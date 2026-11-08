@@ -26005,7 +26005,7 @@ export const CITY_PAGES: CityPage[] = [
         alt: "Cargo doors of a steel storage container, illustrative render: two green doors with four vertical locking bars, cam handles, hinges and a central lockbox inside a grey frame",
         width: 1451,
         height: 1084,
-        caption: "Cargo doors with four locking bars and a central lockbox. Illustrative render.",
+        caption: "Illustrative render of the green cargo-door end, closed and locked.",
       },
     ],
 
@@ -26137,7 +26137,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Share Your BOQ for a Project-Specific Quote",
-    ctaText: `Call or WhatsApp ${COMPANY.whatsapp.display}, email ${COMPANY.email.sales}, or use the form below. Dispatch origin, availability and the delivery schedule are confirmed in the quotation.`,
+    ctaText: `Send your BOQ and site details through the enquiry form, phone or WhatsApp ${COMPANY.whatsapp.display}, or write to ${COMPANY.email.sales}. Dispatch origin, availability and the delivery schedule are confirmed in the quotation.`,
     ctaButtonLabel: "Request a Quote",
     // Not a container-office page: an empty list drops the two container-office secondary buttons;
     // the call and WhatsApp buttons are on by default.
@@ -26147,7 +26147,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Send Your Project Container Enquiry",
       intro:
-        "Choose a container, enter the size, quantity and the delivery town or PIN code nearest your project site, and add your BOQ reference, fit-out requirements and preferred dispatch phases. Our sales team will reply to confirm the details before sending a written quotation.",
+        "Choose a container, enter the size, quantity and the delivery town or PIN code nearest your project site, and add your BOQ reference, fit-out requirements and preferred dispatch phases. We check the scope with you first, then send a written quotation.",
     },
     relatedLinksHeading: "Related products",
     relatedLinks: [
@@ -26160,7 +26160,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a container yard, depot, workshop or office in Visakhapatnam, Sileru or elsewhere in Andhra Pradesh. Containers are supplied subject to availability: the size, grade, condition, documentation and fit-out of each unit, its dispatch origin, transport, lifting and unloading, any climate control, and any rental term or collection are confirmed in its quotation, and delivery timelines are not guaranteed. The images on this page are illustrative renders of a representative steel storage container; they are not photographs of a stores yard, a delivery or an installation at Upper Sileru or any other project site. Upper Sileru, Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu, Narsipatnam and Visakhapatnam are named only to describe where enquiries are welcome: Portable Office Cabin is not affiliated with, approved by or registered as a vendor of any power utility, project owner or EPC contractor, and no hydel or pumped storage project is described here as a client, a completed project or a confirmed delivery. Notes on delivery, yard layout, lifting, storage safety and equipment preservation are general guidance, not engineering, safety or legal advice; follow the project's approved plans and the equipment suppliers' instructions.",
+      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru. It has no container yard, depot, workshop or office in Visakhapatnam, Sileru or anywhere else in Andhra Pradesh. Every unit depends on availability: its size, grade, condition, documentation and fit-out, its dispatch origin, transport, lifting and unloading, any climate control, and any rental term or collection are set out in its quotation, and no delivery timeline is guaranteed. This page shows illustrative renders of one representative steel storage container, not photographs of a stores yard, a delivery or an installation at Upper Sileru or any other project site. Upper Sileru, Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu, Narsipatnam and Visakhapatnam are named only to describe where enquiries are welcome: Portable Office Cabin is not affiliated with, approved by or registered as a vendor of any power utility, project owner or EPC contractor, and no hydel or pumped storage project is described here as a client, a completed project or a confirmed delivery. Notes on delivery, yard layout, lifting, storage safety and equipment preservation are general guidance, not engineering, safety or legal advice; follow the project's approved plans and the equipment suppliers' instructions.",
   },
 ];
 
