@@ -212,6 +212,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("areas", "areas heading", p.areasHeading);
   t("areas", "areas text", p.areasText);
+  // Optional areas links (since 2026-11-07): label text and href.
+  (p.areasLinks ?? []).forEach((l, i) => { t("areas", `areas link ${i + 1} "${l.label}"`, l.label); m("areas", `areas link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   t("how", "how heading", p.howHeading);
   if (p.howIntro) t("how", "how intro", p.howIntro);
   p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });
