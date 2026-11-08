@@ -414,6 +414,35 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                 </Link>
               </p>
             )}
+            {/* Optional captioned images (`images`, see CityPageListItem); unset = no element. Two
+                columns from `sm` up; with an odd count the first image spans both, so no figure is
+                left alone at half width. Lazy-loaded: these sit far below the fold. */}
+            {s0.images && s0.images.length > 0 && (
+              <div className={`mb-6 grid gap-4 sm:grid-cols-2${mc("reveal-stagger")}`}>
+                {s0.images.map((img, j) => {
+                  const wide = j === 0 && s0.images!.length % 2 === 1;
+                  return (
+                    <figure
+                      key={img.src}
+                      className={`overflow-hidden rounded-xl border bg-muted/30${wide ? " sm:col-span-2" : ""}${mc("hover-lift card-glow")}`}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        width={img.width}
+                        height={img.height}
+                        sizes={wide ? "(max-width: 896px) 100vw, 864px" : "(max-width: 640px) 100vw, 424px"}
+                        className="h-auto w-full"
+                        loading="lazy"
+                      />
+                      <figcaption className="border-t px-4 py-2.5 text-sm leading-relaxed text-muted-foreground">
+                        {img.caption}
+                      </figcaption>
+                    </figure>
+                  );
+                })}
+              </div>
+            )}
           </section>
         ))}
         {/* Optional table after the solutions (`solutionsTable`); unset = no element. */}
