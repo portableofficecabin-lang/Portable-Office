@@ -749,7 +749,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             location pages (3–4 each). Renders nothing on every other page. */}
         <ShippingContainerNearbyBlock
           slug={page.slug}
-          existingHrefs={(page.relatedLinks ?? []).map((l) => l.href)}
+          /* `areasLinks` hrefs are skipped too, so a sibling the areas section already links is not repeated. */
+          existingHrefs={[...(page.relatedLinks ?? []), ...(page.areasLinks ?? [])].map((l) => l.href)}
           motion={page.motion}
         />
 

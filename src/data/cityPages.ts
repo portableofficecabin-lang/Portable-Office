@@ -261,9 +261,10 @@ export interface CityPage {
   areasHeading: string;
   areasText: string;
   /**
-   * Optional contextual links rendered as a short list after `areasText` (first used by Portable Office
-   * Cabin in Bellandur, whose areas paragraph points farther along the corridor to the Sarjapur page).
-   * Unset = nothing rendered.
+   * Optional contextual links rendered as a short list after `areasText` (first used by the Bellandur
+   * and Marathahalli ORR shipping-container pages, which point at each other's local storage intent).
+   * Their hrefs are also skipped by the shipping-container nearby block, so a sibling is not linked
+   * twice. Unset = nothing rendered.
    */
   areasLinks?: CityPageLink[];
 
@@ -16252,6 +16253,257 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN BELLANDUR — Bellandur Post (560103), south-east Bengaluru:
+   * storage for homes, apartment societies, contractors and local shops.
+   *
+   * Owner brief of 2026-11-07 (route, meta title, meta description and H1 used as given). The slug
+   * starts with "shipping-container-", so cityFamily() puts it in the shipping-container family:
+   * directory card, Karnataka sibling links both ways and the nearby block. The brief's sections map
+   * onto the fixed template slots, in the brief's order except where a slot's position is fixed:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Storage uses in Bellandur" table → why, as whyTable (no bullets).
+   *   • "Choosing a container for a residential site" → solutions heading + intro (no items).
+   *   • "Planning delivery through a society gate or narrow lane" and "Container condition, finish and
+   *     fittings" → two afterSolutions extra sections, paragraphs verbatim.
+   *   • "Storing household goods during renovation" → features (four bullets); the fifth bullet, what
+   *     to keep out, → sizesNote (rendered bold).
+   *   • "Shipping container price and rental in Bellandur" → custom (prose, so customBullets is empty,
+   *     which renders no <ul>); the rental link → customLinks.
+   *   • "Areas we serve" → areas (the template renders it before the steps).
+   *   • "From enquiry to delivery" → how (four steps, titles only).
+   *   • FAQs (seven) → faqs; the closing request → CTA + the category enquiry form. The customer may
+   *     buy or rent, so the form keeps the rental model.
+   * Lead-ins written where a slot needs one: tagline, whyIntro, the table caption, featuresIntro, the
+   * outro before the rental link and the enquiry-form intro. No ₹ figure, stock, lead time, guaranteed
+   * fit, moisture protection or capacity claim; 20 ft is the only size named (10 ft stock, side-lifter
+   * delivery and further modifications wait until the business confirms them, as the brief says).
+   *
+   * KEYWORD OWNERSHIP: shipping / storage container × Bellandur, 560103, for household, society,
+   * renovation, contractor and small-shop storage. The Bellandur office-cabin page keeps office cabins
+   * and workspace; the Marathahalli ORR shipping page keeps commercial and infrastructure storage on
+   * the ORR; campus and tech-park intent stays with the Devarabisanahalli page. The brief's reciprocal
+   * links with the office page (and the Marathahalli page's) are added by whichever page merges
+   * second, once both routes are live.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Bellandur shipping city page/Bellandur
+   * shipping/cabin (1–5).webp", no EXIF / XMP / ICC metadata). Four are copied byte-for-byte; the hero
+   * also gains an XMP dc:title / dc:description that identifies it as a render (pixels unchanged).
+   * The brief's crane-delivery slot has no matching image and is omitted. The interior shows shelving
+   * rather than pallets and the vent view is the whole side wall, so their alt text, file names and
+   * captions describe what is shown (the vent caption says "side view", not the brief's "vent detail"); the overhead view (no slot in the brief) is the feature band before the
+   * footprint section. The containers drawn are longer than 20 ft, so no alt text or caption names a
+   * size, and the disclaimer says none is a photograph of a container in Bellandur.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-bellandur",
+    city: "Bellandur",
+    listTitle: "Shipping & Storage Containers in Bellandur",
+    metaTitle: "Shipping & Storage Containers in Bellandur (560103)",
+    metaDescription:
+      "Buy or enquire about renting a shipping container in Bellandur for home renovations, apartment society storage, contractor tools or business stock.",
+    keywords:
+      "Shipping Container in Bellandur, Storage Container Bellandur, Used Shipping Container Bellandur, Storage Container Rental Bellandur, 20 ft Shipping Container Bellandur, Shipping Container Bellandur 560103, Storage Container Bellandur Post",
+    geo: {
+      region: "IN-KA",
+      placename: "Bellandur, Bengaluru, Karnataka, India",
+      position: "12.9260;77.6762",
+      icbm: "12.9260, 77.6762",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-bellandur/bellandur-shipping-storage-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors: a charcoal-grey side wall and bronze-painted doors with vertical locking bars and handles, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a shipping container for residential storage. The size, condition and finish of a supplied unit are confirmed in its quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-bellandur/bellandur-storage-container-overhead-footprint.webp",
+      alt: "Overhead view of a charcoal-grey steel container on paving between planted borders, showing its corrugated roof and rectangular footprint",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative overhead view. Allow room beyond the footprint to open the cargo doors, walk around the unit and unload it safely.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-bellandur/bellandur-storage-container-side-wall-vents.webp",
+      alt: "Painted corrugated steel side wall of a storage container with a small vent near each top corner",
+      width: 2051,
+      height: 767,
+      caption: "Illustrative side view with a small vent near each top corner. Confirm vent availability in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-bellandur/bellandur-storage-container-interior.webp",
+        alt: "Storage container interior with cartons and storage bins on steel shelving either side of a central aisle, under ceiling lights",
+        width: 1451,
+        height: 1084,
+        caption:
+          "Illustrative storage layout with items raised off the floor. Shelving, lining and lighting are fitted only where agreed for the specific unit.",
+      },
+      {
+        src: "/images/cities/shipping-container-bellandur/bellandur-society-storage-container-painted.webp",
+        alt: "Painted steel storage container with closed cargo doors, locking bars and handles",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative painted finish for an apartment society storage unit.",
+      },
+    ],
+
+    h1: "Shipping & Storage Containers for Bellandur Homes, Societies and Local Businesses",
+    tagline:
+      "Buy a 20 ft shipping container, or enquire about renting one, for household, society, contractor and shop storage in Bellandur.",
+    intro: [
+      "Need somewhere to keep furniture during a renovation, spare equipment during clubhouse repairs, or stock that has outgrown your shop's back room? Portable Office Cabin supplies shipping containers for storage enquiries in Bellandur. Share what you need to store and where the unit will sit so we can discuss the size, condition and delivery options.",
+    ],
+
+    whyHeading: "Storage uses in Bellandur",
+    whyIntro: "Who typically asks for container storage in Bellandur, and what each usually keeps inside:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Suitability varies with the goods themselves, their packing and the state of the container offered.",
+      headers: ["Who needs storage", "What can go inside"],
+      rows: [
+        ["Homeowners renovating an independent house", "Dry furniture, boxed household goods and suitable appliances"],
+        ["Apartment associations", "Festival decorations, spare chairs, maintenance spares and clubhouse equipment"],
+        ["Interiors and society repair contractors", "Tiles, fittings, tools and project materials suitable for enclosed storage"],
+        ["Local shops and small businesses", "Dry stock, packaging and seasonal supplies"],
+        ["Authorised lake and drain works crews", "Drained pumps, hoses, hand tools and site equipment"],
+      ],
+    },
+
+    solutionsHeading: "Choosing a container for a residential site",
+    solutionsIntro:
+      "A 20 ft shipping container has an external footprint of roughly 6.1 × 2.44 m. Allow additional room to open the cargo doors, walk around the unit where needed, and unload it safely. Usable storage depends on the unit's internal dimensions, your largest items and how much access you need between stacks. For a larger unit, check the delivery route and unloading space before deciding on a size.",
+    solutions: [],
+
+    featuresHeading: "Storing household goods during renovation",
+    featuresIntro: "Before and while household goods are in the container:",
+    features: [
+      "Pack items dry and use suitable covers to protect furniture from dust and scratches.",
+      "Keep cartons off the floor and leave space from the steel walls. Keep a clear path to items you will need during the renovation.",
+      "Check the unit for damp, odours, residues, floor damage and gaps around door seals before moving goods inside.",
+      "Discuss humidity-sensitive items separately. Ventilation and moisture absorbers can help manage condensation, and valuable documents, electronics and delicate furnishings may need climate-controlled storage.",
+    ],
+    sizesNote: "Keep fuel, gas cylinders, flammable solvents, fireworks and perishables out of general-purpose storage.",
+
+    customHeading: "Shipping container price and rental in Bellandur",
+    customIntro:
+      "The quote depends on size, condition, finish, fittings, transport and unloading access. Include your target dates and expected hire period so the team can confirm availability, transport, placement and collection terms.",
+    customBullets: [],
+    customOutro: "For temporary needs, see our rental page:",
+    customLinks: [{ label: "Shipping container rental", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome shipping and storage container enquiries from Bellandur and the Bellandur Post (560103) area, including Green Glen Layout, Bellandur Gate, Ambalipura, Kasavanahalli, Haralur Road, Iblur, Kaikondrahalli and the nearby Sarjapur Road stretch. Delivery is assessed for each site.",
+    // Marathahalli ORR cross-link (agreed with #226; added here as the second to go live): commercial storage on the ORR is that page's intent.
+    areasLinks: [{ label: "Commercial storage containers on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" }],
+
+    howHeading: "From enquiry to delivery",
+    howSteps: [
+      {
+        title: "Share what you need to store, the approximate duration, and photographs of the approach and placement area.",
+        text: "",
+      },
+      { title: "Review the proposed size, container condition and itemised purchase or rental quotation.", text: "" },
+      { title: "Confirm site permission, access, supports and the agreed unloading method.", text: "" },
+      { title: "Agree on the delivery schedule and, for a rental, how collection will be arranged.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Planning delivery through a society gate or narrow lane",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Send photos of the approach road, gate, turning area and proposed unloading spot. Include gate dimensions and flag overhead cables, low branches, balconies or a basement slab beneath the driveway. The vehicle needs room to manoeuvre, and the lifting equipment needs suitable ground and clearance. If a crane is proposed, agree on its position and the space required to keep residents clear during unloading.",
+          "Confirm permission from the landowner or apartment association, and check any applicable placement requirements. Choose an approved area clear of fire access, hydrants, parking access and pedestrian routes. If the ground is uneven or prone to standing water, have the site team confirm suitable level supports and drainage before delivery.",
+        ],
+      },
+      {
+        heading: "Container condition, finish and fittings",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Ask what condition is available and what the stated grade covers. A one-trip container typically shows limited use. A used cargo-worthy unit may show dents or surface wear. A unit described as wind and watertight is offered on that condition basis. Confirm the actual floor, doors, seals and roof condition before accepting a unit for household storage, and ask separately about any certification needed for transport.",
+          "For residential placement, ask about a neutral repaint, a lockbox, vents or shelving. Confirm which fittings are available for the specific unit and whether modifications are permitted on a rental.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Will a 20 ft shipping container fit inside my compound or apartment society?",
+        answer:
+          "It depends on the available footprint, door clearance, approach route and unloading space. Send site dimensions and photographs for an access review.",
+      },
+      {
+        question: "How much can a 20 ft container hold?",
+        answer:
+          "Capacity for your project depends on the unit's internal dimensions, item sizes, safe stacking and the aisle space you need. Send the dimensions of bulky items such as cupboards, sofas or appliances when enquiring.",
+      },
+      {
+        question: "Can I place a storage container on the road outside my home?",
+        answer:
+          "Plan for placement on approved premises with the owner or association's permission. If delivery requires temporary road access or traffic control, confirm the arrangements and any required permission before scheduling it.",
+      },
+      {
+        question: "Can a used shipping container be repainted?",
+        answer:
+          "Ask about repainting options for the selected unit. Availability, colour and preparation depend on the container's condition and quotation.",
+      },
+      {
+        question: "Will furniture stay dry inside a storage container?",
+        answer:
+          "A sound container helps protect goods from rain, but condensation can still form as temperatures change. Check the condition of the unit, pack belongings dry and discuss suitable storage for moisture-sensitive items.",
+      },
+      {
+        question: "Can I rent a container while my renovation is under way?",
+        answer:
+          "Yes, you can enquire about a rental. Share the start date, duration, storage requirements and site access so the team can confirm the available unit and terms.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, requested modifications, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Bellandur",
+    ctaText:
+      "Share what you need to store, the Bellandur site address or PIN, preferred dates and photos of the access route and drop location. Mention whether you want to buy or rent.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (the brief's Request a Quote · Call · WhatsApp).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry for Bellandur",
+      intro:
+        "Pick a container, enter the quantity and your Bellandur address or PIN, and say whether you want to buy or rent. Add what you will store, your preferred dates and the access to the drop location. The team checks these points with you and then sends a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; there is no container yard, depot or office in Bellandur. Each container is offered subject to stock, and its size, condition, grade, fittings, any certification, any rental terms and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or placed in Bellandur. The 20 ft footprint quoted is approximate; the dimensions and ratings that apply are those of the specific unit. Bellandur Post (560103) and the localities and roads listed are named only to describe the area served, and the storage uses described are examples rather than clients, past projects or confirmed delivery areas. Guidance on packing, condensation, site access, placement and permissions is general information, not engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING CONTAINERS IN SHIVAMOGGA — Machenahalli / Nidige (KIADB) industrial area, Malnad.
    *
    * Owner brief of 2026-11-05 (meta title, meta description, H1 and the preferred URL used as
@@ -16803,6 +17055,8 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas we serve",
     areasText:
       "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout, Doddanekundi and Kadubeesanahalli. We also consider sites along Varthur Road, Old Airport Road and around Mahadevapura. Delivery access is assessed for each location.",
+    // Bellandur cross-link (agreed with the Bellandur page, added by #227 as the second to go live): residential storage is that page's intent.
+    areasLinks: [{ label: "Storage containers for homes and societies in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" }],
 
     howHeading: "From enquiry to placement",
     // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
