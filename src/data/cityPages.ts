@@ -8377,10 +8377,12 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
         { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
         { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
-        // Sibling portable-shop location pages, which keep their own place intents: Krishnagiri (live since #196)
-        // and Hassan (live since #210, linked both ways at the Hassan brief's request).
+        // Sibling portable-shop location pages, which keep their own place intents: Krishnagiri (live since #196),
+        // Hassan (live since #210, linked both ways at the Hassan brief's request) and Nanjangud (live since #209;
+        // the Nanjangud brief asks for the reciprocal, which the Nanjangud page adds in its own follow-up).
         { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
         { label: "Portable Shops in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
+        { label: "Portable Shop Cabins in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
