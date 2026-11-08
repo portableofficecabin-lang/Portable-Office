@@ -430,6 +430,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           ))}
         </ul>
         <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
+        {/* Optional contextual links after the sizes note (`featuresLinks`); unset = nothing rendered. */}
+        {page.featuresLinks && page.featuresLinks.length > 0 && renderLinks(page.featuresLinks)}
 
         {/* gallery — every angle of the cabin, lazy-loaded. Columns follow the item count so a
             1- or 2-image gallery fills the row instead of sitting stranded at a third width. */}
