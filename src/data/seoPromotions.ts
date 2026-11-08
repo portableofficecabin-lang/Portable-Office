@@ -538,6 +538,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
     // Uttara Kannada (Karwar, Sirsi and the coast), 2026-11-07; appended so the live links keep their positions.
     { name: "Shipping Container in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
+    // Marathahalli / Outer Ring Road commercial storage (owner brief, 2026-11-07), after Shivamogga.
+    { name: "Shipping Containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
   ],
 };
 

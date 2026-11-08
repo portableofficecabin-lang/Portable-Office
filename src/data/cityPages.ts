@@ -16601,6 +16601,279 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINERS IN MARATHAHALLI (ORR) — commercial and infrastructure storage along the
+   * Outer Ring Road: road and metro work zones, showroom overflow, business archives, sports turfs,
+   * restaurants and event teams.
+   *
+   * Owner brief of 2026-11-07: route, meta title, meta description and H1 used as given; every
+   * section of the publishable copy is kept in the owner's words and order, except where the fixed
+   * template slots force a change (nothing is dropped):
+   *   • Intro → intro (two paragraphs) + heroCta (Request a Quote / Call / WhatsApp).
+   *   • "Commercial storage along the ORR" → why, as `whyTable` (empty whyBullets). The lead-in
+   *     sentence and the table caption are the only composed lines in the body.
+   *   • "Storage for road and metro work zones" → solutionsHeading + solutionsIntro with an empty
+   *     `solutions` list, so it stays an H2 with one paragraph, like the brief's other use sections.
+   *   • "Showroom overflow…", "Archive storage…", "Storage for sports turfs…" and "Choosing between
+   *     20 ft and 40 ft containers" → four afterSolutions extra sections, in the brief's order. The
+   *     size table's caption is the brief's own "Final fit depends on…" sentence.
+   *   • "Condition, security and fittings" → features: the first sentence is the intro, the next
+   *     four are the list, and the rental-fittings sentence is the bold note. The gallery (cargo
+   *     doors with lockbox, fitted interior) follows it.
+   *   • "Shipping container price, purchase and rental in Marathahalli" → custom, with the rental
+   *     link as `customLinks` (anchor as given).
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps, the owner's
+   *     sentences). The template puts areas before the steps, the reverse of the brief.
+   *   • FAQs (six) → faqs; the closing request → CTA + the cargo-category enquiry form (rental models
+   *     kept: rental is in this brief's scope).
+   * DEFERRED LINKS (brief section 5: never link to a route that is not live). Office cabins in
+   * Marathahalli (portable-office-cabin-marathahalli, session cf) and storage containers for homes
+   * and societies in Bellandur (shipping-container-bellandur, session d1) are added, both ways, by
+   * whichever PR merges second.
+   * Not claimed (brief section 3): stacking, night lifting, warning-light mounts, ramps, CCTV, alarms,
+   * lease-to-own, fixed delivery timelines or guaranteed archive protection. No ₹ figure.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container × Marathahalli and the ORR, for
+   * commercial and infrastructure storage. Bellandur's shipping page keeps household and society
+   * storage; the Marathahalli office-cabin page keeps workspace; Devarabisanahalli keeps campus and
+   * tech-park intent. No Bellandur locality is named in the areas list.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Marathahalli shipping container city
+   * page/Marathahalli ORR shipping and storage container/cabin (1–4).webp": 600×448 and 1452×1083 ×3,
+   * no EXIF/XMP/ICC), copied with descriptive names and a truthful XMP dc:title/dc:description
+   * ("Illustrative render of…") added losslessly: the VP8 bitstream is untouched and the decoded
+   * pixels are identical. Only the exterior matches a slot in the owner's image table, and it is the
+   * hero (the owner's alt text and render caption) and the social preview. The side wall, cargo doors
+   * and lined interior match none of the other slots (work-zone barriers, boxed stock, archive racks,
+   * sports racks), so those slot filenames and alts are not used. They carry their own descriptive
+   * alt text and an "illustrative render" caption, and no alt text names a place.
+   * The hero is 600 px wide, narrower than the 672 px frame, so the template caps it at its own width
+   * (the interior image's narrow rule).
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-marathahalli-orr",
+    city: "Marathahalli",
+    listTitle: "Shipping Containers in Marathahalli (ORR)",
+    metaTitle: "Shipping Containers in Marathahalli (ORR) | 20 & 40 ft",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Marathahalli for road and metro works, showroom overflow, event equipment and sports turf storage.",
+    keywords:
+      "Shipping Container in Marathahalli, Storage Container Marathahalli, Cargo Container ORR, Cargo Container Outer Ring Road, 20 ft Container Marathahalli, 40 ft Container Marathahalli, Shipping Container Rental Marathahalli",
+    geo: {
+      region: "IN-KA",
+      placename: "Marathahalli, Outer Ring Road, Bengaluru, Karnataka, India",
+      position: "12.9569;77.7011",
+      icbm: "12.9569, 77.7011",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+
+    heroImage: {
+      src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 600,
+      height: 448,
+      caption: "Illustrative shipping container exterior for commercial storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-side-wall.webp",
+      alt: "Corrugated steel side wall of a 20 ft shipping container with two forklift pockets, on a paved yard",
+      width: 1452,
+      height: 1083,
+      caption: "Illustrative render of the corrugated side wall of a 20 ft shipping container.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-cargo-doors.webp",
+        alt: "Double cargo doors of a steel shipping container with four locking bars, cam handles and a central lockbox",
+        width: 1452,
+        height: 1083,
+        caption: "Illustrative render of the cargo doors, with a lockbox between the locking bars. Fittings vary by unit and are listed in the quotation.",
+      },
+      {
+        src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-lined-interior.webp",
+        alt: "Container interior with cream wall lining, two ceiling lights, a switch and power socket and a wood-effect floor, seen between open cargo doors",
+        width: 1452,
+        height: 1083,
+        caption:
+          "Illustrative render of a lined interior with lighting and power points. These are specification options confirmed in the quotation, not standard fittings.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers for Marathahalli and the Outer Ring Road",
+    tagline: "20 ft and 40 ft containers for project, showroom, archive, sports and event storage along the ORR.",
+    intro: [
+      "A showroom preparing for festive sales, a contractor moving between work zones and a sports turf storing equipment all need space close to where they work.",
+      "Portable Office Cabin supplies shipping containers for commercial and infrastructure storage enquiries in Marathahalli and along the Outer Ring Road (ORR). Share what you need to store, how long you need the space and where the container will sit.",
+    ],
+
+    whyHeading: "Commercial storage along the ORR",
+    whyIntro: "Typical commercial and infrastructure uses, and what each can plan space for:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Examples only. Confirm that your goods suit container storage and the conditions they need.",
+      headers: ["Use", "What you can plan space for"],
+      rows: [
+        ["Road, flyover and metro works", "Tools, cables, fittings, drained pumps and project materials"],
+        ["Showrooms and retailers", "Seasonal inventory, boxed stock and display fixtures"],
+        ["Office and business records", "Archive boxes where the storage environment meets retention and access requirements"],
+        ["Sports turfs and gyms", "Nets, cones, balls, mats and maintenance equipment"],
+        ["Restaurants", "Packaging and suitable non-food supplies"],
+        ["Event and exhibition teams", "Stands, display panels and staging equipment"],
+      ],
+    },
+
+    solutionsHeading: "Storage for road and metro work zones",
+    solutionsIntro:
+      "A 20 ft unit can be considered for an approved work zone or contractor yard where the project team confirms the footprint, unloading area and clearance. If a project moves in stages, ask about the scope and cost of relocation between approved locations. Discuss visibility markings and access control with the project team. Placement and lifting beside a live carriageway depend on the applicable permissions, traffic management and an agreed lifting plan.",
+    // Empty on purpose: the section is the heading and paragraph above (see the header comment).
+    solutions: [],
+
+    featuresHeading: "Condition, security and fittings",
+    featuresIntro: "Ask about the grade and actual condition of the available unit.",
+    features: [
+      "One-trip units generally have seen limited use.",
+      "Used cargo-worthy units can show wear, and units described as wind and watertight should be assessed against their stated condition.",
+      "Check the floor, doors, locking gear and seals before accepting a unit.",
+      "For a busy commercial yard, discuss a lockbox, suitable lighting, shelving and placement with doors facing a controlled area.",
+    ],
+    sizesNote: "Confirm which fittings are included in the quote and whether changes are permitted on rental units.",
+
+    customHeading: "Shipping container price, purchase and rental in Marathahalli",
+    customIntro: "Pricing depends on size, condition, fittings, transport, unloading and site access.",
+    customBullets: [
+      { text: "Compare rental for a project or seasonal overflow with purchase for recurring storage." },
+      { text: "For longer hires, ask about the rental term, extensions and collection." },
+    ],
+    customOutro: "See our rental options and confirm availability for your site and dates:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout, Doddanekundi and Kadubeesanahalli. We also consider sites along Varthur Road, Old Airport Road and around Mahadevapura. Delivery access is assessed for each location.",
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share the intended use, item sizes, hire duration if applicable and site photographs.", text: "" },
+      { title: "Review the proposed container size, condition, fittings and itemised quote.", text: "" },
+      { title: "Confirm the placement location, base, access and required permissions with the responsible site team.", text: "" },
+      { title: "Agree on the delivery and unloading plan, plus any later relocation or collection in the quotation.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Showroom overflow and festive stock",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Plan racks around carton dimensions and keep a clear aisle for restocking. Ask about shelving, interior lighting and a lockbox for the selected unit. If stock moves on trolleys, share the trolley dimensions and proposed loading arrangement when requesting a quote. Check storage temperature and humidity requirements for the goods you intend to keep inside.",
+        ],
+      },
+      {
+        heading: "Archive storage for business records",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Labelled shelving, clear aisles and controlled access make retrieval easier. Before storing records, confirm your organisation's requirements for humidity, temperature, fire protection, retention and access. An unconditioned steel container can experience heat and condensation. Specify a suitable controlled environment if the records require one.",
+        ],
+      },
+      {
+        heading: "Storage for sports turfs and gyms",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Use bins, racks or hooks to separate small kit from long items such as nets and poles. Dry equipment before putting it away and discuss ventilation and door access based on how often staff use the store.",
+        ],
+      },
+      {
+        heading: "Choosing between 20 ft and 40 ft containers",
+        placement: "afterSolutions",
+        table: {
+          caption: "Final fit depends on the unit, delivery vehicle and placement method.",
+          headers: ["Size", "Storage use", "Site planning"],
+          // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a
+          // 320 px phone, where row headers may wrap.
+          rows: [
+            [
+              "20\u00a0ft",
+              "Contractor tools, turf equipment and smaller showroom overflow",
+              "Check gate clearance, turning space, door swing and unloading area.",
+            ],
+            [
+              "40\u00a0ft",
+              "Bulk showroom stock, contractor depots and event equipment",
+              "Check the full trailer approach and whether lifting equipment can be positioned safely.",
+            ],
+          ],
+        },
+        closing: [
+          "If you need more internal height, ask whether a 40 ft high-cube unit is available and confirm its dimensions before designing tall racks. Share entrance measurements, site photos and overhead obstructions.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a container be placed in an ORR road or metro work zone?",
+        answer:
+          "It can be considered where the project authority approves the location and the site team confirms clearance, traffic arrangements and the lifting plan.",
+      },
+      {
+        question: "Will a 40 ft container fit at our showroom?",
+        answer:
+          "The footprint is only one part of the check. Share approach-road and gate dimensions, turning space, overhead restrictions and photos of the unloading area.",
+      },
+      {
+        question: "Can I use a container for business archives?",
+        answer:
+          "That depends on the records and their storage requirements. Check temperature, humidity, fire protection and access requirements before choosing the unit and fit-out.",
+      },
+      {
+        question: "What security options can I ask for?",
+        answer:
+          "Ask about door condition, a lockbox, lighting and placement within a controlled area. Confirm the available fittings for the quoted unit.",
+      },
+      {
+        question: "Should I rent or buy?",
+        answer:
+          "Rental is worth comparing for seasonal inventory and time-limited projects. Purchase may suit ongoing storage. Compare the full quoted cost, including delivery, placement and any collection charges.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on available stock, fittings, transport and site readiness. Share the target date so a schedule can be confirmed in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote for Marathahalli or the ORR",
+    ctaText:
+      "Send the intended use, preferred size, site address, dates, and photos of the approach road, gate and proposed placement area. Mention any racking, lighting or security requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry",
+      intro:
+        "Tell us which container you have in mind, how many you need and where the site is in Marathahalli or on the ORR. Add what you plan to store, your dates and any racking, lighting or security needs; we confirm the details with you before quoting in writing.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Cargo Storage Container in Bangalore", href: "/promotions/cargo-storage-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and its Karnataka office is in Electronic City Phase 1, Bengaluru. It has no yard, depot or office in Marathahalli or on the Outer Ring Road. Supply depends on stock: the size, grade, condition and fittings of a unit, any rental term, and how it is delivered, unloaded, moved or collected are set out in its quotation, and no delivery date is guaranteed. The pictures here are renders of a typical 20 ft container, not photographs taken in Marathahalli or on the ORR. Marathahalli Bridge, the Outer Ring Road and the other localities are named only to show where enquiries are welcome; Portable Office Cabin has no connection with any road, metro or civic authority, and none of the uses or places mentioned is a client, a finished project or a confirmed delivery location. Guidance here on placement, lifting, permits, traffic management, archives and storage conditions is general, not engineering, fire-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN CHENNAI — the metropolitan page for the whole Chennai industrial belt
    * (Sriperumbudur–Oragadam, OMR / GST Road, Ennore–Kattupalli–Manali, ECR).
    *
