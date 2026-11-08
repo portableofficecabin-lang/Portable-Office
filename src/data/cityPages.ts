@@ -27837,9 +27837,10 @@ export const CITY_PAGES: CityPage[] = [
    *     puts areas before the steps, the reverse of the brief.
    *   • FAQs (five) → faqs; the closing request → CTA + the cargo-category enquiry form (rental is in
    *     scope, so the rental model is kept).
-   * Composed (owner review): the tagline, the features lead-in, the sizes-table caption, the "See:"
-   * lead-in before the inspection link, the enquiry-form heading and intro, the alt text and captions of
-   * the four non-hero images (the hero's are the brief's) and the disclaimer.
+   * Composed (owner review): the tagline, the features lead-in, the sizes-table caption, the lead-in
+   * before the inspection link, the enquiry-form heading and intro, the alt text and captions of the
+   * four non-hero images (the hero's are the brief's) and the disclaimer. Composed lines are worded so
+   * they do not repeat the sibling shipping-container pages (8-word shingle check).
    *
    * INTERLINKS (brief section 5): the rental link is in place (live, 200). The Chennai shipping-container
    * page (/products/shipping-container-in-chennai) still has no used-container inspection checklist
@@ -27901,7 +27902,7 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Steel shipping container seen from above: corrugated roof, corner castings and closed cargo doors, on a paved yard",
       width: 1451,
       height: 1084,
-      caption: "Illustrative render. Plan the placement area, door clearance and handling space around the unit.",
+      caption: "Illustrative render. Choose a dry, level placement area with room to swing both doors open and move stock in and out.",
     },
     interiorImage: {
       src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-interior.webp",
@@ -27917,14 +27918,14 @@ export const CITY_PAGES: CityPage[] = [
         alt: "Closed double cargo doors of a steel shipping container with vertical locking bars, handles and a central lockbox",
         width: 1451,
         height: 1084,
-        caption: "Illustrative render of the cargo doors. Inspect the seals, hinges and locking hardware of the unit offered.",
+        caption: "Illustrative render of the cargo doors and lockbox. A lockbox is fitted only when the quotation includes one.",
       },
       {
         src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-side-wall.webp",
         alt: "Blind end and corrugated side wall of a brown steel shipping container on a paved yard",
         width: 1451,
         height: 1084,
-        caption: "Illustrative render of the blind end and side wall.",
+        caption: "Illustrative render: the blind end and corrugated side wall of an unfitted container.",
       },
     ],
 
@@ -28000,7 +28001,7 @@ export const CITY_PAGES: CityPage[] = [
         placement: "afterSolutions",
         table: {
           caption:
-            "High-cube availability, actual dimensions, fittings and lifting arrangements are confirmed for the specific unit in its quotation.",
+            "The quotation for each unit states its actual dimensions, fittings and lifting arrangements, and whether a high-cube unit is available.",
           headers: ["Configuration", "Typical enquiry", "What to confirm"],
           // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a
           // 320 px phone, where row headers may wrap.
@@ -28012,7 +28013,7 @@ export const CITY_PAGES: CityPage[] = [
         },
         closing: [
           "For a used unit, confirm its stated condition and inspect the floor, roof, doors, seals and locking hardware. Ask for the dispatch point and unloading scope in the quote.",
-          "Buying a used unit? See:",
+          "Buying a used unit? For the points to check before you accept it, see:",
         ],
         // Brief section 5 inspection link (no Chennai inspection checklist exists; see the header comment).
         links: [{ label: "How to inspect a used container", href: "/products/cargo-storage-containers" }],
@@ -28058,7 +28059,7 @@ export const CITY_PAGES: CityPage[] = [
     enquiryForm: {
       categorySlug: "cargo-storage-shipping-containers",
       noun: "shipping container",
-      heading: "Shipping container enquiry for Chamarajanagar",
+      heading: "Send your Chamarajanagar storage requirement",
       intro:
         "Select the container you have in mind, the number of units and the nearest town or PIN code in Chamarajanagar district. Tell us what the store will hold, when you need it and whether it needs shelving, racking, a repaint or a lockbox, and we will confirm the details with you before quoting.",
     },
@@ -28071,7 +28072,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru; it has no container yard, depot or office in Chamarajanagar district. Containers are offered subject to stock. The unit's size, grade, condition, fit-out, finish, any hire period and the transport, unloading, placement and collection arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one steel container, not photographs taken in Chamarajanagar district or of a unit that has been supplied. Badanaguppe–Kellamballi, Kollegal, Gundlupet, Bandipur, MM Hills, the Biligiri Rangana Hills and the other places named indicate where enquiries are welcome: Portable Office Cabin has no affiliation with any industrial area, forest or wildlife authority, temple, fair organiser, resort or business there, and no use or place on this page is a client, a completed project or a confirmed delivery location. Containers are not offered as food-grade or hazardous-goods storage. Notes on food storage, hazardous materials, floor and rack loads, routes, access restrictions and placement are general guidance, not food-safety, engineering, legal or regulatory advice.",
+      "Portable Office Cabin's factory is near Hosur in Tamil Nadu and its Karnataka office is in Electronic City Phase 1, Bengaluru; the company does not run a yard, depot or office anywhere in Chamarajanagar district. Containers are offered subject to stock. The unit's size, grade, condition, fit-out, finish, any hire period and the transport, unloading, placement and collection arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one steel container, not photographs taken in Chamarajanagar district or of a unit that has been supplied. Badanaguppe–Kellamballi, Kollegal, Gundlupet, Bandipur, MM Hills, the Biligiri Rangana Hills and the other places named show the area enquiries may come from. Portable Office Cabin has no affiliation with any industrial area, forest or wildlife authority, temple, fair organiser, resort or business there, and none of the uses or places described should be read as a customer, a finished project or a confirmed delivery point. Containers are not offered as food-grade or hazardous-goods storage. Notes on food storage, hazardous materials, floor and rack loads, routes, access restrictions and placement are general guidance, not food-safety, engineering, legal or regulatory advice.",
   },
 ];
 
