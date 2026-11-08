@@ -2009,6 +2009,11 @@ export const CITY_PAGES: CityPage[] = [
       { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      // Sibling shop pages named in the owner's brief, linked once live: Shivamogga (#195), Sriperumbudur
+      // (#208) and Hassan (#210, live 2026-11-07; it links back here). Hoskote (#202) is added when it goes live.
+      { label: "Portable Shop Cabins in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
+      { label: "Portable Shop Cabins in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -2016,6 +2021,7 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
         { label: "Portable Shops in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+        { label: "Portable Shops in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
         { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
@@ -13340,6 +13346,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Shop Cabin (10 × 10 ft)", href: "/products/portable-shop-cabin" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Portable Shops in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
+      // Reciprocal link to the Nanjangud shop page, which links here (owner's Nanjangud brief, 2026-11-06).
+      { label: "Shop Rows and Kiosks in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
       { label: "Shipping and Cargo Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
