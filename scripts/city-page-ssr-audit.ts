@@ -192,6 +192,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   t("features", "features intro", p.featuresIntro);
   p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
   t("features", "sizes note", p.sizesNote);
+  // Optional features links (since 2026-11-08): label text and href.
+  (p.featuresLinks ?? []).forEach((l, i) => { t("features", `features link ${i + 1} "${l.label}"`, l.label); m("features", `features link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
   // Optional gallery captions (since 2026-11-05): audited whenever an image sets one.
   p.gallery?.forEach((g, i) => { if (g.caption) t("images", `gallery ${i + 1} caption`, g.caption); });
@@ -219,6 +221,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("areas", "areas heading", p.areasHeading);
   t("areas", "areas text", p.areasText);
+  // Optional areas links (since 2026-11-07): label text and href.
+  (p.areasLinks ?? []).forEach((l, i) => { t("areas", `areas link ${i + 1} "${l.label}"`, l.label); m("areas", `areas link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   t("how", "how heading", p.howHeading);
   if (p.howIntro) t("how", "how intro", p.howIntro);
   p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });

@@ -459,6 +459,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           ))}
         </ul>
         <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
+        {/* Optional contextual links after the sizes note (`featuresLinks`); unset = nothing rendered. */}
+        {page.featuresLinks && page.featuresLinks.length > 0 && renderLinks(page.featuresLinks)}
 
         {/* gallery — every angle of the cabin, lazy-loaded. Columns follow the item count so a
             1- or 2-image gallery fills the row instead of sitting stranded at a third width. */}
@@ -566,6 +568,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.areasHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.areasText}</p>
+        {/* Optional contextual links after the areas text (`areasLinks`); unset = nothing rendered. */}
+        {page.areasLinks && page.areasLinks.length > 0 && renderLinks(page.areasLinks)}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.howHeading}</h2>
         {/* Optional lead-in / closing paragraphs (`howIntro`, `howOutro`); unset = no element. A step
@@ -710,7 +714,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             location pages (3–4 each). Renders nothing on every other page. */}
         <ShippingContainerNearbyBlock
           slug={page.slug}
-          existingHrefs={(page.relatedLinks ?? []).map((l) => l.href)}
+          /* `areasLinks` hrefs are skipped too, so a sibling the areas section already links is not repeated. */
+          existingHrefs={[...(page.relatedLinks ?? []), ...(page.areasLinks ?? [])].map((l) => l.href)}
           motion={page.motion}
         />
 
