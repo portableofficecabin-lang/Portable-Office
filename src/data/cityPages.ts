@@ -27314,10 +27314,9 @@ export const CITY_PAGES: CityPage[] = [
    * was checked: /products/shipping-container-in-chennai has no inspection checklist, so "how to
    * inspect a used container" points at /products/cargo-storage-containers ("Key Inspection Points"),
    * the same target the Uttara Kannada shipping page uses for this anchor (one anchor, one target
-   * across the site). It is therefore not repeated in the related links. DEFERRED until live: the Vellore
-   * shipping page (/cities-we-serve/shipping-container-vellore answered 404 on 2026-11-07) for
-   * "insulated and air-conditioned storage fit-outs" at the end of the preservation section, and the
-   * link from a future Visakhapatnam city container page. The Andhra Pradesh shipping-container hub
+   * across the site). It is therefore not repeated in the related links. The Vellore link (added by #231, the
+   * second merger) sits at the end of the preservation section. DEFERRED until live: the link from a
+   * future Visakhapatnam city container page. The Andhra Pradesh shipping-container hub
    * (seoPromotions) lists this page, and the page links back to it.
    *
    * KEYWORD OWNERSHIP: shipping / storage containers × hydel and pumped storage project sites ×
@@ -27471,8 +27470,8 @@ export const CITY_PAGES: CityPage[] = [
         paragraphs: [
           "Start with the equipment supplier's preservation instructions. Specify storage limits, inspection intervals, packaging and any recording requirements in the BOQ. Maintain a preservation log and keep packaging sealed when instructed. For sensitive items, specify any required dehumidification, temperature control, monitoring and response to power failure. Have the responsible project team verify that the proposed unit and controls meet the equipment specification before loading.",
         ],
-        // DEFERRED (brief section 5): "insulated and air-conditioned storage fit-outs" → the Vellore
-        // shipping page, as related fit-out guidance, once /cities-we-serve/shipping-container-vellore is live.
+        closing: ["For related fit-out planning guidance, see:"],
+        links: [{ label: "Planning insulated and air-conditioned storage fit-outs", href: "/cities-we-serve/shipping-container-vellore" }],
       },
       {
         heading: "Container Sizes and Procurement",
