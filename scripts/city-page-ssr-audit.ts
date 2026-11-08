@@ -222,6 +222,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("areas", "areas heading", p.areasHeading);
   t("areas", "areas text", p.areasText);
+  // Optional areas links (since 2026-11-07): label text and href.
+  (p.areasLinks ?? []).forEach((l, i) => { t("areas", `areas link ${i + 1} "${l.label}"`, l.label); m("areas", `areas link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   // Optional section (since 2026-11-07): audited whenever the page sets it.
   if (p.howHeading) {
     t("how", "how heading", p.howHeading);
