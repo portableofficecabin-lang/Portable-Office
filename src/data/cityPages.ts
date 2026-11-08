@@ -124,6 +124,12 @@ export interface CityPage {
    * Service block, as before.
    */
   serviceJsonLd?: { serviceType: string };
+  /**
+   * Optional: declare the hero image's `width` / `height` (which must be its actual pixel size) as
+   * og:image:width / og:image:height (first used by Shipping & Storage Containers in Bellandur, whose
+   * brief asks for the social preview's actual dimensions). Unset = no dimension tags, as before.
+   */
+  ogImageDimensions?: boolean;
 
   /**
    * Hero image (also the page's og:image). Root-relative path under /public. `caption` (optional)
@@ -6592,7 +6598,271 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
       { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+      // Sibling page (2026-11-07): the shipping / storage container box itself for Coimbatore; it links back here.
+      { label: "Shipping and storage containers in Coimbatore", href: "/cities-we-serve/shipping-container-coimbatore" },
     ],
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN COIMBATORE (KOVAI) — the storage box itself for pump and motor
+   * stock, engineering spares, job-work workshop enquiries, textile supplies and Pollachi coir.
+   *
+   * Owner brief of 2026-11-07 (route, meta title, meta description and H1 used as given; one
+   * canonical for Coimbatore and Kovai). The slug starts with "shipping-container-", so cityFamily()
+   * puts it in the shipping-container family: directory card, Tamil Nadu sibling links both ways
+   * (Athipattu, Mettur) and the nearby block. The brief's sections map onto the fixed template slots,
+   * in the brief's order except where a slot's position is fixed:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Storage for pumps, motors and machinery parts" → why: the paragraph is whyIntro and the
+   *     stock table is whyTable (no bullets).
+   *   • "Container workshop enquiries for job-work units" → solutions heading + intro (no items).
+   *     The copy only invites an enquiry ("Ask whether a workshop fit-out can be quoted"), so it is
+   *     already planning guidance and claims no fit-out.
+   *   • "Storage for textile mills", "Coir and coconut products from the Pollachi belt" and
+   *     "Container sizes, condition and delivery" (table + the used-unit paragraph as `closing`) →
+   *     three afterSolutions extra sections, copy verbatim.
+   *   • "Controlled access for engineering stores" → features. The features slot renders after the
+   *     afterSolutions sections, so this section follows the sizes section (the brief has it before).
+   *     Its first sentence is split into the intro and three list items; the last two sentences are
+   *     the bold note. The gallery follows it.
+   *   • "Shipping container price and rental in Coimbatore" → custom (first sentence = intro, the
+   *     next two as untitled bullets) with the rental link as `customLinks` (anchor as given).
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps). The template
+   *     puts areas before the steps, the reverse of the brief.
+   *   • FAQs (five) → faqs; the closing request → CTA + the cargo-category enquiry form (rental is
+   *     mentioned, so the form keeps the rental model).
+   * Lead-ins written where a slot needs one: tagline, the two table captions, the outro before the
+   * rental link and the enquiry-form intro. No ₹ figure, stock, lead time, load rating, depot origin,
+   * customer relationship or supplier approval; workshop fit-outs, 40 ft high cube availability, side
+   * openings, power, extraction and relocation stay quote-dependent, and heavy-load and combustible-
+   * stock guidance stays tied to the site's own technical, fire-safety and insurance review.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container × Coimbatore (Kovai), Pollachi coir and
+   * the surrounding industrial belt. Container offices stay with container-office-in-sipcot-coimbatore
+   * just above; the two pages link to each other. Coimbatore is not a location in the generated
+   * promotion grid, so no /promotions page competes for this keyword.
+   *
+   * DEFERRED LINKS (brief §5): the Chennai "how to inspect a used container" link waits, because no
+   * Chennai page is a used-container inspection guide (the Chennai shipping-container product page
+   * has one sentence on inspection). The Vellore fit-out link waits until
+   * /cities-we-serve/shipping-container-vellore is live; whichever of the two pages goes live second
+   * adds it.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Coimbatore shipping container city
+   * page/Coimbatore shipping container/cabin (1–5).webp", no EXIF / XMP / ICC metadata), copied with
+   * an XMP dc:title / dc:description that marks each one as a render (pixels unchanged). They show
+   * one painted container with a glazed side door and a lined interior; the brief's pump-stock,
+   * workshop, textile and coir slots have no matching image and are omitted. The exterior is the
+   * hero (and og:image); the elevated view is the feature band; the side door, cargo doors and lined
+   * interior are the gallery. No alt text or caption names a size, and the disclaimer says none is a
+   * photograph of a container in Coimbatore or Pollachi.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-coimbatore",
+    city: "Coimbatore",
+    listTitle: "Shipping & Cargo Containers in Coimbatore",
+    metaTitle: "Shipping & Storage Containers in Coimbatore (Kovai)",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Coimbatore for pump and motor stock, engineering spares, textile supplies and Pollachi coir products.",
+    keywords:
+      "Shipping Container in Coimbatore, Storage Container Coimbatore, Cargo Container Kovai, Used Shipping Container Coimbatore, Shipping Container Rental Coimbatore",
+    geo: {
+      region: "IN-TN",
+      placename: "Coimbatore, Tamil Nadu, India",
+      position: "11.0168;76.9558",
+      icbm: "11.0168, 76.9558",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors and a glazed sliding door in its side wall, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative shipping container exterior for industrial storage. A side opening such as the glazed door shown is subject to quotation and a structural review.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-elevated-view.webp",
+      alt: "Elevated view of a steel shipping container on paving, showing its corrugated roof, closed cargo doors and a glazed side door",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative elevated view. Plan the placement area, door clearance and handling space around the unit before delivery.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a steel shipping container with vertical locking bars and handles",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the cargo doors. Check the doors, seals and locking hardware of the unit offered.",
+      },
+      {
+        src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-side-door.webp",
+        alt: "Side view of a corrugated steel container with a glazed sliding door set into its side wall",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render. Any side opening needs a structural review before fabrication and is subject to quotation.",
+      },
+      {
+        src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-lined-interior.webp",
+        alt: "Wood-lined container interior with wall shelves, a low cabinet and a glazed side door, seen through open cargo doors",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative lined interior. Lining, lighting and any fit-out are subject to quotation.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Coimbatore",
+    tagline:
+      "20 ft and 40 ft containers for pump and motor stock, engineering spares, textile supplies and Pollachi coir products, quoted for your site across Coimbatore (Kovai).",
+    intro: [
+      "A pump manufacturer may need space for crated motors awaiting dispatch. A mill may need a separate store for spares and packaging. A Pollachi coir business may need room for finished products between collections. Portable Office Cabin welcomes shipping container enquiries across Coimbatore (Kovai) and the surrounding industrial belt. Share what you plan to store, how staff will handle it and where the unit will sit so we can quote the size, fit-out and delivery scope.",
+    ],
+
+    whyHeading: "Storage for pumps, motors and machinery parts",
+    whyIntro:
+      "Start with the packed dimensions and weight of your largest items, including crates and skids. If staff will use a forklift or pallet truck, include its dimensions and loaded weight. Ask the responsible technical team to check the selected unit's floor and loading limits, including concentrated loads, along with rack ratings, door clearance and the proposed handling method. Agree how the stock will be secured and leave enough room to retrieve it safely.",
+    whyBullets: [],
+    whyTable: {
+      caption: "Floor and handling limits depend on the selected unit and the load.",
+      headers: ["Stock", "What to plan for"],
+      rows: [
+        ["Pumps, motors and gearboxes", "Skid dimensions, lifting access and verified floor capacity"],
+        ["Engineering spares and finished assemblies", "Rated shelving, labelled locations and a clear picking aisle"],
+        ["Wet grinders and other boxed appliances", "Carton dimensions, safe stacking and dispatch access"],
+      ],
+    },
+
+    solutionsHeading: "Container workshop enquiries for job-work units",
+    solutionsIntro:
+      "If you need a compact space for bench assembly, tool preparation or inspection, share your equipment list, power requirements and number of operators. Ask whether a workshop fit-out can be quoted. Discuss workbenches, lighting, electrical supply and earthing, ventilation or extraction, and entry and exit requirements with the responsible technical team. For machinery, provide weights, mounting and vibration requirements. Any proposed side opening or shutter needs a structural review before fabrication.",
+    // Empty on purpose: the section is the heading and paragraph above (see the header comment).
+    solutions: [],
+
+    featuresHeading: "Controlled access for engineering stores",
+    featuresIntro: "For traceable parts or customer-owned stock, consider:",
+    features: ["Labelled bins", "A stock register", "A record of who can access the unit"],
+    sizesNote:
+      "Ask about available door hardware, lockboxes and tamper-evident seals. If your customer specifies access, traceability or environmental controls, include those requirements in the enquiry and confirm that the quoted scope meets them.",
+
+    customHeading: "Shipping container price and rental in Coimbatore",
+    customIntro: "Pricing depends on size, condition, fit-out, transport and unloading.",
+    customBullets: [
+      { text: "Include the weight and size of any heavy stock, plus requirements for racks, power, ventilation or security." },
+      { text: "Confirm availability, the hire period, permitted modifications and collection terms for your site." },
+    ],
+    customOutro: "For seasonal stock or temporary project storage, see:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Peelamedu, Ganapathy, Kurichi SIDCO, Malumichampatti, Chettipalayam, Arasur, Sulur, Karumathampatti, Saravanampatti, Thudiyalur and Kovilpalayam. We also consider sites around Madukkarai, Kinathukadavu, Annur, Pollachi, Mettupalayam and Varapatti. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share the intended use, quantity, target dates and photos of the site and approach.", text: "" },
+      { title: "Review the proposed unit, fit-out and itemised quote.", text: "" },
+      {
+        title: "Confirm the placement area, handling method, electrical scope if needed and unloading responsibilities.",
+        text: "",
+      },
+      { title: "Agree on delivery and placement, plus collection if included in the hire.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage for textile mills",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A container can provide overflow space for suitable packaging, maintenance spares and finished goods awaiting dispatch. Before storing yarn or cotton bales, ask your site fire-safety team and insurer to confirm whether the proposed unit and location are suitable for the stock and quantities involved. Agree on separation, housekeeping, ignition controls, emergency access and fire protection through the site plan.",
+        ],
+      },
+      {
+        heading: "Coir and coconut products from the Pollachi belt",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For coir fibre, pith blocks, mats and ropes, share pack dimensions and the supplier's storage requirements. Plan pallet positions, handling clearances and regular stock checks. Confirm that the unit suits the required moisture conditions and that your site team has assessed fire protection for the intended stock.",
+        ],
+      },
+      {
+        heading: "Container sizes, condition and delivery",
+        placement: "afterSolutions",
+        table: {
+          caption: "Availability and actual dimensions are confirmed for the specific unit in its quotation.",
+          headers: ["Configuration", "Typical enquiry", "What to confirm"],
+          rows: [
+            ["20 ft", "Pump spares, boxed appliances or smaller coir stock", "Load limits, door clearance and unloading access"],
+            ["40 ft", "Larger stock volumes or longer rack runs", "Trailer approach, turning space and placement area"],
+            ["40 ft high cube", "Bulky items or taller racking", "Availability, actual internal height and route clearances"],
+          ],
+        },
+        closing: [
+          "For a used unit, confirm the condition of its floor, roof, doors, seals and locking hardware. Ask for the proposed dispatch location, route and unloading scope in the quotation. Share photos of the gate, approach road and placement area, including overhead obstructions and space for the vehicle to turn.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a shipping container hold heavy pumps and motors?",
+        answer:
+          "That depends on the unit and the loads. Share the packed weights, skid or contact dimensions and handling equipment so the floor, racking and access requirements can be assessed.",
+      },
+      {
+        question: "Can I enquire about a container workshop?",
+        answer:
+          "Yes. Share your equipment list, number of users and electrical, ventilation and access requirements. Fit-out availability and suitability depend on the quoted specification and site review.",
+      },
+      {
+        question: "Can a container be used to store yarn, cotton or coir?",
+        answer:
+          "Ask your fire-safety team and insurer to assess the stock, volume, container and placement. Confirm storage and handling conditions before choosing a unit.",
+      },
+      {
+        question: "Can you deliver to Pollachi or Mettupalayam?",
+        answer:
+          "You can enquire for either location. Share the site address and photos of the approach and unloading area so delivery can be assessed.",
+      },
+      {
+        question: "How quickly can you deliver to Coimbatore?",
+        answer:
+          "Timing depends on stock, modifications, dispatch location, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Coimbatore",
+    ctaText:
+      "Send your site address, intended use, preferred size, target dates and access photos. Include item dimensions and weights, plus any workshop, racking, power or security requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (the brief's Request a Quote · Call · WhatsApp).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry for Coimbatore",
+      intro:
+        "Choose a container and quantity, then give your Coimbatore site address or PIN, what will go inside and your target dates. Mention heavy items, racking, power or workshop needs; a written quotation follows once the details are reviewed with you.",
+    },
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+      // Sibling page: container offices for SIPCOT Coimbatore (the office intent); it links back here.
+      { label: "Container offices for SIPCOT Coimbatore", href: "/cities-we-serve/container-office-in-sipcot-coimbatore" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; it does not operate a container yard, depot or office in Coimbatore, Pollachi or Mettupalayam. Each container is offered subject to stock, and its size, condition, grade, dispatch location, any fit-out or modification, any rental terms and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or installed in Coimbatore or Pollachi. The industries, stock and localities named describe typical enquiries and the area served; they are not clients, past projects or confirmed delivery areas, and no approval as a supplier to any customer or organisation is implied. Guidance on floor and rack loads, electrical work, ventilation, fire safety, moisture and site access is general information, not engineering, fire-safety or insurance advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
