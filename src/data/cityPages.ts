@@ -6648,11 +6648,12 @@ export const CITY_PAGES: CityPage[] = [
    * just above; the two pages link to each other. Coimbatore is not a location in the generated
    * promotion grid, so no /promotions page competes for this keyword.
    *
-   * DEFERRED LINKS (brief §5): the Chennai "how to inspect a used container" link waits, because no
-   * Chennai page is a used-container inspection guide (the Chennai shipping-container product page
-   * has one sentence on inspection). The Vellore fit-out link waits until
-   * /cities-we-serve/shipping-container-vellore is live; whichever of the two pages goes live second
-   * adds it.
+   * LINKS (brief §5): no Chennai page is a used-container inspection guide (the Chennai
+   * shipping-container product page has one sentence on inspection), so on 2026-11-08 the owner chose
+   * /products/cargo-storage-containers, whose FAQ covers inspecting a used container, for the "how to
+   * inspect a used container" link at the end of the sizes section. The Vellore fit-out link waits
+   * until /cities-we-serve/shipping-container-vellore is live; whichever of the two pages goes live
+   * second adds it.
    *
    * Images: five owner-dropped webp renders ("public/images/Coimbatore shipping container city
    * page/Coimbatore shipping container/cabin (1–5).webp", no EXIF / XMP / ICC metadata), copied with
@@ -6810,7 +6811,10 @@ export const CITY_PAGES: CityPage[] = [
         },
         closing: [
           "For a used unit, confirm the condition of its floor, roof, doors, seals and locking hardware. Ask for the proposed dispatch location, route and unloading scope in the quotation. Share photos of the gate, approach road and placement area, including overhead obstructions and space for the vehicle to turn.",
+          "Buying a used unit? See:",
         ],
+        // Brief §5 inspection link; the owner chose this target on 2026-11-08 (no Chennai inspection guide exists).
+        links: [{ label: "How to inspect a used container", href: "/products/cargo-storage-containers" }],
       },
     ],
 
