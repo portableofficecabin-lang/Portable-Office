@@ -22927,8 +22927,13 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     areasHeading: "Delivery Enquiries Around Cheyyar",
+    // Kanchipuram and Uthiramerur moved off this list on 2026-11-09: both are served by the dedicated
+    // Kanchipuram portable-cabin page (owner rule: one product × place intent per page), linked below.
     areasText:
-      "We welcome enquiries from SIPCOT Industrial Area Cheyyar, Cheyyar town, Anakkavur, Vembakkam, Vandavasi, Thellar and Arani. For sites towards Tiruvannamalai, Kanchipuram, Uthiramerur or other nearby locations, share the exact address so we can confirm transport feasibility and delivery arrangements. Entry into industrial premises is subject to the relevant permissions and site procedures.",
+      "We welcome enquiries from SIPCOT Industrial Area Cheyyar, Cheyyar town, Anakkavur, Vembakkam, Vandavasi, Thellar and Arani. For sites towards Tiruvannamalai or other nearby locations, share the exact address so we can confirm transport feasibility and delivery arrangements. Entry into industrial premises is subject to the relevant permissions and site procedures.",
+    areasLinks: [
+      { label: "Portable cabins for sites around Kanchipuram and Uthiramerur", href: "/cities-we-serve/portable-cabin-kanchipuram" },
+    ],
 
     howHeading: "From Enquiry to Installation",
     howSteps: [
@@ -23418,8 +23423,9 @@ export const CITY_PAGES: CityPage[] = [
     metaTitle: "Portable Cabins in SIPCOT Mambakkam | Sriperumbudur",
     metaDescription:
       "Portable office cabins, security cabins, induction rooms and staff facilities for SIPCOT Mambakkam, Sriperumbudur Phase IV. Request a quotation.",
+    // "Portable Site Office Kanchipuram" removed 2026-11-09: that intent belongs to the Kanchipuram page.
     keywords:
-      "Portable Cabins in SIPCOT Mambakkam, Portable Cabin Sriperumbudur, Portable Office Cabin Sriperumbudur Phase IV, Security Cabin Sriperumbudur, Gate Cabin SIPCOT Mambakkam, Safety Induction Room Cabin, Portable Site Office Kanchipuram, Portable Cabin Oragadam, Portable Cabin Irungattukottai, Staff Facility Cabins Sriperumbudur",
+      "Portable Cabins in SIPCOT Mambakkam, Portable Cabin Sriperumbudur, Portable Office Cabin Sriperumbudur Phase IV, Security Cabin Sriperumbudur, Gate Cabin SIPCOT Mambakkam, Safety Induction Room Cabin, Portable Cabin Oragadam, Portable Cabin Irungattukottai, Staff Facility Cabins Sriperumbudur",
     geo: {
       region: "IN-TN",
       placename: "Mambakkam, Sriperumbudur, Kanchipuram, Tamil Nadu, India",
@@ -23570,8 +23576,13 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     areasHeading: "Delivery Enquiries Around Mambakkam",
+    // Walajabad and Kanchipuram moved off this list on 2026-11-09: the Kanchipuram portable-cabin page
+    // serves them, and this page stays on the Sriperumbudur industrial belt (Kanchipuram brief, section 3).
     areasText:
-      "We welcome enquiries for SIPCOT Mambakkam, Sriperumbudur Phase IV, and surrounding industrial locations. For sites in Sriperumbudur, Irungattukottai, Thandalam, Sunguvarchatram, Oragadam, Vallam Vadagal, Pillaipakkam, Padappai, Walajabad or Kanchipuram, share your exact address so we can assess transport feasibility and delivery arrangements. Enquiries towards Chengalpattu, Poonamallee and Thirumazhisai can also be reviewed according to the location and cabin requirements.",
+      "We welcome enquiries for SIPCOT Mambakkam, Sriperumbudur Phase IV, and surrounding industrial locations. For sites in Sriperumbudur, Irungattukottai, Thandalam, Sunguvarchatram, Oragadam, Vallam Vadagal, Pillaipakkam or Padappai, share your exact address so we can assess transport feasibility and delivery arrangements. Enquiries towards Chengalpattu, Poonamallee and Thirumazhisai can also be reviewed according to the location and cabin requirements.",
+    areasLinks: [
+      { label: "Portable cabins for Kanchipuram town and the Parandur area", href: "/cities-we-serve/portable-cabin-kanchipuram" },
+    ],
 
     howHeading: "From Requirement to Handover",
     howSteps: [
@@ -23668,6 +23679,287 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Mambakkam, Sriperumbudur or elsewhere in Kanchipuram district. Delivery, unloading and placement are arranged for each project, the base, supports and anchoring depend on the site, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes, documents and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and connected or multi-cabin layouts are subject to structural design. No cabin is described as fire-rated or flood-proof; fire performance, wind and flood exposure, occupancy, sanitation and corporate approval requirements are assessed for each project and confirmed by the customer's responsible team. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Mambakkam or Sriperumbudur. SIPCOT and the SIPCOT Industrial Park at Mambakkam (Sriperumbudur Phase IV) are independent organisations with which Portable Office Cabin is not affiliated; they, the facilities described and the towns named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any estate or premises is subject to its own permissions and procedures. Notes on electrical, fire, insulation, drainage and site preparation are general guidance, not engineering, legal or regulatory advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN KANCHIPURAM — the general portable-cabin intent for Kanchipuram town and the
+   * places around it (Kanchipuram district, Tamil Nadu): site offices and stores for temple renovation
+   * crews, festival help desks and control rooms, offices and inspection rooms for the silk trade, and
+   * project cabins for approved sites in the Parandur area.
+   *
+   * Owner brief of 2026-11-09 ("Kanchipuram portable cabin page and developer commands"): route, meta
+   * title, meta description, H1 and keywords (primary query + supporting terms) as given, and every
+   * sentence of the website copy verbatim. ONE canonical for both spellings: "Kancheepuram" is a
+   * keyword here, and no route, redirect or sitemap entry used either spelling before (checked
+   * 2026-11-09). Entry placed after Mambakkam (its district neighbour) rather than at the end of the list,
+   * so it does not collide with the city pages queued behind it; the order only affects the sitemap and
+   * the directory. Mapped onto the template slots (no template code is changed):
+   *   • Opening paragraph → tagline (its question) + intro, with the hero contact row (`heroCta`:
+   *     Request a Quote · Call · WhatsApp, numbers from COMPANY).
+   *   • "Cabins for temple renovation teams" → why: first paragraph as whyIntro, second as whyOutro
+   *     (no bullets).
+   *   • "Festival control rooms and help desks" → solutions heading + intro, the second paragraph as
+   *     `solutionsOutro` (no items).
+   *   • "Offices and stores for the silk trade" (table + paragraph as `closing`), "Project cabins near
+   *     Parandur", "Placement near heritage surfaces" and "Cabin sizes and fittings" (paragraph, table,
+   *     the MS / PUF sentence as `closing`, then the product link) → four afterSolutions extra sections.
+   *     No features section.
+   *   • "Portable cabin price and rental in Kanchipuram" → custom (prose: customBullets is empty),
+   *     beside the interior render, with the rental link as `customLinks`.
+   *   • "Areas we serve" → areas, then the Mambakkam related-location link; "From enquiry to placement"
+   *     → how (title-only steps). The template puts areas before the steps, the reverse of the brief.
+   *   • FAQs (five) → faqs; "Request a portable cabin quote in Kanchipuram" → CTA.
+   * Composed (owner review): the two table captions, the lead-in to the product link, the alt text and
+   * captions of the three images outside the brief's slots, the hero's alt text (see Images), the related
+   * links, the two sibling-page anchors and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): /products/portable-cabin (live 200) follows the sizes table with the
+   * brief's anchor; /rental-service (live 200; lists site office, toilet, storage and other cabins for
+   * construction sites, events and short-term projects) follows the hire sentence; the Mambakkam page
+   * follows Areas we serve. The /cities-we-serve directory lists this page under Tamil Nadu by itself
+   * (geo.region IN-TN, card label = `directoryLabel`, the brief's anchor), and both Tamil Nadu portable /
+   * porta cabin keyword hubs (seoPromotions) list it after Mambakkam.
+   *
+   * KEYWORD OWNERSHIP: portable / porta cabin × Kanchipuram (Kancheepuram), Walajabad, Uthiramerur and
+   * the Parandur area. Mambakkam keeps the Sriperumbudur industrial belt (brief): its meta keywords lose
+   * "Portable Site Office Kanchipuram" and its areas text loses Walajabad and Kanchipuram; Cheyyar's areas
+   * text loses Kanchipuram and Uthiramerur. Both now link here instead. The Chennai container-office page
+   * still lists Kanchipuram for container offices (a different product family) and Mambakkam's and the
+   * Sriperumbudur shop page's geo placename keep "Kanchipuram" as their district.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Kanchipuram portable cabin city page/
+   * Kanchipuram portable cabin/cabin (1–5).webp": 1446×1088 and 1445×1088 ×4; no EXIF / XMP / ICC),
+   * copied under descriptive names with a truthful XMP dc:title / dc:description ("Illustrative render
+   * of…") added losslessly; the decoded pixels are identical and no camera, GPS, date, project or customer
+   * data is added. They show one blue site office cabin (three-quarter view, front, side, from above) and
+   * one office interior. Two of the brief's slots match and use its file names and captions: the exterior
+   * hero (alt text names the finish as muted blue) and the project office (front view, in the gallery
+   * after the sizes table). No image shows a service counter, an issue counter with record shelves or an
+   * inspection table, so the festival help desk, cooperative office and silk inspection slots are
+   * omitted. The view from above (feature band), the side view (gallery) and the interior (beside the
+   * price section) carry their own descriptive alt text and an "illustrative" caption, and no alt text
+   * names a place.
+   *
+   * No ₹ figure, stock, lead time, client, temple, festival, cooperative or project affiliation, Parandur
+   * project status, heritage-surface guarantee or included-scope claim for fit-outs, hire, backup power,
+   * surface protection or removal. Opts into the CSS-only motion pass (`motion: true`), the Service
+   * JSON-LD (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-kanchipuram",
+    city: "Kanchipuram",
+    listTitle: "Portable Cabins in Kanchipuram",
+    // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
+    directoryLabel: "Portable cabins in Kanchipuram",
+    metaTitle: "Portable Cabins in Kanchipuram for Works and Events",
+    metaDescription:
+      "Enquire about portable cabins in Kanchipuram for temple renovation teams, festival help desks, silk cooperatives and project sites around Parandur.",
+    keywords:
+      "Portable Cabin in Kanchipuram, Porta Cabin Kanchipuram, Portable Cabin Kancheepuram, Festival Help Desk Cabin, Weavers’ Cooperative Office, Silk Inspection Cabin",
+    geo: {
+      region: "IN-TN",
+      placename: "Kanchipuram, Tamil Nadu, India",
+      position: "12.8342;79.7036",
+      icbm: "12.8342, 79.7036",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+    // The hero is 1446 × 1088 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-kanchipuram/kanchipuram-portable-site-office-exterior.webp",
+      alt: "Portable site office with a muted blue exterior finish and entrance steps",
+      width: 1446,
+      height: 1088,
+      caption: "Illustrative portable site office design.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-kanchipuram/kanchipuram-site-office-cabin-aerial-view.webp",
+      alt: "Site office cabin seen from above, with a corrugated roof, barred windows, a door canopy and concrete steps on a prepared base",
+      width: 1445,
+      height: 1088,
+      caption: "Illustrative render of the same site office seen from above. The base and placement method are agreed for each site.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-kanchipuram/kanchipuram-site-office-cabin-interior.webp",
+      alt: "Site office cabin interior with desks, office chairs, filing trays, ceiling fans and tube lights",
+      width: 1445,
+      height: 1088,
+      caption: "Illustrative interior render. Furniture, lights and sockets follow the specification you approve.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-kanchipuram/parandur-area-project-office-cabin.webp",
+        alt: "Prefabricated project office with windows and an entrance door",
+        width: 1445,
+        height: 1088,
+        caption: "Illustrative project office design.",
+      },
+      {
+        src: "/images/cities/portable-cabin-kanchipuram/kanchipuram-site-office-cabin-side-view.webp",
+        alt: "Side of the same site office cabin with two barred windows under small awnings, raised on concrete plinths",
+        width: 1445,
+        height: 1088,
+        caption: "Illustrative render: side view of the same cabin design.",
+      },
+    ],
+
+    h1: "Portable Cabins in Kanchipuram",
+    tagline:
+      "Need an office for a temple renovation crew, an information desk for a festival or a room where a silk cooperative can issue yarn and check finished work?",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Kanchipuram town and nearby areas. Share the intended use, site access and dates so we can discuss the layout, fittings and placement.",
+    ],
+
+    whyHeading: "Cabins for temple renovation teams",
+    whyIntro:
+      "A site office gives supervisors a place for drawings, work records and meetings. A separate lockable store can hold suitable tools and fittings. If the crew needs a rest room or sanitation module, include it in the same site plan so access and utilities can be reviewed together.",
+    // Empty on purpose: the section is two paragraphs, as in the brief.
+    whyBullets: [],
+    whyOutro:
+      "Agree on the location with the temple administration and any relevant authority. Keep worship, procession, pedestrian and emergency routes clear. Confirm delivery and removal windows around the temple schedule.",
+
+    solutionsHeading: "Festival control rooms and help desks",
+    solutionsIntro:
+      "An event team can enquire about an information counter, lost-and-found desk, organiser’s control room or space for a staffed first-aid post. Specify what visitors need to do at the counter and which functions need a separate entrance or private workspace.",
+    // Empty on purpose: the section is two paragraphs, as in the brief.
+    solutions: [],
+    solutionsOutro:
+      "For a control room, list the equipment you plan to bring, such as screens, radios or a public-address console. Discuss lighting, sockets, cable routes, ventilation and backup power provisions. Agree who will provide equipment, staffing, signage and site power. Confirm the location and access plan with the event organiser before scheduling delivery.",
+
+    customHeading: "Portable cabin price and rental in Kanchipuram",
+    customIntro:
+      "Pricing depends on size, construction, fittings, finish, transport, unloading and any site protection requirements.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "For a festival, renovation or seasonal showroom requirement, share the dates and module list so the team can confirm whether suitable cabins can be quoted on hire.",
+    customLinks: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Periya Kanchipuram, Chinna Kanchipuram, Enathur, Ayyampettai, Walajabad, Uthiramerur, Damal, Sevilimedu and the Parandur area. Delivery is assessed for each site.",
+    // Brief section 5: the optional related-location note for buyers with a separate industrial-belt site.
+    areasLinks: [
+      { label: "Portable cabins for the Mambakkam industrial belt", href: "/cities-we-serve/portable-cabin-mambakkam" },
+    ],
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share the purpose, site address, desired dates and access photos.", text: "" },
+      { title: "Confirm the proposed location and any required permissions with the site organiser.", text: "" },
+      { title: "Review the layout and itemised quotation, including transport, unloading and utility responsibilities.", text: "" },
+      { title: "Agree on the placement schedule and, if required, include removal or relocation in the quotation.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Offices and stores for the silk trade",
+        placement: "afterSolutions",
+        table: {
+          caption: "Silk-trade workspaces and the layout points to discuss for each.",
+          headers: ["Use", "Layout to discuss"],
+          rows: [
+            ["Weavers’ cooperative office", "Issue counter, seating, account desk and record storage"],
+            ["Yarn and zari store", "Lockable cabinets, labelled stock and an issue register"],
+            ["Silk inspection room", "Large inspection table, even lighting and controlled glare for checking colour and weave"],
+            ["Design room", "Worktops, seating, sockets and network provisions where needed"],
+            ["Seasonal showroom support", "Separate space for billing, packing or stock checks during busy periods"],
+          ],
+        },
+        closing: [
+          "For an inspection room, share any lighting requirements used by your quality team before selecting fixtures. For a yarn or zari store, confirm the material’s storage requirements before choosing ventilation or environmental controls.",
+        ],
+      },
+      {
+        heading: "Project cabins near Parandur",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Contractors and survey teams can enquire about project offices, entrance security cabins, tool stores, sanitation modules and individual worker accommodation cabins for approved sites in the Parandur area. Share the site plan and expected project phases. If units may move as work progresses, discuss lifting points, access and reconnection requirements in advance.",
+        ],
+      },
+      {
+        heading: "Placement near heritage surfaces",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Discuss muted finishes and discreet signs if the cabin will sit near historic buildings. Have the responsible site team approve the base, lifting method and any surface protection. Flag stone paving, buried services and restricted vehicle access before dispatch. Agree on how the cabin will be supported and removed without fixing into protected surfaces, where the approved placement plan permits.",
+        ],
+      },
+      {
+        heading: "Cabin sizes and fittings",
+        placement: "afterSolutions",
+        paragraphs: [
+          "These footprints are examples for layout discussion. Confirm the dimensions, fittings and availability in the quotation.",
+        ],
+        // Footprints use no-break spaces (\u00a0) so a size never splits over two lines on a narrow phone.
+        table: {
+          caption: "Example footprints matched to typical enquiries.",
+          headers: ["Example footprint", "Typical enquiry"],
+          rows: [
+            ["6\u00a0×\u00a06\u00a0ft", "Help desk or guard cabin"],
+            ["10\u00a0×\u00a08\u00a0ft", "Tool store, yarn and zari store or first-aid support space"],
+            ["20\u00a0×\u00a010\u00a0ft", "Site office, control room, cooperative office or inspection room"],
+            ["40\u00a0×\u00a010\u00a0ft", "Larger project office or individual worker accommodation module"],
+          ],
+        },
+        closing: [
+          "Discuss MS construction or an insulated PUF specification according to the intended use, occupancy, site exposure and operating hours.",
+          "Compare the options before requesting a layout:",
+        ],
+        // Brief section 5: the portable cabin product page, with the brief's anchor, after the sizes table.
+        links: [{ label: "Portable cabin sizes and specifications", href: "/products/portable-cabin" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I place a cabin at a temple renovation site?",
+        answer:
+          "The proposed location and placement method should be approved by the temple administration and any relevant authority. Share access photos and flag historic surfaces, worship routes and scheduled events.",
+      },
+      {
+        question: "Can I request a temporary festival control room or help desk?",
+        answer:
+          "Yes. Share the operating dates, staff count, equipment and expected visitor access so the layout and availability can be assessed.",
+      },
+      {
+        question: "What should I specify for a silk inspection cabin?",
+        answer:
+          "Include the table size, lighting and glare-control requirements, number of inspectors and any storage space needed for samples and records.",
+      },
+      {
+        question: "Can I rent a cabin for a short period?",
+        answer:
+          "Share the type of cabin, hire dates and location. Availability, placement and collection terms are confirmed in the quotation.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on the selected unit, fit-out, site permissions and delivery access. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a portable cabin quote in Kanchipuram",
+    ctaText:
+      "Send the site pin, intended use, size, quantity, dates and photos of the approach and placement area. Include any site protection, lighting, power, plumbing or furniture requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons; the
+    // call and WhatsApp buttons (numbers from COMPANY) stay on, as the brief asks.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it has no yard, depot or branch in Kanchipuram. The itemised quotation for each order sets out the cabin’s size, construction, fittings and finish, any hire, removal, relocation or surface-protection scope, and who is responsible for transport, unloading, placement and utility connections. Delivery and placement dates are estimates, not guarantees, and nothing on this page guarantees the condition of any historic or protected surface. The five images are illustrative renders of one site office cabin design and an office interior; they are not photographs from Kanchipuram or Parandur and do not show a supplied unit or an approved placement at a heritage site. Parandur is named only as a geographic reference, and this page makes no statement about the status of any project there. Portable Office Cabin is not affiliated with, or appointed by, any temple administration, government department, festival organiser, weavers’ cooperative, silk business, contractor or project authority in the region, and the localities named show where enquiries are welcome, not customers, completed installations or confirmed delivery locations. Guidance on placement, permissions, historic surfaces, lighting, storage, power and relocation is general information, not engineering, conservation, legal or regulatory advice.",
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE SHOP CABINS IN SRIPERUMBUDUR — the portable-shop intent for Sriperumbudur and its
