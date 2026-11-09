@@ -29144,8 +29144,8 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Two-storey container office seen from the rear corner, with windows on both floors and an external staircase to a covered upper deck",
       width: 1451,
       height: 1084,
-      caption:
-        "Illustrative render. Plan where visitors park and walk in before the layout is fixed; an upper floor or deck is included only when the approved design provides for it.",
+      // Kept short: the band's caption sits on the image, and a long one covers half of it on a phone.
+      caption: "Illustrative render: rear-corner view of a two-storey container office design.",
     },
     interiorImage: {
       src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-marketing-office-interior-desk.webp",
