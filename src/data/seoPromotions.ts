@@ -337,6 +337,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
+    // Virudhunagar marketing offices (recruitment, investor meetings, Sivakasi print samples; owner brief 2026-11-09), appended after the live lines.
+    { name: "Portable Marketing Offices in Virudhunagar", href: "/cities-we-serve/portable-marketing-office-virudhunagar" },
   ],
   "Porta Cabin|Tamil Nadu": [
     { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
