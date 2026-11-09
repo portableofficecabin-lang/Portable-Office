@@ -370,6 +370,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {/* Optional table (`whyTable`); unset = no element. */}
         {page.whyTable && renderTable(page.whyTable)}
         {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
+        {/* Optional contextual links after the outro (`whyLinks`); unset = nothing rendered. */}
+        {page.whyLinks && page.whyLinks.length > 0 && renderLinks(page.whyLinks)}
 
         {/* Feature band — a single editorial plate breaking the longest text run on the page.
             Cropped 3:2 (sources are square, so object-cover keeps the cabin centred and stops a
