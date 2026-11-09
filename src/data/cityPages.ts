@@ -29220,6 +29220,9 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas we serve",
     areasText:
       "We welcome enquiries from Madurai and the Ring Road corridor, including Thiruparankundram, Thirumangalam, Thoppur, Kappalur, Vadapalanji, Avaniyapuram, Vilangudi, Samayanallur, Othakadai, Melur, Mattuthavani, Uthangudi and K. Pudur. Delivery is assessed for each site.",
+    // Agreed with the Virudhunagar marketing-office page (whichever merged second adds both links): its
+    // visitors with a Virudhunagar-district site get the dedicated page.
+    areasLinks: [{ label: "Portable marketing offices in Virudhunagar", href: "/cities-we-serve/portable-marketing-office-virudhunagar" }],
 
     howHeading: "From enquiry to launch",
     // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
@@ -29297,6 +29300,256 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru; there is no company yard, depot or branch in Madurai. Every marketing office is quoted to the layout you approve, and the written quotation fixes its size, glazing, insulation, fittings, finishes, branding, any AC provision, any hire or relocation scope, and who handles delivery, unloading and installation. Delivery dates are estimates, not guarantees. The four images are illustrative renders of a single two-storey container office design; they are not photographs from Madurai and do not show a supplied unit. Thiruparankundram, Thirumangalam, Thoppur, the Ring Road and the other localities listed indicate where enquiries are welcome, and Chithirai appears only as an example of a date to plan around. The company is not affiliated with any developer, project, dealership, school, college, temple or festival organiser in the region, and nothing on this page describes a customer, a completed installation or a confirmed delivery location. Guidance on placement, glazing, lighting, electrical supply, permissions and relocation is general information, not engineering, legal or regulatory advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE MARKETING OFFICES IN VIRUDHUNAGAR — owner brief "Virudhunagar portable marketing office
+   * page" (2026-11-09). Route /cities-we-serve/portable-marketing-office-virudhunagar: no existing
+   * route, redirect or sitemap entry used it, and no other page names Virudhunagar or Sivakasi. As the
+   * brief asks, the page is about textile recruitment, investor meetings, Sivakasi print samples and
+   * seasonal booking desks; the Madurai marketing-office page (separate brief) keeps property launches
+   * and evening visitor appointments. The PM MITRA park area is named only as geographic context: no
+   * project milestone, investment or employment figure, and no affiliation.
+   *
+   * MAPPING onto main's template as it is (no template code is changed):
+   *   • Intro → intro.
+   *   • "Sales offices near E. Kumaralingapuram" → why (the paragraph; no bullets).
+   *   • "Recruitment centres for textile and industrial units" → solutions heading + intro, no items.
+   *   • "Investor and business meeting cabins", "Sample showroom offices for Sivakasi printers",
+   *     "Seasonal booking offices" and "Signage and display upkeep near NH 44" → four afterSolutions
+   *     extra sections, in the brief's order.
+   *   • "Layout examples" → features: the five table rows as list items (the features slot is a list,
+   *     not a table), the confirmation sentence as the bold note with the brief's lead-in, then the
+   *     product link from brief section 5. The gallery follows it.
+   *   • "Portable marketing office price in Virudhunagar" → custom (prose: customBullets is empty); the
+   *     hire sentence is the outro. No hire link: /rental-service does not cover marketing offices
+   *     (checked live 2026-11-09), so hire stays an enquiry, as the brief allows.
+   *   • "Areas we serve" → areas; "From enquiry to handover" → how (title-only steps). The template puts
+   *     areas before the steps, the reverse of the brief.
+   *   • FAQs (five) → faqs; the closing request → CTA. Buttons: Request a Quote (→ /contact), Call and
+   *     WhatsApp (numbers from COMPANY), repeated under the intro (`heroCta`). No enquiry form: the
+   *     Marketing Office product's category (prefab-building) has no category landing, so /api/enquiries
+   *     would reject the form.
+   * Composed (owner review): the tagline, the layout-example list wording, the link lead-in, the alt
+   * text and captions of all five images and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): "Portable marketing office layouts" → /products/marketing-office (live,
+   * 200). The Marketing Office product page is a Merchant-fed product with no Tamil Nadu or
+   * related-locations section, so the reverse link is not added ("where supported"). The Madurai page
+   * (#239) merged first, so this PR adds the agreed links both ways (`areasLinks`, see below). The /cities-we-serve directory lists this page in its Tamil Nadu
+   * group automatically, with the brief's anchor as `directoryLabel`, and the Tamil Nadu portable-cabin
+   * hub (seoPromotions) lists it.
+   *
+   * Images: five owner-dropped webp renders ("public/images/virudhunagar marketing office city page/
+   * virudhunagar/cabin (1–5).webp": 1451×1084 ×4 and 1200×896, no EXIF / XMP / ICC), copied under
+   * descriptive names with a truthful XMP dc:title / dc:description ("Illustrative render of…") added
+   * losslessly; the decoded pixels are identical and no camera, GPS or date data is added. They show one
+   * two-storey container office design (front, two corners and two interiors), not a glazed entrance,
+   * sign panel, registration area, conference table or print display, so only the exterior hero slot is
+   * used (with its brief filename): each image has its own visible-detail alt text and an
+   * "illustrative render" caption, the unmatched slots are omitted, and no alt text names a place.
+   *
+   * No ₹ figure, stock, lead time, occupancy figure, client, project, institution or trade affiliation.
+   * Joined modules, AC equipment, restrooms, AV and display equipment, hire and relocation stay
+   * quote-dependent, as in the owner's copy, and the booking-office copy stays administrative (no
+   * fireworks or hazardous stock in the cabin). Opts into the CSS-only motion pass (`motion: true`), the
+   * Service JSON-LD (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-marketing-office-virudhunagar",
+    city: "Virudhunagar",
+    listTitle: "Portable Marketing Offices in Virudhunagar",
+    // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
+    directoryLabel: "Portable marketing offices in Virudhunagar",
+    metaTitle: "Portable Marketing Offices in Virudhunagar",
+    metaDescription:
+      "Enquire about portable marketing offices in Virudhunagar for property sales, textile recruitment, investor meetings and print sample displays in Sivakasi.",
+    keywords:
+      "Portable Marketing Office in Virudhunagar, Sales Office Virudhunagar, Sample Showroom Office Sivakasi, Recruitment Centre Cabin Virudhunagar, Portable Investor Meeting Room",
+    geo: {
+      region: "IN-TN",
+      placename: "Virudhunagar, Tamil Nadu, India",
+      position: "9.5680;77.9624",
+      icbm: "9.5680, 77.9624",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Marketing Office" },
+    // The hero is 1451 × 1084 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-portable-marketing-office-exterior.webp",
+      alt: "Two-storey container office with a ground-floor door and windows, a covered upper deck and an external staircase",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative portable marketing office design. Entrance, glazing, signage and layout are agreed in the quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-marketing-office-rear-corner.webp",
+      alt: "Two-storey container office seen from the rear corner, with windows on both floors and an external staircase to a covered upper deck",
+      width: 1451,
+      height: 1084,
+      // Kept short: the band's caption sits on the image, and a long one covers half of it on a phone.
+      caption: "Illustrative render: rear-corner view of a two-storey container office design.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-marketing-office-interior-desk.webp",
+      alt: "Cabin office interior with a desk, a computer, three chairs, low storage cabinets, two windows and a door",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative interior render. Desks, seating, display fittings, partitions and electrical points follow the layout you approve.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-marketing-office-front-corner.webp",
+        alt: "Two-storey container office seen from the front corner, with an external staircase, a covered upper deck and a planted bed",
+        width: 1200,
+        height: 896,
+        caption: "Illustrative render: front-corner view of the same two-storey design.",
+      },
+      {
+        src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-marketing-office-desk-deck-door.webp",
+        alt: "Cabin room with a desk, two visitor chairs and a filing cabinet, and an open door onto a covered deck",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of a room with a desk and visitor chairs. Furniture and fittings are confirmed in the quotation.",
+      },
+    ],
+
+    h1: "Portable Marketing Offices in Virudhunagar",
+    tagline:
+      "Visitor-facing offices planned for recruitment drives, investor meetings, print sample displays and seasonal booking desks across Virudhunagar district.",
+    intro: [
+      "Give job applicants a place to register, show print samples to visiting buyers, or present a site plan to investors before your permanent office opens. Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries for portable marketing offices in Virudhunagar district. Share what visitors need to do inside the cabin so the reception, display and meeting spaces can be planned around that purpose.",
+    ],
+
+    whyHeading: "Sales offices near E. Kumaralingapuram",
+    whyIntro:
+      "For housing, industrial land or warehousing projects around the PM MITRA textile park area, discuss a visitor-facing office with a reception desk, layout displays and a place for consultations. Bring your approved plans and signage requirements to the layout review. Agree on where visitors can park and walk without crossing construction or service traffic.",
+    // Empty on purpose: the section is one paragraph, as in the brief.
+    whyBullets: [],
+
+    solutionsHeading: "Recruitment centres for textile and industrial units",
+    solutionsIntro:
+      "Plan the route from registration to waiting, document checks and interviews. Allow enough desk space for paperwork and a separate area for confidential conversations. If applicants arrive in groups, discuss shaded seating, drinking-water access, clear directions and a queue system. Confirm restroom access and any privacy or accessibility requirements. A larger drive may call for multiple modules. Confirm the configuration against the site and expected visitor numbers.",
+    // Empty on purpose: the section is one paragraph, as in the brief.
+    solutions: [],
+
+    featuresHeading: "Layout examples",
+    featuresIntro: "These footprints are starting points for discussion.",
+    // The brief's table (configuration, example footprint, typical layout), one row per item. Footprints use
+    // no-break spaces (\u00a0) so a size never splits over two lines.
+    features: [
+      "Compact booking office (10\u00a0×\u00a08\u00a0ft): order desk and visitor seating",
+      "Property sales office (20\u00a0×\u00a010\u00a0ft): reception and plan display",
+      "Print sample showroom (20\u00a0×\u00a010 to 30\u00a0×\u00a010\u00a0ft): sample walls, shelves and order desk",
+      "Investor meeting cabin (30\u00a0×\u00a010\u00a0ft): meeting table and presentation wall",
+      "Recruitment centre (one or more modules): registration, waiting and interview areas",
+    ],
+    sizesNote: "Confirm dimensions, occupancy, fittings and availability in the quotation. Explore our range for more configuration ideas:",
+    // Brief section 5: the confirmed marketing office product page, with the brief's anchor.
+    featuresLinks: [{ label: "Portable marketing office layouts", href: "/products/marketing-office" }],
+
+    customHeading: "Portable marketing office price in Virudhunagar",
+    customIntro:
+      "The price depends on the footprint, layout, glazing, partitions, display fittings, lighting, branding and delivery access. Tell us whether you need a compact booking desk or several rooms.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "If you need a short-term office, share your dates so the team can confirm whether a suitable configuration can be quoted on hire.",
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Virudhunagar, E. Kumaralingapuram, Sivakasi, Sattur, Srivilliputhur, Rajapalayam, Aruppukottai and Kariapatti, including sites along NH 44. Delivery is assessed for each location.",
+    // Brief section 5's optional related-location link (anchor from the brief, first letter capitalised for the
+    // list), added once the Madurai page was merged; that page links back here the same way.
+    areasLinks: [{ label: "Portable marketing offices in Madurai", href: "/cities-we-serve/portable-marketing-office-madurai" }],
+
+    howHeading: "From enquiry to handover",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share your intended use, visitor numbers, site address and opening date.", text: "" },
+      { title: "Review the layout, fittings and itemised quotation.", text: "" },
+      { title: "Confirm signage, power and data requirements, base readiness and access for unloading.", text: "" },
+      { title: "Agree on the delivery and handover schedule. Discuss any later relocation separately.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Investor and business meeting cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A meeting cabin can include a conference table, a wall for site plans and provisions for a screen or video calls. Share the expected group size, presentation equipment and connectivity needs. Confirm sockets, data points and who will supply the internet connection, display and furniture.",
+        ],
+      },
+      {
+        heading: "Sample showroom offices for Sivakasi printers",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Set aside space for calendars, diaries, labels, cartons and other approved print or packaging samples. Discuss wall displays, shelves or cases, and a table where buyers can compare finishes and review quantities. If colour matching is important, specify the viewing and lighting requirements. Removable displays make it easier to update the sample range before a new sales season.",
+        ],
+      },
+      {
+        heading: "Seasonal booking offices",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For short campaigns, plan a desk for enquiries and order paperwork, seating for customers and storage for catalogues. The layout described here is for administrative use. Keep fireworks and other hazardous stock out of the cabin. For enquiries connected to a regulated trade, confirm proposed use and placement with the responsible safety and licensing teams before ordering.",
+        ],
+      },
+      {
+        heading: "Signage and display upkeep near NH 44",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Share the proposed sign location, approach and approved vehicle access. Keep the message short and plan the entrance from the site’s parking area. Confirm any sign or access approvals and the electrical scope for illuminated signage.",
+          "On dusty sites, discuss door seals, a closer, an entrance mat and wipe-clean finishes. Enclosed sample cases can reduce the cleaning required between visits. Confirm the ventilation, insulation and AC provisions for the selected layout.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a portable office be used for recruitment?",
+        answer:
+          "Yes. Share the expected number of applicants and how registration, document checks and interviews will run so the layout can be assessed.",
+      },
+      {
+        question: "Can I display printed samples inside the cabin?",
+        answer:
+          "Yes. Share sample dimensions and any colour-viewing requirements so display surfaces, lighting and buyer seating can be specified.",
+      },
+      {
+        question: "Can I request an investor meeting room with video-call facilities?",
+        answer:
+          "Yes. Confirm screen, camera, power and data provisions in the quote and identify who will supply the equipment and internet connection.",
+      },
+      {
+        question: "Can I rent a marketing office for a short campaign?",
+        answer: "Share the dates, site and layout. The team can confirm whether a suitable unit and hire terms are available.",
+      },
+      {
+        question: "How soon can you deliver to Virudhunagar?",
+        answer:
+          "Timing depends on the approved layout, fittings, production or hire availability, and site access. Share your opening date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a portable marketing office quote in Virudhunagar",
+    ctaText:
+      "Send the site location, expected visitor numbers, intended use, opening date and approach photos. Include any requirements for interview partitions, sample cases, presentation equipment or signage.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons (one of
+    // them is "Container Office on Rent"); the call and WhatsApp buttons (numbers from COMPANY) stay on.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinksHeading: "Related pages",
+    relatedLinks: [
+      { label: "Prefab Marketing Office", href: "/products/marketing-office/prefab-marketing-office" },
+      { label: "Prefab Buildings", href: "/products/category/prefab-building" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin's factory is near Hosur in Tamil Nadu and its Karnataka office is in Electronic City Phase 1, Bengaluru; the company does not run a yard, depot or office in Virudhunagar district. Each marketing office is quoted for the layout you approve: its size, glazing, partitions, fittings, finishes, branding, any AC provision, any joined modules, any hire or relocation scope and the delivery, unloading and installation arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one two-storey container office design, not photographs taken in Virudhunagar district or of a unit that has been supplied, and not a textile park installation. E. Kumaralingapuram, the PM MITRA textile park area, Sivakasi, NH 44 and the other places named show the area enquiries may come from. Portable Office Cabin has no affiliation with the PM MITRA park, its developer or any government body, or with any textile unit, printer, fireworks or other trade business, developer or investor there, and none of the uses or places described should be read as a customer, a finished project or a confirmed delivery point. The cabins are offered for administrative, sales, meeting and display use only, not for storing fireworks or other hazardous goods. Notes on placement, signage, electrical supply, approvals, licensing and relocation are general guidance, not engineering, legal or regulatory advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
