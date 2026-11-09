@@ -187,14 +187,17 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
   );
 
   /* Optional contextual link list (an extra section's `links`, or `customLinks`): same link style as a
-     solution's contextual link, one per list item. Callers render it only when the list is non-empty. */
+     solution's contextual link, one per list item. Callers render it only when the list is non-empty.
+     A link with a `lead` renders as one sentence, "<lead> <link>."; without one, the bare link as before. */
   const renderLinks = (links: CityPageLink[]) => (
     <ul className={`mb-4 list-disc pl-6${mc("reveal-stagger")}`}>
       {links.map((l) => (
         <li key={l.href} className={li}>
+          {l.lead && <>{l.lead} </>}
           <Link href={l.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
             {l.label}
           </Link>
+          {l.lead && "."}
         </li>
       ))}
     </ul>

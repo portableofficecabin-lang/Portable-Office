@@ -200,7 +200,7 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     (p.features ?? []).forEach((f, i) => t("features", `feature line ${i + 1}`, f));
     t("features", "sizes note", p.sizesNote ?? "");
     // Optional features links (since 2026-11-08): label text and href.
-    (p.featuresLinks ?? []).forEach((l, i) => { t("features", `features link ${i + 1} "${l.label}"`, l.label); m("features", `features link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+    (p.featuresLinks ?? []).forEach((l, i) => { t("features", `features link ${i + 1} "${l.label}"`, l.label); if (l.lead) t("features", `features link ${i + 1} lead`, l.lead); m("features", `features link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   }
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
   // Optional gallery captions (since 2026-11-05): audited whenever an image sets one.
@@ -220,7 +220,7 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   p.customBullets.forEach((b, i) => { t("custom", `custom bullet ${i + 1} title`, b.title ?? ""); t("custom", `custom bullet ${i + 1} text`, b.text); });
   t("custom", "custom outro", p.customOutro);
   // Optional custom links (since 2026-11-05): label text and href.
-  (p.customLinks ?? []).forEach((l, i) => { t("custom", `custom link ${i + 1} "${l.label}"`, l.label); m("custom", `custom link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  (p.customLinks ?? []).forEach((l, i) => { t("custom", `custom link ${i + 1} "${l.label}"`, l.label); if (l.lead) t("custom", `custom link ${i + 1} lead`, l.lead); m("custom", `custom link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   // Optional section (since 2026-10-21): audited whenever the page sets it.
   if (p.whyUsHeading) {
     t("whyUs", "why-us heading", p.whyUsHeading);
@@ -229,8 +229,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("areas", "areas heading", p.areasHeading);
   t("areas", "areas text", p.areasText);
-  // Optional areas links (since 2026-11-07): label text and href.
-  (p.areasLinks ?? []).forEach((l, i) => { t("areas", `areas link ${i + 1} "${l.label}"`, l.label); m("areas", `areas link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  // Optional areas links (since 2026-11-07): label text, href and any lead sentence (since 2026-11-09).
+  (p.areasLinks ?? []).forEach((l, i) => { t("areas", `areas link ${i + 1} "${l.label}"`, l.label); if (l.lead) t("areas", `areas link ${i + 1} lead`, l.lead); m("areas", `areas link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   t("how", "how heading", p.howHeading);
   if (p.howIntro) t("how", "how intro", p.howIntro);
   p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });
@@ -248,7 +248,7 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     (s.bullets ?? []).forEach((b, j) => { t("extra", `extra section ${i + 1} bullet ${j + 1} title`, b.title ?? ""); t("extra", `extra section ${i + 1} bullet ${j + 1} text`, b.text); });
     (s.closing ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} closing ${j + 1}`, x));
     // Optional links (since 2026-11-05): label text and href.
-    (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
+    (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); if (l.lead) t("extra", `extra section ${i + 1} link ${j + 1} lead`, l.lead); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
     // heading and the features heading in the visible text. A page without those optional sections
     // (since 2026-11-08) is checked against the headings either side instead: the why heading before,
