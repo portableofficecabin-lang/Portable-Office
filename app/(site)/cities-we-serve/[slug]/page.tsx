@@ -400,36 +400,82 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </figure>
         )}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.solutionsHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.solutionsIntro}</p>
-        {page.solutions.map((s0, i) => (
-          <section key={s0.title} className={page.motion ? "reveal" : undefined}>
-            <h3 className={h3}>{i + 1}. {s0.title}</h3>
-            <p className={p}>{s0.text}</p>
-            {/* Optional contextual link (`link`, see CityPageListItem); unset = no element. */}
-            {s0.link && (
-              <p className={p}>
-                <Link href={s0.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
-                  {s0.link.label}
-                </Link>
-              </p>
-            )}
-          </section>
-        ))}
-        {/* Optional table after the solutions (`solutionsTable`); unset = no element. */}
-        {page.solutionsTable && renderTable(page.solutionsTable)}
+        {/* Optional since 2026-11-08 (see CityPage.solutionsHeading): unset = no section. The fragment
+            adds no markup, so pages that set it render the same HTML (only React's generated useId
+            values further down, e.g. in the enquiry form, are numbered differently). */}
+        {page.solutionsHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.solutionsHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.solutionsIntro}</p>
+            {(page.solutions ?? []).map((s0, i) => (
+              <section key={s0.title} className={page.motion ? "reveal" : undefined}>
+                <h3 className={h3}>{i + 1}. {s0.title}</h3>
+                <p className={p}>{s0.text}</p>
+                {/* Optional contextual link (`link`, see CityPageListItem); unset = no element. */}
+                {s0.link && (
+                  <p className={p}>
+                    <Link href={s0.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+                      {s0.link.label}
+                    </Link>
+                  </p>
+                )}
+                {/* Optional captioned images (`images`, see CityPageListItem); unset = no element. Two
+                    columns from `sm` up; with an odd count the first image spans both, so no figure is
+                    left alone at half width. Lazy-loaded: these sit far below the fold. */}
+                {s0.images && s0.images.length > 0 && (
+                  <div className={`mb-6 grid gap-4 sm:grid-cols-2${mc("reveal-stagger")}`}>
+                    {s0.images.map((img, j) => {
+                      const wide = j === 0 && s0.images!.length % 2 === 1;
+                      return (
+                        <figure
+                          key={img.src}
+                          className={`overflow-hidden rounded-xl border bg-muted/30${wide ? " sm:col-span-2" : ""}${mc("hover-lift card-glow")}`}
+                        >
+                          <Image
+                            src={img.src}
+                            alt={img.alt}
+                            width={img.width}
+                            height={img.height}
+                            sizes={wide ? "(max-width: 896px) 100vw, 864px" : "(max-width: 640px) 100vw, 424px"}
+                            className="h-auto w-full"
+                            loading="lazy"
+                          />
+                          <figcaption className="border-t px-4 py-2.5 text-sm leading-relaxed text-muted-foreground">
+                            {img.caption}
+                          </figcaption>
+                        </figure>
+                      );
+                    })}
+                  </div>
+                )}
+              </section>
+            ))}
+            {/* Optional table after the solutions (`solutionsTable`); unset = no element. */}
+            {page.solutionsTable && renderTable(page.solutionsTable)}
+            {/* Optional closing paragraph (`solutionsOutro`); unset = no element. */}
+            {page.solutionsOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.solutionsOutro}</p>}
+          </>
+        )}
 
         {/* Optional extra sections placed after the solutions (`placement: "afterSolutions"`). */}
         {page.extraSections?.filter((sec) => sec.placement === "afterSolutions").map(renderSection)}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.featuresIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.features.map((f) => (
-            <li key={f} className={li}>{f}</li>
-          ))}
-        </ul>
-        <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
+        {/* Optional since 2026-11-08 (see CityPage.featuresHeading): unset = no section; pages that
+            set it render the same HTML, as above. */}
+        {page.featuresHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.featuresIntro}</p>
+            <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+              {(page.features ?? []).map((f) => (
+                <li key={f} className={li}>{f}</li>
+              ))}
+            </ul>
+            <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
+            {/* Optional contextual links after the sizes note (`featuresLinks`); unset = nothing rendered. */}
+            {page.featuresLinks && page.featuresLinks.length > 0 && renderLinks(page.featuresLinks)}
+          </>
+        )}
 
         {/* gallery — every angle of the cabin, lazy-loaded. Columns follow the item count so a
             1- or 2-image gallery fills the row instead of sitting stranded at a third width. */}
@@ -537,6 +583,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.areasHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.areasText}</p>
+        {/* Optional contextual links after the areas text (`areasLinks`); unset = nothing rendered. */}
+        {page.areasLinks && page.areasLinks.length > 0 && renderLinks(page.areasLinks)}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.howHeading}</h2>
         {/* Optional lead-in / closing paragraphs (`howIntro`, `howOutro`); unset = no element. A step
@@ -681,7 +729,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             location pages (3–4 each). Renders nothing on every other page. */}
         <ShippingContainerNearbyBlock
           slug={page.slug}
-          existingHrefs={(page.relatedLinks ?? []).map((l) => l.href)}
+          /* `areasLinks` hrefs are skipped too, so a sibling the areas section already links is not repeated. */
+          existingHrefs={[...(page.relatedLinks ?? []), ...(page.areasLinks ?? [])].map((l) => l.href)}
           motion={page.motion}
         />
 
