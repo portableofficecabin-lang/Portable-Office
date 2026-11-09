@@ -29288,6 +29288,250 @@ export const CITY_PAGES: CityPage[] = [
     disclaimer:
       "Portable Office Cabin's factory is near Hosur in Tamil Nadu and its Karnataka office is in Electronic City Phase 1, Bengaluru; the company does not run a yard, depot or office anywhere in Chamarajanagar district. Containers are offered subject to stock. The unit's size, grade, condition, fit-out, finish, any hire period and the transport, unloading, placement and collection arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one steel container, not photographs taken in Chamarajanagar district or of a unit that has been supplied. Badanaguppe–Kellamballi, Kollegal, Gundlupet, Bandipur, MM Hills, the Biligiri Rangana Hills and the other places named show the area enquiries may come from. Portable Office Cabin has no affiliation with any industrial area, forest or wildlife authority, temple, fair organiser, resort or business there, and none of the uses or places described should be read as a customer, a finished project or a confirmed delivery point. Containers are not offered as food-grade or hazardous-goods storage. Notes on food storage, hazardous materials, floor and rack loads, routes, access restrictions and placement are general guidance, not food-safety, engineering, legal or regulatory advice.",
   },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN MADURAI — the general portable-cabin intent for Madurai city and the places
+   * around it (Madurai district, Tamil Nadu): non-clinical support cabins for hospital campuses, jasmine
+   * grading and packing rooms, and billing and dispatch offices for Ring Road godowns and Kappalur units.
+   *
+   * Owner brief of 2026-11-09 ("Madurai portable cabin page and developer commands"): route, meta
+   * title, meta description, H1 and keywords (primary query + supporting terms) as given, and every
+   * sentence of the website copy verbatim. No route, redirect or sitemap entry used a Madurai
+   * portable-cabin canonical before (checked 2026-11-09). The Madurai siblings keep their own intents
+   * (brief section 3): visitor-facing sales layouts → portable-marketing-office-madurai, complete worker
+   * camps → labour-colony-madurai; neither product term is in this page's title, H1 or meta description.
+   * Entry placed before the marketing-office entry (its Madurai sibling) rather than at the end of the
+   * list, so it does not collide with the city pages queued behind it; the order only affects the
+   * sitemap and the directory. Mapped onto the template slots (no template code is changed):
+   *   • Opening paragraph → tagline (its question) + intro, with the hero contact row (`heroCta`:
+   *     Request a Quote · Call · WhatsApp, numbers from COMPANY).
+   *   • "Non-clinical cabins for hospital campuses" → why: a one-line lead-in as whyIntro, the table as
+   *     `whyTable` (no bullets), the paragraph as whyOutro.
+   *   • "Jasmine grading and packing rooms" → solutions heading + intro, the second paragraph as
+   *     `solutionsOutro` (no items).
+   *   • "Billing and dispatch offices for godowns and Kappalur units" (two paragraphs) and "Cabin sizes
+   *     and fittings" (table, the closing paragraph, then the brief's sibling link) → two afterSolutions
+   *     extra sections. No features section.
+   *   • "Portable cabin price and rental in Madurai" → custom (prose: customBullets is empty), beside
+   *     the interior render.
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps). The template
+   *     puts areas before the steps, the reverse of the brief.
+   *   • FAQs (four) → faqs; "Request a portable cabin quote in Madurai" → CTA.
+   * Composed (owner review): the whyIntro lead-in, the two table captions, the lead-in to the sibling
+   * link ("…, see:" in place of the brief's inline "see our [anchor]"), the alt text and captions of the
+   * three images outside the brief's slots, the related links and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): the Madurai marketing-office page (on main since #239) follows the
+   * sizes section with the brief's anchor, and its layout examples link back here with "Portable cabins
+   * in Madurai". The labour-colony page (#238) is not on main yet, so both of its links are deferred
+   * until it is (brief: reciprocal links only when both destinations are live or in the same release).
+   * The /cities-we-serve directory lists this page under Tamil Nadu by itself (geo.region IN-TN, card
+   * label = `directoryLabel`, the brief's anchor), and both Tamil Nadu portable / porta cabin keyword
+   * hubs (seoPromotions) list it after Perundurai.
+   *
+   * KEYWORD OWNERSHIP: portable / porta cabin × Madurai and Kappalur. No other page targets a portable
+   * cabin in Madurai: the marketing-office page keeps marketing offices × Madurai, the labour-colony
+   * page labour colonies × Madurai, and the Thoothukudi container-office page names "the Madurai and
+   * Tirunelveli highways" only as a corridor for a different product family.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Madurai portable cabin city page/Madurai
+   * portable cabin page/cabin (1–4).webp": 1200×896, 1451×1084 ×2 and 1450×1085; no EXIF / XMP /
+   * ICC), copied under descriptive names with a truthful XMP dc:title / dc:description ("Illustrative
+   * render of…") added losslessly; the decoded pixels are identical and no camera, GPS, date, project
+   * or customer data is added. They show one grey container-style cabin with a glazed front (three-
+   * quarter view, front, from above) and one office interior. Only the exterior hero matches a slot in
+   * the brief and uses its file name, alt text and caption. No image shows rows of seats under ceiling
+   * fans, a service counter, jasmine or packing boxes, a service window or record shelves, so the
+   * attendant waiting room, help desk, jasmine packing, godown billing and dispatch office slots are
+   * omitted. The view from above (feature band), the front view (gallery, after the sizes table) and the
+   * interior (beside the price section) carry their own descriptive alt text and an "illustrative"
+   * caption, and no alt text names a place.
+   *
+   * No ₹ figure, stock, lead time, client, hospital, market, trader, warehouse or SIDCO affiliation,
+   * clinical-suitability, cooling or freshness claim, or included-scope claim for fit-outs, hire,
+   * collection or relocation. Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD
+   * (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-madurai",
+    city: "Madurai",
+    listTitle: "Portable Cabins in Madurai",
+    // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
+    directoryLabel: "Portable cabins in Madurai",
+    metaTitle: "Portable Cabins in Madurai for Hospitals & Businesses",
+    metaDescription:
+      "Enquire about portable cabins in Madurai for hospital waiting areas, jasmine grading and packing, Ring Road warehouse offices and Kappalur dispatch teams.",
+    keywords:
+      "Portable Cabin in Madurai, Porta Cabin Madurai, Hospital Waiting Cabin, Jasmine Packing Room Cabin, Godown Office Cabin, Portable Cabin Kappalur",
+    geo: {
+      region: "IN-TN",
+      placename: "Madurai, Tamil Nadu, India",
+      position: "9.9252;78.1198",
+      icbm: "9.9252, 78.1198",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-madurai/madurai-portable-cabin-exterior.webp",
+      alt: "Prefabricated cabin with windows and an entrance door",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable cabin exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-madurai/madurai-portable-cabin-aerial-view.webp",
+      alt: "Aerial view of a container-style cabin showing its corrugated roof, glazed front, entrance door and concrete supports on a paved base",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render of the same cabin from overhead. How it is supported and placed is decided for each site with the site team.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-madurai/madurai-portable-office-cabin-interior.webp",
+      alt: "Office cabin interior with a desk, a computer, an office chair, a storage cabinet and visitor chairs beside a glazed wall",
+      width: 1450,
+      height: 1085,
+      caption: "Illustrative interior render. Desks, counters, storage and sockets follow the specification you approve.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-madurai/madurai-portable-cabin-front-view.webp",
+        alt: "Front of a container-style cabin with a wide glazed panel, an entrance door and corrugated cladding, raised on concrete supports",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render: front view of the same cabin design.",
+      },
+    ],
+
+    h1: "Portable Cabins in Madurai",
+    tagline:
+      "Need a waiting room for families at a hospital, a workspace for grading and packing jasmine near Mattuthavani, or a billing office at a Ring Road godown?",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Madurai and nearby areas. Share the intended use, site access and target dates so we can discuss the layout, fittings and delivery.",
+    ],
+
+    whyHeading: "Non-clinical cabins for hospital campuses",
+    whyIntro: "Common non-clinical uses on a hospital campus, with the layout points to discuss for each:",
+    // Empty on purpose: the section is the table and a paragraph, as in the brief.
+    whyBullets: [],
+    whyTable: {
+      caption: "Non-clinical support uses. The layout and fittings included are confirmed in the quotation.",
+      headers: ["Use", "Layout to discuss"],
+      rows: [
+        ["Waiting room for patient attendants", "Seating, lighting, ventilation and charging points"],
+        ["Help desk or registration overflow", "Service counter, signage, power and data points, and space for the queue"],
+        ["Ambulance driver rest room", "Seating, ventilation, charging points and access agreed with campus facilities"],
+        ["Contractor site office", "Workstations and space for drawings, records and site reviews"],
+      ],
+    },
+    whyOutro:
+      "Ask the hospital facilities team to approve the location, visitor flow and delivery window. Keep ambulance, fire and pedestrian routes clear and confirm how patient information will be handled at registration counters. These layouts are for non-clinical support. Refer any clinical proposal to the responsible healthcare team for a separate review.",
+
+    solutionsHeading: "Jasmine grading and packing rooms",
+    solutionsIntro:
+      "For a flower trader near Mattuthavani or a collection team around Thirumangalam, Usilampatti or Peraiyur, start with the workflow from receipt and weighing through grading, packing, labelling and dispatch. Discuss washable work surfaces, task lighting, screened openings and space for boxes. If staff will use water or ice, agree on the cleaning and drainage arrangements before choosing the fittings.",
+    // Empty on purpose: the section is two paragraphs, as in the brief.
+    solutions: [],
+    solutionsOutro:
+      "The room is intended for grading and packing before dispatch. If your process requires chilled holding, specify the temperature, equipment and monitoring needs separately.",
+
+    customHeading: "Portable cabin price and rental in Madurai",
+    customIntro:
+      "Pricing depends on size, construction, fittings, finishes, utilities, transport and unloading. List any counters, washable finishes, ventilation, drainage or electrical requirements for an itemised quote.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "For a hospital renovation or a seasonal packing requirement, share the dates so we can confirm whether a suitable unit can be quoted on hire.",
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Goripalayam, Anna Nagar, K.K. Nagar, Mattuthavani, Avaniyapuram and sites along the Madurai Ring Road. We also consider sites in Kappalur, Thoppur, Thirumangalam, Usilampatti, Peraiyur, Melur and Vadipatti. Delivery is assessed for each location.",
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share the site pin, intended use, size, quantity and target dates.", text: "" },
+      { title: "Review the proposed layout, fit-out and itemised quote.", text: "" },
+      { title: "Confirm placement approval, base readiness, utility responsibilities and unloading access.", text: "" },
+      { title: "Agree on delivery and handover. Include any collection or relocation in the quotation.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Billing and dispatch offices for godowns and Kappalur units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Plan a service window where drivers can hand over documents, a desk for billing and dispatch, and lockable record storage. Share the equipment list if you need power and data points for printers or CCTV monitors. If loaders or staff need a break area, discuss a separate room or module.",
+          "For a Ring Road warehouse or Kappalur SIDCO site, choose a proposed location with the site team and keep pedestrian access clear of loading and reversing vehicles. Share gate dimensions, overhead obstructions and access photos before dispatch.",
+        ],
+      },
+      {
+        heading: "Cabin sizes and fittings",
+        placement: "afterSolutions",
+        // Footprints use no-break spaces (\u00a0) so a size never splits over two lines on a narrow phone.
+        table: {
+          caption: "Example footprints matched to typical enquiries.",
+          headers: ["Example footprint", "Typical enquiry"],
+          rows: [
+            ["6\u00a0×\u00a06\u00a0ft", "Compact help desk or guard cabin"],
+            ["10\u00a0×\u00a08\u00a0ft", "Registration counter, collection point or godown office"],
+            ["20\u00a0×\u00a010\u00a0ft", "Attendant waiting area, packing room or site office"],
+            ["30\u00a0×\u00a010\u00a0ft and above", "Larger waiting room or combined billing and accounts office"],
+          ],
+        },
+        closing: [
+          "These are layout starting points. Confirm dimensions, occupancy and fittings in the quotation. Discuss mild steel construction or a PUF-insulated specification based on the intended use, hours of operation and exposure.",
+          "For a visitor-facing sales office or display space, see:",
+        ],
+        // Brief section 5: the Madurai marketing-office page, with the brief's anchor, after this section.
+        links: [{ label: "Portable marketing offices in Madurai", href: "/cities-we-serve/portable-marketing-office-madurai" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I enquire about a hospital attendant waiting cabin?",
+        answer:
+          "Yes. Share expected visitor numbers and seating, ventilation, charging and access needs. Have the hospital team confirm placement and pedestrian routes before delivery.",
+      },
+      {
+        question: "What should I specify for a jasmine packing cabin?",
+        answer:
+          "Include the work sequence, number of packers, table and box dimensions, lighting, cleaning and drainage needs. Specify any chilled holding requirement separately.",
+      },
+      {
+        question: "What does a godown billing cabin need?",
+        answer:
+          "Start with a service counter, desk, sockets and space for records. Share printer, data and CCTV requirements so the electrical provisions can be quoted.",
+      },
+      {
+        question: "Can I rent a cabin, and when can it be delivered?",
+        answer:
+          "Share the unit type, site and dates. Hire terms and timing depend on availability, fittings, transport and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a portable cabin quote in Madurai",
+    ctaText:
+      "Send your site location, intended use, preferred size, quantity, dates and photos of the approach and placement area. Include any seating, counters, worktops, power, water or drainage requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons; the
+    // call and WhatsApp buttons (numbers from COMPANY) stay on, as the brief asks.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Cabin Sizes & Specifications", href: "/products/portable-cabin" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Cabins are made at the Portable Office Cabin factory near Hosur in Tamil Nadu, and the company’s office is in Electronic City, Bengaluru; the company has no premises in Madurai. Each written quotation records the agreed dimensions, construction, fittings, finishes and any hire, collection or relocation, and states who arranges transport, unloading, placement and utility connections. Any delivery date given is an estimate, not a guarantee. The hospital-campus layouts are for non-clinical support only: this page does not describe any cabin as suitable for clinical use or patient care, and a clinical proposal needs a separate review by the responsible healthcare team. A grading and packing room is not a cold store; no cabin here is offered for chilled holding or to keep flowers fresh, and any temperature, equipment or monitoring requirement is specified and quoted separately. All four images are illustrative renders, three of one container-style cabin and one of an office interior; none was photographed in Madurai or shows a supplied unit, a hospital campus, a flower trader’s premises or a warehouse. Mattuthavani, the Madurai Ring Road, Kappalur and the other places listed indicate where enquiries can come from; they do not identify customers, finished installations or confirmed delivery points. Portable Office Cabin has no affiliation with any hospital, healthcare provider, flower market, jasmine trader, warehouse operator, SIDCO industrial estate or government body in the region. Notes on placement, access, utilities, drainage, cleaning and patient-information handling are general guidance, not engineering, medical, food-safety, legal or regulatory advice.",
+  },
   /* ──────────────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE MARKETING OFFICES IN MADURAI — owner brief "Madurai portable marketing office page and
    * developer commands" (2026-11-09). Route /cities-we-serve/portable-marketing-office-madurai: no
@@ -29322,8 +29566,9 @@ export const CITY_PAGES: CityPage[] = [
    * 200). The Marketing Office product page has no Tamil Nadu or related-locations section, so the
    * reverse link is not added ("where supported"). The /cities-we-serve directory lists this page in its
    * Tamil Nadu group automatically, with the brief's anchor as `directoryLabel`, and the Tamil Nadu
-   * portable-cabin hub (seoPromotions) lists it. A future general Madurai office-cabin page should link
-   * here for visitor-facing sales enquiries once both are live.
+   * portable-cabin hub (seoPromotions) lists it. The general Madurai portable-cabin page links here after
+   * its sizes section, and the layout examples below link back to it (portable-cabin brief, section 5,
+   * 2026-11-09).
    *
    * Images: four owner-dropped webp renders ("public/images/marketing office city page madurai/Madurai
    * portable marketing office/cabin (1–4).webp": 600×448 and 1452×1083 ×3, no EXIF / XMP / ICC), copied
@@ -29434,9 +29679,14 @@ export const CITY_PAGES: CityPage[] = [
       "Sales gallery with discussion room, 30\u00a0×\u00a010\u00a0ft: separate visitor seating and private discussions",
       "Larger visitor lounge, 40\u00a0×\u00a010\u00a0ft: display wall, waiting area and consultation space",
     ],
-    sizesNote: "Confirm dimensions, occupancy, fittings and availability in the quotation. For more configuration ideas, explore:",
-    // Brief section 5: the confirmed marketing office product page, with the brief's anchor.
-    featuresLinks: [{ label: "Portable marketing office layouts", href: "/products/marketing-office" }],
+    sizesNote:
+      "Confirm dimensions, occupancy, fittings and availability in the quotation. For more configuration ideas, or a separate staff or site operations workspace, explore:",
+    // Brief section 5: the confirmed marketing office product page, with the brief's anchor; then the
+    // general Madurai portable-cabin page (its brief, section 5: "After Layout Examples").
+    featuresLinks: [
+      { label: "Portable marketing office layouts", href: "/products/marketing-office" },
+      { label: "Portable cabins in Madurai", href: "/cities-we-serve/portable-cabin-madurai" },
+    ],
 
     customHeading: "Portable marketing office price in Madurai",
     customIntro:
