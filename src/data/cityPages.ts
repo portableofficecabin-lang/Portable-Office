@@ -28971,6 +28971,9 @@ export const CITY_PAGES: CityPage[] = [
         paragraphs: [
           "Factories and contractors around Badanaguppe–Kellamballi can enquire about stores for suitable cartons, finished goods, maintenance spares and tools. Group items by receipt and dispatch frequency, and measure the largest crate or trolley before choosing the layout. Keep flammable or hazardous materials out of general-purpose stores and use storage designated by your site safety team.",
         ],
+        // Porta-cabin sibling (owner brief of 2026-11-09, section 5): office space goes to that page, once.
+        closing: ["For reception, gate or project office space, see:"],
+        links: [{ label: "Porta cabins in Chamarajanagar", href: "/cities-we-serve/porta-cabin-chamarajanagar" }],
       },
       {
         heading: "Delivery near forest routes and wildlife corridors",
@@ -29294,6 +29297,278 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru; there is no company yard, depot or branch in Madurai. Every marketing office is quoted to the layout you approve, and the written quotation fixes its size, glazing, insulation, fittings, finishes, branding, any AC provision, any hire or relocation scope, and who handles delivery, unloading and installation. Delivery dates are estimates, not guarantees. The four images are illustrative renders of a single two-storey container office design; they are not photographs from Madurai and do not show a supplied unit. Thiruparankundram, Thirumangalam, Thoppur, the Ring Road and the other localities listed indicate where enquiries are welcome, and Chithirai appears only as an example of a date to plan around. The company is not affiliated with any developer, project, dealership, school, college, temple or festival organiser in the region, and nothing on this page describes a customer, a completed installation or a confirmed delivery location. Guidance on placement, glazing, lighting, electrical supply, permissions and relocation is general information, not engineering, legal or regulatory advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTA CABINS & PORTABLE CABINS IN CHAMARAJANAGAR — workshop-built cabins for safari reception and
+   * nature interpretation near Bandipur and the Biligiri Rangana (BRT) Hills, pilgrim rest points near
+   * MM Hills, resort and homestay check-in, and gate and project offices at Badanaguppe–Kellamballi,
+   * across Chamarajanagar district.
+   *
+   * Owner brief of 2026-11-09 ("Chamarajanagar porta cabin page and developer commands"): route, meta
+   * title, meta description, H1 and copy used as given. No route, redirect, sitemap entry or other page
+   * targeted a cabin × Chamarajanagar intent before this one, so the brief's proposed route is used.
+   * One indexable page serves "porta cabin", "portable cabin" and "prefab cabin" (the H1 names the first
+   * two; the third and the "Chamrajnagar" spelling are in the meta keywords). No alias route is added:
+   * /cities-we-serve/portable-cabin-chamarajanagar was never published or linked (the brief's alias is
+   * conditional on one being needed), and with dynamicParams = false it is a plain 404 that no crawler
+   * has seen. The slug matches neither the container-office cluster nor the shipping-container prefix,
+   * so the /cities-we-serve directory lists it in the Karnataka local-service group, separately from the
+   * shipping-container listing (brief section 5).
+   *
+   * MAPPING onto the template as it is (no template code is changed):
+   *   • Opening paragraph → intro; heroCta row (Request a Quote → /contact, Call, WhatsApp: the brief's
+   *     buttons, numbers from COMPANY). No enquiry form: the brief asks for the three buttons only.
+   *   • "Porta cabin, portable cabin or prefab cabin?" → why (one paragraph, no bullets).
+   *   • The overhead render is the feature band between that answer and the use sections.
+   *   • "Reception and interpretation cabins near Bandipur and BRT Hills" (table + paragraph), "Pilgrim
+   *     rest points near MM Hills", "Gate and project offices at Badanaguppe–Kellamballi", "Signs for
+   *     visitors from different regions" and "Cabin size examples" (table + paragraph) → five
+   *     afterSolutions extra sections, in the brief's order (there is no solutions slot: `solutionsIntro`
+   *     always renders a paragraph, and the first use section opens with a table). Each table's caption
+   *     is the first sentence of the paragraph that follows it in the brief; the rest is `closing`.
+   *   • The gallery (two exterior renders) follows the size examples.
+   *   • "Porta cabin price and rental in Chamarajanagar" → custom (prose: customBullets is empty), beside
+   *     the interior render.
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps). The template
+   *     puts areas before the steps, the reverse of the brief (as on the Chamarajanagar shipping page).
+   *   • FAQs (five) → faqs; the closing request → CTA.
+   * Composed (owner review): the tagline, the lead-ins before the size and rental links ("…, see:"), the
+   * alt text and captions of all five images, and the disclaimer.
+   *
+   * INTERLINKS (brief section 5), root-relative, each once:
+   *   • → /cities-we-serve/shipping-container-chamarajanagar after the gate and project offices section
+   *     ("For separate materials storage, see:"); the shipping page links back after its packaging and
+   *     spares section ("For reception, gate or project office space, see:"). Both ship in this PR.
+   *   • → /products/portable-cabin below the size table ("Portable cabin sizes and specifications").
+   *   • → /rental-service in the price and rental section: the page is the "Portable Cabin Rental
+   *     Service" and lists site office and portable cabins (checked 2026-11-09), so it covers the units.
+   *   • Inbound: the Karnataka porta-cabin and portable-cabin hubs (seoPromotions) and the /cities-we-serve
+   *     directory (automatic, as "Porta Cabins in Chamarajanagar").
+   *
+   * KEYWORD OWNERSHIP: porta / portable / prefab cabin × Chamarajanagar (Chamrajnagar), Gundlupet and
+   * Kollegal. No other page targets a cabin keyword for these places. Materials storage stays on the
+   * shipping-container page (brief). The Mysore container-office page names Chamarajanagar in its supply
+   * areas for container offices, a separate product family, so it is left as it is.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Chamarajanagar porta cabin city
+   * page/Chamarajanagar porta cabin/cabin (1–5).webp": 1451×1084 ×4 and 1200×896, already compressed,
+   * no EXIF / XMP / ICC), copied under descriptive names with a truthful XMP dc:title / dc:description
+   * ("Illustrative render of…") added losslessly; the decoded pixels are identical, the originals are
+   * kept, and no camera, GPS, date, customer or site data is added. All five show one beige and dark
+   * grey corrugated cabin. None shows shaded seating, display panels, benches or a service window, so
+   * the brief's slot file names and alt texts (reception with seating, interpretation room, pilgrim rest
+   * point, homestay reception, gate office) are omitted; the front elevation is the hero and social
+   * preview (1451 × 1084, declared with `ogImageDimensions`). Every image carries its own visible-detail
+   * alt text and an "illustrative render" caption, and no alt text names a place.
+   *
+   * No ₹ figure, lead time, stock, capacity rating, dispatch origin, client, affiliation, approved
+   * placement or guaranteed access claim. Solar provisions, water points, signage, rental and removal
+   * are quote-dependent. Opts into the CSS-only motion pass (`motion: true`, the brief's "show
+   * animation"), the Service JSON-LD (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "porta-cabin-chamarajanagar",
+    city: "Chamarajanagar",
+    listTitle: "Porta Cabins in Chamarajanagar",
+    metaTitle: "Porta Cabins & Portable Cabins in Chamarajanagar",
+    metaDescription:
+      "Enquire about porta cabins in Chamarajanagar for safari reception, pilgrim rest points near MM Hills, resort check-in and industrial site offices.",
+    keywords:
+      "Porta Cabin in Chamarajanagar, Portable Cabin in Chamarajanagar, Prefab Cabin Chamarajanagar, Porta Cabin Chamrajnagar, Portable Cabin Gundlupet, Porta Cabin Kollegal, Pilgrim Rest Point Cabin",
+    geo: {
+      region: "IN-KA",
+      placename: "Chamarajanagar, Karnataka, India",
+      position: "11.9261;76.9437",
+      icbm: "11.9261, 76.9437",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Porta Cabin" },
+    // The hero is 1451 × 1084 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/porta-cabin-chamarajanagar/chamarajanagar-porta-cabin-exterior.webp",
+      alt: "Porta cabin with a central entrance door under a small canopy and two barred windows, finished in beige with a dark grey lower band",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative porta cabin exterior. Openings, fittings and finish follow the agreed layout and quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/porta-cabin-chamarajanagar/chamarajanagar-porta-cabin-overhead-view.webp",
+      alt: "Porta cabin seen from above, showing its ribbed roof, corner lifting points, entrance door and two barred windows on a paved area",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render. Share approach photos and the placement area so access, unloading and clearances can be planned.",
+    },
+    interiorImage: {
+      src: "/images/cities/porta-cabin-chamarajanagar/chamarajanagar-porta-cabin-office-interior.webp",
+      alt: "Porta cabin interior furnished as an office with two desks, task chairs, computer monitors, ceiling lights and barred sliding windows",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render shown with optional office furniture and equipment. Fittings are supplied only as listed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/porta-cabin-chamarajanagar/chamarajanagar-porta-cabin-three-quarter-view.webp",
+        alt: "Beige and dark grey porta cabin seen at an angle, with hooded barred windows and an entrance door",
+        width: 1200,
+        height: 896,
+        caption: "Illustrative render of the same cabin at an angle, with hoods over the door and windows.",
+      },
+      {
+        src: "/images/cities/porta-cabin-chamarajanagar/chamarajanagar-porta-cabin-side-windows.webp",
+        alt: "Side wall of a porta cabin with two hooded, barred sliding windows",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of a side wall. Window positions and sizes are set in the agreed layout.",
+      },
+    ],
+
+    h1: "Porta Cabins & Portable Cabins in Chamarajanagar",
+    tagline:
+      "Workshop-built cabins for visitor reception, pilgrim rest points and industrial site offices, planned around your site, your visitors and your dates.",
+    intro: [
+      "Need a reception cabin for a safari operator, a shaded rest point along a pilgrimage route or a site office while an industrial unit is being set up? Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Chamarajanagar district. Share your intended use, site access and target dates so we can discuss the layout, fittings and delivery.",
+    ],
+
+    whyHeading: "Porta cabin, portable cabin or prefab cabin?",
+    whyIntro:
+      "For this range, the names refer to the same workshop-built cabin. It is transported to your site and placed using an unloading method suited to the unit and the available access.",
+    whyBullets: [],
+
+    customHeading: "Porta cabin price and rental in Chamarajanagar",
+    customIntro:
+      "Pricing depends on size, construction, fittings, signage, transport and unloading. Include any seating, lighting, screens, water points or site preparation in your enquiry.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "For a seasonal programme or short project, share the dates so the team can confirm whether a suitable cabin can be quoted on hire. For the cabins offered on hire, see:",
+    customLinks: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Chamarajanagar town, Badanaguppe, Kellamballi, Santhemarahalli, Yelandur, Kollegal, Hanur and Gundlupet, including approved sites around Bandipur, the Biligiri Rangana Hills and MM Hills. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share the site pin, intended use, desired footprint, dates and approach photos.", text: "" },
+      { title: "Review the proposed layout and itemised quotation.", text: "" },
+      { title: "Confirm approvals, base readiness, utilities and unloading access.", text: "" },
+      { title: "Agree on delivery and placement. Include removal or collection in the quotation if needed.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Reception and interpretation cabins near Bandipur and BRT Hills",
+        placement: "afterSolutions",
+        table: {
+          caption: "Discuss muted finishes, insect screens and lighting for early arrivals.",
+          headers: ["Use", "Layout to discuss"],
+          rows: [
+            ["Safari reception and waiting lounge", "Booking desk, seating, information boards and screened openings"],
+            ["Nature interpretation room", "Wildlife display panels, a screen provision and seating for small groups"],
+            ["Homestay or resort reception", "Check-in counter, guest seating and room for records and equipment"],
+          ],
+        },
+        closing: [
+          "If power is limited, share the available supply and ask whether provisions for a separately designed solar system can be quoted. Confirm the placement location and access with the landowner and relevant site authorities before arranging delivery near protected areas.",
+        ],
+      },
+      {
+        heading: "Pilgrim rest points near MM Hills",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Plan shaded seating, clear directions and space for a drinking-water point or charging sockets where utilities are available. If organisers need a first-aid point, confirm staffing, equipment and access with the responsible team. Agree on the approved location, pedestrian routes, emergency access and removal schedule before delivery.",
+        ],
+      },
+      {
+        heading: "Gate and project offices at Badanaguppe–Kellamballi",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Contractors and industrial units can enquire about gate cabins for visitor entry, administrative rooms for accounts and purchase teams, and site offices for engineers. Share staffing, counter and records requirements. If a unit will be reused after construction, discuss the future layout and any relocation separately.",
+        ],
+        // Brief section 5: the shipping-container sibling, once, after this section.
+        closing: ["For separate materials storage, see:"],
+        links: [{ label: "Shipping containers in Chamarajanagar", href: "/cities-we-serve/shipping-container-chamarajanagar" }],
+      },
+      {
+        heading: "Signs for visitors from different regions",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Choose the languages your visitors use. Kannada, English, Tamil and Malayalam can be considered for directions, opening hours or check-in instructions. Confirm translations, lettering, graphics and the supplied signage scope before production.",
+        ],
+      },
+      {
+        heading: "Cabin size examples",
+        placement: "afterSolutions",
+        table: {
+          caption: "These are layout starting points. Confirm dimensions, occupancy and fittings in the quotation.",
+          headers: ["Example footprint", "Typical enquiry"],
+          // Row headers use no-break spaces (\u00a0) so a footprint never splits over two lines on a 320 px
+          // phone, where row headers may wrap.
+          rows: [
+            ["6\u00a0×\u00a06\u00a0ft", "Ticket counter or gate cabin"],
+            ["10\u00a0×\u00a08\u00a0ft", "Compact reception, staffed first-aid point or rest point"],
+            ["20\u00a0×\u00a010\u00a0ft", "Waiting lounge, interpretation room or site office"],
+            ["30\u00a0×\u00a010\u00a0ft and above", "Larger lounge or combined reception and interpretation room"],
+          ],
+        },
+        closing: [
+          "Discuss mild steel or PUF-insulated construction based on working hours, ventilation and site exposure.",
+          "For the standard sizes and build options, see:",
+        ],
+        // Brief section 5: the product page, below the size table.
+        links: [{ label: "Portable cabin sizes and specifications", href: "/products/portable-cabin" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer: "Yes. For this range, both names describe a workshop-built cabin delivered to your site.",
+      },
+      {
+        question: "Can I enquire about a safari reception cabin?",
+        answer:
+          "Yes. Share the approved location, visitor numbers, seating and counter requirements. Delivery depends on access and site permissions.",
+      },
+      {
+        question: "What can a pilgrim rest point include?",
+        answer:
+          "Discuss shade, seating, signage and any power or water provisions with the organiser. Confirm placement and responsibilities before ordering.",
+      },
+      {
+        question: "Can I request signs in multiple languages?",
+        answer: "Yes. Share the required languages, approved translations and sign locations so the scope can be quoted.",
+      },
+      {
+        question: "Can I rent a cabin, and how soon can you deliver?",
+        answer:
+          "Share the cabin type, site and target dates. Hire availability and delivery timing depend on the configuration, route and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a porta cabin quote in Chamarajanagar",
+    ctaText:
+      "Send your site pin, intended use, preferred size, quantity, dates and photos of the approach and placement area. Include any requirements for seating, counters, signage, power or water.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Porta Cabin", href: "/products/porta-cabin" },
+      { label: "Prefab Porta Cabin", href: "/products/prefab-porta-cabin" },
+      { label: "Portable Cabins", href: "/products/category/portable-cabins" },
+      { label: "Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin makes its cabins at its factory near Hosur, in Krishnagiri district, Tamil Nadu, and its Karnataka office is in Electronic City Phase 1, Bengaluru; it has no workshop, yard, depot, office or agent in Chamarajanagar district. The size, layout, construction, fittings, signage, any solar provisions, water points or seating, any hire period, and the transport, unloading, placement and removal arrangements are set out in the quotation for each order; hire is subject to availability and delivery dates are not guaranteed. Each image on this page is an illustrative render of one cabin design, with the interior shown as an optionally furnished office; none is a photograph taken in Chamarajanagar district, at Bandipur, the Biligiri Rangana Hills or MM Hills, or of a unit that has been supplied. Bandipur, the Biligiri Rangana Hills, MM Hills, Badanaguppe–Kellamballi and the other places named describe where enquiries may come from. Portable Office Cabin is not affiliated with any forest, wildlife, temple, pilgrimage or industrial-area authority, safari operator, resort, homestay or business there, and no use or place described is a customer, a completed project, an approved placement or a confirmed delivery point. Placement permissions, sign translations and any first-aid staffing or equipment are to be confirmed with the landowner, the relevant authorities or the organiser before ordering. Notes on power, water, routes, access and placement are general guidance, not engineering, legal, regulatory or safety advice.",
   },
 ];
 
