@@ -341,6 +341,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
     // Madurai marketing offices (visitor-facing site sales offices; owner brief 2026-11-09), appended after the live lines.
     { name: "Portable Marketing Offices in Madurai", href: "/cities-we-serve/portable-marketing-office-madurai" },
+    // Virudhunagar marketing offices (recruitment, investor meetings, Sivakasi print samples; owner brief 2026-11-09), appended after the live lines.
+    { name: "Portable Marketing Offices in Virudhunagar", href: "/cities-we-serve/portable-marketing-office-virudhunagar" },
   ],
   "Porta Cabin|Tamil Nadu": [
     { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
@@ -495,6 +497,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
     // Office-cabin page for tech park projects in Devarabisanahalli, Bengaluru (2026-11-07), after the portable-cabin city pages already listed.
     { name: "Portable Office Cabins in Devarabisanahalli", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
+    // Porta / portable cabin page for Hubballi–Dharwad (2026-11-09), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -524,6 +528,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
     // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
     { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
+    // Porta / portable cabin page for Hubballi–Dharwad (2026-11-09), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Porta Cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
