@@ -323,6 +323,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     // Portable-cabin page for Tiruvallur (2026-10-23), here and on Porta Cabin, after Tindivanam.
     { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
+    // Portable-cabin page for Kundrathur, Kancheepuram district (owner brief 2026-11-09), here and on Porta Cabin, after Tiruvallur.
+    { name: "Portable Cabins in Kundrathur, Kancheepuram District", href: "/cities-we-serve/portable-cabin-kancheepuram-district" },
     { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
     { name: "Portable Cabins in Cheyyar", href: "/cities-we-serve/portable-cabin-cheyyar" },
     // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Gummidipoondi.
@@ -347,6 +349,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
+    { name: "Portable Cabins in Kundrathur, Kancheepuram District", href: "/cities-we-serve/portable-cabin-kancheepuram-district" },
     { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
     { name: "Portable Cabins in Cheyyar", href: "/cities-we-serve/portable-cabin-cheyyar" },
     // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Gummidipoondi.
