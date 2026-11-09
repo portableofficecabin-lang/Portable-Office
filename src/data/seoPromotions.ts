@@ -337,6 +337,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
+    // Madurai marketing offices (visitor-facing site sales offices; owner brief 2026-11-09), appended after the live lines.
+    { name: "Portable Marketing Offices in Madurai", href: "/cities-we-serve/portable-marketing-office-madurai" },
   ],
   "Porta Cabin|Tamil Nadu": [
     { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },

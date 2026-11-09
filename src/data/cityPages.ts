@@ -28791,6 +28791,244 @@ export const CITY_PAGES: CityPage[] = [
     disclaimer:
       "Portable Office Cabin's factory is near Hosur in Tamil Nadu and its Karnataka office is in Electronic City Phase 1, Bengaluru; the company does not run a yard, depot or office anywhere in Chamarajanagar district. Containers are offered subject to stock. The unit's size, grade, condition, fit-out, finish, any hire period and the transport, unloading, placement and collection arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one steel container, not photographs taken in Chamarajanagar district or of a unit that has been supplied. Badanaguppe–Kellamballi, Kollegal, Gundlupet, Bandipur, MM Hills, the Biligiri Rangana Hills and the other places named show the area enquiries may come from. Portable Office Cabin has no affiliation with any industrial area, forest or wildlife authority, temple, fair organiser, resort or business there, and none of the uses or places described should be read as a customer, a finished project or a confirmed delivery point. Containers are not offered as food-grade or hazardous-goods storage. Notes on food storage, hazardous materials, floor and rack loads, routes, access restrictions and placement are general guidance, not food-safety, engineering, legal or regulatory advice.",
   },
+  /* ──────────────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE MARKETING OFFICES IN MADURAI — owner brief "Madurai portable marketing office page and
+   * developer commands" (2026-11-09). Route /cities-we-serve/portable-marketing-office-madurai: no
+   * existing route, redirect or sitemap entry used it, and no other page targets marketing offices ×
+   * Madurai. The page is about visitor-facing sales offices (property launches, evening appointments,
+   * repeat campaigns); general workspace, handover offices, shops and kiosks keep their own pages.
+   *
+   * MAPPING onto main's template as it is (no template code is changed):
+   *   • Intro → intro.
+   *   • "Plan the office around the visitor’s walkthrough" → why: the paragraph, then the area table as
+   *     `whyTable` (no bullets).
+   *   • "Site sales offices for plotted layouts, villas and apartments" → solutions heading + intro, no
+   *     items.
+   *   • "Glazing, shade and lighting for evening visits" and "Seasonal campaigns and repeat launches" →
+   *     two afterSolutions extra sections.
+   *   • "Marketing office layout examples" → features: the four example footprints as list items (the
+   *     features slot is a list, not a table), the confirmation sentence as the bold note, then the
+   *     product link from brief section 5. The gallery follows it.
+   *   • "Portable marketing office price in Madurai" → custom (prose: customBullets is empty); the hire
+   *     sentence is the outro. No rental link: /rental-service does not cover marketing offices (checked
+   *     live 2026-11-09), so hire stays an enquiry, as the brief says.
+   *   • "Areas we serve" → areas; "From enquiry to launch" → how (title-only steps). The template puts
+   *     areas before the steps, the reverse of the brief.
+   *   • FAQs (six) → faqs; the closing request → CTA. Buttons: Request a Quote (→ /contact), Call and
+   *     WhatsApp (numbers from COMPANY), repeated under the intro (`heroCta`). No enquiry form: the
+   *     Marketing Office product's category (prefab-building) has no category landing, so /api/enquiries
+   *     would reject the form.
+   * Composed (owner review): the tagline, the area-table caption, the lead-in to the product link, the
+   * alt text and captions of all four images and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): "Portable marketing office layouts" → /products/marketing-office (live,
+   * 200). The Marketing Office product page has no Tamil Nadu or related-locations section, so the
+   * reverse link is not added ("where supported"). The /cities-we-serve directory lists this page in its
+   * Tamil Nadu group automatically, with the brief's anchor as `directoryLabel`, and the Tamil Nadu
+   * portable-cabin hub (seoPromotions) lists it. A future general Madurai office-cabin page should link
+   * here for visitor-facing sales enquiries once both are live.
+   *
+   * Images: four owner-dropped webp renders ("public/images/marketing office city page madurai/Madurai
+   * portable marketing office/cabin (1–4).webp": 600×448 and 1452×1083 ×3, no EXIF / XMP / ICC), copied
+   * under descriptive names with a truthful XMP dc:title / dc:description ("Illustrative render of…")
+   * added losslessly; the decoded pixels are identical and no camera, GPS or date data is added. They
+   * show one two-storey container office (front, corner and two interiors), not a glass front, display
+   * wall, evening lighting, canopy or signage, so none matches a slot in the brief's image table: the
+   * brief's slot alt texts and filenames are not used, each image has its own visible-detail alt text and
+   * an "illustrative render" caption, and no alt text names a place.
+   *
+   * No ₹ figure, stock, lead time, occupancy figure, client, project, institution or festival
+   * affiliation. AC equipment, glazing, upper floors and joined cabins, rental and relocation stay
+   * quote-dependent, as in the owner's copy. Opts into the CSS-only motion pass (`motion: true`), the
+   * Service JSON-LD (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-marketing-office-madurai",
+    city: "Madurai",
+    listTitle: "Portable Marketing Offices in Madurai",
+    // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
+    directoryLabel: "Portable marketing offices in Madurai",
+    metaTitle: "Portable Marketing Offices in Madurai for Site Sales",
+    metaDescription:
+      "Enquire about portable marketing offices in Madurai for plotted layouts, villa launches, dealership campaigns and admissions. Plan your layout and branding.",
+    keywords:
+      "Portable Marketing Office in Madurai, Site Sales Office Madurai, Real Estate Marketing Office Cabin Madurai, Prefabricated Sales Gallery Madurai, Relocatable Marketing Office Madurai",
+    geo: {
+      region: "IN-TN",
+      placename: "Madurai, Tamil Nadu, India",
+      position: "9.9252;78.1198",
+      icbm: "9.9252, 78.1198",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Marketing Office" },
+    // The hero is 1452 × 1083 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-marketing-office-madurai/madurai-marketing-office-two-storey-front.webp",
+      alt: "Two-storey container office with a ground-floor door and windows, a covered upper deck and an external steel staircase",
+      width: 1452,
+      height: 1083,
+      caption:
+        "Illustrative render of a two-storey container office. Glazing, signage, layout and finishes for a marketing office are agreed in the quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-marketing-office-madurai/madurai-marketing-office-interior-desk.webp",
+      alt: "Cabin office interior with a desk, three chairs, a storage cabinet, two windows and a door",
+      width: 1452,
+      height: 1083,
+      caption: "Illustrative interior render. Counters, display walls and partitions follow the layout you approve.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-marketing-office-madurai/madurai-marketing-office-two-storey-corner.webp",
+        alt: "Two-storey container office seen from the corner, with an external staircase, an upper deck and a planted bed",
+        width: 600,
+        height: 448,
+        caption: "Illustrative render: corner view of the same two-storey design and its external staircase.",
+      },
+      {
+        src: "/images/cities/portable-marketing-office-madurai/madurai-marketing-office-upper-room-deck-door.webp",
+        alt: "Upper-floor cabin room with a desk, chairs and storage, and an open door onto a covered deck",
+        width: 1452,
+        height: 1083,
+        caption:
+          "Illustrative render of an upper-floor room opening onto a covered deck. An upper floor, deck or staircase is included only when the approved design and quotation provide for it.",
+      },
+    ],
+
+    h1: "Portable Marketing Offices in Madurai",
+    tagline:
+      "Prefabricated site sales offices for property launches, dealership promotions and admissions campaigns, quoted for your site in and around Madurai.",
+    intro: [
+      "Give visitors a place to see the plans, ask questions and sit down with your sales team. Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries for portable marketing offices in Madurai. Whether you are launching a plotted layout along the Ring Road, opening a villa sales gallery near Thoppur or running a short admissions campaign, we can discuss a layout built around how your team meets visitors.",
+    ],
+
+    whyHeading: "Plan the office around the visitor’s walkthrough",
+    whyIntro:
+      "Start with what visitors should see when they arrive. A reception desk helps staff manage appointments and walk-ins. A display wall gives the team somewhere to show plot maps, floor plans and project visuals. If several conversations will happen at once, discuss a separate room for consultations or booking paperwork.",
+    // Empty on purpose: the section is the paragraph and the area table, as in the brief.
+    whyBullets: [],
+    whyTable: {
+      caption: "What to discuss for each area of the office. The fittings, furniture and finishes included are confirmed in the quotation.",
+      headers: ["Area", "Features to discuss"],
+      rows: [
+        ["Entrance and reception", "Glass frontage, signage, reception counter and a clear route in from parking"],
+        ["Display area", "Printed plans, a model display or a screen for walkthroughs"],
+        ["Consultation area", "A discussion table, seating, sockets and a partition where privacy is needed"],
+        ["Waiting area", "Visitor seating and shade at the entrance where the site allows"],
+        ["Staff area", "Storage for brochures, charging points and space for daily paperwork"],
+      ],
+    },
+
+    solutionsHeading: "Site sales offices for plotted layouts, villas and apartments",
+    solutionsIntro:
+      "For a launch near the Ring Road, Thiruparankundram, Thirumangalam or Thoppur, share the entrance plan and the expected visitor flow. Choose a location buyers can find easily while keeping vehicle circulation, construction access and pedestrian routes clear. Reserve display space for the project plans, booking information and any notices your project team needs to show.",
+    // Empty on purpose: the section is one paragraph, as in the brief.
+    solutions: [],
+
+    featuresHeading: "Marketing office layout examples",
+    featuresIntro: "These footprints are starting points for discussion.",
+    // The brief's table (layout, example footprint, use), one row per item. Sizes use no-break spaces
+    // (\u00a0) so a footprint never splits over two lines.
+    features: [
+      "Compact enquiry office, 10\u00a0×\u00a08\u00a0ft: admissions, dealer outreach or a small enquiry desk",
+      "Site sales office, 20\u00a0×\u00a010\u00a0ft: reception, plan display and a compact consultation area",
+      "Sales gallery with discussion room, 30\u00a0×\u00a010\u00a0ft: separate visitor seating and private discussions",
+      "Larger visitor lounge, 40\u00a0×\u00a010\u00a0ft: display wall, waiting area and consultation space",
+    ],
+    sizesNote: "Confirm dimensions, occupancy, fittings and availability in the quotation. For more configuration ideas, explore:",
+    // Brief section 5: the confirmed marketing office product page, with the brief's anchor.
+    featuresLinks: [{ label: "Portable marketing office layouts", href: "/products/marketing-office" }],
+
+    customHeading: "Portable marketing office price in Madurai",
+    customIntro:
+      "Pricing depends on cabin size, layout, glazing, insulation, finishes, display fittings, electrical provisions, branding and delivery access. Share the launch date and itemised requirements.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro: "If you need a short-term unit, ask whether a suitable marketing-office layout can be quoted on hire for those dates.",
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Madurai and the Ring Road corridor, including Thiruparankundram, Thirumangalam, Thoppur, Kappalur, Vadapalanji, Avaniyapuram, Vilangudi, Samayanallur, Othakadai, Melur, Mattuthavani, Uthangudi and K. Pudur. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to launch",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share your use case, site address, target launch date and expected visitor numbers.", text: "" },
+      { title: "Review the proposed layout and itemised quote, including delivery, unloading and installation scope.", text: "" },
+      { title: "Approve drawings, finishes, artwork and the location of display and electrical points.", text: "" },
+      { title: "Confirm site access, base readiness and utility responsibilities before agreeing on a delivery and handover schedule.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Glazing, shade and lighting for evening visits",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For a glass-front sales office, consider how afternoon sun reaches the façade and where visitors will wait. Discuss insulation, solar-control glazing, entrance shade and AC provision for the selected layout. For evening appointments, plan lighting at the entrance and along the path to parking. Position display lighting to keep plans readable through glare. Confirm electrical supply and the scope of any exterior lighting or illuminated signage before ordering.",
+        ],
+      },
+      {
+        heading: "Seasonal campaigns and repeat launches",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Work backwards from your opening date to allow time for layout sign-off, approved graphics, site preparation and utility connections. For a campaign timed around Chithirai or another festival, confirm the permitted site and access arrangements before scheduling delivery. The same planning applies to dealership promotions, school or college admissions, and customer outreach programmes.",
+          "If you expect to reuse the office, tell us before the layout is finalised. Discuss replaceable signboards, removable graphics and display surfaces that can accept new plans. Future relocation depends on the approved cabin design, lifting arrangement and access at both sites. Confirm how furniture, screens and other loose equipment will be handled before transport.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How is a marketing office laid out?",
+        answer:
+          "The layout supports visitor reception, displays and sales consultations. Start with how many visitors and staff will use the office at once, then choose the seating and display space.",
+      },
+      {
+        question: "Can the office be moved to our next launch?",
+        answer:
+          "Relocation can be discussed if the cabin was designed for it and both sites have suitable lifting and vehicle access. Ask for the relocation scope separately.",
+      },
+      {
+        question: "Can I request a glass front and AC provision?",
+        answer:
+          "Yes. Share the façade, shade and cooling requirements. Confirm the glazing, insulation and electrical scope, including whether the AC equipment is included, in the quotation.",
+      },
+      {
+        question: "Can we use a marketing office for a festival campaign?",
+        answer:
+          "You can enquire for an approved site. Confirm the landowner’s permission and any required event or access approvals before planning placement.",
+      },
+      {
+        question: "Is a marketing office available on rent?",
+        answer: "Share the proposed dates, site and layout. The team can confirm whether a suitable rental configuration is available.",
+      },
+      {
+        question: "How quickly can you deliver to Madurai?",
+        answer:
+          "Timing depends on the approved layout, fittings, production or rental availability, and delivery access. Share your launch date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a portable marketing office quote in Madurai",
+    ctaText:
+      "Send the site location, launch date, expected visitor numbers and any requirements for glazing, consultation rooms, display screens, signage or cooling. Include photos of the approach and proposed placement area.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons (one of
+    // them is "Container Office on Rent"); the call and WhatsApp buttons (numbers from COMPANY) stay on.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinksHeading: "Related pages",
+    relatedLinks: [
+      { label: "Prefab Marketing Office", href: "/products/marketing-office/prefab-marketing-office" },
+      { label: "Prefab Buildings", href: "/products/category/prefab-building" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru; there is no company yard, depot or branch in Madurai. Every marketing office is quoted to the layout you approve, and the written quotation fixes its size, glazing, insulation, fittings, finishes, branding, any AC provision, any hire or relocation scope, and who handles delivery, unloading and installation. Delivery dates are estimates, not guarantees. The four images are illustrative renders of a single two-storey container office design; they are not photographs from Madurai and do not show a supplied unit. Thiruparankundram, Thirumangalam, Thoppur, the Ring Road and the other localities listed indicate where enquiries are welcome, and Chithirai appears only as an example of a date to plan around. The company is not affiliated with any developer, project, dealership, school, college, temple or festival organiser in the region, and nothing on this page describes a customer, a completed installation or a confirmed delivery location. Guidance on placement, glazing, lighting, electrical supply, permissions and relocation is general information, not engineering, legal or regulatory advice.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
