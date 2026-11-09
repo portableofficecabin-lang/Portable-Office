@@ -14595,6 +14595,9 @@ export const CITY_PAGES: CityPage[] = [
           "A 20 ft container can provide storage for tools, cables, fittings and equipment at an authorised railway project site. The project team should confirm the location, clearances and lifting arrangements. Discuss a lockbox and whether the store will need to move as the work progresses.",
           "Engineering units can also use containers for spares and tooling, transport yards for parts, and traders for suitable goods awaiting dispatch.",
         ],
+        // Reciprocal link to the cabin page (owner brief of 2026-11-09), placed after the industrial stores.
+        closing: ["For a separate campus office, study room or staff workspace, see:"],
+        links: [{ label: "Porta cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" }],
       },
       {
         heading: "Container sizes and condition",
@@ -14718,6 +14721,234 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Our factory is near Hosur in Tamil Nadu and our Karnataka office is in Electronic City Phase 1, Bengaluru; Portable Office Cabin has no container yard, depot, workshop or office in Hubballi or Dharwad. Containers are sold or hired subject to availability. Each unit's size, grade, condition and fit-out, any base work or relocation, and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render of one representative storage container, drawn with an optional side window, and none was photographed at a site in Hubballi or Dharwad. Localities, industrial areas and the NH 48 bypass are listed only to show where we accept enquiries: naming them does not mean we have customers, past projects or confirmed delivery there. We have no affiliation with a railway authority, railway project, industrial area or estate, and the uses described are examples, not projects we have supplied. A standard container does not provide temperature control, cold-chain performance or rodent exclusion. Notes on stock rotation, pest control, heat, ground conditions and site preparation are general guidance, not engineering, food-safety, pharmaceutical or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTA CABINS & PORTABLE CABINS IN HUBBALLI–DHARWAD (Hubli) — study halls, coaching classrooms,
+   * music practice rooms and campus project offices.
+   *
+   * Owner brief of 2026-11-09: route, meta title, meta description, H1 and public copy as given. No
+   * other page targets a cabin intent in Hubballi, Hubli or Dharwad (repo routes, redirects and
+   * sitemap checked), so this one canonical covers the three place names and the porta / portable /
+   * prefab cabin synonyms; nothing needs a /portable-cabin-hubballi-dharwad alias, so no redirect is
+   * added. The slug matches no family prefix, so cityFamily() lists it with the local-service pages
+   * in the Karnataka group of /cities-we-serve under its listTitle (the hub anchor the brief asks
+   * for), apart from the shipping-container card. The brief's sections map onto the fixed slots:
+   *   • Opening paragraphs → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Study halls and coaching classrooms" → why: the layout table as whyTable, the planning
+   *     paragraph as whyOutro.
+   *   • "Music practice and riyaz rooms" → solutions heading + intro + outro (prose, no items).
+   *   • "Cabins for university projects and Hubballi worksites" and "Cabin sizes and fittings" (table
+   *     and planning note) → afterSolutions extra sections, in the brief's order, each closing with
+   *     its contextual link: the sibling shipping-container page (its base-preparation section has
+   *     no anchor, so the page itself) and /products/portable-cabin below the sizes table.
+   *   • "Porta cabin price and rental in Hubballi–Dharwad" → custom (prose) + customLinks →
+   *     /rental-service, whose hire range lists site-office and guard cabins, the configurations a
+   *     temporary campus project would hire.
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (five) → faqs; the closing request → CTA.
+   *     No on-page form: /api/enquiries accepts only the CATEGORY_LANDING_SLUGS categories and none
+   *     is a porta or portable cabin category, so Request a Quote goes to /contact.
+   * Lead-ins written where a slot needs one: tagline, whyIntro, the table captions and the closing
+   * lines before the shipping-container and rental links. No ₹ figure, fixed occupancy, soundproofing
+   * or sound-isolation claim, delivery time or university affiliation; joined modules, acoustic
+   * treatment, AC, hire and relocation stay quote-dependent, as the brief says.
+   *
+   * KEYWORD OWNERSHIP: porta / portable / prefab cabin × Hubballi, Hubli, Dharwad, with the study
+   * hall, coaching, music practice and campus site office uses. Freight and industrial storage stay on
+   * Shipping & Cargo Containers in Hubballi–Dharwad, which links back from its industrial stores
+   * section.
+   *
+   * Images: four owner-dropped lossy VP8 webp renders ("public/images/hubballi dharwad porta cabin
+   * city page/Hubballi–Dharwad porta cabin page/cabin (1–4).webp", 1200×896 and 1451×1084 ×3, no
+   * EXIF / XMP / ICC metadata or provenance to keep) of one grey ribbed-steel cabin. The VP8
+   * bitstreams are copied byte-for-byte (pixel-identical decode) with an XMP dc:title and a
+   * dc:description that calls each an illustrative render. Only the exterior hero matches a slot in
+   * the brief's image table: its filename and caption are used, and the alt names the barred window
+   * and two doors the render shows. No image shows a study hall, classroom, practice room or entrance
+   * steps, so those slots are left out; the side, overhead and office-interior renders carry their
+   * own accurate names, alt text and captions.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "porta-cabin-hubballi-dharwad",
+    city: "Hubballi–Dharwad",
+    listTitle: "Porta Cabins in Hubballi–Dharwad",
+    metaTitle: "Porta Cabins in Hubballi–Dharwad (Hubli)",
+    metaDescription:
+      "Enquire about portable cabins in Hubballi–Dharwad for study halls, coaching rooms, music practice, campus projects and construction site offices.",
+    keywords:
+      "Porta Cabin in Hubballi-Dharwad, Portable Cabin in Hubli-Dharwad, Porta Cabin Hubli, Portable Cabin Dharwad, Study Hall Cabin, Music Practice Cabin, Campus Site Office Cabin",
+    geo: {
+      region: "IN-KA",
+      placename: "Hubballi–Dharwad, Karnataka, India",
+      position: "15.3647;75.1240",
+      icbm: "15.3647, 75.1240",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Porta Cabin" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/porta-cabin-hubballi-dharwad/hubballi-dharwad-porta-cabin-exterior.webp",
+      alt: "Prefabricated porta cabin with a barred window between two entrance doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative porta cabin exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/porta-cabin-hubballi-dharwad/hubballi-dharwad-porta-cabin-roof-view.webp",
+      alt: "Porta cabin seen from above, showing its ribbed steel roof, two window hoods and a paved area in front",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative overhead view. Placement depends on site access and the approved base.",
+    },
+    interiorImage: {
+      src: "/images/cities/porta-cabin-hubballi-dharwad/hubballi-dharwad-porta-cabin-office-interior.webp",
+      alt: "Office layout inside a portable cabin with two desks, computer monitors, office chairs, a filing cabinet and a barred sliding window",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative office layout. Furniture, lighting and electrical fittings are optional and confirmed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/porta-cabin-hubballi-dharwad/hubballi-dharwad-porta-cabin-side-windows.webp",
+        alt: "Side wall of a grey porta cabin with two barred windows under small hoods",
+        width: 1451,
+        height: 1084,
+        caption: "Side wall with two barred windows. Illustrative render.",
+      },
+    ],
+
+    h1: "Porta Cabins & Portable Cabins in Hubballi–Dharwad",
+    tagline: "Prefabricated cabins for study halls, coaching classrooms, music practice rooms and campus project offices.",
+    intro: [
+      "Need extra seats for a Dharwad reading room, a dedicated space for music practice or an office for a campus construction team? Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Hubballi and Dharwad. Tell us who will use the room, what goes inside and where it will sit so we can discuss the layout, fittings and delivery.",
+      "For this range, porta cabin, portable cabin and prefab cabin describe the same workshop-built unit. The unloading and placement method depends on the cabin and site access.",
+    ],
+
+    whyHeading: "Study halls and coaching classrooms",
+    whyIntro: "Layouts to discuss for learners and teaching staff:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Example layouts and the features to discuss. Fittings and joined modules are confirmed in the quotation.",
+      headers: ["Layout", "Features to discuss"],
+      rows: [
+        ["Study hall for exam preparation", "Individual cubicles, task lights, sockets, router provision and lockers"],
+        ["Coaching classroom", "Seating facing a whiteboard or presentation wall, a teaching desk and power points for AV equipment"],
+        ["Larger teaching or study area", "Joined modules, subject to layout review, access and availability"],
+      ],
+    },
+    whyOutro:
+      "Start with the expected number of learners and staff, hours of use and equipment list. Discuss even lighting, insulation and ventilation or cooling. Have the responsible site team confirm occupancy, aisle space, exits, accessibility and electrical requirements before approving the layout.",
+
+    solutionsHeading: "Music practice and riyaz rooms",
+    solutionsIntro:
+      "For vocal practice, tabla lessons or one-to-one teaching, share the instruments, number of users and how close the room will be to neighbouring buildings. Acoustic treatment helps reduce echo inside the room. Sound isolation depends on the full construction, including the walls, roof, floor, doors, windows, seals and ventilation openings.",
+    solutions: [],
+    solutionsOutro:
+      "Discuss instrument storage, seating, lighting and quiet ventilation for the intended practice hours. If you need a measurable sound isolation target, include it in the enquiry and agree on the design and verification scope before ordering.",
+
+    extraSections: [
+      {
+        heading: "Cabins for university projects and Hubballi worksites",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Campus contractors can enquire about offices for drawings and site meetings, guard cabins for temporary construction gates and stores for suitable tools and fittings. Agree on placement, pedestrian routes and delivery windows with the campus team, especially around classes and exams.",
+          "For housing and commercial works around Hubballi, share the gate dimensions, unloading area and proposed base. If the ground shows seasonal movement or ponding, ask the responsible site professional to assess drainage and supports before delivery.",
+        ],
+        closing: [
+          "Our storage container page has general notes on preparing a base where black cotton soil is present. Supports for a cabin are still set by the site assessment.",
+        ],
+        links: [
+          { label: "Site preparation and shipping containers in Hubballi–Dharwad", href: "/cities-we-serve/shipping-container-hubballi-dharwad" },
+        ],
+      },
+      {
+        heading: "Cabin sizes and fittings",
+        placement: "afterSolutions",
+        table: {
+          caption: "Example footprints for planning. Usable internal dimensions are confirmed in the quotation.",
+          headers: ["Example footprint", "Typical enquiry"],
+          rows: [
+            ["8 × 8 ft", "Small practice room, subject to instrument and circulation needs"],
+            ["10 × 8 ft", "Guard cabin, small store or one-to-one music room"],
+            ["20 × 10 ft", "Study hall section, coaching room or campus site office"],
+            ["Joined modules", "Larger teaching or study layout, subject to quotation"],
+          ],
+        },
+        closing: [
+          "These footprints are planning examples. Confirm usable internal dimensions, occupancy, mild steel or PUF-insulated construction and included fittings in the quotation.",
+        ],
+        links: [{ label: "Portable cabin sizes and specifications", href: "/products/portable-cabin" }],
+      },
+    ],
+
+    customHeading: "Porta cabin price and rental in Hubballi–Dharwad",
+    customIntro:
+      "Pricing depends on size, construction, furniture, electrical fittings, ventilation, acoustic requirements, transport and unloading. Share the required layout and target dates for an itemised quote.",
+    customBullets: [],
+    customOutro:
+      "For an exam season or temporary campus project, ask whether a suitable unit can be quoted on hire. The site office and guard cabins we offer on hire are listed here:",
+    customLinks: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Hubballi (also known as Hubli), Dharwad, Vidyanagar, Gokul Road, Navanagar, Keshwapur, Saptapur, Malmaddi, Sattur, Rayapur and Tarihal. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share the intended use, seat or staff count, site pin, target dates and approach photos.", text: "" },
+      { title: "Review the proposed layout, fit-out and itemised quote.", text: "" },
+      { title: "Confirm permissions, base readiness, utility responsibilities and unloading access.", text: "" },
+      { title: "Agree on delivery and handover. Include collection or relocation in the quotation if needed.", text: "" },
+    ],
+
+    faqs: [
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer: "Yes. For this range, both names describe a prefabricated cabin delivered to your site.",
+      },
+      {
+        question: "How many students can a coaching cabin accommodate?",
+        answer:
+          "It depends on internal dimensions, seating, circulation and the site’s occupancy requirements. Share the batch size for a layout review.",
+      },
+      {
+        question: "Can a cabin be used for music practice?",
+        answer:
+          "Yes. Share the instruments, room use and any sound isolation target. Acoustic treatment and sound isolation need separate specifications.",
+      },
+      {
+        question: "Can I enquire about a temporary campus site office?",
+        answer:
+          "Yes. Share the project duration, staff count and approved placement area so the unit and delivery arrangements can be assessed.",
+      },
+      {
+        question: "Can I rent a cabin, and how quickly can you deliver?",
+        answer:
+          "Share the required dates, layout and site. Hire availability and delivery timing depend on the configuration and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a porta cabin quote in Hubballi–Dharwad",
+    ctaText:
+      "Send your intended use, preferred size, quantity, target dates and site access photos. Include seating, equipment, cooling, acoustic or electrical requirements as applicable.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Porta Cabin", href: "/products/porta-cabin" },
+      { label: "Porta Cabins in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Our factory is near Hosur in Tamil Nadu and our Karnataka office is in Electronic City Phase 1, Bengaluru; Portable Office Cabin has no factory, workshop, yard or office in Hubballi or Dharwad. Each cabin's size, construction, fittings, any joined modules, acoustic treatment, cooling, hire, base work or relocation, and the delivery, unloading and collection arrangements are set out in its quotation; hire is subject to availability and no delivery date is guaranteed. Every image here is an illustrative render of one representative cabin design, shown with optional office furniture inside, and none was photographed at a site in Hubballi or Dharwad. Localities are listed only to show where we accept enquiries: naming them does not mean we have customers, past projects or confirmed delivery there. We have no affiliation with any university, college, school, coaching institute or campus, and the uses described are examples, not projects we have supplied. Acoustic treatment is not soundproofing, and no sound isolation performance is offered unless a measurable target and its verification are agreed in writing. Occupancy, exits, accessibility and electrical requirements are for the responsible site team to confirm; notes on layouts, ground conditions and site preparation are general guidance, not engineering, fire-safety or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
