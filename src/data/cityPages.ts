@@ -29675,8 +29675,13 @@ export const CITY_PAGES: CityPage[] = [
       "Recruitment centre (one or more modules): registration, waiting and interview areas",
     ],
     sizesNote: "Confirm dimensions, occupancy, fittings and availability in the quotation. Explore our range for more configuration ideas:",
-    // Brief section 5: the confirmed marketing office product page, with the brief's anchor.
-    featuresLinks: [{ label: "Portable marketing office layouts", href: "/products/marketing-office" }],
+    // Brief section 5: the confirmed marketing office product page, with the brief's anchor. The second link
+    // (Virudhunagar portable cabin brief, "After Layout Examples") was added by #240, the second of the two
+    // Virudhunagar pages to go live; that page links back here from its sizes section.
+    featuresLinks: [
+      { label: "Portable marketing office layouts", href: "/products/marketing-office" },
+      { label: "Portable cabins in Virudhunagar", href: "/cities-we-serve/portable-cabin-virudhunagar" },
+    ],
 
     customHeading: "Portable marketing office price in Virudhunagar",
     customIntro:
@@ -29778,6 +29783,267 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin's factory is near Hosur in Tamil Nadu and its Karnataka office is in Electronic City Phase 1, Bengaluru; the company does not run a yard, depot or office in Virudhunagar district. Each marketing office is quoted for the layout you approve: its size, glazing, partitions, fittings, finishes, branding, any AC provision, any joined modules, any hire or relocation scope and the delivery, unloading and installation arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one two-storey container office design, not photographs taken in Virudhunagar district or of a unit that has been supplied, and not a textile park installation. E. Kumaralingapuram, the PM MITRA textile park area, Sivakasi, NH 44 and the other places named show the area enquiries may come from. Portable Office Cabin has no affiliation with the PM MITRA park, its developer or any government body, or with any textile unit, printer, fireworks or other trade business, developer or investor there, and none of the uses or places described should be read as a customer, a finished project or a confirmed delivery point. The cabins are offered for administrative, sales, meeting and display use only, not for storing fireworks or other hazardous goods. Notes on placement, signage, electrical supply, approvals, licensing and relocation are general guidance, not engineering, legal or regulatory advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN VIRUDHUNAGAR — the general portable-cabin intent for Virudhunagar district
+   * (Tamil Nadu): industrial plot setup around the PM MITRA textile park area at E. Kumaralingapuram,
+   * gate and support cabins for cleared sites, pre-press rooms for Sivakasi printers, time offices for
+   * the Rajapalayam and Aruppukottai mills and trader's offices for the market yards.
+   *
+   * Owner brief of 2026-11-09 ("Virudhunagar portable cabin page and developer commands"): route, meta
+   * title, meta description, H1 and keywords (primary query + supporting terms) as given, and every
+   * sentence of the website copy verbatim. Mapped onto the template slots:
+   *   • Opening paragraph → tagline (its question) + intro, with the hero contact row (`heroCta`:
+   *     Request a Quote · Call · WhatsApp, numbers from COMPANY).
+   *   • "Cabin combinations for industrial plot setup" → why: intro, the combinations table
+   *     (`whyTable`, no bullets) and the closing paragraph as whyOutro.
+   *   • "Site support cabins for fireworks and match businesses" → solutions heading + intro, the last
+   *     two sentences as `solutionsOutro` (no items).
+   *   • "Pre-press and design cabins for Sivakasi printers", "Time offices for spinning mills and
+   *     cabins for market yards" and "Cabin sizes and fittings" (paragraph, table, the MS / PUF
+   *     paragraph as `closing`, then the product link) → three afterSolutions extra sections. No
+   *     features section (optional since #237).
+   *   • "Portable cabin price and rental in Virudhunagar" → custom (prose: customBullets is empty),
+   *     beside the interior render, with the rental link as `customLinks`.
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps). The template
+   *     puts areas before the steps, the reverse of the brief.
+   *   • FAQs (five) → faqs; "Request a portable cabin quote in Virudhunagar" → CTA.
+   * Composed (owner review): the two table captions, the alt text and captions of the three non-hero
+   * images, the hero's alt text and caption (see Images), the related links and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): /products/portable-cabin ("Portable Cabin: Sizes, Specifications &
+   * Prices", live 200) follows the sizes table; /rental-service (live 200; lists site office, toilet,
+   * security guard, storage and accommodation units, so it covers the cabin types the brief names)
+   * follows the rental sentence. The Virudhunagar marketing-office page
+   * (/cities-we-serve/portable-marketing-office-virudhunagar, #241) went live first, so this PR adds the
+   * reciprocal links both ways (brief: "Defer reciprocal links until both routes are in the same release
+   * or already live"): "Portable marketing offices in Virudhunagar" closes the sizes section here, and
+   * "Portable cabins in Virudhunagar" follows that page's layout examples. The template renders contextual
+   * links as a list, so the brief's two lead-in sentences are not shown; only its anchors are used.
+   * The /cities-we-serve directory lists this page
+   * under Tamil Nadu by itself (geo.region IN-TN, card label = `directoryLabel`, the brief's anchor), and
+   * both Tamil Nadu portable / porta cabin keyword hubs (seoPromotions) list it after Ranipet.
+   *
+   * KEYWORD OWNERSHIP: portable / porta / prefabricated / site office cabin × Virudhunagar, Sivakasi
+   * and Rajapalayam. No other page names these places (repo search 2026-11-09). Sales offices, sample
+   * displays and recruitment centres belong to the Virudhunagar marketing-office page; complete worker
+   * camps belong to the labour colony pages (brief), so this page names only individual bunk cabins and
+   * accommodation modules as single units.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Virudhunagar for Industrial Sites city
+   * page/Virudhunagar for Industrial Sites/cabin (1–4).webp": 1200×896, 1451×1084 ×2, 1450×1085; no
+   * EXIF / XMP / ICC), copied under descriptive names with a truthful XMP dc:title / dc:description
+   * ("Illustrative render of…") added losslessly; the decoded pixels are identical and no camera, GPS
+   * or date data is added. They show one dark grey cabin and one furnished interior. Only the exterior
+   * hero slot of the brief's image table is used (its file name and XMP title); its alt text, caption
+   * and XMP description name one cabin, because the render shows one cabin with a single entrance, not
+   * "cabins with separate entrances". No image shows a guard cabin service window, pre-press
+   * workstations, an attendance counter or records shelving, so those four slots are omitted; the side
+   * view (feature band), the front elevation (gallery, after the sizes table) and the interior (beside
+   * the price section) carry their own descriptive alt text and an "illustrative render" caption.
+   *
+   * No ₹ figure, stock, lead time, client, completed project, PM MITRA status or affiliation, or
+   * hazardous-area / fireworks-storage suitability claim. Opts into the CSS-only motion pass
+   * (`motion: true`), the Service JSON-LD (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-virudhunagar",
+    city: "Virudhunagar",
+    listTitle: "Portable Cabins in Virudhunagar",
+    // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
+    directoryLabel: "Portable cabins in Virudhunagar",
+    metaTitle: "Portable Cabins in Virudhunagar for Industrial Sites",
+    metaDescription:
+      "Enquire about portable cabins in Virudhunagar, Sivakasi and Rajapalayam for industrial site setup, gate security, pre-press work and mill time offices.",
+    keywords:
+      "Portable Cabin in Virudhunagar, Porta Cabin Virudhunagar, Prefabricated Cabin Sivakasi, Site Office Cabin Virudhunagar, Portable Cabin Rajapalayam",
+    geo: {
+      region: "IN-TN",
+      placename: "Virudhunagar, Tamil Nadu, India",
+      position: "9.5833;77.9500",
+      icbm: "9.5833, 77.9500",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-virudhunagar/virudhunagar-industrial-portable-cabins.webp",
+      alt: "Prefabricated site cabin with a door, sliding windows and corner lifting points",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative site cabin for an industrial plot.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-virudhunagar/virudhunagar-site-cabin-side-view.webp",
+      alt: "Side of a dark grey prefabricated cabin with two sliding windows, standing on a paved yard",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render. Leave clear space around each module for unloading, access and utility connections.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-virudhunagar/virudhunagar-site-office-cabin-interior.webp",
+      alt: "Prefabricated cabin interior with a desk, a computer, office chairs, a low storage cabinet and sliding windows",
+      width: 1450,
+      height: 1085,
+      caption: "Illustrative render, shown with optional furniture. Fit-out items are included only as agreed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-virudhunagar/virudhunagar-site-cabin-front-elevation.webp",
+        alt: "Front elevation of a dark grey prefabricated cabin: a central door between two sliding windows",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the front elevation. Door and window positions are confirmed in the approved layout.",
+      },
+    ],
+
+    h1: "Portable Cabins in Virudhunagar",
+    tagline: "Setting up an industrial plot, adding a time office at a mill gate or creating a separate room for pre-press work?",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Virudhunagar district. Tell us how staff will use the cabin, where it will sit and when the site will be ready.",
+    ],
+
+    whyHeading: "Cabin combinations for industrial plot setup",
+    whyIntro:
+      "If you are preparing a site around the PM MITRA textile park area at E. Kumaralingapuram, plan gate security, site administration and sanitation together. Use these combinations as starting points for a quotation.",
+    whyBullets: [],
+    whyTable: {
+      caption: "Example module combinations by site phase.",
+      headers: ["Site requirement", "Modules to discuss"],
+      rows: [
+        ["Early works", "Guard cabin, compact site office and single toilet cabin"],
+        ["Active construction", "Guard cabin, site office with a meeting table, toilet block and lockable store"],
+        [
+          "Larger contractor setup",
+          "Gate cabins, site office with a separate meeting area, sanitation blocks, stores and space for first-aid support or individual bunk cabins",
+        ],
+      ],
+    },
+    whyOutro:
+      "Confirm the module count, fixtures and utilities for each phase. If a site office will later become a time office or quality-control room, discuss that use before deciding on the layout and fittings.",
+
+    solutionsHeading: "Site support cabins for fireworks and match businesses",
+    solutionsIntro:
+      "Enquire about ordinary gate, administration, rest or first-aid support cabins for a proposed location that your site safety team has assessed and cleared for that use. Before selecting a cabin, share the intended use and approved location with the supplier.",
+    solutions: [],
+    solutionsOutro:
+      "This page covers general-purpose cabins for support activities. Keep fireworks, chemicals and other hazardous stock out of these units.",
+
+    customHeading: "Portable cabin price and rental in Virudhunagar",
+    customIntro:
+      "Pricing depends on cabin size, construction, fit-out, utilities, transport and unloading access. For multiple cabins, ask for an itemised quote by module.",
+    customBullets: [],
+    customOutro:
+      "For temporary works, share the dates and cabin types needed so the team can confirm whether suitable units can be quoted on hire.",
+    customLinks: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Virudhunagar, E. Kumaralingapuram, Sivakasi, Sattur, Srivilliputhur, Rajapalayam, Aruppukottai, Kariapatti and Tiruchuli, including sites along NH 44. Delivery is assessed for each location.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share the site address, use, cabin count, target dates and access photos.", text: "" },
+      { title: "Review the module list, layouts and itemised quotation.", text: "" },
+      { title: "Confirm placement, base readiness, utility responsibilities and access for unloading.", text: "" },
+      { title: "Agree on delivery and handover. Quote any future relocation separately.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Pre-press and design cabins for Sivakasi printers",
+        paragraphs: [
+          "A separate room can give designers and proofing staff space away from press-floor traffic. Start with the workstation count, equipment dimensions and the lighting required for reviewing proofs.",
+          "Discuss door and window seals, insulation, AC provision, network points, power sockets and worktop depth. If you need a colour-viewing booth, UPS or specialist plate equipment, include the equipment supplier's space, electrical and ventilation requirements. Confirm the dust-control and environmental specification in the quote.",
+        ],
+        placement: "afterSolutions",
+      },
+      {
+        heading: "Time offices for spinning mills and cabins for market yards",
+        paragraphs: [
+          "For mills in Rajapalayam and Aruppukottai, a time office can provide a counter for attendance and shift records. Maintenance teams can enquire about a contractor office, and gate teams can discuss a guard cabin with visibility suited to the entrance layout.",
+          "For market yards around Virudhunagar, consider a compact trader's office for accounts and records, or a separate lockable store for suitable samples, sacks and packing supplies. Confirm placement and access with the yard operator.",
+        ],
+        placement: "afterSolutions",
+      },
+      {
+        heading: "Cabin sizes and fittings",
+        paragraphs: [
+          "These footprints are examples for layout discussion. Confirm dimensions, fittings and availability in the quotation.",
+        ],
+        table: {
+          caption: "Example cabin footprints and the enquiries they typically suit.",
+          headers: ["Example footprint", "Typical enquiry"],
+          rows: [
+            ["6 × 6 ft", "Guard cabin or time office counter"],
+            ["10 × 8 ft", "Compact site office, store or first-aid support room"],
+            ["20 × 10 ft", "Site office with meeting space, pre-press room or worker rest room"],
+            ["40 × 10 ft", "Larger office or individual worker accommodation module"],
+          ],
+        },
+        closing: [
+          "Discuss MS construction or an insulated PUF specification based on the intended use. For occupied cabins, share expected working hours, sun exposure and dust conditions. For toilet modules, confirm water supply, wastewater arrangements and who will connect them.",
+        ],
+        // The product link follows the sizes table; the marketing-office link closes the section ("After
+        // Cabin Sizes and Fittings"), with the brief's anchor, first letter capitalised for the list.
+        links: [
+          { label: "Portable cabin sizes and specifications", href: "/products/portable-cabin" },
+          { label: "Portable marketing offices in Virudhunagar", href: "/cities-we-serve/portable-marketing-office-virudhunagar" },
+        ],
+        placement: "afterSolutions",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I order several cabin types together for a new industrial plot?",
+        answer:
+          "Yes. Share the site plan and the order in which you need the modules. A quote can separate the cabin, fittings, delivery and installation scope for each unit.",
+      },
+      {
+        question: "Can I enquire about a guard or rest cabin for a fireworks or match business?",
+        answer:
+          "For a general-purpose support cabin, first have your site safety team confirm the proposed use and location. Share the approved placement details with your enquiry.",
+      },
+      {
+        question: "What should I include in a pre-press cabin enquiry?",
+        answer:
+          "Include the workstation count, equipment dimensions, proof-viewing lighting requirements, power and network needs, and any specified cooling or dust-control requirements.",
+      },
+      {
+        question: "Can a site office be reused as a time office?",
+        answer:
+          "Discuss the later use before ordering. Confirm the counter, records storage, services and access required for each use, as well as lifting arrangements if the unit will move.",
+      },
+      {
+        question: "Is rental available, and how soon can you deliver?",
+        answer:
+          "Share the module list, site and target dates. Availability, hire terms and delivery schedules depend on the selected configuration and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a portable cabin quote in Virudhunagar",
+    ctaText:
+      "Send the site location, intended use, cabin sizes and quantities, target dates and photos of the approach and placement area. Include any insulation, electrical, plumbing or fit-out requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Virudhunagar district. Delivery, unloading and placement are assessed and arranged for each location, and delivery schedules are not guaranteed. Rental is subject to availability and the rental quotation. The cabin combinations, sizes, layouts, fittings and specifications described on this page are examples for discussion; the items supplied are confirmed in the approved specification and quotation for each order. The cabins described here are general-purpose units for support activities: they are not designed or offered for hazardous areas, for fireworks, match or chemical manufacturing, or for storing fireworks, chemicals or other hazardous materials, and whether a location at a licensed or regulated site is suitable is for that site's safety team and the relevant authorities to decide. The images on this page are illustrative renders of one Portable Office Cabin design, shown with an optionally furnished interior; they are not photographs of installations in Virudhunagar district or at the PM MITRA park. The PM MITRA textile park area at E. Kumaralingapuram is named only to describe the location; Portable Office Cabin is not affiliated with the park, its developer or any business there, this page makes no claim about the park's status, and the mills, printers, market yards and other businesses mentioned are not clients or completed projects. Notes on placement, utilities and site safety are general guidance, not engineering, safety or legal advice.",
   },
 ];
 
