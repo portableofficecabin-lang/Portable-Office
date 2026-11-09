@@ -382,7 +382,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Mettur, Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
     // Coimbatore (Kovai) and the Pollachi belt, 2026-11-07; after Mettur so the live links keep their positions.
     { name: "Shipping Container in Coimbatore", href: "/cities-we-serve/shipping-container-coimbatore" },
-    // Dharmapuri district (Adhiyamankottai, Palacode), 2026-11-08; after Coimbatore so the live links keep their positions.
+    // Vellore (with Katpadi), 2026-11-07; after Mettur so the live links keep their positions. Not on the
+    // Chennai hub: Vellore is inland, and the page links back to this hub only.
+    { name: "Shipping Container in Vellore", href: "/cities-we-serve/shipping-container-vellore" },
+    // Dharmapuri district (Adhiyamankottai, Palacode), 2026-11-08; after Vellore so the live links keep their positions.
     { name: "Shipping Container in Dharmapuri", href: "/cities-we-serve/shipping-container-dharmapuri" },
   ],
   "Shipping Container|Chennai": [
@@ -544,6 +547,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
     // Bellandur (household, society and shop storage), 2026-11-07; appended after the live lines so they keep their positions.
     { name: "Shipping Container in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+    // Chamarajanagar district (granite supplies, packing stores, fairs and resorts; owner brief 2026-11-08), after Bellandur.
+    { name: "Shipping Container in Chamarajanagar", href: "/cities-we-serve/shipping-container-chamarajanagar" },
   ],
 };
 

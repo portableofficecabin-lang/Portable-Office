@@ -178,12 +178,20 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     t("solutions", "solutions intro", p.solutionsIntro ?? "");
     (p.solutions ?? []).forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
     (p.solutions ?? []).forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
+    // Optional captioned images under a solutions item (since 2026-11-05): src, alt and caption.
+    (p.solutions ?? []).forEach((s, i) => s.images?.forEach((img, j) => {
+      items.push({ group: "images", label: `layout ${i + 1} image ${j + 1} src`, test: (mk) => imageNeedle(img.src).test(mk) });
+      m("images", `layout ${i + 1} image ${j + 1} alt`, `alt="${img.alt}"`);
+      t("images", `layout ${i + 1} image ${j + 1} caption`, img.caption);
+    }));
     // Optional solutions table (since 2026-11-07): caption, headers and every cell.
     if (p.solutionsTable) {
       t("solutions", "solutions table caption", p.solutionsTable.caption);
       p.solutionsTable.headers.forEach((x, j) => t("solutions", `solutions table header ${j + 1}`, x));
       p.solutionsTable.rows.forEach((row, r) => row.forEach((x, c) => t("solutions", `solutions table row ${r + 1} cell ${c + 1}`, x)));
     }
+    // Optional solutions outro (since 2026-11-08).
+    if (p.solutionsOutro) t("solutions", "solutions outro", p.solutionsOutro);
   }
   // Optional section (since 2026-11-08): audited whenever the page sets it.
   if (p.featuresHeading) {
@@ -191,6 +199,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     t("features", "features intro", p.featuresIntro ?? "");
     (p.features ?? []).forEach((f, i) => t("features", `feature line ${i + 1}`, f));
     t("features", "sizes note", p.sizesNote ?? "");
+    // Optional features links (since 2026-11-08): label text and href.
+    (p.featuresLinks ?? []).forEach((l, i) => { t("features", `features link ${i + 1} "${l.label}"`, l.label); m("features", `features link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   }
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
   // Optional gallery captions (since 2026-11-05): audited whenever an image sets one.
@@ -203,6 +213,9 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("custom", "custom heading", p.customHeading);
   if (p.interiorImage) { items.push({ group: "images", label: "interior image src", test: (mk) => imageNeedle(p.interiorImage!.src).test(mk) }); m("images", "interior image alt", `alt="${p.interiorImage.alt}"`); }
+  // Optional visible captions on the hero and interior images (audited since 2026-11-05).
+  if (p.heroImage.caption) t("images", "hero caption", p.heroImage.caption);
+  if (p.interiorImage?.caption) t("images", "interior caption", p.interiorImage.caption);
   t("custom", "custom intro", p.customIntro);
   p.customBullets.forEach((b, i) => { t("custom", `custom bullet ${i + 1} title`, b.title ?? ""); t("custom", `custom bullet ${i + 1} text`, b.text); });
   t("custom", "custom outro", p.customOutro);
@@ -424,7 +437,13 @@ async function auditPage(p: CityPage): Promise<PageResult> {
     if (s !== 200) linksBroken.push(`${h} → ${s}`);
   }
   // images: every page-data image must be fetchable as the raw file and through the optimizer URL used in the HTML
-  const imgSrcs = [p.heroImage.src, p.featureImage?.src, p.interiorImage?.src, ...(p.gallery ?? []).map((g) => g.src)].filter(Boolean) as string[];
+  const imgSrcs = [
+    p.heroImage.src,
+    p.featureImage?.src,
+    p.interiorImage?.src,
+    ...(p.gallery ?? []).map((g) => g.src),
+    ...(p.solutions ?? []).flatMap((s) => (s.images ?? []).map((img) => img.src)),
+  ].filter(Boolean) as string[];
   const imagesBroken: string[] = [];
   for (const src of imgSrcs) {
     const s = await headStatus(origin + src);
