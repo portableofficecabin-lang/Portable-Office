@@ -385,6 +385,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Vellore (with Katpadi), 2026-11-07; after Mettur so the live links keep their positions. Not on the
     // Chennai hub: Vellore is inland, and the page links back to this hub only.
     { name: "Shipping Container in Vellore", href: "/cities-we-serve/shipping-container-vellore" },
+    // Dharmapuri district (Adhiyamankottai, Palacode), 2026-11-08; after Vellore so the live links keep their positions.
+    { name: "Shipping Container in Dharmapuri", href: "/cities-we-serve/shipping-container-dharmapuri" },
   ],
   "Shipping Container|Chennai": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
