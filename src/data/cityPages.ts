@@ -29174,7 +29174,7 @@ export const CITY_PAGES: CityPage[] = [
 
     h1: "Portable Marketing Offices in Virudhunagar",
     tagline:
-      "Prefabricated cabins planned for recruitment drives, investor meetings, print sample displays and seasonal booking desks across Virudhunagar district.",
+      "Visitor-facing offices planned for recruitment drives, investor meetings, print sample displays and seasonal booking desks across Virudhunagar district.",
     intro: [
       "Give job applicants a place to register, show print samples to visiting buyers, or present a site plan to investors before your permanent office opens. Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries for portable marketing offices in Virudhunagar district. Share what visitors need to do inside the cabin so the reception, display and meeting spaces can be planned around that purpose.",
     ],
