@@ -330,6 +330,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in SIPCOT Mambakkam, Sriperumbudur", href: "/cities-we-serve/portable-cabin-mambakkam" },
     { name: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
     { name: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
+    // Portable-cabin page for Virudhunagar district (owner brief 2026-11-09), here and on Porta Cabin, after Ranipet.
+    { name: "Portable Cabins in Virudhunagar", href: "/cities-we-serve/portable-cabin-virudhunagar" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -352,6 +354,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in SIPCOT Mambakkam, Sriperumbudur", href: "/cities-we-serve/portable-cabin-mambakkam" },
     { name: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
     { name: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
+    { name: "Portable Cabins in Virudhunagar", href: "/cities-we-serve/portable-cabin-virudhunagar" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
