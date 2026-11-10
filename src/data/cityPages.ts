@@ -31312,7 +31312,7 @@ export const CITY_PAGES: CityPage[] = [
         heading: "Container size examples",
         placement: "afterSolutions",
         table: {
-          caption: "Examples of typical enquiries; the quotation states the actual dimensions, condition and availability of the unit offered.",
+          caption: "Examples only: the specific unit's dimensions, condition and availability are confirmed in your quotation.",
           headers: ["Configuration", "Typical enquiry", "What to confirm"],
           rows: [
             ["20 ft", "Packaging supplies, spares or segregated scrap", "Door clearance, handling method and unloading space"],
@@ -31390,7 +31390,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Send your Shoolagiri container requirement",
       intro:
-        "Choose a container and quantity, then add your plot pin or PIN code, what the unit will hold and your target dates. Mention racks, labelled bays, door openings, unloading or rental; the team reviews the details before sending a written quotation.",
+        "Choose a container and quantity, then add your plot pin or PIN code, what the unit will hold and your target dates. Mention racks, labelled bays, door openings, unloading or hire, and our team will check these points and reply with a written quote.",
     },
     relatedLinksHeading: "Related products",
     relatedLinks: [
@@ -31400,7 +31400,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
     ],
 
-    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not run a container yard, depot, office or service partner in Shoolagiri. Each container is offered subject to stock, and its size, condition, grade, dispatch point, any fittings or modifications, any rental terms, the dispatch documents and the transport, unloading, placement and collection scope are set out in its quotation; no delivery date is guaranteed. All four images are illustrative renders of one steel shipping container; the interior is shown empty, and none is a photograph of a container delivered to or placed in Shoolagiri, at SIPCOT or at the Future Mobility Park. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and the Future Mobility Park are named only to describe where enquiries may come from; Portable Office Cabin is not affiliated with SIPCOT or with any manufacturer, supplier, contractor or company there. The returnable-packaging, scrap, consumables and spares uses describe typical enquiries, not clients, completed projects or confirmed delivery areas. The containers described are for general-purpose storage of suitable non-hazardous goods; hazardous waste, contaminated scrap and e-waste are outside this offer. Notes on stacking, loads, waste classification, dispatch documents and e-way bills are general guidance, not engineering, environmental, safety, legal or tax advice.`,
+    disclaimer: `Containers are supplied by Portable Office Cabin, whose factory is at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur in Krishnagiri district, Tamil Nadu, with a Bengaluru office in Electronic City; the company has no container yard, depot, branch or agent in Shoolagiri. Every unit is subject to stock. Your quotation records its size, condition, grade and dispatch point, any fittings or modifications, any hire terms, the dispatch paperwork, and who handles transport, unloading, placement and collection; delivery dates are not guaranteed. The four images are illustrative renders of a single steel shipping container, shown with an empty interior; none was photographed in Shoolagiri, at SIPCOT or at the Future Mobility Park, and none shows a delivered unit. SIPCOT (State Industries Promotion Corporation of Tamil Nadu) and the Future Mobility Park are mentioned only as places enquiries may come from, and Portable Office Cabin has no affiliation with them or with any business located there. The returnable-packaging, scrap, consumables and spares uses are examples of typical enquiries rather than customers, finished projects or confirmed delivery points. These containers are for general-purpose storage of suitable non-hazardous goods; hazardous waste, contaminated scrap and e-waste are excluded. Guidance on stacking, loads, waste classification, dispatch documents and e-way bills is general information, not engineering, environmental, safety, legal or tax advice.`,
   },
 ];
 
