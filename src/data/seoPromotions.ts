@@ -316,6 +316,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     // Portable-cabin page for Perundurai / SIPCOT Perundurai (Erode), here and on Porta Cabin.
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    // Portable-cabin page for Madurai (owner brief 2026-11-09), here and on Porta Cabin, after Perundurai.
+    { name: "Portable Cabins in Madurai", href: "/cities-we-serve/portable-cabin-madurai" },
     // Insulated PUF panel cabins for Padalur / Irur (Perambalur), here and on Porta Cabin.
     { name: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
     // Tindivanam / SIPCOT Industrial Park, Viluppuram district (owner request, 2026-10-23), on both TN
@@ -346,6 +348,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
     { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    { name: "Portable Cabins in Madurai", href: "/cities-we-serve/portable-cabin-madurai" },
     { name: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
@@ -494,6 +497,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
     // Office-cabin page for tech park projects in Devarabisanahalli, Bengaluru (2026-11-07), after the portable-cabin city pages already listed.
     { name: "Portable Office Cabins in Devarabisanahalli", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
+    // Porta / portable cabin page for Hubballi–Dharwad (2026-11-09), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" },
     // Porta & portable cabin page for Chamarajanagar district (owner brief 2026-11-09), here and on Porta Cabin; appended so the live links keep their positions.
     { name: "Portable Cabins in Chamarajanagar", href: "/cities-we-serve/porta-cabin-chamarajanagar" },
     ...hubLinksFor([
@@ -525,6 +530,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
     // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
     { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
+    // Porta / portable cabin page for Hubballi–Dharwad (2026-11-09), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Porta Cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" },
     // Porta & portable cabin page for Chamarajanagar district (owner brief 2026-11-09), here and on Portable Cabin; appended so the live links keep their positions.
     { name: "Porta Cabins in Chamarajanagar", href: "/cities-we-serve/porta-cabin-chamarajanagar" },
     ...hubLinksFor([
