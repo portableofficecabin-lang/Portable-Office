@@ -24310,6 +24310,7 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
         { label: "Shop Cabins in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
         { label: "Shop Cabins in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+        { label: "Shop Cabins in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
