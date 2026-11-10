@@ -78,8 +78,10 @@ export interface CityPageSection {
    * Optional position of the section. Unset = after the "how" steps, where every extra section has
    * always rendered. "afterSolutions" renders it straight after the solutions list instead (first used
    * by Portable Security Cabins in Krishnagiri, whose cabin-selection table follows its industries).
+   * "afterIntro" renders it straight after the intro and the hero contact row, before the why section
+   * (first used by Portable Cabins in Madurai for its porta-cabin synonyms section).
    */
-  placement?: "afterSolutions";
+  placement?: "afterIntro" | "afterSolutions";
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -29293,6 +29295,20 @@ export const CITY_PAGES: CityPage[] = [
    * around it (Madurai district, Tamil Nadu): non-clinical support cabins for hospital campuses, jasmine
    * grading and packing rooms, and billing and dispatch offices for Ring Road godowns and Kappalur units.
    *
+   * REVISED BRIEF (same title, received 2026-11-09, applied 2026-11-10 as an in-place update of the
+   * live page; slug, canonical, images and links unchanged): the porta-cabin synonyms join the meta
+   * title, meta description and H1 ("Portable Cabins (Porta Cabins) in Madurai"); a new "Porta Cabin,
+   * Portable Cabin or Prefab Cabin?" section follows the intro (an extra section with
+   * `placement: "afterIntro"`, added to the template for it); the jasmine paragraph names "washable
+   * packing tables and floors"; the 20 x 10 ft row reads "jasmine packing porta cabin"; the price
+   * heading is "Portable Cabin & Porta Cabin Price in Madurai"; a first FAQ "Is a porta cabin the same
+   * as a portable cabin?" is added; and the CTA ends "so we can quote a porta cabin suited to the
+   * work". One indexable page covers the synonyms: no /porta-cabin-madurai route exists or is needed,
+   * so no alias redirect is added (the brief asks for one only if the CMS requires that path). No
+   * Product entity represents this cabin range (the /products/portable-cabin guide is a Service, the
+   * category page an ItemList), so no alternateName is added anywhere. The labour-colony links stay
+   * deferred until #238 is on main. The rest of this comment describes the first version.
+   *
    * Owner brief of 2026-11-09 ("Madurai portable cabin page and developer commands"): route, meta
    * title, meta description, H1 and keywords (primary query + supporting terms) as given, and every
    * sentence of the website copy verbatim. No route, redirect or sitemap entry used a Madurai
@@ -29311,11 +29327,12 @@ export const CITY_PAGES: CityPage[] = [
    *   • "Billing and dispatch offices for godowns and Kappalur units" (two paragraphs) and "Cabin sizes
    *     and fittings" (table, the closing paragraph, then the brief's sibling link) → two afterSolutions
    *     extra sections. No features section.
-   *   • "Portable cabin price and rental in Madurai" → custom (prose: customBullets is empty), beside
+   *   • "Portable Cabin & Porta Cabin Price in Madurai" (first version: "Portable cabin price and
+   *     rental in Madurai") → custom (prose: customBullets is empty), beside
    *     the interior render.
    *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps). The template
    *     puts areas before the steps, the reverse of the brief.
-   *   • FAQs (four) → faqs; "Request a portable cabin quote in Madurai" → CTA.
+   *   • FAQs (four; five since the revision) → faqs; "Request a portable cabin quote in Madurai" → CTA.
    * Composed (owner review): the whyIntro lead-in, the two table captions, the lead-in to the sibling
    * link ("…, see:" in place of the brief's inline "see our [anchor]"), the alt text and captions of the
    * three images outside the brief's slots, the related links and the disclaimer.
@@ -29357,9 +29374,9 @@ export const CITY_PAGES: CityPage[] = [
     listTitle: "Portable Cabins in Madurai",
     // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
     directoryLabel: "Portable cabins in Madurai",
-    metaTitle: "Portable Cabins in Madurai for Hospitals & Businesses",
+    metaTitle: "Portable Cabin & Porta Cabin in Madurai | Hospitals, Jasmine Packing & Godowns",
     metaDescription:
-      "Enquire about portable cabins in Madurai for hospital waiting areas, jasmine grading and packing, Ring Road warehouse offices and Kappalur dispatch teams.",
+      "Portable cabins and porta cabins in Madurai for hospital waiting areas and help desks, jasmine packing rooms, Ring Road godown offices and Kappalur units.",
     keywords:
       "Portable Cabin in Madurai, Porta Cabin Madurai, Hospital Waiting Cabin, Jasmine Packing Room Cabin, Godown Office Cabin, Portable Cabin Kappalur",
     geo: {
@@ -29404,7 +29421,7 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
 
-    h1: "Portable Cabins in Madurai",
+    h1: "Portable Cabins (Porta Cabins) in Madurai",
     tagline:
       "Need a waiting room for families at a hospital, a workspace for grading and packing jasmine near Mattuthavani, or a billing office at a Ring Road godown?",
     intro: [
@@ -29430,13 +29447,13 @@ export const CITY_PAGES: CityPage[] = [
 
     solutionsHeading: "Jasmine grading and packing rooms",
     solutionsIntro:
-      "For a flower trader near Mattuthavani or a collection team around Thirumangalam, Usilampatti or Peraiyur, start with the workflow from receipt and weighing through grading, packing, labelling and dispatch. Discuss washable work surfaces, task lighting, screened openings and space for boxes. If staff will use water or ice, agree on the cleaning and drainage arrangements before choosing the fittings.",
+      "For a flower trader near Mattuthavani or a collection team around Thirumangalam, Usilampatti or Peraiyur, start with the workflow from receipt and weighing through grading, packing, labelling and dispatch. Discuss washable packing tables and floors, task lighting, screened openings and space for boxes. If staff will use water or ice, agree on the cleaning and drainage arrangements before choosing the fittings.",
     // Empty on purpose: the section is two paragraphs, as in the brief.
     solutions: [],
     solutionsOutro:
       "The room is intended for grading and packing before dispatch. If your process requires chilled holding, specify the temperature, equipment and monitoring needs separately.",
 
-    customHeading: "Portable cabin price and rental in Madurai",
+    customHeading: "Portable Cabin & Porta Cabin Price in Madurai",
     customIntro:
       "Pricing depends on size, construction, fittings, finishes, utilities, transport and unloading. List any counters, washable finishes, ventilation, drainage or electrical requirements for an itemised quote.",
     // Empty on purpose: a prose section (see the header comment).
@@ -29459,6 +29476,14 @@ export const CITY_PAGES: CityPage[] = [
 
     extraSections: [
       {
+        // Revised brief: the synonyms section sits between the intro and the hospital-campus section.
+        heading: "Porta Cabin, Portable Cabin or Prefab Cabin?",
+        placement: "afterIntro",
+        paragraphs: [
+          "For the cabins on this page, “porta cabin”, “portable cabin”, “prefab cabin” and “readymade cabin” describe the same workshop-built room. It is transported to your site and placed using a method suited to the unit and available access.",
+        ],
+      },
+      {
         heading: "Billing and dispatch offices for godowns and Kappalur units",
         placement: "afterSolutions",
         paragraphs: [
@@ -29476,7 +29501,7 @@ export const CITY_PAGES: CityPage[] = [
           rows: [
             ["6\u00a0×\u00a06\u00a0ft", "Compact help desk or guard cabin"],
             ["10\u00a0×\u00a08\u00a0ft", "Registration counter, collection point or godown office"],
-            ["20\u00a0×\u00a010\u00a0ft", "Attendant waiting area, packing room or site office"],
+            ["20\u00a0×\u00a010\u00a0ft", "Attendant waiting area, jasmine packing porta cabin or site office"],
             ["30\u00a0×\u00a010\u00a0ft and above", "Larger waiting room or combined billing and accounts office"],
           ],
         },
@@ -29490,6 +29515,11 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     faqs: [
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer:
+          "Yes. For this range, both names refer to a workshop-built, relocatable cabin delivered to your site. We welcome enquiries across Madurai, including the Ring Road, Kappalur, Thirumangalam, Usilampatti and Melur.",
+      },
       {
         question: "Can I enquire about a hospital attendant waiting cabin?",
         answer:
@@ -29514,7 +29544,7 @@ export const CITY_PAGES: CityPage[] = [
 
     ctaHeading: "Request a portable cabin quote in Madurai",
     ctaText:
-      "Send your site location, intended use, preferred size, quantity, dates and photos of the approach and placement area. Include any seating, counters, worktops, power, water or drainage requirements.",
+      "Send your site location, intended use, preferred size, quantity, dates and photos of the approach and placement area. Include any seating, counters, worktops, power, water or drainage requirements so we can quote a porta cabin suited to the work.",
     ctaButtonLabel: "Request a Quote",
     // Not a container-office page: an empty list drops the two container-office secondary buttons; the
     // call and WhatsApp buttons (numbers from COMPANY) stay on, as the brief asks.
