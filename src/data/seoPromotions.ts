@@ -316,6 +316,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     // Portable-cabin page for Perundurai / SIPCOT Perundurai (Erode), here and on Porta Cabin.
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    // Portable-cabin page for Madurai (owner brief 2026-11-09), here and on Porta Cabin, after Perundurai.
+    { name: "Portable Cabins in Madurai", href: "/cities-we-serve/portable-cabin-madurai" },
     // Insulated PUF panel cabins for Padalur / Irur (Perambalur), here and on Porta Cabin.
     { name: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
     // Tindivanam / SIPCOT Industrial Park, Viluppuram district (owner request, 2026-10-23), on both TN
@@ -337,11 +339,16 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
+    // Madurai marketing offices (visitor-facing site sales offices; owner brief 2026-11-09), appended after the live lines.
+    { name: "Portable Marketing Offices in Madurai", href: "/cities-we-serve/portable-marketing-office-madurai" },
+    // Virudhunagar marketing offices (recruitment, investor meetings, Sivakasi print samples; owner brief 2026-11-09), appended after the live lines.
+    { name: "Portable Marketing Offices in Virudhunagar", href: "/cities-we-serve/portable-marketing-office-virudhunagar" },
   ],
   "Porta Cabin|Tamil Nadu": [
     { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
     { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    { name: "Portable Cabins in Madurai", href: "/cities-we-serve/portable-cabin-madurai" },
     { name: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
@@ -382,6 +389,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Mettur, Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
     // Coimbatore (Kovai) and the Pollachi belt, 2026-11-07; after Mettur so the live links keep their positions.
     { name: "Shipping Container in Coimbatore", href: "/cities-we-serve/shipping-container-coimbatore" },
+    // Vellore (with Katpadi), 2026-11-07; after Mettur so the live links keep their positions. Not on the
+    // Chennai hub: Vellore is inland, and the page links back to this hub only.
+    { name: "Shipping Container in Vellore", href: "/cities-we-serve/shipping-container-vellore" },
+    // Dharmapuri district (Adhiyamankottai, Palacode), 2026-11-08; after Vellore so the live links keep their positions.
+    { name: "Shipping Container in Dharmapuri", href: "/cities-we-serve/shipping-container-dharmapuri" },
   ],
   "Shipping Container|Chennai": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
@@ -485,6 +497,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
     // Office-cabin page for tech park projects in Devarabisanahalli, Bengaluru (2026-11-07), after the portable-cabin city pages already listed.
     { name: "Portable Office Cabins in Devarabisanahalli", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
+    // Porta / portable cabin page for Hubballi–Dharwad (2026-11-09), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -514,6 +528,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
     // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
     { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
+    // Porta / portable cabin page for Hubballi–Dharwad (2026-11-09), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Porta Cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -540,6 +556,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
     // Marathahalli / Outer Ring Road commercial storage (owner brief, 2026-11-07), after Shivamogga.
     { name: "Shipping Containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
+    // Bellandur (household, society and shop storage), 2026-11-07; appended after the live lines so they keep their positions.
+    { name: "Shipping Container in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+    // Chamarajanagar district (granite supplies, packing stores, fairs and resorts; owner brief 2026-11-08), after Bellandur.
+    { name: "Shipping Container in Chamarajanagar", href: "/cities-we-serve/shipping-container-chamarajanagar" },
   ],
 };
 

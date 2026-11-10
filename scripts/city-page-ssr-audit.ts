@@ -172,20 +172,36 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     m("images", "feature image alt", `alt="${p.featureImage.alt}"`);
     t("images", "feature image caption", p.featureImage.caption);
   }
-  t("solutions", "solutions heading", p.solutionsHeading);
-  t("solutions", "solutions intro", p.solutionsIntro);
-  p.solutions.forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
-  p.solutions.forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
-  // Optional solutions table (since 2026-11-07): caption, headers and every cell.
-  if (p.solutionsTable) {
-    t("solutions", "solutions table caption", p.solutionsTable.caption);
-    p.solutionsTable.headers.forEach((x, j) => t("solutions", `solutions table header ${j + 1}`, x));
-    p.solutionsTable.rows.forEach((row, r) => row.forEach((x, c) => t("solutions", `solutions table row ${r + 1} cell ${c + 1}`, x)));
+  // Optional section (since 2026-11-08): audited whenever the page sets it.
+  if (p.solutionsHeading) {
+    t("solutions", "solutions heading", p.solutionsHeading);
+    t("solutions", "solutions intro", p.solutionsIntro ?? "");
+    (p.solutions ?? []).forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
+    (p.solutions ?? []).forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
+    // Optional captioned images under a solutions item (since 2026-11-05): src, alt and caption.
+    (p.solutions ?? []).forEach((s, i) => s.images?.forEach((img, j) => {
+      items.push({ group: "images", label: `layout ${i + 1} image ${j + 1} src`, test: (mk) => imageNeedle(img.src).test(mk) });
+      m("images", `layout ${i + 1} image ${j + 1} alt`, `alt="${img.alt}"`);
+      t("images", `layout ${i + 1} image ${j + 1} caption`, img.caption);
+    }));
+    // Optional solutions table (since 2026-11-07): caption, headers and every cell.
+    if (p.solutionsTable) {
+      t("solutions", "solutions table caption", p.solutionsTable.caption);
+      p.solutionsTable.headers.forEach((x, j) => t("solutions", `solutions table header ${j + 1}`, x));
+      p.solutionsTable.rows.forEach((row, r) => row.forEach((x, c) => t("solutions", `solutions table row ${r + 1} cell ${c + 1}`, x)));
+    }
+    // Optional solutions outro (since 2026-11-08).
+    if (p.solutionsOutro) t("solutions", "solutions outro", p.solutionsOutro);
   }
-  t("features", "features heading", p.featuresHeading);
-  t("features", "features intro", p.featuresIntro);
-  p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
-  t("features", "sizes note", p.sizesNote);
+  // Optional section (since 2026-11-08): audited whenever the page sets it.
+  if (p.featuresHeading) {
+    t("features", "features heading", p.featuresHeading);
+    t("features", "features intro", p.featuresIntro ?? "");
+    (p.features ?? []).forEach((f, i) => t("features", `feature line ${i + 1}`, f));
+    t("features", "sizes note", p.sizesNote ?? "");
+    // Optional features links (since 2026-11-08): label text and href.
+    (p.featuresLinks ?? []).forEach((l, i) => { t("features", `features link ${i + 1} "${l.label}"`, l.label); m("features", `features link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  }
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
   // Optional gallery captions (since 2026-11-05): audited whenever an image sets one.
   p.gallery?.forEach((g, i) => { if (g.caption) t("images", `gallery ${i + 1} caption`, g.caption); });
@@ -197,6 +213,9 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("custom", "custom heading", p.customHeading);
   if (p.interiorImage) { items.push({ group: "images", label: "interior image src", test: (mk) => imageNeedle(p.interiorImage!.src).test(mk) }); m("images", "interior image alt", `alt="${p.interiorImage.alt}"`); }
+  // Optional visible captions on the hero and interior images (audited since 2026-11-05).
+  if (p.heroImage.caption) t("images", "hero caption", p.heroImage.caption);
+  if (p.interiorImage?.caption) t("images", "interior caption", p.interiorImage.caption);
   t("custom", "custom intro", p.customIntro);
   p.customBullets.forEach((b, i) => { t("custom", `custom bullet ${i + 1} title`, b.title ?? ""); t("custom", `custom bullet ${i + 1} text`, b.text); });
   t("custom", "custom outro", p.customOutro);
@@ -210,6 +229,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("areas", "areas heading", p.areasHeading);
   t("areas", "areas text", p.areasText);
+  // Optional areas links (since 2026-11-07): label text and href.
+  (p.areasLinks ?? []).forEach((l, i) => { t("areas", `areas link ${i + 1} "${l.label}"`, l.label); m("areas", `areas link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   t("how", "how heading", p.howHeading);
   if (p.howIntro) t("how", "how intro", p.howIntro);
   p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });
@@ -229,15 +250,19 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     // Optional links (since 2026-11-05): label text and href.
     (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
-    // heading and the features heading in the visible text.
+    // heading and the features heading in the visible text. A page without those optional sections
+    // (since 2026-11-08) is checked against the headings either side instead: the why heading before,
+    // and the industries or custom heading after.
     if (s.placement === "afterSolutions") {
+      const before = p.solutionsHeading ?? p.whyHeading;
+      const after = p.featuresHeading ?? p.industriesHeading ?? p.customHeading;
       items.push({
         group: "extra",
         label: `extra section ${i + 1} renders after the solutions`,
         test: (_mk, tx) => {
-          const a = tx.indexOf(squash(p.solutionsHeading));
+          const a = tx.indexOf(squash(before));
           const b = a >= 0 ? tx.indexOf(squash(s.heading), a) : -1;
-          const c = b >= 0 ? tx.indexOf(squash(p.featuresHeading), b) : -1;
+          const c = b >= 0 ? tx.indexOf(squash(after), b) : -1;
           return a >= 0 && b > a && c > b;
         },
       });
@@ -412,7 +437,13 @@ async function auditPage(p: CityPage): Promise<PageResult> {
     if (s !== 200) linksBroken.push(`${h} → ${s}`);
   }
   // images: every page-data image must be fetchable as the raw file and through the optimizer URL used in the HTML
-  const imgSrcs = [p.heroImage.src, p.featureImage?.src, p.interiorImage?.src, ...(p.gallery ?? []).map((g) => g.src)].filter(Boolean) as string[];
+  const imgSrcs = [
+    p.heroImage.src,
+    p.featureImage?.src,
+    p.interiorImage?.src,
+    ...(p.gallery ?? []).map((g) => g.src),
+    ...(p.solutions ?? []).flatMap((s) => (s.images ?? []).map((img) => img.src)),
+  ].filter(Boolean) as string[];
   const imagesBroken: string[] = [];
   for (const src of imgSrcs) {
     const s = await headStatus(origin + src);
