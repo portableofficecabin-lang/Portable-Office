@@ -26100,7 +26100,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Delivery Enquiries Around Krishnagiri",
     areasText:
-      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area, Shoolagiri and Hosur, and from sites along NH 44 and NH 48. For Dharmapuri, see the nearby service areas below. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
+      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area, Shoolagiri and Hosur, and from sites along NH 44 and NH 48. For Bargur and Dharmapuri, see the nearby service areas below. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
 
     howHeading: "Delivery and Installation",
     howIntro: "How an order moves from enquiry to installation:",
@@ -26281,6 +26281,8 @@ export const CITY_PAGES: CityPage[] = [
       heading: "Nearby Service Areas",
       links: [
         { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        // Bargur's own portable-toilet page (2026-11-05): Bargur left this page's areas list for it.
+        { label: "Portable Toilet Cabins in Bargur", href: "/cities-we-serve/portable-toilet-cabin-bargur" },
         { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
@@ -31130,6 +31132,373 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Cabins are made at Portable Office Cabin's factory near Hosur (Krishnagiri district, Tamil Nadu), and the company's Karnataka office is at Electronic City Phase 1 in Bengaluru; there is no workshop, yard, depot, office or agent of the company in Chamarajanagar district. Each order's quotation records the size, layout, construction, fittings and signage, any solar provisions, water points or seating, the length of any hire, and who handles transport, unloading, placement and removal; hire is subject to availability and delivery dates are not guaranteed. Each image on this page is an illustrative render of one cabin design, with the interior shown as an optionally furnished office; none is a photograph taken in Chamarajanagar district, at Bandipur, the Biligiri Rangana Hills or MM Hills, or of a cabin already delivered to a customer. Bandipur, the Biligiri Rangana Hills, MM Hills, Badanaguppe–Kellamballi and the other places named describe where enquiries may come from. Portable Office Cabin is not affiliated with any forest, wildlife, temple, pilgrimage or industrial-area authority, safari operator, resort, homestay or business there, and no use or place described is a customer, a completed project, an approved placement or a confirmed delivery point. Placement permissions, sign translations and any first-aid staffing or equipment are to be confirmed with the landowner, the relevant authorities or the organiser before ordering. Notes on power, water, routes, access and placement are general guidance, not engineering, legal, regulatory or safety advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABIN MANUFACTURERS IN BARGUR INDUSTRIAL AREA — the portable-toilet intent for
+   * Bargur (Krishnagiri district, Tamil Nadu — not Bargur in Erode district): the SIPCOT Industrial
+   * Growth Centre across the Bargur, Uthangarai and Pochampalli taluks (with its SEZ), the SIDCO
+   * Industrial Estate at Bargur and the NH 48 corridor. Compact cabins for small estate plots and
+   * multi-seater blocks for larger plants. It owns "toilet cabin + Bargur"; the Krishnagiri toilet page
+   * keeps Krishnagiri and no longer lists Bargur as a delivery town (no-cannibalisation rule), and the
+   * two pages link to each other.
+   *
+   * Owner brief of 2026-11-05 ("Portable Toilet Cabin Manufacturers in Bargur Industrial Area"): the
+   * preferred slug, meta title (62 chars), meta description (160 chars) and H1 verbatim. Names checked
+   * on 2026-11-05: SIPCOT's Industrial Growth Centre at Bargur/Uthangarai/Pochampalli taluks and its SEZ
+   * (sezindia.gov.in notifications), the SIDCO Industrial Estate at Bargur (TANSIDCO plot listings of
+   * about 0.11–1.03 acres), Balethottam and Olaipatti (villages near Pochampalli). The brief is section
+   * guidance; the text is written from it, with its caveats, and is not copied from the Krishnagiri page.
+   * Mapped onto the template slots:
+   *   • Hero → tagline, intro (four paragraphs), heroCta.
+   *   • "Toilet Cabins for Small Units and Larger Industrial Sites" → why, as a comparison table
+   *     (`whyTable`, empty whyBullets) + whyOutro (EHS plan line).
+   *   • "Types of Portable Toilet Cabins" → solutions (nine; FRP / bio-toilet left out — owner's final
+   *     decision of 2026-11-05 on unconfirmed toilet types). "Choosing the Right Construction Material"
+   *     → an extra section placed after the solutions, MS and PUF rows only (no FRP row, no
+   *     "maintenance-free").
+   *   • "Portable Toilet Cabin Price in Bargur" → features (cost factors) + bold quotation note.
+   *   • "Portable Toilets for Different Industries in Bargur" → industries (four; no named EV factory,
+   *     no dustproof / food-safety-compliance claims, decontamination stated as separate).
+   *   • "Compact Layouts for Small SIDCO Plots" → custom, beside the three-quarter image (600 px wide, so
+   *     the route caps it at its own width).
+   *   • "Why Choose Portable Office Cabin?" → whyUs; "Areas Served" → areas, as delivery enquiries;
+   *     "How to Order" → how (six steps).
+   *   • "Delivery to Bargur Industrial Locations" and its site-preparation list → two extra sections
+   *     after the steps (no guaranteed SEZ entry or automatic paperwork).
+   *   • FAQs: the brief's eight, no delivery times. No rental section or rental FAQ (brief: omit unless
+   *     offered in Bargur).
+   *   • "Request a Portable Toilet Cabin Quote in Bargur" → CTA + the portable-toilet-cabins enquiry form.
+   * Images: three owner-dropped webp files ("public/images/cities/bargur portable toilet city page/
+   * Bargur Industrial Area portable toilet/cabin (1–3).webp", no EXIF/XMP/ICC), copied byte-for-byte:
+   * (1) 1200×896 front, both doors open (Western commode one side, Indian pan the other) = hero /
+   * og:image; (2) 1200×896 rear with roof ventilator = feature band; (3) 600×448 three-quarter, doors
+   * closed = beside the compact-layout section. Described as illustrative images of one design, not
+   * installations in Bargur; no location in the alt text.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-bargur",
+    city: "Bargur",
+    listTitle: "Portable Toilet Cabins in Bargur",
+    metaTitle: "Portable Toilet Cabin in Bargur | SIPCOT & SIDCO Toilet Blocks",
+    metaDescription:
+      "Portable toilet cabins in Bargur, Krishnagiri district. Explore compact toilets for SIDCO units and prefabricated toilet blocks for SIPCOT and industrial sites.",
+    keywords:
+      "Portable Toilet Cabin in Bargur, Portable Toilet Bargur, Mobile Toilet Bargur Industrial Area, Toilet Cabin SIPCOT Bargur, Portable Toilet Cabin Manufacturers in Bargur, Portable Toilet Suppliers Bargur, Prefab Toilet Block Bargur, Portable Toilet Cabin Price in Bargur, Compact Toilet Cabin Bargur, Multi-Seater Toilet Block Bargur, Toilet Cabin for Industrial Units",
+    geo: { region: "IN-TN", placename: "Bargur, Krishnagiri, Tamil Nadu, India", position: "12.5333;78.3500", icbm: "12.5333, 78.3500" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-bargur/double-portable-toilet-cabin-front.webp",
+      alt: "Double portable toilet cabin with both doors open, showing a Western commode with a hand spray in one cubicle and an Indian squatting pan with a cistern in the other, under green corrugated panels and terracotta trims — illustrative image",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/portable-toilet-cabin-bargur/portable-toilet-cabin-rear-ventilator.webp",
+      alt: "Rear of the double portable toilet cabin: a plain green corrugated wall framed by terracotta trims, with a turbine ventilator on the roof — illustrative image",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable toilet cabin design; final fittings depend on specifications.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-bargur/double-portable-toilet-cabin-three-quarter.webp",
+      alt: "Compact double portable toilet cabin with both doors closed, seen at a three-quarter angle, with green corrugated walls, terracotta corner trims and a curved roof edge — illustrative image",
+      width: 600,
+      height: 448,
+      caption: "Illustrative image of a compact two-cubicle footprint. Plot fit, setbacks and service positions are confirmed in the approved drawing.",
+    },
+
+    h1: "Portable Toilet Cabin Manufacturers in Bargur Industrial Area",
+    tagline: "Compact Toilet Cabins for SIDCO Units and Toilet Blocks for Larger Plants",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable toilet cabins and sanitation blocks for industrial, commercial and construction-related requirements in Bargur and the surrounding areas of Krishnagiri district.",
+      "Bargur's industrial locations range from compact workshops on small estate plots to larger manufacturing and processing facilities, and each has different sanitation needs.",
+      "A portable toilet cabin gives employees, contractors and visitors a sanitation arrangement that can be customized to the site.",
+      "Depending on the requirement, a configuration may include one or more toilet cubicles, handwash facilities, a changing area, water storage and waste-management provisions.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Toilet Cabins for Small Units and Larger Industrial Sites",
+    whyIntro: "Small workshops and large plants plan sanitation differently:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Possible configurations by site size. The final layout and quantities are confirmed for each site.",
+      headers: ["Site", "Possible layouts"],
+      rows: [
+        [
+          "Small industrial units",
+          "Compact single toilet cabin, double toilet cabin, toilet and store combination, exterior handwash basin and suitable water storage",
+        ],
+        [
+          "Larger plants",
+          "Multi-seater toilet blocks, separate ladies toilet cabins, gents toilet cabins with urinals, handwash stations and changing rooms",
+        ],
+      ],
+    },
+    whyOutro:
+      "On a small unit, the layout must allow for limited space, access, privacy, ventilation, drainage and maintenance. On a larger plant, sanitation points are spread across the site, and actual quantities and layouts must follow the requirements that apply to the site and the customer's EHS plan.",
+
+    solutionsHeading: "Types of Portable Toilet Cabins",
+    solutionsIntro: "Each type is made to order in the configuration you approve:",
+    solutions: [
+      {
+        title: "Single Toilet Cabin",
+        text: "A compact cabin with one toilet cubicle for smaller workshops and facilities.",
+        link: { label: "Compare portable toilet cabin types", href: "/products/portable-toilet-cabin" },
+      },
+      {
+        title: "Double Toilet Cabin",
+        text: "A two-cubicle cabin for sites that need more capacity. Each cubicle can take an Indian or a Western seat, as in the cabin shown on this page.",
+      },
+      {
+        title: "Toilet and Store Combo Cabin",
+        text: "One structure with a toilet compartment and a separate lockable storage compartment, each with its own access.",
+      },
+      {
+        title: "Multi-Seater Toilet Block",
+        text: "A prefabricated block with several toilet cubicles for larger workforces.",
+        link: { label: "View the 4-unit toilet block specifications", href: "/products/portable-toilet-block-4-unit" },
+      },
+      {
+        title: "Ladies Toilet Cabin",
+        text: "A privacy-focused cabin with suitable locks, lighting and fittings.",
+      },
+      {
+        title: "Urinal Cabin",
+        text: "A unit with urinal fixtures and the plumbing they need.",
+      },
+      {
+        title: "Handwash Station",
+        text: "A multi-tap handwashing unit with suitable water and drainage connections.",
+      },
+      {
+        title: "Toilet and Changing Room Cabin",
+        text: "A combined unit with the toilet and the changing space kept separate.",
+      },
+      {
+        title: "MS and PUF Toilet Cabins",
+        text: "Toilet cabins on a mild steel frame, with MS sheet walls or insulated PUF panels, chosen according to how long and how the cabin will be used.",
+      },
+    ],
+
+    featuresHeading: "Portable Toilet Cabin Price in Bargur",
+    featuresIntro: "A toilet cabin is priced on its specification. The main cost factors are:",
+    features: [
+      "Cabin size",
+      "Number of toilet seats",
+      "Urinal fittings",
+      "MS, PUF-insulated or other available construction",
+      "A toilet and store combination layout",
+      "Changing room provisions",
+      "Handwash fittings",
+      "Water storage",
+      "Waste holding tanks",
+      "Plumbing connections",
+      "Interior finishes",
+      "Delivery and unloading",
+      "Quantity ordered",
+    ],
+    sizesNote:
+      "Send your requirement for a written quotation. Prices, discounts and delivery dates are confirmed only in that quotation.",
+
+    industriesHeading: "Portable Toilets for Different Industries in Bargur",
+    industriesIntro: "What to consider for the main types of site around Bargur:",
+    industries: [
+      {
+        title: "Granite processing units",
+        text: "cutting and processing yards can mean wet surfaces, dust and heavy vehicles. Consider slip-resistant flooring, easy-clean surfaces, suitable ventilation, durable sanitary fittings, safe pedestrian access and a position away from active loading routes. Vents and doors do not make a cabin dustproof.",
+      },
+      {
+        title: "Food processing and horticulture units",
+        text: "plan separate handwash facilities, easy-clean wall finishes, insect screening, suitable changing areas and, where offered, hands-free taps, with toilet access kept apart from food handling. Placement and sanitation arrangements must be assessed against the food-safety requirements that apply; installing a toilet cabin does not by itself make a site compliant.",
+      },
+      {
+        title: "Engineering and chemical units",
+        text: "discuss washable interiors, suitable handwash facilities, drainage, durable fixtures and a position away from hazardous operations. Decontamination facilities for chemical exposure are a separate technical requirement, not a standard toilet cabin.",
+      },
+      {
+        title: "EV and larger industrial plants",
+        text: "large sites may need several multi-seater blocks, ladies toilet blocks, urinal cabins, handwash stations, changing facilities and sanitation points distributed across the plant.",
+      },
+    ],
+
+    customHeading: "Compact Layouts for Small SIDCO Plots",
+    customIntro:
+      "On a small estate plot, the cabin has to fit without blocking access or required clearances. Common arrangements:",
+    customBullets: [
+      {
+        title: "Corner placement",
+        text: "a compact toilet cabin in a suitable corner of the site, keeping access and required clearances.",
+      },
+      {
+        title: "Boundary-side placement",
+        text: "a narrow configuration along a boundary, subject to setbacks and utility requirements.",
+      },
+      {
+        title: "Toilet and store combination",
+        text: "a toilet compartment and a separate lockable store in one unit, with appropriate separation, hygiene provisions and access.",
+      },
+      {
+        title: "Water tank options",
+        text: "a tank beside the cabin or on a suitably engineered support structure; the cabin roof is not assumed to carry a full tank without structural verification.",
+      },
+      {
+        title: "External handwash point",
+        text: "an exterior basin where suitable plumbing and drainage are available.",
+      },
+    ],
+    customOutro:
+      "Share the plot dimensions, gate position and service points, and the proposed position will be marked on the drawing for your approval.",
+
+    whyUsHeading: "Why Order from Portable Office Cabin?",
+    whyUsIntro: "What we can offer for a Bargur sanitation requirement:",
+    whyUsBullets: [
+      { title: "Customized sizes", text: "toilet cabins sized for your plot and the number of users." },
+      { title: "Compact and multi-cubicle layouts", text: "from a single cubicle to multi-seater blocks." },
+      { title: "MS and insulated construction", text: "steel sheet or PUF panel options." },
+      { title: "Toilet and store combinations", text: "sanitation and lockable storage in one unit." },
+      { title: "Handwash and changing provisions", text: "basins, handwash stations and changing spaces where required." },
+      { title: "Water and drainage options", text: "tank, inlet and outlet provisions planned for your site." },
+      { title: "Quotation support", text: "a written quotation for the specification you confirm." },
+      { title: "Delivery coordination", text: "transport, unloading and placement planned with your site team." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Bargur",
+    areasText:
+      "We welcome delivery enquiries from Bargur town and the Bargur industrial area, the SIPCOT Industrial Growth Centre across the Bargur, Uthangarai and Pochampalli taluks, including its SEZ, and the SIDCO Industrial Estate at Bargur, as well as Balethottam, Olaipatti, Pochampalli, Uthangarai, Mathur and sites along the NH 48 corridor in Krishnagiri district, Tamil Nadu. Delivery feasibility, transport and unloading are confirmed in the quotation for each site. This page covers Bargur in Krishnagiri district, not Bargur in Erode district.",
+
+    howHeading: "How to Order a Toilet Cabin",
+    howIntro: "Six steps from enquiry to placement:",
+    howSteps: [
+      { title: "Share your requirements", text: "the industry, number of users, plot dimensions and delivery location." },
+      { title: "Discuss the layout", text: "toilet cubicles, handwash points, material options and the space available." },
+      { title: "Confirm utilities", text: "water availability, drainage and waste-management arrangements." },
+      { title: "Approve the quotation", text: "specifications, price and commercial terms." },
+      { title: "Manufacture", text: "the approved cabin is fabricated." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated with site readiness." },
+    ],
+
+    extraSections: [
+      {
+        heading: "Choosing the Right Construction Material",
+        placement: "afterSolutions",
+        paragraphs: ["Two construction options are offered for these cabins:"],
+        table: {
+          caption: "Construction options. The material, panel thickness and finish are confirmed in the quotation.",
+          headers: ["Material", "Features", "Typical use"],
+          rows: [
+            ["MS", "Strong steel frame with a suitable protective finish", "Workshops and general industrial use"],
+            ["PUF-insulated", "Insulated panels that can help keep the cabin cooler", "Longer-term industrial applications"],
+          ],
+        },
+        closing: [
+          "Neither option is maintenance-free: every cabin needs periodic cleaning, inspection of its fittings and care of its protective finish.",
+        ],
+      },
+      {
+        heading: "Delivery to Bargur Industrial Locations",
+        paragraphs: ["Each industrial location has its own access arrangements, so confirm these before the delivery date:"],
+        bullets: [
+          { title: "SIDCO Industrial Estate", text: "internal road width, turning space, site entry and unloading access." },
+          { title: "SIPCOT industrial locations", text: "the correct entry gate, a site contact and delivery permissions." },
+          {
+            title: "SEZ-related sites",
+            text: "the documentation and entry requirements set by the site operator or authority, coordinated in advance. Entry is not guaranteed, and the paperwork is not handled automatically.",
+          },
+        ],
+      },
+      {
+        heading: "Preparing the Site",
+        paragraphs: ["Before the cabin arrives, plan for:"],
+        bullets: [
+          { title: "Base", text: "a suitable supporting base." },
+          { title: "Water", text: "the water connection." },
+          { title: "Wastewater", text: "the wastewater arrangement and drainage." },
+          { title: "Access", text: "safe access and enough unloading space." },
+          { title: "Permissions", text: "any permissions the site requires." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a portable toilet cabin fit on a small SIDCO plot?",
+        answer:
+          "Compact designs may fit on smaller plots, depending on the plot dimensions, setbacks, access and utility arrangements. Share the plot size and the proposed position for a layout check.",
+      },
+      {
+        question: "What toilet cabin features suit granite processing units?",
+        answer:
+          "Slip-resistant flooring, durable fittings, washable surfaces and safe access routes away from loading areas may be appropriate.",
+      },
+      {
+        question: "Can a portable toilet cabin be used at a food processing facility?",
+        answer:
+          "Yes, where the design, placement, handwashing arrangements and maintenance meet the site's own requirements and the food-safety requirements that apply.",
+      },
+      {
+        question: "What is a toilet and store combination cabin?",
+        answer: "A prefabricated unit with separate sanitation and storage compartments in one structure.",
+      },
+      {
+        question: "Can you deliver to an industrial or SEZ site in Bargur?",
+        answer:
+          "Delivery feasibility depends on the site location, access, permissions and transport arrangements, which are confirmed before dispatch.",
+      },
+      {
+        question: "Are multi-seater toilet blocks available for large industrial sites?",
+        answer: "Multi-cubicle configurations can be discussed according to the capacity you need and manufacturing capability.",
+      },
+      {
+        question: "Can portable toilet cabins include water storage?",
+        answer: "Water tank arrangements can be considered, subject to structural design, tank capacity and utility requirements.",
+      },
+      {
+        question: "How quickly can a portable toilet cabin be delivered?",
+        answer:
+          "Delivery depends on the selected configuration, manufacturing workload, quantity, transport and site readiness, and the schedule is confirmed with the order.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Toilet Cabin Quote in Bargur",
+    ctaText: `Need a compact toilet cabin for a workshop, a toilet-and-store combination for a small industrial plot or multi-seater toilet blocks for a larger plant? Share your site location, dimensions, required fittings and number of users. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Toilet Cabin Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default container-office buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Send Your Bargur Toilet Cabin Requirement",
+      intro:
+        "Add the industry, number of users, plot dimensions and delivery site. Our sales team will check the details with you and then prepare a written quotation.",
+    },
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Toilet Cabin Models", href: "/products/category/portable-toilet-cabins" },
+      { label: "Cabins with an Attached Toilet and Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "Prefab Labour Colony", href: "/products/labour-colony" },
+      { label: "G+1 Workmen Accommodation Blocks", href: "/products/category/g1-workmen-accommodation" },
+      { label: "Security Cabins for Gates", href: "/products/category/security-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Toilet Cabins Across Tamil Nadu", href: "/promotions/portable-toilet-cabin-in-tamil-nadu" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+        { label: "Portable Cabin Factory near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "All Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Bargur. This page concerns Bargur in Krishnagiri district, Tamil Nadu, not Bargur in Erode district. The toilet cabin types, sizes, materials, fittings, water storage, plumbing, waste provisions and finishes described here are options confirmed in the approved specification and quotation for each order, and delivery, unloading and placement are arranged for each site without guaranteed dates. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu), its Industrial Growth Centre and SEZ, and the SIDCO Industrial Estate at Bargur (Tamil Nadu Small Industries Development Corporation) are named only to describe locations; Portable Office Cabin is not affiliated with them or with any company there, and the industries and places named are not clients, completed projects or confirmed delivery areas. The images are illustrative images of one double portable toilet cabin design; final fittings depend on specifications, and they are not photographs of installations in Bargur. Notes on sanitation, food safety, EHS planning, hazardous operations and structural loads are general guidance, not engineering, food-safety, safety or legal advice, and chemical decontamination facilities are outside the scope of a standard toilet cabin.`,
   },
 ];
 

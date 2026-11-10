@@ -252,6 +252,7 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       ...promotionLocations("portable-toilet-cabin"),
       { name: "Devanahalli", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
       { name: "Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+      { name: "Bargur", href: "/cities-we-serve/portable-toilet-cabin-bargur" },
       { name: "Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
       { name: "Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
     ],
