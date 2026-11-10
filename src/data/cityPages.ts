@@ -88,6 +88,13 @@ export interface CityPageSection {
    */
   links?: CityPageLink[];
   /**
+   * Optional paragraphs that each carry one inline contextual link, rendered after `links` (first used
+   * by Shipping & Cargo Containers in Shoolagiri Industrial Area, whose brief words its links as
+   * sentences: "For a separate gatehouse, see our security cabins in Shoolagiri."). Unset = nothing
+   * rendered, so every other page's HTML is unchanged.
+   */
+  inlineLinks?: CityPageInlineLink[];
+  /**
    * Optional position of the section. Unset = after the "how" steps, where every extra section has
    * always rendered. "afterSolutions" renders it straight after the solutions list instead (first used
    * by Portable Security Cabins in Krishnagiri, whose cabin-selection table follows its industries).
@@ -216,6 +223,12 @@ export interface CityPage {
   whyTable?: CityPageTable;
   /** Optional closing line rendered after the "why" bullets. */
   whyOutro?: string;
+  /**
+   * Optional paragraph with one inline contextual link, rendered after `whyOutro` (first used by
+   * Portable Security Cabins in Shoolagiri, whose project-stage section points to the Shoolagiri
+   * shipping-container page for separate materials storage). Unset = no element, as before.
+   */
+  whyInlineLink?: CityPageInlineLink;
 
   /**
    * The solutions section. Optional since 2026-11-08 on the same terms as the industries section (first
@@ -27538,6 +27551,13 @@ export const CITY_PAGES: CityPage[] = [
     },
     whyOutro:
       "How many cabins a site needs, and where they stand, is decided by the actual site-security plan. Portable cabins may be relocated when site arrangements change, subject to their design, condition and safe lifting requirements.",
+    // Brief of 2026-11-10 (Shoolagiri shipping-container page, §5): one link from this site-setup section
+    // to the Shoolagiri shipping-container page, for separate materials storage.
+    whyInlineLink: {
+      before: "For separate materials storage while the site is being set up, see our",
+      link: { label: "shipping containers in Shoolagiri", href: "/cities-we-serve/shipping-container-shoolagiri" },
+      after: ".",
+    },
 
     solutionsHeading: "Planning Security Cabins for Multiple Gates",
     solutionsIntro:
@@ -31128,6 +31148,257 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Cabins are made at Portable Office Cabin's factory near Hosur (Krishnagiri district, Tamil Nadu), and the company's Karnataka office is at Electronic City Phase 1 in Bengaluru; there is no workshop, yard, depot, office or agent of the company in Chamarajanagar district. Each order's quotation records the size, layout, construction, fittings and signage, any solar provisions, water points or seating, the length of any hire, and who handles transport, unloading, placement and removal; hire is subject to availability and delivery dates are not guaranteed. Each image on this page is an illustrative render of one cabin design, with the interior shown as an optionally furnished office; none is a photograph taken in Chamarajanagar district, at Bandipur, the Biligiri Rangana Hills or MM Hills, or of a cabin already delivered to a customer. Bandipur, the Biligiri Rangana Hills, MM Hills, Badanaguppe–Kellamballi and the other places named describe where enquiries may come from. Portable Office Cabin is not affiliated with any forest, wildlife, temple, pilgrimage or industrial-area authority, safari operator, resort, homestay or business there, and no use or place described is a customer, a completed project, an approved placement or a confirmed delivery point. Placement permissions, sign translations and any first-aid staffing or equipment are to be confirmed with the landowner, the relevant authorities or the organiser before ordering. Notes on power, water, routes, access and placement are general guidance, not engineering, legal, regulatory or safety advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN SHOOLAGIRI INDUSTRIAL AREA — the storage box itself for returnable
+   * packaging, segregated non-hazardous scrap and early consumables and spares storage around
+   * Shoolagiri, SIPCOT and the Future Mobility Park.
+   *
+   * Owner brief of 2026-11-10 ("Shoolagiri shipping container page and developer commands"): route,
+   * meta title, meta description, H1 and public copy as given. No other page targets shipping
+   * containers in Shoolagiri (repo routes, next.config / middleware redirects and the sitemap checked;
+   * the route was a 404). The slug starts with "shipping-container-", so cityFamily() puts it in the
+   * shipping-container family: directory card "Shipping containers in Shoolagiri" (the hub anchor the
+   * brief asks for) under Tamil Nadu, Tamil Nadu sibling links both ways and the nearby block. Like
+   * the Dharmapuri shipping page it sets neither the solutions nor the features section, so every
+   * section after "why" is an extra section, in the brief's order:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp, numbers from COMPANY).
+   *   • "Stores for returnable bins, trays and pallets" → why (the paragraph as whyIntro, no bullets).
+   *   • "Segregation space for suitable non-hazardous scrap", "Early storage near SIPCOT and the Future
+   *     Mobility Park" (with the brief §5 security-cabin sentence as an inline link), "Delivery from
+   *     Karnataka or Tamil Nadu" and "Container size examples" (table, the used-unit note and the
+   *     brief §5 inspection sentence) → afterSolutions extra sections, followed by the gallery.
+   *   • "Shipping container price and rental in Shoolagiri" → custom (no bullets), with the brief's
+   *     rental anchor as customLinks after the hire-dates sentence.
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (four) → faqs; the closing request → CTA + the
+   *     cargo-category enquiry form (rental is mentioned, so the form keeps the rental model).
+   * Lead-ins written where a slot needs one: tagline, the table caption, the two inline-link
+   * sentences' wording around the brief's anchors, the enquiry-form heading and intro, and the alt
+   * texts and captions of the three images outside the brief's hero slot. No ₹ figure, stock, lead
+   * time, load rating, dispatch origin, project milestone, sourcing arrangement or clearance claim;
+   * high-cube availability, side openings, fit-outs, rental, dispatch documents and unloading stay
+   * quote-dependent, as the brief says. SIPCOT and the Future Mobility Park are named only as
+   * enquiry locations.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Shoolagiri and SIPCOT Shoolagiri, plus
+   * the returnable-packaging, scrap-segregation and early-spares uses. Portable Security Cabins in
+   * Shoolagiri keeps gatehouses (the two pages link to each other once each; its link sits in its
+   * project-stage section). Container Office in SIPCOT Shoolagiri keeps offices. The Krishnagiri
+   * container product page (/products/shipping-container-in-krishnagiri) keeps its own title, meta
+   * and uses and does not name Shoolagiri, so the brief's "link the existing Shoolagiri mention" has
+   * nothing to link.
+   *
+   * LINKS (brief §5): the security-cabin page and /products/shipping-container-rental are live. The
+   * Shoolagiri portable-toilet page is NOT live yet (its PR is still open), so the "For crew
+   * sanitation, see our portable toilet cabins in Shoolagiri." sentence and its reciprocal link are
+   * deferred until it is: whichever of the two pages merges second adds both. No Chennai page is a
+   * used-container inspection guide; the Chennai-area page with a used-container checklist is
+   * Shipping Container in Athipattu, whose "Used Container Inspection" section lists seven checks, so
+   * "how to inspect a used container" points there, as on the Dharmapuri and Vellore pages.
+   *
+   * Images: four owner-dropped lossy VP8 webp renders ("public/images/Shoolagiri shipping container
+   * city page/Shoolagiri shipping container/cabin (1–4).webp", 600×448 and 1452×1083 ×3, no EXIF / XMP
+   * / ICC metadata or provenance to keep) of one charcoal-grey steel container with tan cargo doors on
+   * a paved yard. The VP8 bitstreams are copied byte-for-byte (pixel-identical decode) into the
+   * extended format with an XMP dc:title and a dc:description that calls each an illustrative render.
+   * Only the exterior (2) matches a slot in the brief's image table, so it carries that slot's
+   * filename, alt, caption and XMP text (it is 600×448, the largest size supplied; the hero displays
+   * at up to 672 px). The interior is empty and no image shows bins, sorted scrap, a truck or shelved
+   * spares, so those four slots are left out. The roof view (3) is the feature band; the open-door
+   * interior (1) and the side view (4) are the gallery. Every caption says "illustrative" and the
+   * disclaimer says none is a photograph taken in Shoolagiri.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-shoolagiri",
+    city: "Shoolagiri",
+    listTitle: "Shipping & Cargo Containers in Shoolagiri",
+    metaTitle: "Shipping Containers in Shoolagiri for Industrial Storage",
+    metaDescription:
+      "Enquire about shipping containers in Shoolagiri for returnable packaging, segregated scrap, packing supplies and maintenance spares near SIPCOT.",
+    keywords:
+      "Shipping Container in Shoolagiri, Cargo Container Shoolagiri, Storage Container SIPCOT Shoolagiri, Used Shipping Container Shoolagiri, Returnable Packaging Store",
+    geo: {
+      region: "IN-TN",
+      placename: "Shoolagiri, Krishnagiri district, Tamil Nadu, India",
+      position: "12.6740;77.9694",
+      icbm: "12.6740, 77.9694",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 600 × 448 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-shoolagiri/shoolagiri-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 600,
+      height: 448,
+      caption: "Illustrative shipping container exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-shoolagiri/shoolagiri-shipping-container-roof-view.webp",
+      alt: "Top-down view of a grey steel shipping container on stone paving, with its corrugated roof and closed cargo doors at one end",
+      width: 1452,
+      height: 1083,
+      caption: "Illustrative render from above. Share photos of the gate, final approach and placement area with your enquiry.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-shoolagiri/shoolagiri-shipping-container-empty-interior.webp",
+        alt: "Open double cargo doors showing an empty container interior with corrugated grey walls and a plywood floor",
+        width: 1452,
+        height: 1083,
+        caption: "Illustrative empty interior. Labelled bays, racking and other fittings are quoted separately.",
+      },
+      {
+        src: "/images/cities/shipping-container-shoolagiri/shoolagiri-shipping-container-side-view.webp",
+        alt: "Long corrugated side wall of a grey steel shipping container standing on stone paving",
+        width: 1452,
+        height: 1083,
+        caption: "Illustrative side view. Vehicle access and unloading space are assessed for each site.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Shoolagiri Industrial Area",
+    tagline:
+      "Storage containers for returnable bins and pallets, segregated non-hazardous scrap, and packing supplies and spares around Shoolagiri and SIPCOT.",
+    intro: [
+      "Empty bins coming back from customers, clean offcuts waiting for collection and spare parts arriving before a factory store is ready all need their own space. Portable Office Cabin welcomes enquiries for shipping containers in Shoolagiri. Share what your team will store, how it will move the stock and where the unit will sit so we can discuss the layout and delivery.",
+    ],
+
+    whyHeading: "Stores for returnable bins, trays and pallets",
+    whyIntro:
+      "Plan the store around what comes back from each customer and what needs to go out next. Use labelled bays for bins, trays, dividers and pallets, with a separate area for damaged items awaiting inspection. Keep a tally of incoming and outgoing stock, and allow enough aisle space for the trolley or handling equipment you use. Share the largest stack dimensions and loaded weights before choosing shelving or floor positions. Allow cleaned returnables to dry before putting them away.",
+    whyBullets: [],
+
+    extraSections: [
+      {
+        heading: "Segregation space for suitable non-hazardous scrap",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For suitable clean metal offcuts, cardboard, plastic film and wooden packaging, discuss separate labelled bays and access for collection. Keep a record of the material, quantity and collection date. Have your site environmental and safety teams confirm the waste classification, placement and collection arrangements before using a unit. Keep hazardous waste, contaminated scrap and e-waste out of general-purpose segregation stores and use your site’s designated arrangements.",
+        ],
+      },
+      {
+        heading: "Early storage near SIPCOT and the Future Mobility Park",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For a unit being set up in the Shoolagiri industrial area, plan where stretch film, labels, cartons, belts, filters and tools will go before regular operations begin. If the unit will later become a spares or consumables store, plan the aisle, racking and location for both phases. Share the plot pin and the delivery window your site can accommodate.",
+        ],
+        // Brief §5. The second sentence ("For crew sanitation, see our portable toilet cabins in
+        // Shoolagiri.") waits until the Shoolagiri toilet page is live (see the header comment).
+        inlineLinks: [
+          {
+            before: "For a separate gatehouse, see our",
+            link: { label: "security cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Delivery from Karnataka or Tamil Nadu",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If a supplier proposes dispatch from a Bengaluru-area yard or a yard in Tamil Nadu, ask for the confirmed origin, unit condition, route and itemised transport and unloading charges. Before dispatch, agree who provides the invoice, any applicable e-way bill, transporter information and any documentation needed to establish the seller’s right to sell the unit and its clearance status. Have your accounts or logistics team confirm what applies to the transaction. Share photos of the final approach, gate and placement area so the vehicle and unloading method can be assessed.",
+        ],
+      },
+      {
+        heading: "Container size examples",
+        placement: "afterSolutions",
+        table: {
+          caption: "Examples of typical enquiries; the quotation states the actual dimensions, condition and availability of the unit offered.",
+          headers: ["Configuration", "Typical enquiry", "What to confirm"],
+          rows: [
+            ["20 ft", "Packaging supplies, spares or segregated scrap", "Door clearance, handling method and unloading space"],
+            ["40 ft", "Multiple customer zones for returned bins and pallets", "Usable dimensions, aisle width and trailer access"],
+            ["40 ft high cube", "Bulky trays or taller racking", "Stock availability, safe stacking and route clearances"],
+          ],
+        },
+        closing: [
+          "Confirm the condition, internal dimensions and door opening of the actual unit. For used stock, ask about the floor, roof, seals and locking hardware before accepting it.",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "For a checklist, see",
+            link: { label: "how to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+    ],
+
+    customHeading: "Shipping container price and rental in Shoolagiri",
+    customIntro: "Pricing depends on the size, condition, fittings, dispatch point, delivery and unloading.",
+    // Empty on purpose: the section is prose (see the header comment).
+    customBullets: [],
+    customOutro:
+      "For temporary returnable stock or plant setup, share your dates and ask about the rental options below. Confirm availability, permitted modifications and collection terms in the quotation.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Shoolagiri, the SIPCOT and Future Mobility Park areas, Berigai, Uddanapalli, Kelamangalam, Bagalur and sites along NH 44 near Shoolagiri. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share your intended use, quantity, preferred size, plot pin, dates and access photos.", text: "" },
+      { title: "Review the proposed unit, fit-out and itemised quotation.", text: "" },
+      { title: "Confirm the base, route, unloading responsibilities and applicable dispatch documents.", text: "" },
+      { title: "Agree on delivery and placement. Include collection or relocation in the quote if needed.", text: "" },
+    ],
+
+    faqs: [
+      {
+        question: "Which container size suits returnable packaging?",
+        answer:
+          "Start with the largest bin or pallet stack, the number of separate customer zones and the aisle needed for handling. Compare 20 ft and 40 ft options using the selected unit’s actual dimensions.",
+      },
+      {
+        question: "Can I use a container for scrap segregation?",
+        answer:
+          "You can enquire about a store for suitable clean, non-hazardous scrap. Confirm the classification and the collection arrangements with your site team first.",
+      },
+      {
+        question: "Can a container be dispatched from Karnataka?",
+        answer:
+          "Share the delivery site and dates. Dispatch origin and transport availability depend on the quoted unit. Confirm document responsibilities before dispatch.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, fittings, dispatch location, vehicle access and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Shoolagiri",
+    ctaText:
+      "Send the site pin, intended use, preferred size, quantity, target dates and access photos. Include any requirements for racks, labelled bays, door openings or unloading.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (the brief's Request a Quote · Call · WhatsApp).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Send your Shoolagiri container requirement",
+      intro:
+        "Choose a container and quantity, then add your plot pin or PIN code, what the unit will hold and your target dates. Mention racks, labelled bays, door openings, unloading or rental; the team reviews the details before sending a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not run a container yard, depot, office or service partner in Shoolagiri. Each container is offered subject to stock, and its size, condition, grade, dispatch point, any fittings or modifications, any rental terms, the dispatch documents and the transport, unloading, placement and collection scope are set out in its quotation; no delivery date is guaranteed. All four images are illustrative renders of one steel shipping container; the interior is shown empty, and none is a photograph of a container delivered to or placed in Shoolagiri, at SIPCOT or at the Future Mobility Park. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and the Future Mobility Park are named only to describe where enquiries may come from; Portable Office Cabin is not affiliated with SIPCOT or with any manufacturer, supplier, contractor or company there. The returnable-packaging, scrap, consumables and spares uses describe typical enquiries, not clients, completed projects or confirmed delivery areas. The containers described are for general-purpose storage of suitable non-hazardous goods; hazardous waste, contaminated scrap and e-waste are outside this offer. Notes on stacking, loads, waste classification, dispatch documents and e-way bills are general guidance, not engineering, environmental, safety, legal or tax advice.`,
   },
 ];
 

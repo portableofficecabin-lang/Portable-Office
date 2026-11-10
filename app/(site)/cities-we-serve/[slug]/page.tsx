@@ -201,10 +201,11 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
     </ul>
   );
 
-  /* Optional paragraph with one inline link (`introLink`, `areasInlineLink`): same link style as the
-     link lists above. Callers render it only when the field is set. */
+  /* Optional paragraph with one inline link (`introLink`, `whyInlineLink`, `areasInlineLink`, an extra
+     section's `inlineLinks`): same link style as the link lists above. Callers render it only when the
+     field is set. The key (the link's href) only matters inside a section's list. */
   const renderInlineLink = (il: CityPageInlineLink, extraClass = "") => (
-    <p className={`${p}${extraClass}${mc("reveal")}`}>
+    <p key={il.link.href} className={`${p}${extraClass}${mc("reveal")}`}>
       {il.before}{" "}
       <Link href={il.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
         {il.link.label}
@@ -238,6 +239,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       ))}
       {/* Optional contextual links after the closing paragraphs (`links`); unset = nothing rendered. */}
       {sec.links && sec.links.length > 0 && renderLinks(sec.links)}
+      {/* Optional inline-link paragraphs after the links (`inlineLinks`); unset = nothing rendered. */}
+      {sec.inlineLinks?.map((il) => renderInlineLink(il))}
     </section>
   );
 
@@ -385,6 +388,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {/* Optional table (`whyTable`); unset = no element. */}
         {page.whyTable && renderTable(page.whyTable)}
         {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
+        {/* Optional inline-link paragraph after the why outro (`whyInlineLink`); unset = no element. */}
+        {page.whyInlineLink && renderInlineLink(page.whyInlineLink)}
 
         {/* Feature band — a single editorial plate breaking the longest text run on the page.
             Cropped 3:2 (sources are square, so object-cover keeps the cabin centred and stops a
