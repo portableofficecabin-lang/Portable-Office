@@ -167,6 +167,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     items.push({ group: "why", label: "why table is a <table> with row headers", test: (mk) => /<table[\s\S]*<th[^>]*scope="row"/.test(mk) });
   }
   if (p.whyOutro) t("why", "why outro", p.whyOutro);
+  // Optional why links (since 2026-11-09): label text and href.
+  (p.whyLinks ?? []).forEach((l, i) => { t("why", `why link ${i + 1} "${l.label}"`, l.label); m("why", `why link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   // Optional why inline link (since 2026-11-10): the sentence before it, the label and the href.
   if (p.whyInlineLink) {
     t("why", "why inline link lead-in", p.whyInlineLink.before);
