@@ -22649,6 +22649,270 @@ export const CITY_PAGES: CityPage[] = [
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Tiruvallur or Tiruvallur district. Delivery, unloading, lifting and placement are arranged for each project; the base and supports depend on the site, foundation and civil work are quoted separately, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, connected or combined cabins are subject to structural design, and any fire classification depends on the certified products specified and does not by itself establish the fire performance of a complete cabin. First-aid, welfare and other regulated uses are subject to the requirements confirmed by the customer's responsible safety or compliance team. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished office interior; other designs look different, and the images are not photographs of installations in Tiruvallur. The towns, industrial areas and places named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any premises is subject to its own permissions. Notes on insulation, drainage, waterlogging, supports, electrical work and site preparation are general guidance, not engineering, electrical or safety advice.",
   },
 
+  /* ─────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS FOR KANCHEEPURAM DISTRICT’S KUNDRATHUR BELT — the portable-cabin intent for
+   * Kundrathur and the localities around it (Thirumudivakkam, Mangadu, Gerugambakkam, Kovur,
+   * Somangalam, Sikkarayapuram): inspection rooms for precision engineering suppliers, CNC programming
+   * and drawing rooms, narrow cabins for compact plots, and construction and institutional cabins.
+   *
+   * Owner brief of 2026-11-09 ("Kancheepuram district and Kundrathur portable cabin page"): route,
+   * meta title, meta description, H1 and keywords (primary queries + supporting terms) as given, and
+   * every sentence of the website copy verbatim. Kundrathur is one of Kancheepuram district's five
+   * taluks (official district site, kancheepuram.nic.in, checked 2026-11-09). The page names
+   * Thirumudivakkam only as a service locality and assigns it to no district (brief). Kundrathur in the
+   * title and H1 keeps it apart from the Kanchipuram town page (PR #243), which owns the town intent
+   * (temples, festivals, silk); Mambakkam keeps the Sriperumbudur industrial belt. Entry placed after
+   * Tiruvallur, not at the end of CITY_PAGES, so it does not collide with the city pages queued behind
+   * it; the order only affects the sitemap and the directory. Mapped onto the template slots (no
+   * template code is changed):
+   *   • Opening paragraph → tagline (its question) + intro, with the hero contact row (`heroCta`:
+   *     Request a Quote · Call · WhatsApp, numbers from COMPANY).
+   *   • "Inspection rooms for precision engineering suppliers" → why: first paragraph as whyIntro, the
+   *     requirements table as whyTable, the closing paragraph as whyOutro (no bullets).
+   *   • "CNC programming and drawing rooms" → solutions heading + intro (one paragraph, no items).
+   *   • "Narrow cabins for compact industrial plots", "Construction and institutional cabins around
+   *     Mangadu and Kovur" and "Cabin sizes and fit-out options" (paragraph, table, the MS / PUF
+   *     paragraph as `closing`, then the product link) → three afterSolutions extra sections.
+   *     No features section.
+   *   • "Portable cabin price and rental in the Kundrathur belt" → custom (prose: customBullets is
+   *     empty), beside the interior render; the rental sentence is customOutro, then the rental link.
+   *   • "Areas we serve" → areas, then the Mambakkam related-location link; "From enquiry to placement"
+   *     → how (title-only steps). The template puts areas before the steps, the reverse of the brief.
+   *   • FAQs (four) → faqs; "Request a portable cabin quote in Kundrathur" → CTA.
+   * Composed (owner review): the two table captions, the hero's alt text (the brief's "entrance steps"
+   * are not in the image), the alt text and captions of the two images outside the brief's slots, the
+   * related links and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): /products/portable-cabin (live 200) closes the sizes section with the
+   * brief's anchor; /rental-service (live 200; lists 10 × 10, 20 × 10 and 40 × 10 ft site office cabins
+   * and toilet blocks for hire) follows the rental sentence; the Mambakkam page follows Areas we serve.
+   * The /cities-we-serve directory lists this page under Tamil Nadu (geo.region IN-TN, card label =
+   * `directoryLabel`, the brief's anchor), and both Tamil Nadu portable / porta cabin keyword hubs
+   * (seoPromotions) list it after Tiruvallur. The reciprocal Kanchipuram town ↔ Kundrathur links are
+   * NOT here: the brief releases them only when both pages are live, so they go in whichever of this
+   * page and #243 merges second.
+   *
+   * KEYWORD OWNERSHIP: portable cabin × Kundrathur, Kancheepuram district, Thirumudivakkam, Mangadu,
+   * Gerugambakkam, Kovur, Somangalam and Sikkarayapuram. No other city page names these places
+   * (checked 2026-11-09; Thirumudivakkam appears only in the shipping-container product copy and the
+   * image geo-tag list, a different product family).
+   *
+   * Images: four owner-dropped webp renders ("public/images/Kancheepuram district and Kundrathur city
+   * page/Kancheepuram district and Kundrathur/cabin (1–4).webp": 1200×896 and 1451×1084 ×3; no EXIF /
+   * XMP / ICC), copied under descriptive names with a truthful XMP dc:title / dc:description
+   * ("Illustrative render of…") added losslessly; the decoded pixels are identical and no camera, GPS,
+   * date, project or customer data is added. They show one dark grey prefabricated cabin (three-quarter
+   * view, front, window side) and one office interior. Two of the brief's slots match and use its file
+   * names and captions: the exterior hero (alt text corrected: no entrance steps are shown) and the
+   * site office (front view with windows and a front door, in the gallery after the sizes section). No
+   * image shows an inspection bench, drawing boards or a narrow cabin beside a building, so the
+   * inspection room, CNC programming and narrow layout slots are omitted. The window-side view (feature
+   * band) and the interior (beside the price section) carry their own descriptive alt text and an
+   * "illustrative" caption, and no alt text names a place.
+   *
+   * No ₹ figure, stock, lead time, client, estate count, customer relationship, metrology performance,
+   * standards compliance or included-scope claim for narrow widths, AC, UPS, specialist supports,
+   * rental or relocation. Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no
+   * offers) and the og:image dimension tags.
+   * ───────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-kancheepuram-district",
+    city: "Kundrathur",
+    listTitle: "Portable Cabins in Kundrathur",
+    // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
+    directoryLabel: "Portable cabins in Kundrathur, Kancheepuram district",
+    metaTitle: "Portable Cabins in Kundrathur, Kancheepuram District",
+    metaDescription:
+      "Enquire about portable cabins in the Kundrathur belt for inspection rooms, CNC programming, narrow plots and construction sites around Mangadu and Kovur.",
+    keywords:
+      "Portable Cabin Kundrathur, Portable Cabin in Kancheepuram District, Portable Cabin Thirumudivakkam, Site Office Cabin Mangadu, Prefabricated Cabin Gerugambakkam, Portable Cabin Kovur, Inspection Room Cabin",
+    geo: {
+      region: "IN-TN",
+      placename: "Kundrathur, Kancheepuram, Tamil Nadu, India",
+      position: "12.9974;80.0966",
+      icbm: "12.9974, 80.0966",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-kancheepuram-district/kundrathur-industrial-portable-cabin.webp",
+      alt: "Dark grey prefabricated office cabin with sliding windows and an entrance door",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable cabin design for industrial sites.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-kancheepuram-district/kundrathur-portable-cabin-window-side-view.webp",
+      alt: "The same prefabricated cabin from its window side, with ribbed wall panels and lifting points at the roof corners",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render of the same cabin from its window side. Window positions are agreed during layout review.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-kancheepuram-district/kundrathur-portable-cabin-office-interior.webp",
+      alt: "Cabin office interior with a desk, computer monitor, office chair, two visitor chairs and low storage cabinets",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative office layout render. Furniture, storage and electrical points are fitted only as itemised in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-kancheepuram-district/mangadu-construction-site-office-cabin.webp",
+        alt: "Portable office cabin with windows and a front door",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative construction site office design.",
+      },
+    ],
+
+    h1: "Portable Cabins for Kancheepuram District’s Kundrathur Belt",
+    tagline:
+      "Need a room for parts inspection near Thirumudivakkam, a quiet workspace for CNC programming or a contractor’s office at an apartment site in Mangadu?",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries from Kundrathur and the surrounding belt. Share how the room will be used, the space available and the delivery approach so we can discuss a suitable layout and fit-out.",
+    ],
+
+    whyHeading: "Inspection rooms for precision engineering suppliers",
+    whyIntro:
+      "An inspection cabin can give staff a dedicated place to review parts, record results and store gauges. Start with the equipment manufacturer’s requirements and decide whether the room is for visual inspection, bench measurement or higher-precision metrology.",
+    // Empty on purpose: the section is a paragraph, a table and a paragraph, as in the brief.
+    whyBullets: [],
+    whyTable: {
+      caption: "What to share when enquiring about an inspection room.",
+      headers: ["Requirement", "Details to share"],
+      rows: [
+        ["Equipment and supports", "Instrument and surface plate dimensions, packed weights, support needs and handling method"],
+        ["Temperature and humidity", "Required operating limits, permissible variation and monitoring needs"],
+        ["Vibration and dust", "Nearby machines, vehicle movements and the equipment’s environmental limits"],
+        ["Layout and services", "Inspection benches, task lighting, gauge storage, power and data points"],
+      ],
+    },
+    whyOutro:
+      "A standard insulated cabin is a starting point for discussing the envelope and fit-out. For precision instruments, have the equipment supplier and site team assess the base, vibration, environmental controls and verification requirements before use.",
+
+    solutionsHeading: "CNC programming and drawing rooms",
+    solutionsIntro:
+      "Set aside room for programming workstations, drawing reviews and revision records near the production floor. Share the workstation count, monitor sizes and power and network requirements. Ask about insulation, AC provision and UPS space if needed. Where staff need a view of the shop floor, discuss window placement and glare during layout review.",
+    // Empty on purpose: the section is one paragraph, as in the brief.
+    solutions: [],
+
+    customHeading: "Portable cabin price and rental in the Kundrathur belt",
+    customIntro:
+      "Pricing depends on size, construction, fit-out, transport and unloading. For inspection rooms, include equipment details and any base, power or environmental requirements so the quotation can separate the cabin scope from specialist site works.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "If you need a cabin temporarily, share the dates and intended use so the team can confirm whether a suitable rental unit can be quoted.",
+    // Brief section 5: the rental page, which lists site office cabins and toilet blocks for hire.
+    customLinks: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Kundrathur, Thirumudivakkam, Mangadu, Gerugambakkam, Kovur, Somangalam and Sikkarayapuram. Delivery is assessed for each site.",
+    // Brief section 5: the optional related-location note for a separate Sriperumbudur-belt site. The
+    // Kanchipuram town link joins it once both pages are live (see the header comment).
+    areasLinks: [
+      { label: "Portable cabins for the Mambakkam industrial belt", href: "/cities-we-serve/portable-cabin-mambakkam" },
+    ],
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share your intended use, site pin, available footprint, target dates and access photos.", text: "" },
+      { title: "Review the layout, fittings and itemised quotation. Include instrument and support requirements for inspection rooms.", text: "" },
+      { title: "Confirm placement permission, base readiness, utility responsibilities and unloading access.", text: "" },
+      { title: "Agree on delivery and handover, plus collection or relocation if included.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Narrow cabins for compact industrial plots",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Share the usable width and length, doorway clearance and the route from the gate to the proposed placement area. Ask whether a narrower layout can be quoted. Allow space for circulation, utilities and maintenance access, and keep emergency and drainage routes clear. Have the site team confirm that the placement is permitted and that the delivery vehicle and unloading equipment can operate within the available space.",
+        ],
+      },
+      {
+        heading: "Construction and institutional cabins around Mangadu and Kovur",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Contractors working around Mangadu, Kundrathur, Gerugambakkam and Kovur can enquire about site offices, gate cabins, lockable stores and toilet cabins. Schools and clinics can enquire about administrative rooms, staff rooms or general-purpose stores during renovations. Include lane width, gate dimensions, overhead obstructions and any standing-water concerns in your site notes. Ask the site team to confirm base readiness and utility connections before dispatch.",
+        ],
+      },
+      {
+        heading: "Cabin sizes and fit-out options",
+        placement: "afterSolutions",
+        paragraphs: [
+          "These footprints are examples for layout discussion. Confirm the dimensions, fittings and availability in the quotation.",
+        ],
+        // Footprints use no-break spaces (\u00a0) so a size never splits over two lines on a narrow phone.
+        table: {
+          caption: "Example cabin footprints and the enquiries they typically suit.",
+          headers: ["Example footprint", "Typical enquiry"],
+          rows: [
+            ["Narrow layout, width to be quoted", "Compact office or store on a constrained plot"],
+            ["10\u00a0×\u00a08\u00a0ft", "Programming room, compact inspection space or guard cabin"],
+            ["20\u00a0×\u00a010\u00a0ft", "Site office, staff room or larger inspection workspace"],
+            ["30\u00a0×\u00a010\u00a0ft and above", "Larger offices or separate inspection and records areas"],
+          ],
+        },
+        closing: [
+          "Discuss mild steel construction or insulated PUF panels according to occupancy, exposure and operating requirements. Confirm the supplied electrical fittings, insulation, environmental controls and site connections in writing.",
+        ],
+        // Brief section 5: the portable cabin product page, with the brief's anchor, after the sizes table.
+        links: [{ label: "Portable cabin sizes and specifications", href: "/products/portable-cabin" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I use a portable cabin as a metrology room?",
+        answer:
+          "It depends on the instrument and the site. Share the equipment specifications and operating tolerances so the base, environment and controls can be assessed before a fit-out is quoted.",
+      },
+      {
+        question: "Can you quote a narrow cabin for a small plot?",
+        answer:
+          "Share the usable footprint, entrance and vehicle access. The team can confirm whether a suitable width and layout can be built and delivered.",
+      },
+      {
+        question: "Can I enquire about cabins for an apartment project in Mangadu?",
+        answer:
+          "Yes. Share the site plan and list of modules, such as a contractor office, guard cabin, store or toilet cabin, so access and placement can be reviewed together.",
+      },
+      {
+        question: "Can I rent a cabin, and how quickly can it be delivered?",
+        answer:
+          "Share the type of unit, site and dates. Availability, hire terms and the delivery schedule depend on the configuration and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a portable cabin quote in Kundrathur",
+    ctaText:
+      "Send your site location, intended use, preferred size, quantity and dates. Include approach and placement photos and any equipment weights, cooling, power or plumbing requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons; the
+    // call and WhatsApp buttons (numbers from COMPANY) stay on, as the brief asks.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it has no yard, depot or branch in Kundrathur or elsewhere in Kancheepuram district. Narrow widths, AC provision, UPS space, specialist supports, environmental controls, rental units and relocation are quoted for each requirement, and the itemised quotation sets out the cabin’s size, construction and fittings and who is responsible for transport, unloading, placement, the base and utility connections. No cabin is represented as a metrology laboratory or as meeting any measurement, calibration, environmental or other standard; whether a cabin suits inspection or measurement work is assessed by the customer with its equipment supplier. Delivery dates are estimates, not guarantees. The four images are illustrative renders of one prefabricated cabin design and an office interior; they are not photographs from Kundrathur, Mangadu or Kovur and do not show a supplied unit. Portable Office Cabin is not affiliated with any industrial estate, engineering supplier, contractor, apartment developer, school or clinic in the area, and the localities named show where enquiries are welcome, not customers, completed installations or confirmed delivery locations. Guidance on placement, access, bases, utilities, inspection rooms and environmental requirements is general information, not engineering, legal or regulatory advice.",
+  },
+
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN PAPPANKUPPAM AND SIPCOT GUMMIDIPOONDI — the portable-cabin intent for the
    * Gummidipoondi industrial belt of northern Tiruvallur district (Tamil Nadu): gate and documentation
