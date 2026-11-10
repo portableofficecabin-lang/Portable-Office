@@ -509,6 +509,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Office Cabins in Devarabisanahalli", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
     // Porta / portable cabin page for Hubballi–Dharwad (2026-11-09), here and on Porta Cabin; appended so the live links keep their positions.
     { name: "Portable Cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" },
+    // Porta & portable cabin page for Chamarajanagar district (owner brief 2026-11-09), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Chamarajanagar", href: "/cities-we-serve/porta-cabin-chamarajanagar" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -540,6 +542,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
     // Porta / portable cabin page for Hubballi–Dharwad (2026-11-09), here and on Portable Cabin; appended so the live links keep their positions.
     { name: "Porta Cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" },
+    // Porta & portable cabin page for Chamarajanagar district (owner brief 2026-11-09), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Porta Cabins in Chamarajanagar", href: "/cities-we-serve/porta-cabin-chamarajanagar" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
