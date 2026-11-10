@@ -24,6 +24,7 @@ import { Phone } from "lucide-react";
 import {
   CITY_PAGES,
   cityPageBySlug,
+  type CityPageInlineLink,
   type CityPageLink,
   type CityPageSection,
   type CityPageTable,
@@ -200,6 +201,18 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
     </ul>
   );
 
+  /* Optional paragraph with one inline link (`introLink`, `areasInlineLink`): same link style as the
+     link lists above. Callers render it only when the field is set. */
+  const renderInlineLink = (il: CityPageInlineLink, extraClass = "") => (
+    <p className={`${p}${extraClass}${mc("reveal")}`}>
+      {il.before}{" "}
+      <Link href={il.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+        {il.link.label}
+      </Link>
+      {il.after}
+    </p>
+  );
+
   /* One optional extra section (`extraSections`): owner copy with more H2s than the fixed slots
      hold. Same classes and motion as the fixed sections. Rendered after the "how" steps, after the
      intro when `placement` is "afterIntro", or after the solutions list when it is "afterSolutions". */
@@ -315,6 +328,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {page.intro.map((text) => (
           <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
         ))}
+        {/* Optional inline-link paragraph after the intro (`introLink`); unset = no element. */}
+        {page.introLink && renderInlineLink(page.introLink, " mt-4")}
 
         {/* Optional hero contact row (`heroCta`): quotation (the on-page form when there is one), Call
             and WhatsApp, styled like the CTA box buttons. Not a scroll reveal: it sits near the top
@@ -586,6 +601,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.areasHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.areasText}</p>
+        {/* Optional inline-link paragraph after the areas text (`areasInlineLink`); unset = no element. */}
+        {page.areasInlineLink && renderInlineLink(page.areasInlineLink)}
         {/* Optional contextual links after the areas text (`areasLinks`); unset = nothing rendered. */}
         {page.areasLinks && page.areasLinks.length > 0 && renderLinks(page.areasLinks)}
 

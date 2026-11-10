@@ -331,7 +331,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Padalur & Irur", href: "/cities-we-serve/portable-cabin-padalur-irur" },
     { name: "Portable Cabins in SIPCOT Mambakkam, Sriperumbudur", href: "/cities-we-serve/portable-cabin-mambakkam" },
     { name: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
-    { name: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
+    // Ranipet (owner brief 2026-11-09): the SIPCOT page is labelled for the estate, and the district page follows it.
+    { name: "Portable Cabins for SIPCOT Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
+    { name: "Portable Cabins across Ranipet District", href: "/cities-we-serve/portable-cabin-ranipet-district" },
+    // Portable-cabin page for Dharmapuri (owner brief 2026-11-09), here and on Porta Cabin, after the Ranipet pages.
+    { name: "Portable Cabins in Dharmapuri", href: "/cities-we-serve/portable-cabin-dharmapuri" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -358,7 +362,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Padalur & Irur", href: "/cities-we-serve/portable-cabin-padalur-irur" },
     { name: "Portable Cabins in SIPCOT Mambakkam, Sriperumbudur", href: "/cities-we-serve/portable-cabin-mambakkam" },
     { name: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
-    { name: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
+    // Ranipet (owner brief 2026-11-09): the SIPCOT page is labelled for the estate, and the district page follows it.
+    { name: "Portable Cabins for SIPCOT Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
+    { name: "Portable Cabins across Ranipet District", href: "/cities-we-serve/portable-cabin-ranipet-district" },
+    { name: "Portable Cabins in Dharmapuri", href: "/cities-we-serve/portable-cabin-dharmapuri" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
