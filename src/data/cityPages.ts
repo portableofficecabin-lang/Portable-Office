@@ -14952,6 +14952,230 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTA CABINS & PORTABLE CABINS IN KOPPAL — Kinhal craft workshops, farm machinery hire offices,
+   * early learning cabin enquiries and industrial site and gate cabins across Koppal district.
+   *
+   * Owner brief of 2026-11-09: route, meta title, meta description, H1 and public copy as given. No
+   * other page on main names Koppal or any locality in this page's areas list (routes, redirects,
+   * sitemap and every source file checked), so this one canonical covers the porta / portable /
+   * prefab cabin synonyms and nothing needs a /portable-cabin-koppal alias: no redirect is added. The
+   * slug matches no family prefix, so cityFamily() lists it with the local-service pages in the
+   * Karnataka group of /cities-we-serve under its listTitle (the hub anchor the brief asks for). The
+   * brief's sections map onto the fixed slots, in the brief's order:
+   *   • Opening paragraphs → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Workshop cabins for Kinhal artisans and toy makers" → why: the layout paragraph as whyIntro,
+   *     the dust and solvent paragraph as whyOutro (no bullets).
+   *   • "Booking offices for farm machinery hire centres" → solutions heading + intro (prose, no items).
+   *   • "Anganwadi and early learning cabin enquiries", "Site and gate cabins for industrial units" and
+   *     "Cabin size examples" (table, planning note and the /products/portable-cabin link below it) →
+   *     afterSolutions extra sections.
+   *   • "Porta cabin price and rental in Koppal" → custom (prose) + customLinks → /rental-service,
+   *     whose hire range lists the site office and security guard cabins a temporary project or a
+   *     seasonal booking office would hire (its minimum terms are left to that page and the quote).
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (five) → faqs; the closing request → CTA.
+   *     No on-page form: /api/enquiries accepts only the CATEGORY_LANDING_SLUGS categories and none
+   *     is a porta or portable cabin category, so Request a Quote goes to /contact.
+   * Lead-ins written where a slot needs one: tagline, the sizes-table caption and the line before the
+   * rental link. No ₹ figure, occupancy figure, extraction, child-use, compliance or safety claim,
+   * delivery time, toy-cluster milestone or affiliation; extraction, child-use fit-outs, hire and
+   * relocation stay quote-dependent, as the brief says.
+   *
+   * KEYWORD OWNERSHIP: porta / portable / prefab cabin × Koppal and its listed localities, with the
+   * artisan workshop, design studio, machinery hire office, early learning and industrial site office
+   * uses. Spares and materials storage belong to a Koppal shipping-container page. That page is not on
+   * main or live yet (an unopened draft), so the brief's link to it, and its reciprocal link here, are
+   * added when it ships; this page carries no storage section.
+   *
+   * Images: four owner-dropped lossy webp renders ("public/images/Koppal porta cabin city page/Koppal
+   * porta cabin/cabin (1–4).webp", 1200×896 ×2 and 1184×864 ×2, VP8X + Google sRGB ICC profile, no
+   * EXIF / XMP or provenance to keep) of one navy ribbed-steel cabin. The ICC and VP8 chunks are copied
+   * byte-for-byte (pixel-identical decode) with an XMP dc:title and a dc:description that calls each an
+   * illustrative render. Two views match a slot in the brief's image table and use its filename and
+   * caption: the three-quarter exterior (the hero) and the front elevation (the industrial office);
+   * both renders show two doors, so their alt text says so. No image shows workbenches, drying racks,
+   * a booking counter, a notice board or early learning furniture, so those slots are left out; the
+   * office interior (desks, cabinets, no sample shelving) and the rear view carry their own accurate
+   * names, alt text and captions.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "porta-cabin-koppal",
+    city: "Koppal",
+    listTitle: "Porta Cabins in Koppal",
+    metaTitle: "Porta Cabins & Portable Cabins in Koppal",
+    metaDescription:
+      "Enquire about porta cabins in Koppal for Kinhal craft workshops, farm machinery hire offices, early learning spaces and industrial sites.",
+    keywords:
+      "Porta Cabin in Koppal, Portable Cabin in Koppal, Prefab Cabin Koppal, Artisan Workshop Cabin Kinhal, Machinery Hire Office Gangavathi, Porta Cabin Kushtagi",
+    geo: {
+      region: "IN-KA",
+      placename: "Koppal, Karnataka, India",
+      position: "15.3500;76.1500",
+      icbm: "15.3500, 76.1500",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Porta Cabin" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/porta-cabin-koppal/koppal-porta-cabin-workshop-exterior.webp",
+      alt: "Prefabricated porta cabin with side windows and two entrance doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative artisan workshop cabin exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/porta-cabin-koppal/koppal-porta-cabin-rear-view.webp",
+      alt: "Rear of a navy ribbed-steel porta cabin with a small high window and a larger window on its long side, beside a paved area",
+      width: 1184,
+      height: 864,
+      caption: "Illustrative rear view. Window positions follow the approved layout.",
+    },
+    interiorImage: {
+      src: "/images/cities/porta-cabin-koppal/koppal-porta-cabin-office-interior.webp",
+      alt: "Office layout inside a portable cabin with computer desks, office chairs, tall storage cabinets and a small meeting table by the end window",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative office or design studio layout. Desks, storage and electrical fittings are confirmed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/porta-cabin-koppal/basapura-industrial-site-office-cabin.webp",
+        alt: "Prefabricated site office with two windows between two entrance doors",
+        width: 1184,
+        height: 864,
+        caption: "Illustrative industrial site office.",
+      },
+    ],
+
+    h1: "Porta Cabins & Portable Cabins in Koppal",
+    tagline: "Prefabricated cabins for craft workshops, machinery hire counters, early learning spaces and industrial sites.",
+    intro: [
+      "Need a bench workspace for Kinhal craft, a booking counter for farm machinery, or a site office near Ginigera? Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Koppal district. Tell us who will use the room, what equipment it needs and where it will sit so we can discuss a layout and delivery plan.",
+      "For this range, porta cabin, portable cabin and prefab cabin describe the same workshop-built unit. The unloading method depends on the cabin and site access.",
+    ],
+
+    whyHeading: "Workshop cabins for Kinhal artisans and toy makers",
+    whyIntro:
+      "Plan the layout around the work sequence, from carving and assembly to inspection and packing. Share the workbench dimensions, tool list, task lighting needs and space needed for drying or displaying finished pieces. For a design studio near Bhanapur, discuss computer desks, a sample bench, shelving and a small meeting area.",
+    whyBullets: [],
+    whyOutro:
+      "If the work involves dust, paints, lacquers or solvents, have the responsible safety team assess the process and specify any necessary extraction, electrical equipment and materials storage before approving a fit-out. The standard cabin layout is for general workshop and design use.",
+
+    solutionsHeading: "Booking offices for farm machinery hire centres",
+    solutionsIntro:
+      "For sites around Gangavathi and Karatagi, plan a service window, booking desk and notice board for machine availability and rates. Allow room for maintenance records and, if needed, a separate counter for issuing small tools. Ask about an operator rest cabin with seating, charging points and ventilation. Agree on a pedestrian approach that stays clear of vehicle movements and machinery loading.",
+    solutions: [],
+
+    extraSections: [
+      {
+        heading: "Anganwadi and early learning cabin enquiries",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Share the intended age group, expected occupancy and activity layout. Discuss washable surfaces, daylight, ventilation, storage for learning materials and an accessible entrance. Have the operator and responsible project team review supervision, emergency access, sanitation and any separate food preparation facilities. Confirm applicable departmental requirements and approvals before ordering. Fit-out and suitability depend on the approved specification.",
+        ],
+      },
+      {
+        heading: "Site and gate cabins for industrial units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Contractors and industrial teams around Ginigera, Basapura and Kyadigoppa can enquire about offices for engineers, guard cabins for vehicle entry and administrative cabins for records and meetings. Share the staff count, counter position and electrical needs. Confirm the placement area and delivery route with the site team.",
+        ],
+        // The brief's "shipping containers in Koppal" link goes here once that page is live (see the
+        // header note); until then the section ends with the brief's own paragraph.
+      },
+      {
+        heading: "Cabin size examples",
+        placement: "afterSolutions",
+        table: {
+          caption: "Example footprints and the enquiries they usually start from.",
+          headers: ["Example footprint", "Typical enquiry"],
+          rows: [
+            ["6 × 6 ft", "Gate cabin or compact service counter"],
+            ["10 × 8 ft", "Booking office, operator rest room or small craft workspace"],
+            ["20 × 10 ft", "Artisan workshop, design studio or project office"],
+            ["30 × 10 ft and above", "Shared workshop or partitioned workspace"],
+          ],
+        },
+        closing: [
+          "These are starting points for discussion. Confirm usable dimensions, fittings, occupancy and mild steel or PUF-insulated construction in the quotation.",
+        ],
+        links: [{ label: "Portable cabin sizes and specifications", href: "/products/portable-cabin" }],
+      },
+    ],
+
+    customHeading: "Porta cabin price and rental in Koppal",
+    customIntro:
+      "Pricing depends on the size, construction, worktops, counters, electrical fittings, ventilation, transport and unloading. Share the required layout and dates for an itemised quote.",
+    customBullets: [],
+    customOutro:
+      "If you need a cabin for a harvest season or a temporary project, ask whether a suitable configuration can be quoted on hire. Our rental page lists the site office and security guard cabins offered on hire, with their minimum terms:",
+    customLinks: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Koppal town, Kinhal, Bhanapur, Ginigera, Basapura, Munirabad, Hitnal, Gangavathi, Karatagi, Kanakagiri, Kushtagi, Kyadigoppa, Yelburga and Kukanur. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share the use, site pin, preferred size, quantity, target dates and approach photos.", text: "" },
+      { title: "Review the proposed layout and itemised quotation.", text: "" },
+      {
+        title:
+          "Confirm placement permissions, including any applicable heritage-area requirements, plus base readiness, utilities and unloading access.",
+        text: "",
+      },
+      { title: "Agree on delivery and handover. Include collection or relocation in the quotation if needed.", text: "" },
+    ],
+
+    faqs: [
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer: "Yes. For this range, both names describe a prefabricated cabin delivered to your site.",
+      },
+      {
+        question: "What should I specify for an artisan workshop?",
+        answer:
+          "Share the processes, workbench dimensions, lighting, tool storage and any dust or fume extraction requirements. Confirm specialist fit-outs before ordering.",
+      },
+      {
+        question: "Can I enquire about an anganwadi or pre-school cabin?",
+        answer:
+          "Yes. Share the intended use, occupancy and departmental requirements so the proposed layout can be reviewed before quotation and placement.",
+      },
+      {
+        question: "What should I check before placing a cabin near Hampi?",
+        answer:
+          "Ask the landowner and relevant authorities to confirm whether the proposed location needs heritage or other placement approvals before arranging delivery.",
+      },
+      {
+        question: "Can I rent a cabin, and how soon can you deliver?",
+        answer:
+          "Share the type of cabin, site and dates. Hire availability and delivery timing depend on the configuration and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a porta cabin quote in Koppal",
+    ctaText:
+      "Send your site pin, intended use, size, quantity, target dates and access photos. Include requirements for workbenches, counters, ventilation, power and other fittings.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Porta Cabin", href: "/products/porta-cabin" },
+      { label: "Porta Cabins in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Our factory is near Hosur in Tamil Nadu and our Karnataka office is in Electronic City Phase 1, Bengaluru; Portable Office Cabin has no factory, workshop, yard or office in Koppal district. Each cabin's size, construction, worktops, counters, fittings, ventilation, any extraction or child-use fit-out, hire, base work or relocation, and the delivery, unloading and collection arrangements are set out in its quotation; hire is subject to availability and no delivery date is guaranteed. Every image here is an illustrative render of one representative cabin design, shown with optional office furniture inside, and none was photographed at a site in Koppal district. Localities are listed only to show where we accept enquiries: naming them does not mean we have customers, past projects or confirmed delivery there. We have no affiliation with any artisan, craft or toy-making organisation, machinery hire centre, anganwadi, government department, industrial unit or heritage authority, and the uses described are examples, not projects we have supplied. Process safety, extraction, child-use suitability, supervision, sanitation, occupancy and placement approvals, including any heritage-area requirements near Hampi, are for the operator, landowner and responsible authorities to confirm; notes on layouts and site preparation are general guidance, not engineering, fire-safety, child-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN SARJAPUR — the Sarjapur Road corridor of south-east Bengaluru
    * (Bellandur → Kasavanahalli → Carmelaram → Dommasandra → Sarjapur Town, with Attibele and
    * Bommasandra to the south).
