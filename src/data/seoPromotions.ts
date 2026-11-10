@@ -332,6 +332,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Gummidipoondi.
     { name: "Portable Cabins in Padalur & Irur", href: "/cities-we-serve/portable-cabin-padalur-irur" },
     { name: "Portable Cabins in SIPCOT Mambakkam, Sriperumbudur", href: "/cities-we-serve/portable-cabin-mambakkam" },
+    { name: "Portable Cabins in Kanchipuram Town", href: "/cities-we-serve/portable-cabin-kanchipuram" },
     { name: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
     // Ranipet (owner brief 2026-11-09): the SIPCOT page is labelled for the estate, and the district page follows it.
     { name: "Portable Cabins for SIPCOT Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
@@ -364,6 +365,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Gummidipoondi.
     { name: "Portable Cabins in Padalur & Irur", href: "/cities-we-serve/portable-cabin-padalur-irur" },
     { name: "Portable Cabins in SIPCOT Mambakkam, Sriperumbudur", href: "/cities-we-serve/portable-cabin-mambakkam" },
+    { name: "Portable Cabins in Kanchipuram Town", href: "/cities-we-serve/portable-cabin-kanchipuram" },
     { name: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
     // Ranipet (owner brief 2026-11-09): the SIPCOT page is labelled for the estate, and the district page follows it.
     { name: "Portable Cabins for SIPCOT Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
