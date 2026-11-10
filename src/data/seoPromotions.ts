@@ -278,6 +278,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
     // Office-cabin page for tech park projects in Devarabisanahalli (Outer Ring Road, 2026-11-07); the page links back here.
     { name: "Portable Office Cabins for Devarabisanahalli Tech Parks", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
+    // Portable office cabins for Marathahalli and the Outer Ring Road (east Bengaluru, owner brief of
+    // 2026-11-07); the page links back to this hub. After the live lines so they keep their positions.
+    { name: "Portable Office Cabins in Marathahalli", href: "/cities-we-serve/portable-office-cabin-marathahalli" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [

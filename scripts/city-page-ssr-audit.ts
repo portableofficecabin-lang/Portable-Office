@@ -156,9 +156,14 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
 
   // body copy
   p.intro.slice(1).forEach((s, i) => t("intro", `intro paragraph ${i + 2}`, s));
-  t("why", "why heading", p.whyHeading);
-  t("why", "why intro", p.whyIntro);
-  p.whyBullets.forEach((b, i) => { t("why", `why bullet ${i + 1} title`, b.title ?? ""); t("why", `why bullet ${i + 1} text`, b.text); });
+  // Optional intro links (since 2026-11-07): label text and href.
+  (p.introLinks ?? []).forEach((l, i) => { t("intro", `intro link ${i + 1} "${l.label}"`, l.label); m("intro", `intro link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  // Optional section (since 2026-11-07): audited whenever the page sets it.
+  if (p.whyHeading) {
+    t("why", "why heading", p.whyHeading);
+    t("why", "why intro", p.whyIntro ?? "");
+  }
+  (p.whyBullets ?? []).forEach((b, i) => { t("why", `why bullet ${i + 1} title`, b.title ?? ""); t("why", `why bullet ${i + 1} text`, b.text); });
   // Optional why table (since 2026-11-04): caption, every header and every cell.
   if (p.whyTable) {
     t("why", "why table caption", p.whyTable.caption);
@@ -177,7 +182,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   // Optional section (since 2026-11-08): audited whenever the page sets it.
   if (p.solutionsHeading) {
     t("solutions", "solutions heading", p.solutionsHeading);
-    t("solutions", "solutions intro", p.solutionsIntro ?? "");
+    // Optional intro (since 2026-11-07, first Marathahalli): audited whenever the page sets it.
+    if (p.solutionsIntro) t("solutions", "solutions intro", p.solutionsIntro);
     (p.solutions ?? []).forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
     (p.solutions ?? []).forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
     // Optional captioned images under a solutions item (since 2026-11-05): src, alt and caption.
@@ -213,16 +219,21 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     t("industries", "industries intro", p.industriesIntro ?? "");
     (p.industries ?? []).forEach((b, i) => { t("industries", `industry ${i + 1} title`, b.title ?? ""); t("industries", `industry ${i + 1} text`, b.text); });
   }
-  t("custom", "custom heading", p.customHeading);
-  if (p.interiorImage) { items.push({ group: "images", label: "interior image src", test: (mk) => imageNeedle(p.interiorImage!.src).test(mk) }); m("images", "interior image alt", `alt="${p.interiorImage.alt}"`); }
-  // Optional visible captions on the hero and interior images (audited since 2026-11-05).
+  // Optional visible caption on the hero image (audited since 2026-11-05).
   if (p.heroImage.caption) t("images", "hero caption", p.heroImage.caption);
-  if (p.interiorImage?.caption) t("images", "interior caption", p.interiorImage.caption);
-  t("custom", "custom intro", p.customIntro);
-  p.customBullets.forEach((b, i) => { t("custom", `custom bullet ${i + 1} title`, b.title ?? ""); t("custom", `custom bullet ${i + 1} text`, b.text); });
-  t("custom", "custom outro", p.customOutro);
-  // Optional custom links (since 2026-11-05): label text and href.
-  (p.customLinks ?? []).forEach((l, i) => { t("custom", `custom link ${i + 1} "${l.label}"`, l.label); m("custom", `custom link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  // Optional section (since 2026-11-07): audited whenever the page sets it; the interior image renders
+  // inside it.
+  if (p.customHeading) {
+    t("custom", "custom heading", p.customHeading);
+    if (p.interiorImage) { items.push({ group: "images", label: "interior image src", test: (mk) => imageNeedle(p.interiorImage!.src).test(mk) }); m("images", "interior image alt", `alt="${p.interiorImage.alt}"`); }
+    // Optional visible caption on the interior image (audited since 2026-11-05).
+    if (p.interiorImage?.caption) t("images", "interior caption", p.interiorImage.caption);
+    t("custom", "custom intro", p.customIntro ?? "");
+    (p.customBullets ?? []).forEach((b, i) => { t("custom", `custom bullet ${i + 1} title`, b.title ?? ""); t("custom", `custom bullet ${i + 1} text`, b.text); });
+    t("custom", "custom outro", p.customOutro ?? "");
+    // Optional custom links (since 2026-11-05): label text and href.
+    (p.customLinks ?? []).forEach((l, i) => { t("custom", `custom link ${i + 1} "${l.label}"`, l.label); m("custom", `custom link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  }
   // Optional section (since 2026-10-21): audited whenever the page sets it.
   if (p.whyUsHeading) {
     t("whyUs", "why-us heading", p.whyUsHeading);
@@ -233,12 +244,24 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   t("areas", "areas text", p.areasText);
   // Optional areas links (since 2026-11-07): label text and href.
   (p.areasLinks ?? []).forEach((l, i) => { t("areas", `areas link ${i + 1} "${l.label}"`, l.label); m("areas", `areas link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
-  t("how", "how heading", p.howHeading);
-  if (p.howIntro) t("how", "how intro", p.howIntro);
-  p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });
-  if (p.howOutro) t("how", "how outro", p.howOutro);
+  // Optional section (since 2026-11-07): audited whenever the page sets it.
+  if (p.howHeading) {
+    t("how", "how heading", p.howHeading);
+    if (p.howIntro) t("how", "how intro", p.howIntro);
+    (p.howSteps ?? []).forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });
+    if (p.howOutro) t("how", "how outro", p.howOutro);
+    // Optional how links (since 2026-11-08): label text and href.
+    (p.howLinks ?? []).forEach((l, i) => { t("how", `how link ${i + 1} "${l.label}"`, l.label); m("how", `how link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  }
   (p.extraSections ?? []).forEach((s, i) => {
     t("extra", `extra section ${i + 1} heading`, s.heading);
+    // Optional image (since 2026-11-07): src, alt and caption.
+    if (s.image) {
+      const img = s.image;
+      items.push({ group: "images", label: `extra section ${i + 1} image src`, test: (mk) => imageNeedle(img.src).test(mk) });
+      m("images", `extra section ${i + 1} image alt`, `alt="${img.alt}"`);
+      if (img.caption) t("images", `extra section ${i + 1} image caption`, img.caption);
+    }
     (s.paragraphs ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} paragraph ${j + 1}`, x));
     // Optional table (since 2026-11-04): caption, every header and every cell.
     if (s.table) {
@@ -253,11 +276,11 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
     // heading and the features heading in the visible text. A page without those optional sections
-    // (since 2026-11-08) is checked against the headings either side instead: the why heading before,
-    // and the industries or custom heading after.
+    // (since 2026-11-07/08) is checked against the headings either side instead: the why heading (else
+    // the H1) before, and the first later optional heading it sets after, else the areas heading.
     if (s.placement === "afterSolutions") {
-      const before = p.solutionsHeading ?? p.whyHeading;
-      const after = p.featuresHeading ?? p.industriesHeading ?? p.customHeading;
+      const before = p.solutionsHeading ?? p.whyHeading ?? p.h1;
+      const after = p.featuresHeading ?? p.industriesHeading ?? p.customHeading ?? p.whyUsHeading ?? p.areasHeading;
       items.push({
         group: "extra",
         label: `extra section ${i + 1} renders after the solutions`,
@@ -279,6 +302,11 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   (p.ctaSecondaryLinks ?? [{ label: "Explore Container Offices", href: "/products" }, { label: "Container Office on Rent", href: "/rental-service" }]).forEach((l) => { t("cta", `secondary button "${l.label}"`, l.label); m("cta", `secondary href ${l.href}`, `href="${l.href}"`); });
   // Optional hero contact row and on-page enquiry form (since 2026-11-04).
   if (p.heroCta) m("cta", "hero quotation button target", p.enquiryForm ? `href="#category-enquiry"` : `href="/contact"`);
+  // Optional Call / WhatsApp button labels (since 2026-11-07), when the contact buttons are shown.
+  if ((p.ctaContactButtons ?? true) || p.heroCta) {
+    if (p.callButtonLabel) t("cta", `call button "${p.callButtonLabel}"`, p.callButtonLabel);
+    if (p.whatsappButtonLabel) t("cta", `WhatsApp button "${p.whatsappButtonLabel}"`, p.whatsappButtonLabel);
+  }
   if (p.enquiryForm) {
     t("form", "enquiry form heading", p.enquiryForm.heading);
     t("form", "enquiry form intro", p.enquiryForm.intro);
