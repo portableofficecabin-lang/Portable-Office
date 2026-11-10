@@ -27,6 +27,23 @@ export interface CityPageListItem {
    * by the other lists. Unset = no element, so every other page's HTML is unchanged.
    */
   link?: CityPageLink;
+  /**
+   * Optional captioned images rendered under a SOLUTIONS item, after its paragraph and link (first
+   * used by Portable Shops in Hoskote, whose container-shop item shows the container shell such a
+   * shop is converted from). Ignored by the other lists. Unset = no element, so every other page's
+   * HTML is unchanged.
+   */
+  images?: CityPageFigure[];
+}
+
+/** A captioned image inside a solutions item (see CityPageListItem.images). */
+export interface CityPageFigure {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  /** Rendered visibly under the image, e.g. to mark a render as illustrative. */
+  caption: string;
 }
 
 /** A plain internal link — used for CTA buttons and the optional related-pages block. */
@@ -103,6 +120,14 @@ export interface CityPage {
    * "| ..." search qualifier.
    */
   listTitle?: string;
+  /**
+   * Optional anchor text for this page's card in the /cities-we-serve directory and in its siblings'
+   * nearby blocks (src/data/cityDirectory.ts). Unset = the family default ("Shipping containers in
+   * <city>" for a shipping-container page). First used by Shipping Containers for Hydel Power Project
+   * Sites in the Visakhapatnam Region, whose card names the use rather than the city, so it does not
+   * take the general "shipping containers in Visakhapatnam" intent.
+   */
+  directoryLabel?: string;
   /** EXACT meta title (rendered absolute — no site-name suffix appended). */
   metaTitle: string;
   metaDescription: string;
@@ -124,6 +149,12 @@ export interface CityPage {
    * Service block, as before.
    */
   serviceJsonLd?: { serviceType: string };
+  /**
+   * Optional: declare the hero image's `width` / `height` (which must be its actual pixel size) as
+   * og:image:width / og:image:height (first used by Shipping & Storage Containers in Bellandur, whose
+   * brief asks for the social preview's actual dimensions). Unset = no dimension tags, as before.
+   */
+  ogImageDimensions?: boolean;
 
   /**
    * Hero image (also the page's og:image). Root-relative path under /public. `caption` (optional)
@@ -166,14 +197,43 @@ export interface CityPage {
   /** Optional closing line rendered after the "why" bullets. */
   whyOutro?: string;
 
-  solutionsHeading: string;
-  solutionsIntro: string;
-  solutions: CityPageListItem[];
+  /**
+   * The solutions section. Optional since 2026-11-08 on the same terms as the industries section (first
+   * left out by Shipping Containers in Dharmapuri, whose sections are all extra sections): it renders
+   * only when `solutionsHeading` is set, and every earlier page sets all three, so its HTML is unchanged.
+   */
+  solutionsHeading?: string;
+  solutionsIntro?: string;
+  solutions?: CityPageListItem[];
+  /**
+   * Optional table rendered after the solutions intro and items, with the same markup as an extra
+   * section's table (first used by Shipping Containers for Hydel Power Project Sites in the
+   * Visakhapatnam Region, whose stores-yard section is one paragraph and a table). Unset = no table,
+   * so every other page's HTML is unchanged.
+   */
+  solutionsTable?: CityPageTable;
+  /**
+   * Optional paragraph rendered after the solutions items and table (first used by Shipping & Cargo
+   * Containers in Chamarajanagar, whose turmeric section is two paragraphs and no list). Unset = no
+   * element, so every other page's HTML is unchanged.
+   */
+  solutionsOutro?: string;
 
-  featuresHeading: string;
-  featuresIntro: string;
-  features: string[];
-  sizesNote: string;
+  /**
+   * The features section (list + bold sizes note). Optional since 2026-11-08 on the same terms as the
+   * solutions section above: it renders only when `featuresHeading` is set, and every earlier page sets
+   * all four, so its HTML is unchanged.
+   */
+  featuresHeading?: string;
+  featuresIntro?: string;
+  features?: string[];
+  sizesNote?: string;
+  /**
+   * Optional contextual links rendered as a short list right after `sizesNote` (first used by Shipping
+   * & Cargo Containers in Coimbatore, whose controlled-access section points at the Vellore page's
+   * insulated and AC fit-out guidance). Unset = nothing rendered.
+   */
+  featuresLinks?: CityPageLink[];
 
   /**
    * The industries (uses) section. Optional since 2026-10-21, for owner copy that has no such section
@@ -186,6 +246,7 @@ export interface CityPage {
 
   customHeading: string;
   customIntro: string;
+  /** May be empty for a prose section (first used by Shipping & Storage Containers in Bellandur); an empty list renders no <ul>. */
   customBullets: CityPageListItem[];
   customOutro: string;
   /**
@@ -205,6 +266,13 @@ export interface CityPage {
 
   areasHeading: string;
   areasText: string;
+  /**
+   * Optional contextual links rendered as a short list after `areasText` (first used by the Bellandur
+   * and Marathahalli ORR shipping-container pages, which point at each other's local storage intent).
+   * Their hrefs are also skipped by the shipping-container nearby block, so a sibling is not linked
+   * twice. Unset = nothing rendered.
+   */
+  areasLinks?: CityPageLink[];
 
   howHeading: string;
   /**
@@ -2002,6 +2070,11 @@ export const CITY_PAGES: CityPage[] = [
       { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      // Sibling shop pages named in the owner's brief, linked once live: Shivamogga (#195), Sriperumbudur
+      // (#208) and Hassan (#210, live 2026-11-07; it links back here). Hoskote (#202) is added when it goes live.
+      { label: "Portable Shop Cabins in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
+      { label: "Portable Shop Cabins in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -2009,6 +2082,7 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
         { label: "Portable Shops in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+        { label: "Portable Shops in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
         { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
@@ -2622,7 +2696,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Shipping Container Delivery Areas in Mysore and Surrounding Locations",
     areasText:
-      "Portable Office Cabin accepts shipping container enquiries for Mysore and the surrounding region, including Mysore industrial and commercial areas — Mysore City, Hootagalli, Hebbal, Metagalli, Koorgalli, Belavadi, Bogadi, Kadakola, Kochanahalli and Nanjangud; Mysore district locations — Hunsur, Periyapatna, K.R. Nagar, T. Narasipura, H.D. Kote, Bannur and Thandya; and nearby locations — Srirangapatna, Mandya, Chamarajanagar and locations along the Kodagu Road. Delivery availability and transportation charges are subject to the specific destination and required vehicle arrangements.",
+      "Portable Office Cabin accepts shipping container enquiries for Mysore and the surrounding region, including Mysore industrial and commercial areas — Mysore City, Hootagalli, Hebbal, Metagalli, Koorgalli, Belavadi, Bogadi, Kadakola, Kochanahalli and Nanjangud; Mysore district locations — Hunsur, Periyapatna, K.R. Nagar, T. Narasipura, H.D. Kote, Bannur and Thandya; and nearby locations — Srirangapatna, Mandya and locations along the Kodagu Road. Delivery availability and transportation charges are subject to the specific destination and required vehicle arrangements.",
 
     howHeading: "How to Buy or Rent a Shipping Container in Mysore",
     howSteps: [
@@ -3146,6 +3220,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "Truck-Driver and Highway Kiosks in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -3153,6 +3228,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Offices in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Containers and Container Shops in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
         { label: "Sugarcane Juice and Roadside Kiosks in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
+        // Nanjangud's shop page (#209, live 2026-11-05) — the brief's location-specific link; it links back here.
+        { label: "Shop Rows and Festival Stalls in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -4186,10 +4263,13 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Set up a professional, secure, and comfortable office at your site — without the wait and cost of construction. Contact Portable Office Cabin now for a free consultation and quotation on your container office in Doddaballapura. Buy or rent, standard or fully customized — we will build it to your requirement and deliver it to your doorstep.",
     /* Reciprocal links for the Tumkur page (2026-10-11): both pages serve the Dabaspet–NH 48
-       belt, and city↔city links are kept reciprocal (Tamil Nadu cluster precedent). */
+       belt, and city↔city links are kept reciprocal (Tamil Nadu cluster precedent).
+       2026-11-05: plus the Doddaballapur portable-toilet page, which links back here; this page keeps
+       container offices and the toilet page owns the toilet intent for the same town. */
     relatedLinks: [
       { label: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Portable Toilet Cabins in Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
     ],
   },
 
@@ -6587,7 +6667,276 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
       { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+      // Sibling page (2026-11-07): the shipping / storage container box itself for Coimbatore; it links back here.
+      { label: "Shipping and storage containers in Coimbatore", href: "/cities-we-serve/shipping-container-coimbatore" },
     ],
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN COIMBATORE (KOVAI) — the storage box itself for pump and motor
+   * stock, engineering spares, job-work workshop enquiries, textile supplies and Pollachi coir.
+   *
+   * Owner brief of 2026-11-07 (route, meta title, meta description and H1 used as given; one
+   * canonical for Coimbatore and Kovai). The slug starts with "shipping-container-", so cityFamily()
+   * puts it in the shipping-container family: directory card, Tamil Nadu sibling links both ways
+   * (Athipattu, Mettur) and the nearby block. The brief's sections map onto the fixed template slots,
+   * in the brief's order except where a slot's position is fixed:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Storage for pumps, motors and machinery parts" → why: the paragraph is whyIntro and the
+   *     stock table is whyTable (no bullets).
+   *   • "Container workshop enquiries for job-work units" → solutions heading + intro (no items).
+   *     The copy only invites an enquiry ("Ask whether a workshop fit-out can be quoted"), so it is
+   *     already planning guidance and claims no fit-out.
+   *   • "Storage for textile mills", "Coir and coconut products from the Pollachi belt" and
+   *     "Container sizes, condition and delivery" (table + the used-unit paragraph as `closing`) →
+   *     three afterSolutions extra sections, copy verbatim.
+   *   • "Controlled access for engineering stores" → features. The features slot renders after the
+   *     afterSolutions sections, so this section follows the sizes section (the brief has it before).
+   *     Its first sentence is split into the intro and three list items; the last two sentences are
+   *     the bold note. The gallery follows it.
+   *   • "Shipping container price and rental in Coimbatore" → custom (first sentence = intro, the
+   *     next two as untitled bullets) with the rental link as `customLinks` (anchor as given).
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps). The template
+   *     puts areas before the steps, the reverse of the brief.
+   *   • FAQs (five) → faqs; the closing request → CTA + the cargo-category enquiry form (rental is
+   *     mentioned, so the form keeps the rental model).
+   * Lead-ins written where a slot needs one: tagline, the two table captions, the outro before the
+   * rental link and the enquiry-form intro. No ₹ figure, stock, lead time, load rating, depot origin,
+   * customer relationship or supplier approval; workshop fit-outs, 40 ft high cube availability, side
+   * openings, power, extraction and relocation stay quote-dependent, and heavy-load and combustible-
+   * stock guidance stays tied to the site's own technical, fire-safety and insurance review.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container × Coimbatore (Kovai), Pollachi coir and
+   * the surrounding industrial belt. Container offices stay with container-office-in-sipcot-coimbatore
+   * just above; the two pages link to each other. Coimbatore is not a location in the generated
+   * promotion grid, so no /promotions page competes for this keyword.
+   *
+   * LINKS (brief §5): no Chennai page is a used-container inspection guide (the Chennai
+   * shipping-container product page has one sentence on inspection), so on 2026-11-08 the owner chose
+   * /products/cargo-storage-containers, whose FAQ covers inspecting a used container, for the "how to
+   * inspect a used container" link at the end of the sizes section. The Vellore fit-out link waits
+   * until /cities-we-serve/shipping-container-vellore is live; whichever of the two pages goes live
+   * second adds it.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Coimbatore shipping container city
+   * page/Coimbatore shipping container/cabin (1–5).webp", no EXIF / XMP / ICC metadata), copied with
+   * an XMP dc:title / dc:description that marks each one as a render (pixels unchanged). They show
+   * one painted container with a glazed side door and a lined interior; the brief's pump-stock,
+   * workshop, textile and coir slots have no matching image and are omitted. The exterior is the
+   * hero (and og:image); the elevated view is the feature band; the side door, cargo doors and lined
+   * interior are the gallery. No alt text or caption names a size, and the disclaimer says none is a
+   * photograph of a container in Coimbatore or Pollachi.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-coimbatore",
+    city: "Coimbatore",
+    listTitle: "Shipping & Cargo Containers in Coimbatore",
+    metaTitle: "Shipping & Storage Containers in Coimbatore (Kovai)",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Coimbatore for pump and motor stock, engineering spares, textile supplies and Pollachi coir products.",
+    keywords:
+      "Shipping Container in Coimbatore, Storage Container Coimbatore, Cargo Container Kovai, Used Shipping Container Coimbatore, Shipping Container Rental Coimbatore",
+    geo: {
+      region: "IN-TN",
+      placename: "Coimbatore, Tamil Nadu, India",
+      position: "11.0168;76.9558",
+      icbm: "11.0168, 76.9558",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors and a glazed sliding door in its side wall, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative shipping container exterior for industrial storage. A side opening such as the glazed door shown is subject to quotation and a structural review.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-elevated-view.webp",
+      alt: "Elevated view of a steel shipping container on paving, showing its corrugated roof, closed cargo doors and a glazed side door",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative elevated view. Plan door clearance and handling space around the unit.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a steel shipping container with vertical locking bars and handles",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the cargo doors. Check the doors, seals and locking hardware of the unit offered.",
+      },
+      {
+        src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-side-door.webp",
+        alt: "Side view of a corrugated steel container with a glazed sliding door set into its side wall",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render. Any side opening needs a structural review before fabrication and is subject to quotation.",
+      },
+      {
+        src: "/images/cities/shipping-container-coimbatore/coimbatore-shipping-container-lined-interior.webp",
+        alt: "Wood-lined container interior with wall shelves, a low cabinet and a glazed side door, seen through open cargo doors",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative lined interior. Lining, lighting and any fit-out are subject to quotation.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Coimbatore",
+    tagline:
+      "20 ft and 40 ft containers for pump and motor stock, engineering spares, textile supplies and Pollachi coir products, quoted for your site across Coimbatore (Kovai).",
+    intro: [
+      "A pump manufacturer may need space for crated motors awaiting dispatch. A mill may need a separate store for spares and packaging. A Pollachi coir business may need room for finished products between collections. Portable Office Cabin welcomes shipping container enquiries across Coimbatore (Kovai) and the surrounding industrial belt. Share what you plan to store, how staff will handle it and where the unit will sit so we can quote the size, fit-out and delivery scope.",
+    ],
+
+    whyHeading: "Storage for pumps, motors and machinery parts",
+    whyIntro:
+      "Start with the packed dimensions and weight of your largest items, including crates and skids. If staff will use a forklift or pallet truck, include its dimensions and loaded weight. Ask the responsible technical team to check the selected unit's floor and loading limits, including concentrated loads, along with rack ratings, door clearance and the proposed handling method. Agree how the stock will be secured and leave enough room to retrieve it safely.",
+    whyBullets: [],
+    whyTable: {
+      caption: "Floor and handling limits depend on the selected unit and the load.",
+      headers: ["Stock", "What to plan for"],
+      rows: [
+        ["Pumps, motors and gearboxes", "Skid dimensions, lifting access and verified floor capacity"],
+        ["Engineering spares and finished assemblies", "Rated shelving, labelled locations and a clear picking aisle"],
+        ["Wet grinders and other boxed appliances", "Carton dimensions, safe stacking and dispatch access"],
+      ],
+    },
+
+    solutionsHeading: "Container workshop enquiries for job-work units",
+    solutionsIntro:
+      "If you need a compact space for bench assembly, tool preparation or inspection, share your equipment list, power requirements and number of operators. Ask whether a workshop fit-out can be quoted. Discuss workbenches, lighting, electrical supply and earthing, ventilation or extraction, and entry and exit requirements with the responsible technical team. For machinery, provide weights, mounting and vibration requirements. Any proposed side opening or shutter needs a structural review before fabrication.",
+    // Empty on purpose: the section is the heading and paragraph above (see the header comment).
+    solutions: [],
+
+    featuresHeading: "Controlled access for engineering stores",
+    featuresIntro: "For traceable parts or customer-owned stock, consider:",
+    features: ["Labelled bins", "A stock register", "A record of who can access the unit"],
+    sizesNote:
+      "Ask about available door hardware, lockboxes and tamper-evident seals. If your customer specifies access, traceability or environmental controls, include those requirements in the enquiry and confirm that the quoted scope meets them. For stock with specified temperature or humidity limits, see:",
+    // Reciprocal link agreed with the Vellore page (#231, the second page to go live, adds it).
+    featuresLinks: [{ label: "Insulated and air-conditioned storage fit-outs", href: "/cities-we-serve/shipping-container-vellore" }],
+
+    customHeading: "Shipping container price and rental in Coimbatore",
+    customIntro: "Pricing depends on size, condition, fit-out, transport and unloading.",
+    customBullets: [
+      { text: "Include the weight and size of any heavy stock, plus requirements for racks, power, ventilation or security." },
+      { text: "Confirm availability, the hire period, permitted modifications and collection terms for your site." },
+    ],
+    customOutro: "For seasonal stock or temporary project storage, see:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Peelamedu, Ganapathy, Kurichi SIDCO, Malumichampatti, Chettipalayam, Arasur, Sulur, Karumathampatti, Saravanampatti, Thudiyalur and Kovilpalayam. We also consider sites around Madukkarai, Kinathukadavu, Annur, Pollachi, Mettupalayam and Varapatti. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share the intended use, quantity, target dates and photos of the site and approach.", text: "" },
+      { title: "Review the proposed unit, fit-out and itemised quote.", text: "" },
+      {
+        title: "Confirm the placement area, handling method, electrical scope if needed and unloading responsibilities.",
+        text: "",
+      },
+      { title: "Agree on delivery and placement, plus collection if included in the hire.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage for textile mills",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A container can provide overflow space for suitable packaging, maintenance spares and finished goods awaiting dispatch. Before storing yarn or cotton bales, ask your site fire-safety team and insurer to confirm whether the proposed unit and location are suitable for the stock and quantities involved. Agree on separation, housekeeping, ignition controls, emergency access and fire protection through the site plan.",
+        ],
+      },
+      {
+        heading: "Coir and coconut products from the Pollachi belt",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For coir fibre, pith blocks, mats and ropes, share pack dimensions and the supplier's storage requirements. Plan pallet positions, handling clearances and regular stock checks. Confirm that the unit suits the required moisture conditions and that your site team has assessed fire protection for the intended stock.",
+        ],
+      },
+      {
+        heading: "Container sizes, condition and delivery",
+        placement: "afterSolutions",
+        table: {
+          caption: "Availability and actual dimensions are confirmed for the specific unit in its quotation.",
+          headers: ["Configuration", "Typical enquiry", "What to confirm"],
+          rows: [
+            ["20 ft", "Pump spares, boxed appliances or smaller coir stock", "Load limits, door clearance and unloading access"],
+            ["40 ft", "Larger stock volumes or longer rack runs", "Trailer approach, turning space and placement area"],
+            ["40 ft high cube", "Bulky items or taller racking", "Availability, actual internal height and route clearances"],
+          ],
+        },
+        closing: [
+          "For a used unit, confirm the condition of its floor, roof, doors, seals and locking hardware. Ask for the proposed dispatch location, route and unloading scope in the quotation. Share photos of the gate, approach road and placement area, including overhead obstructions and space for the vehicle to turn.",
+          "Buying a used unit? See:",
+        ],
+        // Brief §5 inspection link; the owner chose this target on 2026-11-08 (no Chennai inspection guide exists).
+        links: [{ label: "How to inspect a used container", href: "/products/cargo-storage-containers" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a shipping container hold heavy pumps and motors?",
+        answer:
+          "That depends on the unit and the loads. Share the packed weights, skid or contact dimensions and handling equipment so the floor, racking and access requirements can be assessed.",
+      },
+      {
+        question: "Can I enquire about a container workshop?",
+        answer:
+          "Yes. Share your equipment list, number of users and electrical, ventilation and access requirements. Fit-out availability and suitability depend on the quoted specification and site review.",
+      },
+      {
+        question: "Can a container be used to store yarn, cotton or coir?",
+        answer:
+          "Ask your fire-safety team and insurer to assess the stock, volume, container and placement. Confirm storage and handling conditions before choosing a unit.",
+      },
+      {
+        question: "Can you deliver to Pollachi or Mettupalayam?",
+        answer:
+          "You can enquire for either location. Share the site address and photos of the approach and unloading area so delivery can be assessed.",
+      },
+      {
+        question: "How quickly can you deliver to Coimbatore?",
+        answer:
+          "Timing depends on stock, modifications, dispatch location, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Coimbatore",
+    ctaText:
+      "Send your site address, intended use, preferred size, target dates and access photos. Include item dimensions and weights, plus any workshop, racking, power or security requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (the brief's Request a Quote · Call · WhatsApp).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry for Coimbatore",
+      intro:
+        "Choose a container and quantity, then give your Coimbatore site address or PIN, what will go inside and your target dates. Mention heavy items, racking, power or workshop needs; a written quotation follows once the details are reviewed with you.",
+    },
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+      // Sibling page: container offices for SIPCOT Coimbatore (the office intent); it links back here.
+      { label: "Container offices for SIPCOT Coimbatore", href: "/cities-we-serve/container-office-in-sipcot-coimbatore" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; it does not operate a container yard, depot or office in Coimbatore, Pollachi or Mettupalayam. Each container is offered subject to stock, and its size, condition, grade, dispatch location, any fit-out or modification, any rental terms and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or installed in Coimbatore or Pollachi. The industries, stock and localities named describe typical enquiries and the area served; they are not clients, past projects or confirmed delivery areas, and no approval as a supplier to any customer or organisation is implied. Guidance on floor and rack loads, electrical work, ventilation, fire safety, moisture and site access is general information, not engineering, fire-safety or insurance advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -6949,9 +7298,11 @@ export const CITY_PAGES: CityPage[] = [
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING CONTAINER IN METTUR, SALEM — new and used shipping containers (the box itself:
-   * sale, rental, storage, modification) for Mettur, Salem district and the Erode / Namakkal /
-   * Dharmapuri belt. Sibling of the container-office page above: each owns its own keyword and
-   * they link to each other.
+   * sale, rental, storage, modification) for Mettur, Salem district and the Erode / Namakkal belt.
+   * Sibling of the container-office page above: each owns its own keyword and they link to each other.
+   * Dharmapuri has its own shipping-container page since 2026-11-08 (shipping-container-dharmapuri), so
+   * the areas line no longer lists it and points to the Tamil Nadu nearby block instead (owner rule of
+   * 2026-11-05, no keyword cannibalisation).
    *
    * Owner copy of 2026-10-12, mapped onto the fixed template slots the same way as the Mysore
    * and Athipattu shipping-container pages. The draft has 11 H2 sections for 8 slots, so three
@@ -7199,7 +7550,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Shipping Container Supply Areas in Mettur, Salem and Nearby Locations",
     areasText:
-      "Portable Office Cabin accepts shipping container enquiries across Mettur, Salem district and surrounding locations. Mettur and nearby areas: Mettur Dam, P.N. Patti, Raman Nagar, Kolathur, Mecheri and surrounding industrial and residential areas. Salem district: Salem City, Omalur, Sankagiri, Edappadi, Jalakandapuram, Elampillai, Attur and Yercaud. Nearby districts and locations: Dharmapuri, Bhavani, Erode, Namakkal and surrounding commercial and industrial areas. Delivery availability and transportation charges depend on the actual destination and site access. Transportation and delivery: transportation is an important consideration when buying shipping containers for inland locations, and the total delivered cost may include the container price, transport charges, unloading equipment and any additional site-related requirements. A 20 ft container may be transported using a suitable truck or specialised container vehicle; actual vehicle selection depends on the container's dimensions, weight and site conditions. A 40 ft container normally requires a suitable trailer or container transport vehicle, so check road width, turning radius, overhead obstacles, ground conditions and unloading arrangements. Where a site has restricted road access, two 20 ft containers may be worth considering as an alternative to one 40 ft unit; however, the final decision should account for total purchase cost, transport, unloading, layout and storage requirements. A quotation can separate the container price (the selected container), transportation (delivery from the dispatch location to the customer's site), unloading (a crane, hydra or other suitable lifting arrangement, where applicable), modifications (doors, windows, lighting, painting or other agreed work) and applicable GST, so the total landed cost is clear before order confirmation.",
+      "Portable Office Cabin accepts shipping container enquiries across Mettur, Salem district and surrounding locations. Mettur and nearby areas: Mettur Dam, P.N. Patti, Raman Nagar, Kolathur, Mecheri and surrounding industrial and residential areas. Salem district: Salem City, Omalur, Sankagiri, Edappadi, Jalakandapuram, Elampillai, Attur and Yercaud. Nearby districts and locations: Bhavani, Erode, Namakkal and surrounding commercial and industrial areas. For Dharmapuri, see the other Tamil Nadu locations below. Delivery availability and transportation charges depend on the actual destination and site access. Transportation and delivery: transportation is an important consideration when buying shipping containers for inland locations, and the total delivered cost may include the container price, transport charges, unloading equipment and any additional site-related requirements. A 20 ft container may be transported using a suitable truck or specialised container vehicle; actual vehicle selection depends on the container's dimensions, weight and site conditions. A 40 ft container normally requires a suitable trailer or container transport vehicle, so check road width, turning radius, overhead obstacles, ground conditions and unloading arrangements. Where a site has restricted road access, two 20 ft containers may be worth considering as an alternative to one 40 ft unit; however, the final decision should account for total purchase cost, transport, unloading, layout and storage requirements. A quotation can separate the container price (the selected container), transportation (delivery from the dispatch location to the customer's site), unloading (a crane, hydra or other suitable lifting arrangement, where applicable), modifications (doors, windows, lighting, painting or other agreed work) and applicable GST, so the total landed cost is clear before order confirmation.",
 
     howHeading: "How to Buy or Rent a Shipping Container in Mettur and Salem",
     howSteps: [
@@ -7945,8 +8296,422 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
       { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
       { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      // Hoskote's portable-shop sibling (2026-11-05), which links back from its nearby locations.
+      { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOPS IN HOSKOTE — the portable-shop intent (readymade shop cabins, retail kiosks,
+   * petty shops, food kiosks, mini marts) for Hoskote / Hosakote and the Old Madras Road belt east
+   * of Bengaluru. The site's first portable-shop location page; a sibling of the Container Office
+   * in Hoskote page above (office cabins only), which links here from its related pages.
+   *
+   * Owner brief of 2026-11-05 ("Portable Shop Manufacturers in Hoskote"), mapped onto the template
+   * slots in the brief's order wherever the template allows:
+   *   1 Hero → h1 / tagline / intro + heroCta (Request a Quote → /contact, Call, WhatsApp).
+   *   2 Why portable shops are useful → why; the "no guarantees" rule is the whyOutro.
+   *   3 Shop ideas → solutions: eleven h3 cards, with a contextual link where a verified page fits.
+   *     The container-shop card carries the owner's five container renders (`images`, new optional
+   *     field) and links to the cargo-container category, not to a storage page's head term.
+   *   4 Where shops may be used, 6 Sizes → extra sections with `placement: "afterSolutions"`. Per the
+   *     owner's approval of #202, every table size is a planning example subject to an approved drawing
+   *     and quotation (the only catalogue shop cabin is 10 × 10 ft).
+   *   Title and H1 per the same approval: "Portable Shop Cabin Manufacturers Serving Hoskote".
+   *   5 Customize → features (front, interior, utilities, branding; every item an option).
+   *   7 Weather → custom, beside the overhead render; 13 Why us → whyUs; 12 Areas → areas;
+   *   11 Ordering → how; 8 Permissions and 9 Price → extra sections after the steps; 14 FAQs; 15 CTA.
+   *   10 Rentals → OMITTED: no portable-shop rental is offered on the site (the rental page lists
+   *     none), so the brief's buy-or-rent FAQ is left out as well.
+   * Wording rules: no ₹ (the fixed online price lives on /products/portable-shop-cabin only); no
+   * lead times, ratings or customer claims; sizes, fronts, fittings and utilities are options
+   * confirmed in the quotation; places are typical uses and delivery enquiry locations. Capability
+   * sources: rolling-shutter front, shelves, counter, signboard, brand colours and other sizes from
+   * the portable shop cabin page; serving window, awning, exhaust hood, sink and water inlet from
+   * the container cafe page. Factory wording names only Kamandoddi (Hosur) and the Electronic City
+   * office: the retired Hoskote works address must not reappear (src/lib/company.ts).
+   * No keyword cannibalisation (owner rule, 2026-11-05): this page owns portable / readymade /
+   * prefabricated shop, retail kiosk and petty shop × Hoskote. It does not target Bengaluru, and
+   * container shops are one card, not a container-storage target.
+   *
+   * Images: the hero, feature band and weather-section image are the published AI renders of the
+   * 10 × 10 ft portable shop cabin (/images/products/portable-shop-cabin/, no EXIF/XMP/ICC/IPTC),
+   * reused in place. The five container images are the owner's drop "public/images/krishnagiri cargo
+   * container city page/Krishnagiri Industrial Area cargo container/cabin (1–5).webp" (renders of
+   * one plain olive 20 ft container with an added side door, no metadata), copied byte-for-byte to
+   * /images/cities/portable-shop-hoskote/20ft-container-shell-*.webp. Owner's choice (2026-11-05):
+   * shop renders for the hero and gallery, container renders in the container-shop card. Every
+   * caption and the disclaimer say they are renders; no image claims a Hoskote location.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-hoskote",
+    city: "Hoskote",
+    listTitle: "Portable Shops in Hoskote",
+    // Owner wording of 2026-11-05 (approval of #202): "Serving Hoskote", so the title and H1 do not
+    // suggest a factory in Hoskote; the factory is near Hosur, as the tagline, intro and disclaimer say.
+    metaTitle: "Portable Shop Cabin Manufacturers Serving Hoskote",
+    metaDescription:
+      "Portable shop cabin manufacturers serving Hoskote from our factory near Hosur: readymade shop cabins, food kiosks, petty shops, bakery counters and mini marts.",
+    keywords:
+      "Portable Shop in Hoskote, Portable Shop Cabin Hoskote, Readymade Shop Hoskote, Prefabricated Shop Hoskote, Movable Shop Hoskote, Portable Shop Cabin Manufacturers Serving Hoskote, Portable Shop Suppliers Hoskote, Portable Shop Hosakote, Portable Shop Price in Hoskote, Retail Kiosk Hoskote, Petty Shop Hoskote, Container Shop Hoskote",
+    geo: { region: "IN-KA", placename: "Hoskote, Bengaluru Rural, Karnataka, India", position: "13.0707;77.7980", icbm: "13.0707, 77.7980" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop" },
+
+    heroImage: {
+      src: "/images/products/portable-shop-cabin/portable-shop-cabin-front-three-quarter.webp",
+      alt: "Illustrative render of a 10 ft × 10 ft portable shop cabin: cream corrugated steel walls, a wood-finish lockable door beside a large glazed display window with shelves of packaged goods, a second glazed window on the side wall and a light above the door, standing on concrete blocks under trees",
+      width: 1600,
+      height: 1067,
+      caption:
+        "Illustrative render of our 10 ft × 10 ft portable shop cabin with a glazed display front and a lockable door. Your shop's size, front and fittings are agreed in your quotation.",
+    },
+    featureImage: {
+      src: "/images/products/portable-shop-cabin/portable-shop-cabin-glazed-side.webp",
+      alt: "Illustrative render of the glazed side of a 10 ft × 10 ft portable shop cabin: a wide display window in cream corrugated steel walls, with stocked shelves visible inside",
+      width: 1600,
+      height: 1067,
+      caption: "A glazed display front keeps your stock on view from the road. Illustrative render of our 10 ft × 10 ft shop cabin.",
+    },
+    interiorImage: {
+      src: "/images/products/portable-shop-cabin/portable-shop-cabin-overhead.webp",
+      alt: "Illustrative elevated render of a 10 ft × 10 ft portable shop cabin showing its cream corrugated steel roof, glazed display windows on two sides and a wood-finish door, raised on concrete blocks",
+      width: 1536,
+      height: 1024,
+      caption:
+        "Illustrative render of the shop cabin from above: the corrugated roof and the raised supports. Roof sealing, drainage and the base are agreed for each site.",
+    },
+
+    h1: "Portable Shop Cabin Manufacturers Serving Hoskote",
+    tagline: "Readymade shop cabins, food kiosks and retail stalls, built to your layout at our factory near Hosur and delivered to businesses in and around Hoskote.",
+    intro: [
+      "Portable Office Cabin builds readymade shop cabins, retail kiosks and other prefabricated portable shops for traders, food sellers and service businesses in Hoskote and the industrial and residential areas around it.",
+      "From a compact petty shop or tea counter to a bakery kiosk, a food stall or a mini mart, a portable shop cabin gives you a customizable commercial space built around the way your business sells.",
+      "Each shop cabin can be planned with a rolling shutter, a serving window or a glass display front, together with counters, shelves, lighting and branding to suit your requirements. It is fabricated at our factory at Kamandoddi, near Hosur, and brought to your site by road.",
+    ],
+
+    whyHeading: "Why Portable Shops Are Useful in Hoskote",
+    whyIntro:
+      "Hoskote sits on Bengaluru's eastern side along Old Madras Road, with industrial, logistics, commercial and residential activity around the town. A portable shop cabin can suit a business that needs flexible retail space without constructing a conventional permanent shop building. What it offers:",
+    whyBullets: [
+      { title: "Prefabricated manufacturing", text: "the cabin is built at our factory while you prepare the site, so less work happens where you will trade." },
+      { title: "Customizable shop layouts", text: "the counter, shelving and storage are planned around what you sell." },
+      { title: "Different shopfront designs", text: "a rolling shutter, a glass display front, a serving window or an open-front counter." },
+      { title: "Relocation possibilities", text: "with a crane or other suitable lifting equipment, the cabin can go to a new site later, if its build, its condition and the road access permit." },
+      { title: "Reduced on-site construction work", text: "the site needs a prepared base and the service connections rather than masonry, plastering and roofing." },
+      { title: "Professional storefront appearance", text: "a finished front, a name board and lighting give a small business a clean, recognisable shop." },
+      { title: "Optional interior fittings", text: "shelves, racks, a billing counter, lighting and sockets, specified in your quotation." },
+    ],
+    whyOutro:
+      "A portable shop does not guarantee an opening date, unrestricted relocation or a lower cost than a built shop in every case: that depends on the size, the specification and the site, and the permissions your business needs still apply.",
+
+    solutionsHeading: "Portable Shop Ideas for Hoskote",
+    solutionsIntro:
+      "Eleven ways a portable shop cabin can be set up for a business in and around Hoskote. Each is a starting point; the layout, front and fittings are agreed in your quotation.",
+    solutions: [
+      {
+        title: "Biryani and Food Kiosk",
+        text: "Hoskote is known well beyond the town for its biryani, and food stalls are a big part of local trade. A prefabricated food kiosk can be planned with a serving counter, washable surfaces, ventilation provisions and space for food-service equipment. Food preparation inside the kiosk must meet the applicable hygiene, electrical, ventilation and fire-safety requirements, so tell us the equipment you will use before the layout is drawn.",
+        link: { label: "Container cafe and restaurant builds", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Darshini-Style Quick Eats Counter",
+        text: "A compact service kiosk for a quick-service food business: a serving window at the front, a preparation area behind it and a customer-facing counter where people order and eat standing.",
+      },
+      {
+        title: "Bakery and Snacks Kiosk",
+        text: "A portable bakery counter with a glass display front, shelves and lighting, plus electrical provisions for suitable display equipment such as a lit showcase.",
+        link: { label: "Cabin layouts and interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Tender Coconut and Juice Stall",
+        text: "An open-front or partially enclosed shop cabin with a shade awning over the serving counter and storage space at the back for stock and crates.",
+      },
+      {
+        title: "Petty Shop",
+        text: "A compact retail cabin with a rolling shutter, shelves and a counter for packaged snacks, daily essentials and other small retail goods.",
+        link: { label: "The 10 ft × 10 ft portable shop cabin", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Milk Parlour Kiosk",
+        text: "A small kiosk with a service counter, suitable electrical provisions and space for refrigeration equipment such as a milk cooler.",
+      },
+      {
+        title: "Mobile and Recharge Shop",
+        text: "A portable retail shop with display glazing, lockable storage, charging points and provisions for a billing counter.",
+      },
+      {
+        title: "Flower and Pooja Items Stall",
+        text: "A compact shop cabin with open display shelving, an optional awning over the front and a secure way to close up at night.",
+      },
+      {
+        title: "Parcel Pickup Counter",
+        text: "A small commercial kiosk that can hold a parcel collection and dispatch counter, with storage shelves behind it.",
+      },
+      {
+        title: "Mini Mart for Residential Layouts",
+        text: "A larger shop cabin laid out with shelves along the walls, a billing counter near the door, storage space and room for suitable refrigeration equipment, sized for a residential layout or an apartment community.",
+        link: { label: "Portable cabin sizes and dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
+      },
+      {
+        title: "Container Shop",
+        text: "A shop converted from a steel shipping container: the shopfront openings are cut into the shell and engineered for it, then fitted with shutters, display glazing and exterior branding. The images below show the kind of plain 20 ft container shell such a conversion starts from.",
+        link: { label: "Steel containers for shop conversions", href: "/products/category/cargo-storage-shipping-containers" },
+        images: [
+          {
+            src: "/images/cities/portable-shop-hoskote/20ft-container-shell-side-door.webp",
+            alt: "Illustrative render of an olive-green 20 ft steel container with double cargo doors at one end and an added personnel door in the side wall, standing in a paved industrial yard",
+            width: 1200,
+            height: 896,
+            caption:
+              "A plain 20 ft container shell with its double cargo doors and an added side door. A container shop starts from a shell like this; the shopfront openings are cut and fitted out to the approved design. Illustrative render.",
+          },
+          {
+            src: "/images/cities/portable-shop-hoskote/20ft-container-shell-cargo-doors.webp",
+            alt: "Illustrative render of the double cargo doors of an olive-green 20 ft container, with vertical locking bars, handles and hinges",
+            width: 1451,
+            height: 1084,
+            caption: "The original double cargo doors and locking bars. Where the design allows, they can stay as an outer closure. Illustrative render.",
+          },
+          {
+            src: "/images/cities/portable-shop-hoskote/20ft-container-shell-interior.webp",
+            alt: "Illustrative render of the empty interior of a 20 ft steel container: a plywood floor, light-grey corrugated walls and ceiling, and a personnel door in the side wall",
+            width: 1451,
+            height: 1084,
+            caption: "Inside the empty shell, before lining, shelving, counters and lighting are added. Illustrative render.",
+          },
+          {
+            src: "/images/cities/portable-shop-hoskote/20ft-container-shell-roof-view.webp",
+            alt: "Illustrative elevated render of an olive-green 20 ft container showing its corrugated steel roof, cargo doors and side personnel door",
+            width: 1451,
+            height: 1084,
+            caption: "From above: the corrugated steel roof and side walls, around which display or shutter openings are planned. Illustrative render.",
+          },
+          {
+            src: "/images/cities/portable-shop-hoskote/20ft-container-shell-end-wall.webp",
+            alt: "Illustrative render of the closed end wall and corrugated side wall of an olive-green 20 ft container",
+            width: 1451,
+            height: 1084,
+            caption: "The closed end wall, which can carry painted branding or a name board. Illustrative render.",
+          },
+        ],
+      },
+    ],
+
+    featuresHeading: "Customize Your Portable Shop",
+    featuresIntro:
+      "Four sets of choices shape your shop. Each item is an option priced in your quotation; tell us what you sell and we will suggest a starting point:",
+    features: [
+      "Front design — a rolling shutter, a glass display front, a serving window, an open-front counter or a shade awning",
+      "Interior — shelving, display racks, a billing counter, storage cabinets, LED lighting, sink provisions and exhaust ventilation",
+      "Utilities — electrical sockets, water inlet and outlet provisions, circuits suited to your equipment, and exterior lighting",
+      "Branding — Kannada, English or dual-language signage, custom paint colours and a shop name board",
+    ],
+    sizesNote:
+      "Every option is confirmed in your approved layout and quotation. Refrigerators, cooking equipment and display chillers are not part of the cabin unless the quotation lists them.",
+
+    customHeading: "Construction and Weather Protection",
+    customIntro:
+      "A shop cabin in Hoskote has to cope with summer heat and heavy monsoon showers. The construction points to agree before fabrication:",
+    customBullets: [
+      { title: "Roof sealing", text: "sealed roof joints, kept in condition with routine maintenance." },
+      { title: "Rainwater drainage", text: "a roof slope or overhang that sheds water away from the shopfront, where the design includes one." },
+      { title: "Protective steel coating", text: "surface preparation, primer and protective paint on the frame and sheets." },
+      { title: "Door and window sealing", text: "seals around the shutter, the doors and the glazing." },
+      { title: "Shade awnings", text: "an awning over the counter for customers and stock." },
+      { title: "Suitable raised bases", text: "supports that keep the floor clear of standing water, chosen for the ground at your site." },
+      { title: "Optional PUF panel insulation", text: "sandwich panels in the walls and roof that slow the summer heat a steel shop picks up from the sun." },
+      { title: "Ventilation provisions", text: "windows, vents or an exhaust fan, which matter most in a food kiosk." },
+    ],
+    customOutro:
+      "Not every unit has a sloped roof, a raised base or insulation: these are specified for your site and use. Good construction and a well-drained site help keep a shop dry, but no cabin can be guaranteed to stay completely dry in flooding or severe weather.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "Working with the manufacturer means one team plans, fabricates and delivers your shop:",
+    whyUsBullets: [
+      { title: "Custom shop layouts", text: "planned around your goods, your counter and how customers reach you." },
+      { title: "MS and insulated cabin options", text: "mild steel construction, or PUF-insulated panels where heat matters." },
+      { title: "Rolling shutter configurations", text: "quoted in place of, or as well as, a glazed front." },
+      { title: "Retail display fronts", text: "glazed display windows like those on the cabin shown on this page." },
+      { title: "Electrical fitting options", text: "lighting, sockets and circuits for your equipment." },
+      { title: "Interior shelving and counters", text: "made to suit your stock and the way you serve." },
+      { title: "Branding customization", text: "your colours, logo and name board, in Kannada, English or both." },
+      { title: "Quotation support", text: "a written quotation that sets out what is supplied, what is included and what each part costs." },
+      { title: "Delivery coordination", text: "transport from our factory near Hosur, with unloading planned with you." },
+    ],
+
+    areasHeading: "Areas Served Around Hoskote",
+    areasText:
+      "We welcome portable shop enquiries from Hoskote (also spelt Hosakote) and the places around it: Pillagumpe, Budigere Cross, Kattamnallur, Sulibele, Nandagudi, Anugondanahalli, Jadigenahalli, Old Madras Road, KR Puram, Whitefield and Malur. Share the exact site address so we can confirm the route, transport and unloading arrangements for your shop cabin.",
+
+    howHeading: "How to Order a Portable Shop",
+    howSteps: [
+      { title: "Share your requirement", text: "your business type, preferred dimensions, site location and the fittings you need." },
+      { title: "Review the design and quotation", text: "we prepare a proposed layout, a shopfront configuration and a written quotation." },
+      { title: "Confirm manufacturing", text: "fabrication proceeds to the approved specification and commercial terms." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated with your site." },
+      { title: "Prepare to open", text: "you arrange the licences, utility connections and approvals your business needs." },
+    ],
+    howOutro:
+      "Manufacturing and delivery dates depend on the size and specification, the work already in our factory and whether your site is ready; they are confirmed when the order is finalised.",
+
+    extraSections: [
+      {
+        heading: "Where Portable Shops May Be Used Around Hoskote",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Places where a portable shop could work around Hoskote. These are potential applications, not locations with guaranteed footfall or approval for a shop:",
+        ],
+        bullets: [
+          { text: "Hoskote industrial area" },
+          { text: "Pillagumpe industrial area" },
+          { text: "Warehousing and logistics premises" },
+          { text: "Commercial locations along Old Madras Road" },
+          { text: "Residential layouts" },
+          { text: "Apartment communities" },
+          { text: "School and college premises" },
+          { text: "Town market areas" },
+          { text: "Festivals and temporary exhibitions" },
+          { text: "Commercial premises near transport corridors" },
+        ],
+        closing: [
+          "Inside an industrial area, a campus or an apartment community, the premises management's permission is needed before a shop is placed, as well as the landowner's.",
+        ],
+      },
+      {
+        heading: "Portable Shop Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Planning examples for common shop types. None of these sizes is a catalogue or stock item: each is built only to an approved drawing and quotation.",
+        ],
+        table: {
+          caption: "Planning examples only, subject to an approved drawing and quotation, which confirm the actual dimensions and whether the size can be manufactured.",
+          headers: ["Planning example", "Suitable application"],
+          rows: [
+            ["6 × 4 ft", "Recharge kiosk, compact milk counter"],
+            ["8 × 6 ft", "Petty shop, juice stall, flower stall"],
+            ["10 × 8 ft", "Bakery kiosk, mobile shop, food counter"],
+            ["20 × 8 ft", "Food kiosk, parcel counter, larger retail shop"],
+            ["20 × 10 ft and above", "Mini mart or larger commercial cabin"],
+          ],
+        },
+        closing: [
+          "Our catalogue portable shop cabin is 10 ft × 10 ft and can be bought online on its product page. Any other size, including those above, is built only to an approved drawing and quotation.",
+        ],
+      },
+      {
+        heading: "Permissions and Site Preparation",
+        paragraphs: ["Before a portable shop is installed, plan for:"],
+        bullets: [
+          { text: "Landowner permission" },
+          { text: "Local municipal or panchayat requirements" },
+          { text: "Applicable trade licensing" },
+          { text: "Food safety registration for food businesses" },
+          { text: "Electrical safety" },
+          { text: "Fire safety" },
+          { text: "Highway setback and access restrictions" },
+          { text: "Drainage and ground conditions" },
+          { text: "Vehicle access for unloading" },
+        ],
+        closing: [
+          "A prefabricated shop does not automatically avoid commercial licensing or land-use rules. Check with the landowner and the local authority before you order; obtaining permits is the buyer's responsibility unless agreed otherwise in writing.",
+        ],
+      },
+      {
+        heading: "Portable Shop Price in Hoskote",
+        paragraphs: ["Each portable shop is priced for its configuration. The price depends on:"],
+        bullets: [
+          { text: "Cabin dimensions" },
+          { text: "MS or insulated construction" },
+          { text: "Front design" },
+          { text: "Rolling shutters" },
+          { text: "Glass display panels" },
+          { text: "Shelving and counters" },
+          { text: "Electrical fittings" },
+          { text: "Water and sink provisions" },
+          { text: "Exterior branding" },
+          { text: "Delivery and installation requirements" },
+        ],
+        closing: [
+          "Send your requirement by phone, on WhatsApp or through our contact form, and we will prepare a written quotation for your shop and site.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I operate a biryani or food business from a portable shop?",
+        answer:
+          "A portable food kiosk can be configured for suitable food-service operations, subject to ventilation, hygiene, fire-safety and licensing requirements, including food safety registration. Tell us the cooking and serving equipment you plan to use so the layout, electrical provisions and ventilation are planned for it.",
+      },
+      {
+        question: "What portable shop is suitable for a residential layout?",
+        answer:
+          "A compact petty shop or a larger mini mart may suit, depending on the space available, what residents need and your business plans. The landowner's or association's permission is needed before the shop is placed.",
+      },
+      {
+        question: "Can a portable shop withstand heavy rain?",
+        answer:
+          "Weather-resistant construction and suitable installation help protect the cabin: sealed roof joints, drainage, door and window seals and a base clear of standing water. Performance still depends on the design, maintenance and site drainage.",
+      },
+      {
+        question: "Can a portable shop be relocated?",
+        answer:
+          "Many portable shop cabins are designed for relocation, subject to their construction, condition, lifting arrangements and the access at both sites. Power and water are disconnected before the move, which needs lifting equipment and a truck suited to the cabin's size.",
+      },
+      {
+        question: "Can the signboard be in Kannada?",
+        answer:
+          "Yes. Kannada, English or dual-language signage can be included in the design, and the name board is shown in the proposed layout for your approval.",
+      },
+      {
+        question: "How quickly can a portable shop be delivered to Hoskote?",
+        answer:
+          "Manufacturing and delivery timelines depend on the dimensions, the specification, our workload and your site arrangements. The schedule is confirmed during quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Quote in Hoskote",
+    ctaText: `Planning a food kiosk, petty shop, bakery counter, juice stall, mini mart or a customized portable retail cabin? Share your business type, dimensions, preferred shopfront, fittings and site location by phone or WhatsApp on ${COMPANY.whatsapp.display}, by e-mail to ${COMPANY.email.sales}, or through our contact form.`,
+    ctaButtonLabel: "Request a Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Portable Shop Cabin — 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
+      { label: "Cargo and Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
+      { label: "MS vs PUF Cabin Materials", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "Security Cabin", href: "/products/security-cabin" },
+      { label: "Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby locations",
+      links: [
+        { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
+        { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+        { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
+        { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
+        { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+        // Sibling portable-shop location pages, which keep their own place intents: Krishnagiri (live since #196),
+        // Hassan (live since #210, linked both ways at the Hassan brief's request) and Nanjangud (live since #209;
+        // the Nanjangud brief asks for the reciprocal, which the Nanjangud page adds in its own follow-up).
+        { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+        { label: "Portable Shops in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
+        { label: "Portable Shop Cabins in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru. Delivery, unloading and placement are arranged for each order, the base or supports depend on the site, and manufacturing and delivery dates are not guaranteed. The shop types, sizes, fronts, materials, insulation, fittings, utilities, signage and finishes on this page are options; apart from the 10 ft × 10 ft catalogue cabin, the sizes shown are planning examples subject to an approved drawing and quotation, and the items supplied are confirmed in the approved specification and quotation for each order. The portable shop images are illustrative renders of one Portable Office Cabin 10 ft × 10 ft shop cabin design, and the container images are illustrative renders of a plain 20 ft container shell before conversion; none of them is a photograph of an installation in Hoskote. The industrial areas, roads, places and businesses named here describe the region, typical uses and delivery enquiry locations, not clients, completed projects or approved shop locations, and Portable Office Cabin is not affiliated with any industrial area, layout or institution named. Notes on permissions, licensing, food safety, electrical and fire safety, weather protection and relocation are general guidance, not legal, engineering or safety advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -8942,6 +9707,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "MS or PUF Panels: Material Guide", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
       { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "Portable Shops in Shivamogga's Machenahalli Area", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Shop Cabins for Hebbal's Office Areas, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -9696,6 +10463,413 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, office, yard or service partner in Tumkur district. Delivery, unloading and placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The sizes, layouts, build types, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and stacked or double-storey units are subject to structural design and approvals. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other build types (MS, PUF panel, FRP, ACP) look different, and the images are not photographs of installations in Tumkur. Hindustan Aeronautics Limited (HAL) and its Gubbi helicopter factory, the Pavagada solar park and its developers, KIADB and its industrial areas, and the Tumakuru Smart City programme are independent organisations and projects with which Portable Office Cabin is not affiliated; they, the businesses and institutions described and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on build types, heat, rain, insulation and ventilation are general guidance, not engineering advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN HASSAN — the retail shop and kiosk intent for Hassan, Karnataka: portable
+   * shop cabin, readymade shop, prefabricated shop and kiosk, for the KIADB industrial areas and the
+   * Hassan Growth Centre, the surroundings of the KIADB textile and pharmaceutical SEZs, Hassan city
+   * streets, permitted NH 75 roadside plots, coffee and spice kiosks, agricultural supply shops and
+   * heritage-area retail around Belur, Halebidu and Shravanabelagola. A sibling of Portable Shops in
+   * Krishnagiri (a related link each way) and of the Hoskote (#202) and Shivamogga (#195) shop pages,
+   * which are linked from here only once they are live. Not a container-office cluster location.
+   *
+   * Owner brief of 2026-11-05, mapped onto the template slots (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → /contact, Call, WhatsApp).
+   *   5 Front options → why (four titled bullets and the brief's design caveat as whyOutro), then the
+   *     feature band (the front elevation). It renders before the environments because the template's
+   *     "why" slot comes first; that way the environments keep their h3 subsections and links.
+   *   2 Four commercial environments → solutions: four h3 subsections, each with a verified link;
+   *     the brief's "potential use cases, not guarantees" line closes the solutions intro.
+   *   3 Seasonal planning, 4 Finish, 6 Interior and exterior features, 7 Sizes, 8 Weather → extra
+   *     sections with `placement: "afterSolutions"`, in that order. The seasonal table has no fixed
+   *     peak-season claim and two columns (each planning idea closes its cell), so it fits a 320 px
+   *     phone; the Mahamastakabhisheka note says the event is periodic, with no date. The
+   *     sizes are planning examples, not confirmed standard models (owner wording of 2026-11-05 on
+   *     #201/#202): only the 10 ft × 10 ft Portable Shop Cabin (id 48) is a catalogue item.
+   *   9 Permissions → features (one item per authority, plus the general list), the brief's
+   *     "we manufacture; the owner obtains the permissions" rule in the bold sizesNote.
+   *   10 Price → custom, beside the interior render; no ₹ anywhere.
+   *   11 Rental → left out: the rental range (src/views/RentalService.tsx) has no shop cabin.
+   *   13 Areas → areas; 12 Ordering → how (the template renders areas before how); 14 Why choose →
+   *     an extra section after how (whyUs unset), so it still comes after ordering, as in the brief;
+   *   15 the brief's eight FAQs, worded for Hassan; 16 CTA (Request Quote, Call, WhatsApp).
+   * No on-page form: /api/enquiries accepts only the CATEGORY_LANDING_SLUGS categories, and shops sit
+   * in Portable Cabins, which has none; the quote buttons use the /contact quotation flow.
+   * Left out as unverified: rental, timelines, flood or waterproofing guarantees, SEZ acreages or
+   * unit counts, any event date, and links to pages that do not exist or are not live (a container
+   * shop product, the Hoskote, Shivamogga and Sriperumbudur shop pages, and Belur, Halebidu,
+   * Sakleshpur or Channarayapatna pages). No Hassan parent page exists to link in from.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Hassan, and
+   * no other page names Hassan. The areas list names only towns with no shop page of their own;
+   * link anchors and the CTA line are this page's own. KIADB is named nominatively, with the
+   * non-affiliation note in the disclaimer.
+   *
+   * Images: six owner-dropped webp renders ("public/images/Hassan Industrial Area portable shop city
+   * page/Hassan Industrial Area/cabin (1–6).webp", lossy VP8 with no EXIF/XMP/ICC chunk, 78–156 KB)
+   * copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image,
+   * captioned; (5) front elevation = the feature band, captioned; (2) interior = beside the price
+   * factors, captioned; (3) elevated view, (4) rear and window side and (6) a closed charcoal
+   * variant with an entry door = the three-image gallery after the permissions. They show one grey
+   * corrugated-steel kiosk with a rolling-shutter serving hatch, plus that closed variant. Every alt
+   * text, caption and the disclaimer say they are illustrative renders, and none names Hassan.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-hassan",
+    city: "Hassan",
+    listTitle: "Portable Shops in Hassan",
+    metaTitle: "Portable Shop Cabin in Hassan | KIADB, Highway & Retail Kiosks",
+    metaDescription:
+      "Portable shop cabins in Hassan for KIADB areas, highway kiosks, agri-input shops and heritage retail. Explore custom shop designs, sizes and fittings.",
+    keywords:
+      "Portable Shop Cabin in Hassan, Portable Shop Hassan, Readymade Shop Cabin Hassan, Prefabricated Shop Hassan, Kiosk Hassan Industrial Area, Shop Cabin KIADB Hassan, Portable Shop Cabin Manufacturers in Hassan, Portable Shop Suppliers Hassan, Portable Shop Cabin Price in Hassan, Coffee Kiosk Hassan, Agricultural Shop Cabin Hassan, Highway Kiosk Hassan",
+    geo: { region: "IN-KA", placename: "Hassan, Karnataka, India", position: "13.0033;76.1004", icbm: "13.0033, 76.1004" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-rolling-shutter-three-quarter-view.webp",
+      alt: "Prefabricated portable shop cabin with a rolling shutter over a fold-down serving counter — illustrative render of a grey corrugated steel kiosk with a black lower band, a pitched corrugated roof and an end-wall window under a prop-up awning, in a paved courtyard",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop cabin design; final fittings depend on approved specifications.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-front-elevation-serving-counter.webp",
+      alt: "Front elevation of a portable shop cabin — illustrative render of a closed rolling shutter under a pelmet, a fold-down serving counter on steel brackets, grey corrugated walls with a black lower band and a pitched roof",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of a rolling-shutter front with a fold-down counter; the pictured design is not a confirmed standard product. Your shop's front, size and fittings follow its approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-interior-shelving-counter.webp",
+      alt: "Interior of a portable shop cabin with shelving and a serving counter — illustrative render with wood-finish wall and ceiling panels, wall shelves and a low rack holding packaged goods, an LED strip light, a sliding window and the open rolling shutter above the counter",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative interior render; the stock is shown for illustration. The shelving, counter and lighting of your shop are set in its approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-elevated-roof-view.webp",
+        alt: "Elevated view of a portable shop cabin — illustrative render of the pitched corrugated roof, the rolling shutter and fold-down counter on the long side and the awning over the end-wall window",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-rear-and-window-side.webp",
+        alt: "Rear of a portable shop cabin — illustrative render of the plain corrugated long side with a black lower band and the end-wall sliding window under its prop-up awning",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-closed-variant-entry-door.webp",
+        alt: "Closed configuration of a portable shop cabin — illustrative render in charcoal corrugated steel with a hinged entry door in the end wall, a low-pitched roof with an overhang and no serving hatch on this side",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers in Hassan Industrial Area",
+    tagline:
+      "Prefabricated shop cabins and kiosks for KIADB industrial areas, Hassan city streets, permitted NH 75 roadside plots, heritage towns and agricultural markets",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, retail kiosks and customized commercial cabins for industrial, urban, highway and rural business requirements in Hassan and surrounding areas.",
+      "Hassan combines industrial activity, agricultural trade, residential development, highway movement and heritage tourism.",
+      "Portable shop cabins can be configured for daily essentials stores, coffee and spice kiosks, agricultural supply counters, mobile shops, souvenir stalls and other permitted retail uses.",
+      "Depending on requirements, cabins may include rolling shutters, glass displays, service counters, shelving, electrical fittings, branding panels and weather protection. Each cabin is built at our factory near Hosur and delivered to Hassan by road.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Portable Shop Cabin Front Options",
+    whyIntro: "The front decides how a shop opens, locks and serves its customers. Four common arrangements:",
+    whyBullets: [
+      { title: "Rolling shutter front", text: "suitable for many compact retail applications where lockable closure is required." },
+      {
+        title: "Glass display front",
+        text: "useful for selected fancy stores, mobile shops and display-oriented retail. The catalogue 10 ft × 10 ft Portable Shop Cabin has this front, with a lockable entrance door.",
+      },
+      { title: "Service window front", text: "a possible option for tea, coffee and snack counters." },
+      { title: "Open counter with awning", text: "may suit flower, fruit or vegetable retail at approved locations." },
+    ],
+    whyOutro:
+      "Final designs should account for weather exposure, security, ventilation and customer access. A shutter and a glass front can also be combined; the arrangement is confirmed in your approved layout.",
+
+    solutionsHeading: "Four Commercial Environments in Hassan",
+    solutionsIntro:
+      "Retail needs around Hassan range from counters near factory gates to village stores. Four broad settings, each with possible shop types. These are potential use cases, not guarantees of customer demand or profitability.",
+    solutions: [
+      {
+        title: "Industrial Hassan",
+        text: "Industrial areas and SEZ surroundings, such as the KIADB Hassan Growth Centre and the areas around the KIADB textile and pharmaceutical SEZs, may support permitted retail businesses serving employees, contractors and visitors. Possible shop cabin applications include fancy stores, snacks and daily essentials shops, mobile accessory counters, compact retail kiosks and smart-finish kiosks for approved commercial locations.",
+        link: { label: "Layouts and interiors for a compact retail cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Hassan City",
+        text: "Residential layouts, colleges, hospitals and commercial streets may require convenient retail facilities. Possible applications include vegetable and fruit shops, daily essentials stores, mobile accessory shops, and snacks and convenience kiosks.",
+        link: { label: "The glazed 10 ft × 10 ft shop cabin in our catalogue", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Highway Hassan",
+        text: "Permitted roadside commercial locations along NH 75 may be suitable for traveller-oriented retail. Possible applications include coffee kiosks, spice retail counters, tea and snack kiosks and local product displays. Roadside placement must follow applicable land-use, access and highway safety requirements.",
+        link: { label: "Container cafe and kiosk formats for a coffee counter", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Heritage and Agricultural Hassan",
+        text: "The district includes heritage destinations, such as Belur, Halebidu and Shravanabelagola, and agricultural communities. Possible applications include souvenir kiosks, pooja and flower stalls, agricultural input shops and village convenience stores. Heritage-area placement and regulated agricultural product sales require appropriate approvals.",
+        link: { label: "Preparing the base and access at a rural site", href: "/products/portable-cabin/installation-and-site-preparation" },
+      },
+    ],
+
+    featuresHeading: "Permissions for Shop Cabins in Hassan",
+    featuresIntro:
+      "Check these with the authorities concerned before the cabin is delivered. Which of them apply depends on the site and the business:",
+    features: [
+      "Industrial areas and SEZs: permission from the relevant industrial estate operator, landowner or SEZ authority before a commercial cabin is placed. Whether a shop may stand inside a processing zone, or only outside its gates, depends on that zone's own rules.",
+      "KIADB industrial areas: the permitted land use and installation requirements, verified with the relevant authority.",
+      "Heritage locations: the monument-protection, planning and local authority requirements that apply before a kiosk is placed near a protected heritage site.",
+      "Agricultural input shops: the dealer licences and storage compliance needed to sell regulated seeds, fertilisers or pesticides.",
+      "General retail: landowner consent, local body permission, a trade licence, food registration or a food licence, electrical approval, fire safety requirements and any other sector-specific permissions the business needs.",
+    ],
+    sizesNote:
+      "Portable Office Cabin manufactures the cabin according to the approved specification. Obtaining the operating permissions before the shop opens is the business owner's responsibility.",
+
+    customHeading: "Portable Shop Cabin Price in Hassan",
+    customIntro: "There is no list price for a configured shop: each cabin is quoted for its own specification. Pricing depends on:",
+    customBullets: [
+      { text: "Cabin dimensions" },
+      { text: "MS, PUF or other available materials" },
+      { text: "A rolling shutter or a glass front" },
+      { text: "Service windows" },
+      { text: "Interior shelving" },
+      { text: "A billing counter" },
+      { text: "Electrical provisions" },
+      { text: "Exterior cladding" },
+      { text: "Branding and signage" },
+      { text: "A weather canopy" },
+      { text: "Delivery and unloading" },
+      { text: "Order quantity" },
+    ],
+    customOutro:
+      "Share the business type, the dimensions, the front and fittings you want and the installation location, and our sales team will send a written quotation setting out the specification, what is included and the charges that apply.",
+
+    areasHeading: "Areas Served Around Hassan",
+    areasText:
+      "We welcome shop cabin enquiries from Hassan city, the Hassan Industrial Area, the KIADB Hassan Growth Centre and the surroundings of the textile and pharmaceutical SEZs, and from Holenarasipura, Channarayapatna, Arsikere, Belur, Halebidu, Shravanabelagola, Sakleshpur, Alur and sites along the NH 75 corridor. Send the full site address: the route, the transport and the unloading arrangements are confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share your business requirements", text: "tell us the shop type, preferred dimensions and intended installation location." },
+      { title: "Discuss the layout", text: "review the front style, counters, shelving, equipment space and exterior finish." },
+      { title: "Confirm utilities", text: "discuss electrical requirements, ventilation, water connections and drainage where relevant." },
+      { title: "Approve the quotation", text: "finalise the specifications, commercial terms and delivery requirements." },
+      { title: "Manufacture", text: "we fabricate the approved shop cabin at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated according to site readiness." },
+    ],
+    howOutro:
+      "The business owner must obtain the applicable operating permissions before opening. Manufacturing and delivery dates are confirmed when the order is finalised.",
+
+    extraSections: [
+      {
+        heading: "Hassan's Seasonal Retail Planning",
+        placement: "afterSolutions",
+        paragraphs: ["Different businesses may experience seasonal demand changes. Planning ideas for the year:"],
+        table: {
+          caption: "Planning ideas, not forecasts: demand varies by location and business, and no period guarantees trade.",
+          // Two columns, the planning idea closing each cell, so the table fits a 320 px phone without a
+          // sideways scroll (a three-column version measured 310 px in a 286 px box); every value of the
+          // brief's three-column table is kept.
+          headers: ["Period", "Possible retail consideration and shop planning idea"],
+          rows: [
+            ["October–February", "Tourism and pilgrimage activity may vary. Planning idea: souvenir and beverage displays."],
+            ["Agricultural sowing and harvest periods", "Seasonal demand for agricultural supplies. Planning idea: flexible shelving and secure storage."],
+            ["March–May", "Warmer conditions. Planning idea: provisions for cold beverage equipment."],
+            ["June–September", "Monsoon conditions. Planning idea: weather-protected counters and canopies."],
+            ["Festival periods", "Potential short-term customer activity. Planning idea: temporary retail layouts where permitted."],
+            ["Major pilgrimage events", "Event-specific retail requirements. Planning idea: event kiosks subject to official approvals."],
+          ],
+        },
+        closing: [
+          "Shravanabelagola's Mahamastakabhisheka is a periodic religious event held at intervals of several years, not an annual festival. Kiosks for any major event depend on the official arrangements announced for it, so plan them only once those are confirmed.",
+        ],
+      },
+      {
+        heading: "Choosing a Shop Cabin Finish",
+        placement: "afterSolutions",
+        paragraphs: ["The setting also guides the exterior finish:"],
+        table: {
+          caption: "All finishes are subject to the materials available and the approved specification.",
+          headers: ["Location type", "Possible exterior finish"],
+          rows: [
+            ["Approved retail near offices or industrial units", "ACP-style finish and clean signage"],
+            ["Industrial worker retail areas", "Durable shutter, shelving and canopy"],
+            ["Permitted NH 75 retail locations", "Visible signage and exterior lighting"],
+            ["Heritage surroundings", "Subtle colours and locally appropriate design"],
+            ["Villages and market towns", "Durable MS construction and practical shutters"],
+          ],
+        },
+        closing: ["Heritage locations may impose additional restrictions on appearance, signage and placement."],
+      },
+      {
+        heading: "Interior and Exterior Features",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Apart from the catalogue 10 ft × 10 ft cabin, which comes with a glazed front, a lockable door, flooring, internal wiring and LED lights, each shop cabin's fittings are chosen for its trade and listed in the quotation:",
+        ],
+        bullets: [
+          {
+            title: "Interior options",
+            text: "display shelves, retail racks, a billing counter, storage compartments, LED lighting, electrical sockets, equipment space and ventilation provisions.",
+          },
+          {
+            title: "Exterior options",
+            text: "a canopy or awning, a rolling shutter, a signage panel, exterior lighting, custom colours, optional ACP cladding and weather-resistant finishing.",
+          },
+        ],
+        closing: [
+          "Kannada and English signage may be incorporated according to customer requirements and applicable local rules. Anything not listed in your approved specification is not included.",
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "These are indicative planning sizes, not confirmed standard models. Only the 10 ft × 10 ft Portable Shop Cabin is a catalogue item; every other size is a planning example, subject to an approved drawing and quotation.",
+        ],
+        table: {
+          caption:
+            "Planning examples only. Manufacturing availability, usable internal dimensions and structural requirements are confirmed in the approved drawing and quotation.",
+          headers: ["Indicative size", "Possible application"],
+          rows: [
+            ["6 × 4 ft", "Mobile recharge or coffee counter"],
+            ["8 × 6 ft", "Fancy store, flower or souvenir kiosk"],
+            ["10 × 8 ft", "Snacks, condiments or vegetable shop"],
+            ["20 × 8 ft", "Agricultural supply shop or larger retail kiosk"],
+            ["20 × 10 ft and above", "Mini convenience store"],
+          ],
+        },
+        closing: ["Actual dimensions depend on equipment, occupancy, circulation, storage and site requirements."],
+      },
+      {
+        heading: "Weather Protection for Hassan",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hassan and surrounding locations may experience seasonal rain and varying local weather conditions. Possible shop cabin design considerations include:",
+        ],
+        bullets: [
+          { text: "Properly sealed roof joints" },
+          { text: "A suitable roof slope and drainage" },
+          { text: "Weather-protected service windows" },
+          { text: "Awnings and canopies" },
+          { text: "Corrosion-protective exterior finishes" },
+          { text: "An appropriate base elevation" },
+          { text: "Exterior lighting" },
+          { text: "Ventilation" },
+        ],
+        closing: [
+          "A suitable foundation and site drainage are important. These measures improve protection against rain; they do not make a cabin flood-proof or completely waterproof, and the protection specified for your shop is set out in its quotation.",
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: ["What a Hassan shop owner gets from ordering directly from the manufacturer:"],
+        bullets: [
+          { title: "Customized shop cabin dimensions", text: "the size is planned per order and shown on the approved drawing." },
+          { title: "Retail-specific front designs", text: "a rolling shutter, a glass display, a service window or an open counter." },
+          { title: "MS and insulated construction options", text: "MS sheet or insulated PUF panels, chosen for the use and the exposure." },
+          { title: "Display shelves and counters", text: "shelving, racks and counters arranged around what you sell." },
+          { title: "Electrical and ventilation provisions", text: "lighting, sockets and ventilation, as specified." },
+          { title: "Exterior branding options", text: "colours, signage panels and optional cladding." },
+          { title: "Weather-conscious designs", text: "roof drainage, sealed joints, awnings and protective finishes." },
+          { title: "Quotation support", text: "a written quotation for your specification." },
+          { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What portable shop cabin types may suit Hassan industrial areas?",
+        answer:
+          "Daily essentials shops, fancy stores, snack kiosks and mobile accessory counters are possible options, depending on the demand at the location and the permissions for the site. Inside an industrial area, the estate operator's or landowner's permission comes first.",
+      },
+      {
+        question: "Can I place a shop cabin inside an SEZ in Hassan?",
+        answer:
+          "Placement depends on the rules of the SEZ concerned, the land-use permissions and approvals from the appropriate authority. Check with that authority before ordering; we build the cabin to the specification that is approved.",
+      },
+      {
+        question: "Can I install a souvenir kiosk near Belur or Halebidu?",
+        answer:
+          "Possibly, but placement near protected monuments may be restricted, and a kiosk's appearance, signage and position may also be controlled. Confirm the permissions with the authorities concerned before installation.",
+      },
+      {
+        question: "What type of kiosk may suit an approved NH 75 retail location?",
+        answer:
+          "A coffee, spice, tea or snack kiosk may be considered, subject to demand, safe site access and the applicable land-use and highway approvals. A service window, or a shutter with a fold-down counter, lets customers be served from outside the cabin.",
+      },
+      {
+        question: "Do agricultural input shops in Hassan require licences?",
+        answer:
+          "Selling regulated seeds, fertilisers or pesticides generally requires the applicable dealer licences and compliance with the relevant storage and sale rules. The licence is the business owner's responsibility; the shelving and secure storage can be planned around the conditions it sets.",
+      },
+      {
+        question: "Can portable shop cabins be designed for Hassan's seasonal rain?",
+        answer:
+          "Yes, within limits. Sealed roof joints, a suitable roof slope and drainage, weather-protected openings, awnings and corrosion-resistant finishing can improve weather protection, and a raised, well-drained base helps. No cabin is promised to be completely waterproof or flood-proof.",
+      },
+      {
+        question: "Can a portable shop cabin be relocated to another site later?",
+        answer:
+          "Some cabins can be relocated, subject to their structural design, condition, lifting arrangements and transport access at both sites. Mention it before fabrication if you expect to move the shop; the permissions for one site do not carry over to another.",
+      },
+      {
+        question: "How quickly can a shop cabin be delivered to Hassan?",
+        answer:
+          "Manufacturing and delivery timelines depend on the selected configuration, the quantity, our workload, transport and how ready the site is. The schedule is confirmed when the order is finalised; no date is promised in advance.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Hassan",
+    ctaText: `Planning a retail kiosk near an industrial area, a coffee counter at a permitted highway location, a souvenir stall or an agricultural supply shop? Share your business type, preferred dimensions, installation location and required fittings. Call or WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Catalogue Portable Shop Cabin (10 ft × 10 ft)", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Kiosk Formats", href: "/products/container-cafe-restaurant" },
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Security Guard Cabins", href: "/products/security-cabin" },
+      { label: "Container Site Office", href: "/products/container-site-office" },
+      { label: "All Portable Cabin Models", href: "/products/category/portable-cabins" },
+      { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "Portable Shop Cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+      { label: "Portable Shop Cabins in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
+      { label: "Portable Shop Cabins in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
+      { label: "Portable Shop Cabins in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
+      { label: "Portable Shops in Shivamogga, Machenahalli", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Offices in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+        { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+        { label: "Portable Cabins in Shivamogga, Machenahalli", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+        { label: "Container Offices in Chitradurga", href: "/cities-we-serve/container-office-in-chitradurga" },
+        { label: "Portable Cabins Across Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Hassan district. Delivery, unloading and placement are arranged for each order, the base depends on the site, and no manufacturing or delivery date is guaranteed. The shop fronts, finishes, fittings, materials and sizes on this page are options, and the sizes are planning examples; only the 10 ft × 10 ft Portable Shop Cabin is a catalogue item, and what is supplied for each order is confirmed in its approved drawing, specification and quotation. The six images are illustrative renders of one grey corrugated-steel kiosk design with a rolling-shutter serving hatch, outside and inside, and of a closed charcoal variant with an entry door; the pictured design is not a confirmed standard product, the stock is shown for illustration, and the images are not photographs of installations in Hassan. KIADB (the Karnataka Industrial Areas Development Board), its Hassan Growth Centre and the textile and pharmaceutical SEZs are named only to describe locations; Portable Office Cabin is not affiliated with KIADB or with any SEZ, estate, heritage site or company in the district, and the places, highways and businesses named here describe typical uses and enquiry locations, not clients, completed projects or guaranteed delivery areas. No location or season guarantees footfall, demand or sales. Permissions, licences, food registration, heritage-area and highway rules, and electrical and fire requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or regulatory advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -10835,6 +12009,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
         { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
         { label: "Container Offices near Devanahalli Airport", href: "/cities-we-serve/container-office-devanahalli-airport" },
+        // Sibling toilet page (2026-11-06, owner-approved cross-links): Doddaballapur links back here.
+        { label: "Toilet Cabins for Doddaballapur Industrial Units", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -12275,6 +13451,8 @@ export const CITY_PAGES: CityPage[] = [
       heading: "Nearby Locations",
       links: [
         { label: "Shop and Kiosk Cabins for Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+        // Nanjangud shop page, live since #209 (owner Mandya brief: link Nanjangud and Hassan once live; Hassan follows).
+        { label: "Shop Cabins for Nanjangud Industrial Area", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
         { label: "Container Offices in Mysuru", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Containers in Mysuru", href: "/cities-we-serve/shipping-container-in-mysore" },
         { label: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
@@ -12917,6 +14095,10 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Shop Cabin (10 × 10 ft)", href: "/products/portable-shop-cabin" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "Portable Shops in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
+      // Reciprocal link to the Nanjangud shop page, which links here (owner's Nanjangud brief, 2026-11-06).
+      { label: "Shop Rows and Kiosks in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
+      { label: "NH 48 Kiosks and Shop Cabins in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
       { label: "Shipping and Cargo Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
@@ -13256,6 +14438,520 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN HUBBALLI–DHARWAD (Hubli) — storage containers for distributor
+   * stockrooms, temporary godowns, heat-sensitive stock and authorised railway project stores.
+   *
+   * Owner brief of 2026-11-07: route, meta title, meta description, H1 and public copy as given. No
+   * other page targets Hubballi, Hubli or Dharwad (repo routes, redirects and sitemap checked), so
+   * this one canonical covers all three names. The slug starts with "shipping-container-", so
+   * cityFamily() puts it in the shipping-container family: directory card ("Shipping containers in
+   * Hubballi–Dharwad", the hub anchor the brief asks for), Karnataka sibling links both ways and the
+   * nearby block. The brief's sections map onto the fixed template slots:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Stockrooms for FMCG distributors" → why (paragraph + the four titled points).
+   *   • "A temporary godown while your warehouse is being built" → solutions heading + intro (prose,
+   *     no items).
+   *   • "Storage for heat-sensitive stock", "Railway project and industrial stores" and "Container
+   *     sizes and condition" (its table, the condition note and the inspection link) → afterSolutions
+   *     extra sections, in the brief's order.
+   *   • "Preparing a base where black cotton soil is present" → features: the ground-check paragraph
+   *     as the intro, the four pre-delivery checks as the list, "Settlement can affect door alignment
+   *     and access." as the bold note. The template's fixed order puts it after the sizes section,
+   *     next to the price and the steps that confirm base readiness.
+   *   • "Shipping container price and rental in Hubballi–Dharwad" → custom (the quote factors as
+   *     bullets) + customLinks (the brief's rental anchor → /products/shipping-container-rental).
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (seven) → faqs; the closing request → CTA
+   *     + the category enquiry form. The customer may buy or rent, so the form keeps the rental model.
+   * Lead-ins written where a slot needs one: tagline, the table caption, the custom intro and the
+   * enquiry-form intro. No ₹ figure, stock, lead time, rodent exclusion, cold-chain performance or
+   * standard foundation design; high-cube units, racking, insulation, temperature control, base work
+   * and relocation stay quote-dependent, as the brief says.
+   *
+   * Inspection link: the brief points at the Chennai container page's used-container checklist. The
+   * Container Office in Chennai page has no such checklist; the Chennai-area page that does is
+   * Shipping Container in Athipattu (Ennore–Kattupalli corridor, Tiruvallur district), whose "Used
+   * Container Inspection" section lists seven checks. It is live (HTTP 200) and is linked once.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container, temporary godown container and container
+   * rental × Hubballi, Hubli, Dharwad. The Haveri container-office page names Hubballi only as the
+   * NH-48 destination.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Hubballi–Dharwad shipping
+   * container city page/Hubballi–Dharwad shipping container page/cabin (1–5).webp", 1200×896 and
+   * 1451×1084 ×4, no EXIF / XMP / ICC metadata or provenance to keep) of one rust-orange container
+   * with grey cargo doors and a fixed side window, in a yard. The VP8 bitstreams are copied
+   * byte-for-byte (pixel-identical decode) into the extended format with an XMP dc:title and a
+   * dc:description that calls each an illustrative render. Only the exterior hero matches a slot in
+   * the brief's image table (its filename, alt and caption are used); no image shows racking, a
+   * godown row, raised supports, a shade roof or a fenced project yard, so those slots are left out
+   * and the other four renders carry their own accurate names, alt text and captions. Every caption
+   * says "illustrative", the side window is called an optional modification, and the disclaimer
+   * says none is a photograph taken in Hubballi or Dharwad.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-hubballi-dharwad",
+    city: "Hubballi–Dharwad",
+    listTitle: "Shipping Containers in Hubballi–Dharwad",
+    metaTitle: "Shipping Containers in Hubballi–Dharwad (Hubli)",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Hubballi–Dharwad for FMCG stockrooms, temporary godowns, industrial spares and railway project stores.",
+    keywords:
+      "Shipping Container in Hubballi-Dharwad, Shipping Container Hubli, Cargo Container Hubballi, Storage Container Dharwad, Shipping Container Rental Hubli, Temporary Godown Container",
+    geo: {
+      region: "IN-KA",
+      placename: "Hubballi–Dharwad, Karnataka, India",
+      position: "15.3647;75.1240",
+      icbm: "15.3647, 75.1240",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative shipping container exterior for industrial storage. The side window shown is an optional modification.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-roof-view.webp",
+      alt: "Steel shipping container seen from above, showing its corrugated roof, double cargo doors and a small side window",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render of a storage container seen from above. Placement depends on site conditions.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-interior.webp",
+      alt: "Empty steel shipping container interior with corrugated walls, a plywood floor and both cargo doors open",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty container interior. Racking, lighting, insulation and ventilation are optional and quoted separately.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a steel shipping container with four locking bars and cam handles",
+        width: 1451,
+        height: 1084,
+        caption: "Double cargo doors with four locking bars. Illustrative render.",
+      },
+      {
+        src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-closed-end.webp",
+        alt: "Corrugated steel shipping container seen from its closed end, with a small window in the side wall",
+        width: 1451,
+        height: 1084,
+        caption: "Closed end and side wall. The side window is an optional modification. Illustrative render.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Hubballi–Dharwad",
+    tagline: "20 ft and 40 ft storage containers for distributor stock, temporary godowns, industrial spares and railway project stores.",
+    intro: [
+      "Need more room for distributor stock, packaging while a warehouse is being built, or tools for an industrial or railway project? Portable Office Cabin supplies shipping containers for storage enquiries across Hubballi and Dharwad. Share the goods you plan to store, how often staff need access, and where the unit will sit. We can discuss the size, fit-out, and delivery requirements for your site.",
+    ],
+
+    whyHeading: "Stockrooms for FMCG distributors",
+    whyIntro:
+      "Distributors, super stockists and carrying and forwarding agents can use a container for suitable packaged inventory, cartons and dispatch supplies. If you need to pick stock daily, plan the layout around carton sizes and stock rotation.",
+    whyBullets: [
+      {
+        title: "Stock rotation",
+        text: "Arrange racks so older receipts are accessible first. If goods are date-coded, follow your inventory policy for earliest expiry.",
+      },
+      {
+        title: "Picking space",
+        text: "Label zones by product or batch and keep a clear aisle. Check rack capacity and the container’s usable space before ordering shelving.",
+      },
+      {
+        title: "Storage and housekeeping",
+        text: "Keep cartons on suitable pallets or shelves. Inspect seals and gaps, keep the loading area clear of waste, and follow your pest-control plan.",
+      },
+      { title: "Visibility", text: "Discuss lighting and keep a stock list so staff know where to find each batch." },
+    ],
+
+    solutionsHeading: "A temporary godown while your warehouse is being built",
+    solutionsIntro:
+      "A container can hold suitable packaging, spare parts or dispatch stock while the permanent warehouse is being fitted out. Begin with the volume you need and reserve enough space to unload or add a second unit if demand increases. Once the warehouse opens, the unit can serve as an overflow store or spares room. For rentals, agree on the hire period and collection arrangements. For a unit you plan to move, get relocation quoted separately.",
+    solutions: [],
+
+    extraSections: [
+      {
+        heading: "Storage for heat-sensitive stock",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A steel container in direct sun can get hot. Ask about a light-coloured exterior, shade, insulation or ventilation if those options suit the stock and site. Confirm the storage limits specified by the product supplier. Goods such as some confectionery, cosmetics and medicines may require monitored, temperature-controlled storage. Select the unit and controls around those requirements.",
+        ],
+      },
+      {
+        heading: "Railway project and industrial stores",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A 20 ft container can provide storage for tools, cables, fittings and equipment at an authorised railway project site. The project team should confirm the location, clearances and lifting arrangements. Discuss a lockbox and whether the store will need to move as the work progresses.",
+          "Engineering units can also use containers for spares and tooling, transport yards for parts, and traders for suitable goods awaiting dispatch.",
+        ],
+        // Reciprocal link to the cabin page (owner brief of 2026-11-09), placed after the industrial stores.
+        closing: ["For a separate campus office, study room or staff workspace, see:"],
+        links: [{ label: "Porta cabins in Hubballi–Dharwad", href: "/cities-we-serve/porta-cabin-hubballi-dharwad" }],
+      },
+      {
+        heading: "Container sizes and condition",
+        placement: "afterSolutions",
+        table: {
+          caption: "Typical storage uses and site checks by size. The availability of each size is confirmed in the quotation.",
+          headers: ["Size", "Storage use", "What to check"],
+          rows: [
+            ["20 ft", "Distributor overflow, railway project tools or industrial spares", "Door clearance, aisle space and access for unloading"],
+            ["40 ft", "Temporary godowns, packaging and larger stock volumes", "Trailer approach, turning space and unloading position"],
+            ["40 ft high cube", "Taller racking or bulky stock", "Availability, internal height and clearance along the delivery route"],
+          ],
+        },
+        closing: [
+          "Confirm the actual dimensions and condition of the quoted unit. If buying used, ask for the stated grade and the condition of the specific unit.",
+          "Before selecting a unit, see our guide on how to inspect a used container:",
+        ],
+        links: [{ label: "How to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" }],
+      },
+    ],
+
+    featuresHeading: "Preparing a base where black cotton soil is present",
+    featuresIntro:
+      "Expansive soil can move as moisture changes. If your site has black cotton soil or shows seasonal movement, have the responsible site professional confirm ground conditions, drainage, bearing capacity and the support layout for the unit and its intended load.",
+    features: [
+      "Share photographs of the placement area and approach road before delivery.",
+      "Flag ponding, recent fill or uneven ground.",
+      "Confirm that the approved base is ready and level, with enough room for unloading and door access.",
+      "Include any base work in the agreed project scope.",
+    ],
+    sizesNote: "Settlement can affect door alignment and access.",
+
+    customHeading: "Shipping container price and rental in Hubballi–Dharwad",
+    customIntro: "The quote depends on:",
+    customBullets: [
+      { text: "The container size and condition" },
+      { text: "Optional fit-out" },
+      { text: "Transport" },
+      { text: "Unloading access" },
+    ],
+    customOutro:
+      "If you need a unit during warehouse construction or for a time-limited project, see our rental options below. Share the hire dates and location so the team can confirm availability, delivery and collection terms.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Hubballi (also known as Hubli), Dharwad, Gokul Road, Tarihal, Gamanagatti, Rayapur, Navanagar and Amargol. We also consider sites around Belur, Mummigatti, Kotur, Ittigatti and along the NH 48 bypass. Delivery depends on site access and availability.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      {
+        title: "Share your stock type, storage volume, target dates, and photographs of the plot and approach road.",
+        text: "",
+      },
+      { title: "Review the proposed size, condition, fit-out and itemised quote.", text: "" },
+      { title: "Confirm base readiness, site access, applicable approvals and unloading responsibilities.", text: "" },
+      {
+        title: "Agree on delivery and placement. For a hire or relocation, confirm the associated scope and charges.",
+        text: "",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I place a shipping container directly on black cotton soil?",
+        answer:
+          "Have the site assessed before placement. The support arrangement depends on ground movement, drainage and the load the unit will carry.",
+      },
+      {
+        question: "Can a container work as an FMCG stockroom?",
+        answer:
+          "Yes, for goods compatible with the storage conditions. Plan racks, stock rotation, aisles and pest control around your inventory and handling requirements.",
+      },
+      {
+        question: "Can I use one as a temporary godown?",
+        answer:
+          "Yes. Share the storage volume, expected duration and available placement area. If renting, confirm the hire term and collection arrangements.",
+      },
+      {
+        question: "Can a standard container store heat-sensitive goods?",
+        answer:
+          "Check the product’s required storage conditions first. Shade and insulation may help reduce heat gain. Goods with specified temperature limits may require a monitored, temperature-controlled unit.",
+      },
+      {
+        question: "Can I enquire about a store for a railway project?",
+        answer:
+          "Yes. Share the approved placement area and access conditions. Coordinate clearances, unloading and any future relocation with the responsible project authority.",
+      },
+      {
+        question: "Is Hubli the same as Hubballi?",
+        answer: "Hubli is an older spelling of Hubballi. This page covers enquiries for Hubballi and Dharwad together.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, fit-out, transport, site access and base readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Hubballi–Dharwad",
+    ctaText:
+      "Send the intended use, preferred size, site address, target dates and access photos. Tell us if you need to buy or rent, and mention any racking, lighting, security or environmental requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Request a Shipping Container Quote",
+      intro:
+        "Choose a container or the rental option, then enter the quantity and your delivery town in or around Hubballi or Dharwad. Use the message to tell us the goods you will store, your target dates and any racking, lighting or security needs. We check the requirement with you first, then send the quotation in writing.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Dimensions of 20 ft, 40 ft and high-cube cargo containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+    ],
+
+    disclaimer:
+      "Our factory is near Hosur in Tamil Nadu and our Karnataka office is in Electronic City Phase 1, Bengaluru; Portable Office Cabin has no container yard, depot, workshop or office in Hubballi or Dharwad. Containers are sold or hired subject to availability. Each unit's size, grade, condition and fit-out, any base work or relocation, and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render of one representative storage container, drawn with an optional side window, and none was photographed at a site in Hubballi or Dharwad. Localities, industrial areas and the NH 48 bypass are listed only to show where we accept enquiries: naming them does not mean we have customers, past projects or confirmed delivery there. We have no affiliation with a railway authority, railway project, industrial area or estate, and the uses described are examples, not projects we have supplied. A standard container does not provide temperature control, cold-chain performance or rodent exclusion. Notes on stock rotation, pest control, heat, ground conditions and site preparation are general guidance, not engineering, food-safety, pharmaceutical or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTA CABINS & PORTABLE CABINS IN HUBBALLI–DHARWAD (Hubli) — study halls, coaching classrooms,
+   * music practice rooms and campus project offices.
+   *
+   * Owner brief of 2026-11-09: route, meta title, meta description, H1 and public copy as given. No
+   * other page targets a cabin intent in Hubballi, Hubli or Dharwad (repo routes, redirects and
+   * sitemap checked), so this one canonical covers the three place names and the porta / portable /
+   * prefab cabin synonyms; nothing needs a /portable-cabin-hubballi-dharwad alias, so no redirect is
+   * added. The slug matches no family prefix, so cityFamily() lists it with the local-service pages
+   * in the Karnataka group of /cities-we-serve under its listTitle (the hub anchor the brief asks
+   * for), apart from the shipping-container card. The brief's sections map onto the fixed slots:
+   *   • Opening paragraphs → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Study halls and coaching classrooms" → why: the layout table as whyTable, the planning
+   *     paragraph as whyOutro.
+   *   • "Music practice and riyaz rooms" → solutions heading + intro + outro (prose, no items).
+   *   • "Cabins for university projects and Hubballi worksites" and "Cabin sizes and fittings" (table
+   *     and planning note) → afterSolutions extra sections, in the brief's order, each closing with
+   *     its contextual link: the sibling shipping-container page (its base-preparation section has
+   *     no anchor, so the page itself) and /products/portable-cabin below the sizes table.
+   *   • "Porta cabin price and rental in Hubballi–Dharwad" → custom (prose) + customLinks →
+   *     /rental-service, whose hire range lists site-office and guard cabins, the configurations a
+   *     temporary campus project would hire.
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (five) → faqs; the closing request → CTA.
+   *     No on-page form: /api/enquiries accepts only the CATEGORY_LANDING_SLUGS categories and none
+   *     is a porta or portable cabin category, so Request a Quote goes to /contact.
+   * Lead-ins written where a slot needs one: tagline, whyIntro, the table captions and the closing
+   * lines before the shipping-container and rental links. No ₹ figure, fixed occupancy, soundproofing
+   * or sound-isolation claim, delivery time or university affiliation; joined modules, acoustic
+   * treatment, AC, hire and relocation stay quote-dependent, as the brief says.
+   *
+   * KEYWORD OWNERSHIP: porta / portable / prefab cabin × Hubballi, Hubli, Dharwad, with the study
+   * hall, coaching, music practice and campus site office uses. Freight and industrial storage stay on
+   * Shipping & Cargo Containers in Hubballi–Dharwad, which links back from its industrial stores
+   * section.
+   *
+   * Images: four owner-dropped lossy VP8 webp renders ("public/images/hubballi dharwad porta cabin
+   * city page/Hubballi–Dharwad porta cabin page/cabin (1–4).webp", 1200×896 and 1451×1084 ×3, no
+   * EXIF / XMP / ICC metadata or provenance to keep) of one grey ribbed-steel cabin. The VP8
+   * bitstreams are copied byte-for-byte (pixel-identical decode) with an XMP dc:title and a
+   * dc:description that calls each an illustrative render. Only the exterior hero matches a slot in
+   * the brief's image table: its filename and caption are used, and the alt names the barred window
+   * and two doors the render shows. No image shows a study hall, classroom, practice room or entrance
+   * steps, so those slots are left out; the side, overhead and office-interior renders carry their
+   * own accurate names, alt text and captions.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "porta-cabin-hubballi-dharwad",
+    city: "Hubballi–Dharwad",
+    listTitle: "Porta Cabins in Hubballi–Dharwad",
+    metaTitle: "Porta Cabins in Hubballi–Dharwad (Hubli)",
+    metaDescription:
+      "Enquire about portable cabins in Hubballi–Dharwad for study halls, coaching rooms, music practice, campus projects and construction site offices.",
+    keywords:
+      "Porta Cabin in Hubballi-Dharwad, Portable Cabin in Hubli-Dharwad, Porta Cabin Hubli, Portable Cabin Dharwad, Study Hall Cabin, Music Practice Cabin, Campus Site Office Cabin",
+    geo: {
+      region: "IN-KA",
+      placename: "Hubballi–Dharwad, Karnataka, India",
+      position: "15.3647;75.1240",
+      icbm: "15.3647, 75.1240",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Porta Cabin" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/porta-cabin-hubballi-dharwad/hubballi-dharwad-porta-cabin-exterior.webp",
+      alt: "Prefabricated porta cabin with a barred window between two entrance doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative porta cabin exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/porta-cabin-hubballi-dharwad/hubballi-dharwad-porta-cabin-roof-view.webp",
+      alt: "Porta cabin seen from above, showing its ribbed steel roof, two window hoods and a paved area in front",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative overhead view. Placement depends on site access and the approved base.",
+    },
+    interiorImage: {
+      src: "/images/cities/porta-cabin-hubballi-dharwad/hubballi-dharwad-porta-cabin-office-interior.webp",
+      alt: "Office layout inside a portable cabin with two desks, computer monitors, office chairs, a filing cabinet and a barred sliding window",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative office layout. Furniture, lighting and electrical fittings are optional and confirmed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/porta-cabin-hubballi-dharwad/hubballi-dharwad-porta-cabin-side-windows.webp",
+        alt: "Side wall of a grey porta cabin with two barred windows under small hoods",
+        width: 1451,
+        height: 1084,
+        caption: "Side wall with two barred windows. Illustrative render.",
+      },
+    ],
+
+    h1: "Porta Cabins & Portable Cabins in Hubballi–Dharwad",
+    tagline: "Prefabricated cabins for study halls, coaching classrooms, music practice rooms and campus project offices.",
+    intro: [
+      "Need extra seats for a Dharwad reading room, a dedicated space for music practice or an office for a campus construction team? Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Hubballi and Dharwad. Tell us who will use the room, what goes inside and where it will sit so we can discuss the layout, fittings and delivery.",
+      "For this range, porta cabin, portable cabin and prefab cabin describe the same workshop-built unit. The unloading and placement method depends on the cabin and site access.",
+    ],
+
+    whyHeading: "Study halls and coaching classrooms",
+    whyIntro: "Layouts to discuss for learners and teaching staff:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Example layouts and the features to discuss. Fittings and joined modules are confirmed in the quotation.",
+      headers: ["Layout", "Features to discuss"],
+      rows: [
+        ["Study hall for exam preparation", "Individual cubicles, task lights, sockets, router provision and lockers"],
+        ["Coaching classroom", "Seating facing a whiteboard or presentation wall, a teaching desk and power points for AV equipment"],
+        ["Larger teaching or study area", "Joined modules, subject to layout review, access and availability"],
+      ],
+    },
+    whyOutro:
+      "Start with the expected number of learners and staff, hours of use and equipment list. Discuss even lighting, insulation and ventilation or cooling. Have the responsible site team confirm occupancy, aisle space, exits, accessibility and electrical requirements before approving the layout.",
+
+    solutionsHeading: "Music practice and riyaz rooms",
+    solutionsIntro:
+      "For vocal practice, tabla lessons or one-to-one teaching, share the instruments, number of users and how close the room will be to neighbouring buildings. Acoustic treatment helps reduce echo inside the room. Sound isolation depends on the full construction, including the walls, roof, floor, doors, windows, seals and ventilation openings.",
+    solutions: [],
+    solutionsOutro:
+      "Discuss instrument storage, seating, lighting and quiet ventilation for the intended practice hours. If you need a measurable sound isolation target, include it in the enquiry and agree on the design and verification scope before ordering.",
+
+    extraSections: [
+      {
+        heading: "Cabins for university projects and Hubballi worksites",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Campus contractors can enquire about offices for drawings and site meetings, guard cabins for temporary construction gates and stores for suitable tools and fittings. Agree on placement, pedestrian routes and delivery windows with the campus team, especially around classes and exams.",
+          "For housing and commercial works around Hubballi, share the gate dimensions, unloading area and proposed base. If the ground shows seasonal movement or ponding, ask the responsible site professional to assess drainage and supports before delivery.",
+        ],
+        closing: [
+          "Our storage container page has general notes on preparing a base where black cotton soil is present. Supports for a cabin are still set by the site assessment.",
+        ],
+        links: [
+          { label: "Site preparation and shipping containers in Hubballi–Dharwad", href: "/cities-we-serve/shipping-container-hubballi-dharwad" },
+        ],
+      },
+      {
+        heading: "Cabin sizes and fittings",
+        placement: "afterSolutions",
+        table: {
+          caption: "Example footprints for planning. Usable internal dimensions are confirmed in the quotation.",
+          headers: ["Example footprint", "Typical enquiry"],
+          rows: [
+            ["8 × 8 ft", "Small practice room, subject to instrument and circulation needs"],
+            ["10 × 8 ft", "Guard cabin, small store or one-to-one music room"],
+            ["20 × 10 ft", "Study hall section, coaching room or campus site office"],
+            ["Joined modules", "Larger teaching or study layout, subject to quotation"],
+          ],
+        },
+        closing: [
+          "These footprints are planning examples. Confirm usable internal dimensions, occupancy, mild steel or PUF-insulated construction and included fittings in the quotation.",
+        ],
+        links: [{ label: "Portable cabin sizes and specifications", href: "/products/portable-cabin" }],
+      },
+    ],
+
+    customHeading: "Porta cabin price and rental in Hubballi–Dharwad",
+    customIntro:
+      "Pricing depends on size, construction, furniture, electrical fittings, ventilation, acoustic requirements, transport and unloading. Share the required layout and target dates for an itemised quote.",
+    customBullets: [],
+    customOutro:
+      "For an exam season or temporary campus project, ask whether a suitable unit can be quoted on hire. The site office and guard cabins we offer on hire are listed here:",
+    customLinks: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Hubballi (also known as Hubli), Dharwad, Vidyanagar, Gokul Road, Navanagar, Keshwapur, Saptapur, Malmaddi, Sattur, Rayapur and Tarihal. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share the intended use, seat or staff count, site pin, target dates and approach photos.", text: "" },
+      { title: "Review the proposed layout, fit-out and itemised quote.", text: "" },
+      { title: "Confirm permissions, base readiness, utility responsibilities and unloading access.", text: "" },
+      { title: "Agree on delivery and handover. Include collection or relocation in the quotation if needed.", text: "" },
+    ],
+
+    faqs: [
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer: "Yes. For this range, both names describe a prefabricated cabin delivered to your site.",
+      },
+      {
+        question: "How many students can a coaching cabin accommodate?",
+        answer:
+          "It depends on internal dimensions, seating, circulation and the site’s occupancy requirements. Share the batch size for a layout review.",
+      },
+      {
+        question: "Can a cabin be used for music practice?",
+        answer:
+          "Yes. Share the instruments, room use and any sound isolation target. Acoustic treatment and sound isolation need separate specifications.",
+      },
+      {
+        question: "Can I enquire about a temporary campus site office?",
+        answer:
+          "Yes. Share the project duration, staff count and approved placement area so the unit and delivery arrangements can be assessed.",
+      },
+      {
+        question: "Can I rent a cabin, and how quickly can you deliver?",
+        answer:
+          "Share the required dates, layout and site. Hire availability and delivery timing depend on the configuration and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a porta cabin quote in Hubballi–Dharwad",
+    ctaText:
+      "Send your intended use, preferred size, quantity, target dates and site access photos. Include seating, equipment, cooling, acoustic or electrical requirements as applicable.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Porta Cabin", href: "/products/porta-cabin" },
+      { label: "Porta Cabins in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Our factory is near Hosur in Tamil Nadu and our Karnataka office is in Electronic City Phase 1, Bengaluru; Portable Office Cabin has no factory, workshop, yard or office in Hubballi or Dharwad. Each cabin's size, construction, fittings, any joined modules, acoustic treatment, cooling, hire, base work or relocation, and the delivery, unloading and collection arrangements are set out in its quotation; hire is subject to availability and no delivery date is guaranteed. Every image here is an illustrative render of one representative cabin design, shown with optional office furniture inside, and none was photographed at a site in Hubballi or Dharwad. Localities are listed only to show where we accept enquiries: naming them does not mean we have customers, past projects or confirmed delivery there. We have no affiliation with any university, college, school, coaching institute or campus, and the uses described are examples, not projects we have supplied. Acoustic treatment is not soundproofing, and no sound isolation performance is offered unless a measurable target and its verification are agreed in writing. Occupancy, exits, accessibility and electrical requirements are for the responsible site team to confirm; notes on layouts, ground conditions and site preparation are general guidance, not engineering, fire-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN SARJAPUR — the Sarjapur Road corridor of south-east Bengaluru
    * (Bellandur → Kasavanahalli → Carmelaram → Dommasandra → Sarjapur Town, with Attibele and
    * Bommasandra to the south).
@@ -13576,6 +15272,267 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory or service partner in Sarjapur; delivery, unloading and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Sarjapur. Notes on site access, crane lifting, slab loading, foundations and approvals are general guidance: the lifting method, base and any structural checks for a specific site are defined in the approved quotation and drawing, and approval notes are not legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE OFFICE CABINS FOR TECH PARK PROJECTS IN DEVARABISANAHALLI — the office-cabin intent for
+   * work inside the managed tech parks of Devarabisanahalli (also spelled Devarabeesanahalli) on
+   * Bengaluru's Outer Ring Road: contractor and facilities offices, PMC offices, temporary swing space
+   * during refurbishment, inspection and review rooms, and contractor office clusters. It owns
+   * "portable office cabin + Devarabisanahalli" for both spellings (one canonical page). The planned
+   * Marathahalli page keeps site and sales offices, road projects and delivery logistics; this page
+   * stays inside the campus. Once BOTH pages are live, the Marathahalli tech-park paragraph links here
+   * ("tech park project office cabins in Devarabisanahalli") — held until then, per the brief.
+   *
+   * Owner brief of 2026-11-07 ("Devarabisanahalli Office Cabins — Website Copy and Implementation
+   * Commands"): the proposed slug (no other route serves this intent), meta title (55 chars), meta
+   * description and H1 verbatim; every public paragraph, the table rows and the five FAQs are the
+   * owner's text. Mapped onto the template slots without a template change (#159 and #202 also edit
+   * the route file):
+   *   1 Intro → intro + heroCta (Request a Quotation, Call, WhatsApp; the call and WhatsApp labels
+   *     are the template's own).
+   *   2 "Office Cabins for Managed Tech Parks" (four H3s) → solutions, so they keep their H3s; the
+   *     contractor item links to the site-office product and the PMC item to the office cabin page.
+   *   3 "Plan a Cluster of Contractor Offices" → why (intro + outro, no list). The template renders
+   *     the why section before the solutions, so this section moves up one place.
+   *   4–6 Approval information, placement area, finishes/power/reuse → extra sections placed after
+   *     the solutions, in the brief's order.
+   *   7 Configuration Guide → features (each table row as "Workspace: layout points") with its
+   *     closing note as the sizes note; the interior render follows it as the gallery.
+   *   8 Price → custom: the first paragraph's two sentences, then the items to be shown separately as
+   *     a list; the second paragraph → customOutro. Beside the end-view render.
+   *   9 Delivery enquiries → areas, without the brief's "or around Bellandur": the owner's Bellandur
+   *     brief gives office cabins in Bellandur their own page (portable-office-cabin-bellandur, homes and
+   *     societies, session cc), and an areas list names no place that has its own page for the same
+   *     product (no-cannibalisation rule). The two pages cross-link once both are live.
+   *   10 FAQs: the brief's five; "How long will delivery take?" is already asked on another city
+   *     page, so it reads "…take to a Devarabisanahalli campus?".
+   *   11 Quotation → CTA (+ the configured phone and e-mail) and the on-page enquiry form
+   *     (site-office-containers, the accepted category closest to contractor office cabins; no
+   *     rental models).
+   * Composed for owner review: the tagline, the solutions lead-in, the features lead-in, the
+   * "how" section (four steps built only from the brief's own requests), the form intro, the
+   * image captions and the disclaimer. Not added (brief: confirm first): rental, colour-matched
+   * cladding, sub-metering, shared amenities or removal as services; no schedule, no ₹, no tech park
+   * or company named. Geo is an approximate point on the Outer Ring Road between Bellandur and
+   * Kadubeesanahalli (no gazetteer lists the locality itself).
+   *
+   * Images: four owner-dropped webp files ("public/images/Devarabisanahalli Office Cabins city
+   * page/Devarabisanahalli Office Cabins/cabin (1–4).webp", plain VP8, no EXIF/XMP/ICC, source not
+   * stated), copied byte-for-byte under descriptive names: (1) 1279×816 front three-quarter view =
+   * hero / og:image; (2) aerial roof view = feature band; (3) interior with one L-shaped desk = the
+   * gallery after the configuration guide; (4) end view = beside the price section. All four are
+   * renders of one sage-green and rust-red cabin, so every image is captioned as illustrative and no
+   * image text names a place. No review-room or multi-cabin image was supplied, so none is claimed.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-office-cabin-devarabisanahalli",
+    city: "Devarabisanahalli",
+    listTitle: "Portable Office Cabins in Devarabisanahalli",
+    metaTitle: "Portable Office Cabin in Devarabisanahalli | Tech Parks",
+    metaDescription:
+      "Plan portable office cabins for Devarabisanahalli tech parks, including contractor offices, PMC workspaces and temporary offices during refurbishment.",
+    keywords:
+      "Portable Office Cabin in Devarabisanahalli, Portable Office Cabin Devarabeesanahalli, Tech Park Contractor Office Cabin, PMC Office Cabin, Temporary Swing Space Office, Contractor Office Cluster, Office Cabin for Tech Park Refurbishment, Portable Office Cabin Price in Devarabisanahalli",
+    geo: { region: "IN-KA", placename: "Devarabisanahalli, Bengaluru, Karnataka, India", position: "12.9310;77.6890", icbm: "12.9310, 77.6890" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Office Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-office-cabin-devarabisanahalli/portable-tech-park-office-cabin-front.webp",
+      alt: "Front exterior of a portable office cabin with windows and an entrance door — illustrative render of a sage-green steel cabin with a rust-red lower band, barred windows and an open steel door",
+      width: 1279,
+      height: 816,
+      caption: "Illustrative portable office cabin design. Final fittings depend on the approved specification.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-office-cabin-devarabisanahalli/portable-office-cabin-roof-aerial-view.webp",
+      alt: "Aerial view of a portable office cabin — illustrative render of the green ribbed steel roof seen from above",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative aerial view of a single cabin roof. The footprint, and the space needed around it, follow the approved drawing.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-office-cabin-devarabisanahalli/portable-office-cabin-end-view.webp",
+      alt: "End view of a portable office cabin — illustrative render of the end wall with one barred window, sage-green upper panels and a rust-red lower band",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative end view of the same cabin. Colours, cladding and openings follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-office-cabin-devarabisanahalli/contractor-office-cabin-interior.webp",
+        alt: "Portable office cabin interior — illustrative render of an L-shaped desk with a computer, an office chair and a drawer unit, wood-finish wall panels, ceiling lights and two barred windows",
+        width: 1200,
+        height: 896,
+        caption: "Illustrative contractor office layout. Final fittings depend on the approved specification.",
+      },
+    ],
+
+    h1: "Portable Office Cabins for Tech Park Projects in Devarabisanahalli",
+    tagline: "Contractor Offices, PMC Workspaces and Temporary Swing Space for Fit-Outs, Refurbishments and Campus Expansion",
+    intro: [
+      "Need a workspace for a fit-out, tenant refurbishment or campus expansion? Portable Office Cabin can help you plan a portable office for your Devarabisanahalli project. Start with the number of teams, the work each team needs to do and the space that campus management has made available.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Plan a Cluster of Contractor Offices",
+    whyIntro:
+      "For a larger campus project, several cabins can be planned together as a contractor office cluster, sometimes called a contractor village. List which teams need their own office, which spaces can be shared and where people will enter and circulate.",
+    whyBullets: [],
+    whyOutro:
+      "Discuss shared meeting space, pantry needs, nearby toilets, signs and external lighting with the campus team. If separate electricity tracking is required, confirm whether the campus permits sub-metering and who supplies, installs and reads the meters. Shared facilities and utility work should be itemised in the quote.",
+
+    solutionsHeading: "Office Cabins for Managed Tech Parks",
+    solutionsIntro: "Workspaces to consider for a project inside a managed campus:",
+    solutions: [
+      {
+        title: "Contractor and facilities offices",
+        text: "Set out desk space, drawing storage and a coordination area for civil, interior or mechanical, electrical and plumbing teams. For a facilities office, include space for service records, computers and staff who need access throughout the project.",
+        link: { label: "Portable site office cabins", href: "/products/construction-site-portable-office" },
+      },
+      {
+        title: "Project management consultant offices",
+        text: "A project management consultant (PMC) office can combine workstations with a review table for schedule, quality and progress meetings. Share the required desk count, display equipment and document storage when you request a drawing.",
+        link: { label: "Portable office cabins", href: "/products/office-portable-cabin" },
+      },
+      {
+        title: "Temporary swing space during refurbishment",
+        text: "Swing space gives a tenant team somewhere to work while its regular office is being refurbished. Confirm user numbers, expected duration, privacy, network access and the campus requirements for occupied workspaces before choosing the layout.",
+      },
+      {
+        title: "Material inspection and client review rooms",
+        text: "If teams need to inspect samples or meet clients close to the work area, plan the review table, lighting and storage around the size of the samples. Include any separation or privacy requirements in the brief.",
+      },
+    ],
+
+    featuresHeading: "Configuration Guide",
+    featuresIntro: "Layout points to discuss for each workspace:",
+    features: [
+      "Contractor office: workstations, drawing storage and printer space",
+      "PMC office: desks, review table, display wall and records storage",
+      "Swing space: user count, meeting area, sockets and data connections",
+      "Material inspection room: inspection table, sample shelves and suitable lighting",
+      "Client review room: seating, display space, circulation and privacy",
+      "Contractor office cluster: cabin count, shared facilities, pedestrian access and utilities",
+    ],
+    sizesNote:
+      "Confirm cabin dimensions and circulation using the approved drawing. Specify furniture, equipment and external connections in the enquiry so each item can be accounted for.",
+
+    customHeading: "Portable Office Cabin Price in Devarabisanahalli",
+    customIntro:
+      "Pricing depends on the number of cabins, dimensions, fit-out, finishes, electrical provisions and any shared facilities. Site access, transport, lifting and placement can affect the total. Ask for these items to be shown separately where applicable:",
+    customBullets: [
+      { text: "Site access and transport" },
+      { text: "Lifting and placement" },
+      { text: "Utility connections" },
+      { text: "Any later removal" },
+    ],
+    customOutro: "Send the campus address, project duration, team sizes and approval checklist for an itemised quotation.",
+
+    areasHeading: "Delivery Enquiries Along the Outer Ring Road",
+    areasText:
+      "For sites in Devarabisanahalli (also spelled Devarabeesanahalli), Kadubeesanahalli or Kariyammana Agrahara, share the exact campus entrance and delivery route. The site team can review access and the proposed placement area before a delivery window is agreed.",
+
+    howHeading: "From Enquiry to Delivery Window",
+    howSteps: [
+      { title: "Share the project brief", text: "the campus address, team sizes, project duration, proposed placement area and required date." },
+      { title: "Send the campus checklist", text: "with a site plan if one is available, so access, placement and utility questions can be reviewed." },
+      { title: "Review the drawing and quotation", text: "confirm dimensions, circulation, fit-out and the items shown separately." },
+      { title: "Agree the delivery window", text: "with the responsible campus and lifting teams, once the approvals and documents in the project scope are in place." },
+    ],
+
+    extraSections: [
+      {
+        heading: "Prepare the Campus Approval Information",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Ask the campus team for its placement and delivery checklist early. It may request the cabin footprint, weight, electrical load and connection details, access and exit arrangements, or information about delivery, lifting and eventual removal.",
+          "Agree who provides each item. The cabin supplier, lifting contractor and campus team may each have different responsibilities. Confirm any drawings, lift plan, method statement and crew documentation in the project scope before scheduling delivery.",
+        ],
+      },
+      {
+        heading: "Choose an Approved Placement Area",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A service yard or designated contractor area may be suitable after the campus team reviews it. Check pedestrian access, emergency routes, building exits, drainage, underground services and space for maintenance. For a podium or terrace, obtain a structural assessment that covers the proposed cabin, occupancy and relevant delivery or lifting loads.",
+          "Share gate widths, internal road and ramp limits, overhead obstacles and unloading space. Agree the delivery window and placement sequence with the responsible campus and lifting teams.",
+        ],
+      },
+      {
+        heading: "Coordinate Finishes, Power and Future Reuse",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If the campus has finish or signage requirements, share its palette and design guidelines before ordering. Discuss lighting, ventilation, cooling and insulation alongside the expected occupancy. Confirm campus power availability, capacity and connection responsibilities before selecting equipment.",
+          "If the cabin is intended to move to another project, discuss how it will be disconnected, lifted and transported and who will restore the placement area. Provide any sustainability reporting requirements upfront so the project team can confirm which information is available.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can an office cabin be placed inside a tech park?",
+        answer:
+          "Placement depends on campus approval, a suitable location, safe access and the proposed utility connections. Share the campus requirements before selecting a cabin.",
+      },
+      {
+        question: "What is a contractor office cluster?",
+        answer:
+          "It is a group of office cabins in a designated project area. The arrangement can include separate team offices and shared space where the approved layout and project scope allow.",
+      },
+      {
+        question: "Can we use campus power?",
+        answer:
+          "Ask the campus team to confirm available capacity, the connection point and any metering requirements. The quotation should state which wiring and equipment are included.",
+      },
+      {
+        question: "Who supplies approval documents?",
+        answer:
+          "Agree responsibilities before ordering. Cabin drawings and technical details, structural assessments and lifting documents can come from different parties.",
+      },
+      {
+        question: "How long will delivery take to a Devarabisanahalli campus?",
+        answer:
+          "Confirm the schedule for your order after reviewing design approval, production availability, campus permissions and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a Quotation for Your Tech Park Project",
+    ctaText: `Send Portable Office Cabin your campus address, proposed placement area, team size and required date. Include a site plan and the campus checklist if available. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The brief's buttons are Call, WhatsApp and Request a Quotation: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default container-office buttons (one is "on rent";
+    // rental is not confirmed for this page).
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "site-office-containers",
+      noun: "portable office cabin",
+      heading: "Request an Office Cabin Quotation",
+      intro:
+        "Tell us the campus address, team sizes, project duration and required date. Our sales team will confirm the details with you before preparing an itemised quotation.",
+      excludeRentalModels: true,
+    },
+    relatedLinks: [
+      { label: "Office Cabins with a Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "All Portable Cabins", href: "/products/category/portable-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Portable Cabin Layouts and Interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Request an Office Cabin Quotation", href: "/contact" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Offices on Sarjapur Road", href: "/cities-we-serve/container-office-in-sarjapur" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Devarabisanahalli. Delivery, unloading, lifting and placement are arranged for each order, and delivery dates are not guaranteed. The workspaces, layouts, fit-out, finishes and electrical provisions described on this page are options; the items supplied are confirmed in the approved drawing, specification and quotation for each order, and metering, shared facilities, utility connections and later removal are included only where that quotation lists them. The images on this page are illustrative renders of one portable office cabin design, shown with optional furniture; other layouts look different, and the images are not photographs of installations in Devarabisanahalli or in any tech park. No tech park, campus operator or company is named on this page: Portable Office Cabin is not affiliated with any campus in Devarabisanahalli, and the uses described here are not clients or completed projects. Campus approvals, structural assessments, lift plans, method statements and crew documentation are project-specific and may come from different parties; the notes on approvals, placement, loads, lifting and power are general guidance, not engineering, safety or legal advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -14944,6 +16901,257 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN BELLANDUR — Bellandur Post (560103), south-east Bengaluru:
+   * storage for homes, apartment societies, contractors and local shops.
+   *
+   * Owner brief of 2026-11-07 (route, meta title, meta description and H1 used as given). The slug
+   * starts with "shipping-container-", so cityFamily() puts it in the shipping-container family:
+   * directory card, Karnataka sibling links both ways and the nearby block. The brief's sections map
+   * onto the fixed template slots, in the brief's order except where a slot's position is fixed:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Storage uses in Bellandur" table → why, as whyTable (no bullets).
+   *   • "Choosing a container for a residential site" → solutions heading + intro (no items).
+   *   • "Planning delivery through a society gate or narrow lane" and "Container condition, finish and
+   *     fittings" → two afterSolutions extra sections, paragraphs verbatim.
+   *   • "Storing household goods during renovation" → features (four bullets); the fifth bullet, what
+   *     to keep out, → sizesNote (rendered bold).
+   *   • "Shipping container price and rental in Bellandur" → custom (prose, so customBullets is empty,
+   *     which renders no <ul>); the rental link → customLinks.
+   *   • "Areas we serve" → areas (the template renders it before the steps).
+   *   • "From enquiry to delivery" → how (four steps, titles only).
+   *   • FAQs (seven) → faqs; the closing request → CTA + the category enquiry form. The customer may
+   *     buy or rent, so the form keeps the rental model.
+   * Lead-ins written where a slot needs one: tagline, whyIntro, the table caption, featuresIntro, the
+   * outro before the rental link and the enquiry-form intro. No ₹ figure, stock, lead time, guaranteed
+   * fit, moisture protection or capacity claim; 20 ft is the only size named (10 ft stock, side-lifter
+   * delivery and further modifications wait until the business confirms them, as the brief says).
+   *
+   * KEYWORD OWNERSHIP: shipping / storage container × Bellandur, 560103, for household, society,
+   * renovation, contractor and small-shop storage. The Bellandur office-cabin page keeps office cabins
+   * and workspace; the Marathahalli ORR shipping page keeps commercial and infrastructure storage on
+   * the ORR; campus and tech-park intent stays with the Devarabisanahalli page. The brief's reciprocal
+   * links with the office page (and the Marathahalli page's) are added by whichever page merges
+   * second, once both routes are live.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Bellandur shipping city page/Bellandur
+   * shipping/cabin (1–5).webp", no EXIF / XMP / ICC metadata). Four are copied byte-for-byte; the hero
+   * also gains an XMP dc:title / dc:description that identifies it as a render (pixels unchanged).
+   * The brief's crane-delivery slot has no matching image and is omitted. The interior shows shelving
+   * rather than pallets and the vent view is the whole side wall, so their alt text, file names and
+   * captions describe what is shown (the vent caption says "side view", not the brief's "vent detail"); the overhead view (no slot in the brief) is the feature band before the
+   * footprint section. The containers drawn are longer than 20 ft, so no alt text or caption names a
+   * size, and the disclaimer says none is a photograph of a container in Bellandur.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-bellandur",
+    city: "Bellandur",
+    listTitle: "Shipping & Storage Containers in Bellandur",
+    metaTitle: "Shipping & Storage Containers in Bellandur (560103)",
+    metaDescription:
+      "Buy or enquire about renting a shipping container in Bellandur for home renovations, apartment society storage, contractor tools or business stock.",
+    keywords:
+      "Shipping Container in Bellandur, Storage Container Bellandur, Used Shipping Container Bellandur, Storage Container Rental Bellandur, 20 ft Shipping Container Bellandur, Shipping Container Bellandur 560103, Storage Container Bellandur Post",
+    geo: {
+      region: "IN-KA",
+      placename: "Bellandur, Bengaluru, Karnataka, India",
+      position: "12.9260;77.6762",
+      icbm: "12.9260, 77.6762",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-bellandur/bellandur-shipping-storage-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors: a charcoal-grey side wall and bronze-painted doors with vertical locking bars and handles, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a shipping container for residential storage. The size, condition and finish of a supplied unit are confirmed in its quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-bellandur/bellandur-storage-container-overhead-footprint.webp",
+      alt: "Overhead view of a charcoal-grey steel container on paving between planted borders, showing its corrugated roof and rectangular footprint",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative overhead view. Allow room beyond the footprint to open the cargo doors, walk around the unit and unload it safely.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-bellandur/bellandur-storage-container-side-wall-vents.webp",
+      alt: "Painted corrugated steel side wall of a storage container with a small vent near each top corner",
+      width: 2051,
+      height: 767,
+      caption: "Illustrative side view with a small vent near each top corner. Confirm vent availability in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-bellandur/bellandur-storage-container-interior.webp",
+        alt: "Storage container interior with cartons and storage bins on steel shelving either side of a central aisle, under ceiling lights",
+        width: 1451,
+        height: 1084,
+        caption:
+          "Illustrative storage layout with items raised off the floor. Shelving, lining and lighting are fitted only where agreed for the specific unit.",
+      },
+      {
+        src: "/images/cities/shipping-container-bellandur/bellandur-society-storage-container-painted.webp",
+        alt: "Painted steel storage container with closed cargo doors, locking bars and handles",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative painted finish for an apartment society storage unit.",
+      },
+    ],
+
+    h1: "Shipping & Storage Containers for Bellandur Homes, Societies and Local Businesses",
+    tagline:
+      "Buy a 20 ft shipping container, or enquire about renting one, for household, society, contractor and shop storage in Bellandur.",
+    intro: [
+      "Need somewhere to keep furniture during a renovation, spare equipment during clubhouse repairs, or stock that has outgrown your shop's back room? Portable Office Cabin supplies shipping containers for storage enquiries in Bellandur. Share what you need to store and where the unit will sit so we can discuss the size, condition and delivery options.",
+    ],
+
+    whyHeading: "Storage uses in Bellandur",
+    whyIntro: "Who typically asks for container storage in Bellandur, and what each usually keeps inside:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Suitability varies with the goods themselves, their packing and the state of the container offered.",
+      headers: ["Who needs storage", "What can go inside"],
+      rows: [
+        ["Homeowners renovating an independent house", "Dry furniture, boxed household goods and suitable appliances"],
+        ["Apartment associations", "Festival decorations, spare chairs, maintenance spares and clubhouse equipment"],
+        ["Interiors and society repair contractors", "Tiles, fittings, tools and project materials suitable for enclosed storage"],
+        ["Local shops and small businesses", "Dry stock, packaging and seasonal supplies"],
+        ["Authorised lake and drain works crews", "Drained pumps, hoses, hand tools and site equipment"],
+      ],
+    },
+
+    solutionsHeading: "Choosing a container for a residential site",
+    solutionsIntro:
+      "A 20 ft shipping container has an external footprint of roughly 6.1 × 2.44 m. Allow additional room to open the cargo doors, walk around the unit where needed, and unload it safely. Usable storage depends on the unit's internal dimensions, your largest items and how much access you need between stacks. For a larger unit, check the delivery route and unloading space before deciding on a size.",
+    solutions: [],
+
+    featuresHeading: "Storing household goods during renovation",
+    featuresIntro: "Before and while household goods are in the container:",
+    features: [
+      "Pack items dry and use suitable covers to protect furniture from dust and scratches.",
+      "Keep cartons off the floor and leave space from the steel walls. Keep a clear path to items you will need during the renovation.",
+      "Check the unit for damp, odours, residues, floor damage and gaps around door seals before moving goods inside.",
+      "Discuss humidity-sensitive items separately. Ventilation and moisture absorbers can help manage condensation, and valuable documents, electronics and delicate furnishings may need climate-controlled storage.",
+    ],
+    sizesNote: "Keep fuel, gas cylinders, flammable solvents, fireworks and perishables out of general-purpose storage.",
+
+    customHeading: "Shipping container price and rental in Bellandur",
+    customIntro:
+      "The quote depends on size, condition, finish, fittings, transport and unloading access. Include your target dates and expected hire period so the team can confirm availability, transport, placement and collection terms.",
+    customBullets: [],
+    customOutro: "For temporary needs, see our rental page:",
+    customLinks: [{ label: "Shipping container rental", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome shipping and storage container enquiries from Bellandur and the Bellandur Post (560103) area, including Green Glen Layout, Bellandur Gate, Ambalipura, Kasavanahalli, Haralur Road, Iblur, Kaikondrahalli and the nearby Sarjapur Road stretch. Delivery is assessed for each site.",
+    // Marathahalli ORR cross-link (agreed with #226; added here as the second to go live): commercial storage on the ORR is that page's intent.
+    areasLinks: [{ label: "Commercial storage containers on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" }],
+
+    howHeading: "From enquiry to delivery",
+    howSteps: [
+      {
+        title: "Share what you need to store, the approximate duration, and photographs of the approach and placement area.",
+        text: "",
+      },
+      { title: "Review the proposed size, container condition and itemised purchase or rental quotation.", text: "" },
+      { title: "Confirm site permission, access, supports and the agreed unloading method.", text: "" },
+      { title: "Agree on the delivery schedule and, for a rental, how collection will be arranged.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Planning delivery through a society gate or narrow lane",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Send photos of the approach road, gate, turning area and proposed unloading spot. Include gate dimensions and flag overhead cables, low branches, balconies or a basement slab beneath the driveway. The vehicle needs room to manoeuvre, and the lifting equipment needs suitable ground and clearance. If a crane is proposed, agree on its position and the space required to keep residents clear during unloading.",
+          "Confirm permission from the landowner or apartment association, and check any applicable placement requirements. Choose an approved area clear of fire access, hydrants, parking access and pedestrian routes. If the ground is uneven or prone to standing water, have the site team confirm suitable level supports and drainage before delivery.",
+        ],
+      },
+      {
+        heading: "Container condition, finish and fittings",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Ask what condition is available and what the stated grade covers. A one-trip container typically shows limited use. A used cargo-worthy unit may show dents or surface wear. A unit described as wind and watertight is offered on that condition basis. Confirm the actual floor, doors, seals and roof condition before accepting a unit for household storage, and ask separately about any certification needed for transport.",
+          "For residential placement, ask about a neutral repaint, a lockbox, vents or shelving. Confirm which fittings are available for the specific unit and whether modifications are permitted on a rental.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Will a 20 ft shipping container fit inside my compound or apartment society?",
+        answer:
+          "It depends on the available footprint, door clearance, approach route and unloading space. Send site dimensions and photographs for an access review.",
+      },
+      {
+        question: "How much can a 20 ft container hold?",
+        answer:
+          "Capacity for your project depends on the unit's internal dimensions, item sizes, safe stacking and the aisle space you need. Send the dimensions of bulky items such as cupboards, sofas or appliances when enquiring.",
+      },
+      {
+        question: "Can I place a storage container on the road outside my home?",
+        answer:
+          "Plan for placement on approved premises with the owner or association's permission. If delivery requires temporary road access or traffic control, confirm the arrangements and any required permission before scheduling it.",
+      },
+      {
+        question: "Can a used shipping container be repainted?",
+        answer:
+          "Ask about repainting options for the selected unit. Availability, colour and preparation depend on the container's condition and quotation.",
+      },
+      {
+        question: "Will furniture stay dry inside a storage container?",
+        answer:
+          "A sound container helps protect goods from rain, but condensation can still form as temperatures change. Check the condition of the unit, pack belongings dry and discuss suitable storage for moisture-sensitive items.",
+      },
+      {
+        question: "Can I rent a container while my renovation is under way?",
+        answer:
+          "Yes, you can enquire about a rental. Share the start date, duration, storage requirements and site access so the team can confirm the available unit and terms.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, requested modifications, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Bellandur",
+    ctaText:
+      "Share what you need to store, the Bellandur site address or PIN, preferred dates and photos of the access route and drop location. Mention whether you want to buy or rent.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (the brief's Request a Quote · Call · WhatsApp).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry for Bellandur",
+      intro:
+        "Pick a container, enter the quantity and your Bellandur address or PIN, and say whether you want to buy or rent. Add what you will store, your preferred dates and the access to the drop location. The team checks these points with you and then sends a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; there is no container yard, depot or office in Bellandur. Each container is offered subject to stock, and its size, condition, grade, fittings, any certification, any rental terms and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or placed in Bellandur. The 20 ft footprint quoted is approximate; the dimensions and ratings that apply are those of the specific unit. Bellandur Post (560103) and the localities and roads listed are named only to describe the area served, and the storage uses described are examples rather than clients, past projects or confirmed delivery areas. Guidance on packing, condensation, site access, placement and permissions is general information, not engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING CONTAINERS IN SHIVAMOGGA — Machenahalli / Nidige (KIADB) industrial area, Malnad.
    *
    * Owner brief of 2026-11-05 (meta title, meta description, H1 and the preferred URL used as
@@ -15341,6 +17549,281 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a container yard, depot, workshop or office in Shivamogga, Machenahalli, Nidige or Bhadravathi. Containers are supplied subject to availability: the size, grade, condition, certification and modifications of each unit, and its delivery and unloading arrangements, are confirmed in its quotation, and delivery timelines are not guaranteed. The images on this page are illustrative renders of a representative 20 ft dry shipping container; they are not photographs of a container supplied to, or placed in, Shivamogga or Machenahalli. Dimensions and capacities on this page are approximate; the ratings that apply are those on the specific container's identification plate and documentation. KIADB, the Nidige–Machenahalli Industrial Area and Shivamogga Airport are named only to describe the location; Portable Office Cabin is not affiliated with KIADB, any industrial estate or any airport operator, and the uses and places described here are not clients, completed projects or confirmed delivery areas. Notes on storage, moisture, condensation, food safety, site preparation and permissions are general guidance, not engineering, food-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINERS IN MARATHAHALLI (ORR) — commercial and infrastructure storage along the
+   * Outer Ring Road: road and metro work zones, showroom overflow, business archives, sports turfs,
+   * restaurants and event teams.
+   *
+   * Owner brief of 2026-11-07: route, meta title, meta description and H1 used as given; every
+   * section of the publishable copy is kept in the owner's words and order, except where the fixed
+   * template slots force a change (nothing is dropped):
+   *   • Intro → intro (two paragraphs) + heroCta (Request a Quote / Call / WhatsApp).
+   *   • "Commercial storage along the ORR" → why, as `whyTable` (empty whyBullets). The lead-in
+   *     sentence and the table caption are the only composed lines in the body.
+   *   • "Storage for road and metro work zones" → solutionsHeading + solutionsIntro with an empty
+   *     `solutions` list, so it stays an H2 with one paragraph, like the brief's other use sections.
+   *   • "Showroom overflow…", "Archive storage…", "Storage for sports turfs…" and "Choosing between
+   *     20 ft and 40 ft containers" → four afterSolutions extra sections, in the brief's order. The
+   *     size table's caption is the brief's own "Final fit depends on…" sentence.
+   *   • "Condition, security and fittings" → features: the first sentence is the intro, the next
+   *     four are the list, and the rental-fittings sentence is the bold note. The gallery (cargo
+   *     doors with lockbox, fitted interior) follows it.
+   *   • "Shipping container price, purchase and rental in Marathahalli" → custom, with the rental
+   *     link as `customLinks` (anchor as given).
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps, the owner's
+   *     sentences). The template puts areas before the steps, the reverse of the brief.
+   *   • FAQs (six) → faqs; the closing request → CTA + the cargo-category enquiry form (rental models
+   *     kept: rental is in this brief's scope).
+   * DEFERRED LINKS (brief section 5: never link to a route that is not live). Office cabins in
+   * Marathahalli (portable-office-cabin-marathahalli, session cf) and storage containers for homes
+   * and societies in Bellandur (shipping-container-bellandur, session d1) are added, both ways, by
+   * whichever PR merges second.
+   * Not claimed (brief section 3): stacking, night lifting, warning-light mounts, ramps, CCTV, alarms,
+   * lease-to-own, fixed delivery timelines or guaranteed archive protection. No ₹ figure.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container × Marathahalli and the ORR, for
+   * commercial and infrastructure storage. Bellandur's shipping page keeps household and society
+   * storage; the Marathahalli office-cabin page keeps workspace; Devarabisanahalli keeps campus and
+   * tech-park intent. No Bellandur locality is named in the areas list.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Marathahalli shipping container city
+   * page/Marathahalli ORR shipping and storage container/cabin (1–4).webp": 600×448 and 1452×1083 ×3,
+   * no EXIF/XMP/ICC), copied with descriptive names and a truthful XMP dc:title/dc:description
+   * ("Illustrative render of…") added losslessly: the VP8 bitstream is untouched and the decoded
+   * pixels are identical. Only the exterior matches a slot in the owner's image table, and it is the
+   * hero (the owner's alt text and render caption) and the social preview. The side wall, cargo doors
+   * and lined interior match none of the other slots (work-zone barriers, boxed stock, archive racks,
+   * sports racks), so those slot filenames and alts are not used. They carry their own descriptive
+   * alt text and an "illustrative render" caption, and no alt text names a place.
+   * The hero is 600 px wide, narrower than the 672 px frame, so the template caps it at its own width
+   * (the interior image's narrow rule).
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-marathahalli-orr",
+    city: "Marathahalli",
+    listTitle: "Shipping Containers in Marathahalli (ORR)",
+    metaTitle: "Shipping Containers in Marathahalli (ORR) | 20 & 40 ft",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Marathahalli for road and metro works, showroom overflow, event equipment and sports turf storage.",
+    keywords:
+      "Shipping Container in Marathahalli, Storage Container Marathahalli, Cargo Container ORR, Cargo Container Outer Ring Road, 20 ft Container Marathahalli, 40 ft Container Marathahalli, Shipping Container Rental Marathahalli",
+    geo: {
+      region: "IN-KA",
+      placename: "Marathahalli, Outer Ring Road, Bengaluru, Karnataka, India",
+      position: "12.9569;77.7011",
+      icbm: "12.9569, 77.7011",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+
+    heroImage: {
+      src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 600,
+      height: 448,
+      caption: "Illustrative shipping container exterior for commercial storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-side-wall.webp",
+      alt: "Corrugated steel side wall of a 20 ft shipping container with two forklift pockets, on a paved yard",
+      width: 1452,
+      height: 1083,
+      caption: "Illustrative render of the corrugated side wall of a 20 ft shipping container.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-cargo-doors.webp",
+        alt: "Double cargo doors of a steel shipping container with four locking bars, cam handles and a central lockbox",
+        width: 1452,
+        height: 1083,
+        caption: "Illustrative render of the cargo doors, with a lockbox between the locking bars. Fittings vary by unit and are listed in the quotation.",
+      },
+      {
+        src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-lined-interior.webp",
+        alt: "Container interior with cream wall lining, two ceiling lights, a switch and power socket and a wood-effect floor, seen between open cargo doors",
+        width: 1452,
+        height: 1083,
+        caption:
+          "Illustrative render of a lined interior with lighting and power points. These are specification options confirmed in the quotation, not standard fittings.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers for Marathahalli and the Outer Ring Road",
+    tagline: "20 ft and 40 ft containers for project, showroom, archive, sports and event storage along the ORR.",
+    intro: [
+      "A showroom preparing for festive sales, a contractor moving between work zones and a sports turf storing equipment all need space close to where they work.",
+      "Portable Office Cabin supplies shipping containers for commercial and infrastructure storage enquiries in Marathahalli and along the Outer Ring Road (ORR). Share what you need to store, how long you need the space and where the container will sit.",
+    ],
+
+    whyHeading: "Commercial storage along the ORR",
+    whyIntro: "Typical commercial and infrastructure uses, and what each can plan space for:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Examples only. Confirm that your goods suit container storage and the conditions they need.",
+      headers: ["Use", "What you can plan space for"],
+      rows: [
+        ["Road, flyover and metro works", "Tools, cables, fittings, drained pumps and project materials"],
+        ["Showrooms and retailers", "Seasonal inventory, boxed stock and display fixtures"],
+        ["Office and business records", "Archive boxes where the storage environment meets retention and access requirements"],
+        ["Sports turfs and gyms", "Nets, cones, balls, mats and maintenance equipment"],
+        ["Restaurants", "Packaging and suitable non-food supplies"],
+        ["Event and exhibition teams", "Stands, display panels and staging equipment"],
+      ],
+    },
+
+    solutionsHeading: "Storage for road and metro work zones",
+    solutionsIntro:
+      "A 20 ft unit can be considered for an approved work zone or contractor yard where the project team confirms the footprint, unloading area and clearance. If a project moves in stages, ask about the scope and cost of relocation between approved locations. Discuss visibility markings and access control with the project team. Placement and lifting beside a live carriageway depend on the applicable permissions, traffic management and an agreed lifting plan.",
+    // Empty on purpose: the section is the heading and paragraph above (see the header comment).
+    solutions: [],
+
+    featuresHeading: "Condition, security and fittings",
+    featuresIntro: "Ask about the grade and actual condition of the available unit.",
+    features: [
+      "One-trip units generally have seen limited use.",
+      "Used cargo-worthy units can show wear, and units described as wind and watertight should be assessed against their stated condition.",
+      "Check the floor, doors, locking gear and seals before accepting a unit.",
+      "For a busy commercial yard, discuss a lockbox, suitable lighting, shelving and placement with doors facing a controlled area.",
+    ],
+    sizesNote: "Confirm which fittings are included in the quote and whether changes are permitted on rental units.",
+
+    customHeading: "Shipping container price, purchase and rental in Marathahalli",
+    customIntro: "Pricing depends on size, condition, fittings, transport, unloading and site access.",
+    customBullets: [
+      { text: "Compare rental for a project or seasonal overflow with purchase for recurring storage." },
+      { text: "For longer hires, ask about the rental term, extensions and collection." },
+    ],
+    customOutro: "See our rental options and confirm availability for your site and dates:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout, Doddanekundi and Kadubeesanahalli. We also consider sites along Varthur Road, Old Airport Road and around Mahadevapura. Delivery access is assessed for each location.",
+    // Bellandur cross-link (agreed with the Bellandur page, added by #227 as the second to go live): residential storage is that page's intent.
+    areasLinks: [{ label: "Storage containers for homes and societies in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" }],
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share the intended use, item sizes, hire duration if applicable and site photographs.", text: "" },
+      { title: "Review the proposed container size, condition, fittings and itemised quote.", text: "" },
+      { title: "Confirm the placement location, base, access and required permissions with the responsible site team.", text: "" },
+      { title: "Agree on the delivery and unloading plan, plus any later relocation or collection in the quotation.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Showroom overflow and festive stock",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Plan racks around carton dimensions and keep a clear aisle for restocking. Ask about shelving, interior lighting and a lockbox for the selected unit. If stock moves on trolleys, share the trolley dimensions and proposed loading arrangement when requesting a quote. Check storage temperature and humidity requirements for the goods you intend to keep inside.",
+        ],
+      },
+      {
+        heading: "Archive storage for business records",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Labelled shelving, clear aisles and controlled access make retrieval easier. Before storing records, confirm your organisation's requirements for humidity, temperature, fire protection, retention and access. An unconditioned steel container can experience heat and condensation. Specify a suitable controlled environment if the records require one.",
+        ],
+      },
+      {
+        heading: "Storage for sports turfs and gyms",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Use bins, racks or hooks to separate small kit from long items such as nets and poles. Dry equipment before putting it away and discuss ventilation and door access based on how often staff use the store.",
+        ],
+      },
+      {
+        heading: "Choosing between 20 ft and 40 ft containers",
+        placement: "afterSolutions",
+        table: {
+          caption: "Final fit depends on the unit, delivery vehicle and placement method.",
+          headers: ["Size", "Storage use", "Site planning"],
+          // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a
+          // 320 px phone, where row headers may wrap.
+          rows: [
+            [
+              "20\u00a0ft",
+              "Contractor tools, turf equipment and smaller showroom overflow",
+              "Check gate clearance, turning space, door swing and unloading area.",
+            ],
+            [
+              "40\u00a0ft",
+              "Bulk showroom stock, contractor depots and event equipment",
+              "Check the full trailer approach and whether lifting equipment can be positioned safely.",
+            ],
+          ],
+        },
+        closing: [
+          "If you need more internal height, ask whether a 40 ft high-cube unit is available and confirm its dimensions before designing tall racks. Share entrance measurements, site photos and overhead obstructions.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a container be placed in an ORR road or metro work zone?",
+        answer:
+          "It can be considered where the project authority approves the location and the site team confirms clearance, traffic arrangements and the lifting plan.",
+      },
+      {
+        question: "Will a 40 ft container fit at our showroom?",
+        answer:
+          "The footprint is only one part of the check. Share approach-road and gate dimensions, turning space, overhead restrictions and photos of the unloading area.",
+      },
+      {
+        question: "Can I use a container for business archives?",
+        answer:
+          "That depends on the records and their storage requirements. Check temperature, humidity, fire protection and access requirements before choosing the unit and fit-out.",
+      },
+      {
+        question: "What security options can I ask for?",
+        answer:
+          "Ask about door condition, a lockbox, lighting and placement within a controlled area. Confirm the available fittings for the quoted unit.",
+      },
+      {
+        question: "Should I rent or buy?",
+        answer:
+          "Rental is worth comparing for seasonal inventory and time-limited projects. Purchase may suit ongoing storage. Compare the full quoted cost, including delivery, placement and any collection charges.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on available stock, fittings, transport and site readiness. Share the target date so a schedule can be confirmed in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote for Marathahalli or the ORR",
+    ctaText:
+      "Send the intended use, preferred size, site address, dates, and photos of the approach road, gate and proposed placement area. Mention any racking, lighting or security requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry",
+      intro:
+        "Tell us which container you have in mind, how many you need and where the site is in Marathahalli or on the ORR. Add what you plan to store, your dates and any racking, lighting or security needs; we confirm the details with you before quoting in writing.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Cargo Storage Container in Bangalore", href: "/promotions/cargo-storage-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and its Karnataka office is in Electronic City Phase 1, Bengaluru. It has no yard, depot or office in Marathahalli or on the Outer Ring Road. Supply depends on stock: the size, grade, condition and fittings of a unit, any rental term, and how it is delivered, unloaded, moved or collected are set out in its quotation, and no delivery date is guaranteed. The pictures here are renders of a typical 20 ft container, not photographs taken in Marathahalli or on the ORR. Marathahalli Bridge, the Outer Ring Road and the other localities are named only to show where enquiries are welcome; Portable Office Cabin has no connection with any road, metro or civic authority, and none of the uses or places mentioned is a client, a finished project or a confirmed delivery location. Guidance here on placement, lifting, permits, traffic management, archives and storage conditions is general, not engineering, fire-safety or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -23053,7 +25536,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Delivery Enquiries Around Krishnagiri",
     areasText:
-      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area, Shoolagiri, Hosur and Dharmapuri, and from sites along NH 44 and NH 48. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
+      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area, Shoolagiri and Hosur, and from sites along NH 44 and NH 48. For Dharmapuri, see the nearby service areas below. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
 
     howHeading: "Delivery and Installation",
     howIntro: "How an order moves from enquiry to installation:",
@@ -23238,6 +25721,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
         { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+        // Dharmapuri's own portable-toilet page (2026-11-05): Dharmapuri left this page's areas list for it.
+        { label: "Portable Toilet Cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -23988,6 +26473,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
       { label: "Portable Shops in Shivamogga, Karnataka", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Portable Shop Cabins in Hassan, Karnataka", href: "/cities-we-serve/portable-shop-cabin-hassan" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -24739,6 +27225,2810 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru. Delivery, unloading and placement are arranged for each order, the supports depend on the site, and production and delivery dates are not guaranteed. The cabin types, sizes, materials, insulation, fittings, provisions, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. CCTV cameras, boom barriers, access-control readers, networking equipment and software are not part of a cabin unless the quotation lists them. The images on this page are illustrative renders of two Portable Office Cabin compact security cabin designs, shown with optional furniture and fittings; other cabin types look different, and the images are not photographs of installations in Shoolagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Shoolagiri estate and planned expansion are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate or company there, and the gate positions, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions and safety procedures. A portable cabin is not a wildlife-proof shelter, and the notes on insulation, ventilation, toilets, relocation, wildlife and supports are general guidance, not engineering, safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABIN MANUFACTURERS IN DHARMAPURI INDUSTRIAL AREA — the portable-toilet intent for
+   * Dharmapuri town, the Dharmapuri industrial area and the SIPCOT industrial park being developed at
+   * Adhagapadi (Tamil Nadu): toilet points for road, drainage and pipeline crews, shared blocks for
+   * vendor clusters, factory-construction blocks, heat and water planning. It owns "toilet cabin +
+   * Dharmapuri" (and Adhiyamankottai / Nallampalli, which get no page of their own). The Krishnagiri
+   * toilet page keeps Krishnagiri and no longer lists Dharmapuri as a delivery town (no-cannibalisation
+   * rule); the two pages link to each other.
+   *
+   * Owner brief of 2026-11-05 ("Portable Toilet Cabin Manufacturers in Dharmapuri Industrial Area"):
+   * the preferred /cities-we-serve/ slug (no other Dharmapuri toilet route exists), meta title (63
+   * chars), meta description and H1 verbatim. Park checked on 2026-11-05: SIPCOT lists "Adhagapadi
+   * Phase I, Dharmapuri" among its upcoming parks, and the environmental clearance covers Adhagapadi
+   * (Dharmapuri taluk) and Adhiyamankottai, Thadangam and Balajangamanahalli (Nallampalli taluk); it is
+   * named as "being developed", with no area figure and no claim that any factory operates there. The
+   * brief is section guidance; the text is written from it, with its caveats, and is not copied from
+   * the Krishnagiri page. Mapped onto the template slots in the brief's order wherever it allows:
+   *   1 Hero → tagline, intro (four paragraphs), heroCta (Request Quote, Call, WhatsApp).
+   *   2 Project phases → why, as a table (`whyTable`, empty whyBullets) + whyOutro. Four cells are
+   *     reworded ("arrangement" → "setup", "contractor" → "builder", "distributed" and "multi-cubicle"
+   *     spelled out) so the three columns fit a 320 px screen without sideways scrolling.
+   *   3 Road and pipeline crews → solutions (five options as H3s; the relocation caveat is the
+   *     last one; no "moved in minutes", no trailer-mounted toilet).
+   *   4 Shared vendor-park blocks, 5 Comfort table, 6 Heat and Water (two H2s, one per subsection) →
+   *     extra sections with `placement: "afterSolutions"`. Waterless urinals left out (not confirmed).
+   *     Owner's approval of 2026-11-05: standalone handwash stations are not offered until confirmed
+   *     (left out of 3, 4, 7 and FAQ 7; washbasins in the cabin stay), and ladies' cabins are
+   *     worded as subject to the approved layout and quotation, with no fittings or availability claimed.
+   *   7 Types → features (nine types; FRP and trailer-mounted toilets left out, owner decision of
+   *     2026-11-05 on unconfirmed toilet types) + the built-to-order note.
+   *   8 Choosing an arrangement → industries (the "not statutory fixture counts" caveat in the intro).
+   *   9 Price → custom (cost factors), beside the rear view.
+   *   10 Rental → left out: toilet rental in Dharmapuri is not confirmed (brief: remove), so no rental
+   *     section, keyword, FAQ, link or default "on rent" button.
+   *   11 Ordering → how; 12 Areas → areas, as delivery enquiries; 13 Why us → whyUs (the template
+   *     renders whyUs and areas before how). 14 FAQs: the brief's eight. 15 CTA → CTA + enquiryForm.
+   * Owner wording rules: no ₹, no lead time, no fixture-count rule, no superlatives; specifications are
+   * options confirmed in the quotation; SIPCOT is named nominatively, with the non-affiliation note.
+   *
+   * Images: three owner-dropped 1200×896 webp files ("public/images/Dharmapuri Industrial Area portable
+   * toilet city page/Dharmapuri Industrial Area/cabin (1–3).webp", 87–96 KB, no EXIF/XMP/ICC; source
+   * not stated), copied byte-for-byte under descriptive names: (1) front with both doors open = hero /
+   * og:image, no caption; (2) three-quarter view = the feature band; (3) rear view = beside the price
+   * section. They show one green two-seater cabin (one Western, one Indian seat); the alt texts,
+   * captions and disclaimer call them illustrative images, and no image text names Dharmapuri.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-dharmapuri",
+    city: "Dharmapuri",
+    listTitle: "Portable Toilet Cabins in Dharmapuri",
+    metaTitle: "Portable Toilet Cabin in Dharmapuri | SIPCOT Site Toilet Blocks",
+    metaDescription:
+      "Portable toilet cabins in Dharmapuri for SIPCOT projects, road crews, industrial sites and vendor parks. Explore insulated, multi-seat and water-saving options.",
+    keywords:
+      "Portable Toilet Cabin in Dharmapuri, Portable Toilet Dharmapuri, Mobile Toilet Dharmapuri Industrial Area, Toilet Cabin SIPCOT Dharmapuri, Portable Toilet Cabin Manufacturers in Dharmapuri, Portable Toilet Suppliers Dharmapuri, Portable Toilet Adhiyamankottai, Toilet Block Nallampalli, Portable Toilet Cabin Price in Dharmapuri, Prefabricated Toilet Block Dharmapuri",
+    geo: { region: "IN-TN", placename: "Dharmapuri, Tamil Nadu, India", position: "12.1211;78.1582", icbm: "12.1211, 78.1582" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-dharmapuri/double-portable-toilet-cabin-front-doors-open.webp",
+      alt: "Double portable toilet cabin with both doors open — illustrative image of a green corrugated steel cabin with rounded top corners, a Western commode with a health faucet in one cubicle and an Indian squat pan in the other, each with a wall-mounted cistern",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/portable-toilet-cabin-dharmapuri/double-portable-toilet-cabin-three-quarter-view.webp",
+      alt: "Double portable toilet cabin — illustrative three-quarter image of the green corrugated steel cabin with two separate light-grey doors, a curved roof edge and a louvred ventilation panel high on the side wall",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative image of a double cabin with separate doors and a side ventilation louvre. Panels, fittings and ventilation follow the approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-dharmapuri/double-portable-toilet-cabin-rear-view.webp",
+      alt: "Rear view of the double portable toilet cabin — illustrative image of the closed green corrugated steel rear wall with rounded top corners and a small square fitting near the roof line",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative image of the same cabin from the rear. Panel finish, vents and service-connection positions are fixed in the approved drawing.",
+    },
+
+    h1: "Portable Toilet Cabin Manufacturers in Dharmapuri Industrial Area",
+    tagline: "Toilet Cabins and Sanitation Blocks for Industrial Park Works, Road Crews and Factory Sites",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable toilet cabins and sanitation blocks for industrial, construction and commercial requirements in Dharmapuri and the surrounding areas.",
+      "Industrial park development, infrastructure works and factory construction can need sanitation facilities at several work locations at the same time.",
+      "Portable toilet cabins give construction crews, contractors, industrial workers and temporary project facilities a flexible way to provide them.",
+      "Depending on the project, a cabin may include one or more toilet cubicles, a washbasin, water storage, a waste holding tank and insulated construction.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Toilet Facilities for Different Project Phases",
+    whyIntro: "An industrial development needs different sanitation arrangements as construction moves forward:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Project phases and the toilet arrangements they may call for. Each site's arrangement follows its own workforce, access, water and requirements.",
+      headers: ["Project phase", "Typical work", "Possible toilet setup"],
+      rows: [
+        ["Infrastructure development", "Roads, drains, water lines and utilities", "Compact toilet points near active work areas"],
+        ["Factory construction", "Several vendor and builder sites", "Toilet blocks spread across the site, with wash basins"],
+        ["Industrial operations", "Staff, visitors and shift workers", "Suitable sanitation blocks with several cubicles"],
+      ],
+    },
+    whyOutro:
+      "Base the arrangement on your actual workforce numbers, site access, water availability and the requirements that apply to the project.",
+
+    solutionsHeading: "Portable Toilets for Road and Pipeline Crews",
+    solutionsIntro:
+      "Road construction, drainage and pipeline work can move across several locations. Instead of relying on one distant toilet block, a project may consider smaller sanitation points near the active work areas. Possible options include:",
+    solutions: [
+      {
+        title: "Single Toilet Cabins",
+        text: "A one-cubicle cabin for a small crew at a single work front, placed where workers can reach it safely.",
+        link: { label: "Portable toilet cabin types and options", href: "/products/portable-toilet-cabin" },
+      },
+      {
+        title: "Double Toilet Cabins",
+        text: "Two cubicles with separate doors in one portable structure, for a larger crew or for separate use by women and men where the layout allows.",
+        link: { label: "Browse all portable toilet cabins", href: "/products/category/portable-toilet-cabins" },
+      },
+      {
+        title: "Water Storage Arrangements",
+        text: "Refillable tanks for work fronts without a piped supply, sized for the crew and the planned refill frequency.",
+      },
+      {
+        title: "Waste Holding Tanks",
+        text: "A suitable holding tank where there is no sewer or septic connection, emptied through an authorised servicing arrangement.",
+      },
+      {
+        title: "Relocatable Cabin Configurations",
+        text: "Where approved, a cabin may be repositioned as the work moves on. Whether and how it can be moved depends on its design, its lifting provisions, the condition of its tank, transport access and the safe disconnection of water, drainage and power.",
+      },
+    ],
+
+    featuresHeading: "Portable Toilet Cabin Types",
+    featuresIntro: "Configurations you can discuss with us for a Dharmapuri project:",
+    features: [
+      "Single toilet cabin: a compact unit for smaller teams or remote work locations",
+      "Double toilet cabin: two toilet cubicles within one portable structure",
+      "Multi-seater toilet block: a larger unit for sites with higher sanitation demand",
+      "Shared toilet block: a multi-cubicle arrangement for an approved shared-use location",
+      "Ladies toilet cabin: a separate, privacy-focused unit, subject to the approved layout and quotation",
+      "Urinal cabin: a prefabricated unit with urinal fixtures",
+      "Toilet and bathing cabin: a combined sanitation unit for suitable worker accommodation sites",
+      "MS toilet cabin: steel-framed prefabricated construction",
+      "PUF toilet cabin: insulated prefabricated construction",
+    ],
+    sizesNote:
+      "Every configuration is made to order: its size, materials, fittings and cubicle count are set out in the specification you approve with the quotation.",
+
+    industriesHeading: "Choosing a Toilet Arrangement",
+    industriesIntro:
+      "Examples of where a project might start. They are not statutory fixture-count recommendations; final quantities are for your site and compliance teams to decide.",
+    industries: [
+      {
+        title: "Road construction team",
+        text: "compact toilet facilities near the active work location, with safe access and planned servicing.",
+      },
+      {
+        title: "Pipeline team working at multiple locations",
+        text: "sanitation arrangements for each active work front, subject to workforce numbers and legal requirements.",
+      },
+      {
+        title: "Vendor cluster under construction",
+        text: "shared or individual toilet blocks, according to the approved site arrangement.",
+      },
+      {
+        title: "Large factory construction site",
+        text: "several toilet blocks, separate facilities for women and men, and washbasins in the blocks.",
+      },
+      {
+        title: "Operating industrial facility",
+        text: "sanitation capacity assessed against staffing, shift arrangements and the requirements that apply.",
+      },
+    ],
+
+    customHeading: "Portable Toilet Cabin Price in Dharmapuri",
+    customIntro: "There is no single price list: each cabin is quoted for its own configuration. The price depends on:",
+    customBullets: [
+      { title: "Dimensions", text: "the size of the cabin." },
+      { title: "Toilet cubicles", text: "how many cubicles it has." },
+      { title: "Urinals", text: "how many urinals are included." },
+      { title: "Material", text: "MS, PUF or another available build." },
+      { title: "Insulation", text: "the insulation the site needs." },
+      { title: "Ventilation", text: "vents and any exhaust fans." },
+      { title: "Water storage", text: "the tank capacity." },
+      { title: "Waste holding tanks", text: "where the site needs them." },
+      { title: "Handwash fittings", text: "washbasins and taps in the cabin." },
+      { title: "Plumbing", text: "inlets, outlets and internal pipework." },
+      { title: "Delivery and unloading", text: "the route to your site and how the cabin is unloaded." },
+      { title: "Order quantity", text: "the number of cabins ordered." },
+    ],
+    customOutro:
+      "Send these details with your enquiry to receive a written quotation. Prices, discounts and delivery dates are fixed only in the confirmed quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What we bring to a sanitation project in the Dharmapuri area:",
+    whyUsBullets: [
+      { title: "Customizable configurations", text: "toilet cabin layouts planned around your site." },
+      { title: "Single and multi-cubicle options", text: "from one cubicle to larger blocks." },
+      { title: "MS and insulated construction", text: "steel-framed cabins, with PUF insulation where it is specified." },
+      { title: "Handwash and bathing arrangements", text: "washbasins in the cabin and combined toilet-and-bathing units." },
+      { title: "Water and wastewater provisions", text: "tank, inlet and outlet provisions for your supply and your waste arrangement." },
+      { title: "Industrial and construction-site applications", text: "cabins configured for industrial projects and construction sites." },
+      { title: "Quotation support", text: "help turning your requirements into a specification and a written quotation." },
+      { title: "Delivery coordination", text: "transport and unloading arranged with your site team ahead of dispatch." },
+    ],
+
+    areasHeading: "Areas Served Around Dharmapuri",
+    areasText:
+      "We welcome delivery enquiries from Dharmapuri town and the Dharmapuri industrial area, including the SIPCOT industrial park being developed across Adhagapadi, Adhiyamankottai, Thadangam and Balajangamanahalli, and from Nallampalli, Thoppur, Palacode, Karimangalam, Pennagaram, Harur, Morappur, Pappireddipatti and sites along the NH 44 corridor. Share your exact site location; delivery feasibility, transport and unloading are confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howIntro: "From your first enquiry to delivery on site:",
+    howSteps: [
+      { title: "Share project requirements", text: "workforce numbers, site location, project type and the number of active work areas." },
+      { title: "Discuss the sanitation layout", text: "toilet cubicles, washbasins, separate arrangements and possible placement." },
+      { title: "Confirm utilities", text: "water availability, waste handling, tank requirements and drainage." },
+      { title: "Approve the quotation", text: "specifications, commercial terms and delivery requirements are finalised." },
+      { title: "Manufacture", text: "the approved toilet cabin configuration is fabricated." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated with the site's readiness." },
+    ],
+    howOutro:
+      "Delivery dates are confirmed with the order and depend on the configuration, the quantity and when the site is ready to receive the cabins.",
+
+    extraSections: [
+      {
+        heading: "Shared Toilet Blocks for Vendor Parks",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Industrial vendor clusters may benefit from shared sanitation facilities, where this is permitted and properly managed. Possible arrangements include:",
+        ],
+        bullets: [
+          { title: "Multi-seater toilet blocks", text: "several cubicles in one prefabricated structure." },
+          { title: "Separate ladies facilities", text: "private sanitation facilities in a suitable, safely reached location, subject to the approved layout." },
+          { title: "Urinal cabins", text: "additional facilities where they suit the workforce." },
+          { title: "Shared maintenance arrangements", text: "cleaning, water supply and waste-management responsibilities clearly assigned." },
+        ],
+        closing: [
+          "A shared block has to be evaluated against the applicable regulations, the workforce, accessibility needs and the site operator's rules. It does not automatically replace the toilets that individual workplaces are legally required to provide.",
+          "For separate storage for tools and fittings, see:",
+        ],
+        // Reciprocal link (2026-11-08): the Dharmapuri shipping-container page links back here from its contractor-store section.
+        links: [{ label: "Shipping containers in Dharmapuri", href: "/cities-we-serve/shipping-container-dharmapuri" }],
+      },
+      {
+        heading: "Making Site Toilets Practical and Comfortable",
+        placement: "afterSolutions",
+        paragraphs: ["Common concerns about site toilets, and the design or operational points that address each one:"],
+        table: {
+          caption: "Common concerns about site toilets and the matching design or operational consideration.",
+          headers: ["Common concern", "Design or operational consideration"],
+          rows: [
+            ["Odour", "Ventilation and regular cleaning"],
+            ["Poor lighting", "Suitable interior and approach lighting"],
+            ["Limited water", "Properly sized refillable water storage"],
+            ["Long queues", "Adequate fixture capacity"],
+            ["Lack of privacy", "Solid doors and functioning locks"],
+            ["Excessive walking distance", "Suitable distribution of toilet points"],
+            ["Women's safety and privacy", "Separate facilities and safe access"],
+            ["High internal temperatures", "Insulation, shading and ventilation"],
+          ],
+        },
+        closing: [
+          "No design on its own removes odour, heat or sanitation problems: actual comfort and hygiene depend on the design, the installation and the maintenance that follows.",
+        ],
+      },
+      {
+        heading: "Toilet Cabins for Dharmapuri's Heat and Dry Conditions",
+        placement: "afterSolutions",
+        paragraphs: ["Hot weather affects how usable a closed cabin is through the day. Heat management options include:"],
+        bullets: [
+          { title: "PUF insulation", text: "PUF-insulated walls and roofing." },
+          { title: "High-level ventilation", text: "suitable vents placed high on the walls." },
+          { title: "Light-coloured exterior", text: "a lighter external finish." },
+          { title: "Shaded placement", text: "siting the cabin in shade where practical." },
+          { title: "Air circulation", text: "appropriate air movement through the cubicles." },
+        ],
+        closing: ["Insulation can reduce heat transfer, but it does not guarantee a particular indoor temperature."],
+      },
+      {
+        heading: "Water-Efficient Sanitation",
+        placement: "afterSolutions",
+        paragraphs: ["Where water comes from storage or by tanker, plan how much the toilets will use. Options include:"],
+        bullets: [
+          { title: "Low-flow taps", text: "for washbasins." },
+          { title: "Water-efficient flushing fittings", text: "suitable fittings for the chosen seat type." },
+          { title: "Properly sized storage tanks", text: "matched to the users and the refill plan." },
+          { title: "Planned tanker refills", text: "a refill schedule agreed before the cabins are in use." },
+        ],
+        closing: [
+          "The seat type alone does not decide water use: an Indian pan does not use less water in every installation. Size the tank from the expected number of users, the fixture specifications, cleaning needs and how often it can be refilled.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can portable toilet cabins be used for road construction crews?",
+        answer:
+          "Yes. Portable toilet cabins can provide sanitation near road construction work areas when they are designed and serviced appropriately, with water, waste handling and cleaning planned for each location.",
+      },
+      {
+        question: "What is a shared toilet block?",
+        answer:
+          "It is a sanitation block intended for multiple approved users or neighbouring work areas, with defined access, cleaning and maintenance responsibilities.",
+      },
+      {
+        question: "Are insulated toilet cabins suitable for hot weather?",
+        answer:
+          "Insulation can help reduce heat transfer, particularly when it is combined with ventilation and appropriate placement. It does not guarantee a particular indoor temperature.",
+      },
+      {
+        question: "Can a portable toilet operate without piped water?",
+        answer:
+          "Yes, with a suitable design: refillable water storage for flushing and handwashing, and an approved wastewater handling arrangement.",
+      },
+      {
+        question: "Can toilet cabins be relocated during construction?",
+        answer:
+          "Some cabins can be relocated, subject to their structural design, lifting arrangements and site access, and to the safe disconnection of water and drainage before the move.",
+      },
+      {
+        question: "Can you provide separate toilet facilities for women workers?",
+        answer:
+          "Separate toilet facilities for women can be discussed for your site; the configuration is confirmed in the approved layout and quotation.",
+      },
+      {
+        question: "Can a portable toilet cabin include a washbasin?",
+        answer:
+          "A washbasin with a tap can be included inside the cabin where suitable water and drainage provisions are available. Tell us your handwashing requirement with your enquiry.",
+      },
+      {
+        question: "How quickly can portable toilet cabins be delivered to a Dharmapuri site?",
+        answer:
+          "Delivery timelines depend on the selected design, the quantity, the manufacturing workload, transport and site readiness. The schedule is confirmed with your order.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Toilet Cabin Quote in Dharmapuri",
+    ctaText: `Planning sanitation facilities for an industrial project, road construction crew, factory site or vendor cluster? Share your site location, workforce requirements, preferred toilet configuration and water availability. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default container-office buttons (one is "on rent").
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Request a Toilet Cabin Quote for Dharmapuri",
+      intro:
+        "Tell us your site location, workforce size, the toilet configuration you have in mind and how water will be supplied. Our sales team will confirm the details with you before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "All Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Toilet Cabin Types and Options", href: "/products/portable-toilet-cabin" },
+      { label: "4-Unit Portable Toilet Block", href: "/products/portable-toilet-block-4-unit" },
+      { label: "Portable Cabin with Attached Toilet and Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "Prefab Labour Colony", href: "/products/labour-colony" },
+      { label: "Workmen Accommodation Camps", href: "/products/workmen-accommodation" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins Across Tamil Nadu", href: "/promotions/portable-toilet-cabin-in-tamil-nadu" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Portable Toilet Cabins in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Dharmapuri district. Delivery, unloading and placement are arranged for each order, and delivery dates are not guaranteed. The toilet types, cubicle counts, sizes, materials, insulation, fittings, water storage, plumbing and waste provisions described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative images of one double toilet cabin design with one Western and one Indian seat; other configurations look different, and the images are not photographs of installations in Dharmapuri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its industrial park at Adhagapadi are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, contractor or company there, and the project phases, uses and places described here are not clients, completed projects or confirmed delivery areas. The notes on sanitation planning, shared facilities, heat, water use and wastewater are general guidance, not engineering, public-health or legal advice; fixture quantities and wastewater handling must meet the requirements that apply to each site.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN DHARMAPURI — the storage box itself for supplier buffer and kitting
+   * stores, contractor materials, sericulture equipment between crops and empty Palacode crates.
+   *
+   * Owner brief of 2026-11-08 ("Dharmapuri shipping container page and developer commands"): route,
+   * meta title, meta description, H1 and public copy as given. No other page targets shipping
+   * containers in Dharmapuri (repo routes, redirects and sitemap checked; the route was a live 404).
+   * The slug starts with "shipping-container-", so cityFamily() puts it in the shipping-container
+   * family: directory card ("Shipping containers in Dharmapuri", the hub anchor the brief asks for),
+   * Tamil Nadu sibling links both ways and the nearby block. The brief's sections map onto the
+   * template in the brief's order; this page sets neither the solutions nor the features section
+   * (both optional since 2026-11-08), so every section after "why" is an extra section:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Buffer and kitting stores for industrial suppliers" → why (paragraph, the four bullets, and
+   *     the EV battery note as whyOutro).
+   *   • "Contractor stores for cable, fittings and tools" (two paragraphs + the brief §5 toilet link),
+   *     "Sericulture equipment between crops", "Empty crates and packing supplies in Palacode" and
+   *     "Container sizes, condition and delivery" (table, the used-unit paragraph and the brief §5
+   *     inspection link) → afterSolutions extra sections, followed by the gallery.
+   *   • "Shipping container price and rental in Dharmapuri" → custom (no bullets), with the brief's
+   *     rental anchor as customLinks; the hire-dates sentence follows the pointer to it.
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (six) → faqs; the closing request → CTA + the
+   *     cargo-category enquiry form (rental is mentioned, so the form keeps the rental model).
+   * Lead-ins written where a slot needs one: tagline, the table caption, the two link lead-ins, the
+   * enquiry-form heading and intro. No ₹ figure, stock, lead time, load rating, dispatch origin, park
+   * acreage, construction status, EV hub timeline or supplier affiliation; high-cube availability,
+   * fit-outs, lifting and dispatch stay quote-dependent, and battery storage stays outside the
+   * general-purpose offer, as the brief says. SIPCOT is named only as service-area context.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container and container rental × Dharmapuri,
+   * Adhiyamankottai and Palacode. The Dharmapuri toilet page keeps site sanitation (the two pages link
+   * to each other); the Mettur, Salem shipping page no longer lists Dharmapuri in its areas line. The
+   * Krishnagiri container product page (/products/shipping-container-in-krishnagiri) keeps its own
+   * title, meta and uses; it names Dharmapuri only as a delivery area in its body.
+   *
+   * LINKS (brief §5): the toilet page and /products/shipping-container-rental are live (HTTP 200).
+   * No Chennai page is a used-container inspection guide; the Chennai-area page with a used-container
+   * checklist is Shipping Container in Athipattu (Ennore–Kattupalli corridor), whose "Used Container
+   * Inspection" section lists seven checks, so "How to inspect a used container" points there, as on
+   * the Hubballi–Dharwad page.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Dharmapuri shipping container
+   * city page/Dharmapuri shipping container page/cabin (1–5).webp", 1200×896 and 1451×1084 ×4, no
+   * EXIF / XMP / ICC metadata or provenance to keep) of one charcoal-grey steel container on a paved
+   * yard. The VP8 bitstreams are copied byte-for-byte (pixel-identical decode) into the extended format
+   * with an XMP dc:title and a dc:description that calls each an illustrative render. Only the exterior
+   * hero matches a slot in the brief's image table (its filename, alt and caption are used); the
+   * interior is empty and no image shows bins, shelves, trays or crates, so those four slots are left
+   * out. The roof view is the feature band; the cargo doors, empty interior and side view are the
+   * gallery. Every caption says "illustrative" and the disclaimer says none is a photograph taken in
+   * Dharmapuri or Palacode.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-dharmapuri",
+    city: "Dharmapuri",
+    listTitle: "Shipping & Cargo Containers in Dharmapuri",
+    metaTitle: "Shipping & Storage Containers in Dharmapuri",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Dharmapuri for supplier stock, contractor materials, sericulture equipment and Palacode crates.",
+    keywords:
+      "Shipping Container in Dharmapuri, Storage Container Dharmapuri, Cargo Container Dharmapuri, Shipping Container Rental Dharmapuri, Adhiyamankottai Industrial Storage, Palacode Crate Storage",
+    geo: { region: "IN-TN", placename: "Dharmapuri, Tamil Nadu, India", position: "12.1211;78.1582", icbm: "12.1211, 78.1582" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative shipping container exterior for industrial storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-roof-view.webp",
+      alt: "Steel shipping container seen from above on a paved yard, showing its corrugated roof and closed double cargo doors",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render from above. Include photos of the drop area, gate and any overhead obstructions with your enquiry.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a steel shipping container, with four vertical locking bars and handles",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the cargo doors. Ask about a lockbox, and check the seals of the unit quoted.",
+      },
+      {
+        src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-empty-interior.webp",
+        alt: "Empty steel container interior with corrugated walls and a plywood floor, seen through open cargo doors",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative empty interior. Shelving, bins, lighting and any other fit-out are quoted separately.",
+      },
+      {
+        src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-side-view.webp",
+        alt: "Corrugated side wall and closed end wall of a steel shipping container on a paved yard",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative side view. The approach and unloading space are checked for each site.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Dharmapuri",
+    tagline:
+      "Storage containers for supplier buffer stock, contractor materials, sericulture equipment and empty crates around Dharmapuri, Adhiyamankottai and Palacode.",
+    intro: [
+      "Need a buffer store for an assembly supplier, somewhere to keep cable fittings on a construction site, or space for empty crates between dispatches? Portable Office Cabin welcomes shipping container enquiries across Dharmapuri district, including sites around Adhiyamankottai and Palacode. Share what you need to store, how your team will handle it and where the unit will sit so we can discuss the size, fittings and delivery.",
+    ],
+
+    whyHeading: "Buffer and kitting stores for industrial suppliers",
+    whyIntro:
+      "A buffer store holds parts between incoming deliveries and the next issue to production. A kitting store gives staff a place to group parts for an assembly batch. For suppliers working around the Dharmapuri SIPCOT area, start with the number of part lines, replenishment frequency and the largest trolley or carton you need to move.",
+    whyBullets: [
+      { text: "Use labelled bins and shelves for harnesses, brackets, fasteners and other suitable non-hazardous parts." },
+      { text: "Allow a clear picking aisle and a separate space for preparing kits." },
+      { text: "Discuss lighting, shelf loads and access for trolleys in the quotation." },
+      { text: "Agree on a reorder and issue process that fits your existing inventory system." },
+    ],
+    whyOutro:
+      "EV battery enquiries: this page covers general-purpose storage for non-hazardous parts and packaging. For lithium-ion cells or battery packs, refer the storage requirement to your qualified fire-safety team.",
+
+    extraSections: [
+      {
+        heading: "Contractor stores for cable, fittings and tools",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A site store can hold suitable tools, valves, pipe fittings and electrical materials during industrial construction. Ask about a lockbox, rated shelving and labelled issue points. Keep an issue register and agree with the site team on lighting, access control and the location of the unit.",
+          "If you need to store cable drums, include their dimensions and loaded weights. Have the responsible technical team verify floor capacity, handling clearances and how drums will be secured before selecting a unit.",
+        ],
+        closing: ["For separate crew sanitation, see:"],
+        // Brief §5: the Dharmapuri toilet page (live), which links back from its shared-toilet-block section.
+        links: [{ label: "Portable toilet cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" }],
+      },
+      {
+        heading: "Sericulture equipment between crops",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Use a separate store for clean, dry rearing trays, mountages and other equipment between batches. Plan racks around the largest pieces and keep access clear for cleaning and inspection. Follow your sericulture adviser’s and treatment supplier’s instructions for cleaning, disinfection and handling treated equipment.",
+        ],
+      },
+      {
+        heading: "Empty crates and packing supplies in Palacode",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For tomato traders and packing teams, a container can hold empty reusable crates, suitable cartons, liners and other dry packing materials between dispatches. Measure nested crate stacks and allow room to retrieve stock without moving everything in front. Use produce-appropriate storage for fresh tomatoes.",
+        ],
+      },
+      {
+        heading: "Container sizes, condition and delivery",
+        placement: "afterSolutions",
+        table: {
+          caption: "Sizes describe typical enquiries; the quotation states the actual dimensions, condition and availability of the unit offered.",
+          headers: ["Configuration", "Typical enquiry", "What to confirm"],
+          rows: [
+            ["20 ft", "Buffer stock, sericulture equipment or empty crates", "Door clearance, aisle space and unloading access"],
+            ["40 ft", "Larger contractor stores or supplier inventory", "Trailer approach, turning area and approved placement"],
+            ["40 ft high cube", "Taller racking or bulky packaging", "Availability, actual dimensions and route height clearance"],
+          ],
+        },
+        closing: [
+          "For a used unit, ask for its stated condition and check the floor, doors, seals, roof and locking gear. Share photos of the final approach, gate and drop area, including overhead obstructions and the space available for unloading. Ask for the dispatch point, transport and lifting scope in the quotation.",
+          "Before selecting a used unit, see our guide:",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        links: [{ label: "How to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" }],
+      },
+    ],
+
+    customHeading: "Shipping container price and rental in Dharmapuri",
+    customIntro: "The price depends on the size, condition, fittings, transport and unloading arrangements.",
+    // Empty on purpose: the section is prose (see the header comment).
+    customBullets: [],
+    customOutro:
+      "For seasonal storage or temporary construction work, see the rental options below. Share your proposed hire dates so the team can confirm availability, delivery and collection terms.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Dharmapuri town, Adhiyamankottai, Adhagapadi, Thadangam, Balajangamanahalli, Nallampalli and Thoppur. We also consider sites in Palacode, Karimangalam, Pennagaram, Harur, Morappur and Pappireddipatti. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share the stock type, quantity, intended use, site address and target dates.", text: "" },
+      { title: "Review the proposed container, fit-out and itemised quote.", text: "" },
+      { title: "Confirm the placement area, route access, base readiness and unloading responsibilities.", text: "" },
+      { title: "Agree on delivery and placement, plus collection if included in the hire.", text: "" },
+    ],
+
+    faqs: [
+      {
+        question: "Can a container work as a kitting or buffer store?",
+        answer: "Yes, for suitable stock. Share part sizes, shelf loads and trolley dimensions so the layout can be assessed.",
+      },
+      {
+        question: "Can I use a standard container for EV battery storage?",
+        answer:
+          "The units described here are for general-purpose storage. Refer lithium-ion battery storage to your qualified fire-safety team for a purpose-designed solution.",
+      },
+      {
+        question: "Can I store cable drums in a container?",
+        answer:
+          "That depends on the drum weights, dimensions and handling method. Have the technical team assess the floor, clearances and restraint requirements before ordering.",
+      },
+      {
+        question: "Can I store sericulture equipment between crops?",
+        answer:
+          "You can enquire about shelving for clean, dry trays, mountages and tools. Follow the applicable cleaning and treatment instructions before putting equipment away.",
+      },
+      {
+        question: "Can I rent a container for empty tomato crates in Palacode?",
+        answer:
+          "Yes, you can enquire about rental for empty crates and suitable packing materials. Share your dates, stack dimensions and site access for an availability check.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer: "Timing depends on stock, any fittings, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Dharmapuri",
+    ctaText:
+      "Send the site address, intended use, preferred size, quantity, dates and photos of the access route and unloading area. Include stock dimensions, weights and any racking, lighting or security requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (the brief's Request a Quote · Call · WhatsApp).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Send your Dharmapuri container requirement",
+      intro:
+        "Pick a container and quantity, then add your site address or PIN in Dharmapuri district, the stock you plan to store and your dates. Mention racking, lighting, a lockbox or rental; the team reviews the details before sending a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not run a container yard, depot, office or service partner in Dharmapuri district. Each container is offered subject to stock, and its size, condition, grade, dispatch point, any fittings, any rental terms and the transport, lifting, unloading and collection scope are set out in its quotation; no delivery date is guaranteed. All five images are illustrative renders of one steel shipping container; the interior is shown empty, and none is a photograph of a container delivered to or placed in Dharmapuri or Palacode. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) is named only to describe the area served; Portable Office Cabin is not affiliated with SIPCOT or with any supplier, manufacturer, contractor, trader or company there. The suppliers, contractors, sericulture farmers, tomato traders and localities named describe typical enquiries and the area served, not clients, completed projects or confirmed delivery areas. The containers described are for general-purpose storage of suitable non-hazardous goods, not for lithium-ion cells or battery packs. Notes on shelf and floor loads, cable drums, lighting, fire safety, sericulture cleaning and treatment, and produce storage are general guidance, not engineering, fire-safety, agricultural or food-safety advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABINS FOR DODDABALLAPUR INDUSTRIAL UNITS — the portable-toilet intent for
+   * Doddaballapur (also spelled Doddaballapura; one page for both, as the brief asks), Bengaluru Rural
+   * district, Karnataka: additional toilet blocks for operating garment units, weaving and powerloom
+   * sheds, factories and warehouses. It owns "toilet cabin + Doddaballapur". The broader Doddaballapura
+   * page, container-office-in-doddaballapura, covers container offices and has no toilet keywords; the
+   * two pages link to each other. No other page targets toilets in Doddaballapur, and the areas line
+   * names no town that has its own toilet page (owner rule of 2026-11-05, no keyword cannibalisation).
+   *
+   * Owner brief of 2026-11-05 ("Doddaballapur Portable Toilet Cabin — Content and Implementation
+   * Commands"): the proposed slug, meta title (62 chars), meta description and H1 verbatim, and the
+   * section text verbatim except where noted below. Mapped onto the template slots in the brief's
+   * order. The entry is data-only (no template change), so a few sections are adapted to the slot that
+   * carries them:
+   *   • Intro (two paragraphs) → intro + heroCta (Request a Quotation → the on-page form, Call,
+   *     WhatsApp). The tagline is new, made from the intro's list of workplaces.
+   *   • Reduce Unnecessary Walking and Queues → why: the first paragraph, then the brief's
+   *     "illustrative walking-time calculation" as `whyTable` (its figures as rows, its title and two
+   *     caveats verbatim in the caption), then the second paragraph as whyOutro.
+   *   • Solutions → "Toilet Cabin Options to Discuss". NOT in the brief: the template needs a numbered
+   *     H3 section here, and the brief allows catalogue options once checked. Three items, each worded
+   *     only from its own product page and linked to it: toilet cabins built to order
+   *     (/products/portable-toilet-cabin), the four-unit block (/products/portable-toilet-block-4-unit,
+   *     no price named) and a cabin with an attached toilet (/products/portable-cabin/with-toilet-and-
+   *     pantry, the brief's "portable cabins with toilets" link, worded "with an attached toilet" so it
+   *     does not repeat the Devanahalli toilet page's anchor). For owner review.
+   *   • Garment units, Buyer facility reviews, Existing factory (with its table), Seasonal workforce,
+   *     Weaving and powerloom units, Warehouses and logistics yards → extra sections with
+   *     `placement: "afterSolutions"`, in the brief's order and wording. The table caption is new.
+   *   • Configuration Planning Guide → features: the table's five rows as "Site requirement: points"
+   *     items (the features slot is a list), the closing note as sizesNote. Its lead-in line is new.
+   *   • Price → custom, beside the rear view (which shows the connection points): the first
+   *     paragraph's cost factors as three bullets (Cabin / Services / Site, the same items), the second
+   *     paragraph verbatim.
+   *   • Service-area enquiries → areas; How to Enquire → how (the five steps verbatim, as titles). The
+   *     template renders areas before how, so these two swap places.
+   *   • FAQs: the brief's eight, verbatim. CTA heading and text verbatim, plus the sales email from
+   *     COMPANY; the CTA buttons (Request a Quotation, Call, WhatsApp) + the category enquiry form.
+   * Left out (brief section 4): rental (not confirmed for this location, so no section, FAQ, keyword,
+   * link or default "on rent" button), named MS / PUF / urinal / handwash / walkway / vending options,
+   * park acreage, loom counts, workforce figures, audit promises, installation times and lead times.
+   * Apparel Park and the Textile Park were checked on 2026-11-05 (KIADB's Doddaballapur Apparel Park,
+   * Phases I–II; the Doddaballapur Integrated Textile Park, reported functional in parliamentary
+   * replies) and are named only as delivery enquiry locations, with the non-affiliation note in the
+   * disclaimer.
+   * Links: three contextual links (the solutions items); related products and the Karnataka and
+   * Bangalore portable-toilet hubs (both list this page); the broader Doddaballapura page (which links
+   * back). The Devanahalli toilet page (#214, live 2026-11-06) and this page link to each other in
+   * their nearby-links blocks (owner-approved cross-links, 2026-11-06); neither names the other's town
+   * in its areas line.
+   *
+   * Images: three owner-dropped webp files ("public/images/Doddaballapur Portable Toilet Cabin city
+   * page/Doddaballapur Portable Toilet Cabin/cabin (1–3).webp", no EXIF/XMP/ICC/IPTC; source not
+   * stated), copied byte-for-byte under the brief's names: (1) front with both doors open, 600×448 =
+   * hero / og:image, no caption (sibling convention); (2) side view, 1200×896 = the feature band;
+   * (3) rear view with tap, socket, louvres and drain outlets, 1200×896 = beside the price section.
+   * One teal two-cubicle cabin (one Western toilet, one Indian squat pan). The alt texts describe only
+   * what is visible; the captions and the disclaimer call them illustrative images, and no image text
+   * names Doddaballapur.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-doddaballapur",
+    city: "Doddaballapur",
+    listTitle: "Portable Toilet Cabins in Doddaballapur",
+    metaTitle: "Portable Toilet Cabin in Doddaballapur | Factory Toilet Blocks",
+    metaDescription:
+      "Enquire about portable toilet cabins in Doddaballapur for garment units, factories and warehouses. Discuss layouts, fittings, connections and delivery.",
+    keywords:
+      "Portable Toilet Cabin in Doddaballapur, Portable Toilet Cabin Doddaballapura, Toilet Cabin Doddaballapur Apparel Park, Toilet Block Doddaballapur Industrial Area, Portable Washroom Cabin Doddaballapura, Factory Toilet Block Doddaballapur, Portable Toilet Cabin Price in Doddaballapur",
+    geo: { region: "IN-KA", placename: "Doddaballapur, Bengaluru Rural, Karnataka, India", position: "13.2919;77.5388", icbm: "13.2919, 77.5388" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-doddaballapur/portable-toilet-cabin-front.webp",
+      alt: "Front of a teal two-cubicle portable toilet cabin with both doors open, showing a Western toilet in one cubicle and an Indian squat pan in the other, each with a wall-mounted cistern",
+      width: 600,
+      height: 448,
+    },
+    featureImage: {
+      src: "/images/cities/portable-toilet-cabin-doddaballapur/portable-toilet-cabin-side.webp",
+      alt: "Side view of a teal portable toilet cabin with a curved roof edge, ribbed wall panels, a grey base band and a roof ventilator",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative side elevation of a portable toilet cabin. The final size, panels and ventilation follow the approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-doddaballapur/portable-toilet-cabin-rear.webp",
+      alt: "Rear of a teal portable toilet cabin with an outdoor tap, an electrical socket, two ventilation louvres and two drain outlets at the base",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative rear view of the same cabin. Water, drainage and electrical connection points are confirmed for each site.",
+    },
+
+    h1: "Portable Toilet Cabins for Doddaballapur Industrial Units",
+    tagline: "Toilet blocks for garment units, weaving sheds, factories and warehouses",
+    intro: [
+      "Planning additional washroom facilities for a garment unit, weaving shed, factory or warehouse in Doddaballapur? Portable Office Cabin can help you discuss portable toilet cabin requirements around your workforce, available space and existing service connections.",
+      "For an operating factory, the planning starts with where people work, how they reach the facilities and how the cabins will be cleaned and maintained. Share your site plan and requirements so the proposed layout, fittings and supply scope can be confirmed before ordering.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Reduce Unnecessary Walking and Queues",
+    whyIntro:
+      "A toilet block that is difficult to reach can create unnecessary walking and waiting during a shift. Review the route from each work area, expected use at shift changes and safe access before deciding on a location.",
+    whyBullets: [],
+    whyTable: {
+      caption:
+        "An illustrative walking-time calculation. This is a hypothetical planning example, not a measured result or a promise of savings. Toilet breaks themselves are necessary; the example concerns only avoidable travel time.",
+      headers: ["Hypothetical example", "Figure"],
+      rows: [
+        ["Workers on the shift", "300"],
+        ["Trips per worker during the shift", "2"],
+        ["Avoidable walking per trip", "4 minutes"],
+        ["Avoidable walking per shift", "2,400 minutes, or 40 person-hours"],
+      ],
+    },
+    whyOutro:
+      "Consider whether several smaller facilities would serve the site better than one distant block. Keep routes clear, provide suitable lighting and discuss weather protection where required. Placement must preserve emergency exits, vehicle routes and required clearances. Convenient access should support workers’ wellbeing and unrestricted toilet use.",
+
+    solutionsHeading: "Toilet Cabin Options to Discuss",
+    solutionsIntro:
+      "Our existing product pages give a starting point for the discussion. The size, layout and fittings for your site are confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Toilet Cabins Built to Order",
+        text: "The number of cubicles, the seat types, the fittings and the water and drainage provisions are agreed for the site before the cabin is built.",
+        link: { label: "Compare portable toilet cabin types", href: "/products/portable-toilet-cabin" },
+      },
+      {
+        title: "Four-Unit Toilet Block",
+        text: "A catalogue toilet block with four toilet units in separate sections, for a site that needs several toilets in one cabin.",
+        link: { label: "View the four-unit toilet block", href: "/products/portable-toilet-block-4-unit" },
+      },
+      {
+        title: "Site Office Cabin with an Attached Toilet",
+        text: "Where a site office also needs its own toilet, a portable cabin can be built with an attached toilet and pantry.",
+        link: { label: "Portable cabins with an attached toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      },
+    ],
+
+    featuresHeading: "Configuration Planning Guide",
+    featuresIntro: "Points to review for each type of site:",
+    features: [
+      "Garment production unit: user numbers, separate facilities, privacy and handwashing",
+      "Existing factory expansion: permitted placement, utility capacity and safe access",
+      "Seasonal increase in workers: peak occupancy, duration and future relocation needs",
+      "Small weaving shed: footprint, ventilation, cleaning and maintenance access",
+      "Warehouse or logistics yard: shift use, driver access and separation from vehicle routes",
+    ],
+    sizesNote:
+      "Fixture quantities and layouts should be checked by the responsible project team against applicable requirements. This guide does not prescribe a universal seats-per-worker ratio.",
+
+    customHeading: "Portable Toilet Cabin Price in Doddaballapur",
+    customIntro: "The quotation depends on what is agreed for the cabin and on your site:",
+    customBullets: [
+      { title: "Cabin", text: "the agreed size, layout, fixture quantity, materials and finish." },
+      { title: "Services", text: "the plumbing and electrical scope." },
+      {
+        title: "Site",
+        text: "the location, transport, unloading, ground preparation and connection requirements, which can also affect the total.",
+      },
+    ],
+    customOutro:
+      "Send your quantity, preferred layout and exact site address for an itemised quotation. Ask for taxes, transport, unloading, connections and any additional services to be identified clearly as included or excluded.",
+
+    areasHeading: "Doddaballapur Service-Area Enquiries",
+    areasText:
+      "For sites in Doddaballapur town, the industrial area, Apparel Park or Textile Park, share the exact address and delivery access details. For enquiries around Rajanukunte, Doddabelavangala, Tubagere, Ghati Subramanya or the Satellite Town Ring Road, confirm delivery availability and logistics for the individual location.",
+
+    howHeading: "How to Enquire",
+    howSteps: [
+      { title: "Share your Doddaballapur site address and intended use.", text: "" },
+      { title: "Provide workforce numbers, shifts and existing facility details.", text: "" },
+      { title: "Send the proposed placement area, site plan or photographs.", text: "" },
+      { title: "Confirm required fittings, service connections and access arrangements.", text: "" },
+      { title: "Review the drawing, quotation, responsibilities and delivery schedule before placing the order.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Planning Facilities for Garment Units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For garment production and other workplaces, discuss privacy, user numbers and day-to-day maintenance alongside cabin dimensions.",
+        ],
+        bullets: [
+          { text: "Separate facilities where required by the workforce and applicable requirements." },
+          { text: "Doors, privacy provisions and safe access routes." },
+          { text: "Handwashing points and reliable water supply." },
+          { text: "Lighting, ventilation and easy-clean surfaces." },
+          { text: "Suitable sanitary-waste arrangements where needed." },
+          { text: "Cleaning responsibility, consumable replenishment and maintenance access." },
+        ],
+        closing: ["Confirm each fitting and provision in the approved specification rather than assuming it is included."],
+      },
+      {
+        heading: "Preparing for Buyer Facility Reviews",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If a buyer or customer has a facility checklist, share it before requesting a quotation. Your project or compliance team should identify the relevant requirements and confirm the complete arrangement, including toilet numbers, separation, water, hygiene, cleaning and access.",
+          "A cabin supply does not guarantee that a factory will pass a social-compliance audit. The outcome depends on the full workplace arrangement, operating practices and the assessment criteria. Any requested cabin features must be reviewed and expressly included in the order scope.",
+        ],
+      },
+      {
+        heading: "Adding a Toilet Block to an Existing Factory",
+        placement: "afterSolutions",
+        paragraphs: [
+          "An additional cabin may be an option where existing facilities no longer suit the workforce. Start by reviewing the site plan, access, utility connections and intended placement area.",
+        ],
+        table: {
+          caption: "Information to share when planning an additional toilet block at an operating factory.",
+          headers: ["Planning point", "Information to provide"],
+          rows: [
+            ["Available space", "Proposed footprint and nearby structures"],
+            ["Access", "Vehicle route, unloading space and lifting arrangements"],
+            ["Connections", "Fresh water, wastewater and electrical supply"],
+            ["Factory operations", "Delivery windows and routes that must remain open"],
+            ["User access", "Walking route, lighting, privacy and any weather protection"],
+            ["Approvals", "Applicable siting, drainage and other project requirements"],
+          ],
+        },
+        closing: [
+          "Do not assume that a setback, fire-access route or other open space can be used for a cabin. Your project team should confirm permitted placement. Foundations, ground preparation and service connections may be required. Installation scope and any effect on operations must be agreed for the individual site.",
+        ],
+      },
+      {
+        heading: "Plan Ahead for Seasonal Workforce Changes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If additional workers are expected during a peak order period, review toilet capacity before the increase. Share the expected user numbers, shifts and duration when discussing an additional block.",
+          "Consider how the cabin will be connected, cleaned and accessed during that period, and how disconnection or relocation would be handled later. Purchase, relocation support and any rental availability must be confirmed separately in the quotation.",
+        ],
+      },
+      {
+        heading: "Toilet Cabin Requirements for Weaving and Powerloom Units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For a compact weaving shed, available space and maintenance access can shape the layout. Discuss cabin dimensions, fixture quantity, lighting, ventilation and cleaning requirements.",
+          "Where lint or dust is present, share the operating conditions during design review. Ventilation must remain suitable for washroom use; vents should not simply be sealed to exclude dust. Any protective screening or ventilation treatment requires an appropriate design and a confirmed specification.",
+        ],
+      },
+      {
+        heading: "Facilities for Warehouses and Logistics Yards",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Warehouse staff, loading teams and visiting drivers may use facilities at different times. Review shift patterns and waiting areas when planning the location and capacity of a toilet block.",
+          "Keep pedestrian access clear of moving vehicles and loading operations. Discuss exterior lighting, water supply, cleaning access and any requested separate urinal or handwash provision. Confirm availability and inclusion of each item in the order.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can an existing factory add a portable toilet block?",
+        answer:
+          "An additional cabin may be suitable after reviewing available space, permitted placement, utility connections and access. The proposed arrangement and installation requirements must be confirmed for your site.",
+      },
+      {
+        question: "Will a toilet cabin guarantee a successful buyer audit?",
+        answer:
+          "No. Share your buyer’s checklist for review, but audit outcomes depend on the complete facility and operating practices. Only the features expressly confirmed in the specification form part of the cabin supply.",
+      },
+      {
+        question: "How should we plan facilities for extra seasonal workers?",
+        answer:
+          "Provide the peak workforce, shift pattern and expected duration. Review capacity, connections, cleaning and future disconnection or relocation arrangements before ordering additional cabins.",
+      },
+      {
+        question: "Where should a factory toilet block be placed?",
+        answer:
+          "Choose a permitted location with convenient, safe pedestrian access and suitable service connections. Preserve emergency access and required clearances. The final position should be reviewed with your project team.",
+      },
+      {
+        question: "Can a compact cabin be considered for a weaving unit?",
+        answer:
+          "Share the available dimensions and operating conditions for review. The layout must allow suitable ventilation, plumbing, cleaning and maintenance access.",
+      },
+      {
+        question: "Are sanitary bins, walkways and other accessories included?",
+        answer:
+          "List each required accessory in your enquiry. Availability, supply responsibility and cost must be confirmed in the quotation; they are not assumed to be included.",
+      },
+      {
+        question: "Are cleaning and wastewater services included?",
+        answer:
+          "These responsibilities must be agreed separately. Cleaning, consumables, waste handling and ongoing servicing are included only when expressly stated in the order scope.",
+      },
+      {
+        question: "How soon can delivery be arranged?",
+        answer:
+          "Timing depends on the approved design, quantity, production availability and site logistics. Request an order-specific schedule with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Toilet Cabin Quotation for Doddaballapur",
+    ctaText: `Share your workforce requirements, preferred layout and site details with Portable Office Cabin. Include the required quantity and date so the cabin specification, delivery arrangements and scope can be discussed clearly. You can also email the sales team at ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The brief's buttons are Call Us, WhatsApp and Request a Quotation: the call and WhatsApp buttons
+    // are on by default, and an empty list drops the two default container-office / rental buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Send Your Toilet Cabin Requirements",
+      intro:
+        "Include your workforce numbers, shifts, preferred layout, quantity and site address. We use these details to confirm the scope with you before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related Toilet and Cabin Pages",
+    relatedLinks: [
+      { label: "Portable Toilet Cabin Range", href: "/products/category/portable-toilet-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabin in Karnataka", href: "/promotions/portable-toilet-cabin-in-karnataka" },
+      { label: "Portable Toilet Cabin in Bangalore", href: "/promotions/portable-toilet-cabin-in-bangalore" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Service Areas",
+      links: [
+        { label: "Toilet Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
+        { label: "Container Offices for Doddaballapura Sites", href: "/cities-we-serve/container-office-in-doddaballapura" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Doddaballapur. Delivery, unloading, placement and any connections are planned for each order, and delivery dates are not guaranteed. The layouts, fixtures, fittings, materials and service provisions mentioned on this page are points to discuss; only the items expressly confirmed in the approved specification and quotation form part of a supply. The three images are illustrative images of one two-cubicle toilet cabin design with one Western toilet and one Indian squat pan; other configurations look different, and the images do not show an installation in Doddaballapur or a customer project. The Doddaballapur industrial area, Apparel Park and Textile Park are named only to describe locations; Portable Office Cabin is not affiliated with their developers or operators or with any unit there, and the towns, roads and parks named here are places we accept delivery enquiries from, not clients, completed projects or confirmed delivery areas. The walking-time figures are a hypothetical example. The planning notes are general guidance, not engineering, public-health, legal or compliance advice: a cabin supply does not guarantee the result of any buyer or social-compliance audit, and wastewater handling and disposal must comply with applicable local requirements.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS ACROSS UTTARA KANNADA — one district page for the coast (Karwar,
+   * Gokarna, Kumta, Bhatkal) and the ghats (Sirsi, Yellapur, Dandeli): ghat-road access, off-season
+   * tourism and adventure storage, fishing gear, sloping or laterite sites and monsoon door upkeep.
+   *
+   * Owner brief of 2026-11-07: route, meta title, meta description and H1 used as given; every
+   * section of the publishable copy is kept in the owner's words, mapped onto the fixed template
+   * slots (the Marathahalli ORR mapping), with nothing dropped:
+   *   • Intro → intro + heroCta (Request a Quote / Call / WhatsApp from COMPANY).
+   *   • "Getting a container over the ghats" → why: first paragraph as whyIntro, second as whyOutro
+   *     (empty whyBullets). The roof-view render follows as the feature band.
+   *   • "Fishing net and gear stores" → solutionsHeading + solutionsIntro with an empty `solutions`
+   *     list. It renders BEFORE "Off-season storage…", one place earlier than in the brief: the
+   *     solutions slot takes a single paragraph, and the off-season section needs a table.
+   *   • "Off-season storage…", "Placement on sloping or laterite ground", "Other uses across the
+   *     district" and "Container sizes and condition" → four afterSolutions extra sections, in the
+   *     brief's order. The two table captions are composed and keep high-cube stock, racks, hooks and
+   *     lifting "subject to quotation" (brief section 3).
+   *   • "Monsoon upkeep for doors and hardware" → features, after the sizes section (template order:
+   *     the features slot follows every afterSolutions section). The lead-in is composed; the second
+   *     sentence of the fourth bullet ("Ask for an inspection…") is the bold note.
+   *   • "Shipping container price and rental in Uttara Kannada" → custom, beside the interior render:
+   *     the quote factors as the list, the rental link as `customLinks` (anchor as given).
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps, the owner's
+   *     sentences). The template puts areas before the steps, the reverse of the brief.
+   *   • FAQs (six) → faqs; the closing request → CTA + the cargo-category enquiry form (rental models
+   *     kept: rental is in this brief's scope).
+   * INSPECTION LINK (brief section 5): the Chennai shipping-container page
+   * (/products/shipping-container-in-chennai) has no used-container inspection checklist, only one
+   * line that units are inspected before sale, so the anchor "how to inspect a used container" points
+   * at /products/cargo-storage-containers, whose "Key Inspection Points" list and FAQ cover it.
+   * Not claimed: delivery to every location, fixed timelines, guaranteed grades, high-cube stock,
+   * crane availability, ground-preparation methods or flood safety. No ₹ figure.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage container × Uttara Kannada and its towns (Karwar, Sirsi,
+   * Kumta, Bhatkal, Dandeli, Gokarna). Shivamogga keeps its Malnad industrial and agricultural
+   * storage, Hubballi–Dharwad its industrial uses, and Chennai used-container sales; no town outside
+   * Uttara Kannada is named in the areas list.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Uttara kannada city page/Uttara Kannada
+   * shipping container page/cabin (1–5).webp": 1200×896 and 1451×1084 ×4, no EXIF/XMP/ICC), copied
+   * under descriptive names with a truthful XMP dc:title/dc:description ("Illustrative render of…")
+   * added losslessly; the VP8 bitstream is untouched and the decoded pixels are identical. Only the
+   * exterior matches a slot in the owner's image table: it is the hero and social preview, with the
+   * owner's alt text and render caption. No image shows furniture, fishing gear, a delivery truck,
+   * sloping ground or paddles, so those slots are omitted; the roof view, cargo doors, side wall and
+   * empty interior carry their own descriptive alt text and an "illustrative render" caption, and no
+   * alt text names a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the
+   * og:image dimension tags (`ogImageDimensions`; the hero is 1200×896).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-uttara-kannada",
+    city: "Uttara Kannada",
+    listTitle: "Shipping Containers in Uttara Kannada",
+    metaTitle: "Shipping Containers in Uttara Kannada | Karwar & Sirsi",
+    metaDescription:
+      "Enquire about shipping containers in Uttara Kannada for seasonal tourism storage, fishing gear and contractor tools. Share your site for a delivery quote.",
+    keywords:
+      "Shipping Container in Uttara Kannada, Shipping Container Karwar, Storage Container Sirsi, Shipping Container Kumta, Storage Container Bhatkal, Shipping Container Dandeli, Used Shipping Container Uttara Kannada",
+    geo: {
+      region: "IN-KA",
+      placename: "Karwar, Uttara Kannada, Karnataka, India",
+      position: "14.8136;74.1295",
+      icbm: "14.8136, 74.1295",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-uttara-kannada/uttara-kannada-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative shipping container exterior for seasonal or project storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-uttara-kannada/uttara-kannada-shipping-container-roof-view.webp",
+      alt: "Steel shipping container seen from above: corrugated roof, corner castings and the cargo-door end, on a paved yard",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render. Photos of the final approach, gate and placement area help the transport team choose the vehicle and unloading method.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-uttara-kannada/uttara-kannada-shipping-container-interior.webp",
+      alt: "Empty steel shipping container interior seen through open cargo doors: corrugated walls and roof and a plywood floor",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty, unfitted interior. Racks, hooks, lighting and a lockbox are added only as agreed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-uttara-kannada/uttara-kannada-shipping-container-cargo-doors.webp",
+        alt: "Double cargo doors of a steel shipping container with four locking bars, cam handles and a central lockbox",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the cargo doors. Check the gaskets, hinges and locking bars before each season.",
+      },
+      {
+        src: "/images/cities/shipping-container-uttara-kannada/uttara-kannada-shipping-container-side-wall.webp",
+        alt: "Blind end and corrugated steel side wall of a grey shipping container with an orange band, on a paved yard",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the blind end and side wall.",
+      },
+    ],
+
+    h1: "Shipping & Storage Containers Across Uttara Kannada",
+    tagline: "Storage containers for off-season tourism stock, fishing gear and project tools, on the coast and above the ghats.",
+    intro: [
+      "Need somewhere to keep beach café furniture between seasons, store fishing gear near an approved harbour site, or organise rafting equipment in Dandeli? Portable Office Cabin supplies shipping containers for storage enquiries across Uttara Kannada. Tell us what you need to store and where the unit will sit so we can discuss size, fittings and delivery from the main road to your site.",
+    ],
+
+    whyHeading: "Getting a container over the ghats",
+    whyIntro:
+      "For a site near Sirsi, Yellapur or Siddapur, start by sharing the last stretch of the route. Hairpin bends, steep approaches, low branches, overhead lines and narrow gates can affect which vehicle can reach the site. A 20 ft container is a useful starting point when access is limited. A 40 ft container needs more room for the trailer to turn and for unloading equipment to operate.",
+    whyBullets: [],
+    whyOutro:
+      "For coastal sites near NH 66, check the access lane and unloading area as well as the main road. During the monsoon, the transport team should check route restrictions and ground conditions before dispatch. Ask the quote to identify transport, lifting and placement separately.",
+
+    solutionsHeading: "Fishing net and gear stores",
+    solutionsIntro:
+      "A lockable container can help fishing operators organise dry nets, floats, ropes, spare parts and tools. Discuss racks or hanging points for gear, shelves for small items and a lockbox for the cargo doors. For heavy items such as outboard engines, confirm floor loading and the handling method before choosing the layout. Dry nets before putting them away and check any harbour permissions before planning delivery.",
+    // Empty on purpose: the section is the heading and paragraph above (see the header comment).
+    solutions: [],
+
+    featuresHeading: "Monsoon upkeep for doors and hardware",
+    featuresIntro: "Routine checks for the doors, hardware and stored goods:",
+    features: [
+      "Check door gaskets for gaps, splits and wear before loading the unit.",
+      "Keep the door threshold free of debris and inspect the lower door edges for coating damage.",
+      "Service hinges and locking bars using products suitable for the hardware.",
+      "Inspect for leaks or standing water after heavy rain.",
+      "Store gear dry, leave clearance around it and check for damp during the storage period.",
+    ],
+    sizesNote: "Ask for an inspection if the roof is damaged or the doors become difficult to close.",
+
+    customHeading: "Shipping container price and rental in Uttara Kannada",
+    customIntro: "The quote depends on:",
+    customBullets: [
+      { text: "Size" },
+      { text: "Condition" },
+      { text: "Fittings" },
+      { text: "Delivery route" },
+      { text: "Site access" },
+      { text: "Unloading scope" },
+    ],
+    customOutro:
+      "Share your preferred hire dates so the team can confirm availability and delivery and collection terms. If you only need storage for an off-season or a project, see our rental page:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Karwar, Ankola, Gokarna, Kumta, Honnavar, Bhatkal and Murudeshwar along the coast, and from Sirsi, Siddapur, Yellapur, Dandeli, Haliyal, Joida and Mundgod inland. Delivery is assessed for each location.",
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share what you need to store, how long you need it and the site address.", text: "" },
+      { title: "Send photos and measurements of the final approach, gate and proposed placement area.", text: "" },
+      {
+        title: "Review the unit, fit-out and itemised quotation. Confirm base readiness and access before dispatch.",
+        text: "",
+      },
+      { title: "Agree on delivery, unloading and, for a rental, collection arrangements.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Off-season storage for tourism and adventure operators",
+        placement: "afterSolutions",
+        table: {
+          caption: "Examples only. Racks, hooks and other fittings are confirmed for the selected unit in the quotation.",
+          headers: ["Use", "What to plan for"],
+          rows: [
+            ["Beach cafés and seasonal outlets", "Stackable chairs, folded tables, display fixtures and suitable dry equipment"],
+            ["Homestays and resorts", "Spare furniture, boxed supplies and maintenance tools"],
+            [
+              "Rafting and water-sports operators",
+              "Racks or hooks for dry paddles, helmets and life jackets, plus clearance for longer equipment",
+            ],
+          ],
+        },
+        closing: [
+          "Clean and dry equipment before packing. Leave space between stored items and steel walls, and keep a clear access aisle. For waterfront sites, confirm an approved placement area with the landowner or site authority and review flood exposure and drainage with the site team.",
+        ],
+      },
+      {
+        heading: "Placement on sloping or laterite ground",
+        placement: "afterSolutions",
+        paragraphs: [
+          "On sloping sites, ask the responsible site professional to assess slope stability, drainage, bearing capacity and the proposed supports for the unit and intended load. Agree on a stable, level placement area before scheduling delivery. Share photos that show the uphill and downhill sides, any recent fill and where rainwater drains. Flag erosion, soft ground or signs of slope movement before any site preparation or unloading.",
+        ],
+      },
+      {
+        heading: "Other uses across the district",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Spice and cashew businesses around Sirsi and Siddapur can enquire about storage for suitable packaging and equipment. For food or ingredients, confirm that the proposed unit meets the product's hygiene, temperature, moisture and pest-control requirements. Industrial and road or rail contractors can enquire about stores for tools, fittings and materials at approved project sites.",
+        ],
+      },
+      {
+        heading: "Container sizes and condition",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Availability, including high-cube units, internal dimensions and lifting arrangements are confirmed for the specific unit in its quotation.",
+          headers: ["Size", "Typical enquiry", "What to confirm"],
+          // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a
+          // 320 px phone, where row headers may wrap.
+          rows: [
+            ["20\u00a0ft", "Fishing gear, seasonal furniture or project tools", "Final approach, door clearance and unloading space"],
+            ["40\u00a0ft", "Larger resort, operator or contractor stock", "Trailer access, turning room and lifting arrangements"],
+            ["40\u00a0ft high cube", "Bulky gear or taller racks", "Availability, internal dimensions and route height clearance"],
+          ],
+        },
+        closing: [
+          "Ask for the available unit's grade and condition. Confirm the actual floor, door seals, roof and locking hardware before accepting a used container.",
+          "Buying a used unit? Our cargo storage containers page lists the key inspection points:",
+        ],
+        links: [{ label: "How to inspect a used container", href: "/products/cargo-storage-containers" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can you deliver a shipping container over the ghats?",
+        answer:
+          "Delivery depends on the route, vehicle and unloading area. Share photos of the final approach and gate so the transport team can assess whether the proposed size is suitable.",
+      },
+      {
+        question: "Can I store beach café furniture or rafting gear in the off-season?",
+        answer:
+          "Yes, if the items suit the storage conditions. Clean and dry them first, leave space around stored goods, and confirm that the unit and placement area suit the site's weather exposure.",
+      },
+      {
+        question: "Can fishing nets be stored in a container?",
+        answer: "Dry nets can be stored on suitable racks or hooks. Discuss ventilation and access if staff will use the store daily.",
+      },
+      {
+        question: "What should I check if the site slopes?",
+        answer:
+          "Have a site professional assess slope stability, drainage, supports and safe unloading access before preparing the placement area.",
+      },
+      {
+        question: "Can I rent for the monsoon season?",
+        answer:
+          "You can enquire about a hire for the dates you need. Availability, minimum term, delivery and collection are confirmed in the quotation.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on the selected unit, fittings, route conditions, unloading access and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request an Uttara Kannada shipping container quote",
+    ctaText:
+      "Send your location, preferred size, intended use, target dates and photos of the approach road and placement area. Mention any racks, hooks, lighting, lockbox or rental requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Send your container requirement",
+      intro:
+        "Pick a container, add the quantity and the site's town in Uttara Kannada, and describe what you will store, your dates and any racks, hooks, lighting or lockbox. We confirm the details with you before sending a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby locations",
+      links: [
+        { label: "Container offices in Belagavi", href: "/cities-we-serve/container-office-in-belagavi" },
+        { label: "Container offices in Haveri", href: "/cities-we-serve/container-office-in-haveri" },
+      ],
+    },
+
+    disclaimer:
+      "Portable Office Cabin manufactures near Hosur, Tamil Nadu, and its Karnataka office is at Electronic City Phase 1, Bengaluru; it has no yard, depot or office anywhere in Uttara Kannada. Each container is supplied subject to availability, and its size, grade, condition, fittings, any hire term and its delivery, unloading, placement and collection are set out in its quotation; no delivery date is guaranteed. The images are illustrative renders of one steel shipping container, not photographs taken in Uttara Kannada or of a supplied unit. Karwar, Sirsi, Gokarna, Dandeli, NH 66 and the other towns, roads and harbours are named only to show where enquiries are welcome: Portable Office Cabin is not affiliated with any port, harbour, forest, tourism or road authority or with any business there, and none of the uses or places mentioned is a client, a completed project or a confirmed delivery location. Notes on routes, slopes, placement, drainage, flood exposure, food storage, monsoon upkeep and permissions are general guidance, not engineering, food-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINERS FOR HYDEL POWER PROJECT SITES IN THE VISAKHAPATNAM REGION — project stores
+   * for hydel and pumped storage sites around Upper Sileru (Andhra Pradesh). The first Andhra Pradesh
+   * city page and the first application page in the shipping-container family.
+   *
+   * Owner brief of 2026-11-07 (slug, meta title, meta description, H1 and copy used as given). The
+   * site has no editorial /projects route, so the page uses the location-page route; the slug starts
+   * with "shipping-containers-", which cityFamily() now also accepts, so the page joins the
+   * shipping-container family (directory card under a new "Andhra Pradesh" group, nearby block).
+   * `directoryLabel` gives its card the brief's index anchor, "Shipping containers for hydel project
+   * sites", instead of "Shipping containers in <city>", so the general Visakhapatnam intent stays free
+   * for a future city page. The brief's sections map onto the fixed template slots, nothing dropped:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp, the brief's buttons).
+   *   • "Planning delivery to a hill project site" → why: first paragraph as whyIntro, second as
+   *     whyOutro (no bullets).
+   *   • "Setting up a container stores yard" → solutions heading + intro (no items) and the stores
+   *     table as the new optional `solutionsTable`.
+   *   • "Preserving equipment on a humid site" and "Container sizes and procurement" (table, then the
+   *     paragraph) → two afterSolutions extra sections.
+   *   • "Lifting and storage safety" → features: its first sentence as the intro, the next three as
+   *     bullets and the hazardous-materials rule as sizesNote (rendered bold). The features slot renders
+   *     after the extra sections, so this section follows "Container sizes and procurement" instead of
+   *     preceding it — the only change to the brief's order.
+   *   • "Project pricing, rental and close-out" → custom (prose: customBullets is empty), beside the
+   *     interior render; the rental link → customLinks.
+   *   • "Project enquiry areas" → areas.
+   *   • "Request a hydel project container quote" → how: the items to send as title-only steps, the
+   *     documentation sentence as howOutro. FAQs (five) → faqs; CTA box + enquiry form.
+   * Composed (owner review): the tagline, the table captions, the how lead-in, the CTA heading and
+   * text, the enquiry-form heading and intro, and the image alt text and captions.
+   *
+   * INTERLINKS (brief section 5): the rental link is in place (live, 200). The brief's Chennai target
+   * was checked: /products/shipping-container-in-chennai has no inspection checklist, so "how to
+   * inspect a used container" points at /products/cargo-storage-containers ("Key Inspection Points"),
+   * the same target the Uttara Kannada shipping page uses for this anchor (one anchor, one target
+   * across the site). It is therefore not repeated in the related links. The Vellore link (added by #231, the
+   * second merger) sits at the end of the preservation section. DEFERRED until live: the link from a
+   * future Visakhapatnam city container page. The Andhra Pradesh shipping-container hub
+   * (seoPromotions) lists this page, and the page links back to it.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage containers × hydel and pumped storage project sites ×
+   * Visakhapatnam region, Upper Sileru, Sileru. Not "shipping container in Visakhapatnam" or
+   * "shipping container in Andhra Pradesh" (the promotion page keeps the state term).
+   *
+   * Images: five unique owner-dropped webp renders ("public/images/Upper Sileru and Visakhapatnam city
+   * page/Upper Sileru and Visakhapatnam/cabin (1–6).webp"; (4) and (5) are byte-identical; 1200×896
+   * and 1451×1084 ×4; no metadata). None shows a stores yard, a truck, racking or preservation
+   * equipment, so none of the brief's four image slots is used: each render keeps its own descriptive
+   * alt text and an "illustrative render" caption. Copied with a lossless XMP dc:title / dc:description
+   * (pixels identical; no camera, GPS or date data). They show one grey container with green cargo
+   * doors and a glazed side panel, so no alt text names a size, a place or a project.
+   *
+   * No ₹ figure, stock, lead time, capacity, vendor-approval, client or completed-project claim.
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-containers-hydel-project-visakhapatnam",
+    city: "Upper Sileru",
+    directoryLabel: "Shipping containers for hydel project sites",
+    metaTitle: "Shipping Containers for Hydel Projects near Visakhapatnam",
+    metaDescription:
+      "Enquire about storage containers for hydel and pumped storage projects near Visakhapatnam and Sileru. Share your BOQ, site access and delivery phases.",
+    keywords:
+      "Shipping Containers for Hydel Power Projects near Visakhapatnam, Storage Containers Upper Sileru, Pumped Storage Project Site Stores, EPC Container Stores Yard, Hydro Project Equipment Preservation",
+    geo: {
+      region: "IN-AP",
+      placename: "Upper Sileru, Andhra Pradesh, India",
+      position: "18.0491;82.0353",
+      icbm: "18.0491, 82.0353",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-exterior.webp",
+      alt: "Grey steel storage container with green cargo doors and a glazed side panel, illustrative render: four locking bars with cam handles, corrugated side wall and corner castings, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a steel storage container. The size, condition, fit-out and dispatch origin of each unit are confirmed in its quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-roof-view.webp",
+      alt: "Steel storage container seen from above, illustrative render: corrugated grey roof, green cargo-door end and a glazed panel in the side wall, on a paved yard",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render. Plan each unit's footprint, door clearance and handling space on the yard plan before placement.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-empty-interior.webp",
+      alt: "Empty interior of a steel storage container with both cargo doors open, illustrative render: corrugated grey walls and roof, a plywood floor and a glazed side panel",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty container interior. Racking, lighting and any preservation controls are added only as specified against the BOQ.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-side-wall-glazed-panel.webp",
+        alt: "Side wall of a grey steel storage container, illustrative render: corrugated steel panels, corner castings and a glazed panel set into the wall",
+        width: 1451,
+        height: 1084,
+        caption: "Side wall with a glazed panel, an optional modification. Illustrative render.",
+      },
+      {
+        src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-cargo-doors.webp",
+        alt: "Cargo doors of a steel storage container, illustrative render: two green doors with four vertical locking bars, cam handles, hinges and a central lockbox inside a grey frame",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the green cargo-door end, closed and locked.",
+      },
+    ],
+
+    h1: "Shipping Containers for Hydel Power Project Sites in the Visakhapatnam Region",
+    tagline:
+      "Project stores for EPC contractors, subcontractors and procurement teams, quoted against your BOQ, site access and delivery phases.",
+    intro: [
+      "Hydel and pumped storage projects need different stores as work moves from enabling works and civil construction to equipment installation and commissioning. Portable Office Cabin welcomes enquiries from EPC contractors, subcontractors and procurement teams for shipping containers used as project stores in the Visakhapatnam region, including enquiries for sites in the Sileru area. Share your bill of quantities (BOQ), package requirements and delivery sequence for a project-specific quote.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Planning Delivery to a Hill Project Site",
+    whyIntro:
+      "Share the exact gate or delivery point, the access route and photographs of tight bends, gradients, overhead restrictions and the unloading area. Ask the transport team to confirm the dispatch yard, route, vehicle configuration and any movement restrictions before finalising the schedule. If a Vizag-area yard is proposed, confirm stock and dispatch origin in the quotation.",
+    whyBullets: [],
+    whyOutro:
+      "A 20 ft container is a starting point where vehicle access is limited. A 40 ft container may suit a larger stores yard if the trailer can reach and turn at the site and the unloading method is approved. For multiple units, request a phased delivery plan based on yard readiness and the number of units the site can safely unload and place in each window. Agree who will arrange lifting, standby and any rescheduled dispatches.",
+
+    solutionsHeading: "Setting Up a Container Stores Yard",
+    solutionsIntro:
+      "Group stores by discipline and assign each container an ID that appears on the yard plan and inventory list. Coordinate the layout with the site team so staff can receive, inspect and issue items without blocking equipment movements. Have the responsible project teams confirm vehicle aisles, emergency access, separation, drainage, lighting, supports and access controls before placement.",
+    solutions: [],
+    solutionsTable: {
+      caption: "Typical stores by discipline. Contents and layout are agreed with the site team for each project.",
+      headers: ["Store", "Typical contents", "Layout requirements to discuss"],
+      rows: [
+        ["Civil works", "Rock bolts, formwork accessories and suitable dry consumables", "Rated racks, pallet positions and handling clearance"],
+        ["Electrical", "Cable fittings, panels and drums", "Manufacturer storage limits and safe handling space for heavy items"],
+        [
+          "Electro-mechanical preservation",
+          "Bearings, seals, instruments and control components",
+          "Approved packaging, environmental controls and monitoring where specified",
+        ],
+        ["Hydro-mechanical spares", "Fasteners, fittings and small gate or penstock spares", "Labelled bins, rated shelving and issue records"],
+        ["PPE and documents", "Helmets, gloves, drawings and manuals", "Segregated shelving, dry storage and controlled access"],
+      ],
+    },
+
+    featuresHeading: "Lifting and Storage Safety",
+    featuresIntro: "Coordinate placement with the site's lifting and safety teams.",
+    features: [
+      "Keep people out of the lifting exclusion zone.",
+      "Use suitable restraints for open cargo doors.",
+      "Follow the approved site plan for emergency access, fire protection and electrical installation.",
+    ],
+    sizesNote:
+      "Keep explosives, fuel and other hazardous materials out of general-purpose stores. Use the project's approved storage arrangements for those materials.",
+
+    customHeading: "Project Pricing, Rental and Close-Out",
+    customIntro:
+      "The quote depends on quantity, size, condition, fit-out, dispatch origin, transport route, unloading and delivery phases. Include any racking, lighting or preservation requirements against each BOQ line. For time-limited works, review our 20 ft and 40 ft shipping container rental options and confirm project-site availability, the hire term and collection scope.",
+    customBullets: [],
+    customOutro:
+      "Decide early which stores may be reassigned or relocated as the work moves from civil construction to installation and commissioning. If you are buying units, plan their next use or disposal. If you are hiring, agree on collection access, condition requirements and the end date in the quotation.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Project Enquiry Areas",
+    areasText:
+      "We welcome enquiries for project sites in the Sileru area and the wider Visakhapatnam region, including Upper and Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu and Narsipatnam. Each delivery is assessed against the actual site location, route and unloading requirements.",
+
+    howHeading: "Request a Hydel Project Container Quote",
+    howIntro: "Send these details with your enquiry:",
+    howSteps: [
+      { title: "Bill of quantities (BOQ)", text: "" },
+      { title: "Site coordinates or gate location", text: "" },
+      { title: "Access photos", text: "" },
+      { title: "Size and quantity mix", text: "" },
+      { title: "Fit-out requirements", text: "" },
+      { title: "Preferred dispatch phases", text: "" },
+    ],
+    howOutro: "Identify any vendor documentation and delivery responsibilities your project requires.",
+
+    extraSections: [
+      {
+        heading: "Preserving Equipment on a Humid Site",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Start with the equipment supplier's preservation instructions. Specify storage limits, inspection intervals, packaging and any recording requirements in the BOQ. Maintain a preservation log and keep packaging sealed when instructed. For sensitive items, specify any required dehumidification, temperature control, monitoring and response to power failure. Have the responsible project team verify that the proposed unit and controls meet the equipment specification before loading.",
+        ],
+        closing: ["For related fit-out planning guidance, see:"],
+        links: [{ label: "Planning insulated and air-conditioned storage fit-outs", href: "/cities-we-serve/shipping-container-vellore" }],
+      },
+      {
+        heading: "Container Sizes and Procurement",
+        placement: "afterSolutions",
+        table: {
+          caption: "Availability, actual dimensions and route clearance are confirmed for each unit in the quotation.",
+          headers: ["Configuration", "Typical enquiry", "Confirm before ordering"],
+          rows: [
+            ["20 ft", "Civil tools, PPE or electrical fittings", "Route access, door clearance, internal layout and unloading"],
+            ["40 ft", "Larger project stores and longer racks", "Trailer access, lifting capacity and yard footprint"],
+            ["40 ft high cube", "Bulky stock or taller racks", "Availability, actual height and route clearance"],
+          ],
+        },
+        closing: [
+          "Ask for the condition and usable dimensions of each proposed unit. For a used container, confirm the floor, doors, seals, roof and locking hardware. Include required drawings, vendor registration documents, inspection records, dispatch lists and unit IDs in the request for quotation so the supplier can confirm which documents are available.",
+          "Before accepting a used unit, see our guide on how to inspect a used container:",
+        ],
+        links: [{ label: "How to inspect a used container", href: "/products/cargo-storage-containers" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I request a bulk quote with phased deliveries?",
+        answer:
+          "Yes. Send the quantity and size mix, delivery milestones, unloading capacity and site contacts. Dispatch origin, availability and the schedule are confirmed in the quotation.",
+      },
+      {
+        question: "Which size should I consider for a hill project?",
+        answer:
+          "Start by comparing the site's storage requirements with the access route. A 20 ft unit may be easier to plan for a constrained approach. Larger units require enough room for the trailer and lifting equipment.",
+      },
+      {
+        question: "Can a container be used to preserve electro-mechanical equipment?",
+        answer:
+          "Only when the proposed unit, packaging and environmental controls meet the equipment supplier's requirements. Include the specified limits and monitoring requirements in your enquiry.",
+      },
+      {
+        question: "What procurement documents can I request?",
+        answer:
+          "Include the vendor documents, technical specifications, inspection records, dispatch list and unit IDs required by your team. Confirm the documents that can be provided for the quoted scope.",
+      },
+      {
+        question: "Can we relocate units or arrange collection at close-out?",
+        answer:
+          "Share the proposed dates and locations. Availability, handling, transport and collection responsibilities should be agreed in writing.",
+      },
+    ],
+
+    ctaHeading: "Share Your BOQ for a Project-Specific Quote",
+    ctaText: `Send your BOQ and site details through the enquiry form, phone or WhatsApp ${COMPANY.whatsapp.display}, or write to ${COMPANY.email.sales}. Dispatch origin, availability and the delivery schedule are confirmed in the quotation.`,
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Send Your Project Container Enquiry",
+      intro:
+        "Choose a container, enter the size, quantity and the delivery town or PIN code nearest your project site, and add your BOQ reference, fit-out requirements and preferred dispatch phases. We check the scope with you first, then send a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Containers for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "20 ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Construction Site Portable Office", href: "/products/construction-site-portable-office" },
+      { label: "Shipping Container in Andhra Pradesh", href: "/promotions/shipping-container-in-andhra-pradesh" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru. It has no container yard, depot, workshop or office in Visakhapatnam, Sileru or anywhere else in Andhra Pradesh. Every unit depends on availability: its size, grade, condition, documentation and fit-out, its dispatch origin, transport, lifting and unloading, any climate control, and any rental term or collection are set out in its quotation, and no delivery timeline is guaranteed. This page shows illustrative renders of one representative steel storage container, not photographs of a stores yard, a delivery or an installation at Upper Sileru or any other project site. Upper Sileru, Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu, Narsipatnam and Visakhapatnam are named only to describe where enquiries are welcome: Portable Office Cabin is not affiliated with, approved by or registered as a vendor of any power utility, project owner or EPC contractor, and no hydel or pumped storage project is described here as a client, a completed project or a confirmed delivery. Notes on delivery, yard layout, lifting, storage safety and equipment preservation are general guidance, not engineering, safety or legal advice; follow the project's approved plans and the equipment suppliers' instructions.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN VELLORE — Vellore and Katpadi, with Gudiyatham and Pernambut as
+   * service areas: non-clinical storage on healthcare campuses, college and hostel stores, lodge
+   * renovations, leather and footwear stock, and insulated or AC fit-out enquiries.
+   *
+   * Owner brief of 2026-11-07 (route, meta title, meta description and H1 used as given). The slug
+   * starts with "shipping-container-", so cityFamily() puts it in the shipping-container family:
+   * directory card under Tamil Nadu, sibling links both ways (Mettur, Athipattu) and the nearby block.
+   * The brief's sections map onto the fixed template slots; where a slot's position is fixed, the
+   * order moves as noted:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Non-clinical storage for healthcare campuses" → why (no bullets): paragraph 1 → whyIntro,
+   *     paragraph 2 → whyOutro.
+   *   • "College, hostel and event storage" → solutions heading + intro (no items). It renders BEFORE
+   *     the AC section: the solutions slot cannot hold a table, so the AC section follows it.
+   *   • "Insulated and air-conditioned storage enquiries", "Lodge and guest house renovation storage"
+   *     and "Container sizes and condition" → three afterSolutions extra sections, copy verbatim; the
+   *     two tables keep the brief's columns (2 and 3, both fit a 320 px phone).
+   *   • "Leather and footwear stock around Gudiyatham and Pernambut" → features: the paragraph's four
+   *     practices as three bullets + the last one as the bold sizesNote. The features slot follows the
+   *     afterSolutions sections, so it renders after "Container sizes and condition".
+   *   • "Shipping container price and rental in Vellore" → custom (prose, so customBullets is empty,
+   *     which renders no <ul>); the brief's inline rental link → customLinks, after the hire sentences.
+   *   • "Areas we serve" → areas (the template renders it before the steps).
+   *   • "From enquiry to placement" → how (four steps, titles only).
+   *   • FAQs (six) → faqs; the closing request → CTA + the category enquiry form. The brief invites
+   *     rental enquiries, so the form keeps the rental model.
+   * Lead-ins written where a slot needs one: tagline, the two table captions, featuresIntro, the outro
+   * line before the rental link, the line before the inspection link and the enquiry-form intro. No ₹
+   * figure, stock, lead time, refrigeration, regulated-storage suitability or guaranteed temperature,
+   * humidity or AC performance; 10 ft, outdoor-unit cages and the dispatch origin are not mentioned.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage container × Vellore and Katpadi (plus Gudiyatham and
+   * Pernambut for footwear stock). Used-container inspection stays with the Athipattu page (linked
+   * from the sizes section with the brief's anchor); the Krishnagiri product page names Vellore only
+   * in its delivery-area list. A dedicated AC storage product page, if one is published later, gets
+   * the brief's "insulated and air-conditioned storage containers" link from the AC section.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Vellore shipping container city
+   * page/Vellore shipping container page/cabin (1–5).webp", no metadata) copied without re-encoding
+   * (VP8 data byte-identical) plus an XMP dc:title / dc:description that marks each as an
+   * illustrative render. Only the exterior matches a brief slot (hero and og:image, with its actual
+   * size via ogImageDimensions); the overhead view, interior, doors and end wall get their own alt
+   * text and "illustrative" captions. The AC fit-out, equipment staging, furniture and footwear
+   * slots have no matching image and are omitted. No alt text or caption names a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-vellore",
+    city: "Vellore",
+    listTitle: "Shipping Container in Vellore",
+    metaTitle: "Shipping & Storage Containers in Vellore",
+    metaDescription:
+      "Enquire about shipping containers in Vellore and Katpadi for campus storage, lodge renovations and footwear stock. Discuss insulated and AC fit-outs.",
+    keywords:
+      "Shipping Container in Vellore, Storage Container Vellore, Shipping Container Katpadi, Used Shipping Container Vellore, Shipping Container Rental Vellore, Insulated Container with AC Vellore",
+    geo: {
+      region: "IN-TN",
+      placename: "Vellore, Tamil Nadu, India",
+      position: "12.9165;79.1325",
+      icbm: "12.9165, 79.1325",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-vellore/vellore-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative shipping container exterior for storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-vellore/vellore-shipping-container-overhead-view.webp",
+      alt: "Steel shipping container seen from above, showing the corrugated roof, corner castings and the cargo-door end on a paved area",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render. Leave space for the doors to open fully and for items to be moved in and out safely.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-vellore/vellore-storage-container-interior.webp",
+      alt: "Empty steel container interior seen through open cargo doors, with corrugated walls and a plywood floor",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of a bare container with no fit-out. Any racking, lining, lights or AC equipment is supplied only as listed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-vellore/vellore-shipping-container-cargo-doors.webp",
+        alt: "Closed container cargo doors with four locking bars, cam handles and a central lockbox",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render: closed cargo doors secured by four locking bars, with a lockbox at the centre.",
+      },
+      {
+        src: "/images/cities/shipping-container-vellore/vellore-shipping-container-end-wall.webp",
+        alt: "Corrugated steel end wall and side wall of a storage container on a paved area",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render: the corrugated end wall and side wall, with no doors at this end.",
+      },
+    ],
+
+    h1: "Shipping & Storage Containers in Vellore",
+    tagline:
+      "Storage containers for non-clinical campus stores, hostel and lodge renovations, footwear stock and insulated or AC fit-out enquiries in Vellore and Katpadi.",
+    intro: [
+      "Need a temporary store while a hostel or lodge is being refurbished, extra room for footwear cartons before dispatch, or a place for maintenance supplies on a healthcare campus? Portable Office Cabin supplies shipping containers for storage enquiries in Vellore and Katpadi. Tell us what you need to store and where the unit will sit so we can discuss the size, fit-out and delivery plan.",
+    ],
+
+    whyHeading: "Non-clinical storage for healthcare campuses",
+    whyIntro:
+      "A container can provide space for spare furniture, boxed linen, stationery or maintenance parts during a refurbishment. Plan the location with the campus facilities and security teams. Keep ambulance routes, emergency access and pedestrian paths clear, and agree on unloading arrangements before dispatch. Keep general-purpose storage limited to suitable non-clinical items.",
+    whyBullets: [],
+    whyOutro:
+      "For equipment waiting to be installed, check the manufacturer's storage and handling requirements before selecting a unit. Share the required temperature and humidity limits, any restrictions on dust or vibration, and the length of time the equipment will be stored.",
+
+    solutionsHeading: "College, hostel and event storage",
+    solutionsIntro:
+      "Colleges and universities can enquire about containers for hostel furniture during renovations, stage and sports equipment between events, or contractor tools during building works. List bulky items and measure the largest pieces before choosing a container. Plan access around the campus timetable and leave space for doors to open and items to be moved safely.",
+    solutions: [],
+
+    featuresHeading: "Leather and footwear stock around Gudiyatham and Pernambut",
+    featuresIntro: "Points to plan when a container holds leather goods or footwear cartons:",
+    features: [
+      "Plan shelf or pallet layouts around carton sizes and keep an aisle for stock checks.",
+      "Confirm the storage conditions recommended for the materials and packaging.",
+      "If heat or humidity limits apply, share those limits so the proposed fit-out can be assessed.",
+    ],
+    sizesNote: "Check stock periodically and keep cartons clear of walls and the floor where appropriate.",
+
+    customHeading: "Shipping container price and rental in Vellore",
+    customIntro:
+      "The quote depends on size, condition, fittings, route, unloading and any specified insulation or cooling.",
+    customBullets: [],
+    customOutro:
+      "Share the hire dates and intended use so the team can confirm unit availability and delivery and collection terms. Ask separately whether an AC-equipped hire can be quoted for your requirements. For renovation or project storage, see our:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Vellore, Katpadi, Sathuvachari, Bagayam, Thorapadi, Gandhi Nagar, Kaniyambadi, Sripuram, Anaicut, Gudiyatham, K.V. Kuppam and Pernambut. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      {
+        title: "Share the site address, what you need to store, the preferred dates and any environmental requirements.",
+        text: "",
+      },
+      { title: "Review the proposed unit, fit-out, available power and itemised quotation.", text: "" },
+      { title: "Confirm site permission, emergency access, base readiness and unloading arrangements.", text: "" },
+      { title: "Agree on delivery and placement, plus collection if included in the hire.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Insulated and air-conditioned storage enquiries",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If your stock has a specified temperature range, include that range in your enquiry. The design depends on the local conditions, the items being stored, how often doors open and the available power supply. Discuss these requirements before choosing the unit or its air conditioner.",
+        ],
+        table: {
+          caption:
+            "Points to settle before an insulated or AC fit-out is specified. What a unit can support is set by its quoted specification.",
+          headers: ["Requirement", "Details to discuss"],
+          rows: [
+            ["Insulation and cooling", "Wall, roof and door insulation, sealing, and cooling capacity for the expected load"],
+            [
+              "Humidity and monitoring",
+              "Humidity limits, whether separate humidity control is needed, and where to place temperature or humidity loggers",
+            ],
+            ["Power and drainage", "Electrical supply, earthing, outdoor unit clearance and condensate drainage"],
+            ["Continuity", "What happens during a power outage and whether alarms or backup power are required"],
+          ],
+        },
+        closing: [
+          "An air-conditioned fit-out is quoted against the intended use. For goods with strict storage limits, agree on the required controls, monitoring and verification before loading. Medicines, biomedical waste and other regulated materials require purpose-designed storage and approval from the responsible facilities team.",
+        ],
+      },
+      {
+        heading: "Lodge and guest house renovation storage",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A temporary store can keep spare beds, boxed supplies and suitable furniture near a renovation. For buildings off a busy or narrow lane, share photos and measurements of the last stretch of road, gate and proposed unloading area. Confirm the authorised placement area and how guests will move around it during the work.",
+        ],
+      },
+      {
+        heading: "Container sizes and condition",
+        placement: "afterSolutions",
+        table: {
+          caption: "Typical enquiries only. The size, availability and any fit-out are confirmed for each unit in its quotation.",
+          headers: ["Size or configuration", "Typical enquiry", "What to confirm"],
+          rows: [
+            ["20 ft", "Hostel furniture, lodge renovation supplies or footwear stock", "Item dimensions, door clearance and unloading access"],
+            ["40 ft", "Larger campus stores and event inventory", "Trailer approach, turning room and unloading position"],
+            [
+              "Insulated or AC fit-out",
+              "Equipment and stock with defined storage conditions",
+              "Availability, usable internal space, required controls and site power",
+            ],
+          ],
+        },
+        closing: [
+          "For a used unit, confirm the actual condition of the floor, roof, door seals and locking hardware. Ask the supplier to confirm the dispatch point and quote the route to your site. For deliveries approaching Vellore via NH 48, share the campus gate or building access details as well as the site address.",
+          "Buying a used unit? See our guide:",
+        ],
+        // The brief's inspection link: the Athipattu page's "Used Container Inspection" checklist (seven
+        // points), the used-container inspection content for the Chennai port belt.
+        links: [{ label: "How to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a healthcare campus use a shipping container for storage?",
+        answer:
+          "Yes, for suitable non-clinical items such as spare furniture, stationery or maintenance parts. Coordinate the location with the campus facilities team and keep emergency routes clear.",
+      },
+      {
+        question: "What is an air-conditioned storage container?",
+        answer:
+          "It is a container fitted for active cooling, usually with insulation and an AC unit. The quoted specification determines which temperatures it can support, and humidity control and monitoring may require additional equipment.",
+      },
+      {
+        question: "Can I store equipment before installation?",
+        answer:
+          "Share the equipment manufacturer's storage limits and packaging requirements. The responsible facilities team should verify that the proposed unit and monitoring meet those requirements before loading.",
+      },
+      {
+        question: "Can I rent a container during a hostel or lodge renovation?",
+        answer:
+          "Yes, you can enquire about rental. Share your dates, largest items and access photos so the team can assess size, availability and delivery.",
+      },
+      {
+        question: "Does footwear stock need air conditioning?",
+        answer:
+          "That depends on the material, packaging and supplier's storage requirements. Share the applicable temperature and humidity limits before selecting a fit-out.",
+      },
+      {
+        question: "How quickly can you deliver to Vellore?",
+        answer:
+          "Timing depends on stock, fit-out, the dispatch location, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Vellore shipping container quote",
+    ctaText:
+      "Send your site address, intended use, target dates, preferred size and photos of the gate and unloading area. Include the required temperature and humidity range if your stock needs environmental control.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the Call and WhatsApp buttons (from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Request a Shipping Container Quote",
+      intro:
+        "Pick the container you have in mind, the quantity and the Vellore-area address it goes to, then note what will be stored, your target dates and any temperature or humidity limits. We check these details with you first, then send a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20 ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no yard, depot or office in Vellore, Katpadi, Gudiyatham or Pernambut. Each unit's availability, size, condition, fit-out, dispatch point, delivery, unloading and any collection are set out in its quotation, and delivery dates are not guaranteed. Insulation, air conditioning, humidity control and monitoring are discussed against the stated requirement; no temperature, humidity or cooling performance is guaranteed unless the approved specification states it, and no container is offered as refrigerated storage or as storage for medicines, biomedical waste or other regulated materials. Every image here is an illustrative render of a typical dry container; none shows a unit delivered to, or standing at, a site in the Vellore area. Healthcare campuses, colleges, hostels, lodges and footwear businesses are described generically: the uses and localities mentioned are examples of enquiries, not customers, finished projects or confirmed delivery areas, and Portable Office Cabin is not affiliated with any hospital, college, university or business in the Vellore area. The storage notes on this page are general guidance, not engineering, clinical, regulatory or legal advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN CHAMARAJANAGAR — storage containers for granite processing
+   * supplies, turmeric storage planning, factory packing stores at Badanaguppe–Kellamballi, delivery
+   * near forest routes, temple fairs and resort renovations across Chamarajanagar district.
+   *
+   * Owner brief of 2026-11-08 (route, meta title, meta description, H1 and copy used as given). One
+   * canonical serves both spellings: no route, redirect or sitemap entry exists for "Chamrajnagar",
+   * which is carried in the meta keywords only. The slug starts with "shipping-container-", so
+   * cityFamily() puts the page in the shipping-container family: its directory card reads "Shipping
+   * containers in Chamarajanagar" (the brief's hub anchor) and the Karnataka sibling pages link both
+   * ways. The brief's sections map onto the fixed template slots, in the brief's order except where
+   * noted:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp, the brief's buttons).
+   *   • "Stores for granite processing units" → why: first paragraph = whyIntro, second = whyOutro.
+   *   • "Storage planning for turmeric growers and traders" → solutions heading + intro, with the second
+   *     paragraph as the new optional `solutionsOutro` (no items).
+   *   • "Packaging and spares stores at Badanaguppe–Kellamballi", "Delivery near forest routes and
+   *     wildlife corridors" and "Container sizes and condition" (table, the used-unit paragraph as
+   *     `closing`, then the inspection link) → three afterSolutions extra sections.
+   *   • "Storage for temple fairs, resorts and homestays" → features: the two uses as list items and
+   *     the last two sentences as the bold note. The features slot renders after the afterSolutions
+   *     sections, so this section follows the sizes section (the brief has it before it) and leads into
+   *     the price and rental section, which picks up festivals and renovations. The gallery follows it.
+   *   • "Shipping container price and rental in Chamarajanagar" → custom (prose: customBullets is
+   *     empty), beside the interior render. The dates sentence comes before the rental sentence so the
+   *     rental link (anchor as given) can follow it as `customLinks`.
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps). The template
+   *     puts areas before the steps, the reverse of the brief.
+   *   • FAQs (five) → faqs; the closing request → CTA + the cargo-category enquiry form (rental is in
+   *     scope, so the rental model is kept).
+   * Composed (owner review): the tagline, the features lead-in, the sizes-table caption, the lead-in
+   * before the inspection link, the enquiry-form heading and intro, the alt text and captions of the
+   * four non-hero images (the hero's are the brief's) and the disclaimer. Composed lines are worded so
+   * they do not repeat the sibling shipping-container pages (8-word shingle check).
+   *
+   * INTERLINKS (brief section 5): the rental link is in place (live, 200). The Chennai shipping-container
+   * page (/products/shipping-container-in-chennai) still has no used-container inspection checklist
+   * (checked live 2026-11-08), so "how to inspect a used container" points at
+   * /products/cargo-storage-containers ("Key Inspection Points"), the target the owner chose for
+   * Coimbatore and the one Uttara Kannada and the hydel page use: one anchor, one target. The Krishnagiri
+   * container page (/products/shipping-container-in-krishnagiri) has no quarry content, so the brief's
+   * optional quarry link is omitted. The Karnataka shipping-container hub (seoPromotions) and the cargo
+   * category's location links list this page.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container × Chamarajanagar (Chamrajnagar),
+   * Badanaguppe–Kellamballi, Kollegal, Gundlupet, Yelandur and Hanur. Quarry storage stays off this page
+   * (brief). The Mysore shipping-container page no longer names Chamarajanagar in its areas list; its
+   * sibling block links here instead.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Chamarajanagar shipping container city
+   * page/Chamarajanagar shipping container/cabin (1–5).webp": 1200×896 and 1451×1084 ×4, no EXIF / XMP
+   * / ICC), copied under descriptive names with a truthful XMP dc:title / dc:description ("Illustrative
+   * render of…") added losslessly; the decoded pixels are identical and no camera, GPS or date data is
+   * added. Only the exterior matches a slot in the brief's image table: it is the hero and social
+   * preview, with the brief's alt text and render caption. No image shows granite spares, turmeric sacks,
+   * packing crates or a delivery truck, so those slots are omitted; the roof view (feature band), the
+   * empty interior (beside the price section), the cargo doors and the side wall (gallery) carry their
+   * own descriptive alt text and an "illustrative render" caption, and no alt text names a place or size.
+   *
+   * No ₹ figure, stock, lead time, load rating, dispatch origin, acreage, road-restriction hours, client,
+   * affiliation, food-suitability, shelf-life or hazardous-goods storage claim. Opts into the CSS-only
+   * motion pass (`motion: true`), the Service JSON-LD (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-chamarajanagar",
+    city: "Chamarajanagar",
+    listTitle: "Shipping & Cargo Containers in Chamarajanagar",
+    metaTitle: "Shipping & Storage Containers in Chamarajanagar",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Chamarajanagar for granite processing supplies, industrial packing stock, fairs and resort storage.",
+    keywords:
+      "Shipping Container in Chamarajanagar, Storage Container Chamarajanagar, Shipping Container Chamrajnagar, Storage Container Badanaguppe–Kellamballi, Storage Container Kollegal, Shipping Container Gundlupet",
+    geo: {
+      region: "IN-KA",
+      placename: "Chamarajanagar, Karnataka, India",
+      position: "11.9261;76.9437",
+      icbm: "11.9261, 76.9437",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative shipping container exterior for industrial storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-roof-view.webp",
+      alt: "Steel shipping container seen from above: corrugated roof, corner castings and closed cargo doors, on a paved yard",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render. Choose a dry, level placement area with room to swing both doors open and move stock in and out.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-interior.webp",
+      alt: "Empty steel shipping container interior seen through open cargo doors: corrugated walls and roof and a wooden floor",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty, unfitted interior. Shelves, cabinets, racking and a lockbox are included only as agreed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a steel shipping container with vertical locking bars, handles and a central lockbox",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the cargo doors and lockbox. A lockbox is fitted only when the quotation includes one.",
+      },
+      {
+        src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-side-wall.webp",
+        alt: "Blind end and corrugated side wall of a brown steel shipping container on a paved yard",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render: the blind end and corrugated side wall of an unfitted container.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Chamarajanagar",
+    tagline:
+      "Lockable storage containers for granite workshop supplies, factory packing stock, fairs and resort renovations, quoted for your site across Chamarajanagar district.",
+    intro: [
+      "Need a lockable store for granite cutting blades and abrasives, more space for factory packing supplies, or temporary storage during a fair or resort renovation? Portable Office Cabin welcomes shipping container enquiries across Chamarajanagar district. Share what you need to store and where the unit will sit so we can discuss size, fittings, transport and unloading.",
+    ],
+
+    whyHeading: "Stores for granite processing units",
+    whyIntro:
+      "Use labelled shelves or closed cabinets for diamond blades, polishing consumables and spare parts. Set aside space for clean export packing materials such as crates, foam, straps and labels. For boxed tiles or other heavy goods, share the packed weights, stacking plan and handling method so the floor and rack limits can be checked.",
+    whyBullets: [],
+    whyOutro:
+      "Choose a placement area away from slurry channels and wash-down water. Confirm drainage, base readiness and door clearance with the site team. Refer resins, solvents and other potentially hazardous stock to the site safety team for a suitable designated store.",
+
+    solutionsHeading: "Storage planning for turmeric growers and traders",
+    solutionsIntro:
+      "If you plan to hold dried turmeric between dispatches, first confirm the product’s storage requirements with your buyer or a qualified post-harvest adviser. A used container’s previous cargo, floor, interior surfaces and condition should be assessed before it is considered for food. Confirm suitable moisture, temperature, hygiene and pest controls for the proposed storage period.",
+    // Empty on purpose: the section is the two paragraphs (intro + outro), as in the brief.
+    solutions: [],
+    solutionsOutro:
+      "For a unit assessed as suitable, plan clean pallet positions, lot labels, an inspection aisle and a stock register. The quotation can cover storage and fit-out requirements without assuming a particular shelf life or market price.",
+
+    featuresHeading: "Storage for temple fairs, resorts and homestays",
+    featuresIntro: "Typical short-term enquiries:",
+    features: [
+      "Fair organisers can use a temporary store for suitable stall fittings, signage and equipment between events.",
+      "Resorts and homestays can enquire about space for spare furniture, boxed linen and maintenance items during renovation.",
+    ],
+    sizesNote:
+      "Ask whether a neutral repaint or lockbox can be included. Agree on a location that keeps guest paths, service routes and emergency access clear.",
+
+    customHeading: "Shipping container price and rental in Chamarajanagar",
+    customIntro: "Pricing depends on size, condition, fittings, finish, route and unloading arrangements.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "Share your dates so availability, the hire period and collection terms can be confirmed. For a festival, renovation or other short-term requirement, see:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Chamarajanagar town, Badanaguppe, Kellamballi, Santhemarahalli, Yelandur, Kollegal, Hanur and Gundlupet, including sites around MM Hills, Bandipur and the Biligiri Rangana Hills. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share your site pin, intended use, preferred size, quantity and target dates.", text: "" },
+      { title: "Review the proposed unit, fit-out, route and itemised quotation.", text: "" },
+      { title: "Confirm site access, base readiness and unloading responsibilities before dispatch.", text: "" },
+      { title: "Agree on delivery and placement, plus collection if included in the hire.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Packaging and spares stores at Badanaguppe–Kellamballi",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Factories and contractors around Badanaguppe–Kellamballi can enquire about stores for suitable cartons, finished goods, maintenance spares and tools. Group items by receipt and dispatch frequency, and measure the largest crate or trolley before choosing the layout. Keep flammable or hazardous materials out of general-purpose stores and use storage designated by your site safety team.",
+        ],
+      },
+      {
+        heading: "Delivery near forest routes and wildlife corridors",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Share the site pin, proposed approach and photographs of narrow bends, slopes, gates and overhead obstructions. For sites near Bandipur, MM Hills or the Biligiri Rangana Hills, ask the transport team to check current route restrictions, permitted vehicle movements and delivery windows with the relevant authorities before dispatch. Confirm the authorised placement area and safe unloading arrangements with the site team.",
+        ],
+      },
+      {
+        heading: "Container sizes and condition",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "The quotation for each unit states its actual dimensions, fittings and lifting arrangements, and whether a high-cube unit is available.",
+          headers: ["Configuration", "Typical enquiry", "What to confirm"],
+          // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a
+          // 320 px phone, where row headers may wrap.
+          rows: [
+            ["20\u00a0ft", "Granite workshop spares, fair equipment or resort supplies", "Door clearance, floor capacity and unloading access"],
+            ["40\u00a0ft", "Larger packing-material stores or finished-goods buffers", "Trailer approach, turning space and lifting area"],
+            ["40\u00a0ft high cube", "Tall racks or bulky export crates", "Availability, actual dimensions and route clearances"],
+          ],
+        },
+        closing: [
+          "For a used unit, confirm its stated condition and inspect the floor, roof, doors, seals and locking hardware. Ask for the dispatch point and unloading scope in the quote.",
+          "Buying a used unit? For the points to check before you accept it, see:",
+        ],
+        // Brief section 5 inspection link (no Chennai inspection checklist exists; see the header comment).
+        links: [{ label: "How to inspect a used container", href: "/products/cargo-storage-containers" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I store turmeric in a used shipping container?",
+        answer:
+          "Have the unit assessed for food storage before accepting it. Confirm its previous cargo, floor condition and the hygiene, moisture, temperature and pest-control requirements for your product.",
+      },
+      {
+        question: "What can a granite processing unit store in a container?",
+        answer:
+          "Typical enquiries include blades, abrasives, spares and clean packing supplies. Share weights and dimensions for heavy stock, and refer potentially hazardous materials to your safety team.",
+      },
+      {
+        question: "Can you deliver near Bandipur or MM Hills?",
+        answer:
+          "You can enquire for either area. The delivery plan depends on the confirmed route, current access restrictions, vehicle suitability and the unloading location.",
+      },
+      {
+        question: "Can I rent a container during a fair or resort renovation?",
+        answer:
+          "Yes, you can enquire about hire. Share the dates, intended use and site access so the team can confirm a unit and collection terms.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, fittings, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Chamarajanagar",
+    ctaText:
+      "Send your site pin, preferred size, what you will store, target dates and access photos. Include the dimensions and weights of heavy items and any racking, finish or lockbox requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Send your Chamarajanagar storage requirement",
+      intro:
+        "Select the container you have in mind, the number of units and the nearest town or PIN code in Chamarajanagar district. Tell us what the store will hold, when you need it and whether it needs shelving, racking, a repaint or a lockbox, and we will confirm the details with you before quoting.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin's factory is near Hosur in Tamil Nadu and its Karnataka office is in Electronic City Phase 1, Bengaluru; the company does not run a yard, depot or office anywhere in Chamarajanagar district. Containers are offered subject to stock. The unit's size, grade, condition, fit-out, finish, any hire period and the transport, unloading, placement and collection arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one steel container, not photographs taken in Chamarajanagar district or of a unit that has been supplied. Badanaguppe–Kellamballi, Kollegal, Gundlupet, Bandipur, MM Hills, the Biligiri Rangana Hills and the other places named show the area enquiries may come from. Portable Office Cabin has no affiliation with any industrial area, forest or wildlife authority, temple, fair organiser, resort or business there, and none of the uses or places described should be read as a customer, a finished project or a confirmed delivery point. Containers are not offered as food-grade or hazardous-goods storage. Notes on food storage, hazardous materials, floor and rack loads, routes, access restrictions and placement are general guidance, not food-safety, engineering, legal or regulatory advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN MADURAI — the general portable-cabin intent for Madurai city and the places
+   * around it (Madurai district, Tamil Nadu): non-clinical support cabins for hospital campuses, jasmine
+   * grading and packing rooms, and billing and dispatch offices for Ring Road godowns and Kappalur units.
+   *
+   * Owner brief of 2026-11-09 ("Madurai portable cabin page and developer commands"): route, meta
+   * title, meta description, H1 and keywords (primary query + supporting terms) as given, and every
+   * sentence of the website copy verbatim. No route, redirect or sitemap entry used a Madurai
+   * portable-cabin canonical before (checked 2026-11-09). The Madurai siblings keep their own intents
+   * (brief section 3): visitor-facing sales layouts → portable-marketing-office-madurai, complete worker
+   * camps → labour-colony-madurai; neither product term is in this page's title, H1 or meta description.
+   * Entry placed before the marketing-office entry (its Madurai sibling) rather than at the end of the
+   * list, so it does not collide with the city pages queued behind it; the order only affects the
+   * sitemap and the directory. Mapped onto the template slots (no template code is changed):
+   *   • Opening paragraph → tagline (its question) + intro, with the hero contact row (`heroCta`:
+   *     Request a Quote · Call · WhatsApp, numbers from COMPANY).
+   *   • "Non-clinical cabins for hospital campuses" → why: a one-line lead-in as whyIntro, the table as
+   *     `whyTable` (no bullets), the paragraph as whyOutro.
+   *   • "Jasmine grading and packing rooms" → solutions heading + intro, the second paragraph as
+   *     `solutionsOutro` (no items).
+   *   • "Billing and dispatch offices for godowns and Kappalur units" (two paragraphs) and "Cabin sizes
+   *     and fittings" (table, the closing paragraph, then the brief's sibling link) → two afterSolutions
+   *     extra sections. No features section.
+   *   • "Portable cabin price and rental in Madurai" → custom (prose: customBullets is empty), beside
+   *     the interior render.
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps). The template
+   *     puts areas before the steps, the reverse of the brief.
+   *   • FAQs (four) → faqs; "Request a portable cabin quote in Madurai" → CTA.
+   * Composed (owner review): the whyIntro lead-in, the two table captions, the lead-in to the sibling
+   * link ("…, see:" in place of the brief's inline "see our [anchor]"), the alt text and captions of the
+   * three images outside the brief's slots, the related links and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): the Madurai marketing-office page (on main since #239) follows the
+   * sizes section with the brief's anchor, and its layout examples link back here with "Portable cabins
+   * in Madurai". The labour-colony page (#238) is not on main yet, so both of its links are deferred
+   * until it is (brief: reciprocal links only when both destinations are live or in the same release).
+   * The /cities-we-serve directory lists this page under Tamil Nadu by itself (geo.region IN-TN, card
+   * label = `directoryLabel`, the brief's anchor), and both Tamil Nadu portable / porta cabin keyword
+   * hubs (seoPromotions) list it after Perundurai.
+   *
+   * KEYWORD OWNERSHIP: portable / porta cabin × Madurai and Kappalur. No other page targets a portable
+   * cabin in Madurai: the marketing-office page keeps marketing offices × Madurai, the labour-colony
+   * page labour colonies × Madurai, and the Thoothukudi container-office page names "the Madurai and
+   * Tirunelveli highways" only as a corridor for a different product family.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Madurai portable cabin city page/Madurai
+   * portable cabin page/cabin (1–4).webp": 1200×896, 1451×1084 ×2 and 1450×1085; no EXIF / XMP /
+   * ICC), copied under descriptive names with a truthful XMP dc:title / dc:description ("Illustrative
+   * render of…") added losslessly; the decoded pixels are identical and no camera, GPS, date, project
+   * or customer data is added. They show one grey container-style cabin with a glazed front (three-
+   * quarter view, front, from above) and one office interior. Only the exterior hero matches a slot in
+   * the brief and uses its file name, alt text and caption. No image shows rows of seats under ceiling
+   * fans, a service counter, jasmine or packing boxes, a service window or record shelves, so the
+   * attendant waiting room, help desk, jasmine packing, godown billing and dispatch office slots are
+   * omitted. The view from above (feature band), the front view (gallery, after the sizes table) and the
+   * interior (beside the price section) carry their own descriptive alt text and an "illustrative"
+   * caption, and no alt text names a place.
+   *
+   * No ₹ figure, stock, lead time, client, hospital, market, trader, warehouse or SIDCO affiliation,
+   * clinical-suitability, cooling or freshness claim, or included-scope claim for fit-outs, hire,
+   * collection or relocation. Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD
+   * (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-madurai",
+    city: "Madurai",
+    listTitle: "Portable Cabins in Madurai",
+    // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
+    directoryLabel: "Portable cabins in Madurai",
+    metaTitle: "Portable Cabins in Madurai for Hospitals & Businesses",
+    metaDescription:
+      "Enquire about portable cabins in Madurai for hospital waiting areas, jasmine grading and packing, Ring Road warehouse offices and Kappalur dispatch teams.",
+    keywords:
+      "Portable Cabin in Madurai, Porta Cabin Madurai, Hospital Waiting Cabin, Jasmine Packing Room Cabin, Godown Office Cabin, Portable Cabin Kappalur",
+    geo: {
+      region: "IN-TN",
+      placename: "Madurai, Tamil Nadu, India",
+      position: "9.9252;78.1198",
+      icbm: "9.9252, 78.1198",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-madurai/madurai-portable-cabin-exterior.webp",
+      alt: "Prefabricated cabin with windows and an entrance door",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable cabin exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-madurai/madurai-portable-cabin-aerial-view.webp",
+      alt: "Aerial view of a container-style cabin showing its corrugated roof, glazed front, entrance door and concrete supports on a paved base",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render of the same cabin from overhead. How it is supported and placed is decided for each site with the site team.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-madurai/madurai-portable-office-cabin-interior.webp",
+      alt: "Office cabin interior with a desk, a computer, an office chair, a storage cabinet and visitor chairs beside a glazed wall",
+      width: 1450,
+      height: 1085,
+      caption: "Illustrative interior render. Desks, counters, storage and sockets follow the specification you approve.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-madurai/madurai-portable-cabin-front-view.webp",
+        alt: "Front of a container-style cabin with a wide glazed panel, an entrance door and corrugated cladding, raised on concrete supports",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render: front view of the same cabin design.",
+      },
+    ],
+
+    h1: "Portable Cabins in Madurai",
+    tagline:
+      "Need a waiting room for families at a hospital, a workspace for grading and packing jasmine near Mattuthavani, or a billing office at a Ring Road godown?",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Madurai and nearby areas. Share the intended use, site access and target dates so we can discuss the layout, fittings and delivery.",
+    ],
+
+    whyHeading: "Non-clinical cabins for hospital campuses",
+    whyIntro: "Common non-clinical uses on a hospital campus, with the layout points to discuss for each:",
+    // Empty on purpose: the section is the table and a paragraph, as in the brief.
+    whyBullets: [],
+    whyTable: {
+      caption: "Non-clinical support uses. The layout and fittings included are confirmed in the quotation.",
+      headers: ["Use", "Layout to discuss"],
+      rows: [
+        ["Waiting room for patient attendants", "Seating, lighting, ventilation and charging points"],
+        ["Help desk or registration overflow", "Service counter, signage, power and data points, and space for the queue"],
+        ["Ambulance driver rest room", "Seating, ventilation, charging points and access agreed with campus facilities"],
+        ["Contractor site office", "Workstations and space for drawings, records and site reviews"],
+      ],
+    },
+    whyOutro:
+      "Ask the hospital facilities team to approve the location, visitor flow and delivery window. Keep ambulance, fire and pedestrian routes clear and confirm how patient information will be handled at registration counters. These layouts are for non-clinical support. Refer any clinical proposal to the responsible healthcare team for a separate review.",
+
+    solutionsHeading: "Jasmine grading and packing rooms",
+    solutionsIntro:
+      "For a flower trader near Mattuthavani or a collection team around Thirumangalam, Usilampatti or Peraiyur, start with the workflow from receipt and weighing through grading, packing, labelling and dispatch. Discuss washable work surfaces, task lighting, screened openings and space for boxes. If staff will use water or ice, agree on the cleaning and drainage arrangements before choosing the fittings.",
+    // Empty on purpose: the section is two paragraphs, as in the brief.
+    solutions: [],
+    solutionsOutro:
+      "The room is intended for grading and packing before dispatch. If your process requires chilled holding, specify the temperature, equipment and monitoring needs separately.",
+
+    customHeading: "Portable cabin price and rental in Madurai",
+    customIntro:
+      "Pricing depends on size, construction, fittings, finishes, utilities, transport and unloading. List any counters, washable finishes, ventilation, drainage or electrical requirements for an itemised quote.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "For a hospital renovation or a seasonal packing requirement, share the dates so we can confirm whether a suitable unit can be quoted on hire.",
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Goripalayam, Anna Nagar, K.K. Nagar, Mattuthavani, Avaniyapuram and sites along the Madurai Ring Road. We also consider sites in Kappalur, Thoppur, Thirumangalam, Usilampatti, Peraiyur, Melur and Vadipatti. Delivery is assessed for each location.",
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share the site pin, intended use, size, quantity and target dates.", text: "" },
+      { title: "Review the proposed layout, fit-out and itemised quote.", text: "" },
+      { title: "Confirm placement approval, base readiness, utility responsibilities and unloading access.", text: "" },
+      { title: "Agree on delivery and handover. Include any collection or relocation in the quotation.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Billing and dispatch offices for godowns and Kappalur units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Plan a service window where drivers can hand over documents, a desk for billing and dispatch, and lockable record storage. Share the equipment list if you need power and data points for printers or CCTV monitors. If loaders or staff need a break area, discuss a separate room or module.",
+          "For a Ring Road warehouse or Kappalur SIDCO site, choose a proposed location with the site team and keep pedestrian access clear of loading and reversing vehicles. Share gate dimensions, overhead obstructions and access photos before dispatch.",
+        ],
+      },
+      {
+        heading: "Cabin sizes and fittings",
+        placement: "afterSolutions",
+        // Footprints use no-break spaces (\u00a0) so a size never splits over two lines on a narrow phone.
+        table: {
+          caption: "Example footprints matched to typical enquiries.",
+          headers: ["Example footprint", "Typical enquiry"],
+          rows: [
+            ["6\u00a0×\u00a06\u00a0ft", "Compact help desk or guard cabin"],
+            ["10\u00a0×\u00a08\u00a0ft", "Registration counter, collection point or godown office"],
+            ["20\u00a0×\u00a010\u00a0ft", "Attendant waiting area, packing room or site office"],
+            ["30\u00a0×\u00a010\u00a0ft and above", "Larger waiting room or combined billing and accounts office"],
+          ],
+        },
+        closing: [
+          "These are layout starting points. Confirm dimensions, occupancy and fittings in the quotation. Discuss mild steel construction or a PUF-insulated specification based on the intended use, hours of operation and exposure.",
+          "For a visitor-facing sales office or display space, see:",
+        ],
+        // Brief section 5: the Madurai marketing-office page, with the brief's anchor, after this section.
+        links: [{ label: "Portable marketing offices in Madurai", href: "/cities-we-serve/portable-marketing-office-madurai" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I enquire about a hospital attendant waiting cabin?",
+        answer:
+          "Yes. Share expected visitor numbers and seating, ventilation, charging and access needs. Have the hospital team confirm placement and pedestrian routes before delivery.",
+      },
+      {
+        question: "What should I specify for a jasmine packing cabin?",
+        answer:
+          "Include the work sequence, number of packers, table and box dimensions, lighting, cleaning and drainage needs. Specify any chilled holding requirement separately.",
+      },
+      {
+        question: "What does a godown billing cabin need?",
+        answer:
+          "Start with a service counter, desk, sockets and space for records. Share printer, data and CCTV requirements so the electrical provisions can be quoted.",
+      },
+      {
+        question: "Can I rent a cabin, and when can it be delivered?",
+        answer:
+          "Share the unit type, site and dates. Hire terms and timing depend on availability, fittings, transport and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a portable cabin quote in Madurai",
+    ctaText:
+      "Send your site location, intended use, preferred size, quantity, dates and photos of the approach and placement area. Include any seating, counters, worktops, power, water or drainage requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons; the
+    // call and WhatsApp buttons (numbers from COMPANY) stay on, as the brief asks.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Cabin Sizes & Specifications", href: "/products/portable-cabin" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Cabins are made at the Portable Office Cabin factory near Hosur in Tamil Nadu, and the company’s office is in Electronic City, Bengaluru; the company has no premises in Madurai. Each written quotation records the agreed dimensions, construction, fittings, finishes and any hire, collection or relocation, and states who arranges transport, unloading, placement and utility connections. Any delivery date given is an estimate, not a guarantee. The hospital-campus layouts are for non-clinical support only: this page does not describe any cabin as suitable for clinical use or patient care, and a clinical proposal needs a separate review by the responsible healthcare team. A grading and packing room is not a cold store; no cabin here is offered for chilled holding or to keep flowers fresh, and any temperature, equipment or monitoring requirement is specified and quoted separately. All four images are illustrative renders, three of one container-style cabin and one of an office interior; none was photographed in Madurai or shows a supplied unit, a hospital campus, a flower trader’s premises or a warehouse. Mattuthavani, the Madurai Ring Road, Kappalur and the other places listed indicate where enquiries can come from; they do not identify customers, finished installations or confirmed delivery points. Portable Office Cabin has no affiliation with any hospital, healthcare provider, flower market, jasmine trader, warehouse operator, SIDCO industrial estate or government body in the region. Notes on placement, access, utilities, drainage, cleaning and patient-information handling are general guidance, not engineering, medical, food-safety, legal or regulatory advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE MARKETING OFFICES IN MADURAI — owner brief "Madurai portable marketing office page and
+   * developer commands" (2026-11-09). Route /cities-we-serve/portable-marketing-office-madurai: no
+   * existing route, redirect or sitemap entry used it, and no other page targets marketing offices ×
+   * Madurai. The page is about visitor-facing sales offices (property launches, evening appointments,
+   * repeat campaigns); general workspace, handover offices, shops and kiosks keep their own pages.
+   *
+   * MAPPING onto main's template as it is (no template code is changed):
+   *   • Intro → intro.
+   *   • "Plan the office around the visitor’s walkthrough" → why: the paragraph, then the area table as
+   *     `whyTable` (no bullets).
+   *   • "Site sales offices for plotted layouts, villas and apartments" → solutions heading + intro, no
+   *     items.
+   *   • "Glazing, shade and lighting for evening visits" and "Seasonal campaigns and repeat launches" →
+   *     two afterSolutions extra sections.
+   *   • "Marketing office layout examples" → features: the four example footprints as list items (the
+   *     features slot is a list, not a table), the confirmation sentence as the bold note, then the
+   *     product link from brief section 5. The gallery follows it.
+   *   • "Portable marketing office price in Madurai" → custom (prose: customBullets is empty); the hire
+   *     sentence is the outro. No rental link: /rental-service does not cover marketing offices (checked
+   *     live 2026-11-09), so hire stays an enquiry, as the brief says.
+   *   • "Areas we serve" → areas; "From enquiry to launch" → how (title-only steps). The template puts
+   *     areas before the steps, the reverse of the brief.
+   *   • FAQs (six) → faqs; the closing request → CTA. Buttons: Request a Quote (→ /contact), Call and
+   *     WhatsApp (numbers from COMPANY), repeated under the intro (`heroCta`). No enquiry form: the
+   *     Marketing Office product's category (prefab-building) has no category landing, so /api/enquiries
+   *     would reject the form.
+   * Composed (owner review): the tagline, the area-table caption, the lead-in to the product link, the
+   * alt text and captions of all four images and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): "Portable marketing office layouts" → /products/marketing-office (live,
+   * 200). The Marketing Office product page has no Tamil Nadu or related-locations section, so the
+   * reverse link is not added ("where supported"). The /cities-we-serve directory lists this page in its
+   * Tamil Nadu group automatically, with the brief's anchor as `directoryLabel`, and the Tamil Nadu
+   * portable-cabin hub (seoPromotions) lists it. The general Madurai portable-cabin page links here after
+   * its sizes section, and the layout examples below link back to it (portable-cabin brief, section 5,
+   * 2026-11-09).
+   *
+   * Images: four owner-dropped webp renders ("public/images/marketing office city page madurai/Madurai
+   * portable marketing office/cabin (1–4).webp": 600×448 and 1452×1083 ×3, no EXIF / XMP / ICC), copied
+   * under descriptive names with a truthful XMP dc:title / dc:description ("Illustrative render of…")
+   * added losslessly; the decoded pixels are identical and no camera, GPS or date data is added. They
+   * show one two-storey container office (front, corner and two interiors), not a glass front, display
+   * wall, evening lighting, canopy or signage, so none matches a slot in the brief's image table: the
+   * brief's slot alt texts and filenames are not used, each image has its own visible-detail alt text and
+   * an "illustrative render" caption, and no alt text names a place.
+   *
+   * No ₹ figure, stock, lead time, occupancy figure, client, project, institution or festival
+   * affiliation. AC equipment, glazing, upper floors and joined cabins, rental and relocation stay
+   * quote-dependent, as in the owner's copy. Opts into the CSS-only motion pass (`motion: true`), the
+   * Service JSON-LD (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-marketing-office-madurai",
+    city: "Madurai",
+    listTitle: "Portable Marketing Offices in Madurai",
+    // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
+    directoryLabel: "Portable marketing offices in Madurai",
+    metaTitle: "Portable Marketing Offices in Madurai for Site Sales",
+    metaDescription:
+      "Enquire about portable marketing offices in Madurai for plotted layouts, villa launches, dealership campaigns and admissions. Plan your layout and branding.",
+    keywords:
+      "Portable Marketing Office in Madurai, Site Sales Office Madurai, Real Estate Marketing Office Cabin Madurai, Prefabricated Sales Gallery Madurai, Relocatable Marketing Office Madurai",
+    geo: {
+      region: "IN-TN",
+      placename: "Madurai, Tamil Nadu, India",
+      position: "9.9252;78.1198",
+      icbm: "9.9252, 78.1198",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Marketing Office" },
+    // The hero is 1452 × 1083 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-marketing-office-madurai/madurai-marketing-office-two-storey-front.webp",
+      alt: "Two-storey container office with a ground-floor door and windows, a covered upper deck and an external steel staircase",
+      width: 1452,
+      height: 1083,
+      caption:
+        "Illustrative render of a two-storey container office. Glazing, signage, layout and finishes for a marketing office are agreed in the quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-marketing-office-madurai/madurai-marketing-office-interior-desk.webp",
+      alt: "Cabin office interior with a desk, three chairs, a storage cabinet, two windows and a door",
+      width: 1452,
+      height: 1083,
+      caption: "Illustrative interior render. Counters, display walls and partitions follow the layout you approve.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-marketing-office-madurai/madurai-marketing-office-two-storey-corner.webp",
+        alt: "Two-storey container office seen from the corner, with an external staircase, an upper deck and a planted bed",
+        width: 600,
+        height: 448,
+        caption: "Illustrative render: corner view of the same two-storey design and its external staircase.",
+      },
+      {
+        src: "/images/cities/portable-marketing-office-madurai/madurai-marketing-office-upper-room-deck-door.webp",
+        alt: "Upper-floor cabin room with a desk, chairs and storage, and an open door onto a covered deck",
+        width: 1452,
+        height: 1083,
+        caption:
+          "Illustrative render of an upper-floor room opening onto a covered deck. An upper floor, deck or staircase is included only when the approved design and quotation provide for it.",
+      },
+    ],
+
+    h1: "Portable Marketing Offices in Madurai",
+    tagline:
+      "Prefabricated site sales offices for property launches, dealership promotions and admissions campaigns, quoted for your site in and around Madurai.",
+    intro: [
+      "Give visitors a place to see the plans, ask questions and sit down with your sales team. Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries for portable marketing offices in Madurai. Whether you are launching a plotted layout along the Ring Road, opening a villa sales gallery near Thoppur or running a short admissions campaign, we can discuss a layout built around how your team meets visitors.",
+    ],
+
+    whyHeading: "Plan the office around the visitor’s walkthrough",
+    whyIntro:
+      "Start with what visitors should see when they arrive. A reception desk helps staff manage appointments and walk-ins. A display wall gives the team somewhere to show plot maps, floor plans and project visuals. If several conversations will happen at once, discuss a separate room for consultations or booking paperwork.",
+    // Empty on purpose: the section is the paragraph and the area table, as in the brief.
+    whyBullets: [],
+    whyTable: {
+      caption: "What to discuss for each area of the office. The fittings, furniture and finishes included are confirmed in the quotation.",
+      headers: ["Area", "Features to discuss"],
+      rows: [
+        ["Entrance and reception", "Glass frontage, signage, reception counter and a clear route in from parking"],
+        ["Display area", "Printed plans, a model display or a screen for walkthroughs"],
+        ["Consultation area", "A discussion table, seating, sockets and a partition where privacy is needed"],
+        ["Waiting area", "Visitor seating and shade at the entrance where the site allows"],
+        ["Staff area", "Storage for brochures, charging points and space for daily paperwork"],
+      ],
+    },
+
+    solutionsHeading: "Site sales offices for plotted layouts, villas and apartments",
+    solutionsIntro:
+      "For a launch near the Ring Road, Thiruparankundram, Thirumangalam or Thoppur, share the entrance plan and the expected visitor flow. Choose a location buyers can find easily while keeping vehicle circulation, construction access and pedestrian routes clear. Reserve display space for the project plans, booking information and any notices your project team needs to show.",
+    // Empty on purpose: the section is one paragraph, as in the brief.
+    solutions: [],
+
+    featuresHeading: "Marketing office layout examples",
+    featuresIntro: "These footprints are starting points for discussion.",
+    // The brief's table (layout, example footprint, use), one row per item. Sizes use no-break spaces
+    // (\u00a0) so a footprint never splits over two lines.
+    features: [
+      "Compact enquiry office, 10\u00a0×\u00a08\u00a0ft: admissions, dealer outreach or a small enquiry desk",
+      "Site sales office, 20\u00a0×\u00a010\u00a0ft: reception, plan display and a compact consultation area",
+      "Sales gallery with discussion room, 30\u00a0×\u00a010\u00a0ft: separate visitor seating and private discussions",
+      "Larger visitor lounge, 40\u00a0×\u00a010\u00a0ft: display wall, waiting area and consultation space",
+    ],
+    sizesNote:
+      "Confirm dimensions, occupancy, fittings and availability in the quotation. For more configuration ideas, or a separate staff or site operations workspace, explore:",
+    // Brief section 5: the confirmed marketing office product page, with the brief's anchor; then the
+    // general Madurai portable-cabin page (its brief, section 5: "After Layout Examples").
+    featuresLinks: [
+      { label: "Portable marketing office layouts", href: "/products/marketing-office" },
+      { label: "Portable cabins in Madurai", href: "/cities-we-serve/portable-cabin-madurai" },
+    ],
+
+    customHeading: "Portable marketing office price in Madurai",
+    customIntro:
+      "Pricing depends on cabin size, layout, glazing, insulation, finishes, display fittings, electrical provisions, branding and delivery access. Share the launch date and itemised requirements.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro: "If you need a short-term unit, ask whether a suitable marketing-office layout can be quoted on hire for those dates.",
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Madurai and the Ring Road corridor, including Thiruparankundram, Thirumangalam, Thoppur, Kappalur, Vadapalanji, Avaniyapuram, Vilangudi, Samayanallur, Othakadai, Melur, Mattuthavani, Uthangudi and K. Pudur. Delivery is assessed for each site.",
+    // Agreed with the Virudhunagar marketing-office page (whichever merged second adds both links): its
+    // visitors with a Virudhunagar-district site get the dedicated page.
+    areasLinks: [{ label: "Portable marketing offices in Virudhunagar", href: "/cities-we-serve/portable-marketing-office-virudhunagar" }],
+
+    howHeading: "From enquiry to launch",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share your use case, site address, target launch date and expected visitor numbers.", text: "" },
+      { title: "Review the proposed layout and itemised quote, including delivery, unloading and installation scope.", text: "" },
+      { title: "Approve drawings, finishes, artwork and the location of display and electrical points.", text: "" },
+      { title: "Confirm site access, base readiness and utility responsibilities before agreeing on a delivery and handover schedule.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Glazing, shade and lighting for evening visits",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For a glass-front sales office, consider how afternoon sun reaches the façade and where visitors will wait. Discuss insulation, solar-control glazing, entrance shade and AC provision for the selected layout. For evening appointments, plan lighting at the entrance and along the path to parking. Position display lighting to keep plans readable through glare. Confirm electrical supply and the scope of any exterior lighting or illuminated signage before ordering.",
+        ],
+      },
+      {
+        heading: "Seasonal campaigns and repeat launches",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Work backwards from your opening date to allow time for layout sign-off, approved graphics, site preparation and utility connections. For a campaign timed around Chithirai or another festival, confirm the permitted site and access arrangements before scheduling delivery. The same planning applies to dealership promotions, school or college admissions, and customer outreach programmes.",
+          "If you expect to reuse the office, tell us before the layout is finalised. Discuss replaceable signboards, removable graphics and display surfaces that can accept new plans. Future relocation depends on the approved cabin design, lifting arrangement and access at both sites. Confirm how furniture, screens and other loose equipment will be handled before transport.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How is a marketing office laid out?",
+        answer:
+          "The layout supports visitor reception, displays and sales consultations. Start with how many visitors and staff will use the office at once, then choose the seating and display space.",
+      },
+      {
+        question: "Can the office be moved to our next launch?",
+        answer:
+          "Relocation can be discussed if the cabin was designed for it and both sites have suitable lifting and vehicle access. Ask for the relocation scope separately.",
+      },
+      {
+        question: "Can I request a glass front and AC provision?",
+        answer:
+          "Yes. Share the façade, shade and cooling requirements. Confirm the glazing, insulation and electrical scope, including whether the AC equipment is included, in the quotation.",
+      },
+      {
+        question: "Can we use a marketing office for a festival campaign?",
+        answer:
+          "You can enquire for an approved site. Confirm the landowner’s permission and any required event or access approvals before planning placement.",
+      },
+      {
+        question: "Is a marketing office available on rent?",
+        answer: "Share the proposed dates, site and layout. The team can confirm whether a suitable rental configuration is available.",
+      },
+      {
+        question: "How quickly can you deliver to Madurai?",
+        answer:
+          "Timing depends on the approved layout, fittings, production or rental availability, and delivery access. Share your launch date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a portable marketing office quote in Madurai",
+    ctaText:
+      "Send the site location, launch date, expected visitor numbers and any requirements for glazing, consultation rooms, display screens, signage or cooling. Include photos of the approach and proposed placement area.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons (one of
+    // them is "Container Office on Rent"); the call and WhatsApp buttons (numbers from COMPANY) stay on.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinksHeading: "Related pages",
+    relatedLinks: [
+      { label: "Prefab Marketing Office", href: "/products/marketing-office/prefab-marketing-office" },
+      { label: "Prefab Buildings", href: "/products/category/prefab-building" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru; there is no company yard, depot or branch in Madurai. Every marketing office is quoted to the layout you approve, and the written quotation fixes its size, glazing, insulation, fittings, finishes, branding, any AC provision, any hire or relocation scope, and who handles delivery, unloading and installation. Delivery dates are estimates, not guarantees. The four images are illustrative renders of a single two-storey container office design; they are not photographs from Madurai and do not show a supplied unit. Thiruparankundram, Thirumangalam, Thoppur, the Ring Road and the other localities listed indicate where enquiries are welcome, and Chithirai appears only as an example of a date to plan around. The company is not affiliated with any developer, project, dealership, school, college, temple or festival organiser in the region, and nothing on this page describes a customer, a completed installation or a confirmed delivery location. Guidance on placement, glazing, lighting, electrical supply, permissions and relocation is general information, not engineering, legal or regulatory advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE MARKETING OFFICES IN VIRUDHUNAGAR — owner brief "Virudhunagar portable marketing office
+   * page" (2026-11-09). Route /cities-we-serve/portable-marketing-office-virudhunagar: no existing
+   * route, redirect or sitemap entry used it, and no other page names Virudhunagar or Sivakasi. As the
+   * brief asks, the page is about textile recruitment, investor meetings, Sivakasi print samples and
+   * seasonal booking desks; the Madurai marketing-office page (separate brief) keeps property launches
+   * and evening visitor appointments. The PM MITRA park area is named only as geographic context: no
+   * project milestone, investment or employment figure, and no affiliation.
+   *
+   * MAPPING onto main's template as it is (no template code is changed):
+   *   • Intro → intro.
+   *   • "Sales offices near E. Kumaralingapuram" → why (the paragraph; no bullets).
+   *   • "Recruitment centres for textile and industrial units" → solutions heading + intro, no items.
+   *   • "Investor and business meeting cabins", "Sample showroom offices for Sivakasi printers",
+   *     "Seasonal booking offices" and "Signage and display upkeep near NH 44" → four afterSolutions
+   *     extra sections, in the brief's order.
+   *   • "Layout examples" → features: the five table rows as list items (the features slot is a list,
+   *     not a table), the confirmation sentence as the bold note with the brief's lead-in, then the
+   *     product link from brief section 5. The gallery follows it.
+   *   • "Portable marketing office price in Virudhunagar" → custom (prose: customBullets is empty); the
+   *     hire sentence is the outro. No hire link: /rental-service does not cover marketing offices
+   *     (checked live 2026-11-09), so hire stays an enquiry, as the brief allows.
+   *   • "Areas we serve" → areas; "From enquiry to handover" → how (title-only steps). The template puts
+   *     areas before the steps, the reverse of the brief.
+   *   • FAQs (five) → faqs; the closing request → CTA. Buttons: Request a Quote (→ /contact), Call and
+   *     WhatsApp (numbers from COMPANY), repeated under the intro (`heroCta`). No enquiry form: the
+   *     Marketing Office product's category (prefab-building) has no category landing, so /api/enquiries
+   *     would reject the form.
+   * Composed (owner review): the tagline, the layout-example list wording, the link lead-in, the alt
+   * text and captions of all five images and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): "Portable marketing office layouts" → /products/marketing-office (live,
+   * 200). The Marketing Office product page is a Merchant-fed product with no Tamil Nadu or
+   * related-locations section, so the reverse link is not added ("where supported"). The Madurai page
+   * (#239) merged first, so this PR adds the agreed links both ways (`areasLinks`, see below). The /cities-we-serve directory lists this page in its Tamil Nadu
+   * group automatically, with the brief's anchor as `directoryLabel`, and the Tamil Nadu portable-cabin
+   * hub (seoPromotions) lists it.
+   *
+   * Images: five owner-dropped webp renders ("public/images/virudhunagar marketing office city page/
+   * virudhunagar/cabin (1–5).webp": 1451×1084 ×4 and 1200×896, no EXIF / XMP / ICC), copied under
+   * descriptive names with a truthful XMP dc:title / dc:description ("Illustrative render of…") added
+   * losslessly; the decoded pixels are identical and no camera, GPS or date data is added. They show one
+   * two-storey container office design (front, two corners and two interiors), not a glazed entrance,
+   * sign panel, registration area, conference table or print display, so only the exterior hero slot is
+   * used (with its brief filename): each image has its own visible-detail alt text and an
+   * "illustrative render" caption, the unmatched slots are omitted, and no alt text names a place.
+   *
+   * No ₹ figure, stock, lead time, occupancy figure, client, project, institution or trade affiliation.
+   * Joined modules, AC equipment, restrooms, AV and display equipment, hire and relocation stay
+   * quote-dependent, as in the owner's copy, and the booking-office copy stays administrative (no
+   * fireworks or hazardous stock in the cabin). Opts into the CSS-only motion pass (`motion: true`), the
+   * Service JSON-LD (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-marketing-office-virudhunagar",
+    city: "Virudhunagar",
+    listTitle: "Portable Marketing Offices in Virudhunagar",
+    // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
+    directoryLabel: "Portable marketing offices in Virudhunagar",
+    metaTitle: "Portable Marketing Offices in Virudhunagar",
+    metaDescription:
+      "Enquire about portable marketing offices in Virudhunagar for property sales, textile recruitment, investor meetings and print sample displays in Sivakasi.",
+    keywords:
+      "Portable Marketing Office in Virudhunagar, Sales Office Virudhunagar, Sample Showroom Office Sivakasi, Recruitment Centre Cabin Virudhunagar, Portable Investor Meeting Room",
+    geo: {
+      region: "IN-TN",
+      placename: "Virudhunagar, Tamil Nadu, India",
+      position: "9.5680;77.9624",
+      icbm: "9.5680, 77.9624",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Marketing Office" },
+    // The hero is 1451 × 1084 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-portable-marketing-office-exterior.webp",
+      alt: "Two-storey container office with a ground-floor door and windows, a covered upper deck and an external staircase",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative portable marketing office design. Entrance, glazing, signage and layout are agreed in the quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-marketing-office-rear-corner.webp",
+      alt: "Two-storey container office seen from the rear corner, with windows on both floors and an external staircase to a covered upper deck",
+      width: 1451,
+      height: 1084,
+      // Kept short: the band's caption sits on the image, and a long one covers half of it on a phone.
+      caption: "Illustrative render: rear-corner view of a two-storey container office design.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-marketing-office-interior-desk.webp",
+      alt: "Cabin office interior with a desk, a computer, three chairs, low storage cabinets, two windows and a door",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative interior render. Desks, seating, display fittings, partitions and electrical points follow the layout you approve.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-marketing-office-front-corner.webp",
+        alt: "Two-storey container office seen from the front corner, with an external staircase, a covered upper deck and a planted bed",
+        width: 1200,
+        height: 896,
+        caption: "Illustrative render: front-corner view of the same two-storey design.",
+      },
+      {
+        src: "/images/cities/portable-marketing-office-virudhunagar/virudhunagar-marketing-office-desk-deck-door.webp",
+        alt: "Cabin room with a desk, two visitor chairs and a filing cabinet, and an open door onto a covered deck",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of a room with a desk and visitor chairs. Furniture and fittings are confirmed in the quotation.",
+      },
+    ],
+
+    h1: "Portable Marketing Offices in Virudhunagar",
+    tagline:
+      "Visitor-facing offices planned for recruitment drives, investor meetings, print sample displays and seasonal booking desks across Virudhunagar district.",
+    intro: [
+      "Give job applicants a place to register, show print samples to visiting buyers, or present a site plan to investors before your permanent office opens. Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries for portable marketing offices in Virudhunagar district. Share what visitors need to do inside the cabin so the reception, display and meeting spaces can be planned around that purpose.",
+    ],
+
+    whyHeading: "Sales offices near E. Kumaralingapuram",
+    whyIntro:
+      "For housing, industrial land or warehousing projects around the PM MITRA textile park area, discuss a visitor-facing office with a reception desk, layout displays and a place for consultations. Bring your approved plans and signage requirements to the layout review. Agree on where visitors can park and walk without crossing construction or service traffic.",
+    // Empty on purpose: the section is one paragraph, as in the brief.
+    whyBullets: [],
+
+    solutionsHeading: "Recruitment centres for textile and industrial units",
+    solutionsIntro:
+      "Plan the route from registration to waiting, document checks and interviews. Allow enough desk space for paperwork and a separate area for confidential conversations. If applicants arrive in groups, discuss shaded seating, drinking-water access, clear directions and a queue system. Confirm restroom access and any privacy or accessibility requirements. A larger drive may call for multiple modules. Confirm the configuration against the site and expected visitor numbers.",
+    // Empty on purpose: the section is one paragraph, as in the brief.
+    solutions: [],
+
+    featuresHeading: "Layout examples",
+    featuresIntro: "These footprints are starting points for discussion.",
+    // The brief's table (configuration, example footprint, typical layout), one row per item. Footprints use
+    // no-break spaces (\u00a0) so a size never splits over two lines.
+    features: [
+      "Compact booking office (10\u00a0×\u00a08\u00a0ft): order desk and visitor seating",
+      "Property sales office (20\u00a0×\u00a010\u00a0ft): reception and plan display",
+      "Print sample showroom (20\u00a0×\u00a010 to 30\u00a0×\u00a010\u00a0ft): sample walls, shelves and order desk",
+      "Investor meeting cabin (30\u00a0×\u00a010\u00a0ft): meeting table and presentation wall",
+      "Recruitment centre (one or more modules): registration, waiting and interview areas",
+    ],
+    sizesNote: "Confirm dimensions, occupancy, fittings and availability in the quotation. Explore our range for more configuration ideas:",
+    // Brief section 5: the confirmed marketing office product page, with the brief's anchor.
+    featuresLinks: [{ label: "Portable marketing office layouts", href: "/products/marketing-office" }],
+
+    customHeading: "Portable marketing office price in Virudhunagar",
+    customIntro:
+      "The price depends on the footprint, layout, glazing, partitions, display fittings, lighting, branding and delivery access. Tell us whether you need a compact booking desk or several rooms.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "If you need a short-term office, share your dates so the team can confirm whether a suitable configuration can be quoted on hire.",
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Virudhunagar, E. Kumaralingapuram, Sivakasi, Sattur, Srivilliputhur, Rajapalayam, Aruppukottai and Kariapatti, including sites along NH 44. Delivery is assessed for each location.",
+    // Brief section 5's optional related-location link (anchor from the brief, first letter capitalised for the
+    // list), added once the Madurai page was merged; that page links back here the same way.
+    areasLinks: [{ label: "Portable marketing offices in Madurai", href: "/cities-we-serve/portable-marketing-office-madurai" }],
+
+    howHeading: "From enquiry to handover",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share your intended use, visitor numbers, site address and opening date.", text: "" },
+      { title: "Review the layout, fittings and itemised quotation.", text: "" },
+      { title: "Confirm signage, power and data requirements, base readiness and access for unloading.", text: "" },
+      { title: "Agree on the delivery and handover schedule. Discuss any later relocation separately.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Investor and business meeting cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A meeting cabin can include a conference table, a wall for site plans and provisions for a screen or video calls. Share the expected group size, presentation equipment and connectivity needs. Confirm sockets, data points and who will supply the internet connection, display and furniture.",
+        ],
+      },
+      {
+        heading: "Sample showroom offices for Sivakasi printers",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Set aside space for calendars, diaries, labels, cartons and other approved print or packaging samples. Discuss wall displays, shelves or cases, and a table where buyers can compare finishes and review quantities. If colour matching is important, specify the viewing and lighting requirements. Removable displays make it easier to update the sample range before a new sales season.",
+        ],
+      },
+      {
+        heading: "Seasonal booking offices",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For short campaigns, plan a desk for enquiries and order paperwork, seating for customers and storage for catalogues. The layout described here is for administrative use. Keep fireworks and other hazardous stock out of the cabin. For enquiries connected to a regulated trade, confirm proposed use and placement with the responsible safety and licensing teams before ordering.",
+        ],
+      },
+      {
+        heading: "Signage and display upkeep near NH 44",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Share the proposed sign location, approach and approved vehicle access. Keep the message short and plan the entrance from the site’s parking area. Confirm any sign or access approvals and the electrical scope for illuminated signage.",
+          "On dusty sites, discuss door seals, a closer, an entrance mat and wipe-clean finishes. Enclosed sample cases can reduce the cleaning required between visits. Confirm the ventilation, insulation and AC provisions for the selected layout.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a portable office be used for recruitment?",
+        answer:
+          "Yes. Share the expected number of applicants and how registration, document checks and interviews will run so the layout can be assessed.",
+      },
+      {
+        question: "Can I display printed samples inside the cabin?",
+        answer:
+          "Yes. Share sample dimensions and any colour-viewing requirements so display surfaces, lighting and buyer seating can be specified.",
+      },
+      {
+        question: "Can I request an investor meeting room with video-call facilities?",
+        answer:
+          "Yes. Confirm screen, camera, power and data provisions in the quote and identify who will supply the equipment and internet connection.",
+      },
+      {
+        question: "Can I rent a marketing office for a short campaign?",
+        answer: "Share the dates, site and layout. The team can confirm whether a suitable unit and hire terms are available.",
+      },
+      {
+        question: "How soon can you deliver to Virudhunagar?",
+        answer:
+          "Timing depends on the approved layout, fittings, production or hire availability, and site access. Share your opening date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a portable marketing office quote in Virudhunagar",
+    ctaText:
+      "Send the site location, expected visitor numbers, intended use, opening date and approach photos. Include any requirements for interview partitions, sample cases, presentation equipment or signage.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons (one of
+    // them is "Container Office on Rent"); the call and WhatsApp buttons (numbers from COMPANY) stay on.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinksHeading: "Related pages",
+    relatedLinks: [
+      { label: "Prefab Marketing Office", href: "/products/marketing-office/prefab-marketing-office" },
+      { label: "Prefab Buildings", href: "/products/category/prefab-building" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin's factory is near Hosur in Tamil Nadu and its Karnataka office is in Electronic City Phase 1, Bengaluru; the company does not run a yard, depot or office in Virudhunagar district. Each marketing office is quoted for the layout you approve: its size, glazing, partitions, fittings, finishes, branding, any AC provision, any joined modules, any hire or relocation scope and the delivery, unloading and installation arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one two-storey container office design, not photographs taken in Virudhunagar district or of a unit that has been supplied, and not a textile park installation. E. Kumaralingapuram, the PM MITRA textile park area, Sivakasi, NH 44 and the other places named show the area enquiries may come from. Portable Office Cabin has no affiliation with the PM MITRA park, its developer or any government body, or with any textile unit, printer, fireworks or other trade business, developer or investor there, and none of the uses or places described should be read as a customer, a finished project or a confirmed delivery point. The cabins are offered for administrative, sales, meeting and display use only, not for storing fireworks or other hazardous goods. Notes on placement, signage, electrical supply, approvals, licensing and relocation are general guidance, not engineering, legal or regulatory advice.",
   },
 ];
 

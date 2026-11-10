@@ -246,11 +246,14 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "portable-toilet-cabins": {
     locationHeading: "Portable toilet cabins by location",
-    // The four promotion pages, then the portable-toilet city page (Krishnagiri, 2026-11-04).
+    // The four promotion pages, then the portable-toilet city pages (Devanahalli, 2026-11-05;
+    // Krishnagiri, 2026-11-04; Dharmapuri, 2026-11-05; Doddaballapur, 2026-11-05).
     locationLinks: [
       ...promotionLocations("portable-toilet-cabin"),
       { name: "Devanahalli", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
       { name: "Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+      { name: "Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
+      { name: "Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
     ],
     guideLinks: [
       {
@@ -276,6 +279,14 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Cargo storage containers in Bangalore", href: "/promotions/cargo-storage-container-in-bangalore" },
       // First city page on this list (2026-11-05, owner brief): the Shivamogga shipping-container page.
       { name: "Shipping containers in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
+      // Uttara Kannada district page (Karwar, Sirsi and the coast), 2026-11-07.
+      { name: "Shipping containers in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
+      // Marathahalli / Outer Ring Road commercial storage page (owner brief, 2026-11-07).
+      { name: "Shipping containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
+      // Vellore shipping-container page (2026-11-07, owner brief), after Shivamogga so live links keep their positions.
+      { name: "Shipping containers in Vellore", href: "/cities-we-serve/shipping-container-vellore" },
+      // Chamarajanagar district page (owner brief, 2026-11-08).
+      { name: "Shipping containers in Chamarajanagar", href: "/cities-we-serve/shipping-container-chamarajanagar" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
