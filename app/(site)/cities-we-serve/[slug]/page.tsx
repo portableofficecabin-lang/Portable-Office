@@ -422,6 +422,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             {/* Optional table (`whyTable`); unset = no element. */}
             {page.whyTable && renderTable(page.whyTable)}
             {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
+            {/* Optional contextual links after the outro (`whyLinks`); unset = nothing rendered. */}
+            {page.whyLinks && page.whyLinks.length > 0 && renderLinks(page.whyLinks)}
           </>
         )}
 
