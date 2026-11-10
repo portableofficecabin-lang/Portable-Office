@@ -169,6 +169,12 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   if (p.whyOutro) t("why", "why outro", p.whyOutro);
   // Optional why links (since 2026-11-09): label text and href.
   (p.whyLinks ?? []).forEach((l, i) => { t("why", `why link ${i + 1} "${l.label}"`, l.label); m("why", `why link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  // Optional why inline link (since 2026-11-10): the sentence before it, the label and the href.
+  if (p.whyInlineLink) {
+    t("why", "why inline link lead-in", p.whyInlineLink.before);
+    t("why", `why inline link "${p.whyInlineLink.link.label}"`, p.whyInlineLink.link.label);
+    m("why", `why inline link href ${p.whyInlineLink.link.href}`, `href="${p.whyInlineLink.link.href}"`);
+  }
   if (p.featureImage) {
     items.push({ group: "images", label: "feature image src", test: (mk) => imageNeedle(p.featureImage!.src).test(mk) });
     m("images", "feature image alt", `alt="${p.featureImage.alt}"`);
@@ -251,6 +257,12 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     (s.closing ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} closing ${j + 1}`, x));
     // Optional links (since 2026-11-05): label text and href.
     (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
+    // Optional inline-link paragraphs (since 2026-11-10): lead-in, label and href.
+    (s.inlineLinks ?? []).forEach((il, j) => {
+      t("extra", `extra section ${i + 1} inline link ${j + 1} lead-in`, il.before);
+      t("extra", `extra section ${i + 1} inline link ${j + 1} "${il.link.label}"`, il.link.label);
+      m("extra", `extra section ${i + 1} inline link ${j + 1} href ${il.link.href}`, `href="${il.link.href}"`);
+    });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
     // heading and the features heading in the visible text. A page without those optional sections
     // (since 2026-11-08) is checked against the headings either side instead: the why heading before,
