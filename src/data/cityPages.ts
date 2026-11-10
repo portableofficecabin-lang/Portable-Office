@@ -50,14 +50,6 @@ export interface CityPageFigure {
 export interface CityPageLink {
   label: string;
   href: string;
-  /**
-   * Optional start of a sentence rendered before the link, which then ends the sentence with a full
-   * stop: "<lead> <link>." (first used by Portable Cabins in Kanchipuram Town, whose brief words its
-   * Kundrathur-belt link as "For …, see our [anchor]."). Only the contextual link lists render it
-   * (areasLinks, customLinks, featuresLinks and an extra section's links); the CTA, related and nearby
-   * blocks ignore it. Unset = the bare link, so every other page's HTML is unchanged.
-   */
-  lead?: string;
 }
 
 /**
@@ -22820,8 +22812,16 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas we serve",
     areasText:
       "We welcome enquiries from Kundrathur, Thirumudivakkam, Mangadu, Gerugambakkam, Kovur, Somangalam and Sikkarayapuram. Delivery is assessed for each site.",
+    // Reciprocal link with the Kanchipuram town page (#243): the anchor from the owner's Kundrathur brief,
+    // the topics from the town brief ("reference weaving work-sheds, festival support and service counters";
+    // wording approved by the owner on 2026-11-09).
+    areasInlineLink: {
+      before: "For weaving work-sheds, festival support or service counters, see our",
+      link: { label: "portable cabins in Kanchipuram town", href: "/cities-we-serve/portable-cabin-kanchipuram" },
+      after: ".",
+    },
     // Brief section 5: the optional related-location note for a separate Sriperumbudur-belt site. The
-    // Kanchipuram town link joins it once both pages are live (see the header comment).
+    // Kanchipuram town link (#243) is the areasInlineLink above, added with #243 once both pages were live.
     areasLinks: [
       { label: "Portable cabins for the Mambakkam industrial belt", href: "/cities-we-serve/portable-cabin-mambakkam" },
     ],
@@ -24252,10 +24252,10 @@ export const CITY_PAGES: CityPage[] = [
    * construction sites, events and short-term projects) follows the hire sentence. The /cities-we-serve
    * directory lists this page under Tamil Nadu by itself (geo.region IN-TN, card label = `directoryLabel`,
    * the brief's anchor), and both Tamil Nadu portable / porta cabin keyword hubs (seoPromotions) list it
-   * after Mambakkam. The reciprocal Kundrathur-belt links (#245, "portable cabins in the Kundrathur belt"
-   * here, after Areas we serve, with the brief's lead sentence) are added when #245 is live, as the brief
-   * says. The brief has no link from the portable cabin product page's Tamil Nadu section, because that
-   * page has none.
+   * after Mambakkam. The reciprocal Kundrathur-belt links (#245, live first) are `areasInlineLink`
+   * paragraphs after Areas we serve on both pages: here "portable cabins in the Kundrathur belt" in the
+   * brief's sentence, there "portable cabins in Kanchipuram town". The brief's link from the portable
+   * cabin product page's Tamil Nadu section is not added, because that page has no such section.
    *
    * KEYWORD OWNERSHIP: portable / porta cabin × Kanchipuram town (Kancheepuram), Walajabad, Uthiramerur
    * and Damal. The brief keeps the town, Kundrathur belt and Mambakkam industrial pages distinct:
@@ -24370,6 +24370,12 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas we serve",
     areasText:
       "We welcome enquiries from Periya Kanchipuram, Chinna Kanchipuram, Pillaiyarpalayam, Enathur, Ayyampettai, Walajabad, Uthiramerur and Damal. Delivery is assessed for each site.",
+    // Brief section 5: the Kundrathur belt page (#245), after Areas we serve, in the brief's sentence.
+    areasInlineLink: {
+      before: "For engineering workspaces or suburban sites near Kundrathur, see our",
+      link: { label: "portable cabins in the Kundrathur belt", href: "/cities-we-serve/portable-cabin-kancheepuram-district" },
+      after: ".",
+    },
 
     howHeading: "From enquiry to placement",
     // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
