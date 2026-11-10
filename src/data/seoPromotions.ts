@@ -414,10 +414,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Containers for Hydel Project Sites", href: "/cities-we-serve/shipping-containers-hydel-project-visakhapatnam" },
   ],
   // Portable-toilet hub — Portable Toilets in Krishnagiri (2026-11-04), the first portable-toilet city
-  // page; the page links back to this hub.
+  // page, then Portable Toilet Cabins in Dharmapuri and in Shoolagiri (2026-11-05); each page links back to this hub.
   "Portable Toilet Cabin|Tamil Nadu": [
     { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
     { name: "Portable Toilet Cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
+    { name: "Portable Toilet Cabins in Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
   ],
   // Karnataka portable-toilet hub — Portable Toilet Cabins for Devanahalli Aerospace Park (2026-11-05),
   // the first Karnataka portable-toilet city page, then Portable Toilet Cabins in Doddaballapur
