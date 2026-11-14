@@ -269,6 +269,20 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
         },
       });
     }
+    // Optional placement (since 2026-11-10): an "afterIntro" section sits between the first intro
+    // paragraph and the why heading in the visible text.
+    if (s.placement === "afterIntro") {
+      items.push({
+        group: "extra",
+        label: `extra section ${i + 1} renders after the intro`,
+        test: (_mk, tx) => {
+          const a = tx.indexOf(squash(p.intro[0] ?? p.h1));
+          const b = a >= 0 ? tx.indexOf(squash(s.heading), a) : -1;
+          const c = b >= 0 ? tx.indexOf(squash(p.whyHeading), b) : -1;
+          return a >= 0 && b > a && c > b;
+        },
+      });
+    }
   });
   t("faq", "FAQ section heading", "Frequently Asked Questions");
   p.faqs.forEach((f, i) => { t("faq", `FAQ ${i + 1} question`, f.question); t("faq", `FAQ ${i + 1} answer`, f.answer); });

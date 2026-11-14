@@ -214,8 +214,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
   );
 
   /* One optional extra section (`extraSections`): owner copy with more H2s than the fixed slots
-     hold. Same classes and motion as the fixed sections. Rendered after the "how" steps, or after
-     the solutions list when `placement` is "afterSolutions". */
+     hold. Same classes and motion as the fixed sections. Rendered after the "how" steps, after the
+     intro when `placement` is "afterIntro", or after the solutions list when it is "afterSolutions". */
   const renderSection = (sec: CityPageSection) => (
     <section key={sec.heading}>
       <h2 className={`${h2}${mc("reveal")}`}>{sec.heading}</h2>
@@ -369,6 +369,9 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             </a>
           </div>
         )}
+
+        {/* Optional extra sections placed straight after the intro (`placement: "afterIntro"`). */}
+        {page.extraSections?.filter((sec) => sec.placement === "afterIntro").map(renderSection)}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.whyHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.whyIntro}</p>
