@@ -27324,8 +27324,9 @@ export const CITY_PAGES: CityPage[] = [
    * descriptive names: (1) three-quarter view, 1024² = hero / og:image; (2) front view, 1200×896 =
    * single-image gallery after the price factors; (3) interior, 1200×896 = beside "Why Choose",
    * captioned. They show one green corrugated MS cabin with a pitched roof in a yard. Owner
-   * correction of 2026-11-05: they are illustrative images unless the owner confirms they are
-   * photographs of manufactured units, so every alt text, both captions and the disclaimer say so.
+   * correction of 2026-11-05 labelled them illustrative until confirmed; on 2026-11-06 the owner
+   * confirmed they are real photographs of our units, so the alt texts, captions and disclaimer now
+   * call them photographs.
    * No alt text names Salem, and the disclaimer says they do not show an installation in Salem.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
@@ -27345,23 +27346,23 @@ export const CITY_PAGES: CityPage[] = [
 
     heroImage: {
       src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-three-quarter-view.webp",
-      alt: "Prefabricated portable security cabin — illustrative image of a green corrugated MS guard cabin with a dark grey lower band, a pitched roof with a lifting eye, a bulkhead light over the steel door and a glazed sliding window under a sunshade, on a steel base frame in a yard",
+      alt: "Prefabricated portable security cabin — photograph of a green corrugated MS guard cabin with a dark grey lower band, a pitched roof with a lifting eye, a bulkhead light over the steel door and a glazed sliding window under a sunshade, on a steel base frame in a yard",
       width: 1024,
       height: 1024,
-      caption: "Illustrative security cabin configuration; final fittings depend on approved specifications.",
+      caption: "A Portable Office Cabin MS security cabin; final fittings depend on approved specifications.",
     },
     interiorImage: {
       src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-interior.webp",
-      alt: "Interior of a portable security cabin — illustrative image with wood-finish laminate wall and ceiling panels, a glazed sliding window above a built-in desk with a telephone, a task chair, a bulkhead light over the door and a wall-mounted fire extinguisher",
+      alt: "Interior of a portable security cabin — photograph showing wood-finish laminate wall and ceiling panels, a glazed sliding window above a built-in desk with a telephone, a task chair, a bulkhead light over the door and a wall-mounted fire extinguisher",
       width: 1200,
       height: 896,
       caption:
-        "Illustrative security cabin configuration; final fittings depend on approved specifications. The desk, chair, telephone and fire extinguisher are shown for illustration.",
+        "Inside a Portable Office Cabin MS security cabin; final fittings depend on approved specifications. The furniture and equipment shown vary by order.",
     },
     gallery: [
       {
         src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-front-view.webp",
-        alt: "Prefabricated portable security cabin — illustrative front view of the green MS cabin: a corrugated steel door with a hasp and barrel bolt, a bulkhead light under a drip ledge, a pitched roof with a lifting eye and the side window's sunshade, on a steel base frame",
+        alt: "Prefabricated portable security cabin — front-view photograph of the green MS cabin: a corrugated steel door with a hasp and barrel bolt, a bulkhead light under a drip ledge, a pitched roof with a lifting eye and the side window's sunshade, on a steel base frame",
         width: 1200,
         height: 896,
       },
@@ -27630,12 +27631,13 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Offices in Mettur and Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
         { label: "Shipping Containers in Mettur and Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
         { label: "Krishnagiri Security Cabins", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+        { label: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
         { label: "Portable Cabins in Perundurai, Erode", href: "/cities-we-serve/portable-cabin-perundurai" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
 
-    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Salem district. Each delivery is planned for its order, including unloading, placement and the base or supports the site needs, and no manufacturing or delivery date is guaranteed. The cabin types, configurations, sizes, materials, insulation, fittings and finishes on this page are options, and the configurations are indicative; each cabin's size is confirmed through the approved drawing and quotation, and what is supplied is set out in the approved specification and quotation for each order. The three images are illustrative images of one MS security cabin design with a pitched roof, outside and inside; the desk, chair, telephone and fire extinguisher are shown for illustration, other cabin types look different, and the images do not show an installation in Salem. Salem Steel Plant (a unit of Steel Authority of India Limited) is named only to describe a location; Portable Office Cabin is not affiliated with it or with any mine, quarry, factory, yard or company in the Salem area, and the industries, sites, places and highways named here describe typical uses and places we accept enquiries from, not customers, finished projects or guaranteed delivery areas. A security cabin provides workspace for security staff; it does not by itself make a site secure or compliant with any security standard. Notes on heat, ventilation, dust, toilets and relocation are general guidance, not engineering, safety or legal advice.`,
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Salem district. Each delivery is planned for its order, including unloading, placement and the base or supports the site needs, and no manufacturing or delivery date is guaranteed. The cabin types, configurations, sizes, materials, insulation, fittings and finishes on this page are options, and the configurations are indicative; each cabin's size is confirmed through the approved drawing and quotation, and what is supplied is set out in the approved specification and quotation for each order. The three images are photographs of one MS security cabin with a pitched roof made by Portable Office Cabin, outside and inside; the furniture and equipment shown vary by order, other cabin types look different, and the images do not show an installation in Salem. Salem Steel Plant (a unit of Steel Authority of India Limited) is named only to describe a location; Portable Office Cabin is not affiliated with it or with any mine, quarry, factory, yard or company in the Salem area, and the industries, sites, places and highways named here describe typical uses and places we accept enquiries from, not customers, finished projects or guaranteed delivery areas. A security cabin provides workspace for security staff; it does not by itself make a site secure or compliant with any security standard. Notes on heat, ventilation, dust, toilets and relocation are general guidance, not engineering, safety or legal advice.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE SECURITY CABIN MANUFACTURERS IN SHOOLAGIRI INDUSTRIAL AREA — the security-cabin intent
@@ -28008,6 +28010,7 @@ export const CITY_PAGES: CityPage[] = [
       heading: "Nearby service areas",
       links: [
         { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+        { label: "Portable Security Cabins in Salem", href: "/cities-we-serve/portable-security-cabin-salem" },
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
         { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
