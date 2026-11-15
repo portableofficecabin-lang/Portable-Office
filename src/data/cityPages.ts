@@ -100,6 +100,18 @@ export interface CityPageSection {
    * by Portable Security Cabins in Krishnagiri, whose cabin-selection table follows its industries).
    */
   placement?: "afterSolutions";
+  /**
+   * Optional image rendered straight under the section heading, with the interior image's figure and
+   * caption (first used by Portable Office Cabins in Marathahalli, whose interior render sits in its
+   * layout guide). An image narrower than the 672 px frame is shown at its own width. Unset = no element.
+   */
+  image?: { src: string; alt: string; width: number; height: number; caption?: string };
+  /**
+   * Optional: render the bullets as a numbered list (<ol>) instead of a bulleted one, for owner steps
+   * that must stay in an extra section to keep the brief's order (first used by Portable Office Cabin
+   * in Bellandur, whose "From enquiry to placement" steps come before its areas). Unset = <ul>, as before.
+   */
+  ordered?: boolean;
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -212,6 +224,12 @@ export interface CityPage {
   tagline: string;
   intro: string[];
   /**
+   * Optional contextual links rendered as a short list after the intro paragraphs (first used by
+   * Portable Office Cabins in Marathahalli, whose brief links its introduction to the office cabin
+   * product page). Unset = nothing rendered.
+   */
+  introLinks?: CityPageLink[];
+  /**
    * Optional paragraph with one inline contextual link, rendered after the intro paragraphs and before
    * the hero contact row (first used by Portable Cabins Across Ranipet District, which sends enquiries
    * from inside the estate to the SIPCOT Ranipet page). Unset = no element, so every other page's HTML
@@ -219,10 +237,15 @@ export interface CityPage {
    */
   introLink?: CityPageInlineLink;
 
-  whyHeading: string;
-  whyIntro: string;
+  /**
+   * The "why" section. Optional since 2026-11-07, for owner copy whose first section after the intro
+   * is the solutions list (first used by Portable Office Cabins in Marathahalli): the section renders
+   * only when `whyHeading` is set, so every earlier page, which sets it, renders as before.
+   */
+  whyHeading?: string;
+  whyIntro?: string;
   /** May be empty when the section is a table (`whyTable`); an empty list renders no <ul>. */
-  whyBullets: CityPageListItem[];
+  whyBullets?: CityPageListItem[];
   /**
    * Optional table rendered after the "why" bullets and before `whyOutro`, with the same markup as an
    * extra section's table (first used by Portable Security Cabins in Krishnagiri for its portable
@@ -250,6 +273,7 @@ export interface CityPage {
    * only when `solutionsHeading` is set, and every earlier page sets all three, so its HTML is unchanged.
    */
   solutionsHeading?: string;
+  /** Optional since 2026-11-07 (owner copy with no lead-in, first Marathahalli): unset = no paragraph. */
   solutionsIntro?: string;
   solutions?: CityPageListItem[];
   /**
@@ -291,11 +315,16 @@ export interface CityPage {
   industriesIntro?: string;
   industries?: CityPageListItem[];
 
-  customHeading: string;
-  customIntro: string;
+  /**
+   * The customization section, which also holds `interiorImage`. Optional since 2026-11-07 on the same
+   * terms as the "why" section: it renders only when `customHeading` is set (an unset heading also drops
+   * the interior image), and every earlier page sets all four fields.
+   */
+  customHeading?: string;
+  customIntro?: string;
   /** May be empty for a prose section (first used by Shipping & Storage Containers in Bellandur); an empty list renders no <ul>. */
-  customBullets: CityPageListItem[];
-  customOutro: string;
+  customBullets?: CityPageListItem[];
+  customOutro?: string;
   /**
    * Optional contextual links rendered as a short list after `customOutro` (first used by Shipping
    * Containers in Shivamogga, which points retail and office conversions at their own pages).
@@ -327,7 +356,11 @@ export interface CityPage {
    */
   areasInlineLink?: CityPageInlineLink;
 
-  howHeading: string;
+  /**
+   * The ordering ("how") section. Optional since 2026-11-07 on the same terms as the "why" section: it
+   * renders only when `howHeading` is set, and every earlier page sets it and `howSteps`.
+   */
+  howHeading?: string;
   /**
    * Optional paragraph between the "how" heading and the numbered steps, and optional paragraph
    * after them (first used by Portable Cabins in Krishnagiri Industrial Area, whose delivery
@@ -335,7 +368,7 @@ export interface CityPage {
    * `text` is empty renders its title alone, without the " — " joiner.
    */
   howIntro?: string;
-  howSteps: CityPageListItem[];
+  howSteps?: CityPageListItem[];
   howOutro?: string;
 
   /**
@@ -365,6 +398,14 @@ export interface CityPage {
    * never from the entry. Shown by default since 2026-10-14 (unset = shown); set `false` to hide.
    */
   ctaContactButtons?: boolean;
+  /**
+   * Optional labels for the Call and WhatsApp buttons (CTA box and `heroCta` row), for owner copy that
+   * names them (first used by Portable Office Cabins in Marathahalli: "Call Us", "WhatsApp Your
+   * Requirements"). The number and link still come from COMPANY. Unset = "Call <number>" and
+   * "WhatsApp Us", as before.
+   */
+  callButtonLabel?: string;
+  whatsappButtonLabel?: string;
   /**
    * Optional row of contact buttons under the intro paragraphs: the primary quotation button (to the
    * on-page enquiry form when `enquiryForm` is set, otherwise /contact) plus Call and WhatsApp from
@@ -17218,7 +17259,8 @@ export const CITY_PAGES: CityPage[] = [
    * and workspace; the Marathahalli ORR shipping page keeps commercial and infrastructure storage on
    * the ORR; campus and tech-park intent stays with the Devarabisanahalli page. The brief's reciprocal
    * links with the office page (and the Marathahalli page's) are added by whichever page merges
-   * second, once both routes are live.
+   * second, once both routes are live. The office page merged second and added both office links: "see
+   * our office cabins in Bellandur" closes "Container condition, finish and fittings" below.
    *
    * Images: five owner-dropped webp renders ("public/images/Bellandur shipping city page/Bellandur
    * shipping/cabin (1–5).webp", no EXIF / XMP / ICC metadata). Four are copied byte-for-byte; the hero
@@ -17373,6 +17415,8 @@ export const CITY_PAGES: CityPage[] = [
           "Ask what condition is available and what the stated grade covers. A one-trip container typically shows limited use. A used cargo-worthy unit may show dents or surface wear. A unit described as wind and watertight is offered on that condition basis. Confirm the actual floor, doors, seals and roof condition before accepting a unit for household storage, and ask separately about any certification needed for transport.",
           "For residential placement, ask about a neutral repaint, a lockbox, vents or shelving. Confirm which fittings are available for the specific unit and whether modifications are permitted on a rental.",
         ],
+        closing: ["For a workspace with desks and electrical fittings, see our office cabins in Bellandur."],
+        links: [{ label: "Office cabins in Bellandur", href: "/cities-we-serve/portable-office-cabin-bellandur" }],
       },
     ],
 
@@ -26641,7 +26685,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Delivery Enquiries Around Krishnagiri",
     areasText:
-      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area and Hosur, and from sites along NH 44 and NH 48. For Shoolagiri and Dharmapuri, see the nearby service areas below. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
+      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area and Hosur, and from sites along NH 44 and NH 48. For Bargur, Shoolagiri and Dharmapuri, see the nearby service areas below. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
 
     howHeading: "Delivery and Installation",
     howIntro: "How an order moves from enquiry to installation:",
@@ -26822,6 +26866,8 @@ export const CITY_PAGES: CityPage[] = [
       heading: "Nearby Service Areas",
       links: [
         { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        // Bargur's own portable-toilet page (2026-11-05): Bargur left this page's areas list for it.
+        { label: "Portable Toilet Cabins in Bargur", href: "/cities-we-serve/portable-toilet-cabin-bargur" },
         { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Toilet Cabins in Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
@@ -32344,6 +32390,7 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
         { label: "Portable Toilet Cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
+        { label: "Portable Toilet Cabins in Bargur", href: "/cities-we-serve/portable-toilet-cabin-bargur" },
         // Brief of 2026-11-10 (Shoolagiri shipping-container page, §5), as agreed with this page's owner session:
         // a nearby link only, so the page's approved copy is unchanged.
         { label: "Shipping Containers in Shoolagiri", href: "/cities-we-serve/shipping-container-shoolagiri" },
@@ -32610,6 +32657,602 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers are supplied by Portable Office Cabin, whose factory is at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur in Krishnagiri district, Tamil Nadu, with a Bengaluru office in Electronic City; the company has no container yard, depot, branch or agent in Shoolagiri. Every unit is subject to stock. Your quotation records its size, condition, grade and dispatch point, any fittings or modifications, any hire terms, the dispatch paperwork, and who handles transport, unloading, placement and collection; delivery dates are not guaranteed. The four images are illustrative renders of a single steel shipping container, shown with an empty interior; none was photographed in Shoolagiri, at SIPCOT or at the Future Mobility Park, and none shows a delivered unit. SIPCOT (State Industries Promotion Corporation of Tamil Nadu) and the Future Mobility Park are mentioned only as places enquiries may come from, and Portable Office Cabin has no affiliation with them or with any business located there. The returnable-packaging, scrap, consumables and spares uses are examples of typical enquiries rather than customers, finished projects or confirmed delivery points. These containers are for general-purpose storage of suitable non-hazardous goods; hazardous waste, contaminated scrap and e-waste are excluded. Guidance on stacking, loads, waste classification, dispatch documents and e-way bills is general information, not engineering, environmental, safety, legal or tax advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABIN MANUFACTURERS IN BARGUR INDUSTRIAL AREA — the portable-toilet intent for
+   * Bargur (Krishnagiri district, Tamil Nadu — not Bargur in Erode district): the SIPCOT Industrial
+   * Growth Centre across the Bargur, Uthangarai and Pochampalli taluks (with its SEZ), the SIDCO
+   * Industrial Estate at Bargur and the NH 48 corridor. Compact cabins for small estate plots and
+   * multi-seater blocks for larger plants. It owns "toilet cabin + Bargur"; the Krishnagiri toilet page
+   * keeps Krishnagiri and no longer lists Bargur as a delivery town (no-cannibalisation rule), and the
+   * two pages link to each other.
+   *
+   * Owner brief of 2026-11-05 ("Portable Toilet Cabin Manufacturers in Bargur Industrial Area"): the
+   * preferred slug, meta title (62 chars), meta description (160 chars) and H1 verbatim. Names checked
+   * on 2026-11-05: SIPCOT's Industrial Growth Centre at Bargur/Uthangarai/Pochampalli taluks and its SEZ
+   * (sezindia.gov.in notifications), the SIDCO Industrial Estate at Bargur (TANSIDCO plot listings of
+   * about 0.11–1.03 acres), Balethottam and Olaipatti (villages near Pochampalli). The brief is section
+   * guidance; the text is written from it, with its caveats, and is not copied from the Krishnagiri page.
+   * Mapped onto the template slots:
+   *   • Hero → tagline, intro (four paragraphs), heroCta.
+   *   • "Toilet Cabins for Small Units and Larger Industrial Sites" → why, as a comparison table
+   *     (`whyTable`, empty whyBullets) + whyOutro (EHS plan line).
+   *   • "Types of Portable Toilet Cabins" → solutions (nine; FRP / bio-toilet left out — owner's final
+   *     decision of 2026-11-05 on unconfirmed toilet types). "Choosing the Right Construction Material"
+   *     → an extra section placed after the solutions, MS and PUF rows only (no FRP row, no
+   *     "maintenance-free").
+   *   • "Portable Toilet Cabin Price in Bargur" → features (cost factors) + bold quotation note.
+   *   • "Portable Toilets for Different Industries in Bargur" → industries (four; no named EV factory,
+   *     no dustproof / food-safety-compliance claims, decontamination stated as separate).
+   *   • "Compact Layouts for Small SIDCO Plots" → custom, beside the three-quarter image (600 px wide, so
+   *     the route caps it at its own width).
+   *   • "Why Choose Portable Office Cabin?" → whyUs; "Areas Served" → areas, as delivery enquiries;
+   *     "How to Order" → how (six steps).
+   *   • "Delivery to Bargur Industrial Locations" and its site-preparation list → two extra sections
+   *     after the steps (no guaranteed SEZ entry or automatic paperwork).
+   *   • FAQs: the brief's eight, no delivery times. No rental section or rental FAQ (brief: omit unless
+   *     offered in Bargur).
+   *   • "Request a Portable Toilet Cabin Quote in Bargur" → CTA + the portable-toilet-cabins enquiry form.
+   * Images: three owner-dropped webp files ("public/images/cities/bargur portable toilet city page/
+   * Bargur Industrial Area portable toilet/cabin (1–3).webp", no EXIF/XMP/ICC), copied byte-for-byte:
+   * (1) 1200×896 front, both doors open (Western commode one side, Indian pan the other) = hero /
+   * og:image; (2) 1200×896 rear with roof ventilator = feature band; (3) 600×448 three-quarter, doors
+   * closed = beside the compact-layout section. Described as illustrative images of one design, not
+   * installations in Bargur; no location in the alt text.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-bargur",
+    city: "Bargur",
+    listTitle: "Portable Toilet Cabins in Bargur",
+    metaTitle: "Portable Toilet Cabin in Bargur | SIPCOT & SIDCO Toilet Blocks",
+    metaDescription:
+      "Portable toilet cabins in Bargur, Krishnagiri district. Explore compact toilets for SIDCO units and prefabricated toilet blocks for SIPCOT and industrial sites.",
+    keywords:
+      "Portable Toilet Cabin in Bargur, Portable Toilet Bargur, Mobile Toilet Bargur Industrial Area, Toilet Cabin SIPCOT Bargur, Portable Toilet Cabin Manufacturers in Bargur, Portable Toilet Suppliers Bargur, Prefab Toilet Block Bargur, Portable Toilet Cabin Price in Bargur, Compact Toilet Cabin Bargur, Multi-Seater Toilet Block Bargur, Toilet Cabin for Industrial Units",
+    geo: { region: "IN-TN", placename: "Bargur, Krishnagiri, Tamil Nadu, India", position: "12.5333;78.3500", icbm: "12.5333, 78.3500" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-bargur/double-portable-toilet-cabin-front.webp",
+      alt: "Double portable toilet cabin with both doors open, showing a Western commode with a hand spray in one cubicle and an Indian squatting pan with a cistern in the other, under green corrugated panels and terracotta trims — illustrative image",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/portable-toilet-cabin-bargur/portable-toilet-cabin-rear-ventilator.webp",
+      alt: "Rear of the double portable toilet cabin: a plain green corrugated wall framed by terracotta trims, with a turbine ventilator on the roof — illustrative image",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable toilet cabin design; final fittings depend on specifications.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-bargur/double-portable-toilet-cabin-three-quarter.webp",
+      alt: "Compact double portable toilet cabin with both doors closed, seen at a three-quarter angle, with green corrugated walls, terracotta corner trims and a curved roof edge — illustrative image",
+      width: 600,
+      height: 448,
+      caption: "Illustrative image of a compact two-cubicle footprint. Plot fit, setbacks and service positions are confirmed in the approved drawing.",
+    },
+
+    h1: "Portable Toilet Cabin Manufacturers in Bargur Industrial Area",
+    tagline: "Compact Toilet Cabins for SIDCO Units and Toilet Blocks for Larger Plants",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable toilet cabins and sanitation blocks for industrial, commercial and construction-related requirements in Bargur and the surrounding areas of Krishnagiri district.",
+      "Bargur's industrial locations range from compact workshops on small estate plots to larger manufacturing and processing facilities, and each has different sanitation needs.",
+      "A portable toilet cabin gives employees, contractors and visitors a sanitation arrangement that can be customized to the site.",
+      "Depending on the requirement, a configuration may include one or more toilet cubicles, handwash facilities, a changing area, water storage and waste-management provisions.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Toilet Cabins for Small Units and Larger Industrial Sites",
+    whyIntro: "Small workshops and large plants plan sanitation differently:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Possible configurations by site size. The final layout and quantities are confirmed for each site.",
+      headers: ["Site", "Possible layouts"],
+      rows: [
+        [
+          "Small industrial units",
+          "Compact single toilet cabin, double toilet cabin, toilet and store combination, exterior handwash basin and suitable water storage",
+        ],
+        [
+          "Larger plants",
+          "Multi-seater toilet blocks, separate ladies toilet cabins, gents toilet cabins with urinals, handwash stations and changing rooms",
+        ],
+      ],
+    },
+    whyOutro:
+      "On a small unit, the layout must allow for limited space, access, privacy, ventilation, drainage and maintenance. On a larger plant, sanitation points are spread across the site, and actual quantities and layouts must follow the requirements that apply to the site and the customer's EHS plan.",
+
+    solutionsHeading: "Types of Portable Toilet Cabins",
+    solutionsIntro: "Each type is made to order in the configuration you approve:",
+    solutions: [
+      {
+        title: "Single Toilet Cabin",
+        text: "A compact cabin with one toilet cubicle for smaller workshops and facilities.",
+        link: { label: "Compare portable toilet cabin types", href: "/products/portable-toilet-cabin" },
+      },
+      {
+        title: "Double Toilet Cabin",
+        text: "A two-cubicle cabin for sites that need more capacity. Each cubicle can take an Indian or a Western seat, as in the cabin shown on this page.",
+      },
+      {
+        title: "Toilet and Store Combo Cabin",
+        text: "One structure with a toilet compartment and a separate lockable storage compartment, each with its own access.",
+      },
+      {
+        title: "Multi-Seater Toilet Block",
+        text: "A prefabricated block with several toilet cubicles for larger workforces.",
+        link: { label: "View the 4-unit toilet block specifications", href: "/products/portable-toilet-block-4-unit" },
+      },
+      {
+        title: "Ladies Toilet Cabin",
+        text: "A privacy-focused cabin with suitable locks, lighting and fittings.",
+      },
+      {
+        title: "Urinal Cabin",
+        text: "A unit with urinal fixtures and the plumbing they need.",
+      },
+      {
+        title: "Handwash Station",
+        text: "A multi-tap handwashing unit with suitable water and drainage connections.",
+      },
+      {
+        title: "Toilet and Changing Room Cabin",
+        text: "A combined unit with the toilet and the changing space kept separate.",
+      },
+      {
+        title: "MS and PUF Toilet Cabins",
+        text: "Toilet cabins on a mild steel frame, with MS sheet walls or insulated PUF panels, chosen according to how long and how the cabin will be used.",
+      },
+    ],
+
+    featuresHeading: "Portable Toilet Cabin Price in Bargur",
+    featuresIntro: "A toilet cabin is priced on its specification. The main cost factors are:",
+    features: [
+      "Cabin size",
+      "Number of toilet seats",
+      "Urinal fittings",
+      "MS, PUF-insulated or other available construction",
+      "A toilet and store combination layout",
+      "Changing room provisions",
+      "Handwash fittings",
+      "Water storage",
+      "Waste holding tanks",
+      "Plumbing connections",
+      "Interior finishes",
+      "Delivery and unloading",
+      "Quantity ordered",
+    ],
+    sizesNote:
+      "Send your requirement for a written quotation. Prices, discounts and delivery dates are confirmed only in that quotation.",
+
+    industriesHeading: "Portable Toilets for Different Industries in Bargur",
+    industriesIntro: "What to consider for the main types of site around Bargur:",
+    industries: [
+      {
+        title: "Granite processing units",
+        text: "cutting and processing yards can mean wet surfaces, dust and heavy vehicles. Consider slip-resistant flooring, easy-clean surfaces, suitable ventilation, durable sanitary fittings, safe pedestrian access and a position away from active loading routes. Vents and doors do not make a cabin dustproof.",
+      },
+      {
+        title: "Food processing and horticulture units",
+        text: "plan separate handwash facilities, easy-clean wall finishes, insect screening, suitable changing areas and, where offered, hands-free taps, with toilet access kept apart from food handling. Placement and sanitation arrangements must be assessed against the food-safety requirements that apply; installing a toilet cabin does not by itself make a site compliant.",
+      },
+      {
+        title: "Engineering and chemical units",
+        text: "discuss washable interiors, suitable handwash facilities, drainage, durable fixtures and a position away from hazardous operations. Decontamination facilities for chemical exposure are a separate technical requirement, not a standard toilet cabin.",
+      },
+      {
+        title: "EV and larger industrial plants",
+        text: "large sites may need several multi-seater blocks, ladies toilet blocks, urinal cabins, handwash stations, changing facilities and sanitation points distributed across the plant.",
+      },
+    ],
+
+    customHeading: "Compact Layouts for Small SIDCO Plots",
+    customIntro:
+      "On a small estate plot, the cabin has to fit without blocking access or required clearances. Common arrangements:",
+    customBullets: [
+      {
+        title: "Corner placement",
+        text: "a compact toilet cabin in a suitable corner of the site, keeping access and required clearances.",
+      },
+      {
+        title: "Boundary-side placement",
+        text: "a narrow configuration along a boundary, subject to setbacks and utility requirements.",
+      },
+      {
+        title: "Toilet and store combination",
+        text: "a toilet compartment and a separate lockable store in one unit, with appropriate separation, hygiene provisions and access.",
+      },
+      {
+        title: "Water tank options",
+        text: "a tank beside the cabin or on a suitably engineered support structure; the cabin roof is not assumed to carry a full tank without structural verification.",
+      },
+      {
+        title: "External handwash point",
+        text: "an exterior basin where suitable plumbing and drainage are available.",
+      },
+    ],
+    customOutro:
+      "Share the plot dimensions, gate position and service points, and the proposed position will be marked on the drawing for your approval.",
+
+    whyUsHeading: "Why Order from Portable Office Cabin?",
+    whyUsIntro: "What we can offer for a Bargur sanitation requirement:",
+    whyUsBullets: [
+      { title: "Customized sizes", text: "toilet cabins sized for your plot and the number of users." },
+      { title: "Compact and multi-cubicle layouts", text: "from a single cubicle to multi-seater blocks." },
+      { title: "MS and insulated construction", text: "steel sheet or PUF panel options." },
+      { title: "Toilet and store combinations", text: "sanitation and lockable storage in one unit." },
+      { title: "Handwash and changing provisions", text: "basins, handwash stations and changing spaces where required." },
+      { title: "Water and drainage options", text: "tank, inlet and outlet provisions planned for your site." },
+      { title: "Quotation support", text: "a written quotation for the specification you confirm." },
+      { title: "Delivery coordination", text: "transport, unloading and placement planned with your site team." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Bargur",
+    areasText:
+      "We welcome delivery enquiries from Bargur town and the Bargur industrial area, the SIPCOT Industrial Growth Centre across the Bargur, Uthangarai and Pochampalli taluks, including its SEZ, and the SIDCO Industrial Estate at Bargur, as well as Balethottam, Olaipatti, Pochampalli, Uthangarai, Mathur and sites along the NH 48 corridor in Krishnagiri district, Tamil Nadu. Delivery feasibility, transport and unloading are confirmed in the quotation for each site. This page covers Bargur in Krishnagiri district, not Bargur in Erode district.",
+
+    howHeading: "How to Order a Toilet Cabin",
+    howIntro: "Six steps from enquiry to placement:",
+    howSteps: [
+      { title: "Share your requirements", text: "the industry, number of users, plot dimensions and delivery location." },
+      { title: "Discuss the layout", text: "toilet cubicles, handwash points, material options and the space available." },
+      { title: "Confirm utilities", text: "water availability, drainage and waste-management arrangements." },
+      { title: "Approve the quotation", text: "specifications, price and commercial terms." },
+      { title: "Manufacture", text: "the approved cabin is fabricated." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated with site readiness." },
+    ],
+
+    extraSections: [
+      {
+        heading: "Choosing the Right Construction Material",
+        placement: "afterSolutions",
+        paragraphs: ["Two construction options are offered for these cabins:"],
+        table: {
+          caption: "Construction options. The material, panel thickness and finish are confirmed in the quotation.",
+          headers: ["Material", "Features", "Typical use"],
+          rows: [
+            ["MS", "Strong steel frame with a suitable protective finish", "Workshops and general industrial use"],
+            ["PUF-insulated", "Insulated panels that can help keep the cabin cooler", "Longer-term industrial applications"],
+          ],
+        },
+        closing: [
+          "Neither option is maintenance-free: every cabin needs periodic cleaning, inspection of its fittings and care of its protective finish.",
+        ],
+      },
+      {
+        heading: "Delivery to Bargur Industrial Locations",
+        paragraphs: ["Each industrial location has its own access arrangements, so confirm these before the delivery date:"],
+        bullets: [
+          { title: "SIDCO Industrial Estate", text: "internal road width, turning space, site entry and unloading access." },
+          { title: "SIPCOT industrial locations", text: "the correct entry gate, a site contact and delivery permissions." },
+          {
+            title: "SEZ-related sites",
+            text: "the documentation and entry requirements set by the site operator or authority, coordinated in advance. Entry is not guaranteed, and the paperwork is not handled automatically.",
+          },
+        ],
+      },
+      {
+        heading: "Preparing the Site",
+        paragraphs: ["Before the cabin arrives, plan for:"],
+        bullets: [
+          { title: "Base", text: "a suitable supporting base." },
+          { title: "Water", text: "the water connection." },
+          { title: "Wastewater", text: "the wastewater arrangement and drainage." },
+          { title: "Access", text: "safe access and enough unloading space." },
+          { title: "Permissions", text: "any permissions the site requires." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a portable toilet cabin fit on a small SIDCO plot?",
+        answer:
+          "Compact designs may fit on smaller plots, depending on the plot dimensions, setbacks, access and utility arrangements. Share the plot size and the proposed position for a layout check.",
+      },
+      {
+        question: "What toilet cabin features suit granite processing units?",
+        answer:
+          "Slip-resistant flooring, durable fittings, washable surfaces and safe access routes away from loading areas may be appropriate.",
+      },
+      {
+        question: "Can a portable toilet cabin be used at a food processing facility?",
+        answer:
+          "Yes, where the design, placement, handwashing arrangements and maintenance meet the site's own requirements and the food-safety requirements that apply.",
+      },
+      {
+        question: "What is a toilet and store combination cabin?",
+        answer: "A prefabricated unit with separate sanitation and storage compartments in one structure.",
+      },
+      {
+        question: "Can you deliver to an industrial or SEZ site in Bargur?",
+        answer:
+          "Delivery feasibility depends on the site location, access, permissions and transport arrangements, which are confirmed before dispatch.",
+      },
+      {
+        question: "Are multi-seater toilet blocks available for large industrial sites?",
+        answer: "Multi-cubicle configurations can be discussed according to the capacity you need and manufacturing capability.",
+      },
+      {
+        question: "Can portable toilet cabins include water storage?",
+        answer: "Water tank arrangements can be considered, subject to structural design, tank capacity and utility requirements.",
+      },
+      {
+        question: "How quickly can a portable toilet cabin be delivered?",
+        answer:
+          "Delivery depends on the selected configuration, manufacturing workload, quantity, transport and site readiness, and the schedule is confirmed with the order.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Toilet Cabin Quote in Bargur",
+    ctaText: `Need a compact toilet cabin for a workshop, a toilet-and-store combination for a small industrial plot or multi-seater toilet blocks for a larger plant? Share your site location, dimensions, required fittings and number of users. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Toilet Cabin Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default container-office buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Send Your Bargur Toilet Cabin Requirement",
+      intro:
+        "Add the industry, number of users, plot dimensions and delivery site. Our sales team will check the details with you and then prepare a written quotation.",
+    },
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Toilet Cabin Models", href: "/products/category/portable-toilet-cabins" },
+      { label: "Cabins with an Attached Toilet and Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "Prefab Labour Colony", href: "/products/labour-colony" },
+      { label: "G+1 Workmen Accommodation Blocks", href: "/products/category/g1-workmen-accommodation" },
+      { label: "Security Cabins for Gates", href: "/products/category/security-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Toilet Cabins Across Tamil Nadu", href: "/promotions/portable-toilet-cabin-in-tamil-nadu" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+        { label: "Portable Toilet Cabins in Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+        { label: "Portable Cabin Factory near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "All Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Bargur. This page concerns Bargur in Krishnagiri district, Tamil Nadu, not Bargur in Erode district. The toilet cabin types, sizes, materials, fittings, water storage, plumbing, waste provisions and finishes described here are options confirmed in the approved specification and quotation for each order, and delivery, unloading and placement are arranged for each site without guaranteed dates. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu), its Industrial Growth Centre and SEZ, and the SIDCO Industrial Estate at Bargur (Tamil Nadu Small Industries Development Corporation) are named only to describe locations; Portable Office Cabin is not affiliated with them or with any company there, and the industries and places named are not clients, completed projects or confirmed delivery areas. The images are illustrative images of one double portable toilet cabin design; final fittings depend on specifications, and they are not photographs of installations in Bargur. Notes on sanitation, food safety, EHS planning, hazardous operations and structural loads are general guidance, not engineering, food-safety, safety or legal advice, and chemical decontamination facilities are outside the scope of a standard toilet cabin.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE OFFICE CABIN IN BELLANDUR — the office-cabin intent for homes, apartment societies and
+   * neighbourhood projects in Bellandur (Bellandur Post, 560103), south-east Bengaluru: residents'
+   * welfare association and facility offices, builder handover and customer care offices, contractor
+   * offices for society repairs, home office cabins in a house compound, and site offices for
+   * authorised lake and stormwater-drain works. It owns "portable office cabin + Bellandur" (one
+   * canonical page; no earlier route served it). Scope split from the owner brief: tech park and
+   * campus project content stays on the Devarabisanahalli page, sales offices on the Marathahalli page
+   * and industrial office content on Belagavi. The brief's routing note to the Devarabisanahalli page
+   * ("tech park project office cabins") follows the intro as a second paragraph plus `introLinks`;
+   * added once that page was live (#223, d68dfe2, 2026-11-08). Its reciprocal link is a follow-up on
+   * that page once this one is live. The Bellandur shipping-container page went live first (#227,
+   * 02292e2), so this page adds both links: "see our shipping containers in Bellandur" after the
+   * contractor-office item, and "see our office cabins in Bellandur" on that page.
+   *
+   * Owner brief of 2026-11-07 ("Bellandur office cabin page and implementation commands"): the slug,
+   * meta title, meta description and H1 verbatim; every public paragraph, list item, table row, FAQ
+   * and the CTA text are the owner's text, in the brief's order:
+   *   intro → intro; "Office cabins for apartments, home offices and local works" (five H3s) →
+   *   solutions; "Planning delivery inside a gated community", "Suggested cabin layouts", "Portable
+   *   office cabin price and rental in Bellandur" and "From enquiry to placement" → extra sections
+   *   placed after the solutions (the steps as a numbered list, `ordered`); "Areas we serve" → areas,
+   *   with the Sarjapur link (`areasLinks`); FAQs; "Request a Bellandur office cabin quote" → CTA with
+   *   the brief's buttons: Request a Quote (→ /contact), Call and WhatsApp from COMPANY. The why,
+   *   features, custom and how slots are unset (optional since 2026-11-07, the Marathahalli page's
+   *   template shape). The layouts table's lead-in sentences are its visible caption. Each in-copy link
+   *   ("see our …") renders as a link right after its paragraph, with the brief's anchor text.
+   * Composed for owner review: the tagline (the meta description's own list of uses), the image alt
+   * texts and captions of the three images that match no slot in the brief, and the disclaimer.
+   *
+   * Images: four owner-dropped webp files ("public/images/Bellandur office cabin city page/Bellandur
+   * office cabin page and/cabin (1–4).webp", 1983×793, plain VP8, no EXIF/XMP/ICC, source kept),
+   * copied with their image data byte-for-byte (decoded pixels verified identical) under descriptive
+   * names, with an XMP dc:title and dc:description added. They are design renders of one two-tone
+   * container-style office cabin, so every image is captioned as illustrative and none names a
+   * place. Only (2), the exterior with an entrance and three windows, matches a slot in the brief: it
+   * is the hero and og:image, with the brief's alt text and caption and its real dimensions
+   * (`ogImageDimensions`). (1) office interior with two workstations and storage → under "Suggested
+   * cabin layouts" (no reception desk or visitor seating, so not the brief's handover slot); (3) plain
+   * long side and (4) aerial view → gallery. No repair-office, raised-support or garden-office image
+   * was supplied, so those slots are omitted.
+   *
+   * Geo: Bellandur suburb centre, 12.9261 N 77.6758 E.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-office-cabin-bellandur",
+    city: "Bellandur",
+    listTitle: "Portable Office Cabins in Bellandur",
+    metaTitle: "Portable Office Cabin in Bellandur (560103)",
+    metaDescription:
+      "Portable office cabins in Bellandur for apartment associations, builder handovers, society repairs, lake and drain works, and home offices. Request a quote.",
+    keywords:
+      "Portable Office Cabin in Bellandur, Portable Office Cabin Bellandur Post, Office Cabin 560103, Apartment Association Office Cabin, Builder Handover Office Cabin, Society Repair Contractor Office, Lake and Drain Works Site Office, Home Office Cabin, Portable Office Cabin Rental Bellandur",
+    geo: { region: "IN-KA", placename: "Bellandur, Bengaluru, Karnataka, India", position: "12.9261;77.6758", icbm: "12.9261, 77.6758" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Office Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-office-cabin-bellandur/bellandur-association-office-cabin-exterior.webp",
+      alt: "Portable office cabin exterior with an entrance and windows",
+      width: 1983,
+      height: 793,
+      caption: "Illustrative design render of a cabin for an apartment association office.",
+    },
+    ogImageDimensions: true,
+    gallery: [
+      {
+        src: "/images/cities/portable-office-cabin-bellandur/bellandur-office-cabin-side-view.webp",
+        alt: "Plain long side of a two-tone office cabin without doors or windows",
+        width: 1983,
+        height: 793,
+        caption: "Illustrative design render of the cabin's plain long side.",
+      },
+      {
+        src: "/images/cities/portable-office-cabin-bellandur/bellandur-office-cabin-aerial-view.webp",
+        alt: "Aerial view of an office cabin roof with the entrance and windows along one side",
+        width: 1983,
+        height: 793,
+        caption: "Illustrative aerial view of the same office cabin design.",
+      },
+    ],
+
+    h1: "Portable Office Cabins for Bellandur’s Homes, Societies and Neighbourhood Projects",
+    tagline: "Office cabins for apartment associations, builder handovers, society repairs, lake and drain works, and home offices",
+    intro: [
+      "An apartment association needs somewhere residents can bring maintenance queries. A builder handing over a new tower needs a desk for keys, documents and snag lists. A homeowner working from a busy house may simply need a separate room for calls. Portable Office Cabin supplies prefabricated office cabins for these uses in Bellandur, with layouts planned around the available space and delivery access.",
+      "For a project inside an Outer Ring Road tech park, see our tech park project office cabins.",
+    ],
+    introLinks: [{ label: "Tech park project office cabins", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" }],
+
+    solutionsHeading: "Office cabins for apartments, home offices and local works",
+    solutions: [
+      {
+        title: "Association and facility management office",
+        text: "Give the residents’ welfare association (RWA) and facility team a dedicated base for maintenance requests, vendor records and committee meetings. A typical layout can include a resident-facing desk, filing cabinets and a small meeting table.",
+      },
+      {
+        title: "Builder handover and customer care office",
+        text: "Set up a reception desk for new owners, lockable storage for keys and documents, and a separate place to log snag lists. For busier handovers, plan visitor seating, signage from the tower entrance, lighting and a display wall for explaining building amenities and maintenance procedures.",
+      },
+      {
+        title: "Contractor office for society repairs",
+        text: "During waterproofing, repainting, façade repairs or lift upgrades, a compact cabin gives the contractor a place to store drawings and coordinate daily work. Agree on the location and power arrangements with the association before delivery. A check meter can be discussed if the society wants to track the contractor’s electricity use separately. For separate storage for tools, materials or furniture, see our shipping containers in Bellandur.",
+        link: { label: "Shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+      },
+      {
+        title: "Home office cabin in your compound",
+        text: "A cabin can provide a dedicated workspace in a garden or house compound. Plan a desk, a window for daylight, sockets, a wired network point and an AC provision where required. If calls are a priority, discuss insulation, door seals and glazing. A wood-look finish can be considered at quotation stage. Confirm plot access and any applicable placement requirements before ordering.",
+      },
+      {
+        title: "Site office for lake and drain works",
+        text: "For authorised lake restoration or stormwater drain projects, a cabin can serve as a base for supervisors, records and crew briefings. Discuss insect screens, a project information board and a suitable raised support with the project team. The project authority must approve the placement, and the site team should confirm ground and drainage conditions before selecting the base.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Planning delivery inside a gated community",
+        placement: "afterSolutions",
+        bullets: [
+          { text: "Get the managing committee’s approval for the proposed location, footprint and work hours." },
+          { text: "Review the approach road, gate clearance, turning space and unloading position. Flag basement slabs, overhead cables and paving restrictions before arranging a lift." },
+          { text: "Agree on how residents will be notified and how the unloading area will be kept clear during placement." },
+          { text: "Keep fire access routes, emergency exits and pedestrian routes clear. Confirm who will arrange the base, electrical connection and any reinstatement work." },
+        ],
+      },
+      {
+        heading: "Suggested cabin layouts",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-office-cabin-bellandur/bellandur-office-cabin-interior.webp",
+          alt: "Office cabin interior with two workstations, storage cabinets, three windows and a door",
+          width: 1983,
+          height: 793,
+          caption: "Illustrative office cabin interior. Furniture and fittings are optional.",
+        },
+        table: {
+          caption: "These dimensions are starting points for layout discussions. Confirm dimensions, fittings and availability in the quotation.",
+          headers: ["Use", "Example footprint", "Layout to discuss"],
+          rows: [
+            ["Home office", "8 × 6 ft or 10 × 8 ft", "Desk, window, sockets and network provision"],
+            ["Society repair contractor office", "10 × 8 ft", "Work desk and drawing storage"],
+            ["Lake or drain works office", "10 × 8 ft to 20 × 10 ft", "Insect screens and site-specific supports"],
+            ["Association and facility office", "20 × 10 ft", "Resident desk, filing and committee seating"],
+            ["Handover and customer care office", "20 × 10 ft to 30 × 10 ft", "Reception, lockable storage and snag-list desk"],
+          ],
+        },
+        closing: ["For a starting point on materials and specifications, see our insulated office portable cabin."],
+        links: [{ label: "Insulated office portable cabin", href: "/products/office-portable-cabin" }],
+      },
+      {
+        heading: "Portable office cabin price and rental in Bellandur",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Pricing depends on the footprint, layout, finish, insulation, electrical provisions, furniture and access for transport and unloading. Share the proposed location, dimensions and fittings for an itemised quotation. For handovers, repair contracts and other temporary work, see our portable cabin rental service. Rental availability, hire period and delivery scope are confirmed for each enquiry.",
+        ],
+        links: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+      },
+      {
+        heading: "From enquiry to placement",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Share the intended use, number of occupants, site photographs and proposed placement area." },
+          { text: "Review the layout and quotation, including the cabin fittings, transport and unloading scope." },
+          { text: "Confirm the required permissions, access and base arrangements." },
+          { text: "Approve the configuration and agree on the delivery and placement plan." },
+        ],
+      },
+    ],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Bellandur and the Bellandur Post (560103) area, including Green Glen Layout, Bellandur Gate and Ambalipura. We also welcome enquiries from Kasavanahalli, Haralur Road, Iblur, Kaikondrahalli and the nearby Sarjapur Road stretch. For projects farther along the corridor, see our container offices in Sarjapur.",
+    areasLinks: [{ label: "Container offices in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" }],
+
+    faqs: [
+      {
+        question: "Can a portable office cabin be placed inside an apartment society?",
+        answer: "Yes, if the association approves the location and work hours, and the site has suitable delivery and unloading access. Share entrance and placement photos when enquiring.",
+      },
+      {
+        question: "Can I place a home office cabin in my compound?",
+        answer: "It depends on available space, access and any local placement requirements. Share your plot dimensions so the cabin layout and delivery approach can be assessed.",
+      },
+      {
+        question: "Will a home office cabin be quiet enough for calls?",
+        answer: "Insulation, sealed openings and suitable glazing can help reduce outside noise. The result depends on the chosen build and the surroundings. Discuss acoustic requirements before approving the specification.",
+      },
+      {
+        question: "What should a builder’s handover office include?",
+        answer: "Start with a reception desk, visitor seating, lockable key and document storage, and a desk to record snag lists. Lighting, AC provision and signage can be specified to suit the layout.",
+      },
+      {
+        question: "Can I enquire about a site office for lake or drain works?",
+        answer: "Yes. Share the authorised placement area, ground conditions, access and any project-specific requirements such as insect screening or a public information board.",
+      },
+      {
+        question: "How is power billed for a contractor’s office inside a society?",
+        answer: "The association and contractor agree on the supply and billing arrangement. If they want separate usage records, discuss a check meter with their electrician.",
+      },
+      {
+        question: "Can I rent a cabin for a handover or repair project?",
+        answer: "Yes, you can enquire about a rental. Share your preferred dates, expected duration, cabin size and access details so availability and terms can be confirmed.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer: "The schedule depends on the specification, production or rental availability, transport and site permissions. Share your target date so the team can confirm a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Bellandur office cabin quote",
+    ctaText:
+      "Send us the intended use, preferred cabin size, site location and photographs of the approach and placement area. Include the number of users and any requirements for storage, furniture, insulation or electrical points.",
+    ctaButtonLabel: "Request a Quote",
+    // The brief's buttons are Request a Quote, Call and WhatsApp: the call and WhatsApp buttons are on by
+    // default (numbers from COMPANY), and an empty list drops the two default container-office buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office or yard in Bellandur. Delivery, unloading and placement are arranged for each order, and the schedule is confirmed in the quotation. The layouts, footprints, finishes, insulation, electrical provisions and furniture described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative design renders of one office cabin, not photographs of installations in Bellandur. Bellandur, the Bellandur Post (560103) area and the localities listed are named only to describe where enquiries are welcome; they are not clients, completed projects or confirmed delivery sites. The notes on association approvals, placement, lake and drain works and power billing are general guidance, not legal, engineering or electrical advice; the association, project authority or site team confirms the requirements that apply to each site.`,
   },
 ];
 
