@@ -216,6 +216,12 @@ export interface CityPage {
   whyTable?: CityPageTable;
   /** Optional closing line rendered after the "why" bullets. */
   whyOutro?: string;
+  /**
+   * Optional contextual links rendered as a short list right after `whyOutro` (first used by
+   * Prefabricated Labour Colonies in Madurai, whose modules table points at the labour colony
+   * product page). Unset = nothing rendered, so every other page's HTML is unchanged.
+   */
+  whyLinks?: CityPageLink[];
 
   /**
    * The solutions section. Optional since 2026-11-08 on the same terms as the industries section (first
@@ -14977,6 +14983,230 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Our factory is near Hosur in Tamil Nadu and our Karnataka office is in Electronic City Phase 1, Bengaluru; Portable Office Cabin has no factory, workshop, yard or office in Hubballi or Dharwad. Each cabin's size, construction, fittings, any joined modules, acoustic treatment, cooling, hire, base work or relocation, and the delivery, unloading and collection arrangements are set out in its quotation; hire is subject to availability and no delivery date is guaranteed. Every image here is an illustrative render of one representative cabin design, shown with optional office furniture inside, and none was photographed at a site in Hubballi or Dharwad. Localities are listed only to show where we accept enquiries: naming them does not mean we have customers, past projects or confirmed delivery there. We have no affiliation with any university, college, school, coaching institute or campus, and the uses described are examples, not projects we have supplied. Acoustic treatment is not soundproofing, and no sound isolation performance is offered unless a measurable target and its verification are agreed in writing. Occupancy, exits, accessibility and electrical requirements are for the responsible site team to confirm; notes on layouts, ground conditions and site preparation are general guidance, not engineering, fire-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTA CABINS & PORTABLE CABINS IN KOPPAL — Kinhal craft workshops, farm machinery hire offices,
+   * early learning cabin enquiries and industrial site and gate cabins across Koppal district.
+   *
+   * Owner brief of 2026-11-09: route, meta title, meta description, H1 and public copy as given. No
+   * other page on main names Koppal or any locality in this page's areas list (routes, redirects,
+   * sitemap and every source file checked), so this one canonical covers the porta / portable /
+   * prefab cabin synonyms and nothing needs a /portable-cabin-koppal alias: no redirect is added. The
+   * slug matches no family prefix, so cityFamily() lists it with the local-service pages in the
+   * Karnataka group of /cities-we-serve under its listTitle (the hub anchor the brief asks for). The
+   * brief's sections map onto the fixed slots, in the brief's order:
+   *   • Opening paragraphs → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Workshop cabins for Kinhal artisans and toy makers" → why: the layout paragraph as whyIntro,
+   *     the dust and solvent paragraph as whyOutro (no bullets).
+   *   • "Booking offices for farm machinery hire centres" → solutions heading + intro (prose, no items).
+   *   • "Anganwadi and early learning cabin enquiries", "Site and gate cabins for industrial units" and
+   *     "Cabin size examples" (table, planning note and the /products/portable-cabin link below it) →
+   *     afterSolutions extra sections.
+   *   • "Porta cabin price and rental in Koppal" → custom (prose) + customLinks → /rental-service,
+   *     whose hire range lists the site office and security guard cabins a temporary project or a
+   *     seasonal booking office would hire (its minimum terms are left to that page and the quote).
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (five) → faqs; the closing request → CTA.
+   *     No on-page form: /api/enquiries accepts only the CATEGORY_LANDING_SLUGS categories and none
+   *     is a porta or portable cabin category, so Request a Quote goes to /contact.
+   * Lead-ins written where a slot needs one: tagline, the sizes-table caption and the line before the
+   * rental link. No ₹ figure, occupancy figure, extraction, child-use, compliance or safety claim,
+   * delivery time, toy-cluster milestone or affiliation; extraction, child-use fit-outs, hire and
+   * relocation stay quote-dependent, as the brief says.
+   *
+   * KEYWORD OWNERSHIP: porta / portable / prefab cabin × Koppal and its listed localities, with the
+   * artisan workshop, design studio, machinery hire office, early learning and industrial site office
+   * uses. Spares and materials storage belong to a Koppal shipping-container page. That page is not on
+   * main or live yet (an unopened draft), so the brief's link to it, and its reciprocal link here, are
+   * added when it ships; this page carries no storage section.
+   *
+   * Images: four owner-dropped lossy webp renders ("public/images/Koppal porta cabin city page/Koppal
+   * porta cabin/cabin (1–4).webp", 1200×896 ×2 and 1184×864 ×2, VP8X + Google sRGB ICC profile, no
+   * EXIF / XMP or provenance to keep) of one navy ribbed-steel cabin. The ICC and VP8 chunks are copied
+   * byte-for-byte (pixel-identical decode) with an XMP dc:title and a dc:description that calls each an
+   * illustrative render. Two views match a slot in the brief's image table and use its filename and
+   * caption: the three-quarter exterior (the hero) and the front elevation (the industrial office);
+   * both renders show two doors, so their alt text says so. No image shows workbenches, drying racks,
+   * a booking counter, a notice board or early learning furniture, so those slots are left out; the
+   * office interior (desks, cabinets, no sample shelving) and the rear view carry their own accurate
+   * names, alt text and captions.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "porta-cabin-koppal",
+    city: "Koppal",
+    listTitle: "Porta Cabins in Koppal",
+    metaTitle: "Porta Cabins & Portable Cabins in Koppal",
+    metaDescription:
+      "Enquire about porta cabins in Koppal for Kinhal craft workshops, farm machinery hire offices, early learning spaces and industrial sites.",
+    keywords:
+      "Porta Cabin in Koppal, Portable Cabin in Koppal, Prefab Cabin Koppal, Artisan Workshop Cabin Kinhal, Machinery Hire Office Gangavathi, Porta Cabin Kushtagi",
+    geo: {
+      region: "IN-KA",
+      placename: "Koppal, Karnataka, India",
+      position: "15.3500;76.1500",
+      icbm: "15.3500, 76.1500",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Porta Cabin" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/porta-cabin-koppal/koppal-porta-cabin-workshop-exterior.webp",
+      alt: "Prefabricated porta cabin with side windows and two entrance doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative artisan workshop cabin exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/porta-cabin-koppal/koppal-porta-cabin-rear-view.webp",
+      alt: "Rear of a navy ribbed-steel porta cabin with a small high window and a larger window on its long side, beside a paved area",
+      width: 1184,
+      height: 864,
+      caption: "Illustrative rear view. Window positions follow the approved layout.",
+    },
+    interiorImage: {
+      src: "/images/cities/porta-cabin-koppal/koppal-porta-cabin-office-interior.webp",
+      alt: "Office layout inside a portable cabin with computer desks, office chairs, tall storage cabinets and a small meeting table by the end window",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative office or design studio layout. Desks, storage and electrical fittings are confirmed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/porta-cabin-koppal/basapura-industrial-site-office-cabin.webp",
+        alt: "Prefabricated site office with two windows between two entrance doors",
+        width: 1184,
+        height: 864,
+        caption: "Illustrative industrial site office.",
+      },
+    ],
+
+    h1: "Porta Cabins & Portable Cabins in Koppal",
+    tagline: "Prefabricated cabins for craft workshops, machinery hire counters, early learning spaces and industrial sites.",
+    intro: [
+      "Need a bench workspace for Kinhal craft, a booking counter for farm machinery, or a site office near Ginigera? Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Koppal district. Tell us who will use the room, what equipment it needs and where it will sit so we can discuss a layout and delivery plan.",
+      "For this range, porta cabin, portable cabin and prefab cabin describe the same workshop-built unit. The unloading method depends on the cabin and site access.",
+    ],
+
+    whyHeading: "Workshop cabins for Kinhal artisans and toy makers",
+    whyIntro:
+      "Plan the layout around the work sequence, from carving and assembly to inspection and packing. Share the workbench dimensions, tool list, task lighting needs and space needed for drying or displaying finished pieces. For a design studio near Bhanapur, discuss computer desks, a sample bench, shelving and a small meeting area.",
+    whyBullets: [],
+    whyOutro:
+      "If the work involves dust, paints, lacquers or solvents, have the responsible safety team assess the process and specify any necessary extraction, electrical equipment and materials storage before approving a fit-out. The standard cabin layout is for general workshop and design use.",
+
+    solutionsHeading: "Booking offices for farm machinery hire centres",
+    solutionsIntro:
+      "For sites around Gangavathi and Karatagi, plan a service window, booking desk and notice board for machine availability and rates. Allow room for maintenance records and, if needed, a separate counter for issuing small tools. Ask about an operator rest cabin with seating, charging points and ventilation. Agree on a pedestrian approach that stays clear of vehicle movements and machinery loading.",
+    solutions: [],
+
+    extraSections: [
+      {
+        heading: "Anganwadi and early learning cabin enquiries",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Share the intended age group, expected occupancy and activity layout. Discuss washable surfaces, daylight, ventilation, storage for learning materials and an accessible entrance. Have the operator and responsible project team review supervision, emergency access, sanitation and any separate food preparation facilities. Confirm applicable departmental requirements and approvals before ordering. Fit-out and suitability depend on the approved specification.",
+        ],
+      },
+      {
+        heading: "Site and gate cabins for industrial units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Contractors and industrial teams around Ginigera, Basapura and Kyadigoppa can enquire about offices for engineers, guard cabins for vehicle entry and administrative cabins for records and meetings. Share the staff count, counter position and electrical needs. Confirm the placement area and delivery route with the site team.",
+        ],
+        // The brief's "shipping containers in Koppal" link goes here once that page is live (see the
+        // header note); until then the section ends with the brief's own paragraph.
+      },
+      {
+        heading: "Cabin size examples",
+        placement: "afterSolutions",
+        table: {
+          caption: "Example footprints and the enquiries they usually start from.",
+          headers: ["Example footprint", "Typical enquiry"],
+          rows: [
+            ["6 × 6 ft", "Gate cabin or compact service counter"],
+            ["10 × 8 ft", "Booking office, operator rest room or small craft workspace"],
+            ["20 × 10 ft", "Artisan workshop, design studio or project office"],
+            ["30 × 10 ft and above", "Shared workshop or partitioned workspace"],
+          ],
+        },
+        closing: [
+          "These are starting points for discussion. Confirm usable dimensions, fittings, occupancy and mild steel or PUF-insulated construction in the quotation.",
+        ],
+        links: [{ label: "Portable cabin sizes and specifications", href: "/products/portable-cabin" }],
+      },
+    ],
+
+    customHeading: "Porta cabin price and rental in Koppal",
+    customIntro:
+      "Pricing depends on the size, construction, worktops, counters, electrical fittings, ventilation, transport and unloading. Share the required layout and dates for an itemised quote.",
+    customBullets: [],
+    customOutro:
+      "If you need a cabin for a harvest season or a temporary project, ask whether a suitable configuration can be quoted on hire. Our rental page lists the site office and security guard cabins offered on hire, with their minimum terms:",
+    customLinks: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Koppal town, Kinhal, Bhanapur, Ginigera, Basapura, Munirabad, Hitnal, Gangavathi, Karatagi, Kanakagiri, Kushtagi, Kyadigoppa, Yelburga and Kukanur. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share the use, site pin, preferred size, quantity, target dates and approach photos.", text: "" },
+      { title: "Review the proposed layout and itemised quotation.", text: "" },
+      {
+        title:
+          "Confirm placement permissions, including any applicable heritage-area requirements, plus base readiness, utilities and unloading access.",
+        text: "",
+      },
+      { title: "Agree on delivery and handover. Include collection or relocation in the quotation if needed.", text: "" },
+    ],
+
+    faqs: [
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer: "Yes. For this range, both names describe a prefabricated cabin delivered to your site.",
+      },
+      {
+        question: "What should I specify for an artisan workshop?",
+        answer:
+          "Share the processes, workbench dimensions, lighting, tool storage and any dust or fume extraction requirements. Confirm specialist fit-outs before ordering.",
+      },
+      {
+        question: "Can I enquire about an anganwadi or pre-school cabin?",
+        answer:
+          "Yes. Share the intended use, occupancy and departmental requirements so the proposed layout can be reviewed before quotation and placement.",
+      },
+      {
+        question: "What should I check before placing a cabin near Hampi?",
+        answer:
+          "Ask the landowner and relevant authorities to confirm whether the proposed location needs heritage or other placement approvals before arranging delivery.",
+      },
+      {
+        question: "Can I rent a cabin, and how soon can you deliver?",
+        answer:
+          "Share the type of cabin, site and dates. Hire availability and delivery timing depend on the configuration and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a porta cabin quote in Koppal",
+    ctaText:
+      "Send your site pin, intended use, size, quantity, target dates and access photos. Include requirements for workbenches, counters, ventilation, power and other fittings.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    relatedLinks: [
+      { label: "Porta Cabin", href: "/products/porta-cabin" },
+      { label: "Porta Cabins in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds its cabins at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru. It does not operate a factory, workshop, yard or office anywhere in Koppal district. What each cabin includes is recorded in its quotation: size, construction, worktops, counters, fittings and ventilation, any extraction or child-use fit-out, hire, base work or relocation, and who handles delivery, unloading and collection. Hire depends on availability at the time of enquiry, and no date for delivery is guaranteed. The pictures on this page are illustrative renders of a single sample cabin design, some with optional office furniture, and none shows a site in Koppal district. Place names indicate where enquiries are welcome; they do not imply existing customers, completed work or confirmed delivery in those places. Portable Office Cabin is independent of every artisan, craft or toy-making body, machinery hire centre, anganwadi, government department, industrial unit and heritage authority, and the uses described are illustrations, not supplied projects. Process safety, extraction, suitability for children, supervision, sanitation, occupancy and placement approvals, including any heritage-area conditions near Hampi, remain with the operator, landowner and relevant authorities. Layout and site notes on this page are general information, not engineering, fire-safety, child-safety or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -31132,6 +31362,278 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Cabins are made at Portable Office Cabin's factory near Hosur (Krishnagiri district, Tamil Nadu), and the company's Karnataka office is at Electronic City Phase 1 in Bengaluru; there is no workshop, yard, depot, office or agent of the company in Chamarajanagar district. Each order's quotation records the size, layout, construction, fittings and signage, any solar provisions, water points or seating, the length of any hire, and who handles transport, unloading, placement and removal; hire is subject to availability and delivery dates are not guaranteed. Each image on this page is an illustrative render of one cabin design, with the interior shown as an optionally furnished office; none is a photograph taken in Chamarajanagar district, at Bandipur, the Biligiri Rangana Hills or MM Hills, or of a cabin already delivered to a customer. Bandipur, the Biligiri Rangana Hills, MM Hills, Badanaguppe–Kellamballi and the other places named describe where enquiries may come from. Portable Office Cabin is not affiliated with any forest, wildlife, temple, pilgrimage or industrial-area authority, safari operator, resort, homestay or business there, and no use or place described is a customer, a completed project, an approved placement or a confirmed delivery point. Placement permissions, sign translations and any first-aid staffing or equipment are to be confirmed with the landowner, the relevant authorities or the organiser before ordering. Notes on power, water, routes, access and placement are general guidance, not engineering, legal, regulatory or safety advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PREFABRICATED LABOUR COLONIES IN MADURAI — owner brief "Madurai prefabricated labour colony page
+   * and developer commands" (2026-11-09). Route /cities-we-serve/labour-colony-madurai (the brief's
+   * proposed route; no equivalent canonical, redirect or sitemap entry existed). SEO setup, H1 and
+   * copy are the brief's, unchanged.
+   *
+   * SECTION MAPPING (brief → template slot):
+   *   • "What a labour colony can include" → why: the modules table as `whyTable`, the paragraph after
+   *     it as `whyOutro`, then the brief's labour-colony product link as the new optional `whyLinks`
+   *     ("below the modules table").
+   *   • "Plan by peak headcount and project phase" → solutions: the workforce table as `solutionsTable`
+   *     (no items), the "These are enquiry bands…" paragraph as `solutionsOutro`.
+   *   • "Sleeping cabins for Madurai’s heat" and "Hygiene, utilities and site safety" → two
+   *     afterSolutions extra sections; the hygiene section ends with the toilet-and-bathing link.
+   *   • "Phased setup and relocation" → features: first sentence as the intro, the next two as list
+   *     items, the last as the bold note. The gallery follows it.
+   *   • "Labour colony price and rental in Madurai" → custom (prose: customBullets is empty), beside the
+   *     bunk-dormitory render, then the rental link.
+   *   • "Areas we serve" → areas; "From enquiry to camp handover" → how (title-only steps). The template
+   *     puts areas before the steps, the reverse of the brief.
+   *   • FAQs (six) → faqs; the closing request → CTA (Request a Quote, Call, WhatsApp from COMPANY) +
+   *     the G+1 workmen accommodation category's enquiry form (the category that holds the Labour
+   *     Colony product).
+   * Composed (owner review): the tagline, the why and solutions lead-ins, the two table captions, the
+   *   lead-ins before the three links, the enquiry-form heading and intro, the alt text and captions of
+   *   the three non-hero images, the hero alt text (see Images) and the disclaimer.
+   *
+   * INTERLINKS (brief section 5), all destinations checked live (200) on 2026-11-09:
+   *   • → /products/labour-colony ("Prefabricated labour accommodation modules"), the Labour Colony
+   *     product page, after the modules table.
+   *   • → /products/category/portable-toilet-cabins ("Portable toilet and bathing blocks") in the
+   *     hygiene section: the category sells the toilet block and builds bathing blocks to order, so it
+   *     covers both.
+   *   • → /rental-service ("Labour camp module rental") in price and rental: the rental page offers
+   *     worker-accommodation bunker containers and toilet blocks on hire.
+   *   • ← the G+1 workmen accommodation category's location links ("Prefabricated labour colonies in
+   *     Madurai"), which render on the category page and, as "Delivery Areas", on the Labour Colony and
+   *     Workmen Accommodation product pages.
+   *   • ← /cities-we-serve: listed automatically in the Tamil Nadu local-service group, with the card
+   *     label "Labour colonies in Madurai" (`directoryLabel`).
+   *   • DEFERRED: the Madurai marketing-office page is not published yet and the site has no Madurai
+   *     location navigation, so no link between the two Madurai pages is added here.
+   *
+   * KEYWORD OWNERSHIP: labour colony / labour camp / worker accommodation × Madurai, Thoppur, Kappalur,
+   * Thirumangalam, Avaniyapuram, Thiruparankundram, Samayanallur, Othakadai, Melur, Vadipatti and the
+   * Madurai Ring Road. No other page targets Madurai (checked 2026-11-09). The marketing-office page
+   * keeps sales and visitor reception; this page names no marketing-office or sales-gallery use.
+   *
+   * Images: four owner-dropped webp renders ("public/images/madurai labour colony city page/
+   * labour-colony-madurai/cabin (1–4).webp", 1452×1083, no EXIF / XMP / ICC), copied under descriptive
+   * names with a truthful XMP dc:title / dc:description ("Illustrative render of…") added losslessly;
+   * the decoded pixels are identical and no camera, GPS or date data is added. The brief's image table:
+   *   • Camp overview → cabin (1), the hero and social preview, under the brief's filename. It shows
+   *     one two-storey block, not "rows of cabins facing a walkway", so its alt text describes what is
+   *     visible and its caption calls it an illustrative render of an accommodation block.
+   *   • Dormitory → cabin (2), beside the price section, under the brief's filename and caption. No
+   *     ceiling fan is visible, so the alt text names the bunks and lockers instead.
+   *   • Sanitation and dining → skipped: no image shows a toilet block or a dining hall.
+   *   Not in the table: cabin (4), a wider dormitory module (feature band), and cabin (3), the front of
+   *   the same block (gallery); both carry their own alt text and an "illustrative render" caption.
+   *
+   * No ₹ figure, occupancy ratio, installation timeline, stock, client, public-project or affiliation
+   * claim. Rental, utilities, installation and relocation stay subject to quotation. Opts into the
+   * CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the og:image dimension
+   * tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "labour-colony-madurai",
+    city: "Madurai",
+    // Brief section 5: the Cities We Serve card reads "Labour colonies in Madurai".
+    directoryLabel: "Labour colonies in Madurai",
+    metaTitle: "Prefabricated Labour Colonies in Madurai",
+    metaDescription:
+      "Plan a prefabricated labour camp in Madurai with dormitory cabins, toilets, bathing blocks and dining modules. Request an itemised quote for your site.",
+    keywords:
+      "labour colony in Madurai, labour camp Madurai, prefabricated labour accommodation Madurai, worker accommodation cabins Madurai, construction workers’ camp Madurai",
+    geo: {
+      region: "IN-TN",
+      placename: "Madurai, Tamil Nadu, India",
+      position: "9.9252;78.1198",
+      icbm: "9.9252, 78.1198",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Labour Colony" },
+    // The hero is 1452 × 1083 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/labour-colony-madurai/madurai-prefabricated-labour-colony-exterior.webp",
+      alt: "Two-storey prefabricated accommodation block with an upper walkway, glass balustrade and external steel staircase",
+      width: 1452,
+      height: 1083,
+      caption: "Illustrative render of a two-storey labour accommodation block.",
+    },
+    featureImage: {
+      src: "/images/cities/labour-colony-madurai/madurai-labour-colony-dormitory-hall.webp",
+      alt: "Dormitory module with bunk beds and steel lockers along both walls, panel lights, barred windows and green double doors",
+      width: 1452,
+      height: 1083,
+      caption:
+        "Illustrative render of a dormitory module. The number of bunks, lockers and fittings is set by the approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/labour-colony-madurai/madurai-labour-colony-bunk-dormitory.webp",
+      alt: "Bunk beds and steel lockers inside a dormitory cabin with barred windows and ceiling lights",
+      width: 1452,
+      height: 1083,
+      caption: "Illustrative dormitory layout. Occupancy and fittings depend on the specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/labour-colony-madurai/madurai-labour-colony-accommodation-block-front.webp",
+        alt: "Front of a two-storey prefabricated accommodation block with barred windows, a steel door and a railed walkway along the upper floor",
+        width: 1452,
+        height: 1083,
+        caption: "Illustrative render of stacked accommodation modules with an upper walkway and an external stair.",
+      },
+    ],
+
+    h1: "Prefabricated Labour Colonies in Madurai",
+    tagline:
+      "Dormitory cabins, toilet and bathing blocks, dining space and camp support modules for construction crews, planned around your headcount and quoted by module.",
+    intro: [
+      "Planning accommodation for a construction crew near the Madurai Ring Road, Thoppur or Kappalur? Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries for labour colonies in Madurai. Share your expected headcount, project duration and site plan so the accommodation, sanitation and common facilities can be planned together.",
+    ],
+
+    whyHeading: "What a labour colony can include",
+    whyIntro: "A camp is planned zone by zone. The table lists what to discuss for each one.",
+    // Empty on purpose: the section is the modules table (`whyTable`).
+    whyBullets: [],
+    whyTable: {
+      caption: "Camp zones and the modules to discuss. The final list depends on your headcount, site and project requirements.",
+      headers: ["Camp zone", "Modules and facilities to discuss"],
+      rows: [
+        ["Sleeping accommodation", "Dormitory cabins with bunks, lighting, fans, charging points and storage for personal belongings"],
+        ["Toilets and bathing", "Toilet and bathing blocks, handwash stations and provision for laundry and drying"],
+        ["Kitchen and dining", "Separate kitchen, mess or dining space, and drinking-water points"],
+        ["Camp support", "First-aid space, camp office, stores and a security cabin"],
+        ["Common areas", "Shaded seating, lit walking routes and space for rest or recreation"],
+      ],
+    },
+    whyOutro:
+      "Confirm which modules, fixtures, installation work and utility connections are included in the quotation. Where the workforce requires separate accommodation or sanitation, identify those needs early so the layout can account for privacy, access and security. For dormitory and camp layout options, see:",
+    // Brief section 5: the labour colony product page, below the modules table.
+    whyLinks: [{ label: "Prefabricated labour accommodation modules", href: "/products/labour-colony" }],
+
+    solutionsHeading: "Plan by peak headcount and project phase",
+    solutionsIntro: "Share the headcount for each project phase. The bands below show what to review as the workforce grows.",
+    // Empty on purpose: the section is the workforce table (`solutionsTable`) and its note.
+    solutions: [],
+    solutionsTable: {
+      caption: "Planning points by workforce size.",
+      headers: ["Workforce", "Planning discussion"],
+      rows: [
+        ["Up to 50 workers", "Start with sleeping, sanitation, drinking water and the food and support facilities required from opening day."],
+        ["51–100 workers", "Review peak demand on toilets and bathing facilities, shift overlap, dining capacity and separate accommodation needs."],
+        ["101–250 workers", "Consider grouped dormitory rows and distributed facilities. Map pedestrian routes and access for cleaning and maintenance."],
+        ["More than 250 workers", "Plan camp zones, shared facilities and utility capacity around the full workforce and expansion schedule."],
+      ],
+    },
+    solutionsOutro:
+      "These are enquiry bands. Confirm occupancy per cabin, facility counts and the camp layout with the responsible project and compliance teams before ordering.",
+
+    featuresHeading: "Phased setup and relocation",
+    featuresIntro: "Start with the accommodation and facilities required for the opening headcount.",
+    features: [
+      "Before each increase in workforce, review whether sanitation, drinking water, dining and other support facilities need to expand at the same time.",
+      "If you intend to reuse modules at another site, discuss the design and lifting requirements up front.",
+    ],
+    sizesNote: "Quote later dismantling, transport and reconnection separately.",
+
+    customHeading: "Labour colony price and rental in Madurai",
+    customIntro:
+      "Pricing depends on the number and type of modules, cabin finishes, bunks and lockers, sanitation fixtures, electrical and plumbing scope, delivery and installation.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "Share the project duration and ask for an itemised quote by module. If you need a short-term camp, ask whether suitable modules can be quoted on hire for your dates. For hire options, see:",
+    customLinks: [{ label: "Labour camp module rental", href: "/rental-service" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Madurai, Thoppur, Thirumangalam, Kappalur, Avaniyapuram, Thiruparankundram, Samayanallur, Othakadai, Melur, Vadipatti and sites along the Madurai Ring Road. Delivery and installation are assessed for each site.",
+
+    howHeading: "From enquiry to camp handover",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share the site plan, current and peak headcount, project dates, and available utilities.", text: "" },
+      { title: "Review the proposed layout, module list and itemised quotation.", text: "" },
+      { title: "Confirm the placement plan, site preparation and utility responsibilities.", text: "" },
+      { title: "Agree on delivery phases, installation scope and handover checks.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Sleeping cabins for Madurai’s heat",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Discuss insulated walls and roof, fan locations, cross-ventilation where the layout permits, and shade for common areas. Share expected occupancy and hours of use, including daytime rest for night-shift crews. Consider window screens, lockers, charging points and multilingual notices for workers arriving from different regions. The quoted design should identify the insulation, ventilation and electrical provisions included.",
+        ],
+      },
+      {
+        heading: "Hygiene, utilities and site safety",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Plan drinking water, cleaning, drainage, wastewater and waste collection alongside the cabin layout. Discuss washable surfaces for toilets, bathing areas and kitchens. Decide who will operate and maintain the facilities and where workers can find first-aid contacts and emergency instructions.",
+          "Have the responsible site teams approve the camp layout, electrical distribution, cooking and fuel arrangements, fire protection, emergency routes and assembly area. Keep cooking in the designated kitchen. Confirm the placement area, delivery approach, unloading space, and who will complete the base and utility connections before dispatch.",
+        ],
+        closing: ["For sanitation modules, see:"],
+        // Brief section 5: the toilet category covers the toilet block and built-to-order bathing blocks.
+        links: [{ label: "Portable toilet and bathing blocks", href: "/products/category/portable-toilet-cabins" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What does a prefabricated labour colony include?",
+        answer:
+          "A camp can combine dormitories, sanitation, dining and support facilities. The exact module list depends on the headcount, site and project requirements.",
+      },
+      {
+        question: "How many workers can share a dormitory cabin?",
+        answer:
+          "It depends on cabin dimensions, bunk arrangement, circulation, ventilation and applicable project requirements. Confirm the approved occupancy during layout review.",
+      },
+      {
+        question: "Can we request a separate women’s accommodation block?",
+        answer:
+          "Yes. Share the headcount and requirements for privacy, access, toilets and bathing facilities so the block can be planned within the camp layout.",
+      },
+      {
+        question: "Can we expand or move the camp later?",
+        answer:
+          "Additional phases and relocation can be discussed. Confirm module design, site access, lifting, utility disconnection and reconnection before committing to a move.",
+      },
+      {
+        question: "Is rental available?",
+        answer:
+          "Share the proposed hire period, module list and site location. Availability and hire, installation and collection terms are subject to quotation.",
+      },
+      {
+        question: "How quickly can the camp be installed?",
+        answer:
+          "Timing depends on the approved layout, module availability, site readiness and installation scope. Share your required opening date and planned headcount by phase.",
+      },
+    ],
+
+    ctaHeading: "Request a labour colony quote in Madurai",
+    ctaText:
+      "Send the site plan, opening and peak headcount, project duration, utility details and access photos. Include any separate accommodation, sanitation, dining or support modules you need.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "g1-workmen-accommodation",
+      noun: "labour colony",
+      heading: "Send your Madurai labour camp requirement",
+      intro:
+        "Choose the accommodation type closest to your plan and give the nearest town or PIN code around Madurai. Tell us the opening and peak headcount, the project duration and any toilet, bathing, kitchen or support modules you need, and we will review the layout with you before quoting.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "G+1 Workmen Accommodation", href: "/products/workmen-accommodation" },
+      { label: "Prefabricated Labour Hutments and Staff Accommodation", href: "/products/prefabricated-labour-hutments-staff-accommodation" },
+      { label: "Labour Colony in Tamil Nadu", href: "/promotions/labour-colony-in-tamil-nadu" },
+      { label: "Labour Camp Setup in Bangalore", href: "/cities-we-serve/labour-camp-setup-bangalore" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or site team in Madurai district. The modules, fixtures, finishes, installation work, utility connections, any hire period and any later relocation are agreed in writing in the quotation for each camp, and no installation or delivery date is guaranteed. All four images are illustrative renders, not photographs of a camp in Madurai or of a camp that has been supplied. Thoppur, Kappalur, the Madurai Ring Road and the other places named show where enquiries may come from: Portable Office Cabin is not affiliated with any public project, developer, contractor or authority there, and none of them should be read as a customer, a completed project or a confirmed site. The notes on occupancy, ventilation, sanitation, cooking, fire protection and site safety are general planning guidance, not engineering, public-health, legal or regulatory advice; the responsible project and compliance teams approve the camp layout and facility counts for each site.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

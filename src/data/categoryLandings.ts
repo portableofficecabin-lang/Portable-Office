@@ -298,6 +298,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
     locationLinks: [
       { name: "Labour camp setup in Bangalore", href: "/cities-we-serve/labour-camp-setup-bangalore" },
       ...promotionLocations("labour-colony"),
+      // Madurai labour colony city page (owner brief, 2026-11-09), last so live links keep their positions.
+      { name: "Prefabricated labour colonies in Madurai", href: "/cities-we-serve/labour-colony-madurai" },
     ],
     guideLinks: [
       {
