@@ -278,6 +278,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
     // Office-cabin page for tech park projects in Devarabisanahalli (Outer Ring Road, 2026-11-07); the page links back here.
     { name: "Portable Office Cabins for Devarabisanahalli Tech Parks", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
+    // Office-cabin page for homes, apartment societies and neighbourhood projects in Bellandur (2026-11-07),
+    // after the lines already live; the page links back here and to the Karnataka hub.
+    { name: "Portable Office Cabins in Bellandur", href: "/cities-we-serve/portable-office-cabin-bellandur" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
@@ -339,6 +342,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins across Ranipet District", href: "/cities-we-serve/portable-cabin-ranipet-district" },
     // Portable-cabin page for Dharmapuri (owner brief 2026-11-09), here and on Porta Cabin, after the Ranipet pages.
     { name: "Portable Cabins in Dharmapuri", href: "/cities-we-serve/portable-cabin-dharmapuri" },
+    // Portable-cabin page for Virudhunagar district (owner brief 2026-11-09), here and on Porta Cabin, after Dharmapuri.
+    { name: "Portable Cabins in Virudhunagar", href: "/cities-we-serve/portable-cabin-virudhunagar" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -371,6 +376,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins for SIPCOT Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
     { name: "Portable Cabins across Ranipet District", href: "/cities-we-serve/portable-cabin-ranipet-district" },
     { name: "Portable Cabins in Dharmapuri", href: "/cities-we-serve/portable-cabin-dharmapuri" },
+    { name: "Portable Cabins in Virudhunagar", href: "/cities-we-serve/portable-cabin-virudhunagar" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -406,6 +412,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Vellore", href: "/cities-we-serve/shipping-container-vellore" },
     // Dharmapuri district (Adhiyamankottai, Palacode), 2026-11-08; after Vellore so the live links keep their positions.
     { name: "Shipping Container in Dharmapuri", href: "/cities-we-serve/shipping-container-dharmapuri" },
+    // Shoolagiri industrial area (SIPCOT, Future Mobility Park), 2026-11-10; after Dharmapuri so the live links keep their positions.
+    { name: "Shipping Container in Shoolagiri", href: "/cities-we-serve/shipping-container-shoolagiri" },
   ],
   "Shipping Container|Chennai": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
@@ -416,10 +424,12 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Containers for Hydel Project Sites", href: "/cities-we-serve/shipping-containers-hydel-project-visakhapatnam" },
   ],
   // Portable-toilet hub — Portable Toilets in Krishnagiri (2026-11-04), the first portable-toilet city
-  // page; the page links back to this hub.
+  // page, then Portable Toilet Cabins in Dharmapuri and in Shoolagiri (2026-11-05); each page links back to this hub.
   "Portable Toilet Cabin|Tamil Nadu": [
     { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+    { name: "Portable Toilet Cabins in Bargur", href: "/cities-we-serve/portable-toilet-cabin-bargur" },
     { name: "Portable Toilet Cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
+    { name: "Portable Toilet Cabins in Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
   ],
   // Karnataka portable-toilet hub — Portable Toilet Cabins for Devanahalli Aerospace Park (2026-11-05),
   // the first Karnataka portable-toilet city page, then Portable Toilet Cabins in Doddaballapur
@@ -515,6 +525,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Chamarajanagar", href: "/cities-we-serve/porta-cabin-chamarajanagar" },
     // Porta / portable cabin page for Koppal (2026-11-09), here and on Porta Cabin; appended so the live links keep their positions.
     { name: "Portable Cabins in Koppal", href: "/cities-we-serve/porta-cabin-koppal" },
+    // Office-cabin page for Bellandur, Bengaluru (2026-11-07), after the portable-cabin city pages already listed.
+    { name: "Portable Office Cabins in Bellandur", href: "/cities-we-serve/portable-office-cabin-bellandur" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
