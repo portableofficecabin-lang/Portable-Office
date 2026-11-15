@@ -281,6 +281,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Office-cabin page for homes, apartment societies and neighbourhood projects in Bellandur (2026-11-07),
     // after the lines already live; the page links back here and to the Karnataka hub.
     { name: "Portable Office Cabins in Bellandur", href: "/cities-we-serve/portable-office-cabin-bellandur" },
+    // Portable office cabins for Marathahalli and the Outer Ring Road (east Bengaluru, owner brief of
+    // 2026-11-07); the page links back to this hub. After the live lines so they keep their positions.
+    { name: "Portable Office Cabins in Marathahalli", href: "/cities-we-serve/portable-office-cabin-marathahalli" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [

@@ -262,6 +262,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     if (p.howIntro) t("how", "how intro", p.howIntro);
     (p.howSteps ?? []).forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });
     if (p.howOutro) t("how", "how outro", p.howOutro);
+    // Optional how links (since 2026-11-08): label text and href.
+    (p.howLinks ?? []).forEach((l, i) => { t("how", `how link ${i + 1} "${l.label}"`, l.label); m("how", `how link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   }
   (p.extraSections ?? []).forEach((s, i) => {
     t("extra", `extra section ${i + 1} heading`, s.heading);
@@ -305,6 +307,22 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
         label: `extra section ${i + 1} renders after the solutions`,
         test: (_mk, tx) => {
           const a = tx.indexOf(squash(before));
+          const b = a >= 0 ? tx.indexOf(squash(s.heading), a) : -1;
+          const c = b >= 0 ? tx.indexOf(squash(after), b) : -1;
+          return a >= 0 && b > a && c > b;
+        },
+      });
+    }
+    // Optional placement (since 2026-11-10): an "afterIntro" section sits between the first intro
+    // paragraph and the why heading in the visible text (a page without a why section: the first
+    // later section it sets, as for "afterSolutions" above, else the areas heading).
+    if (s.placement === "afterIntro") {
+      const after = p.whyHeading ?? p.solutionsHeading ?? p.featuresHeading ?? p.industriesHeading ?? p.customHeading ?? p.whyUsHeading ?? p.areasHeading;
+      items.push({
+        group: "extra",
+        label: `extra section ${i + 1} renders after the intro`,
+        test: (_mk, tx) => {
+          const a = tx.indexOf(squash(p.intro[0] ?? p.h1));
           const b = a >= 0 ? tx.indexOf(squash(s.heading), a) : -1;
           const c = b >= 0 ? tx.indexOf(squash(after), b) : -1;
           return a >= 0 && b > a && c > b;
