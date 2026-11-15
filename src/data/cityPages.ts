@@ -31778,13 +31778,6 @@ export const CITY_PAGES: CityPage[] = [
     ],
     whyOutro:
       "Whether a particular cabin can be relocated is assessed for its design, the condition of its tanks, the lifting it needs and the access at the site. Not every toilet cabin has built-in lifting points, and a move means disconnecting the services and reconnecting them at the new position.",
-    // Brief of 2026-11-10 (Shoolagiri shipping-container page, §5): one link from this construction-stage
-    // section to the Shoolagiri shipping-container page, for separate materials storage.
-    whyInlineLink: {
-      before: "For separate materials storage on the same site, see our",
-      link: { label: "shipping containers in Shoolagiri", href: "/cities-we-serve/shipping-container-shoolagiri" },
-      after: ".",
-    },
 
     solutionsHeading: "Planning Toilet Facilities for Large Sites",
     solutionsIntro:
@@ -32054,6 +32047,9 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
         { label: "Portable Toilet Cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
+        // Brief of 2026-11-10 (Shoolagiri shipping-container page, §5), as agreed with this page's owner session:
+        // a nearby link only, so the page's approved copy is unchanged.
+        { label: "Shipping Containers in Shoolagiri", href: "/cities-we-serve/shipping-container-shoolagiri" },
         { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
         { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
@@ -32106,7 +32102,8 @@ export const CITY_PAGES: CityPage[] = [
    *
    * LINKS (brief §5): the security-cabin and portable-toilet pages and /products/shipping-container-rental
    * are live. Both Shoolagiri pages link back once: the security page from its project-stage section
-   * and the toilet page from its construction-stage section (each a `whyInlineLink`). No Chennai page is a
+   * (`whyInlineLink`) and the toilet page from its nearby links (its owner kept its approved copy
+   * unchanged). No Chennai page is a
    * used-container inspection guide; the Chennai-area page with a used-container checklist is
    * Shipping Container in Athipattu, whose "Used Container Inspection" section lists seven checks, so
    * "how to inspect a used container" points there, as on the Dharmapuri and Vellore pages.
