@@ -2,364 +2,82 @@ import shippingContainerCrane from "@/assets/products/shipping-container-kormang
 import shippingContainerCafe from "@/assets/products/shipping-container-kormangala-cafe.webp";
 import shippingContainerOffice from "@/assets/products/shipping-container-kormangala-office.webp";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CheckCircle2, Container, Home, Phone, ShieldCheck, Truck, Warehouse, Wrench, MapPin } from "lucide-react";
+import { Phone } from "lucide-react";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import Link from "next/link";
 import { BuyNowCTA } from "@/components/products/BuyNowCTA";
-import { getCommerce } from "@/data/productCommerce";
-import { formatINR, sellPrice } from "@/lib/pricing/gst";
+import { primaryPhone } from "@/lib/site-navigation";
 
-// Live GST-inclusive online price — the same source of truth as the buy box, cart,
-// checkout and Razorpay. Never hardcode a rupee figure beside it.
-const onlinePrice = formatINR(sellPrice(getCommerce("29")!.basePrice));
+/*
+ * Product id 29, /products/shipping-container-in-kormangala (the slug keeps its old spelling): the used
+ * 20 ft container in as-is grade, sold online at one fixed price.
+ *
+ * REFOCUSED 2026-11-15 (owner decision): until then this block was a long "Koramangala local guide"
+ * aimed at "shipping container in Koramangala", the query that the city page
+ * /cities-we-serve/shipping-container-koramangala now owns. It now describes the unit on sale and sends
+ * Koramangala storage-layout enquiries to that page, which links back here. Price, Buy Now and checkout
+ * are unchanged; no rupee figure is written here (the buy box carries the live price).
+ */
 
-const highlights = [
-  { icon: Container, title: "20 ft & 40 ft ISO stock", description: "Standard and high-cube containers available for offices, cafés, storage, and labour accommodation in Koramangala." },
-  { icon: MapPin, title: "Koramangala delivery", description: "Delivery within Koramangala — 1st to 8th Block, HSR Layout, Ejipura, and Domlur; units bought online are dispatched within 7–15 working days." },
-  { icon: Home, title: "Homes, cafés & rooftop", description: "Container homes, rooftop cafés, studios, and modular retail structures with PUF insulation and acoustic treatment." },
-  { icon: Truck, title: "Buy online", description: "Outright purchase at one fixed GST-inclusive price with full customization and relocation freedom." },
-];
-
-const containerTypes = [
-  { type: "20 ft Standard", dimensions: "20' × 8' × 8.6'", volume: "~33 m³", use: "Compact offices, security, storage" },
-  { type: "40 ft Standard", dimensions: "40' × 8' × 8.6'", volume: "~67 m³", use: "Multi-workstation offices, cafés" },
-  { type: "High Cube", dimensions: "9.6 ft height", volume: "Extra headroom", use: "Offices & cafés needing false ceilings or HVAC" },
-];
-
-const grades = [
-  { grade: "Cargo-Worthy", description: "Minor dents, suitable for basic storage and short-term use." },
-  { grade: "Wind & Watertight (WWT)", description: "Sealed against elements — ideal for site offices and accommodation." },
-  { grade: "Refurbished / One-Trip", description: "Sandblasted and repainted for long-term offices, homes, and cafés." },
-  { grade: "Special Types", description: "Open-top, flat rack, and refrigerated reefers on indent for industrial and F&B clients." },
-];
-
-const officeSpecs = [
-  "Insulated PUF panels (50–100 mm) on walls and roof",
-  "UPVC or aluminium sliding windows",
-  "Modular workstations for 4–12 people",
-  "LED lighting, concealed wiring, vinyl flooring",
-  "Split AC provisions (1.5–2 ton capacity)",
-  "Conference cabins, manager rooms, server niches, reception & pantries",
-];
-
-const lifestyleFeatures = [
-  "Container homes: bedroom, kitchenette, toilet, and balcony cutouts for urban plots",
-  "Container cafés: serving counters, 20–30 seat layouts, exhaust hoods, branding exteriors",
-  "Rooftop structures: office extensions, gyms, studios on existing RCC buildings",
-  "75 mm PUF insulation, acoustic treatment up to 40 dB reduction",
-  "Weatherproof paints with UV inhibitors and drainage planning",
-];
-
-const labourFeatures = [
-  "Cross-ventilation via louvered vents",
-  "Bunk layouts sleeping 8–12 per 20 ft unit",
-  "Industrial PVC flooring and easy-clean wall finishes",
-  "Integrated electrical fittings with MCB protection",
-  "Security guard cabins, portable toilets with bio-digesters, prefab canteens",
-];
-
-const storageFeatures = [
-  "Multi-point deadbolt locks (5000N shear rating)",
-  "Optional galvanized shelving (200 kg/m² capacity)",
-  "Anti-rust epoxy coatings",
-  "Basic ventilation and LED lighting",
-  "Yard layout planning with driveways and loading clearance",
-];
-
-const whyBuy = [
-  ["Factor", "Buying outright"],
-  ["Best for", "Long-term use, full customization, relocation freedom"],
-  ["Service life", "20+ years with basic maintenance"],
-  ["Cost (20 ft)", `${onlinePrice} incl. GST — buy online`],
-  ["Ownership", "Yours to modify, relocate, or resell — no recurring charges"],
-];
-
-const pricingRows = [
-  ["Shipping container (this page's offer)", `${onlinePrice} — GST included, buy online`],
-  ["Container office (fitted)", "Custom quote"],
-  ["Container café / home", "Custom quote"],
-  ["Special types (reefer, open-top, flat rack)", "Custom quote"],
-];
-
-const strengths = [
-  "Marine-grade steel and PIR insulation for 20-year durability",
-  "Experience across site offices, labour colonies, container homes, cafés, guard cabins, and portable toilets",
-  "Bangalore office plus a Tamil Nadu factory ~40 km away — quicker site visits and after-sales support",
-  "Sustainability: 90% container reuse, minimal debris versus brick-and-mortar",
-  "Flexibility for homeowners, corporate offices, construction firms, and government bodies",
-];
-
-const faqs = [
-  { q: "What types of shipping containers are available in Koramangala?", a: "We supply 20 ft, 40 ft, and high-cube containers in cargo-worthy, WWT, and refurbished grades — suitable for offices, cafés, storage, homes, and labour accommodation." },
-  { q: "How much does a shipping container cost in Koramangala?", a: `The container offered on this page has one fixed online price — ${onlinePrice}, GST included — and you can buy it directly on this page with secure checkout. Fitted offices, cafés, homes, and special container types are quoted to your specification.` },
-  { q: "Do you deliver to Koramangala's narrow lanes?", a: "Yes. We use 20/32 ft multi-axle trucks and hydra/crane trucks for placement. Our team coordinates timing (9 AM–6 PM) and provides AutoCAD drawings for local approvals." },
-  { q: "Can a shipping container be converted into a café or home?", a: "Absolutely. We fabricate container cafés with serving counters, seating for 20–30, exhaust hoods, and branding. Container homes include bedrooms, kitchenettes, toilets, and balcony cutouts." },
-  { q: "What permissions are needed for a container in Koramangala?", a: "Commercial cafés, offices, and rooftop containers may require BBMP/BDA approvals. We provide 1:50 scale AutoCAD drawings to support your application." },
-  { q: "How quickly can you deliver a container to Koramangala?", a: "The standard unit bought online is dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Custom-fitted container offices follow the timeline in your written quotation." },
-  { q: "Can containers be placed on rooftops in Koramangala?", a: "Yes, after structural load checks on the existing RCC building. We supply rooftop offices, gyms, studios, and cafés with proper waterproofing and drainage." },
-];
+const PRODUCT_NAME = "Used 20 ft Shipping Container (As-Is Grade)";
 
 export function ShippingContainerKormangalaContent() {
   return (
-    <div className="space-y-16">
-      {/* Hero images */}
-      <section className="space-y-8">
+    <section className="space-y-6">
+      <figure className="space-y-3">
         <div className="grid gap-5 md:grid-cols-3">
-          <OptimizedImage src={resolveImageUrl(shippingContainerCrane)} alt="Shipping container being lifted by crane at Koramangala construction site by Portable Office Cabin" productName="Shipping Container in Kormangala" aspectRatio="16/10" className="rounded-3xl border border-border" priority />
-          <OptimizedImage src={resolveImageUrl(shippingContainerCafe)} alt="Container café with rooftop seating and string lights in Koramangala Bangalore by Portable Office Cabin" productName="Shipping Container in Kormangala" aspectRatio="16/10" className="rounded-3xl border border-border" priority />
-          <OptimizedImage src={resolveImageUrl(shippingContainerOffice)} alt="Modern grey shipping container office with glass sliding doors in Koramangala by Portable Office Cabin" productName="Shipping Container in Kormangala" aspectRatio="16/10" className="rounded-3xl border border-border" priority />
+          <OptimizedImage
+            src={resolveImageUrl(shippingContainerCrane)}
+            alt="Blue shipping container lifted by a mobile crane over a construction site"
+            productName={PRODUCT_NAME}
+            aspectRatio="16/10"
+            className="rounded-3xl border border-border"
+          />
+          <OptimizedImage
+            src={resolveImageUrl(shippingContainerCafe)}
+            alt="Two-storey container café with a glazed front and rooftop seating under string lights at dusk"
+            productName={PRODUCT_NAME}
+            aspectRatio="16/10"
+            className="rounded-3xl border border-border"
+          />
+          <OptimizedImage
+            src={resolveImageUrl(shippingContainerOffice)}
+            alt="Dark grey container office with full-width sliding glass doors and a desk inside"
+            productName={PRODUCT_NAME}
+            aspectRatio="16/10"
+            className="rounded-3xl border border-border"
+          />
         </div>
+        <figcaption className="text-sm text-muted-foreground">
+          Illustrative images of container delivery and conversions. Conversions are quoted separately from this unit.
+        </figcaption>
+      </figure>
 
-        <div>
-          <div className="mb-5 flex items-center gap-3">
-            <div className="h-1 w-12 rounded-full bg-accent" />
-            <span className="text-sm font-semibold uppercase tracking-wider text-accent">KORAMANGALA LOCAL GUIDE</span>
-          </div>
-          <h2 className="mb-5 font-display text-3xl font-bold text-foreground sm:text-4xl">
-            Shipping Container in Koramangala — Office, Café, Home & Storage
-          </h2>
-          <p className="mb-4 text-lg leading-relaxed text-muted-foreground">
-            Koramangala (560034) has become one of Bengaluru's most dynamic neighbourhoods for startups, IT firms, and retail ventures. With high commercial lease costs and ongoing redevelopment along 80 Feet Road, Inner Ring Road, and nearby Ejipura, HSR Layout, and Domlur, businesses are searching for cost-effective alternatives.
-          </p>
-          <p className="leading-relaxed text-muted-foreground">
-            Portable Office Cabin manufactures at its Tamil Nadu factory near Hosur, just ~40 km from Bengaluru, and supplies prefabricated and modular building solutions from its Bangalore office. We serve both B2B and B2C customers with new and used containers — from compact storage units to fully fitted container offices, cafés, homes, and rooftop structures.
-          </p>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {highlights.map((item) => (
-            <div key={item.title} className="rounded-2xl border border-border bg-card p-5">
-              <item.icon className="mb-3 h-7 w-7 text-accent" />
-              <h3 className="mb-1 font-semibold text-foreground">{item.title}</h3>
-              <p className="text-sm text-muted-foreground">{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Container types */}
-      <section>
-        <h3 className="mb-6 font-display text-2xl font-bold text-foreground">Container sizes available in Koramangala</h3>
-        <div className="overflow-hidden rounded-3xl border border-border bg-card">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-accent/10">
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Type</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Dimensions</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Volume</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Typical Use</th>
-              </tr>
-            </thead>
-            <tbody>
-              {containerTypes.map((item, i) => (
-                <tr key={item.type} className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                  <td className="px-5 py-4 font-medium text-foreground">{item.type}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{item.dimensions}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{item.volume}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{item.use}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Grades */}
-      <section>
-        <h3 className="mb-6 font-display text-2xl font-bold text-foreground">Container grades & conditions</h3>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {grades.map((item) => (
-            <div key={item.grade} className="rounded-2xl border border-border bg-card p-6">
-              <h4 className="mb-2 font-semibold text-foreground">{item.grade}</h4>
-              <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Container offices */}
-      <section className="rounded-3xl border border-border bg-card p-8">
-        <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Container offices in Koramangala</h3>
-        <p className="mb-5 text-muted-foreground">
-          Container offices address the stress of high commercial lease costs while providing rapid deployment. Startups near Forum Mall, project sites across Koramangala 1st–8th Block, and sales offices along Sarjapur Road are choosing this route — 50–70% cost savings over traditional construction.
+      <div className="rounded-3xl border border-border bg-card p-8">
+        <h2 className="mb-4 font-display text-2xl font-bold text-foreground">About this as-is grade container</h2>
+        <p className="mb-4 leading-relaxed text-muted-foreground">
+          This listing is one used 20 ft shipping container in as-is grade, sold at one fixed online price with GST
+          included: the same amount you pay at checkout. Fitted offices, cafés, homes and other conversions are quoted
+          separately to your specification.
         </p>
-        <div className="space-y-3">
-          {officeSpecs.map((item) => (
-            <div key={item} className="flex items-start gap-3">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-              <span className="text-muted-foreground">{item}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Homes, cafés & rooftop */}
-      <section className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Container homes, cafés & rooftop structures</h3>
-          <div className="space-y-3">
-            {lifestyleFeatures.map((item) => (
-              <div key={item} className="flex items-start gap-3">
-                <Home className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-                <span className="text-muted-foreground">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-3xl border border-border bg-muted/30 p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Labour accommodation & site infrastructure</h3>
-          <div className="space-y-3">
-            {labourFeatures.map((item) => (
-              <div key={item} className="flex items-start gap-3">
-                <Warehouse className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-                <span className="text-muted-foreground">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Storage */}
-      <section className="rounded-3xl border border-border bg-card p-8">
-        <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Portable storage & warehousing</h3>
-        <p className="mb-5 text-muted-foreground">
-          Retailers, e-commerce sellers, and event companies in Koramangala use containers as secure on-site storage — stocking retail inventory in 5th–7th Block shops, storing event equipment, and securing construction materials.
+        <p className="mb-6 leading-relaxed text-muted-foreground">
+          Planning separately lockable storage bays, restaurant equipment storage or a bicycle room in Koramangala? See{" "}
+          <Link href="/cities-we-serve/shipping-container-koramangala" className="text-accent hover:underline">
+            shipping and storage containers in Koramangala
+          </Link>{" "}
+          for layouts, placement and hire enquiries.
         </p>
-        <div className="space-y-3">
-          {storageFeatures.map((item) => (
-            <div key={item} className="flex items-start gap-3">
-              <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-              <span className="text-muted-foreground">{item}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Why buy */}
-      <section>
-        <h3 className="mb-6 font-display text-2xl font-bold text-foreground">Why buy a shipping container in Koramangala?</h3>
-        <div className="overflow-hidden rounded-3xl border border-border bg-card">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-accent/10">
-                {whyBuy[0].map((h) => (
-                  <th key={h} className="px-5 py-4 text-left font-semibold text-foreground">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {whyBuy.slice(1).map((row, i) => (
-                <tr key={row[0]} className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                  <td className="px-5 py-4 font-medium text-foreground">{row[0]}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{row[1]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="mt-4 text-sm text-muted-foreground">
-          A purchased container pays for itself within 18–24 months compared with recurring commercial space costs. Prefer renting instead? See our <Link href="/rental-service" className="text-accent hover:underline">rental service</Link>.
-        </p>
-      </section>
-
-      {/* Pricing */}
-      <section className="space-y-6">
-        <div>
-          <h3 className="mb-2 font-display text-2xl font-bold text-foreground">Pricing & costs in Koramangala</h3>
-          <p className="text-muted-foreground">The container offered on this page has one fixed online price — GST included, the same amount you pay at checkout. Fit-outs, conversions, and special container types are quoted to your specification:</p>
-        </div>
-        <div className="overflow-hidden rounded-3xl border border-border bg-card">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-accent/10">
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Type</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricingRows.map(([type, price], i) => (
-                <tr key={type} className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                  <td className="px-5 py-4 text-foreground">{type}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{price}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Delivery & Installation */}
-      <section className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Delivery & installation in Koramangala</h3>
-          <div className="space-y-4 text-muted-foreground">
-            <p><strong className="text-foreground">Delivery:</strong> 20/32 ft multi-axle trucks from our Tamil Nadu factory near Hosur; units bought online are dispatched within 7–15 working days.</p>
-            <p><strong className="text-foreground">Installation:</strong> Hydra or crane trucks; placement on concrete blocks or steel supports; levelling and fit-out checks.</p>
-            <p><strong className="text-foreground">Permissions:</strong> Commercial cafés, offices, and rooftop containers may require BBMP/BDA approvals — we provide AutoCAD drawings (1:50 scale).</p>
-            <p><strong className="text-foreground">Timing:</strong> Daytime installation (9 AM–6 PM) to comply with noise bylaws.</p>
-          </div>
-        </div>
-
-        <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Why choose Portable Office Cabin</h3>
-          <div className="space-y-3">
-            {strengths.map((item) => (
-              <div key={item} className="flex items-start gap-3">
-                <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-                <span className="text-muted-foreground">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Security & compliance */}
-      <section className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Security measures</h3>
-          <div className="space-y-4 text-muted-foreground">
-            <p>Each container is equipped with high-security locking systems. GPS tracking can be installed for monitoring movement and preventing unauthorized access.</p>
-            <p>Strict protocols ensure only authorized personnel access your container — minimizing risk for valuable goods and sensitive items.</p>
-          </div>
-        </div>
-        <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Certification & compliance</h3>
-          <div className="space-y-4 text-muted-foreground">
-            <p>Containers manufactured in accordance with international ISO standards including ISO 9001:2015 and ISO 39001:2012.</p>
-            <p>Clear documentation and guidance provided for project compliance — portable offices, storage units, and site accommodation.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="rounded-3xl border border-border bg-card p-8 shadow-card">
-        <h3 className="mb-4 font-display text-2xl font-bold text-foreground">Frequently asked questions</h3>
-        <Accordion type="single" collapsible className="w-full">
-          {faqs.map((faq, i) => (
-            <AccordionItem key={i} value={`faq-${i}`}>
-              <AccordionTrigger>{faq.q}</AccordionTrigger>
-              <AccordionContent>{faq.a}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </section>
-
-      {/* Closing CTA */}
-      <section className="rounded-3xl bg-accent/10 p-8 text-center md:p-10">
-        <h3 className="mb-3 font-display text-2xl font-bold text-foreground md:text-3xl">Buy Your Shipping Container in Koramangala Online</h3>
-        <p className="mx-auto mb-6 max-w-3xl text-muted-foreground">
-          Order online at {onlinePrice} — GST included — with secure payment and delivery across Koramangala, or call us to discuss fitted offices, cafés, and rooftop structures.
-        </p>
-        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
           <BuyNowCTA productId="29" />
-          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted">
-            <Phone className="h-4 w-4" />
-            Call Us Now
+          <a
+            href={`tel:${primaryPhone.e164}`}
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted"
+          >
+            <Phone className="h-4 w-4" aria-hidden="true" />
+            Call {primaryPhone.display}
           </a>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
