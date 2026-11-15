@@ -117,6 +117,7 @@ function bodyLinks(page: CityPage): CityPageLink[] {
     page.whyInlineLink?.link,
     ...(page.solutions ?? []).map((s) => s.link),
     ...(page.featuresLinks ?? []),
+    page.featuresInlineLink?.link,
     ...(page.customLinks ?? []),
     page.areasInlineLink?.link,
     ...(page.extraSections ?? []).flatMap((sec) => [
