@@ -229,10 +229,28 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
     );
   };
 
-  /* Optional paragraph with one inline link (`introLink`, `areasInlineLink`): same link style as the
-     link lists above. Callers render it only when the field is set. */
+  /* An extra section's bullets: the bulleted list every section has always rendered, or, with
+     `ordered` (optional, first used by Portable Office Cabin in Bellandur for its numbered steps), a
+     numbered list with the same items. Unset = the <ul>, byte-identical to before. */
+  const renderSectionList = (bullets: NonNullable<CityPageSection["bullets"]>, ordered?: boolean) => {
+    const items = bullets.map((b) => (
+      <li key={b.title ?? b.text} className={li}>
+        {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
+      </li>
+    ));
+    return ordered ? (
+      <ol className={`list-decimal pl-6${mc("reveal-stagger")}`}>{items}</ol>
+    ) : (
+      <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>{items}</ul>
+    );
+  };
+
+  /* Optional paragraph with one inline link (`introLink`, `whyInlineLink`, `areasInlineLink`,
+     `featuresInlineLink`, an extra section's `inlineLinks`): same link style as the link lists above.
+     Callers render it only when the field is set. The key (the link's href) only matters inside a
+     section's list. */
   const renderInlineLink = (il: CityPageInlineLink, extraClass = "") => (
-    <p className={`${p}${extraClass}${mc("reveal")}`}>
+    <p key={il.link.href} className={`${p}${extraClass}${mc("reveal")}`}>
       {il.before}{" "}
       <Link href={il.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
         {il.link.label}
@@ -253,21 +271,15 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
       ))}
       {sec.table && renderTable(sec.table)}
-      {sec.bullets && sec.bullets.length > 0 && (
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {sec.bullets.map((b) => (
-            <li key={b.title ?? b.text} className={li}>
-              {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
-            </li>
-          ))}
-        </ul>
-      )}
+      {sec.bullets && sec.bullets.length > 0 && renderSectionList(sec.bullets, sec.ordered)}
       {/* Optional paragraphs after the bullets (`closing`); unset = nothing rendered. */}
       {sec.closing?.map((text) => (
         <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
       ))}
       {/* Optional contextual links after the closing paragraphs (`links`); unset = nothing rendered. */}
       {sec.links && sec.links.length > 0 && renderLinks(sec.links)}
+      {/* Optional inline-link paragraphs after the links (`inlineLinks`); unset = nothing rendered. */}
+      {sec.inlineLinks?.map((il) => renderInlineLink(il))}
     </section>
   );
 
@@ -424,6 +436,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
             {/* Optional contextual links after the outro (`whyLinks`); unset = nothing rendered. */}
             {page.whyLinks && page.whyLinks.length > 0 && renderLinks(page.whyLinks)}
+            {/* Optional inline-link paragraph after the why outro (`whyInlineLink`); unset = no element. */}
+            {page.whyInlineLink && renderInlineLink(page.whyInlineLink)}
           </>
         )}
 
@@ -531,6 +545,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
             {/* Optional contextual links after the sizes note (`featuresLinks`); unset = nothing rendered. */}
             {page.featuresLinks && page.featuresLinks.length > 0 && renderLinks(page.featuresLinks)}
+            {/* Optional inline-link paragraph after those links (`featuresInlineLink`); unset = no element. */}
+            {page.featuresInlineLink && renderInlineLink(page.featuresInlineLink)}
           </>
         )}
 

@@ -121,6 +121,11 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   m("metadata", "canonical = page URL", `rel="canonical" href="${pageUrl}"`);
   m("metadata", "og:url = page URL", `property="og:url" content="${pageUrl}"`);
   items.push({ group: "metadata", label: "og:image = hero image", test: (mk) => new RegExp(`property="og:image" content="[^"]*${p.heroImage.src.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`).test(mk) });
+  // Optional og:image dimensions (since 2026-11-07): the hero's width and height.
+  if (p.ogImageDimensions) {
+    m("metadata", "og:image:width = hero width", `property="og:image:width" content="${p.heroImage.width}"`);
+    m("metadata", "og:image:height = hero height", `property="og:image:height" content="${p.heroImage.height}"`);
+  }
   items.push({ group: "metadata", label: "no noindex robots meta", test: (mk) => !/name="robots" content="[^"]*noindex/i.test(mk) });
   m("metadata", "geo.region", `name="geo.region" content="${p.geo.region}"`);
 
@@ -174,6 +179,12 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   if (p.whyOutro) t("why", "why outro", p.whyOutro);
   // Optional why links (since 2026-11-09): label text and href.
   (p.whyLinks ?? []).forEach((l, i) => { t("why", `why link ${i + 1} "${l.label}"`, l.label); m("why", `why link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  // Optional why inline link (since 2026-11-10): the sentence before it, the label and the href.
+  if (p.whyInlineLink) {
+    t("why", "why inline link lead-in", p.whyInlineLink.before);
+    t("why", `why inline link "${p.whyInlineLink.link.label}"`, p.whyInlineLink.link.label);
+    m("why", `why inline link href ${p.whyInlineLink.link.href}`, `href="${p.whyInlineLink.link.href}"`);
+  }
   if (p.featureImage) {
     items.push({ group: "images", label: "feature image src", test: (mk) => imageNeedle(p.featureImage!.src).test(mk) });
     m("images", "feature image alt", `alt="${p.featureImage.alt}"`);
@@ -182,8 +193,7 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   // Optional section (since 2026-11-08): audited whenever the page sets it.
   if (p.solutionsHeading) {
     t("solutions", "solutions heading", p.solutionsHeading);
-    // Optional intro (since 2026-11-07, first Marathahalli): audited whenever the page sets it.
-    if (p.solutionsIntro) t("solutions", "solutions intro", p.solutionsIntro);
+    t("solutions", "solutions intro", p.solutionsIntro ?? "");
     (p.solutions ?? []).forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
     (p.solutions ?? []).forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
     // Optional captioned images under a solutions item (since 2026-11-05): src, alt and caption.
@@ -209,6 +219,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     t("features", "sizes note", p.sizesNote ?? "");
     // Optional features links (since 2026-11-08): label text and href.
     (p.featuresLinks ?? []).forEach((l, i) => { t("features", `features link ${i + 1} "${l.label}"`, l.label); m("features", `features link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+    // Optional inline-link paragraph after those links (since 2026-11-15): lead-in, link text and href.
+    if (p.featuresInlineLink) { const il = p.featuresInlineLink; t("features", "features inline link lead-in", il.before); t("features", `features inline link "${il.link.label}"`, il.link.label); m("features", `features inline link href ${il.link.href}`, `href="${il.link.href}"`); }
   }
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
   // Optional gallery captions (since 2026-11-05): audited whenever an image sets one.
@@ -271,13 +283,22 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
       items.push({ group: "extra", label: `extra section ${i + 1} table is a <table> with row headers`, test: (mk) => /<table[\s\S]*<th[^>]*scope="row"/.test(mk) });
     }
     (s.bullets ?? []).forEach((b, j) => { t("extra", `extra section ${i + 1} bullet ${j + 1} title`, b.title ?? ""); t("extra", `extra section ${i + 1} bullet ${j + 1} text`, b.text); });
+    // Optional numbered list (since 2026-11-07): the section's bullets render inside an <ol>.
+    if (s.ordered && s.bullets && s.bullets.length > 0) m("extra", `extra section ${i + 1} numbered list`, `<ol class="list-decimal pl-6`);
     (s.closing ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} closing ${j + 1}`, x));
     // Optional links (since 2026-11-05): label text and href.
     (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
+    // Optional inline-link paragraphs (since 2026-11-10): lead-in, label and href.
+    (s.inlineLinks ?? []).forEach((il, j) => {
+      t("extra", `extra section ${i + 1} inline link ${j + 1} lead-in`, il.before);
+      t("extra", `extra section ${i + 1} inline link ${j + 1} "${il.link.label}"`, il.link.label);
+      m("extra", `extra section ${i + 1} inline link ${j + 1} href ${il.link.href}`, `href="${il.link.href}"`);
+    });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
-    // heading and the features heading in the visible text. A page without those optional sections
-    // (since 2026-11-07/08) is checked against the headings either side instead: the why heading (else
-    // the H1) before, and the first later optional heading it sets after, else the areas heading.
+    // heading and the next fixed heading in the visible text. A page without those optional sections
+    // (since 2026-11-07/08) is checked against the headings either side instead: before it the why
+    // heading (else the H1, which always renders first); after it the first later section the page sets
+    // (features, industries, custom, why-us), else the areas heading.
     if (s.placement === "afterSolutions") {
       const before = p.solutionsHeading ?? p.whyHeading ?? p.h1;
       const after = p.featuresHeading ?? p.industriesHeading ?? p.customHeading ?? p.whyUsHeading ?? p.areasHeading;
