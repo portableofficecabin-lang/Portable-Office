@@ -112,6 +112,7 @@ const DEFAULT_CTA_SECONDARY_LINKS: CityPageLink[] = [
 function bodyLinks(page: CityPage): CityPageLink[] {
   return [
     page.introLink?.link,
+    ...(page.introLinks ?? []),
     ...(page.whyLinks ?? []),
     page.whyInlineLink?.link,
     ...(page.solutions ?? []).map((s) => s.link),
