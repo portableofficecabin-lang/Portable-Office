@@ -24,6 +24,7 @@ import { Phone } from "lucide-react";
 import {
   CITY_PAGES,
   cityPageBySlug,
+  type CityPageInlineLink,
   type CityPageLink,
   type CityPageSection,
   type CityPageTable,
@@ -200,6 +201,19 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
     </ul>
   );
 
+  /* Optional paragraph with one inline link (`introLink`, `areasInlineLink`, `featuresInlineLink`, a
+     section's `inlineLink`): same link style as the link lists above. Callers render it only when the
+     field is set. */
+  const renderInlineLink = (il: CityPageInlineLink, extraClass = "") => (
+    <p className={`${p}${extraClass}${mc("reveal")}`}>
+      {il.before}{" "}
+      <Link href={il.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+        {il.link.label}
+      </Link>
+      {il.after}
+    </p>
+  );
+
   /* One optional extra section (`extraSections`): owner copy with more H2s than the fixed slots
      hold. Same classes and motion as the fixed sections. Rendered after the "how" steps, or after
      the solutions list when `placement` is "afterSolutions". */
@@ -225,6 +239,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       ))}
       {/* Optional contextual links after the closing paragraphs (`links`); unset = nothing rendered. */}
       {sec.links && sec.links.length > 0 && renderLinks(sec.links)}
+      {/* Optional inline-link paragraph at the end of the section (`inlineLink`); unset = no element. */}
+      {sec.inlineLink && renderInlineLink(sec.inlineLink)}
     </section>
   );
 
@@ -315,6 +331,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {page.intro.map((text) => (
           <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
         ))}
+        {/* Optional inline-link paragraph after the intro (`introLink`); unset = no element. */}
+        {page.introLink && renderInlineLink(page.introLink, " mt-4")}
 
         {/* Optional hero contact row (`heroCta`): quotation (the on-page form when there is one), Call
             and WhatsApp, styled like the CTA box buttons. Not a scroll reveal: it sits near the top
@@ -370,6 +388,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {/* Optional table (`whyTable`); unset = no element. */}
         {page.whyTable && renderTable(page.whyTable)}
         {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
+        {/* Optional contextual links after the outro (`whyLinks`); unset = nothing rendered. */}
+        {page.whyLinks && page.whyLinks.length > 0 && renderLinks(page.whyLinks)}
 
         {/* Feature band — a single editorial plate breaking the longest text run on the page.
             Cropped 3:2 (sources are square, so object-cover keeps the cabin centred and stops a
@@ -474,6 +494,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
             {/* Optional contextual links after the sizes note (`featuresLinks`); unset = nothing rendered. */}
             {page.featuresLinks && page.featuresLinks.length > 0 && renderLinks(page.featuresLinks)}
+            {/* Optional inline-link paragraph after those links (`featuresInlineLink`); unset = no element. */}
+            {page.featuresInlineLink && renderInlineLink(page.featuresInlineLink)}
           </>
         )}
 
@@ -583,6 +605,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.areasHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.areasText}</p>
+        {/* Optional inline-link paragraph after the areas text (`areasInlineLink`); unset = no element. */}
+        {page.areasInlineLink && renderInlineLink(page.areasInlineLink)}
         {/* Optional contextual links after the areas text (`areasLinks`); unset = nothing rendered. */}
         {page.areasLinks && page.areasLinks.length > 0 && renderLinks(page.areasLinks)}
 

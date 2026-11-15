@@ -167,6 +167,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     items.push({ group: "why", label: "why table is a <table> with row headers", test: (mk) => /<table[\s\S]*<th[^>]*scope="row"/.test(mk) });
   }
   if (p.whyOutro) t("why", "why outro", p.whyOutro);
+  // Optional why links (since 2026-11-09): label text and href.
+  (p.whyLinks ?? []).forEach((l, i) => { t("why", `why link ${i + 1} "${l.label}"`, l.label); m("why", `why link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   if (p.featureImage) {
     items.push({ group: "images", label: "feature image src", test: (mk) => imageNeedle(p.featureImage!.src).test(mk) });
     m("images", "feature image alt", `alt="${p.featureImage.alt}"`);
@@ -201,6 +203,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     t("features", "sizes note", p.sizesNote ?? "");
     // Optional features links (since 2026-11-08): label text and href.
     (p.featuresLinks ?? []).forEach((l, i) => { t("features", `features link ${i + 1} "${l.label}"`, l.label); m("features", `features link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+    // Optional inline-link paragraph after those links (since 2026-11-10): lead-in, link text and href.
+    if (p.featuresInlineLink) { const il = p.featuresInlineLink; t("features", "features inline link lead-in", il.before); t("features", `features inline link "${il.link.label}"`, il.link.label); m("features", `features inline link href ${il.link.href}`, `href="${il.link.href}"`); }
   }
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
   // Optional gallery captions (since 2026-11-05): audited whenever an image sets one.
@@ -249,6 +253,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     (s.closing ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} closing ${j + 1}`, x));
     // Optional links (since 2026-11-05): label text and href.
     (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
+    // Optional inline-link paragraph at the end of the section (since 2026-11-10): lead-in, link text and href.
+    if (s.inlineLink) { const il = s.inlineLink; t("extra", `extra section ${i + 1} inline link lead-in`, il.before); t("extra", `extra section ${i + 1} inline link "${il.link.label}"`, il.link.label); m("extra", `extra section ${i + 1} inline link href ${il.link.href}`, `href="${il.link.href}"`); }
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
     // heading and the features heading in the visible text. A page without those optional sections
     // (since 2026-11-08) is checked against the headings either side instead: the why heading before,
