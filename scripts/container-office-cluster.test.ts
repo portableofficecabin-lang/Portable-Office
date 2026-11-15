@@ -133,7 +133,7 @@ for (const loc of CONTAINER_OFFICE_LOCATIONS) {
 for (const loc of CONTAINER_OFFICE_LOCATIONS) {
   const page = pagesBySlug.get(loc.slug);
   if (!page) continue;
-  const text = [page.tagline, page.areasHeading, page.areasText, ...page.intro, page.whyIntro, page.industriesIntro ?? "",
+  const text = [page.tagline, page.areasHeading, page.areasText, ...page.intro, page.whyIntro ?? "", page.industriesIntro ?? "",
     ...(page.industries ?? []).map((i) => `${i.title ?? ""} ${i.text}`), ...page.faqs.map((f) => f.answer)].join(" ").toLowerCase();
   const tokens = loc.area.split(/,\s*|\s+and\s+/).map((t) => t.replace(/^the\s+/i, "").trim()).filter((t) => /^[A-Z]/.test(t));
   for (const t of tokens) {
