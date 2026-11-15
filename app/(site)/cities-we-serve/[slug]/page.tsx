@@ -24,6 +24,7 @@ import { Phone } from "lucide-react";
 import {
   CITY_PAGES,
   cityPageBySlug,
+  type CityPage,
   type CityPageInlineLink,
   type CityPageLink,
   type CityPageSection,
@@ -104,6 +105,26 @@ const DEFAULT_CTA_SECONDARY_LINKS: CityPageLink[] = [
   { label: "Explore Container Offices", href: "/products/category/container-offices" },
   { label: "Container Office on Rent", href: "/rental-service" },
 ];
+
+/* Every contextual link a page carries in its body (intro, why, solutions, features, custom and areas
+   links, and the extra sections' links). Read only for a page that sets `nearbySkipsBodyLinks`, so the
+   shipping-container nearby block does not repeat a sibling the body already links. */
+function bodyLinks(page: CityPage): CityPageLink[] {
+  return [
+    page.introLink?.link,
+    ...(page.whyLinks ?? []),
+    page.whyInlineLink?.link,
+    ...(page.solutions ?? []).map((s) => s.link),
+    ...(page.featuresLinks ?? []),
+    ...(page.customLinks ?? []),
+    page.areasInlineLink?.link,
+    ...(page.extraSections ?? []).flatMap((sec) => [
+      ...(sec.links ?? []),
+      ...(sec.inlineLinks ?? []).map((il) => il.link),
+      ...(sec.bullets ?? []).map((b) => b.link),
+    ]),
+  ].filter((l): l is CityPageLink => !!l);
+}
 
 export default async function CityLandingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -753,8 +774,13 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             location pages (3–4 each). Renders nothing on every other page. */}
         <ShippingContainerNearbyBlock
           slug={page.slug}
-          /* `areasLinks` hrefs are skipped too, so a sibling the areas section already links is not repeated. */
-          existingHrefs={[...(page.relatedLinks ?? []), ...(page.areasLinks ?? [])].map((l) => l.href)}
+          /* `areasLinks` hrefs are skipped too, so a sibling the areas section already links is not repeated;
+             with `nearbySkipsBodyLinks` set, so are the siblings linked anywhere in the body. */
+          existingHrefs={[
+            ...(page.relatedLinks ?? []),
+            ...(page.areasLinks ?? []),
+            ...(page.nearbySkipsBodyLinks ? bodyLinks(page) : []),
+          ].map((l) => l.href)}
           motion={page.motion}
         />
 
