@@ -682,6 +682,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
               ))}
             </ol>
             {page.howOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.howOutro}</p>}
+            {/* Optional contextual links after the steps (`howLinks`); unset = nothing rendered. */}
+            {page.howLinks && page.howLinks.length > 0 && renderLinks(page.howLinks)}
           </>
         )}
 
