@@ -370,6 +370,12 @@ export interface CityPage {
   howIntro?: string;
   howSteps?: CityPageListItem[];
   howOutro?: string;
+  /**
+   * Optional contextual links rendered as a short list after `howOutro` (first used by Shipping
+   * Containers in Marathahalli, which points from its enquiry steps to the Marathahalli office-cabin
+   * page). Same markup as `customLinks`. Unset = nothing rendered.
+   */
+  howLinks?: CityPageLink[];
 
   /**
    * Optional extra H2 sections rendered after the "how" steps and before the FAQs, for owner copy
@@ -18045,6 +18051,10 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Confirm the placement location, base, access and required permissions with the responsible site team.", text: "" },
       { title: "Agree on the delivery and unloading plan, plus any later relocation or collection in the quotation.", text: "" },
     ],
+    // Reciprocal with Portable Office Cabins in Marathahalli (#224, 2026-11-08), as agreed between the two
+    // pages: a workspace beside the storage unit is the office-cabin page's intent, not this one's.
+    howOutro: "Need a workspace alongside your storage unit?",
+    howLinks: [{ label: "Office cabins in Marathahalli", href: "/cities-we-serve/portable-office-cabin-marathahalli" }],
 
     extraSections: [
       {
@@ -33332,6 +33342,12 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
+    // Reciprocal with Portable Office Cabins in Marathahalli (#224), as agreed between the two pages'
+    // sessions on 2026-11-08: the brief's scope split gives site and sales offices to Marathahalli.
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [{ label: "Site and Sales Office Cabins in Marathahalli", href: "/cities-we-serve/portable-office-cabin-marathahalli" }],
+    },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office or yard in Bellandur. Delivery, unloading and placement are arranged for each order, and the schedule is confirmed in the quotation. The layouts, footprints, finishes, insulation, electrical provisions and furniture described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative design renders of one office cabin, not photographs of installations in Bellandur. Bellandur, the Bellandur Post (560103) area and the localities listed are named only to describe where enquiries are welcome; they are not clients, completed projects or confirmed delivery sites. The notes on association approvals, placement, lake and drain works and power billing are general guidance, not legal, engineering or electrical advice; the association, project authority or site team confirms the requirements that apply to each site.`,
   },
@@ -33603,6 +33619,255 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Virudhunagar district. Delivery, unloading and placement are assessed and arranged for each location, and delivery schedules are not guaranteed. Rental is subject to availability and the rental quotation. The cabin combinations, sizes, layouts, fittings and specifications described on this page are examples for discussion; the items supplied are confirmed in the approved specification and quotation for each order. The cabins described here are general-purpose units for support activities: they are not designed or offered for hazardous areas, for fireworks, match or chemical manufacturing, or for storing fireworks, chemicals or other hazardous materials, and whether a location at a licensed or regulated site is suitable is for that site's safety team and the relevant authorities to decide. The images on this page are illustrative renders of one Portable Office Cabin design, shown with an optionally furnished interior; they are not photographs of installations in Virudhunagar district or at the PM MITRA park. The PM MITRA textile park area at E. Kumaralingapuram is named only to describe the location; Portable Office Cabin is not affiliated with the park, its developer or any business there, this page makes no claim about the park's status, and the mills, printers, market yards and other businesses mentioned are not clients or completed projects. Notes on placement, utilities and site safety are general guidance, not engineering, safety or legal advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE OFFICE CABINS IN MARATHAHALLI AND THE OUTER RING ROAD (east Bengaluru) —
+   * /cities-we-serve/portable-office-cabin-marathahalli
+   *
+   * Owner brief of 2026-11-07 ("Marathahalli Office Cabin — Website Copy and Implementation Commands"):
+   * the proposed path (no Marathahalli page existed), meta title (60 chars), meta description, H1,
+   * keywords and public copy verbatim. No other page targets an office cabin in Marathahalli; the
+   * Sarjapur container-office page lists Bellandur among its areas, a different product and place.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro, introLinks ("portable office cabins" → Office Portable Cabin) and heroCta. The
+   *     tagline is the meta title's "Site & Sales Offices" qualifier, as the brief has none.
+   *   No "why" section (optional since this page): the brief's first section is the solutions list.
+   *   "Where an Office Cabin Fits in Marathahalli" → solutions, no lead-in (optional since this page);
+   *     "portable site office cabins" → Construction Site Portable Office on the apartment item and
+   *     "marketing office cabins" → Marketing Office on the sales-office item.
+   *   Video calls, backup power, drainage, delivery access, layout guide and price → six extra sections
+   *     after the solutions. The layout guide holds the interior image (`image`, new on this page), the
+   *     brief's table, whose caption is the brief's closing sentence, and the "office cabins with an
+   *     attached toilet" link to the existing toilet-and-pantry guide.
+   *   No features, customization or "how" sections (optional since this page): the brief has none.
+   *   Gallery: the rear elevation, rendered after the price section.
+   *   Delivery enquiries → areas, without the brief's "Bellandur": Portable Office Cabins in Bellandur
+   *     (portable-office-cabin-bellandur, built in parallel) owns that place for this product, and an
+   *     areas list names a place only when it has no page of its own (owner rule, 2026-11-05).
+   *   FAQs: the brief's six. CTA: the brief's heading, text and buttons:
+   *     Request a Quotation (→ /contact), Call Us and WhatsApp Your Requirements (`callButtonLabel` /
+   *     `whatsappButtonLabel`, new on this page; number and link from COMPANY). No secondary buttons,
+   *     so no default "Container Office on Rent" button.
+   * Rental is not confirmed for this page (the brief links it only after confirming availability): no
+   * rental link, keyword, FAQ or button. The brief recasts acoustics, backup power, joined cabins and
+   * toilet or pantry options as requirements to review; the copy keeps them that way, and the
+   * disclaimer says so. The Bangalore portable-cabin hub links here (seoPromotions.ts).
+   * Sibling links agreed with their sessions, added when this page merged after them (2026-11-08): the
+   * tech-park item → Portable Office Cabins in Devarabisanahalli (#223, owns work inside managed
+   * campuses); the road item ↔ Shipping Containers in Marathahalli (#226), whose enquiry steps link back
+   * here through its new `howLinks`. Bellandur (#225) gets a nearby link once it is live.
+   *
+   * Images: three owner-dropped webp files ("public/images/Marathahalli Office Cabin city page/
+   * Marathahalli Office Cabin/cabin (1–3).webp": 1200×896, 1200×896 and 600×448, 23–37 KB, lossy VP8,
+   * no EXIF/XMP/ICC, origin not documented), copied byte-for-byte under descriptive names. They look
+   * like renders, not photographs (same empty warehouse behind both exteriors): (1) front with a
+   * central door and two grilled windows = hero / og:image; (2) the plain rear wall = gallery; (3) one
+   * desk in a wood-panelled interior = layout guide, shown at its own 600 px width. Every caption marks
+   * the image as illustrative, and no image text names Marathahalli or a client.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-office-cabin-marathahalli",
+    city: "Marathahalli",
+    listTitle: "Portable Office Cabins in Marathahalli",
+    metaTitle: "Portable Office Cabin in Marathahalli | Site & Sales Offices",
+    metaDescription:
+      "Plan a portable office cabin for Marathahalli or the Outer Ring Road in east Bengaluru. Discuss project offices, sales layouts, fittings and site delivery.",
+    keywords:
+      "portable office cabin in Marathahalli, site office cabin Marathahalli, prefabricated office Marathahalli, site sales office cabin, office cabin for Outer Ring Road projects",
+    geo: { region: "IN-KA", placename: "Marathahalli, Bengaluru, Karnataka, India", position: "12.9569;77.7011", icbm: "12.9569, 77.7011" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Office Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-office-cabin-marathahalli/portable-office-cabin-front.webp",
+      alt: "Front exterior of a portable office cabin with two grilled windows and a central entrance door — illustrative image of a green corrugated steel cabin on concrete support blocks",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative office cabin exterior. Final size, finish and fittings depend on the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-office-cabin-marathahalli/portable-office-cabin-rear.webp",
+        alt: "Rear elevation of a portable office cabin — illustrative image of a plain green corrugated steel wall without openings, on concrete support blocks",
+        width: 1200,
+        height: 896,
+        caption: "Illustrative rear view of the same office cabin. Final fittings depend on the approved specification.",
+      },
+    ],
+
+    h1: "Portable Office Cabins in Marathahalli and the Outer Ring Road",
+    tagline: "Site and Sales Offices for Projects in East Bengaluru",
+    intro: [
+      "Need a project office close to an apartment site, tech park fit-out or roadworks along the Outer Ring Road? Portable Office Cabin can help plan a workspace around your team, the available footprint and access to your site. Share how many people will use the office, what they need to do there and where the cabin can be placed.",
+    ],
+    introLinks: [{ label: "Portable office cabins", href: "/products/office-portable-cabin" }],
+    heroCta: true,
+
+    solutionsHeading: "Where an Office Cabin Fits in Marathahalli",
+    solutions: [
+      {
+        title: "Apartment and commercial construction",
+        text: "Plan desks for engineers, drawing storage, site records and space for contractor meetings. Review pedestrian access and the delivery route alongside the proposed cabin footprint.",
+        link: { label: "Portable site office cabins", href: "/products/construction-site-portable-office" },
+      },
+      {
+        title: "Tech park fit-outs and refurbishment",
+        text: "A cabin can give contractors or facilities teams a workspace near the work area. Ask the campus facilities team to confirm the proposed location, access rules, utility connections and unloading arrangements before ordering.",
+        // Agreed with the Devarabisanahalli page (#223, live 2026-11-08), which owns work inside managed campuses.
+        link: { label: "Tech park project office cabins in Devarabisanahalli", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
+      },
+      {
+        title: "Road and infrastructure projects",
+        text: "Share the intended work area and whether the office needs to move as the project progresses. Identify permitted placement space and keep access clear for traffic, equipment and pedestrians.",
+        // Reciprocal with Shipping Containers in Marathahalli (#226, live 2026-11-08), which links back from its steps.
+        link: { label: "Shipping containers for site storage in Marathahalli", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
+      },
+      {
+        title: "Residential sales offices",
+        text: "Plan reception, waiting space, a display wall for floor plans and a private discussion area around how buyers move through the office. If you want a glass front, lighting, signage or project colours, list them in the brief so they can be priced and confirmed.",
+        link: { label: "Marketing office cabins", href: "/products/marketing-office" },
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Set Up the Office for Video Calls",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Start with where people will sit and where daylight falls. Discuss glare on screens, lighting for faces, socket locations and a route for data cabling. If calls need privacy, consider whether a partition or separate room would fit the available space.",
+          "For offices close to traffic or construction activity, share your noise concerns before the layout is approved. Confirm any acoustic treatment separately. Network points and router space can be specified, with internet service arranged for the site.",
+        ],
+      },
+      {
+        heading: "Specify Backup Power for Essential Equipment",
+        placement: "afterSolutions",
+        paragraphs: [
+          "List the devices that need to run during a power cut, such as laptops, monitors and a router. Share their expected load and the backup time you need. That gives the electrical designer the information to assess the UPS or inverter, circuit layout and equipment location.",
+          "The quotation should identify the difference between wiring or space for backup equipment and the supply of the equipment itself. Generator changeover, batteries and installation are subject to the agreed electrical scope.",
+        ],
+      },
+      {
+        heading: "Review Drainage Before Choosing a Placement Area",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Tell us if water collects on the plot after heavy rain. Review site levels, surface drainage, thresholds, cable and pipe entries and the proposed support base before finalising placement. If a raised base is proposed, agree who designs and supplies it and how people will access the cabin.",
+          "For a site with recurring waterlogging, have the site team assess a suitable location and support arrangement. Any later relocation depends on access, lifting arrangements and the cabin design.",
+        ],
+      },
+      {
+        heading: "Plan Delivery Around Site Access",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Send the site pin, gate width, approach route, overhead obstacles and proposed unloading area. For a busy or narrow approach, the delivery and lifting team can use these details to assess whether a smaller unit or a different configuration is practical.",
+          "Agree the vehicle and lifting arrangements, permissions and delivery window for the individual site. For a campus or housing project, coordinate access with the responsible facilities or site team. Check any applicable vehicle restrictions before booking a delivery slot.",
+        ],
+      },
+      {
+        heading: "Choose a Layout Around the Team",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-office-cabin-marathahalli/portable-office-cabin-interior-desk.webp",
+          alt: "Portable office cabin interior with a desk, office chair and computer monitor, open shelving, wood-finish wall panels, two grilled windows and a grey door — illustrative image",
+          width: 600,
+          height: 448,
+          caption: "Illustrative office cabin layout. Final fittings depend on the approved specification.",
+        },
+        table: {
+          caption: "Use furniture dimensions and circulation space to review the drawing. Confirm sizes, fittings and special configurations in the quotation.",
+          headers: ["Use", "Layout and fit-out to discuss"],
+          rows: [
+            ["Compact project office", "Desk, sockets, drawing storage and visitor access"],
+            ["Tech park fit-out office", "Workstations, document storage, data cabling and meeting space"],
+            ["Residential sales office", "Reception, display area, visitor seating and private discussions"],
+            ["Site office with meeting room", "Staff desks, meeting table, circulation and partition layout"],
+            ["Larger team office", "Approved footprint, potential joined layout and site assembly"],
+            ["Office with toilet or pantry", "Available floor area, water, drainage and ventilation"],
+          ],
+        },
+        links: [{ label: "Office cabins with an attached toilet", href: "/products/portable-cabin/with-toilet-and-pantry" }],
+      },
+      {
+        heading: "Portable Office Cabin Price in Marathahalli",
+        placement: "afterSolutions",
+        paragraphs: [
+          "The price depends on the cabin dimensions, internal layout, finishes, electrical scope and requested fittings. A glass frontage, partitions, furniture or backup power equipment can affect the total. Transport, unloading, placement, preparation and external connections should also be accounted for.",
+          "For an itemised quotation, send your site pin, required quantity, number of users and preferred layout. Include gate and unloading details where available.",
+        ],
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Marathahalli",
+    areasText:
+      "For Marathahalli, Kundalahalli, Brookefield, AECS Layout, Munnekollal, Kadubeesanahalli, Doddanekundi or Panathur, share the exact site address. For projects near Varthur Road, Old Airport Road or Mahadevapura, provide the approach route so delivery access can be assessed.",
+
+    faqs: [
+      {
+        question: "Can a cabin be placed inside a tech park?",
+        answer:
+          "Placement depends on the campus team's approval, available space, access and utility arrangements. Share the campus rules and intended location during the enquiry.",
+      },
+      {
+        question: "Can you plan an office for video calls?",
+        answer:
+          "Share desk positions, call privacy needs and the expected noise conditions. Lighting, data cabling, partitions and any acoustic treatment can then be reviewed as part of the specification.",
+      },
+      {
+        question: "Is backup power included?",
+        answer:
+          "Check the quotation for the agreed scope. It should identify whether the order includes wiring provisions, UPS or inverter equipment, batteries or installation.",
+      },
+      {
+        question: "What if the site gets waterlogged?",
+        answer:
+          "Share the site's drainage and waterlogging history. Have the site team assess the position and base before confirming the cabin and placement arrangement.",
+      },
+      {
+        question: "Can I request a glass-front sales office?",
+        answer:
+          "Include the frontage, reception layout, display needs and signage in your enquiry. The approved drawing and quotation will set out the agreed specification.",
+      },
+      {
+        question: "Can delivery be scheduled outside busy hours?",
+        answer:
+          "The delivery window depends on the route, any applicable restrictions, permissions, access and site readiness. Confirm the window when delivery is booked.",
+      },
+    ],
+
+    ctaHeading: "Request an Office Cabin Quotation for Marathahalli",
+    ctaText:
+      "Send your site pin, layout requirements, user count and required date to Portable Office Cabin. If you have a layout sketch, gate measurements or photos of the unloading area, include them with your enquiry.",
+    ctaButtonLabel: "Request a Quotation",
+    callButtonLabel: "Call Us",
+    whatsappButtonLabel: "WhatsApp Your Requirements",
+    // The brief's buttons are Call Us, WhatsApp Your Requirements and Request a Quotation: an empty list
+    // drops the two default container-office buttons (one of them is "on rent", which is not confirmed).
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products and Guides",
+    relatedLinks: [
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "Construction Site Portable Office", href: "/products/construction-site-portable-office" },
+      { label: "Marketing Office", href: "/products/marketing-office" },
+      { label: "Portable Cabin with Attached Toilet and Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "Portable Cabin Layouts and Interior Ideas", href: "/products/portable-cabin/layouts-and-interiors" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabin Transport and Delivery", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
+        { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
+        { label: "Portable Cabins in Vasanthapura, Bengaluru", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+        // Reciprocal with Portable Office Cabins in Bellandur (#225, live 2026-11-15): homes and societies.
+        { label: "Office Cabins for Bellandur Homes and Societies", href: "/cities-we-serve/portable-office-cabin-bellandur" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office or yard in Marathahalli. Delivery, unloading and placement are arranged for each order, and delivery dates are not guaranteed. The layouts, fittings, partitions, data cabling, acoustic treatment, backup-power provisions, joined layouts and toilet or pantry configurations described on this page are options to discuss; what is supplied is confirmed in the approved drawing, specification and quotation for each order. The images on this page are illustrative images of one office cabin design, not photographs of installations in Marathahalli. The project types and places named here are not clients, completed projects or confirmed delivery areas, and placement on a campus, road or housing site is subject to the approval of whoever is responsible for it. The notes on video calls, backup power and drainage are general planning guidance, not electrical, acoustic or engineering advice.`,
   },
 ];
 

@@ -262,6 +262,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     if (p.howIntro) t("how", "how intro", p.howIntro);
     (p.howSteps ?? []).forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });
     if (p.howOutro) t("how", "how outro", p.howOutro);
+    // Optional how links (since 2026-11-08): label text and href.
+    (p.howLinks ?? []).forEach((l, i) => { t("how", `how link ${i + 1} "${l.label}"`, l.label); m("how", `how link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   }
   (p.extraSections ?? []).forEach((s, i) => {
     t("extra", `extra section ${i + 1} heading`, s.heading);
