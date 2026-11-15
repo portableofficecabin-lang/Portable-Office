@@ -245,9 +245,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
     );
   };
 
-  /* Optional paragraph with one inline link (`introLink`, `whyInlineLink`, `areasInlineLink`, an extra
-     section's `inlineLinks`): same link style as the link lists above. Callers render it only when the
-     field is set. The key (the link's href) only matters inside a section's list. */
+  /* Optional paragraph with one inline link (`introLink`, `whyInlineLink`, `areasInlineLink`,
+     `featuresInlineLink`, an extra section's `inlineLinks`): same link style as the link lists above.
+     Callers render it only when the field is set. The key (the link's href) only matters inside a
+     section's list. */
   const renderInlineLink = (il: CityPageInlineLink, extraClass = "") => (
     <p key={il.link.href} className={`${p}${extraClass}${mc("reveal")}`}>
       {il.before}{" "}
@@ -544,6 +545,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
             {/* Optional contextual links after the sizes note (`featuresLinks`); unset = nothing rendered. */}
             {page.featuresLinks && page.featuresLinks.length > 0 && renderLinks(page.featuresLinks)}
+            {/* Optional inline-link paragraph after those links (`featuresInlineLink`); unset = no element. */}
+            {page.featuresInlineLink && renderInlineLink(page.featuresInlineLink)}
           </>
         )}
 

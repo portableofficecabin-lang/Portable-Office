@@ -219,6 +219,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     t("features", "sizes note", p.sizesNote ?? "");
     // Optional features links (since 2026-11-08): label text and href.
     (p.featuresLinks ?? []).forEach((l, i) => { t("features", `features link ${i + 1} "${l.label}"`, l.label); m("features", `features link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+    // Optional inline-link paragraph after those links (since 2026-11-15): lead-in, link text and href.
+    if (p.featuresInlineLink) { const il = p.featuresInlineLink; t("features", "features inline link lead-in", il.before); t("features", `features inline link "${il.link.label}"`, il.link.label); m("features", `features inline link href ${il.link.href}`, `href="${il.link.href}"`); }
   }
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
   // Optional gallery captions (since 2026-11-05): audited whenever an image sets one.
