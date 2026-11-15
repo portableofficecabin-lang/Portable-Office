@@ -88,11 +88,12 @@ export interface CityPageSection {
    */
   links?: CityPageLink[];
   /**
-   * Optional paragraph with one inline contextual link, rendered after `links` at the end of the
-   * section (first used by Portable Cabins in Virudhunagar, whose sizes section closes with the brief's
-   * sentence pointing at the Virudhunagar marketing-office page). Unset = no element.
+   * Optional paragraphs that each carry one inline contextual link, rendered after `links` (first used
+   * by Shipping & Cargo Containers in Shoolagiri Industrial Area, whose brief words its links as
+   * sentences: "For a separate gatehouse, see our security cabins in Shoolagiri."). Unset = nothing
+   * rendered, so every other page's HTML is unchanged.
    */
-  inlineLink?: CityPageInlineLink;
+  inlineLinks?: CityPageInlineLink[];
   /**
    * Optional position of the section. Unset = after the "how" steps, where every extra section has
    * always rendered. "afterSolutions" renders it straight after the solutions list instead (first used
@@ -228,6 +229,12 @@ export interface CityPage {
    * product page). Unset = nothing rendered, so every other page's HTML is unchanged.
    */
   whyLinks?: CityPageLink[];
+  /**
+   * Optional paragraph with one inline contextual link, rendered after `whyOutro` (first used by
+   * Portable Security Cabins in Shoolagiri, whose project-stage section points to the Shoolagiri
+   * shipping-container page for separate materials storage). Unset = no element, as before.
+   */
+  whyInlineLink?: CityPageInlineLink;
 
   /**
    * The solutions section. Optional since 2026-11-08 on the same terms as the industries section (first
@@ -2115,10 +2122,11 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
       // Sibling shop pages named in the owner's brief, linked once live: Shivamogga (#195), Sriperumbudur
-      // (#208) and Hassan (#210, live 2026-11-07; it links back here). Hoskote (#202) is added when it goes live.
+      // (#208), Hassan (#210, live 2026-11-07) and Hoskote (#202). Hassan and Hoskote link back here.
       { label: "Portable Shop Cabins in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
       { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
       { label: "Portable Shop Cabins in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
+      { label: "Portable Shop Cabins in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -3265,6 +3273,10 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Truck-Driver and Highway Kiosks in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
+      // Shivamogga's shop page (#195, live 2026-11-06): one of the brief's named sibling shop pages.
+      { label: "Machenahalli Industrial Area Shops in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      // Hoskote's shop page (#202, live 2026-11-08): the brief's third named sibling (owner, 2026-11-15).
+      { label: "Food Kiosks and Retail Stalls in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -3274,6 +3286,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Sugarcane Juice and Roadside Kiosks in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
         // Nanjangud's shop page (#209, live 2026-11-05) — the brief's location-specific link; it links back here.
         { label: "Shop Rows and Festival Stalls in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
+        // Hassan's shop page (#210, live 2026-11-07) — named in the brief; it already links back here.
+        { label: "Highway and KIADB Retail Kiosks in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -5934,6 +5948,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Toilets, pantry and storage",
         text: "Plumbed washroom units, easy-clean canteen cabins for shift catering, and sealed storage containers for tools and spares.",
+        link: { label: "Planning toilet cabins for a Shoolagiri site", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
       },
     ],
 
@@ -26342,7 +26357,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Delivery Enquiries Around Krishnagiri",
     areasText:
-      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area, Shoolagiri and Hosur, and from sites along NH 44 and NH 48. For Dharmapuri, see the nearby service areas below. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
+      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area and Hosur, and from sites along NH 44 and NH 48. For Shoolagiri and Dharmapuri, see the nearby service areas below. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
 
     howHeading: "Delivery and Installation",
     howIntro: "How an order moves from enquiry to installation:",
@@ -26525,6 +26540,7 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
         { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
+        { label: "Portable Toilet Cabins in Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
         { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
         // Dharmapuri's own portable-toilet page (2026-11-05): Dharmapuri left this page's areas list for it.
@@ -27336,8 +27352,9 @@ export const CITY_PAGES: CityPage[] = [
    * descriptive names: (1) three-quarter view, 1024² = hero / og:image; (2) front view, 1200×896 =
    * single-image gallery after the price factors; (3) interior, 1200×896 = beside "Why Choose",
    * captioned. They show one green corrugated MS cabin with a pitched roof in a yard. Owner
-   * correction of 2026-11-05: they are illustrative images unless the owner confirms they are
-   * photographs of manufactured units, so every alt text, both captions and the disclaimer say so.
+   * correction of 2026-11-05 labelled them illustrative until confirmed; on 2026-11-06 the owner
+   * confirmed they are real photographs of our units, so the alt texts, captions and disclaimer now
+   * call them photographs.
    * No alt text names Salem, and the disclaimer says they do not show an installation in Salem.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
@@ -27357,23 +27374,23 @@ export const CITY_PAGES: CityPage[] = [
 
     heroImage: {
       src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-three-quarter-view.webp",
-      alt: "Prefabricated portable security cabin — illustrative image of a green corrugated MS guard cabin with a dark grey lower band, a pitched roof with a lifting eye, a bulkhead light over the steel door and a glazed sliding window under a sunshade, on a steel base frame in a yard",
+      alt: "Prefabricated portable security cabin — photograph of a green corrugated MS guard cabin with a dark grey lower band, a pitched roof with a lifting eye, a bulkhead light over the steel door and a glazed sliding window under a sunshade, on a steel base frame in a yard",
       width: 1024,
       height: 1024,
-      caption: "Illustrative security cabin configuration; final fittings depend on approved specifications.",
+      caption: "A Portable Office Cabin MS security cabin; final fittings depend on approved specifications.",
     },
     interiorImage: {
       src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-interior.webp",
-      alt: "Interior of a portable security cabin — illustrative image with wood-finish laminate wall and ceiling panels, a glazed sliding window above a built-in desk with a telephone, a task chair, a bulkhead light over the door and a wall-mounted fire extinguisher",
+      alt: "Interior of a portable security cabin — photograph showing wood-finish laminate wall and ceiling panels, a glazed sliding window above a built-in desk with a telephone, a task chair, a bulkhead light over the door and a wall-mounted fire extinguisher",
       width: 1200,
       height: 896,
       caption:
-        "Illustrative security cabin configuration; final fittings depend on approved specifications. The desk, chair, telephone and fire extinguisher are shown for illustration.",
+        "Inside a Portable Office Cabin MS security cabin; final fittings depend on approved specifications. The furniture and equipment shown vary by order.",
     },
     gallery: [
       {
         src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-front-view.webp",
-        alt: "Prefabricated portable security cabin — illustrative front view of the green MS cabin: a corrugated steel door with a hasp and barrel bolt, a bulkhead light under a drip ledge, a pitched roof with a lifting eye and the side window's sunshade, on a steel base frame",
+        alt: "Prefabricated portable security cabin — front-view photograph of the green MS cabin: a corrugated steel door with a hasp and barrel bolt, a bulkhead light under a drip ledge, a pitched roof with a lifting eye and the side window's sunshade, on a steel base frame",
         width: 1200,
         height: 896,
       },
@@ -27642,12 +27659,13 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Offices in Mettur and Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
         { label: "Shipping Containers in Mettur and Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
         { label: "Krishnagiri Security Cabins", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+        { label: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
         { label: "Portable Cabins in Perundurai, Erode", href: "/cities-we-serve/portable-cabin-perundurai" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
 
-    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Salem district. Each delivery is planned for its order, including unloading, placement and the base or supports the site needs, and no manufacturing or delivery date is guaranteed. The cabin types, configurations, sizes, materials, insulation, fittings and finishes on this page are options, and the configurations are indicative; each cabin's size is confirmed through the approved drawing and quotation, and what is supplied is set out in the approved specification and quotation for each order. The three images are illustrative images of one MS security cabin design with a pitched roof, outside and inside; the desk, chair, telephone and fire extinguisher are shown for illustration, other cabin types look different, and the images do not show an installation in Salem. Salem Steel Plant (a unit of Steel Authority of India Limited) is named only to describe a location; Portable Office Cabin is not affiliated with it or with any mine, quarry, factory, yard or company in the Salem area, and the industries, sites, places and highways named here describe typical uses and places we accept enquiries from, not customers, finished projects or guaranteed delivery areas. A security cabin provides workspace for security staff; it does not by itself make a site secure or compliant with any security standard. Notes on heat, ventilation, dust, toilets and relocation are general guidance, not engineering, safety or legal advice.`,
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Salem district. Each delivery is planned for its order, including unloading, placement and the base or supports the site needs, and no manufacturing or delivery date is guaranteed. The cabin types, configurations, sizes, materials, insulation, fittings and finishes on this page are options, and the configurations are indicative; each cabin's size is confirmed through the approved drawing and quotation, and what is supplied is set out in the approved specification and quotation for each order. The three images are photographs of one MS security cabin with a pitched roof made by Portable Office Cabin, outside and inside; the furniture and equipment shown vary by order, other cabin types look different, and the images do not show an installation in Salem. Salem Steel Plant (a unit of Steel Authority of India Limited) is named only to describe a location; Portable Office Cabin is not affiliated with it or with any mine, quarry, factory, yard or company in the Salem area, and the industries, sites, places and highways named here describe typical uses and places we accept enquiries from, not customers, finished projects or guaranteed delivery areas. A security cabin provides workspace for security staff; it does not by itself make a site secure or compliant with any security standard. Notes on heat, ventilation, dust, toilets and relocation are general guidance, not engineering, safety or legal advice.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE SECURITY CABIN MANUFACTURERS IN SHOOLAGIRI INDUSTRIAL AREA — the security-cabin intent
@@ -27782,6 +27800,13 @@ export const CITY_PAGES: CityPage[] = [
     },
     whyOutro:
       "How many cabins a site needs, and where they stand, is decided by the actual site-security plan. Portable cabins may be relocated when site arrangements change, subject to their design, condition and safe lifting requirements.",
+    // Brief of 2026-11-10 (Shoolagiri shipping-container page, §5): one link from this site-setup section
+    // to the Shoolagiri shipping-container page, for separate materials storage.
+    whyInlineLink: {
+      before: "For separate materials storage while the site is being set up, see our",
+      link: { label: "shipping containers in Shoolagiri", href: "/cities-we-serve/shipping-container-shoolagiri" },
+      after: ".",
+    },
 
     solutionsHeading: "Planning Security Cabins for Multiple Gates",
     solutionsIntro:
@@ -28020,6 +28045,7 @@ export const CITY_PAGES: CityPage[] = [
       heading: "Nearby service areas",
       links: [
         { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+        { label: "Portable Security Cabins in Salem", href: "/cities-we-serve/portable-security-cabin-salem" },
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
         { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
@@ -28407,6 +28433,7 @@ export const CITY_PAGES: CityPage[] = [
       heading: "Nearby Locations",
       links: [
         { label: "Portable Toilet Cabins in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+        { label: "Portable Toilet Cabins in Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
         { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
         { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
@@ -31652,6 +31679,661 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or site team in Madurai district. The modules, fixtures, finishes, installation work, utility connections, any hire period and any later relocation are agreed in writing in the quotation for each camp, and no installation or delivery date is guaranteed. All four images are illustrative renders, not photographs of a camp in Madurai or of a camp that has been supplied. Thoppur, Kappalur, the Madurai Ring Road and the other places named show where enquiries may come from: Portable Office Cabin is not affiliated with any public project, developer, contractor or authority there, and none of them should be read as a customer, a completed project or a confirmed site. The notes on occupancy, ventilation, sanitation, cooking, fire protection and site safety are general planning guidance, not engineering, public-health, legal or regulatory advice; the responsible project and compliance teams approve the camp layout and facility counts for each site.`,
   },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABIN MANUFACTURERS IN SHOOLAGIRI INDUSTRIAL AREA — the portable-toilet intent
+   * for Shoolagiri town, the Shoolagiri industrial area and SIPCOT Shoolagiri (Krishnagiri district,
+   * Tamil Nadu): site sanitation planning for construction sites, factories and labour camps. A
+   * sibling of Portable Toilets in Krishnagiri (which keeps Krishnagiri town and SIPCOT Kurubarapalli)
+   * and of the Shoolagiri container-office page; the pages link to each other.
+   *
+   * Owner brief of 2026-11-05 ("Portable Toilet Cabin in Shoolagiri"): slug, meta title, meta
+   * description and H1 as given (the brief's preferred /cities-we-serve/ URL; no other Shoolagiri
+   * toilet route exists). Mapped onto the template slots in the brief's order wherever the template
+   * allows:
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote, Call, WhatsApp).
+   *   2 "Toilets That Can Move With Construction Work" → why (six possible features) + whyOutro (the
+   *     relocation caveat: not every cabin has lifting points; no "moved in minutes").
+   *   3 "Planning Toilet Facilities for Large Sites" → solutions: the brief's six h3 subsections; the
+   *     EHS line is in the intro. Distribution links to the 4-unit block, Labour Accommodation to the
+   *     workmen-accommodation category.
+   *   4 Indicative table, 5 EHS checklist, 6 Women workers, 7 Sites without piped water → extra
+   *     sections with `placement: "afterSolutions"`. The table is captioned and closed as a discussion
+   *     guide, not fixture ratios; the checklist closes with "no cabin is automatically audit-ready";
+   *     the women's section lists only fittings the catalogue already offers (sanitary disposal
+   *     equipment left out, unconfirmed); bio-toilet systems left out (owner decision of 2026-11-05).
+   *     The handwash station is not offered as a product (owner, 2026-11-05: its manufacture is
+   *     unconfirmed); the page offers handwash basins in the cabin only, until the owner confirms it.
+   *   8 Types → features (nine types; FRP and bio-toilet left out, owner decision); the bold note says
+   *     each is built to order.
+   *   9 Cleaning and Maintenance → custom, beside the rear render; the outro says cleaning and tank
+   *     emptying are not part of the supply unless agreed in writing, and lists the records to keep.
+   *   10 Price → the whyUs slot (same markup: heading, intro, titled list), so it sits before areas.
+   *   11 Rental → left out: rental of toilet cabins in Shoolagiri is not confirmed (brief: remove).
+   *   12 Ordering → how; 13 Areas → areas (the template renders areas before how). Areas are delivery
+   *     enquiry locations; Krishnagiri is left to the nearby links (it has its own toilet page), and
+   *     Bargur is not named (a peer's Bargur toilet page owns it). Future Mobility Park is not named
+   *     (current status unverified).
+   *   14 Why choose → an extra section after the how steps.
+   *   15 FAQs: the brief's eight. 16 CTA → CTA + enquiryForm (portable-toilet-cabins category form,
+   *     posting to /api/enquiries).
+   * Owner wording rules: no ₹, no lead time, no rental, no FRP / bio-toilet, no statutory-compliance
+   * or audit-ready claims; specifications are options confirmed in the quotation; towns are delivery
+   * enquiry locations. SIPCOT is named nominatively, with the non-affiliation note in the disclaimer.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: the title, description, keywords, tagline
+   * and intro name Shoolagiri only; the Krishnagiri toilet page drops Shoolagiri from its areas list
+   * and links here instead.
+   *
+   * Images: three owner-dropped webp renders ("public/images/Shoolagiri Industrial Area city page
+   * portable toilet/Shoolagiri Industrial Area/cabin (1–3).webp", 53–75 KB, plain VP8, no
+   * EXIF/XMP/ICC), copied byte-for-byte under descriptive names: (1) front with both doors open
+   * (1264×843) = hero / og:image, no caption (owner rule); (3) three-quarter view with the side taps
+   * (1200×896) = the feature band; (2) rear with vent pipes (1200×896) = beside the cleaning section.
+   * They show one navy two-seater cabin with one Western and one Indian toilet; the alt texts,
+   * captions and the disclaimer say they are illustrative renders, not installations in Shoolagiri.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-shoolagiri",
+    city: "Shoolagiri",
+    listTitle: "Portable Toilet Cabins in Shoolagiri",
+    metaTitle: "Portable Toilet Cabin in Shoolagiri | Site & Industrial Toilet Blocks",
+    metaDescription:
+      "Portable toilet cabins in Shoolagiri for industrial sites, construction projects and labour camps. Explore single, multi-seat, ladies and bathing cabin options.",
+    keywords:
+      "Portable Toilet Cabin in Shoolagiri, Portable Toilet Shoolagiri, Mobile Toilet Shoolagiri Industrial Area, Toilet Cabin SIPCOT Shoolagiri, Portable Toilet Cabin Manufacturers in Shoolagiri, Portable Toilet Suppliers Shoolagiri, Prefabricated Toilet Block Shoolagiri, Portable Toilet Cabin Price in Shoolagiri, Construction Site Toilet Shoolagiri, Labour Camp Toilet Shoolagiri, Ladies Toilet Cabin Shoolagiri",
+    geo: {
+      region: "IN-TN",
+      placename: "Shoolagiri, Krishnagiri district, Tamil Nadu, India",
+      position: "12.6740;77.9694",
+      icbm: "12.6740, 77.9694",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-shoolagiri/two-seater-toilet-cabin-western-indian-front.webp",
+      alt: "Two-seater portable toilet cabin with both doors open — illustrative render of a navy cabin with corrugated wall panels and a round vent above each door; the left cubicle has a Western commode and the right an Indian squatting pan, each with a cistern and a hand-spray tap",
+      width: 1264,
+      height: 843,
+    },
+    featureImage: {
+      src: "/images/cities/portable-toilet-cabin-shoolagiri/two-seater-toilet-cabin-three-quarter-view.webp",
+      alt: "Two-seater portable toilet cabin — illustrative three-quarter render of the navy cabin with two closed doors, a round vent above each and two taps with a hand-spray hose on the side wall",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a two-seater cabin. Its fittings, taps and connections depend on the approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-shoolagiri/two-seater-toilet-cabin-rear-vent-pipes.webp",
+      alt: "Rear of the two-seater portable toilet cabin — illustrative render of the navy corrugated rear wall with two vent pipes rising above the roof and a small hinged hatch near the base",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of the rear, with vent pipes and a small hatch. Their positions, and the water and waste connections, follow the approved drawing.",
+    },
+
+    h1: "Portable Toilet Cabin Manufacturers in Shoolagiri Industrial Area",
+    tagline: "Site Sanitation Planned Around Your Workforce, Water Supply and Waste Arrangements",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable toilet cabins and sanitation blocks for industrial, commercial and construction requirements in Shoolagiri and the surrounding area.",
+      "A portable toilet cabin can provide sanitation for construction workers, industrial staff, temporary work areas and labour accommodation sites.",
+      "Depending on the project, a cabin can be configured with one or several toilet cubicles, handwash facilities, bathing arrangements, water storage and waste-management provisions.",
+      "The cabins are built at our factory in Kamandoddi, which is also in Krishnagiri district, and taken to Shoolagiri sites by road once the order is confirmed.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Toilets That Can Move With Construction Work",
+    whyIntro:
+      "On a large construction site, the active work areas shift as the project progresses. Where relocation is feasible, a portable toilet cabin gives the site a flexible sanitation arrangement. Depending on the design, the possible features include:",
+    whyBullets: [
+      { title: "Engineered lifting arrangements", text: "lifting points or a base frame for handling by crane, where the design includes them." },
+      { title: "Suitable plumbing connections", text: "inlets and outlets that can be disconnected and reconnected at a new position." },
+      { title: "Modular construction", text: "a prefabricated unit instead of a masonry block built on the spot." },
+      { title: "Water tank provisions", text: "a mounting or connection point for water storage." },
+      { title: "Waste holding tank options", text: "a holding tank for positions without a drainage connection." },
+      { title: "Reusable cabin structure", text: "a cabin that can serve a later phase, or another site, once the current work ends." },
+    ],
+    whyOutro:
+      "Whether a particular cabin can be relocated is assessed for its design, the condition of its tanks, the lifting it needs and the access at the site. Not every toilet cabin has built-in lifting points, and a move means disconnecting the services and reconnecting them at the new position.",
+
+    solutionsHeading: "Planning Toilet Facilities for Large Sites",
+    solutionsIntro:
+      "Sanitation planning on a large site should consider the points below. Settle the number, location and type of facilities with your site's EHS and compliance teams.",
+    solutions: [
+      {
+        title: "Distribution",
+        text: "Locate facilities so that workers can reach them without excessive travel from where they work. On a spread-out plot, several smaller blocks placed near the work fronts are often more practical than one large block at the gate.",
+        link: { label: "Four-cubicle portable toilet block", href: "/products/portable-toilet-block-4-unit" },
+      },
+      {
+        title: "Separate Facilities",
+        text: "Provide appropriate, separate and private sanitation arrangements for women and men, each with its own entrance where the layout allows.",
+      },
+      {
+        title: "Hygiene",
+        text: "Keep a safe distance between the toilets and any drinking-water source or food-preparation area, according to the requirements that apply to your site.",
+      },
+      {
+        title: "Lighting",
+        text: "Provide suitable lighting inside the cabins and along the paths that lead to them, which matters most for night shifts.",
+      },
+      {
+        title: "Labour Accommodation",
+        text: "Where workers live on site, plan toilets and bathing facilities together with the accommodation rather than as an afterthought.",
+        link: { label: "Workmen accommodation for labour camps", href: "/products/category/g1-workmen-accommodation" },
+      },
+      {
+        title: "Accessibility",
+        text: "Include accessible toilet provisions where they are required, and mention the requirement in your enquiry so that the layout can be reviewed before the quotation.",
+      },
+    ],
+
+    featuresHeading: "Types of Portable Toilet Cabins",
+    featuresIntro: "Configurations to discuss for a Shoolagiri site:",
+    features: [
+      "Single toilet cabin — a compact sanitation cabin for smaller sites or remote work areas",
+      "Double toilet cabin — one unit with two separate toilet cubicles",
+      "Multi-seater toilet block — a larger configuration for sites that need several cubicles",
+      "Ladies toilet cabin — a privacy-focused unit with suitable sanitary arrangements",
+      "Gents toilet cabin — a toilet block with cubicles and optional urinal provisions",
+      "Toilet and bathroom cabin — a combined sanitation unit with toilet and bathing facilities",
+      "Bathing cabin — shower cubicles with suitable drainage and water connections",
+      "MS toilet cabin — a steel-framed prefabricated toilet unit",
+      "PUF toilet cabin — a prefabricated toilet unit with insulated PUF panels",
+    ],
+    sizesNote:
+      "Every configuration is made to order: the cubicle count, cabin size, wall panels and sanitary fittings are fixed in your approved specification before fabrication starts.",
+
+    customHeading: "Cleaning and Maintenance",
+    customIntro:
+      "Once they are in use, sanitation cabins need ongoing cleaning, inspection and wastewater servicing. Sites usually arrange this through:",
+    customBullets: [
+      { title: "Site housekeeping staff", text: "daily cleaning and refilling of consumables by the site's own team." },
+      { title: "A local sanitation contractor", text: "scheduled cleaning and upkeep under a service contract." },
+      { title: "An authorised wastewater collection provider", text: "emptying of holding tanks and disposal of the contents." },
+    ],
+    customOutro:
+      "Portable Office Cabin supplies the toilet cabins; cleaning and tank emptying are not part of the supply unless they are agreed in writing with the order. For each block, keep cleaning records, water refill records, tank emptying records, a repair log and an inspection schedule.",
+
+    whyUsHeading: "Portable Toilet Cabin Price in Shoolagiri",
+    whyUsIntro:
+      "A toilet cabin has no single fixed price: each one is quoted through our quotation process for the confirmed specification. The price depends on:",
+    whyUsBullets: [
+      { title: "Cubicles", text: "the number of toilet cubicles." },
+      { title: "Dimensions", text: "the size of the cabin." },
+      { title: "Materials", text: "MS, PUF or another available construction." },
+      { title: "Toilet fittings", text: "Indian or Western toilets." },
+      { title: "Urinals", text: "any urinal arrangements." },
+      { title: "Handwash basins", text: "how many basins are needed." },
+      { title: "Bathing facilities", text: "showers and bathing cubicles." },
+      { title: "Water storage", text: "the tank capacity required." },
+      { title: "Waste holding tanks", text: "a holding tank, if the site needs one." },
+      { title: "Plumbing provisions", text: "the inlet, outlet and internal pipework." },
+      { title: "Sanitary accessories", text: "mirrors, hooks, signage and similar items." },
+      { title: "Delivery and placement", text: "transport to the site, unloading and positioning." },
+      { title: "Order quantity", text: "the number of cabins ordered." },
+    ],
+
+    areasHeading: "Toilet Cabin Enquiries Around Shoolagiri",
+    areasText:
+      "We take portable toilet cabin enquiries from Shoolagiri town, the Shoolagiri industrial area and SIPCOT Shoolagiri, from the industrial expansion areas and project sites along the NH 44 corridor, and from Berigai, Uddanapalli, Kelamangalam and Bagalur, as well as from project sites around Hosur. For Krishnagiri town and its industrial areas, see the nearby locations below. Share the exact site location: transport, unloading and placement are confirmed in the quotation for each order.",
+
+    howHeading: "Ordering Process",
+    howIntro: "How a toilet cabin order moves from your first message to delivery:",
+    howSteps: [
+      { title: "Share site requirements", text: "your workforce size, site location and sanitation needs." },
+      { title: "Discuss the toilet configuration", text: "cubicle counts, separate facilities, handwash basins and bathing requirements." },
+      { title: "Confirm water and waste arrangements", text: "the utilities available, the tanks required and how waste will be disposed of." },
+      { title: "Review the quotation", text: "dimensions, fittings, commercial terms and transport are finalised." },
+      { title: "Manufacture", text: "the approved toilet cabin configuration is fabricated." },
+      { title: "Arrange delivery", text: "unloading, placement and site utility connections are coordinated with your team." },
+    ],
+    howOutro:
+      "Manufacturing and delivery dates depend on the configuration, the quantity, the factory's workload, transport and the readiness of the site, and they are confirmed with the order.",
+
+    extraSections: [
+      {
+        heading: "Indicative Toilet Block Planning",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Use the table below as a guide for discussion. It is not a statement of statutory compliance, and its rows are not legally required fixture ratios.",
+        ],
+        table: {
+          caption: "Possible configurations for discussion only. The final number and type of facilities are set for each site.",
+          headers: ["Workforce", "Possible configuration for discussion"],
+          rows: [
+            ["Up to 25", "A small toilet block with handwash provisions"],
+            ["25–50", "Multiple cubicles, with separate facilities as required"],
+            ["50–100", "Distributed toilet blocks with suitable handwash and urinal provisions"],
+            ["100+", "Multiple sanitation blocks, separate facilities and bathing arrangements where needed"],
+          ],
+        },
+        closing: [
+          "Actual requirements depend on the workforce composition, the type of site, the labour and factory rules that apply, accessibility requirements and local approvals.",
+        ],
+      },
+      {
+        heading: "EHS and Sanitation Inspection Checklist",
+        placement: "afterSolutions",
+        paragraphs: ["A practical checklist for the team that runs the site's toilets:"],
+        bullets: [
+          { title: "Capacity", text: "enough toilets for the number of workers on each shift." },
+          { title: "Separate facilities", text: "separate toilets for women and men where required." },
+          { title: "Water supply", text: "a reliable supply for flushing and handwashing." },
+          { title: "Handwashing", text: "basins or handwash points close to the toilets." },
+          { title: "Soap", text: "soap kept stocked at every handwash point." },
+          { title: "Door locks", text: "a working lock on every cubicle door." },
+          { title: "Lighting", text: "adequate light inside the cabins and on the approach." },
+          { title: "Ventilation", text: "vents and any exhaust fans kept clear and working." },
+          { title: "Floors and surfaces", text: "floors and surfaces that can be cleaned easily." },
+          { title: "Cleaning schedule", text: "cleaning at set times, with each visit recorded." },
+          { title: "Wastewater", text: "safe handling and disposal of wastewater." },
+          { title: "Signage", text: "clear signs for the ladies, gents and handwash points." },
+          { title: "Sanitary waste", text: "appropriate arrangements for collecting sanitary waste." },
+          { title: "Accessibility", text: "accessible provisions where they apply." },
+        ],
+        closing: [
+          "A checklist does not make a facility compliant: no cabin is automatically audit-ready or guaranteed to pass an EHS inspection. The site's management team remains responsible for the ongoing operation, maintenance and compliance of its toilets.",
+        ],
+      },
+      {
+        heading: "Facilities for Women Workers",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A ladies toilet cabin can be configured to support privacy, hygiene and convenience. Depending on the approved design, it can include:",
+        ],
+        bullets: [
+          { title: "Separate entrance", text: "an entrance apart from the gents facilities." },
+          { title: "Privacy-focused layout", text: "cubicles arranged so that users are not overlooked." },
+          { title: "Secure door locks", text: "a lock on each cubicle door." },
+          { title: "Interior and exterior lighting", text: "lights inside the cabin and at the entrance." },
+          { title: "Sanitary waste bins", text: "space for a covered bin in each cubicle." },
+          { title: "Mirror and hooks", text: "a mirror and clothes hooks." },
+          { title: "Handwash basin", text: "a basin with a tap." },
+          { title: "Changing space", text: "a changing area, where the cabin size allows it." },
+        ],
+        closing: [
+          "Not every standard toilet cabin includes these fittings. The items supplied with a ladies cabin are listed in its approved specification and quotation.",
+        ],
+      },
+      {
+        heading: "Toilet Cabins for Sites Without Piped Water",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Construction plots often need temporary water and wastewater arrangements before permanent services reach them. The possible solutions include:",
+        ],
+        bullets: [
+          { title: "Water storage", text: "an attached or separate water tank, sized for the expected use and the refill arrangement." },
+          { title: "Water-efficient fittings", text: "flushing and tap arrangements that reduce unnecessary water consumption." },
+          { title: "Waste holding tanks", text: "an appropriately designed holding tank, emptied by an authorised collection and disposal provider." },
+        ],
+        closing: [
+          "Tank capacity is calculated from realistic occupancy, flushing demand, handwashing use and the interval between servicing visits. An uninterrupted water supply or fully self-contained operation is never assumed: both are checked against the approved design.",
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: ["What a Shoolagiri site gets when it orders toilet cabins from us:"],
+        bullets: [
+          { title: "Customizable layouts", text: "cubicle arrangement, entrances and fittings planned for your site." },
+          { title: "Single and multi-cubicle configurations", text: "from one toilet to larger blocks." },
+          { title: "MS and insulated construction", text: "steel-framed or PUF-panel cabins." },
+          { title: "Sanitary fitting options", text: "Indian or Western toilets, basins and urinals." },
+          { title: "Water and waste connection provisions", text: "inlet, outlet and tank connections for the arrangement you choose." },
+          { title: "Handwash and bathing configurations", text: "handwash basins and shower cubicles where they are needed." },
+          { title: "Quotation support", text: "a written quotation for the specification you confirm." },
+          { title: "Delivery coordination", text: "transport, unloading and placement planned with your team." },
+        ],
+        closing: [
+          "Our scope is the toilet cabins and the services agreed in the order. Statutory compliance, cleaning and the day-to-day running of the site's sanitation stay with the site.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can portable toilet cabins be relocated during construction?",
+        answer:
+          "Some portable toilet cabins can be relocated, subject to how they are built, their lifting arrangements, the condition of their tanks and the access at the site. The services are disconnected before a move and reconnected afterwards.",
+      },
+      {
+        question: "How many toilet cabins does my site need?",
+        answer:
+          "The number depends on the size and composition of the workforce, the site conditions and the regulations that apply. The indicative table on this page is a starting point; confirm the fixture counts with your site's compliance team.",
+      },
+      {
+        question: "What do EHS teams inspect in toilet facilities?",
+        answer:
+          "Typical considerations include adequate capacity, water supply, handwashing, privacy, lighting, ventilation, cleanliness and the safe disposal of wastewater.",
+      },
+      {
+        question: "Can you provide separate toilet cabins for women?",
+        answer:
+          "Separate ladies toilet configurations can be considered, according to the approved product design and the fittings available for it.",
+      },
+      {
+        question: "Can a portable toilet operate without a piped water connection?",
+        answer:
+          "A suitable design can use refillable water storage together with an approved waste-management arrangement. The tank capacity and the servicing it needs are assessed for your site.",
+      },
+      {
+        question: "Are portable toilet cabins suitable for labour camps?",
+        answer:
+          "Portable toilet and bathing blocks can be used at labour accommodation sites when they are designed and maintained for the requirements there.",
+      },
+      {
+        question: "Can portable toilets include handwash facilities?",
+        answer:
+          "Handwash basins can be incorporated in the toilet cabin. The number of basins and where they are placed are confirmed in the approved specification.",
+      },
+      {
+        question: "How quickly can portable toilet cabins be delivered to a Shoolagiri site?",
+        answer:
+          "Manufacturing and delivery timelines depend on the configuration, the quantity, the factory's workload, transport and the readiness of the site. The schedule is confirmed with your order.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Toilet Cabin Quote in Shoolagiri",
+    ctaText: `Planning sanitation for a construction site, industrial project, labour camp or temporary work area? Share your site location, workforce requirements, number of cubicles, water availability and preferred fittings. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Request a Toilet Cabin Quote for Shoolagiri",
+      intro:
+        "Tell us the site location, workforce size, number of cubicles, water availability and preferred fittings. We will check the details with you before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Toilet Cabin Range", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilet Block - 4 Unit", href: "/products/portable-toilet-block-4-unit" },
+      { label: "Compare Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Cabins with an Attached Toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "G+1 Workmen Accommodation", href: "/products/category/g1-workmen-accommodation" },
+      { label: "Labour Colony in Tamil Nadu", href: "/promotions/labour-colony-in-tamil-nadu" },
+      { label: "Security Cabins for Site Gates", href: "/products/category/security-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabin in Tamil Nadu", href: "/promotions/portable-toilet-cabin-in-tamil-nadu" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
+        { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+        { label: "Portable Toilet Cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
+        // Brief of 2026-11-10 (Shoolagiri shipping-container page, §5), as agreed with this page's owner session:
+        // a nearby link only, so the page's approved copy is unchanged.
+        { label: "Shipping Containers in Shoolagiri", href: "/cities-we-serve/shipping-container-shoolagiri" },
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+        { label: "All Locations We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru. Delivery, unloading and placement are arranged for each order, and manufacturing and delivery dates are not guaranteed. The toilet types, cubicle counts, sizes, panels, sanitary fittings, water storage, plumbing and waste provisions described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. Cleaning, tank emptying and wastewater collection are not included unless agreed in writing. The images on this page are illustrative renders of one two-seater toilet cabin design with a Western and an Indian toilet; other configurations look different, and the images are not photographs of installations in Shoolagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) is named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any company in its industrial parks. The towns, corridors and industrial areas named here are delivery enquiry locations, not clients, completed projects or confirmed delivery areas. The planning table, the checklist and the notes on sanitation, water supply, wastewater, cleaning and maintenance are general guidance, not engineering, public-health or legal advice; the facilities a site needs are set by the rules that apply to it and confirmed with its EHS and compliance teams.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN SHOOLAGIRI INDUSTRIAL AREA — the storage box itself for returnable
+   * packaging, segregated non-hazardous scrap and early consumables and spares storage around
+   * Shoolagiri, SIPCOT and the Future Mobility Park.
+   *
+   * Owner brief of 2026-11-10 ("Shoolagiri shipping container page and developer commands"): route,
+   * meta title, meta description, H1 and public copy as given. No other page targets shipping
+   * containers in Shoolagiri (repo routes, next.config / middleware redirects and the sitemap checked;
+   * the route was a 404). The slug starts with "shipping-container-", so cityFamily() puts it in the
+   * shipping-container family: directory card "Shipping containers in Shoolagiri" (the hub anchor the
+   * brief asks for) under Tamil Nadu, Tamil Nadu sibling links both ways and the nearby block. Like
+   * the Dharmapuri shipping page it sets neither the solutions nor the features section, so every
+   * section after "why" is an extra section, in the brief's order:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp, numbers from COMPANY).
+   *   • "Stores for returnable bins, trays and pallets" → why (the paragraph as whyIntro, no bullets).
+   *   • "Segregation space for suitable non-hazardous scrap", "Early storage near SIPCOT and the Future
+   *     Mobility Park" (with the brief §5 security-cabin and toilet sentences as inline links), "Delivery from
+   *     Karnataka or Tamil Nadu" and "Container size examples" (table, the used-unit note and the
+   *     brief §5 inspection sentence) → afterSolutions extra sections, followed by the gallery.
+   *   • "Shipping container price and rental in Shoolagiri" → custom (no bullets), with the brief's
+   *     rental anchor as customLinks after the hire-dates sentence.
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (four) → faqs; the closing request → CTA + the
+   *     cargo-category enquiry form (rental is mentioned, so the form keeps the rental model).
+   * Lead-ins written where a slot needs one: tagline, the table caption, the two inline-link
+   * sentences' wording around the brief's anchors, the enquiry-form heading and intro, and the alt
+   * texts and captions of the three images outside the brief's hero slot. No ₹ figure, stock, lead
+   * time, load rating, dispatch origin, project milestone, sourcing arrangement or clearance claim;
+   * high-cube availability, side openings, fit-outs, rental, dispatch documents and unloading stay
+   * quote-dependent, as the brief says. SIPCOT and the Future Mobility Park are named only as
+   * enquiry locations.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Shoolagiri and SIPCOT Shoolagiri, plus
+   * the returnable-packaging, scrap-segregation and early-spares uses. Portable Security Cabins in
+   * Shoolagiri keeps gatehouses (the two pages link to each other once each; its link sits in its
+   * project-stage section). Container Office in SIPCOT Shoolagiri keeps offices. The Krishnagiri
+   * container product page (/products/shipping-container-in-krishnagiri) keeps its own title, meta
+   * and uses and does not name Shoolagiri, so the brief's "link the existing Shoolagiri mention" has
+   * nothing to link.
+   *
+   * LINKS (brief §5): the security-cabin and portable-toilet pages and /products/shipping-container-rental
+   * are live. Both Shoolagiri pages link back once: the security page from its project-stage section
+   * (`whyInlineLink`) and the toilet page from its nearby links (its owner kept its approved copy
+   * unchanged). No Chennai page is a
+   * used-container inspection guide; the Chennai-area page with a used-container checklist is
+   * Shipping Container in Athipattu, whose "Used Container Inspection" section lists seven checks, so
+   * "how to inspect a used container" points there, as on the Dharmapuri and Vellore pages.
+   *
+   * Images: four owner-dropped lossy VP8 webp renders ("public/images/Shoolagiri shipping container
+   * city page/Shoolagiri shipping container/cabin (1–4).webp", 600×448 and 1452×1083 ×3, no EXIF / XMP
+   * / ICC metadata or provenance to keep) of one charcoal-grey steel container with tan cargo doors on
+   * a paved yard. The VP8 bitstreams are copied byte-for-byte (pixel-identical decode) into the
+   * extended format with an XMP dc:title and a dc:description that calls each an illustrative render.
+   * Only the exterior (2) matches a slot in the brief's image table, so it carries that slot's
+   * filename, alt, caption and XMP text (it is 600×448, the largest size supplied; the hero displays
+   * at up to 672 px). The interior is empty and no image shows bins, sorted scrap, a truck or shelved
+   * spares, so those four slots are left out. The roof view (3) is the feature band; the open-door
+   * interior (1) and the side view (4) are the gallery. Every caption says "illustrative" and the
+   * disclaimer says none is a photograph taken in Shoolagiri.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-shoolagiri",
+    city: "Shoolagiri",
+    listTitle: "Shipping & Cargo Containers in Shoolagiri",
+    metaTitle: "Shipping Containers in Shoolagiri for Industrial Storage",
+    metaDescription:
+      "Enquire about shipping containers in Shoolagiri for returnable packaging, segregated scrap, packing supplies and maintenance spares near SIPCOT.",
+    keywords:
+      "Shipping Container in Shoolagiri, Cargo Container Shoolagiri, Storage Container SIPCOT Shoolagiri, Used Shipping Container Shoolagiri, Returnable Packaging Store",
+    geo: {
+      region: "IN-TN",
+      placename: "Shoolagiri, Krishnagiri district, Tamil Nadu, India",
+      position: "12.6740;77.9694",
+      icbm: "12.6740, 77.9694",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 600 × 448 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-shoolagiri/shoolagiri-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 600,
+      height: 448,
+      caption: "Illustrative shipping container exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-shoolagiri/shoolagiri-shipping-container-roof-view.webp",
+      alt: "Top-down view of a grey steel shipping container on stone paving, with its corrugated roof and closed cargo doors at one end",
+      width: 1452,
+      height: 1083,
+      caption: "Illustrative render from above. Share photos of the gate, final approach and placement area with your enquiry.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-shoolagiri/shoolagiri-shipping-container-empty-interior.webp",
+        alt: "Open double cargo doors showing an empty container interior with corrugated grey walls and a plywood floor",
+        width: 1452,
+        height: 1083,
+        caption: "Illustrative empty interior. Labelled bays, racking and other fittings are quoted separately.",
+      },
+      {
+        src: "/images/cities/shipping-container-shoolagiri/shoolagiri-shipping-container-side-view.webp",
+        alt: "Long corrugated side wall of a grey steel shipping container standing on stone paving",
+        width: 1452,
+        height: 1083,
+        caption: "Illustrative side view. Vehicle access and unloading space are assessed for each site.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Shoolagiri Industrial Area",
+    tagline:
+      "Storage containers for returnable bins and pallets, segregated non-hazardous scrap, and packing supplies and spares around Shoolagiri and SIPCOT.",
+    intro: [
+      "Empty bins coming back from customers, clean offcuts waiting for collection and spare parts arriving before a factory store is ready all need their own space. Portable Office Cabin welcomes enquiries for shipping containers in Shoolagiri. Share what your team will store, how it will move the stock and where the unit will sit so we can discuss the layout and delivery.",
+    ],
+
+    whyHeading: "Stores for returnable bins, trays and pallets",
+    whyIntro:
+      "Plan the store around what comes back from each customer and what needs to go out next. Use labelled bays for bins, trays, dividers and pallets, with a separate area for damaged items awaiting inspection. Keep a tally of incoming and outgoing stock, and allow enough aisle space for the trolley or handling equipment you use. Share the largest stack dimensions and loaded weights before choosing shelving or floor positions. Allow cleaned returnables to dry before putting them away.",
+    whyBullets: [],
+
+    extraSections: [
+      {
+        heading: "Segregation space for suitable non-hazardous scrap",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For suitable clean metal offcuts, cardboard, plastic film and wooden packaging, discuss separate labelled bays and access for collection. Keep a record of the material, quantity and collection date. Have your site environmental and safety teams confirm the waste classification, placement and collection arrangements before using a unit. Keep hazardous waste, contaminated scrap and e-waste out of general-purpose segregation stores and use your site’s designated arrangements.",
+        ],
+      },
+      {
+        heading: "Early storage near SIPCOT and the Future Mobility Park",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For a unit being set up in the Shoolagiri industrial area, plan where stretch film, labels, cartons, belts, filters and tools will go before regular operations begin. If the unit will later become a spares or consumables store, plan the aisle, racking and location for both phases. Share the plot pin and the delivery window your site can accommodate.",
+        ],
+        // Brief §5: the security-cabin and portable-toilet sentences; both pages link back once.
+        inlineLinks: [
+          {
+            before: "For a separate gatehouse, see our",
+            link: { label: "security cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
+            after: ".",
+          },
+          {
+            before: "For crew sanitation, see our",
+            link: { label: "portable toilet cabins in Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Delivery from Karnataka or Tamil Nadu",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If a supplier proposes dispatch from a Bengaluru-area yard or a yard in Tamil Nadu, ask for the confirmed origin, unit condition, route and itemised transport and unloading charges. Before dispatch, agree who provides the invoice, any applicable e-way bill, transporter information and any documentation needed to establish the seller’s right to sell the unit and its clearance status. Have your accounts or logistics team confirm what applies to the transaction. Share photos of the final approach, gate and placement area so the vehicle and unloading method can be assessed.",
+        ],
+      },
+      {
+        heading: "Container size examples",
+        placement: "afterSolutions",
+        table: {
+          caption: "Examples only: the specific unit's dimensions, condition and availability are confirmed in your quotation.",
+          headers: ["Configuration", "Typical enquiry", "What to confirm"],
+          rows: [
+            ["20 ft", "Packaging supplies, spares or segregated scrap", "Door clearance, handling method and unloading space"],
+            ["40 ft", "Multiple customer zones for returned bins and pallets", "Usable dimensions, aisle width and trailer access"],
+            ["40 ft high cube", "Bulky trays or taller racking", "Stock availability, safe stacking and route clearances"],
+          ],
+        },
+        closing: [
+          "Confirm the condition, internal dimensions and door opening of the actual unit. For used stock, ask about the floor, roof, seals and locking hardware before accepting it.",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "For a checklist, see",
+            link: { label: "how to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+    ],
+
+    customHeading: "Shipping container price and rental in Shoolagiri",
+    customIntro: "Pricing depends on the size, condition, fittings, dispatch point, delivery and unloading.",
+    // Empty on purpose: the section is prose (see the header comment).
+    customBullets: [],
+    customOutro:
+      "For temporary returnable stock or plant setup, share your dates and ask about the rental options below. Confirm availability, permitted modifications and collection terms in the quotation.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Shoolagiri, the SIPCOT and Future Mobility Park areas, Berigai, Uddanapalli, Kelamangalam, Bagalur and sites along NH 44 near Shoolagiri. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share your intended use, quantity, preferred size, plot pin, dates and access photos.", text: "" },
+      { title: "Review the proposed unit, fit-out and itemised quotation.", text: "" },
+      { title: "Confirm the base, route, unloading responsibilities and applicable dispatch documents.", text: "" },
+      { title: "Agree on delivery and placement. Include collection or relocation in the quote if needed.", text: "" },
+    ],
+
+    faqs: [
+      {
+        question: "Which container size suits returnable packaging?",
+        answer:
+          "Start with the largest bin or pallet stack, the number of separate customer zones and the aisle needed for handling. Compare 20 ft and 40 ft options using the selected unit’s actual dimensions.",
+      },
+      {
+        question: "Can I use a container for scrap segregation?",
+        answer:
+          "You can enquire about a store for suitable clean, non-hazardous scrap. Confirm the classification and the collection arrangements with your site team first.",
+      },
+      {
+        question: "Can a container be dispatched from Karnataka?",
+        answer:
+          "Share the delivery site and dates. Dispatch origin and transport availability depend on the quoted unit. Confirm document responsibilities before dispatch.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, fittings, dispatch location, vehicle access and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Shoolagiri",
+    ctaText:
+      "Send the site pin, intended use, preferred size, quantity, target dates and access photos. Include any requirements for racks, labelled bays, door openings or unloading.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (the brief's Request a Quote · Call · WhatsApp).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Send your Shoolagiri container requirement",
+      intro:
+        "Choose a container and quantity, then add your plot pin or PIN code, what the unit will hold and your target dates. Mention racks, labelled bays, door openings, unloading or hire, and our team will check these points and reply with a written quote.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+    ],
+
+    disclaimer: `Containers are supplied by Portable Office Cabin, whose factory is at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur in Krishnagiri district, Tamil Nadu, with a Bengaluru office in Electronic City; the company has no container yard, depot, branch or agent in Shoolagiri. Every unit is subject to stock. Your quotation records its size, condition, grade and dispatch point, any fittings or modifications, any hire terms, the dispatch paperwork, and who handles transport, unloading, placement and collection; delivery dates are not guaranteed. The four images are illustrative renders of a single steel shipping container, shown with an empty interior; none was photographed in Shoolagiri, at SIPCOT or at the Future Mobility Park, and none shows a delivered unit. SIPCOT (State Industries Promotion Corporation of Tamil Nadu) and the Future Mobility Park are mentioned only as places enquiries may come from, and Portable Office Cabin has no affiliation with them or with any business located there. The returnable-packaging, scrap, consumables and spares uses are examples of typical enquiries rather than customers, finished projects or confirmed delivery points. These containers are for general-purpose storage of suitable non-hazardous goods; hazardous waste, contaminated scrap and e-waste are excluded. Guidance on stacking, loads, waste classification, dispatch documents and e-way bills is general information, not engineering, environmental, safety, legal or tax advice.`,
+  },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN VIRUDHUNAGAR — the general portable-cabin intent for Virudhunagar district
    * (Tamil Nadu): industrial plot setup around the PM MITRA textile park area at E. Kumaralingapuram,
@@ -31687,9 +32369,9 @@ export const CITY_PAGES: CityPage[] = [
    * reciprocal links both ways, as the brief's sentences with inline links (brief: "Defer reciprocal links
    * until both routes are in the same release or already live"): this page's sizes section ends with
    * "For a visitor-facing sales or sample display space, see our [portable marketing offices in
-   * Virudhunagar]." (CityPageSection.inlineLink), and that page's layout examples end with "For site setup,
-   * guard cabins or staff support rooms, see our [portable cabins in Virudhunagar]."
-   * (CityPage.featuresInlineLink). Both fields are new, optional and render nothing when unset.
+   * Virudhunagar]." (the section's `inlineLinks`), and that page's layout examples end with "For site
+   * setup, guard cabins or staff support rooms, see our [portable cabins in Virudhunagar]."
+   * (CityPage.featuresInlineLink, new in this PR; renders nothing when unset).
    * The /cities-we-serve directory lists this page
    * under Tamil Nadu by itself (geo.region IN-TN, card label = `directoryLabel`, the brief's anchor), and
    * both Tamil Nadu portable / porta cabin keyword hubs (seoPromotions) list it after Ranipet.
@@ -31858,14 +32540,16 @@ export const CITY_PAGES: CityPage[] = [
         ],
         links: [{ label: "Portable cabin sizes and specifications", href: "/products/portable-cabin" }],
         // Brief section 5, "After Cabin Sizes and Fittings", word for word; the marketing-office page links back.
-        inlineLink: {
-          before: "For a visitor-facing sales or sample display space, see our",
-          link: {
-            label: "portable marketing offices in Virudhunagar",
-            href: "/cities-we-serve/portable-marketing-office-virudhunagar",
+        inlineLinks: [
+          {
+            before: "For a visitor-facing sales or sample display space, see our",
+            link: {
+              label: "portable marketing offices in Virudhunagar",
+              href: "/cities-we-serve/portable-marketing-office-virudhunagar",
+            },
+            after: ".",
           },
-          after: ".",
-        },
+        ],
         placement: "afterSolutions",
       },
     ],
