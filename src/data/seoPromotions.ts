@@ -404,6 +404,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Vellore", href: "/cities-we-serve/shipping-container-vellore" },
     // Dharmapuri district (Adhiyamankottai, Palacode), 2026-11-08; after Vellore so the live links keep their positions.
     { name: "Shipping Container in Dharmapuri", href: "/cities-we-serve/shipping-container-dharmapuri" },
+    // Shoolagiri industrial area (SIPCOT, Future Mobility Park), 2026-11-10; after Dharmapuri so the live links keep their positions.
+    { name: "Shipping Container in Shoolagiri", href: "/cities-we-serve/shipping-container-shoolagiri" },
   ],
   "Shipping Container|Chennai": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
