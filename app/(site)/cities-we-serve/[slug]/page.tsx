@@ -106,8 +106,9 @@ const DEFAULT_CTA_SECONDARY_LINKS: CityPageLink[] = [
   { label: "Container Office on Rent", href: "/rental-service" },
 ];
 
-/* Every contextual link a page carries in its body (intro, why, solutions, features, custom and areas
-   links, and the extra sections' links). Read only for a page that sets `nearbySkipsBodyLinks`, so the
+/* Every contextual link the template renders in a page's body (intro, why, solutions-item, features,
+   custom and areas links, and the extra sections' `links` / `inlineLinks`; list-item links elsewhere are
+   not rendered, so they are not counted). Read only for a page that sets `nearbySkipsBodyLinks`, so the
    shipping-container nearby block does not repeat a sibling the body already links. */
 function bodyLinks(page: CityPage): CityPageLink[] {
   return [
@@ -123,7 +124,6 @@ function bodyLinks(page: CityPage): CityPageLink[] {
     ...(page.extraSections ?? []).flatMap((sec) => [
       ...(sec.links ?? []),
       ...(sec.inlineLinks ?? []).map((il) => il.link),
-      ...(sec.bullets ?? []).map((b) => b.link),
     ]),
   ].filter((l): l is CityPageLink => !!l);
 }
