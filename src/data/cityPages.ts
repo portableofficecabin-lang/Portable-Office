@@ -3255,6 +3255,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Truck-Driver and Highway Kiosks in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
       // Shivamogga's shop page (#195, live 2026-11-06): one of the brief's named sibling shop pages.
       { label: "Machenahalli Industrial Area Shops in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      // Hoskote's shop page (#202, live 2026-11-08): the brief's third named sibling (owner, 2026-11-15).
+      { label: "Food Kiosks and Retail Stalls in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
