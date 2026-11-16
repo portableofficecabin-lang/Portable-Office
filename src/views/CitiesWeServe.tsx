@@ -64,8 +64,10 @@ const MAJOR_CITIES = [
 ];
 
 /** Live local landing pages — each links to a real purchasable product page. */
+// Koramangala left this list on 2026-11-15 (owner decision): its one listing is now the city page
+// /cities-we-serve/shipping-container-koramangala in the Karnataka shipping-container group, and the
+// product page it used to point at was refocused on the as-is unit itself.
 const LOCAL_PAGES = [
-  { name: "Koramangala, Bengaluru", href: "/products/shipping-container-in-kormangala" },
   { name: "Peenya Industrial Area, Bengaluru", href: "/products/shipping-container-in-peenya-industrial" },
   { name: "Narsapura KIADB, Kolar", href: "/products/shipping-container-in-narsapura-industrial" },
   { name: "Krishnagiri, Tamil Nadu", href: "/products/shipping-container-in-krishnagiri" },
