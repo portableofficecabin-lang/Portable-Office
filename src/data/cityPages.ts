@@ -189,6 +189,14 @@ export interface CityPage {
    * brief asks for the social preview's actual dimensions). Unset = no dimension tags, as before.
    */
   ogImageDimensions?: boolean;
+  /**
+   * Optional: the shipping-container nearby block also leaves out the sibling pages this page already
+   * links in its body (intro, why, solutions, features, custom and areas links, and the extra sections'
+   * links), not only those in relatedLinks and areasLinks (first used by Shipping & Storage Containers
+   * in JP Nagar and in Bellandur, whose briefs link each other in the body). Unset = only relatedLinks
+   * and areasLinks are skipped, as before, so every other page's nearby block is unchanged.
+   */
+  nearbySkipsBodyLinks?: boolean;
 
   /**
    * Hero image (also the page's og:image). Root-relative path under /public. `caption` (optional)
@@ -17298,6 +17306,8 @@ export const CITY_PAGES: CityPage[] = [
     serviceJsonLd: { serviceType: "Shipping Container" },
     // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
     ogImageDimensions: true,
+    // Koramangala and JP Nagar are linked after the renovation storage list, so the nearby block leaves them out (see the field).
+    nearbySkipsBodyLinks: true,
 
     heroImage: {
       src: "/images/cities/shipping-container-bellandur/bellandur-shipping-storage-container-exterior.webp",
@@ -17376,9 +17386,12 @@ export const CITY_PAGES: CityPage[] = [
       "Discuss humidity-sensitive items separately. Ventilation and moisture absorbers can help manage condensation, and valuable documents, electronics and delicate furnishings may need climate-controlled storage.",
     ],
     sizesNote: "Keep fuel, gas cylinders, flammable solvents, fireworks and perishables out of general-purpose storage.",
-    // Koramangala cross-link (that page's brief §5, 2026-11-15): the related use after this residential
-    // storage section; separately lockable bays for several users are the Koramangala page's intent.
-    featuresLinks: [{ label: "Partitioned storage containers in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" }],
+    // Cross-links after this renovation storage section (each page's brief §5, 2026-11-15): Koramangala
+    // (separately lockable bays for several users are that page's intent), then JP Nagar (home rebuilds).
+    featuresLinks: [
+      { label: "Partitioned storage containers in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+      { label: "Storage containers for home rebuilds in JP Nagar", href: "/cities-we-serve/shipping-container-jp-nagar" },
+    ],
 
     customHeading: "Shipping container price and rental in Bellandur",
     customIntro:
@@ -17489,6 +17502,284 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; there is no container yard, depot or office in Bellandur. Each container is offered subject to stock, and its size, condition, grade, fittings, any certification, any rental terms and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or placed in Bellandur. The 20 ft footprint quoted is approximate; the dimensions and ratings that apply are those of the specific unit. Bellandur Post (560103) and the localities and roads listed are named only to describe the area served, and the storage uses described are examples rather than clients, past projects or confirmed delivery areas. Guidance on packing, condensation, site access, placement and permissions is general information, not engineering or legal advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN JP NAGAR — long-term storage for home rebuilds, family
+   * downsizing and school storage in JP Nagar (Jayaprakash Narayan Nagar), South Bengaluru.
+   *
+   * Owner brief of 2026-11-15 (route, meta title, meta description, H1, primary keyword and related
+   * terms used as given; the page copy is the brief's, with straight apostrophes). The slug starts
+   * with "shipping-container-", so cityFamily() puts it in the shipping-container family: directory
+   * card "Shipping containers in JP Nagar" (the brief's hub anchor) and the Karnataka nearby blocks.
+   * The brief's sections map onto the template slots, nothing dropped:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Long-term storage during a home rebuild" → why: its two paragraphs as whyIntro and whyOutro
+   *     (no bullets).
+   *   • "Storage while downsizing" → solutions heading + intro (no items).
+   *   • "School storage through the academic year" (table + the approval paragraph), "Delivering on
+   *     residential streets in JP Nagar" and "Container sizes and condition" (table + the condition
+   *     paragraph) → three afterSolutions extra sections, in the brief's order.
+   *   • "Shipping container price and rental in JP Nagar" → custom (prose, so customBullets is empty);
+   *     the rental link → customLinks.
+   *   • "Areas we serve" → areas (the template renders it before the steps, the reverse of the brief).
+   *   • "From enquiry to placement" → how (four steps, titles only).
+   *   • FAQs (four) → faqs; the closing request → CTA + the cargo-category enquiry form. The customer
+   *     may be comparing purchase and hire, so the form keeps the rental model.
+   * Lead-ins written where a slot needs one: tagline, the two table captions, the outro before the
+   * rental link, the two inline-link sentences and the enquiry-form intro. No ₹ figure, stock, lead
+   * time, yard storage, 10 ft unit, climate control or delivery-coverage claim; rental duration,
+   * fittings and collection stay quote-dependent, as the brief says.
+   *
+   * LINKS (brief §5): Bellandur's "Planning delivery through a society gate or narrow lane" covers
+   * lifting access, so "container delivery planning for tight sites" closes the delivery section. No
+   * Chennai page is a used-container inspection guide; the Chennai-area page with a confirmed checklist
+   * is Shipping Container in Athipattu (Ennore–Kattupalli corridor), whose "Used Container Inspection"
+   * section lists seven checks, so "how to inspect a used container" points there, as on the
+   * Shoolagiri, Vellore and Dharmapuri pages. "Shipping container rental options" →
+   * /products/shipping-container-rental (hire is in this brief's scope). Bellandur links back with
+   * "Storage containers for home rebuilds in JP Nagar" after its renovation storage list. Both pages
+   * set `nearbySkipsBodyLinks`, so the nearby block does not repeat a sibling already linked above.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage container × JP Nagar, for home rebuilds, downsizing and
+   * school storage. Bellandur keeps household, society and shop storage in Bellandur; Marathahalli ORR
+   * keeps commercial storage on the ORR; Koramangala (/products/shipping-container-in-kormangala)
+   * keeps offices, cafés and conversions. No other shipping page names JP Nagar or its localities.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/JP Nagar city page/JP Nagar
+   * shipping container page/cabin (1–5).webp", 1445×1088 ×4 and 2336×1760, no EXIF / XMP / ICC
+   * metadata). Each is copied with its VP8 data byte-for-byte plus an XMP dc:title / dc:description
+   * that labels it a render. Only two match the brief's slots: the three-quarter exterior (hero and
+   * og:image, with the brief's alt text and caption) and the shelving interior (the "new-term stock"
+   * slot; its cartons carry no visible labels, so its alt text and file name describe what is shown).
+   * The home-rebuild, school-furniture and delivery slots have no matching image and are skipped. The
+   * overhead view is the feature band, and the cargo-door and side-wall views are the gallery after
+   * the condition section. No caption names a size or claims a JP Nagar installation, and the
+   * disclaimer says none is a photograph taken in JP Nagar.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-jp-nagar",
+    city: "JP Nagar",
+    listTitle: "Shipping & Storage Containers in JP Nagar",
+    metaTitle: "Shipping Containers in JP Nagar for Homes & Schools",
+    metaDescription:
+      "Enquire about shipping containers in JP Nagar for long-term storage during a home rebuild, family downsizing or school upgrades and new-term deliveries.",
+    keywords:
+      "shipping container in JP Nagar, storage container JP Nagar, long-term container rental JP Nagar, school storage container, household storage during a rebuild",
+    geo: {
+      region: "IN-KA",
+      placename: "JP Nagar, Bengaluru, Karnataka, India",
+      position: "12.9063;77.5857",
+      icbm: "12.9063, 77.5857",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 2336 × 1760 px (read from its VP8 header); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+    // Bellandur is linked in the delivery section, so the nearby block leaves it out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-jp-nagar/jp-nagar-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 2336,
+      height: 1760,
+      caption: "Illustrative storage container exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-jp-nagar/jp-nagar-storage-container-placement-overhead.webp",
+      alt: "Overhead view of a cream steel storage container with a charcoal frame on paving between planted borders",
+      width: 1445,
+      height: 1088,
+      caption:
+        "Illustrative overhead view. Agree on a placement area with room beyond the footprint to open the cargo doors and unload.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-jp-nagar/jp-nagar-storage-container-shelving-interior.webp",
+      alt: "Cartons and grey storage bins on steel shelving either side of an aisle inside a storage container with open cargo doors",
+      width: 1445,
+      height: 1088,
+      caption:
+        "Illustrative layout for boxed stock. Shelving and lighting are fitted only where agreed and quoted for the specific unit.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-jp-nagar/jp-nagar-storage-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a cream steel storage container with vertical locking bars and handles",
+        width: 1445,
+        height: 1088,
+        caption: "Illustrative cargo-door view. Inspect the doors, seals and locking hardware of the actual unit.",
+      },
+      {
+        src: "/images/cities/shipping-container-jp-nagar/jp-nagar-storage-container-side-wall.webp",
+        alt: "Corrugated side wall of a cream steel storage container with a charcoal frame on a paved yard",
+        width: 1445,
+        height: 1088,
+        caption: "Illustrative side view. Ask for the actual unit's wall, roof and floor condition.",
+      },
+    ],
+
+    h1: "Shipping & Storage Containers in JP Nagar",
+    tagline:
+      "Buy a shipping container, or enquire about hiring one, for home-rebuild, downsizing or school storage in JP Nagar.",
+    intro: [
+      "If you're moving out while your house is rebuilt, helping family members downsize or clearing school classrooms before repair work, you may need storage for longer than the move itself. Portable Office Cabin welcomes enquiries for shipping and storage containers in JP Nagar. Share what you need to store, for how long and where the unit can go so we can discuss the size, condition and delivery.",
+    ],
+
+    whyHeading: "Long-term storage during a home rebuild",
+    whyIntro:
+      "Start with an inventory and measure bulky items such as wardrobes, mattresses and appliances. Label boxes by room or by when you'll need them again. Clean and dry items before packing, follow the appliance manufacturer's storage instructions, and leave an aisle to reach essentials without unloading the whole unit.",
+    whyBullets: [],
+    whyOutro:
+      "If the container will sit on the rebuild site, agree with the builder on a location that stays clear of excavation, material deliveries and access routes as work progresses. An alternative is another suitable private plot with the owner's permission. For a long storage period, plan access for periodic checks for damp, pests and damage. Discuss separate storage for sensitive documents, electronics or valuables if they require controlled conditions or insurance.",
+
+    solutionsHeading: "Storage while downsizing",
+    solutionsIntro:
+      "Group belongings by what will move to the new home, what will be collected by relatives and what still needs a decision. Keep frequently accessed boxes near the door and label the rest clearly. Share the largest item dimensions and the access you need between groups of belongings so the layout can be assessed.",
+    solutions: [],
+
+    customHeading: "Shipping container price and rental in JP Nagar",
+    customIntro:
+      "Pricing depends on the size, condition, fittings, transport and unloading. For a long rebuild, compare hire charges over the expected term, including collection, with the purchase and delivery cost. If you intend to sell a purchased unit afterwards, treat resale as an estimate. Share the expected storage period and ask for an itemised quotation covering the applicable terms.",
+    customBullets: [],
+    customOutro: "Comparing hire with purchase? See:",
+    customLinks: [{ label: "Shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from JP Nagar (Jayaprakash Narayan Nagar), from 1st to 9th Phase, and nearby Puttenahalli, Sarakki, Arekere, Bilekahalli, Gottigere, Kothnur and Jaraganahalli. We also consider sites along Bannerghatta Road and Kanakapura Road. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share your inventory, approximate storage period, placement address and access photos.", text: "" },
+      { title: "Review the proposed unit, condition and itemised purchase or hire quotation.", text: "" },
+      { title: "Confirm permissions, base readiness and unloading responsibilities.", text: "" },
+      { title: "Agree on delivery and any collection or relocation included in the quote.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "School storage through the academic year",
+        placement: "afterSolutions",
+        table: {
+          caption: "Examples only. Whether a container suits the stock depends on the items and the unit offered.",
+          headers: ["When you need space", "Typical items", "What to plan"],
+          rows: [
+            [
+              "Summer repair window",
+              "Desks, chairs, cupboards and suitable classroom furniture",
+              "Pack by classroom and leave room to retrieve the first items needed when rooms reopen.",
+            ],
+            [
+              "Before a new term",
+              "Boxed textbooks, notebooks and uniforms",
+              "Label by class or size and confirm storage conditions for the stock.",
+            ],
+            [
+              "Between school events",
+              "Stage props, costumes, banners and sports equipment",
+              "Group by event and give staff a clear access aisle.",
+            ],
+          ],
+        },
+        closing: [
+          "Have school management approve the placement and delivery window. Keep student paths, play areas and emergency access clear. Agree on how staff will control access and secure the unit when it is closed.",
+        ],
+      },
+      {
+        heading: "Delivering on residential streets in JP Nagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Share the site pin, gate measurements and photos of tight bends, parked vehicles, trees and overhead cables. Start with a landowner-approved placement area and confirm the base, door clearance and space for unloading. Arrange any required vehicle access or traffic permissions before dispatch. The transport team can assess the actual route and lifting method once it has the site details.",
+        ],
+        // Brief §5: the Bellandur page's gate-and-lane section covers lifting access.
+        inlineLinks: [
+          {
+            before: "For gate, lane and lifting access, see our notes on",
+            link: { label: "container delivery planning for tight sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container sizes and condition",
+        placement: "afterSolutions",
+        table: {
+          caption: "Example sizes only. The internal dimensions and door opening of the actual unit are confirmed in its quotation.",
+          headers: ["Example size", "Typical enquiry", "What to check"],
+          rows: [
+            [
+              "20 ft",
+              "Household furniture, classroom desks or new-term stock",
+              "Internal dimensions, cargo door opening and room to organise items",
+            ],
+            ["40 ft", "Larger household or school inventories", "Trailer access, turning room and lifting arrangements"],
+          ],
+        },
+        closing: [
+          "Ask for the actual unit's condition and inspect the floor, roof, doors, seals and locking hardware. List fragile or moisture-sensitive items separately so you can assess whether the proposed storage conditions suit them.",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "Buying a used unit? Read",
+            link: { label: "how to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Where can I keep a container while my house is rebuilt?",
+        answer:
+          "Start with a suitable private plot where you have permission to place the unit. For placement on the rebuild site, agree with your builder on access and clearance throughout the work.",
+      },
+      {
+        question: "Is it better to rent or buy for a long rebuild?",
+        answer:
+          "Compare the full quoted cost over your expected storage period. Include delivery, unloading, hire extensions and collection where applicable.",
+      },
+      {
+        question: "Can a school use a container for desks or new-term stock?",
+        answer:
+          "Yes, subject to the items' storage requirements and school approval of the location and access plan. Share the inventory and the proposed unloading area.",
+      },
+      {
+        question: "How soon can you deliver?",
+        answer:
+          "Timing depends on the selected unit, fittings, transport and access. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a storage container quote in JP Nagar",
+    ctaText:
+      "Send the site pin, largest item dimensions, estimated storage period, target dates and photos of the approach and placement area. Tell us whether you're comparing purchase and rental.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (the brief's Request a Quote · Call · WhatsApp).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Storage container enquiry for JP Nagar",
+      intro:
+        "Choose a container and quantity, add your JP Nagar site pin or address, and say whether you are comparing purchase with hire. List what you will store, the expected storage period and the access to the placement area. The team goes through these details with you before sending an itemised quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; there is no container yard, depot or office in JP Nagar. Each container is offered subject to stock, and its size, condition, grade, fittings, any rental terms and the delivery, unloading, collection and relocation arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or placed in JP Nagar. The sizes named are examples; the dimensions that apply are those of the specific unit. JP Nagar and the localities and roads listed are named only to describe the area served, and the home, family and school uses described are examples rather than clients, past projects or confirmed delivery areas. Guidance on packing, storage conditions, site access, placement and permissions is general information, not engineering or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
