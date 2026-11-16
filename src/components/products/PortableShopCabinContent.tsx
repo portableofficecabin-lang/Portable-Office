@@ -220,6 +220,7 @@ const SHOP_LOCATION_LINKS: { label: string; href: string }[] = [
   { label: "Portable Shops in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
   { label: "Portable Shop Cabins in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
   { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
+  { label: "Portable Shops in Indiranagar", href: "/cities-we-serve/portable-shop-indiranagar" },
 ];
 
 function SectionHeading({

@@ -34399,6 +34399,229 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer: `Containers are supplied by Portable Office Cabin, whose factory is at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and from its Electronic City office in Bengaluru; there is no Portable Office Cabin yard, depot or branch in Koramangala. Units are offered subject to availability. The quotation for a unit sets out its size, condition, grade and internal dimensions, any partitions, racks, ramp, locks or lighting, any hire terms, and who handles transport, unloading, placement and collection; no delivery date is guaranteed. All five images are illustrative renders of one teal container; none was taken in Koramangala, and none shows a delivered or fitted unit. The self-storage guidance is for customers planning their own operation: Portable Office Cabin supplies the container and any agreed fit-out. The localities listed describe where enquiries are welcome, and the storage uses are examples rather than clients, finished projects or confirmed delivery points. Guidance on approvals, appliance storage, bicycle parking, battery charging, site access and placement is general information, not legal, fire-safety, engineering or insurance advice.`,
   },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOPS & POP-UP STORES IN INDIRANAGAR (east Bengaluru) —
+   * /cities-we-serve/portable-shop-indiranagar
+   *
+   * Owner brief of 2026-11-15 ("Indiranagar portable shop page and developer commands"): the proposed
+   * route (no Indiranagar page, redirect or sitemap entry existed), meta title, meta description, H1,
+   * keywords (primary + supporting terms) and public copy verbatim. No other page names Indiranagar,
+   * and no page targets pop-up stores, apparel pop-ups, gallery cabins or pet grooming cabins.
+   * No keyword cannibalisation (owner rule, 2026-11-05): this page owns portable shop / pop-up store ×
+   * Indiranagar. Hoskote (#202) and Hebbal, Mysuru (#212) keep their own places and shop uses, and the
+   * areas list names only places with no shop page of their own.
+   * Mapped onto the template in the brief's order, all as extra sections after the (absent) solutions:
+   *   Intro → intro and heroCta (Request a Quote, Call, WhatsApp; number and link from COMPANY). The
+   *     tagline restates the meta description's three uses, as the brief has none.
+   *   Apparel, gallery, pet, exterior, site placement, configuration examples and price → seven extra
+   *     sections. The configuration table's caption is the brief's closing sentence, followed by the
+   *     brief's inline link to the portable shop cabin product page.
+   *   "From enquiry to opening" → an ordered extra section, so the steps keep their place before the areas.
+   *   FAQs: the brief's five. CTA: the brief's heading and text, no secondary buttons.
+   * Rental: the rental page (/rental-service) lists cabins and containers but no shop cabin, so the
+   * brief's "portable shop cabin hire" link is left out until hire coverage is confirmed. The copy keeps
+   * hire, joined modules, wet-area fit-outs, installation and removal as items to confirm in the quotation,
+   * and the disclaimer says so. The portable shop cabin product page links here (SHOP_LOCATION_LINKS).
+   *
+   * Images: four owner-dropped webp files ("public/images/indiranagar portable shop city page/
+   * Indiranagar portable shop page/cabin (1–4).webp": 1200×896 and three 1451×1084, lossy VP8, no
+   * EXIF/XMP/ICC, origin not documented). They are renders of one grey corrugated-steel kiosk with
+   * gold-coloured trim and lift-up awning windows, not photographs. VP8 data copied byte-for-byte with an
+   * XMP title and description marking each as an illustrative render. None shows an apparel, gallery or
+   * grooming interior, so those slots of the brief are skipped, and the hero's alt describes what is
+   * visible (awning serving windows, gold-coloured trim) rather than the brief's glazed front and
+   * wood-look trim. (1) three-quarter view = hero / og:image; (4) front elevation = exterior finishes;
+   * (2) aerial view on a paved base = site placement; (3) compact cabin with side door = configuration
+   * examples. Every caption marks the image as illustrative, and no image text names Indiranagar.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-indiranagar",
+    city: "Indiranagar",
+    listTitle: "Portable Shops in Indiranagar",
+    metaTitle: "Portable Shops in Indiranagar for Pop-Up Retail",
+    metaDescription:
+      "Enquire about portable shops in Indiranagar for apparel pop-ups, art and design galleries, and pet grooming or pet supplies. Request a fit-out quote.",
+    keywords:
+      "portable shop in Indiranagar, portable shop cabin Indiranagar, pop-up store cabin, apparel pop-up with fitting room, portable gallery cabin, pet grooming cabin",
+    geo: { region: "IN-KA", placename: "Indiranagar, Bengaluru, Karnataka, India", position: "12.9784;77.6408", icbm: "12.9784, 77.6408" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-shop-indiranagar/indiranagar-portable-shop-awning-windows.webp",
+      alt: "Portable shop cabin with two serving windows under lift-up awnings, a side door, dark grey corrugated walls and gold-coloured trim — illustrative render",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop exterior. Final size, frontage, finish and fittings depend on the approved quotation.",
+    },
+
+    h1: "Portable Shops & Pop-Up Stores in Indiranagar",
+    tagline: "Prefabricated shop cabins for apparel pop-ups, art and design showcases, and pet grooming or pet supplies",
+    intro: [
+      "Test a clothing collection with a short retail run, put a new design range on display or set up a counter for pet supplies. Portable Office Cabin manufactures prefabricated shop cabins and welcomes enquiries from Indiranagar. Share what you plan to sell or display, your opening date and the proposed site so we can discuss a layout, finish and delivery plan.",
+    ],
+    heroCta: true,
+
+    extraSections: [
+      {
+        heading: "Pop-up shops for clothing and lifestyle brands",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Start with the customer's route from the entrance to the displays, fitting room and billing counter. Discuss a glass front, hanging rails, display shelves and track lighting suited to the products. For apparel, allow room for a mirror, hooks and a fitting-room door or curtain. Include stock storage, billing equipment and any lock or shutter requirements when asking for a quote.",
+          "A short pop-up can help you see which products customers try and buy before you commit to a longer retail lease. Share the opening and closing dates so delivery and any removal can be quoted together.",
+        ],
+      },
+      {
+        heading: "Pop-up galleries and design showcases",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For artwork, ceramics or furniture samples, share the dimensions and weights of the pieces you want to display. Discuss neutral finishes, adjustable spotlights, hanging rails, plinths and shelving. Allow space around displays for visitors to move. If artwork has specified temperature, humidity or lighting limits, include these in your enquiry before approving a fit-out.",
+        ],
+      },
+      {
+        heading: "Pet grooming and pet supplies cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A pet supplies cabin can use a retail counter, shelving and a small waiting area. For grooming, plan a separate wet work area and provide details for the tub, water supply, drainage, hair trap, washable surfaces, dryers and ventilation. Have the site team review electrical provisions and wastewater handling for the proposed use. Confirm the equipment and utility installation included in the quotation.",
+        ],
+      },
+      {
+        heading: "Exterior finishes and branding",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-shop-indiranagar/indiranagar-portable-shop-front-elevation.webp",
+          alt: "Front of a portable shop cabin with a glazed serving window under an awning, a steel door, a wall light and gold-coloured trim — illustrative render",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative shopfront with a serving window and gold-coloured trim. Cladding, colours and branding are confirmed in the quotation.",
+        },
+        paragraphs: [
+          "Discuss wood-look cladding, matte paint, a glazed frontage, removable brand graphics or entrance lighting. Share artwork dimensions and tell us if you plan to reuse the cabin for later campaigns. Confirm any replacement graphics, exterior deck, planters or shutter separately.",
+        ],
+      },
+      {
+        heading: "Site placement in Indiranagar",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-shop-indiranagar/indiranagar-portable-shop-aerial-view.webp",
+          alt: "Portable shop cabin seen from above on a paved base, with a pitched roof and two open awning windows — illustrative render",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative view of a shop cabin on a paved base. The base, access and unloading are confirmed for each site.",
+        },
+        paragraphs: [
+          "For a site near 100 Feet Road, 12th Main or CMH Road, start with an owner-approved private forecourt, commercial plot or event venue. Ask the relevant local authority what applies to the proposed business activity, site use and outdoor signage. Confirm usable frontage, customer access, utilities, gate dimensions and unloading space before booking delivery.",
+        ],
+      },
+      {
+        heading: "Shop configuration examples",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-shop-indiranagar/indiranagar-portable-shop-side-door.webp",
+          alt: "Compact portable shop cabin with one serving window under an awning beside a steel door — illustrative render",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative compact shop cabin. Usable dimensions and layout are confirmed in the quotation.",
+        },
+        table: {
+          caption: "These footprints are starting points. Confirm the usable dimensions, equipment, fittings and availability in the quotation.",
+          headers: ["Use", "Example footprint", "Layout to discuss"],
+          rows: [
+            ["Accessories or pet supplies", "10 × 8 ft", "Display shelves and billing counter"],
+            ["Apparel pop-up", "20 × 10 ft", "Display rails, fitting room and checkout"],
+            ["Art or design showcase", "20 × 10 ft or joined modules", "Hanging rails, adjustable lighting and display space"],
+            ["Pet grooming", "10 × 8 to 20 × 10 ft", "Wet-area layout, tub clearance and space for supplies"],
+          ],
+        },
+        inlineLinks: [
+          {
+            before: "See our",
+            link: { label: "glass-front portable shop cabin", href: "/products/portable-shop-cabin" },
+            after: " for a standard layout to compare with your brief.",
+          },
+        ],
+      },
+      {
+        heading: "Portable shop price and rental in Indiranagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Pricing depends on the size, frontage, finishes, branding, interior fittings, utility provisions, transport and unloading. If the shop is for a short campaign, share the dates so the team can confirm whether a suitable cabin can be quoted on hire. Ask for installation, collection or relocation to be itemised where applicable.",
+        ],
+      },
+      {
+        heading: "From enquiry to opening",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Share the intended use, site pin, opening date, desired layout and access photos." },
+          { text: "Review the drawings, fit-out, branding and itemised quotation." },
+          { text: "Confirm site permissions, base readiness, utilities and unloading arrangements." },
+          { text: "Agree on delivery and handover. Include any removal or collection in the quotation." },
+        ],
+      },
+    ],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Indiranagar, including 100 Feet Road, 12th Main, CMH Road, HAL 2nd Stage, HAL 3rd Stage and Defence Colony. We also consider sites in Domlur, Jeevan Bima Nagar, Halasuru and along Old Airport Road. Delivery is assessed for each site.",
+
+    faqs: [
+      {
+        question: "Can an apparel pop-up include a fitting room?",
+        answer:
+          "Yes. Share the display layout, customer flow and privacy requirements so the fitting room and circulation can be planned together.",
+      },
+      {
+        question: "Can I use a portable shop as a small art gallery?",
+        answer:
+          "Yes. Share the work dimensions, display loads, lighting needs and expected visitor numbers for a layout review.",
+      },
+      {
+        question: "What should I specify for a pet grooming cabin?",
+        answer:
+          "Include the grooming equipment, water and drain locations, electrical loads, ventilation and the separation you need between grooming and retail.",
+      },
+      {
+        question: "Can I hire a shop cabin for a short campaign?",
+        answer:
+          "Share the proposed dates, location and fit-out. Hire availability and collection terms depend on the configuration.",
+      },
+      {
+        question: "How soon can you deliver?",
+        answer:
+          "Timing depends on the approved layout, branding, availability and delivery access. Share the opening date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Quote in Indiranagar",
+    ctaText:
+      "Send your product or service, opening dates, preferred size and site photos. Include any fitting room, display, branding or grooming equipment requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // The brief's buttons are Request a Quote, Call and WhatsApp: an empty list drops the two default
+    // container-office buttons (one of them is "on rent", which is not confirmed for shop cabins).
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related products and guides",
+    relatedLinks: [
+      { label: "Portable Cabin Layouts and Interior Ideas", href: "/products/portable-cabin/layouts-and-interiors" },
+      { label: "Portable Cabin Sizes and Dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabin Transport and Delivery", href: "/products/portable-cabin/transport-and-delivery" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
+        { label: "Portable Office Cabins in Marathahalli", href: "/cities-we-serve/portable-office-cabin-marathahalli" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a shop, office or yard in Indiranagar. Delivery, unloading and placement are assessed and arranged for each site, and delivery dates are not guaranteed. Hire of a shop cabin is subject to availability and the quotation. The footprints, layouts, fitting rooms, display fittings, lighting, joined modules, wet-area and grooming fit-outs, utility provisions, branding, installation, collection and removal described on this page are options to discuss; what is supplied is confirmed in the approved drawing, specification and quotation for each order. The images on this page are illustrative renders of one portable shop cabin design, not photographs of installations in Indiranagar, and they do not show the apparel, gallery or grooming layouts described. The roads, localities and venues named here are used only to describe locations; they are not clients, completed projects or confirmed sites. HAL 2nd Stage and HAL 3rd Stage are locality names, and Portable Office Cabin is not affiliated with Hindustan Aeronautics Limited. Business activity, site use and outdoor signage are subject to the site owner and the relevant local authority; the notes on this page are general planning guidance, not legal, licensing, electrical or engineering advice.`,
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
