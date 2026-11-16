@@ -595,6 +595,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
     // Chamarajanagar district (granite supplies, packing stores, fairs and resorts; owner brief 2026-11-08), after Bellandur.
     { name: "Shipping Container in Chamarajanagar", href: "/cities-we-serve/shipping-container-chamarajanagar" },
+    // Koramangala (partitioned storage, restaurant equipment and bicycle rooms; owner brief 2026-11-15), appended.
+    { name: "Shipping Container in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
   ],
 };
 

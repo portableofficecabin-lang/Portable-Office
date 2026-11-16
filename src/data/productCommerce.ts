@@ -660,8 +660,12 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     // in <city>" listings at six prices — Google reads that as one product duplicated with
     // conflicting offers. Each is now a DISTINCT configuration (grade ascends with price);
     // the city names the delivery area, not the product.
+    // 2026-11-15 owner decision: "Koramangala Bangalore Delivery" dropped from the title (the same
+    // correction as POC-SC-KRSH below). The city page /cities-we-serve/shipping-container-koramangala
+    // now owns "shipping container in Koramangala"; this title (= the page <title>, 65 chars) names the
+    // unit. The SKU stays feed-blocked (merchantFeedPolicy), so the feed itself is unchanged.
     h1Title: "Used 20 ft Shipping Container (As-Is Grade)",
-    feedTitle: "Used 20 ft Shipping Container As-Is Grade, Koramangala Bangalore Delivery | Portable Office Cabin",
+    feedTitle: "Used 20 ft Shipping Container As-Is Grade | Portable Office Cabin",
     size: "20 ft × 8 ft — used, as-is grade", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
