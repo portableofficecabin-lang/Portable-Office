@@ -18983,7 +18983,7 @@ export const CITY_PAGES: CityPage[] = [
           { title: "A sign-out log", text: "so the team knows what's been used." },
           {
             title: "Paints and chemicals",
-            text: "only as their labels and safety data sheets advise, on a separate shelf away from everything else, with incompatible products kept apart. Check with your building's safety team before storing anything flammable or hazardous; a general storage container is not automatically suitable for it.",
+            text: "only as their labels and safety data sheets advise, on a separate shelf away from everything else, with incompatible products kept apart. Check with your building's safety team before storing anything flammable or hazardous, as an ordinary storage container may not be the right place for it.",
           },
         ],
       },
@@ -18999,7 +18999,7 @@ export const CITY_PAGES: CityPage[] = [
           width: 1774,
           height: 887,
           caption:
-            "Illustrative empty interior. Padded racks, panel racks and hardware bins are fitted only where agreed and quoted for the selected unit.",
+            "Illustrative empty interior. Any padded racks, panel racks or hardware bins are specified in the quotation for the unit you choose.",
         },
         paragraphs: [
           "As new apartment complexes around Mahadevapura hand over flats, interior firms move in to fit modular kitchens, wardrobes, TV units and appliances, often in dozens of flats at once. Panels and appliances usually arrive before each flat is ready, and leaving them in parking areas or corridors leads to scratches, damp, damage and missing parts.",
@@ -19032,7 +19032,7 @@ export const CITY_PAGES: CityPage[] = [
         },
         paragraphs: [
           "Containers must sit on private land, such as a hotel's service yard, a mall's back-of-house area, a contractor's agreed spot inside an apartment project or a vacant plot, always with the permission of the property owner, builder or association.",
-          "Whitefield Road and the ITPL Road approach are heavily congested, so delivery timing is planned around the traffic after a route check. Share the site pin and photos of the approach road, gate, bends, overhead cables and placement area. The transport team confirms the vehicle, the unloading method and the delivery window once it has checked the access; no delivery time is fixed before then.",
+          "Whitefield Road and the ITPL Road approach are heavily congested, so delivery timing is planned around the traffic after a route check. Send the site pin with photos of the approach road, the gate, any tight turns, overhead cables and the spot where the container will stand. The transport team confirms the vehicle, the unloading method and the delivery window once it has checked the access; no delivery time is fixed before then.",
         ],
         // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers tight-site delivery.
         inlineLinks: [
@@ -19048,7 +19048,7 @@ export const CITY_PAGES: CityPage[] = [
         placement: "afterSolutions",
         table: {
           caption:
-            "Approximate internal volumes; exact dimensions vary slightly by manufacturer. Availability and the dimensions of the actual unit are confirmed in its quotation.",
+            "Capacities are approximate. Exact dimensions vary slightly by manufacturer, and the quotation confirms availability and the measurements of the actual unit.",
           headers: ["Container", "Approximate capacity", "Typical application in Mahadevapura"],
           // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a 320 px phone.
           rows: [
@@ -19079,7 +19079,7 @@ export const CITY_PAGES: CityPage[] = [
         paragraphs: [
           "The grade describes a container's condition. A one-trip unit has made a single loaded voyage. A cargo-worthy unit is used but still sound enough to carry cargo. A wind-and-watertight (WWT) unit has left shipping service but is graded to keep out wind and rain.",
           "For hotel furniture and interior panels, choose a clean, dry one-trip or excellent cargo-worthy container. Marks and damp can ruin finished surfaces. For maintenance spares, a sound cargo-worthy unit offers good value.",
-          "Whatever the grade, condensation can form inside a closed steel box when the temperature changes, so ask about vents, keep goods off the floor and check finished items regularly during long storage.",
+          "In any grade, condensation can form inside a closed steel box when the temperature changes, so ask about vents, keep goods off the floor and check finished items regularly during long storage.",
         ],
         // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
         inlineLinks: [
@@ -19107,8 +19107,8 @@ export const CITY_PAGES: CityPage[] = [
           { title: "Fit-out", text: "padded racks, panel racks, shelving, bins, lighting and vents." },
           { title: "Security", text: "a lockbox and heavy-duty locks." },
           { title: "Duration", text: "the length of a refurbishment or interiors project, if you rent." },
-          { title: "Delivery", text: "the timing and the access to your site." },
-          { title: "Buy or rent", text: "purchase, or rental for an agreed term." },
+          { title: "Delivery", text: "timing and site access." },
+          { title: "Buy or rent", text: "an outright purchase or a rental period." },
           {
             title: "Market rates",
             text: "container prices move with the global shipping market, so quotes are valid for a limited time.",
@@ -19120,7 +19120,7 @@ export const CITY_PAGES: CityPage[] = [
         heading: "Storage Container on Rent in Mahadevapura",
         placement: "afterSolutions",
         paragraphs: [
-          "Running a three-month hotel refurbishment or an interiors project across several towers? Ask us about storage containers on rent in Mahadevapura. The rental term, the unit and the delivery and collection arrangements are set out in the quotation.",
+          "Running a three-month hotel refurbishment or an interiors project across several towers? Ask us about storage containers on rent in Mahadevapura. Your quotation states the rental period, the unit offered and how delivery and collection will work.",
         ],
         inlineLinks: [
           {
