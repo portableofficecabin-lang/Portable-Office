@@ -18408,7 +18408,7 @@ export const CITY_PAGES: CityPage[] = [
             text: "container prices follow the global shipping market, so each quotation is valid for a limited time.",
           },
         ],
-        closing: ["Tell us what you'll store and where the container will stand, and we'll send an itemised quotation."],
+        closing: ["Send the list of equipment and the site location, and we'll price each item separately."],
       },
       {
         heading: "Storage Container on Rent on Kanakapura Road",
@@ -18450,7 +18450,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How quickly can you deliver?",
         answer:
-          "That depends on which units are available, any racks or shelving to be fitted, and the access to your site. Share your target date, and the quotation will set out the expected schedule.",
+          "Timing depends on stock, on any racks or shelving we fit first, and on reaching your plot. Give us the date you need it by, and we'll put the expected schedule in the quotation.",
       },
     ],
 
