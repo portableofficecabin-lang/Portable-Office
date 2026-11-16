@@ -117,9 +117,10 @@ export interface CityPageSection {
   /**
    * Optional H3 sub-sections rendered at the end of the section, after its inline links (first used by
    * Shipping & Storage Containers in Indiranagar, whose boutique section closes with the brief's H3
-   * "Designer Sample Archives"). Each renders its heading as an H3, then its paragraphs and an optional
-   * bulleted list, with the section's classes and motion. Unset = nothing rendered, so every other page's
-   * HTML is unchanged.
+   * "Designer Sample Archives", and on Thanisandra Main Road, whose brief puts H3s under its scaffolding
+   * and vehicle-storage H2s). Each renders its heading as an H3, then its paragraphs, an optional bulleted
+   * or numbered list and optional closing paragraphs, with the section's classes and motion. Unset =
+   * nothing rendered, so every other page's HTML is unchanged.
    */
   subsections?: CityPageSubsection[];
 }
@@ -129,6 +130,10 @@ export interface CityPageSubsection {
   heading: string;
   paragraphs?: string[];
   bullets?: CityPageListItem[];
+  /** Optional: render the bullets as a numbered list (<ol>). Unset = <ul>. */
+  ordered?: boolean;
+  /** Optional paragraphs after the bullets. Unset = nothing rendered. */
+  closing?: string[];
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
