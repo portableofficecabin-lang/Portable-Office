@@ -34,6 +34,13 @@ export interface CityPageListItem {
    * HTML is unchanged.
    */
   images?: CityPageFigure[];
+  /**
+   * Optional bulleted list rendered under a SOLUTIONS item, after its paragraph and link and before its
+   * images (first used by Shipping & Storage Containers in Mahadevapura, whose three hospitality H3s
+   * each end in a checklist). Same markup as an extra section's bullets. Ignored by the other lists.
+   * Unset = no element, so every other page's HTML is unchanged.
+   */
+  bullets?: CityPageListItem[];
 }
 
 /** A captioned image inside a solutions item (see CityPageListItem.images). */
@@ -18218,6 +18225,10 @@ export const CITY_PAGES: CityPage[] = [
    * commercial and infrastructure storage. Bellandur's shipping page keeps household and society
    * storage; the Marathahalli office-cabin page keeps workspace; Devarabisanahalli keeps campus and
    * tech-park intent. No Bellandur locality is named in the areas list.
+   * Mahadevapura brief (2026-11-16): Mahadevapura now has its own shipping page (hotels, malls and interior
+   * staging), so the areas list ends at Old Airport Road and Mahadevapura gets a link instead
+   * (`areasInlineLink`, anchor "Mahadevapura"); `nearbySkipsBodyLinks` keeps the nearby block from
+   * repeating it. Keywords, metadata and the other links are unchanged.
    *
    * Images: four owner-dropped webp renders ("public/images/Marathahalli shipping container city
    * page/Marathahalli ORR shipping and storage container/cabin (1–4).webp": 600×448 and 1452×1083 ×3,
@@ -18250,6 +18261,9 @@ export const CITY_PAGES: CityPage[] = [
     },
     motion: true,
     serviceJsonLd: { serviceType: "Shipping Container" },
+    // The Mahadevapura link sits in the areas section (Mahadevapura brief, 2026-11-16), so the nearby block
+    // leaves it out; the block lists shipping pages only, so nothing else changes.
+    nearbySkipsBodyLinks: true,
 
     heroImage: {
       src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-exterior.webp",
@@ -18333,7 +18347,13 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas we serve",
     areasText:
-      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout, Doddanekundi and Kadubeesanahalli. We also consider sites along Varthur Road, Old Airport Road and around Mahadevapura. Delivery access is assessed for each location.",
+      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout, Doddanekundi and Kadubeesanahalli. We also consider sites along Varthur Road and Old Airport Road. Delivery access is assessed for each location.",
+    // Mahadevapura brief (2026-11-16): hotel, mall and interior-staging storage there is that page's intent.
+    areasInlineLink: {
+      before: "For hotel, mall and apartment-interior storage around",
+      link: { label: "Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+      after: ", see our page for that locality.",
+    },
     // Bellandur cross-link (agreed with the Bellandur page, added by #227 as the second to go live): residential storage is that page's intent.
     areasLinks: [{ label: "Storage containers for homes and societies in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" }],
 
@@ -18459,6 +18479,370 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and its Karnataka office is in Electronic City Phase 1, Bengaluru. It has no yard, depot or office in Marathahalli or on the Outer Ring Road. Supply depends on stock: the size, grade, condition and fittings of a unit, any rental term, and how it is delivered, unloaded, moved or collected are set out in its quotation, and no delivery date is guaranteed. The pictures here are renders of a typical 20 ft container, not photographs taken in Marathahalli or on the ORR. Marathahalli Bridge, the Outer Ring Road and the other localities are named only to show where enquiries are welcome; Portable Office Cabin has no connection with any road, metro or civic authority, and none of the uses or places mentioned is a client, a finished project or a confirmed delivery location. Guidance here on placement, lifting, permits, traffic management, archives and storage conditions is general, not engineering, fire-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN MAHADEVAPURA — hotel FF&E during refurbishments, banquet
+   * furniture overflow, mall and hotel maintenance spares, and staging stores for interior contractors
+   * fitting out new apartments (the Mahadevapura locality on Whitefield Road, east Bengaluru).
+   *
+   * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, link plan and
+   * image plan used as given). Source copy: the owner's content reply of 2026-11-16 07:13Z ("Pasted
+   * text(20261116-090320).txt"), kept section by section with the brief's corrections: no fixed delivery
+   * hours ("quiet-hour delivery" became delivery timing planned after a route check), no day counts, no
+   * price, no "no hidden costs", and paints and chemicals kept to their labels and the building's
+   * safety team. The tagline, the grade-explanation and condensation sentences, the image captions, the
+   * size-table caption, the link lead-ins, the enquiry-form intro and the disclaimer were written for
+   * their slots.
+   * Mapped onto the template in the brief's order:
+   *   • H1, tagline, intro (the source's two paragraphs) and the heroCta row (quotation · Call · WhatsApp).
+   *   • "Storage for Hotels, Malls & Hospitality" → solutions: its three H3s are the three solutions
+   *     items, each with its lead-in as `text` and its checklist as the item's `bullets` (opt-in field,
+   *     first used here).
+   *   • Interior contractors, placement and delivery, sizes, grade, price, rental and "How It Works"
+   *     (ordered) → seven afterSolutions extra sections (no why / features / custom / how slots).
+   *   • "Areas We Serve" → areas; "Why Mahadevapura Businesses Choose Us" → an extra section without a
+   *     placement, so it renders after the areas and before the FAQs, as in the brief.
+   *   • FAQs: the source's six (the delivery answer gives no day count); "Space to Work While the Work
+   *     Gets Done" → CTA (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   * Rental is in the catalogue (Shipping Container Rental: 10, 20, 40 ft and 40 ft High Cube, monthly
+   * terms), so the rental section and the 40 ft high-cube row stay.
+   *
+   * LINKS (brief §5): "shipping containers" → the cargo category (sizes section); "shipping containers in
+   * Bellandur" (its tight-site delivery guidance) closes the delivery section; "how to inspect a used
+   * shipping container" → Shipping Container in Athipattu, the Chennai-area page whose "Used Container
+   * Inspection" section is a seven-point checklist (the Chennai product page has one sentence on
+   * inspection); the rental product from the rental section; the CTA button "Request a Shipping
+   * Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block from repeating
+   * Bellandur. Inbound: the Marathahalli ORR page's areas ("Mahadevapura"), the Karnataka shipping hub,
+   * the cargo category's location links and the Karnataka shipping nearby blocks.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × the Mahadevapura locality, Whitefield
+   * Road, Hoodi, Garudacharpalya, KR Puram, Basavanagar and the ITPL Road approach, for hotel FF&E,
+   * banquet furniture overflow, mall and hotel maintenance spares and residential interior staging.
+   * Not the civic zone: Whitefield, Marathahalli and Bellandur are not targeted, and Marathahalli ORR no
+   * longer names Mahadevapura in its areas. Housing-society spares (Bellandur), office fit-out staging
+   * (Shivamogga), event equipment (Marathahalli ORR) and used-container inspection (Athipattu) are not
+   * targeted. The Marathahalli office-cabin page keeps Mahadevapura: it is a different product.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Mahadevapura shipping container
+   * city page/Storage Containers in Mahadevapura/cabin (1–5).webp", no EXIF / XMP / ICC) of a red-brown
+   * container (the overhead and interior views render it orange-red). Each is copied with its VP8 data
+   * byte-for-byte plus an XMP dc:title / dc:description that labels it a render. (1) three-quarter
+   * exterior = hero / og:image (the brief's "shipping-container-mahadevapura-front"); (5) empty interior
+   * = interior-contractor section; (4) roof from above = delivery section; (3) end wall = grade section;
+   * (2) cargo doors with a lockbox = price section (security fittings). No image shows hotel furniture,
+   * banquet stock, maintenance racks, kitchen panels or appliances, so those five slots of the brief are
+   * not used and no alt text or caption claims them. No alt text or caption names a size.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-mahadevapura",
+    city: "Mahadevapura",
+    listTitle: "Shipping & Storage Containers in Mahadevapura",
+    metaTitle: "Shipping Container in Mahadevapura | Storage & Cargo",
+    metaDescription:
+      "Shipping and storage containers in Mahadevapura for hotel furniture, banquet equipment, mall maintenance spares and apartment interior contractors. Get a quote.",
+    keywords:
+      "shipping container in Mahadevapura, cargo container Mahadevapura, storage container Mahadevapura, used shipping container Mahadevapura, storage container Hoodi, storage container KR Puram, storage container Garudacharpalya, shipping container price in Mahadevapura, storage container for rent in Mahadevapura",
+    // The Mahadevapura locality on Whitefield Road (not the civic zone).
+    geo: {
+      region: "IN-KA",
+      placename: "Mahadevapura, Bengaluru, Karnataka, India",
+      position: "12.9913;77.6874",
+      icbm: "12.9913, 77.6874",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur is linked in the body, so the nearby block leaves it out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-mahadevapura/shipping-container-mahadevapura-front.webp",
+      alt: "Exterior view of a red-brown steel shipping container with closed cargo doors, suitable for commercial storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative storage container arrangement for commercial applications.",
+    },
+
+    h1: "Shipping & Storage Containers in Mahadevapura",
+    tagline:
+      "Storage for hotel refurbishments, banquet furniture, mall and hotel maintenance spares, and interior contractors fitting out new apartments.",
+    intro: [
+      "Mahadevapura sits on one of east Bengaluru's busiest corridors. Shoppers head to its large malls, business travellers fill the hotels along Whitefield Road, and the metro now runs right through. Behind the main road, new apartment towers keep handing over keys, and interior teams follow close behind to fit kitchens and wardrobes in hundreds of new homes.",
+      "Busy places like these have a quieter problem: where to put things while work happens. Hotels need somewhere to keep furniture during a refurbishment. Malls need space for maintenance spares. Interior contractors need somewhere to stage kitchens and wardrobes until each flat is ready. Portable Office Cabin supplies shipping containers in Mahadevapura for exactly these jobs.",
+    ],
+    heroCta: true,
+
+    solutionsHeading: "Storage for Hotels, Malls & Hospitality",
+    solutions: [
+      {
+        title: "Furniture During Refurbishment",
+        text: "When a hotel refreshes its rooms or restaurants, the furniture, fixtures and equipment (FF&E) has to go somewhere, often a floor at a time. A container keeps it together and locked away until it's reinstalled or replaced:",
+        bullets: [
+          { title: "Wrap and pad", text: "beds, headboards, sofas, desks and lamps." },
+          { title: "Label by floor and room", text: "so everything goes back in the right place." },
+          { title: "Stand mattresses upright", text: "in breathable covers." },
+          { title: "Keep a photo inventory", text: "so condition can be checked before and after." },
+          { title: "Store artwork and mirrors upright", text: "with corner protectors." },
+        ],
+      },
+      {
+        title: "Banquet Furniture Overflow",
+        text: "Banquet halls juggle chairs, tables, stages and décor between events. When storerooms fill up, a container takes the overflow:",
+        bullets: [
+          { title: "Chair stacks on trolleys", text: "wheeled in and out; ask about a ramp for the door threshold." },
+          { title: "Folded tables on racks", text: "standing on their edges." },
+          { title: "Stage panels and risers", text: "stacked flat and padded." },
+          { title: "Décor crates", text: "labelled by theme or event, so each booking's items are easy to find." },
+        ],
+      },
+      {
+        title: "Maintenance Spares for Malls & Hotels",
+        text: "Large commercial buildings run on spares: lamps, filters, fan belts, AHU parts, carpet tiles, ceiling tiles and paint for touch-ups. Engineering teams often run out of storeroom space, and a container can take the overflow:",
+        bullets: [
+          { title: "Labelled racks", text: "organised by system, such as electrical, HVAC, plumbing and finishing." },
+          { title: "Bins for small parts", text: "with minimum stock levels marked on the front." },
+          { title: "A sign-out log", text: "so the team knows what's been used." },
+          {
+            title: "Paints and chemicals",
+            text: "only as their labels and safety data sheets advise, on a separate shelf away from everything else, with incompatible products kept apart. Check with your building's safety team before storing anything flammable or hazardous; a general storage container is not automatically suitable for it.",
+          },
+        ],
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Staging Stores for Interior Contractors",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-mahadevapura/storage-container-empty-interior-mahadevapura.webp",
+          alt: "Empty interior of an orange-red steel container with corrugated walls and a dark floor, seen from the open cargo doors",
+          width: 1774,
+          height: 887,
+          caption:
+            "Illustrative empty interior. Padded racks, panel racks and hardware bins are fitted only where agreed and quoted for the selected unit.",
+        },
+        paragraphs: [
+          "As new apartment complexes around Mahadevapura hand over flats, interior firms move in to fit modular kitchens, wardrobes, TV units and appliances, often in dozens of flats at once. Panels and appliances usually arrive before each flat is ready, and leaving them in parking areas or corridors leads to scratches, damp, damage and missing parts.",
+          "A container near the site keeps the whole project organised:",
+        ],
+        bullets: [
+          { title: "Sort by tower and flat number", text: "so each flat's material sits together and is clearly labelled." },
+          {
+            title: "Lay panels flat or stand them upright",
+            text: "on padded racks, depending on the material, to help stop them warping or chipping.",
+          },
+          { title: "Keep hardware separate", text: "with hinges, channels, handles and fittings in labelled bins by flat." },
+          { title: "Leave appliances boxed", text: "until installation day, stored off the floor and away from damp." },
+          { title: "Sequence the loading", text: "so material for the flats you'll install first stays near the doors." },
+          { title: "Keep a delivery and issue log", text: "that records what arrived, what went up to each flat and when." },
+        ],
+        closing: [
+          "Working with the builder or association: many complexes have rules for where contractors can keep material, when deliveries can happen and how lifts are used. Agree on a container spot and schedule before you start.",
+        ],
+      },
+      {
+        heading: "Placement & Delivery",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-mahadevapura/shipping-container-roof-overhead-mahadevapura.webp",
+          alt: "Top-down view of an orange-red shipping container roof on a concrete yard between yellow painted lines",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative top view. The container's position, door clearance and unloading space are agreed for each site.",
+        },
+        paragraphs: [
+          "Containers must sit on private land, such as a hotel's service yard, a mall's back-of-house area, a contractor's agreed spot inside an apartment project or a vacant plot, always with the permission of the property owner, builder or association.",
+          "Whitefield Road and the area around KR Puram are heavily congested, so delivery timing is planned around the traffic after a route check. Share the site pin and photos of the approach road, gate, bends, overhead cables and placement area. The transport team confirms the vehicle, the unloading method and the delivery window once it has checked the access; no delivery time is fixed before then.",
+        ],
+        // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers tight-site delivery.
+        inlineLinks: [
+          {
+            before: "For more on delivery methods for tight sites, see our page on",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Approximate internal volumes; exact dimensions vary slightly by manufacturer. Availability and the dimensions of the actual unit are confirmed in its quotation.",
+          headers: ["Container", "Approximate capacity", "Typical application in Mahadevapura"],
+          // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a 320 px phone.
+          rows: [
+            ["20\u00a0ft", "~33 m³", "Hotel furniture a floor at a time, maintenance spares, or interior materials for several flats"],
+            ["40\u00a0ft", "~67 m³", "Banquet furniture overflow, larger hotel refurbishments, or interior materials for a whole tower"],
+            ["40\u00a0ft high cube", "~76 m³", "Taller panel racks and stacked chair trolleys"],
+          ],
+        },
+        // Brief §5: the main shipping container page (the cargo category, which owns the head term) for sizes and selection.
+        inlineLinks: [
+          {
+            before: "To compare the sizes, grades and units in our range, browse our",
+            link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Choosing a Container Grade",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-mahadevapura/shipping-container-end-wall-mahadevapura.webp",
+          alt: "Corrugated steel end wall of a red-brown shipping container with corner castings and forklift pockets on a paved yard",
+          width: 1448,
+          height: 1086,
+          caption: "Illustrative render of the blind end. The grade and condition of the unit you are offered are stated in its quotation.",
+        },
+        paragraphs: [
+          "The grade describes a container's condition. A one-trip unit has made a single loaded voyage. A cargo-worthy unit is used but still sound enough to carry cargo. A wind-and-watertight (WWT) unit has left shipping service but is graded to keep out wind and rain.",
+          "For hotel furniture and interior panels, choose a clean, dry one-trip or excellent cargo-worthy container. Marks and damp can ruin finished surfaces. For maintenance spares, a sound cargo-worthy unit offers good value.",
+          "Whatever the grade, condensation can form inside a closed steel box when the temperature changes, so ask about vents, keep goods off the floor and check finished items regularly during long storage.",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "For a full checklist, see our guide on",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Mahadevapura",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-mahadevapura/shipping-container-cargo-doors-mahadevapura.webp",
+          alt: "Closed double cargo doors of a red-brown shipping container with four vertical locking bars, cam handles and a central lockbox",
+          width: 1448,
+          height: 1086,
+          caption: "Illustrative cargo-door view. Locks and a lockbox are quoted for the selected unit.",
+        },
+        paragraphs: ["The container price depends on:"],
+        bullets: [
+          { title: "Size", text: "20 ft, 40 ft or 40 ft high cube." },
+          { title: "Grade and condition", text: "one-trip, cargo-worthy, or wind and watertight." },
+          { title: "Fit-out", text: "padded racks, panel racks, shelving, bins, lighting and vents." },
+          { title: "Security", text: "a lockbox and heavy-duty locks." },
+          { title: "Duration", text: "the length of a refurbishment or interiors project, if you rent." },
+          { title: "Delivery", text: "the timing and the access to your site." },
+          { title: "Buy or rent", text: "purchase, or rental for an agreed term." },
+          {
+            title: "Market rates",
+            text: "container prices move with the global shipping market, so quotes are valid for a limited time.",
+          },
+        ],
+        closing: ["Tell us what you'll store, for how long and where, and we'll send an itemised quote."],
+      },
+      {
+        heading: "Storage Container on Rent in Mahadevapura",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Running a three-month hotel refurbishment or an interiors project across several towers? Ask us about storage containers on rent in Mahadevapura. The rental term, the unit and the delivery and collection arrangements are set out in the quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "For the sizes offered on hire and the monthly terms, see our",
+            link: { label: "container rental options", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Tell us what you'll store, for how long and where." },
+          { text: "Get a recommendation and an itemised quote, including racks and labelling." },
+          { text: "Confirm the spot and schedule with the property owner, builder or association." },
+          { text: "We deliver and place the container once the site access has been checked, at a time agreed with you." },
+          { text: "Ask for extra units, layout changes or collection when you're done, where available for your order." },
+        ],
+      },
+      {
+        heading: "Why Mahadevapura Businesses Choose Us",
+        bullets: [
+          { title: "Hospitality storage", text: "planned for refurbishments, banquet overflow and maintenance spares." },
+          { title: "Interior project staging", text: "sorted by tower and flat." },
+          {
+            title: "The right grade",
+            text: "one-trip or cargo-worthy units for finished furniture and panels, with the condition stated in the quotation.",
+          },
+          { title: "Organised layouts", text: "racks, bins and labels planned around what you store." },
+          { title: "Site-access planning", text: "delivery on congested roads arranged after a route check." },
+          { title: "Flexible durations", text: "from one refurbishment to a full handover season, to buy or rent." },
+          { title: "Itemised quotations", text: "the container, fit-out, delivery and any rental terms listed line by line." },
+        ],
+      },
+    ],
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We supply shipping and storage containers in the Mahadevapura locality and nearby, including Whitefield Road, Hoodi, Garudacharpalya, KR Puram, Basavanagar and the ITPL Road approach. Delivery access is checked for each site.",
+
+    faqs: [
+      {
+        question: "Can a hotel store furniture in a container during refurbishment?",
+        answer:
+          "Yes. Wrap and pad each piece, label by floor and room, stand mattresses upright, keep a photo inventory, and choose a clean, dry container.",
+      },
+      {
+        question: "Can banquet chairs and tables be stored in a container?",
+        answer: "Yes. Wheel chair stacks in on trolleys, stand folded tables on racks, pad stage panels and label décor crates by event.",
+      },
+      {
+        question: "How should interior contractors use a staging container?",
+        answer:
+          "Sort material by tower and flat number, store panels on padded racks, keep hardware in labelled bins, leave appliances boxed until installation, and keep a delivery and issue log.",
+      },
+      {
+        question: "Where can a container go inside an apartment complex?",
+        answer: "Only where the builder or association agrees. Settle the spot, delivery times and lift usage before you start.",
+      },
+      {
+        question: "Which container grade is best for finished furniture and panels?",
+        answer: "A clean, dry one-trip or excellent cargo-worthy container, because damp and marks can damage finished surfaces.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "It depends on which units are available, whether racks or other fittings are needed, and how easily the delivery vehicle can reach your site. Tell us your target date and we'll confirm a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Space to Work While the Work Gets Done",
+    ctaText: `Whether you're refreshing hotel rooms, juggling banquet furniture between events, keeping a mall's spares in order or fitting kitchens across a new tower, we'll quote a container set up to keep everything organised and ready when you need it. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Mahadevapura, Whitefield Road, Hoodi, Garudacharpalya and KR Puram.`,
+    // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Shipping Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Mahadevapura",
+      intro:
+        "Choose the container and how many you need, then tell us what you'll store, for how long and where in Mahadevapura it will stand. Mention any racks, bins or locks and whether you'd like to buy or rent; we'll reply with an itemised quotation.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch in Mahadevapura. Every unit is subject to availability. Its quotation states the size, grade, condition and internal dimensions, any racks, bins, vents, lighting, locks or lockbox, any rental term, and how delivery, unloading and collection are arranged; no delivery date, time window or vehicle access is guaranteed. All five images are illustrative renders, not photographs taken in Mahadevapura or of a delivered or fitted unit, and none shows hotel, banquet, maintenance or interior stock. The hotels, malls, banquet halls, apartment projects and contractors described are examples of uses, not clients or completed projects, and the localities and roads named show where enquiries are welcome, not confirmed delivery points. Guidance on storing furniture, appliances, paints and chemicals, on placement and on permissions is general information, not safety, legal or engineering advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
