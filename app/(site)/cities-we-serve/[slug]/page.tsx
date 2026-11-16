@@ -849,11 +849,14 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             location pages (3–4 each). Renders nothing on every other page. */}
         <ShippingContainerNearbyBlock
           slug={page.slug}
-          /* `areasLinks` hrefs are skipped too, so a sibling the areas section already links is not repeated;
-             with `nearbySkipsBodyLinks` set, so are the siblings linked anywhere in the body. */
+          /* `areasLinks` and `areasInlineLink` hrefs are skipped too, so a sibling the areas section already
+             links is not repeated; with `nearbySkipsBodyLinks` set, so are the siblings linked anywhere in the
+             body. (No shipping page set `areasInlineLink` before Koramangala's HSR Layout link of 2026-11-16,
+             so every other page's nearby block is unchanged.) */
           existingHrefs={[
             ...(page.relatedLinks ?? []),
             ...(page.areasLinks ?? []),
+            ...(page.areasInlineLink ? [page.areasInlineLink.link] : []),
             ...(page.nearbySkipsBodyLinks ? bodyLinks(page) : []),
           ].map((l) => l.href)}
           motion={page.motion}
