@@ -300,24 +300,24 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       {sec.closing?.map((text) => (
         <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
       ))}
-      {/* Optional H3 subsections after the closing paragraphs (`subsections`, first used by Shipping &
-          Storage Containers in Brookefield); same classes and motion as the section. Unset = nothing rendered. */}
-      {sec.subsections?.map((sub) => (
-        <div key={sub.heading}>
-          <h3 className={`${h3}${mc("reveal")}`}>{sub.heading}</h3>
-          {sub.paragraphs?.map((text) => (
-            <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
-          ))}
-          {sub.bullets && sub.bullets.length > 0 && renderSectionList(sub.bullets)}
-          {sub.closing?.map((text) => (
-            <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
-          ))}
-        </div>
-      ))}
       {/* Optional contextual links after the closing paragraphs (`links`); unset = nothing rendered. */}
       {sec.links && sec.links.length > 0 && renderLinks(sec.links)}
       {/* Optional inline-link paragraphs after the links (`inlineLinks`); unset = nothing rendered. */}
       {sec.inlineLinks?.map((il) => renderInlineLink(il))}
+      {/* Optional H3 sub-sections (`subsections`), each with its paragraphs, an optional bulleted or
+          numbered list and optional closing paragraphs; unset = nothing rendered. */}
+      {sec.subsections?.map((sub) => (
+        <section key={sub.heading}>
+          <h3 className={`${h3}${mc("reveal")}`}>{sub.heading}</h3>
+          {sub.paragraphs?.map((text) => (
+            <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
+          ))}
+          {sub.bullets && sub.bullets.length > 0 && renderSectionList(sub.bullets, sub.ordered)}
+          {sub.closing?.map((text) => (
+            <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
+          ))}
+        </section>
+      ))}
     </section>
   );
 

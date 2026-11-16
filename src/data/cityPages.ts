@@ -115,19 +115,24 @@ export interface CityPageSection {
    */
   ordered?: boolean;
   /**
-   * Optional H3 subsections rendered after the closing paragraphs and before the links (first used by
-   * Shipping & Storage Containers in Brookefield, whose brief puts an H3 inside each of two H2s). Each
-   * has a heading and optional paragraphs, bullets and closing paragraphs, with the section's classes
-   * and motion. Unset = nothing rendered, so every other page's HTML is unchanged.
+   * Optional H3 sub-sections rendered at the end of the section, after its inline links (first used by
+   * Shipping & Storage Containers in Indiranagar, whose boutique section closes with the brief's H3
+   * "Designer Sample Archives", and on Thanisandra Main Road, whose brief puts H3s under its scaffolding
+   * and vehicle-storage H2s). Each renders its heading as an H3, then its paragraphs, an optional bulleted
+   * or numbered list and optional closing paragraphs, with the section's classes and motion. Unset =
+   * nothing rendered, so every other page's HTML is unchanged.
    */
   subsections?: CityPageSubsection[];
 }
 
-/** An H3 block inside an extra section (see CityPageSection.subsections). */
+/** An H3 sub-section inside an extra section (see CityPageSection.subsections). */
 export interface CityPageSubsection {
   heading: string;
   paragraphs?: string[];
   bullets?: CityPageListItem[];
+  /** Optional: render the bullets as a numbered list (<ol>). Unset = <ul>. */
+  ordered?: boolean;
+  /** Optional paragraphs after the bullets. Unset = nothing rendered. */
   closing?: string[];
 }
 
@@ -35474,7 +35479,8 @@ export const CITY_PAGES: CityPage[] = [
    *   "Mini-Hubs for Furniture & Appliance Rental Businesses" and "Storage for Donation Drives, CSR
    *     Collections & NGOs" → two afterIntro extra sections, each with its H3 ("Separate Returned
    *     Furniture From Clean Stock"; "Keep Donated Goods Clean and Usable", plus the source's volunteer
-   *     and records list) via the new optional `subsections` field.
+   *     and records list) via the optional `subsections` field (the same template hunk as the Indiranagar
+   *     and Thanisandra Main Road shipping PRs, so whichever merges first carries it).
    *   Placement & delivery, sizes, grade, price, rental and "How It Works" (ordered) → six
    *     afterSolutions extra sections, so the steps stay before the areas.
    *   "Areas We Serve" → areas. "Why Choose Portable Office Cabin" → a default extra section (after the

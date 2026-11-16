@@ -286,16 +286,6 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     // Optional numbered list (since 2026-11-07): the section's bullets render inside an <ol>.
     if (s.ordered && s.bullets && s.bullets.length > 0) m("extra", `extra section ${i + 1} numbered list`, `<ol class="list-decimal pl-6`);
     (s.closing ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} closing ${j + 1}`, x));
-    // Optional H3 subsections (since 2026-11-16): heading (as an <h3>), paragraphs, bullets and closing.
-    (s.subsections ?? []).forEach((sub, k) => {
-      const at = `extra section ${i + 1} subsection ${k + 1}`;
-      t("extra", `${at} heading`, sub.heading);
-      const h3Text = sub.heading.replace(/&/g, "&amp;").replace(/'/g, "&#x27;");
-      items.push({ group: "extra", label: `${at} heading is an <h3>`, test: (mk) => mk.includes(`>${h3Text}</h3>`) });
-      (sub.paragraphs ?? []).forEach((x, j) => t("extra", `${at} paragraph ${j + 1}`, x));
-      (sub.bullets ?? []).forEach((b, j) => { t("extra", `${at} bullet ${j + 1} title`, b.title ?? ""); t("extra", `${at} bullet ${j + 1} text`, b.text); });
-      (sub.closing ?? []).forEach((x, j) => t("extra", `${at} closing ${j + 1}`, x));
-    });
     // Optional links (since 2026-11-05): label text and href.
     (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
     // Optional inline-link paragraphs (since 2026-11-10): lead-in, label and href.
@@ -303,6 +293,17 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
       t("extra", `extra section ${i + 1} inline link ${j + 1} lead-in`, il.before);
       t("extra", `extra section ${i + 1} inline link ${j + 1} "${il.link.label}"`, il.link.label);
       m("extra", `extra section ${i + 1} inline link ${j + 1} href ${il.link.href}`, `href="${il.link.href}"`);
+    });
+    // Optional H3 sub-sections (since 2026-11-16), at the end of the section: the heading inside an <h3>,
+    // then paragraphs, bullets, the numbered-list markup when `ordered`, and closing paragraphs.
+    (s.subsections ?? []).forEach((sub, k) => {
+      const at = `extra section ${i + 1} subsection ${k + 1}`;
+      const headRe = new RegExp(`<h3[^>]*>${squash(sub.heading).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</h3>`);
+      items.push({ group: "extra", label: `${at} heading is an <h3>`, test: (mk) => headRe.test(mk) });
+      (sub.paragraphs ?? []).forEach((x, j) => t("extra", `${at} paragraph ${j + 1}`, x));
+      (sub.bullets ?? []).forEach((b, j) => { t("extra", `${at} bullet ${j + 1} title`, b.title ?? ""); t("extra", `${at} bullet ${j + 1} text`, b.text); });
+      if (sub.ordered && sub.bullets && sub.bullets.length > 0) m("extra", `${at} numbered list`, `<ol class="list-decimal pl-6`);
+      (sub.closing ?? []).forEach((x, j) => t("extra", `${at} closing ${j + 1}`, x));
     });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
     // heading and the next fixed heading in the visible text. A page without those optional sections
