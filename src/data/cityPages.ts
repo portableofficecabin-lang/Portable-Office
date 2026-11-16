@@ -18257,7 +18257,7 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Exterior view of a cream steel shipping container with closed cargo doors and locking bars on a paved forecourt",
       width: 1200,
       height: 896,
-      caption: "Illustrative render of a storage container exterior.",
+      caption: "Exterior render for illustration; the unit you're offered is described in its quotation.",
     },
     featureImage: {
       src: "/images/cities/shipping-container-kanakapura-road/storage-container-empty-interior-kanakapura-road.webp",
@@ -18265,7 +18265,7 @@ export const CITY_PAGES: CityPage[] = [
       width: 1672,
       height: 941,
       caption:
-        "Illustrative empty interior. Shelving, racks, cable stands and vents are fitted only where agreed and quoted for the selected unit.",
+        "Empty interior, shown for illustration. Any shelving, racks, cable stands or vents are added only when they appear in your quotation.",
     },
 
     h1: "Shipping & Storage Containers Along Kanakapura Road",
@@ -18279,7 +18279,7 @@ export const CITY_PAGES: CityPage[] = [
         "Both work with expensive, theft-prone equipment that arrives in batches and has to wait somewhere safe before it's installed. Portable Office Cabin supplies",
       link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
       after:
-        " along Kanakapura Road that can be set up for exactly these trades. Tell us what you'll store and where the container will stand, and we'll suggest a size and layout.",
+        " along Kanakapura Road that can be set up for exactly these trades. Share what needs storing and where it will be placed, and we'll recommend a size and an interior layout.",
     },
 
     whyHeading: "Staging Stores for Rooftop Solar Installers",
@@ -18302,14 +18302,14 @@ export const CITY_PAGES: CityPage[] = [
         title: "Ventilation and temperature",
         text: "ask about vents to limit heat build-up and condensation. Vents don't keep a steel container within the storage temperature range that electronics may need, so check the manufacturer's limits for inverters and controllers.",
       },
-      { title: "A lockbox and heavy-duty locks", text: "ask which suit the selected unit." },
+      { title: "A lockbox and heavy-duty locks", text: "we'll advise which fit the unit you choose." },
     ],
     whyOutro:
       "Batteries: store lithium battery packs exactly as the manufacturer specifies. Never charge batteries inside an ordinary storage container, and don't keep damaged or swollen batteries in it: they need specialist handling.",
 
     areasHeading: "Areas We Serve",
     areasText:
-      "We supply shipping and storage containers along Kanakapura Road, including Konanakunte, Doddakallasandra, Vajarahalli, Thalaghattapura, Anjanapura and Kaggalipura, and out in the direction of Harohalli. Delivery to each site is confirmed once its access has been checked.",
+      "We supply shipping and storage containers along Kanakapura Road, including Konanakunte, Doddakallasandra, Vajarahalli, Thalaghattapura, Anjanapura and Kaggalipura, and out in the direction of Harohalli. Each site's access is checked before delivery is confirmed.",
 
     extraSections: [
       {
@@ -18320,7 +18320,7 @@ export const CITY_PAGES: CityPage[] = [
           alt: "Closed double cargo doors of a cream shipping container with four vertical locking bars, handles and a lockbox at the centre",
           width: 1448,
           height: 1086,
-          caption: "Illustrative render of the locking bars and lockbox. The locks supplied are confirmed in the quotation for the selected unit.",
+          caption: "Cargo doors with locking bars and a central lockbox (render). Which locks come with your unit is stated in its quotation.",
         },
         paragraphs: [
           "New homes along Kanakapura Road usually start with a borewell. Drilling contractors, pump installers and water-system teams work from site to site with heavy, valuable equipment that needs a secure base nearby.",
@@ -18346,11 +18346,11 @@ export const CITY_PAGES: CityPage[] = [
           alt: "Top-down view of a cream shipping container roof on a paved yard",
           width: 1774,
           height: 887,
-          caption: "Illustrative overhead view. Plan a firm, level area with clearance around the footprint for the cargo doors and unloading.",
+          caption: "Roof seen from above (render). Leave clear space around the container so the doors open fully and it can be unloaded safely.",
         },
         paragraphs: [
           "Containers must sit on private land with the owner's permission, such as your own yard, a project yard or a leased plot, never on the road or the service lane. Plots further out along Kanakapura Road are usually larger and easier to reach, so a 40 ft container is sometimes possible there. On compact plots closer to the city, a 20 ft unit is usually more practical.",
-          "Before dispatch, share the site pin and photos of the approach road, gate, bends, trees and overhead cables, and of the placement area. The base must be firm and level, with room for the delivery vehicle to reach it and for the container to be unloaded, by crane where the site needs one. Once the transport team has these details, it confirms whether a 20 ft or 40 ft unit and the unloading method suit your site; no size or access is promised before that check.",
+          "For a quotation, send the site pin with photos of the access road, the gate, any tight turns, low branches or overhead wires, and the spot where the container will sit. That spot needs a firm, level base that the delivery truck can get close to, with space to lift the container off, by crane if the site calls for one. The transport team uses these details to confirm which size fits (20 ft or 40 ft) and how it will be unloaded; nothing is promised until that check is done.",
         ],
         // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers lifting access.
         inlineLinks: [
@@ -18369,11 +18369,11 @@ export const CITY_PAGES: CityPage[] = [
           alt: "Corrugated end wall of a cream shipping container with corner castings and forklift pockets on a paved yard",
           width: 1448,
           height: 1086,
-          caption: "Illustrative end-wall view. Ask for recent photographs of the actual unit's walls, roof, floor and doors.",
+          caption: "End wall with forklift pockets (render). Request current photos of the specific unit, including its floor, roof and door seals.",
         },
         table: {
           caption:
-            "Approximate internal volumes. Exact dimensions vary slightly by manufacturer, and the quotation states the internal dimensions and door opening of the actual unit.",
+            "Capacities are approximate and differ a little between manufacturers; your quotation gives the exact internal size and door opening of the unit offered.",
           headers: ["Size", "Approx. capacity", "Typical use on Kanakapura Road"],
           rows: [
             ["20 ft", "~33 m³", "Solar kit for several homes, or a borewell team's pumps, cables and tools"],
@@ -18401,8 +18401,8 @@ export const CITY_PAGES: CityPage[] = [
           { title: "Padded storage", text: "padded bases for panels stored on edge." },
           { title: "Cable stands", text: "for drums that are unrolled on site." },
           { title: "Locking", text: "a lockbox and heavy-duty locks." },
-          { title: "Delivery", text: "the distance along the road and the access to your site." },
-          { title: "Purchase or rental", text: "a purchase price, or rental charges for the agreed term." },
+          { title: "Delivery", text: "how far out along the road the site is, and how easy it is to reach." },
+          { title: "Buying or renting", text: "one purchase price, or a rental charge for the term you agree." },
           {
             title: "Market rates",
             text: "container prices follow the global shipping market, so each quotation is valid for a limited time.",
@@ -18414,7 +18414,7 @@ export const CITY_PAGES: CityPage[] = [
         heading: "Storage Container on Rent on Kanakapura Road",
         placement: "afterSolutions",
         paragraphs: [
-          "Running a big solar order or a busy drilling season? Ask us about storage containers on rent along Kanakapura Road. The rental term, the unit's size and condition, and the delivery and collection arrangements are set out in the quotation.",
+          "Running a big solar order or a busy drilling season? Ask us about storage containers on rent along Kanakapura Road. Your quotation lists the hire period, the unit's size and condition, and how delivery and collection will work.",
         ],
         inlineLinks: [
           {
@@ -18455,7 +18455,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Storage for the Trades Building South Bengaluru's Next Homes",
-    ctaText: `Whether you're staging panels for the next ten rooftops or keeping a drilling team's pumps and cables safe between jobs, we'll quote a container set up for your trade. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Kanakapura Road, Konanakunte, Thalaghattapura, Anjanapura and beyond.`,
+    ctaText: `Whether you're staging panels for the next ten rooftops or keeping a drilling team's pumps and cables safe between jobs, we'll quote a container set up for your trade. Phone ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display}, or email ${COMPANY.email.sales}. Serving Kanakapura Road, Konanakunte, Thalaghattapura, Anjanapura and beyond.`,
     // Brief §5: the final CTA's "request a container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -18466,7 +18466,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Container enquiry for Kanakapura Road",
       intro:
-        "Choose a container and quantity, add your site pin or address along Kanakapura Road, and say whether you want to buy or rent. List the panels, pipes, pumps or tools you'll store and describe the approach road and placement area, and the team will reply with an itemised quotation.",
+        "Select the container and how many you need, then give the site pin or address on or near Kanakapura Road and tell us whether you're buying or renting. Mention the panels, pipes, pumps or tools you'll keep in it and how a truck reaches the plot; we'll reply with an itemised quotation.",
     },
     // The cargo category and the rental product are linked in the body, so they are not repeated here.
     relatedLinksHeading: "Related products",
@@ -18478,7 +18478,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
     ],
 
-    disclaimer: `Containers are supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch on Kanakapura Road. Units are offered subject to availability, and the quotation for each sets out its size, grade, condition and internal dimensions, any racks, shelving, padded bases, cable stands, vents, locks or lockbox, any rental terms, and the delivery, unloading and collection arrangements; no delivery date, container size or vehicle access is guaranteed before the site check. The five images are illustrative renders of one container, not photographs taken on Kanakapura Road or of a delivered or fitted unit, and none shows solar or borewell equipment. The solar installers and borewell contractors described are examples of uses, not clients or past projects, and the places named describe where enquiries are welcome, not confirmed delivery points; the metro and Harohalli are named only to describe the area. Guidance on storing solar panels, inverters, batteries, pumps, cables and fuel, and on site access and placement, is general information, not electrical, fire-safety, legal or engineering advice; follow the equipment manufacturers' instructions and the applicable regulations.`,
+    disclaimer: `Portable Office Cabin manufactures at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur in Tamil Nadu, and runs a Bengaluru office in Electronic City; it operates no yard, depot or branch on Kanakapura Road. Every container is subject to stock. Its quotation states the size, grade, condition and internal measurements, the racks, shelving, padded bases, cable stands, vents, locks or lockbox included, any hire terms, and who handles delivery, unloading and collection. Delivery dates, container sizes and vehicle access are confirmed only after the site check. All five pictures are renders of a single container rather than photographs from Kanakapura Road, and none shows solar or borewell equipment or a fitted-out unit. Solar installers and borewell contractors are mentioned as typical users, not as customers or completed jobs; the localities, the metro and Harohalli are named to describe the area, not to confirm delivery points. Notes on storing panels, inverters, batteries, pumps, cables and fuel, and on access and placement, are general guidance rather than electrical, fire-safety, legal or engineering advice; always follow the equipment makers' instructions and the regulations that apply.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
