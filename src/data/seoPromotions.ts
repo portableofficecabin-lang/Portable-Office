@@ -604,6 +604,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Containers along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
     // HSR Layout (owner-builder storage, house moves and community equipment; owner brief 2026-11-16), after Bannerghatta Road.
     { name: "Shipping Containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+    // Indiranagar (bar and brewery storage, boutique garment stores and sample archives; owner brief 2026-11-16), appended.
+    { name: "Shipping Containers in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
   ],
 };
 
