@@ -295,6 +295,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Shipping containers along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
       // HSR Layout storage page (owner brief, 2026-11-16), appended so the live links keep their positions.
       { name: "Shipping containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+      // Doddanekundi storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Shipping containers in Doddanekundi", href: "/cities-we-serve/shipping-container-doddanekundi" },
       // Indiranagar storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
       { name: "Shipping containers in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
     ],
