@@ -604,6 +604,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Containers along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
     // HSR Layout (owner-builder storage, house moves and community equipment; owner brief 2026-11-16), after Bannerghatta Road.
     { name: "Shipping Containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+    // Thanisandra Main Road (scaffolding-hire component stores and car and motorbike storage; owner brief
+    // 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
   ],
 };
 
