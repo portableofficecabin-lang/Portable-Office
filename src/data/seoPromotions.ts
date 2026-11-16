@@ -604,6 +604,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Containers along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
     // HSR Layout (owner-builder storage, house moves and community equipment; owner brief 2026-11-16), after Bannerghatta Road.
     { name: "Shipping Containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+    // KR Puram (rail and road consignment staging, fibre and telecom contractor stores; owner brief 2026-11-16),
+    // after HSR Layout, appended so the live links keep their positions.
+    { name: "Shipping Containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
   ],
 };
 
