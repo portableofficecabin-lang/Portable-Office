@@ -291,6 +291,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Shipping containers in Chamarajanagar", href: "/cities-we-serve/shipping-container-chamarajanagar" },
       // Koramangala storage page (owner brief, 2026-11-15), appended so the live links keep their positions.
       { name: "Shipping containers in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+      // HSR Layout storage page (owner brief, 2026-11-16), appended so the live links keep their positions.
+      { name: "Shipping containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
