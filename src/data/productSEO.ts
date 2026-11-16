@@ -240,10 +240,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Portable steel office container with ISMC/RHS frame, stackable G+1 & G+2 setups, PUF insulation & 10–25 year design life. Price incl. GST, buy online.",
     keywords: "portable steel office container, stackable container office, ISMC steel container office, G+1 container office, 10ft portable office container, RHS steel office container India",
   },
+  /* Used 20 ft Shipping Container, As-Is Grade (id 29). REFOCUSED 2026-11-15 (owner decision): the
+   * Koramangala query moved to /cities-we-serve/shipping-container-koramangala, so this entry names the
+   * unit, not the place. `title` mirrors productCommerce "29".feedTitle, which is what renders. */
   "29": {
-    title: "Shipping Container in Koramangala | Portable Office Cabin",
-    description: "Shipping containers in Koramangala for sale, rent or conversion — offices, cafés, homes & storage. 20 & 40 ft ISO containers. Get a free quote.",
-    keywords: "shipping container Koramangala, container office Koramangala, container café Bangalore, shipping container rental Koramangala, used container Bangalore, container home Koramangala, portable office Koramangala, container storage Bangalore",
+    title: "Used 20 ft Shipping Container As-Is Grade | Portable Office Cabin",
+    description: "Used 20 ft shipping container in as-is grade, sold online at one fixed price with GST included. Corten steel unit for storage and offices.",
+    keywords: "used 20 ft shipping container, as-is grade shipping container, used shipping container for sale, 20 ft container for storage, buy used container online",
   },
   "30": {
     title: "Shipping Container in Krishnagiri | Portable Office Cabin",
