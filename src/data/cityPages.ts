@@ -18882,6 +18882,399 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN DODDANEKUNDI — controlled parts stores for aerospace and
+   * precision-engineering suppliers near the HAL airport, and secure staging for retired IT equipment
+   * awaiting authorised disposal or recycling (east Bengaluru, on the Outer Ring Road).
+   *
+   * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, link plan and
+   * image plan used as given). Source copy: the owner's content reply of 2026-11-16 09:42Z ("Pasted
+   * text(20261116-094304).txt"), kept section by section with the brief's corrections: the container is
+   * not called aerospace-certified, FOD-free or humidity-controlled; vents and desiccants are not
+   * described as humidity control; CCTV is an enquiry item, not a supplied fitting; no data-destruction
+   * or recycling service is implied; no delivery hours, day counts or prices; "no hidden costs" and
+   * "leak-free" became itemised quotes and grade guidance. "Doddanakundi" and "Doddenakundi" each
+   * appear once (areas), and are not in the keywords or the structured data. The tagline, the size-table
+   * caption, the image captions, the link lead-ins, the enquiry-form intro and the disclaimer were
+   * written for their slots. The slug starts with "shipping-container-", so cityFamily() puts the page
+   * in the shipping-container family. Mapped onto the template in the brief's order:
+   *   • H1 and intro; the second intro paragraph is `introLink` ("shipping containers" → the cargo
+   *     category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Controlled Parts Stores for Aerospace & Precision Suppliers" → why (intro, seven bullets, the
+   *     quality-system and shelf-life note as whyOutro, the climate-control link as whyInlineLink); the
+   *     feature band (empty interior) follows it.
+   *   • IT asset staging, placement and delivery, sizes, grade, price, rental and "How It Works"
+   *     (ordered) → seven afterSolutions extra sections (the solutions slot is unused).
+   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
+   *     placement, so it renders after the areas and before the FAQs, as in the brief.
+   *   • FAQs (the source's six; the delivery answer gives no day count) → faqs; "Storage You Can Account
+   *     For" → CTA (phone, WhatsApp and e-mail from COMPANY) + enquiry form.
+   * Rental is in the catalogue (Shipping Container Rental: 10, 20 and 40 ft, monthly terms), so the
+   * rental section and the 10 ft row stay.
+   *
+   * LINKS (brief §5): "shipping containers" → the cargo category (intro); "climate-controlled container
+   * options" → the Vellore page, whose "Insulated and air-conditioned storage enquiries" section covers
+   * the fit-out (why section); "shipping containers in Bellandur" (its gate-and-lane delivery section)
+   * closes the placement section; "how to inspect a used shipping container" → Shipping Container in
+   * Athipattu, the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist
+   * (the Chennai product page has one sentence on inspection, so it is not a guide); the rental product;
+   * the CTA button "Request a Shipping Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the
+   * nearby block from repeating Bellandur or the category. Inbound: the Marathahalli ORR page's why
+   * section ("Doddanekundi"), the Karnataka shipping hub, the cargo category's location links and the
+   * Karnataka shipping nearby blocks.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Doddanekundi (all spellings), the
+   * Doddanekundi Industrial Area, Doddanekundi Extension, Karthik Nagar and Vibhutipura, for aerospace
+   * and precision parts control and IT asset disposal staging. Marathahalli ORR no longer lists
+   * Doddanekundi in its areas and links here instead; the Marathahalli office-cabin page keeps it (a
+   * different product). Electronics repair stock (not on the published Marathahalli page), industrial
+   * scrap and general e-waste segregation (Shoolagiri), large-project equipment preservation (hydel,
+   * Visakhapatnam), climate-controlled units (Vellore) and used-container inspection (Athipattu) are not
+   * targeted.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Doddanekundi shipping container
+   * city page/Storage Containers in Doddanekundi/cabin (1–5).webp", no EXIF / XMP / ICC) of one
+   * terracotta container with a gold-toned frame. Each is copied with its VP8 data byte-for-byte plus
+   * an XMP dc:title / dc:description that labels it a render. (1) three-quarter exterior = hero /
+   * og:image (the brief's hero exterior); (5) empty interior = feature band (the brief's container
+   * interior); (2) cargo doors with locking bars and a lockbox = IT asset staging section; (4) roof from
+   * above = placement section; (3) end wall = grade section. No image shows parts racks, a quarantine
+   * area, IT equipment or servers, so those image slots are not used and no alt text claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-doddanekundi",
+    city: "Doddanekundi",
+    listTitle: "Shipping & Storage Containers in Doddanekundi",
+    metaTitle: "Shipping Container in Doddanekundi | Aerospace & IT Storage",
+    metaDescription:
+      "Shipping and storage containers in Doddanekundi for precision parts, controlled quarantine stores and secure staging of retired laptops and servers. Get a quote.",
+    keywords:
+      "shipping container in Doddanekundi, cargo container Doddanekundi, storage container Doddanekundi Industrial Area, storage container Karthik Nagar, used shipping container Doddanekundi, shipping container price in Doddanekundi, storage container rent Doddanekundi",
+    // Approximate centre of the Doddanekundi locality, on the Outer Ring Road between Marathahalli and Mahadevapura.
+    geo: {
+      region: "IN-KA",
+      placename: "Doddanekundi, Bengaluru, Karnataka, India",
+      position: "12.9750;77.6970",
+      icbm: "12.9750, 77.6970",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and the cargo category are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-doddanekundi/shipping-container-doddanekundi-front.webp",
+      alt: "Exterior view of a terracotta steel shipping container with closed cargo doors, suitable for industrial storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a container for controlled industrial storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-doddanekundi/shipping-container-interior-doddanekundi.webp",
+      alt: "Empty interior of a steel shipping container with corrugated walls and a plain floor, before any racks or cages are fitted",
+      width: 1774,
+      height: 887,
+      caption:
+        "Illustrative empty interior. Zones, racks, cages and labels are fitted only where agreed and quoted for the selected unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Doddanekundi",
+    tagline:
+      "Controlled parts stores for aerospace and precision suppliers, and secure staging for retired IT equipment awaiting authorised disposal.",
+    intro: [
+      "Doddanekundi is a place where two very different kinds of precision meet. Close to the HAL airport, small engineering firms machine and finish parts for the aerospace and defence supply chain, work where a single misplaced bolt or missing certificate can cause serious trouble. A few minutes away on the Outer Ring Road, tech offices replace thousands of laptops and servers every year, and each of those devices holds data that has to be handled with care until it's safely disposed of.",
+    ],
+    introLink: {
+      before: "Both need storage that's controlled, traceable and secure. Portable Office Cabin supplies",
+      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " in Doddanekundi that can be configured for that kind of work: zoned, labelled parts stores and lockable staging areas for IT equipment. The fittings for each unit are agreed with you and listed in its quotation.",
+    },
+
+    whyHeading: "Controlled Parts Stores for Aerospace & Precision Suppliers",
+    whyIntro:
+      "Suppliers to the aerospace and defence sector work under strict quality systems. Their storage has to show at a glance what each part is, where it came from, whether it has passed inspection, and that nothing can get mixed up. When the shop floor runs out of space, a container can be fitted out as a controlled store like this:",
+    whyBullets: [
+      {
+        title: "Separate zones",
+        text: "for incoming parts awaiting inspection, inspected and accepted stock, and finished parts ready to dispatch.",
+      },
+      {
+        title: "A locked quarantine area",
+        text: "clearly marked, for non-conforming or suspect parts, so they can't be picked by mistake.",
+      },
+      {
+        title: "Traceability labels",
+        text: "on every bin and rack, showing the part number, the batch or serial number, and the inspection status.",
+      },
+      { title: "A clean, debris-free interior", text: "kept that way by a fixed cleaning routine, with nothing left loose on the floor." },
+      {
+        title: "Moisture and corrosion protection",
+        text: "vents, desiccants and sealed packaging help keep condensation off metal parts. They reduce moisture; they don't control humidity.",
+      },
+      { title: "Restricted access", text: "authorised staff only, with a sign-in log." },
+      {
+        title: "Inspection certificates and records",
+        text: "kept in the store only if your quality system allows documents to be held outside the main office.",
+      },
+    ],
+    whyOutro:
+      "Your customer's quality requirements and your own quality system decide how the store must be set up, so share them with us and we'll plan the fit-out to match. A standard shipping container is not aerospace-certified, FOD-free or humidity-controlled; any such capability depends on the fit-out specification agreed for your unit and on your own procedures. Shelf-life items such as some sealants, adhesives and coatings often need temperature-controlled storage, so don't keep them in a plain container.",
+    // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers the fit-out.
+    whyInlineLink: {
+      before:
+        "Where your quality plan sets humidity or temperature limits, ventilation and desiccants alone are not enough. For insulated and air-conditioned fit-outs specified against those limits, see our",
+      link: { label: "climate-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+      after: ".",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We supply shipping and storage containers across Doddanekundi (also spelt Doddanakundi or Doddenakundi), including the Doddanekundi Industrial Area, Doddanekundi Extension, Karthik Nagar, Vibhutipura, the HAL airport side and the Outer Ring Road stretch at Doddanekundi. Each site's access is checked before a delivery is confirmed.",
+
+    extraSections: [
+      {
+        heading: "Secure Staging for IT Asset Disposal",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-doddanekundi/shipping-container-cargo-doors-doddanekundi.webp",
+          alt: "Closed double cargo doors of a terracotta shipping container with four locking bars, cam handles and a central lockbox",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of the cargo doors and lockbox. Locks, seals and any internal cages are confirmed in the quotation for the selected unit.",
+        },
+        paragraphs: [
+          "Offices along the Outer Ring Road refresh their laptops, desktops, monitors and servers regularly. Old equipment doesn't disappear on its own: it waits to be collected by an authorised disposal or recycling partner. In the meantime, every device that holds data is a security risk if it goes missing.",
+          "A container can serve as a secure staging area while equipment waits for collection:",
+        ],
+        bullets: [
+          { title: "Lockable internal cages", text: "so batches stay separate by department or collection date." },
+          {
+            title: "An asset register",
+            text: "listing or scanning every device's asset tag or serial number as it goes in and as it leaves.",
+          },
+          { title: "Tamper-evident seals", text: "on cages or doors between checks." },
+          { title: "Access limited to named staff", text: "with a sign-in log." },
+          {
+            title: "CCTV",
+            text: "if your security policy requires cameras on the doors, say so at the enquiry stage; whether a mounting provision can be included is confirmed in the quotation.",
+          },
+          { title: "Dry shelving", text: "that keeps devices off the floor and away from damp." },
+          {
+            title: "A recorded handover",
+            text: "each batch is signed out against the register when the authorised collection partner takes it.",
+          },
+        ],
+        closing: [
+          "Handle data-bearing devices according to your organisation's security policy and the requirements that apply to you. Wipe drives, or remove them for secure destruction, before equipment leaves your custody, as that policy requires.",
+          "Hand regulated e-waste only to authorised recyclers, and keep a record of each handover.",
+          "Swollen, damaged or leaking batteries need specialist handling and must never go into ordinary mixed storage. Separate them and send them for disposal through authorised channels.",
+          "Supplying a container gives you the space and the fittings. It does not include certified data destruction, e-waste collection or recycling; those stay with your organisation and its authorised partners.",
+        ],
+      },
+      {
+        heading: "Placement & Delivery",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-doddanekundi/shipping-container-roof-overhead-doddanekundi.webp",
+          alt: "Top-down view of a terracotta shipping container roof on a paved concrete yard",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative overhead view. Plan a firm, level footprint with clearance for the cargo doors and for unloading.",
+        },
+        paragraphs: [
+          "Containers must sit on private land with the owner's permission: your unit's yard in the industrial area, an approved service area on a campus, or a leased plot, never the road or the footpath. Doddanekundi's roads are busy, so the delivery timing is planned after a route check.",
+          "Before dispatch, share the site pin and photos of the approach road, gate, turning space, overhead cables and placement area. The ground must be firm and level, with room for the vehicle to reach it and for the container to be lifted or unloaded safely. Any permission the landowner, campus management or another authority requires must be in place before delivery.",
+          "Near the HAL airport, sites can have height restrictions that affect cranes, and the rules are not the same for every site. Check what applies to yours and share it with us, and we'll plan the lift with suitable equipment.",
+        ],
+        // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers access checks.
+        inlineLinks: [
+          {
+            before: "Our page on",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " explains how access through gates and narrow lanes is checked before a lift.",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Approximate capacities. Dimensions vary slightly by manufacturer and, for the fabricated 10 ft size, by build; the quotation gives the internal dimensions of the actual unit.",
+          headers: ["Size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft", "~15 m³", "Small quarantine store or a limited IT asset batch"],
+            ["20 ft", "~33 m³", "Zoned precision parts storage and IT asset staging"],
+            ["40 ft", "~67 m³", "Larger supplier stores and IT equipment refresh projects, on sites with good access"],
+          ],
+        },
+      },
+      {
+        heading: "Choosing a Container Grade",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-doddanekundi/shipping-container-end-wall-doddanekundi.webp",
+          alt: "Corrugated steel end wall of a terracotta shipping container with corner castings, on a paved courtyard",
+          width: 1448,
+          height: 1086,
+          caption: "Illustrative render of the end wall. Before accepting a unit, check recent photos of its walls, roof, floor and door seals.",
+        },
+        paragraphs: [
+          "A one-trip container has carried a single load since it was built, so it is usually the cleanest and best-kept option. A cargo-worthy container is a used unit still sound enough to carry cargo by sea. A wind-and-watertight unit has left shipping service but is graded to keep out wind and rain, which suits general storage more than sensitive stock.",
+          "For aerospace parts and IT assets, choose a clean, dry one-trip container or a cargo-worthy unit in excellent condition. Damp and debris are the enemy: look for rust, flaking paint, old residues and signs of leaks, and check the floor and door seals before any stock goes in. The grade alone doesn't make a unit right for sensitive equipment; its actual condition and the fit-out do.",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "For a step-by-step checklist, see our guide on",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Doddanekundi",
+        placement: "afterSolutions",
+        paragraphs: ["The price of a container depends on:"],
+        bullets: [
+          { title: "Size", text: "10 ft, 20 ft or 40 ft." },
+          { title: "Grade and condition", text: "one-trip or cargo-worthy." },
+          { title: "Shelving and racks", text: "zoned racks, shelving and traceability labelling." },
+          { title: "Quarantine cages", text: "a locked quarantine area and lockable internal cages." },
+          { title: "Security accessories", text: "a lockbox, heavy-duty locks and tamper-evident seals." },
+          {
+            title: "Ventilation and environmental controls",
+            text: "vents and desiccants, or an insulated and air-conditioned fit-out where your limits call for one.",
+          },
+          { title: "Delivery and lifting", text: "the route, the site access and any height planning near the airport." },
+          { title: "Buy or rent", text: "a purchase price, or rental charges for the agreed term." },
+          {
+            title: "Market rates",
+            text: "container prices follow the global shipping market, so each quotation is valid for a limited time.",
+          },
+        ],
+        closing: ["Tell us what you'll store, your quality or security requirements and your site, and we'll send an itemised quote."],
+      },
+      {
+        heading: "Storage Container on Rent in Doddanekundi",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Running a one-off laptop refresh, or need a temporary quarantine store during an audit or expansion? Ask us about storage containers on rent in Doddanekundi. The rental term, the unit and its fittings, and the delivery and collection arrangements are set out in the quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "The sizes on hire and how the monthly terms work are on our page for",
+            link: { label: "shipping container rental sizes and terms", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { title: "Share your storage requirements", text: "and the quality or security specifications that apply." },
+          {
+            title: "Receive a container recommendation and a quotation",
+            text: "covering the zones, cages, labelling and any environmental control.",
+          },
+          { title: "Confirm placement and lifting", text: "including any height restrictions near the airport." },
+          { title: "Arrange delivery", text: "the transport team agrees the delivery window and the container's position with you." },
+          {
+            title: "Ask about further fit-out or collection",
+            text: "extra cages, layout changes or collection, where these are offered for your order.",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          {
+            title: "Quality-minded fit-outs",
+            text: "zones, quarantine cages and traceability labels planned around your quality system.",
+          },
+          { title: "Lockable staging for IT assets", text: "internal cages, asset registers, tamper-evident seals and access logs." },
+          {
+            title: "Moisture protection",
+            text: "vents, desiccants and clean storage, with insulated or air-conditioned fit-outs specified where your limits call for them.",
+          },
+          { title: "Airport-aware delivery planning", text: "lifts near HAL planned around the restrictions you share for your site." },
+          { title: "Grade guidance", text: "help choosing a clean, dry unit, with the actual unit's condition stated in the quotation." },
+          {
+            title: "Clear, itemised quotes",
+            text: "the unit, each fitting, delivery and lifting, and any rental charges shown as separate lines.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can an aerospace supplier use a shipping container as a parts store?",
+        answer:
+          "Yes, if it's fitted out to match your quality system: separate zones, a locked quarantine area, traceability labels, a clean interior, moisture protection and controlled access. The container itself isn't aerospace-certified, so your customer's requirements and your own procedures decide whether the set-up is acceptable, and where they set humidity limits you'll need an environmentally controlled fit-out.",
+      },
+      {
+        question: "Can sealants and adhesives be stored in a container?",
+        answer:
+          "Not in a plain container. Many shelf-life items need temperature-controlled storage, so follow the manufacturer's storage requirements and your quality system.",
+      },
+      {
+        question: "Is it safe to keep retired laptops in a container before disposal?",
+        answer:
+          "It can be, with lockable cages, an asset register, tamper-evident seals, limited access and a sign-in log. Handle data-bearing devices as your security policy requires, and hand equipment only to authorised recyclers. The container provides the space and fittings; it doesn't include data destruction or recycling.",
+      },
+      {
+        question: "What should we do with damaged laptop batteries?",
+        answer:
+          "Don't put them in ordinary mixed storage. Separate swollen, damaged or leaking batteries, get specialist advice on handling them, and send them for disposal through authorised channels.",
+      },
+      {
+        question: "Are there restrictions on crane lifts near the HAL airport?",
+        answer:
+          "There can be. Sites close to an airport may have height restrictions that affect cranes, and they vary from site to site. Check the rules for your site and share them with us, and we'll plan the lift with suitable equipment.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "There is no fixed lead time. It depends on what is in stock, the fit-out you need, and your site's access and lifting conditions; a plain unit from stock is usually quicker to arrange than one with cages, racks or environmental controls. Tell us your target date and the quotation will give the expected schedule.",
+      },
+    ],
+
+    ctaHeading: "Storage You Can Account For",
+    ctaText: `Whether you're keeping aerospace parts traceable and clean, or making sure every retired laptop reaches an authorised recycler without a single one going missing, we'll quote a container set up for control, not just space. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Doddanekundi, the Doddanekundi Industrial Area, Karthik Nagar and Vibhutipura.`,
+    // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Shipping Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Doddanekundi",
+      intro:
+        "Choose a container and quantity, add your Doddanekundi site address or pin, and say whether you want to buy or rent. Tell us what you'll store and any quality or data-security requirements that apply, and the team will reply with an itemised quotation.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch in Doddanekundi. Units are offered subject to availability, and the quotation for each sets out its size, grade, condition and internal dimensions, any racks, cages, labels, seals, locks, vents or environmental controls, any rental terms, and the delivery, lifting and collection arrangements; no delivery date or crane access is guaranteed. No container or fit-out described here is certified for aerospace, quality-system, environmental-control or data-security purposes, and supplying a container does not include data destruction, e-waste collection or recycling. The five images are illustrative renders of one container, not photographs taken in Doddanekundi or of a fitted or delivered unit. The suppliers and offices described are examples of uses, not clients or past projects, and the places named describe where enquiries are welcome, not confirmed delivery points; the HAL airport is named only to describe the location, and Portable Office Cabin is not affiliated with Hindustan Aeronautics Limited or any airport operator. Guidance on quality systems, storage conditions, data security, batteries, e-waste, lifting and placement is general information, not legal, safety, quality-assurance or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING CONTAINERS IN MARATHAHALLI (ORR) — commercial and infrastructure storage along the
    * Outer Ring Road: road and metro work zones, showroom overflow, business archives, sports turfs,
    * restaurants and event teams.
@@ -18930,6 +19323,11 @@ export const CITY_PAGES: CityPage[] = [
    * The hero is 600 px wide, narrower than the 672 px frame, so the template caps it at its own width
    * (the interior image's narrow rule).
    *
+   * Doddanekundi brief (2026-11-16): Doddanekundi left the areas list (aerospace parts stores and IT
+   * asset staging are the Doddanekundi page's intent) and is linked from the why section instead, with
+   * the anchor "Doddanekundi" (`whyInlineLink`); `nearbySkipsBodyLinks` keeps the nearby block from
+   * repeating it. The Marathahalli office-cabin page keeps Doddanekundi (a different product).
+   *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
    * ────────────────────────────────────────────────────────────────────────────────────── */
   {
@@ -18949,6 +19347,9 @@ export const CITY_PAGES: CityPage[] = [
     },
     motion: true,
     serviceJsonLd: { serviceType: "Shipping Container" },
+    // The Doddanekundi link sits in the why section (Doddanekundi brief, 2026-11-16), so the nearby block
+    // leaves it out; the block lists shipping pages only, so nothing else changes.
+    nearbySkipsBodyLinks: true,
 
     heroImage: {
       src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-exterior.webp",
@@ -19004,6 +19405,12 @@ export const CITY_PAGES: CityPage[] = [
         ["Event and exhibition teams", "Stands, display panels and staging equipment"],
       ],
     },
+    // Doddanekundi brief (2026-11-16): aerospace parts stores and IT asset staging are that page's intent.
+    whyInlineLink: {
+      before: "For aerospace and precision parts stores, or secure staging for retired laptops and servers near the HAL airport, see our page for",
+      link: { label: "Doddanekundi", href: "/cities-we-serve/shipping-container-doddanekundi" },
+      after: ".",
+    },
 
     solutionsHeading: "Storage for road and metro work zones",
     solutionsIntro:
@@ -19032,7 +19439,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas we serve",
     areasText:
-      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout, Doddanekundi and Kadubeesanahalli. We also consider sites along Varthur Road, Old Airport Road and around Mahadevapura. Delivery access is assessed for each location.",
+      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout and Kadubeesanahalli. We also consider sites along Varthur Road, Old Airport Road and around Mahadevapura. Delivery access is assessed for each location.",
     // Bellandur cross-link (agreed with the Bellandur page, added by #227 as the second to go live): residential storage is that page's intent.
     areasLinks: [{ label: "Storage containers for homes and societies in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" }],
 
