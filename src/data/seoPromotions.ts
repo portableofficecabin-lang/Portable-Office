@@ -607,6 +607,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Doddanekundi (aerospace and precision parts stores, IT asset disposal staging; owner brief
     // 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Doddanekundi", href: "/cities-we-serve/shipping-container-doddanekundi" },
+    // Yelahanka (air freight packing and export crating stores, equestrian tack rooms; owner brief
+    // 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in Yelahanka", href: "/cities-we-serve/shipping-container-yelahanka" },
   ],
 };
 
