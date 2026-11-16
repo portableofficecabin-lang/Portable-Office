@@ -114,6 +114,26 @@ export interface CityPageSection {
    * in Bellandur, whose "From enquiry to placement" steps come before its areas). Unset = <ul>, as before.
    */
   ordered?: boolean;
+  /**
+   * Optional H3 sub-sections rendered at the end of the section, after its inline links (first used by
+   * Shipping & Storage Containers in Indiranagar, whose boutique section closes with the brief's H3
+   * "Designer Sample Archives", and on Thanisandra Main Road, whose brief puts H3s under its scaffolding
+   * and vehicle-storage H2s). Each renders its heading as an H3, then its paragraphs, an optional bulleted
+   * or numbered list and optional closing paragraphs, with the section's classes and motion. Unset =
+   * nothing rendered, so every other page's HTML is unchanged.
+   */
+  subsections?: CityPageSubsection[];
+}
+
+/** An H3 sub-section inside an extra section (see CityPageSection.subsections). */
+export interface CityPageSubsection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: CityPageListItem[];
+  /** Optional: render the bullets as a numbered list (<ol>). Unset = <ul>. */
+  ordered?: boolean;
+  /** Optional paragraphs after the bullets. Unset = nothing rendered. */
+  closing?: string[];
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -31564,6 +31584,408 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no yard, depot or office in Vellore, Katpadi, Gudiyatham or Pernambut. Each unit's availability, size, condition, fit-out, dispatch point, delivery, unloading and any collection are set out in its quotation, and delivery dates are not guaranteed. Insulation, air conditioning, humidity control and monitoring are discussed against the stated requirement; no temperature, humidity or cooling performance is guaranteed unless the approved specification states it, and no container is offered as refrigerated storage or as storage for medicines, biomedical waste or other regulated materials. Every image here is an illustrative render of a typical dry container; none shows a unit delivered to, or standing at, a site in the Vellore area. Healthcare campuses, colleges, hostels, lodges and footwear businesses are described generically: the uses and localities mentioned are examples of enquiries, not customers, finished projects or confirmed delivery areas, and Portable Office Cabin is not affiliated with any hospital, college, university or business in the Vellore area. The storage notes on this page are general guidance, not engineering, clinical, regulatory or legal advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN RAMAMURTHY NAGAR — stores for sign and flex printers (media rolls,
+   * finished signboards, aluminium frames, ACP sheets, installation kit) and depots for home healthcare
+   * equipment rental (hospital beds, wheelchairs, walkers, commode chairs, air mattresses) with clean and
+   * returned stock kept apart (east Bengaluru).
+   *
+   * Owner brief of 2026-11-16 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers
+   * in Ramamurthy Nagar": meta title, meta description, H1, keywords, local areas, links and image plan
+   * used as given; the brief's root slug became /cities-we-serve/<slug>, the convention of every location
+   * page). Source copy: the owner's content reply of 2026-11-16 13:35Z ("Pasted text
+   * (20261116-133547).txt"), kept section by section with the brief's corrections: ventilation is not
+   * presented as keeping vinyl at a safe temperature; an ordinary container is not offered as
+   * flammable-liquid, oxygen-cylinder, climate-controlled or medically certified storage; a partition is
+   * not presented as adequate infection-control separation on its own; no promise that a 20 ft unit fits
+   * a given site; no delivery day counts ([X] / [X–Y] removed), hours or price. "RM Nagar" appears in the
+   * meta keywords, in one FAQ and in the brief's "Akshaya Nagar (RM Nagar)" area name; no separate page
+   * targets it. Mapped onto the template in the brief's order:
+   *   • H1 and intro; the second intro paragraph is `introLink` ("shipping containers" → the cargo
+   *     category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Storage for Signage & Flex Printing Businesses" → an afterIntro extra section (paragraph and
+   *     overview list) whose three H3s are `subsections`; the feature band (interior render) follows it.
+   *   • "Depots for Home Healthcare Equipment Rental" → solutions: its four H3s are the numbered solutions
+   *     items (the sensitive-device item carries the Vellore link); general note as solutionsOutro.
+   *   • Placement and delivery, sizes, grade, price, rental and "How It Works" (ordered) → six
+   *     afterSolutions extra sections.
+   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
+   *     placement, so it renders after the areas and before the FAQs, as in the brief.
+   *   • The six FAQs (the delivery answer gives no time) → faqs; "Storage for the Signs Above Shops and
+   *     the Care Inside Homes" → CTA (phone, WhatsApp and e-mail from COMPANY) + enquiry form.
+   * Rental is in the catalogue (Shipping Container Rental: 10, 20 and 40 ft, monthly terms), so the
+   * rental section stays. The 10 ft row stays too: the cargo catalogue lists a 10 ft fabricated size.
+   *
+   * LINKS (brief §6): "shipping containers" → the cargo category (intro); "Insulated and air-conditioned
+   * container options" → the Vellore page's insulated / AC fit-out section (the brief's
+   * "climate-controlled" anchor is softened: that page quotes fit-outs against a stated requirement and
+   * guarantees no climate performance); "shipping containers in Bellandur" (its gate-and-lane delivery
+   * section) closes the delivery section; "how to inspect a used shipping container" →
+   * /products/cargo-storage-containers ("Key Inspection Points"): no Chennai page has an inspection
+   * checklist, and this is the target the owner chose for Coimbatore and Uttara Kannada and the hydel
+   * page use (one anchor, one target); "shipping container rental" → the rental product; the CTA button
+   * "Request a Shipping Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block
+   * from repeating them. Inbound: the Karnataka shipping hub, the cargo category's location links and the
+   * Karnataka shipping nearby blocks; the KR Puram page's link (anchor "Ramamurthy Nagar") is added
+   * once KR Puram (#260) is on main.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Ramamurthy Nagar, RM Nagar, Ramamurthy
+   * Nagar Main Road, Hoysala Nagar, Akshaya Nagar (RM Nagar), Kowdenahalli and Vijinapura, for signage
+   * and flex printing stock and for home healthcare equipment rental depots. Not targeted here: KR Puram,
+   * Tin Factory, TC Palya, Battarahalli and Doorvaninagar (KR Puram page); Horamavu and Kalkere (Horamavu
+   * page); furniture and appliance rental mini-hubs (Brookefield); healthcare campus storage (Vellore).
+   *
+   * Images: four owner-dropped lossy VP8 webp renders ("public/images/Storage Containers in Ramamurthy
+   * Nagar city page/Storage Containers in Ramamurthy Nagar/cabin (1–4).webp", no EXIF / XMP / ICC) of
+   * one charcoal-grey converted container. Each is copied with its VP8 data byte-for-byte plus an XMP
+   * dc:title / dc:description that labels it a render. (2) three-quarter exterior = hero / og:image;
+   * (3) glazed side with the empty interior = feature band (captioned: glazing, lining, lights and the
+   * air conditioner are not part of a plain storage unit); (1) roof from above = delivery section;
+   * (4) long side wall = sizes section. No image shows flex rolls, signboards or healthcare equipment, so
+   * the brief's roll, signboard, healthcare and returned-equipment image slots are not used and no alt
+   * text claims those items.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-ramamurthy-nagar",
+    city: "Ramamurthy Nagar",
+    listTitle: "Shipping & Storage Containers in Ramamurthy Nagar",
+    metaTitle: "Shipping Container in Ramamurthy Nagar | Signage & Medical Storage",
+    metaDescription:
+      "Shipping and storage containers in Ramamurthy Nagar for flex printing materials, signboards and home healthcare equipment rental depots. Request a quote.",
+    keywords:
+      "shipping container in Ramamurthy Nagar, cargo container Ramamurthy Nagar, storage container Ramamurthy Nagar, storage container RM Nagar, storage container Ramamurthy Nagar Main Road, storage container Hoysala Nagar, storage container Kowdenahalli, storage container Vijinapura, used shipping container Ramamurthy Nagar, shipping container price in Ramamurthy Nagar, storage container for rent in Ramamurthy Nagar",
+    // Approximate: Ramamurthy Nagar Main Road, the centre of the neighbourhood.
+    geo: {
+      region: "IN-KA",
+      placename: "Ramamurthy Nagar, Bengaluru, Karnataka, India",
+      position: "13.0150;77.6770",
+      icbm: "13.0150, 77.6770",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur, Vellore, the cargo category, the inspection guide and the rental product are linked in the body.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-ramamurthy-nagar/shipping-container-ramamurthy-nagar-front.webp",
+      alt: "Exterior view of a charcoal-grey steel shipping container with a glazed sliding side panel and closed cargo doors with locking bars",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render, not a photograph taken in Ramamurthy Nagar or of a delivered unit.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-ramamurthy-nagar/shipping-container-interior-ramamurthy-nagar.webp",
+      alt: "Interior of a shipping container seen through its glazed side: an empty space with white lined walls, a wooden floor, ceiling lights and a wall-mounted air conditioner",
+      width: 1672,
+      height: 941,
+      caption:
+        "Illustrative render of a converted unit. A plain storage container has steel walls; glazing, lining, lights, racks and air conditioning are fitted only when your quotation includes them.",
+    },
+
+    h1: "Shipping & Storage Containers in Ramamurthy Nagar",
+    tagline:
+      "Organised stores for sign and flex printers, and well-run depots for home healthcare equipment rental, in Ramamurthy Nagar.",
+    intro: [
+      "Ramamurthy Nagar is a busy, lived-in part of east Bengaluru, with homes, small workshops and family-run businesses along its main road and side lanes. Two of its trades are ones the whole city relies on without much thought: the sign and flex printers behind every shop board, banner and hoarding, and the rental businesses that deliver hospital beds and wheelchairs to families caring for someone at home.",
+    ],
+    introLink: {
+      before:
+        "Both work with stock that is bulky, easily damaged and needs careful handling. Portable Office Cabin supplies",
+      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " in Ramamurthy Nagar that can give these businesses a clean, organised and lockable base. Tell us what you need to keep and where the unit would stand, and we'll suggest a size and an inside layout.",
+    },
+
+    solutionsHeading: "Depots for Home Healthcare Equipment Rental",
+    solutionsIntro:
+      "More families now look after elderly relatives or recovering patients at home, and they often rent what they need: hospital beds, wheelchairs, walkers, commode chairs, air mattresses and similar equipment. The businesses that supply them need a local base where every item is counted, inspected and made ready for dispatch. A container on land you're permitted to use can serve as that depot, provided clean stock and returned stock are kept apart:",
+    solutions: [
+      {
+        title: "Clean Zone: Equipment Ready for Rental",
+        text: "Only equipment that has been cleaned and disinfected according to its manufacturer's instructions belongs here, covered and tagged to show it is ready to go. Beds are folded or dismantled as their design allows, with rails, cranks and detachable parts kept together and labelled. Wheelchairs and walkers stand with their brakes on, or strapped in place, so nothing rolls or tips over, and each item is entered in the inventory record before it leaves for a home.",
+      },
+      {
+        title: "Returned Zone: Equipment Awaiting Cleaning",
+        text: "Anything coming back from a home goes to a separate holding area, clearly marked as used and never mixed with clean stock. Nothing moves to the clean zone until it has been inspected, cleaned and disinfected. A simple partition inside one container does not by itself give adequate infection-control separation: work out the cleaning workflow, ventilation, hygiene requirements, how soiled equipment will be handled and which medical-device rules apply to your business. If safe separation can't be achieved within one container, keep returned stock in a physically separate store.",
+      },
+      {
+        title: "Equipment Cleaning, Inspection and Inventory",
+        text: "Clean and disinfect each item with the methods its manufacturer approves, in a suitable area with proper drainage, ideally outside the container, and bring it inside only once it is completely dry. Test motorised beds and air mattress pumps before they go out again, and store any device with batteries exactly as its manufacturer specifies. Tag every item and keep rental and return registers showing when it was last cleaned, who rented it and when it came back. Keep consumables such as covers and mattress protectors sealed, with their dates visible.",
+      },
+      {
+        title: "Oxygen Cylinder and Sensitive Device Precautions",
+        text: "Oxygen cylinders are pressurised and need compliant, purpose-suited storage of their own, so don't keep them in an ordinary general-purpose container. Oxygen concentrators and other sensitive devices must be stored within the conditions their manufacturers specify, with verified environmental controls where those are required. A standard container is neither climate-controlled nor certified for medical storage, so discuss insulation and cooling before such devices go inside.",
+        // Brief §6: the Vellore page's insulated and air-conditioned fit-out section (anchor softened, see the header).
+        link: { label: "Insulated and air-conditioned container options", href: "/cities-we-serve/shipping-container-vellore" },
+      },
+    ],
+    solutionsOutro:
+      "This is general storage guidance. Follow each manufacturer's instructions for every device, and any hygiene, medical-device or local rules that apply to your rental business.",
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Containers are supplied throughout Ramamurthy Nagar, including Ramamurthy Nagar Main Road, Hoysala Nagar, Akshaya Nagar (RM Nagar), Kowdenahalli and Vijinapura. Every delivery is confirmed once we have checked how the site can be reached.",
+
+    extraSections: [
+      {
+        heading: "Storage for Signage & Flex Printing Businesses",
+        placement: "afterIntro",
+        paragraphs: [
+          "Sign and flex printers work with large rolls of media, frames, boards and finished signs waiting to be installed. Workshops fill up quickly, and stock left in the open gathers dust, gets scratched or suffers in the heat. A container lets every kind of stock have its own place:",
+        ],
+        bullets: [
+          { title: "Flex and vinyl rolls", text: "on clean racks, still in their wrapping, never stacked loose on the floor." },
+          { title: "Finished signboards", text: "standing upright with padded separators, each labelled with the customer's name and installation date." },
+          { title: "Aluminium frames and ACP sheets", text: "on racks sorted by size and length, so the right section is quick to find." },
+          { title: "Ladders and installation equipment", text: "harnesses, tool bags and fixings kept together on one wall, ready for the next site." },
+          { title: "Tools", text: "on a tool board, so anything missing is noticed before a crew leaves." },
+          { title: "Job tracking register", text: "a board or book showing which signs are ready, which are waiting and where each one is going." },
+        ],
+        subsections: [
+          {
+            heading: "Flex and Vinyl Roll Storage",
+            paragraphs: [
+              "Store rolls horizontally on racks, or in whatever position the media manufacturer recommends, so they don't flatten, crease or pick up pressure marks. Leave each roll in its original protective wrapping until it goes on the printer, and keep the racks clean so dust and grit never reach the print surface.",
+            ],
+            bullets: [
+              { title: "Heat", text: "high temperatures can soften vinyl and affect its adhesive, so plan for heat before anything else." },
+              { title: "Shading", text: "a shaded spot, a roof cover or a light-coloured exterior stops the steel heating up as much in direct sun." },
+              {
+                title: "Ventilation",
+                text: "vents keep air moving and limit condensation, but on their own they cannot hold the inside at a safe temperature on a hot day.",
+              },
+              { title: "Moisture", text: "keep rolls off the floor and away from the doors, where rain can blow in." },
+            ],
+            closing: [
+              "Where a material's storage temperature or humidity limits are tight, ask about insulation or an air-conditioned fit-out, and check the manufacturer's storage guidance before you load premium media.",
+            ],
+          },
+          {
+            heading: "Finished Signboards and Installation Equipment",
+            paragraphs: [
+              "Finished boards are usually safest standing upright in padded slots, with edge protectors on the corners and printed or acrylic faces kept apart so they don't rub. Label each board with the customer and the installation date, and arrange the slots in the order the jobs will go out.",
+            ],
+            bullets: [
+              { title: "Aluminium sections", text: "horizontal racks with supports close enough together that long lengths don't sag." },
+              { title: "Ladders", text: "secured on wall brackets or a ladder rack, never leaning loose against stock." },
+              { title: "Tool boards", text: "a hook or outline for every drill, cutter and riveter, so a glance shows what is out on site." },
+              { title: "Installation schedule", text: "pinned by the door with the week's jobs, so the right boards and fixings leave together." },
+            ],
+          },
+          {
+            heading: "Printing Inks and Solvent Safety",
+            paragraphs: [
+              "Printing inks, cleaning chemicals and solvents must be stored exactly as their safety data sheets and any applicable requirements say, and many solvent-based products are flammable. An ordinary shipping container is not approved flammable-liquid storage, so keep these products in separate storage that meets those requirements, away from the rolls and boards.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Placement & Delivery in Ramamurthy Nagar",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-ramamurthy-nagar/shipping-container-roof-overhead-ramamurthy-nagar.webp",
+          alt: "Top-down view of a charcoal-grey shipping container roof on a paved yard, with the cargo-door hinges at one end and a glazed panel along one long side",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative view from above. Leave clear space beyond the footprint for the doors to open and for loading.",
+        },
+        paragraphs: [
+          "The container has to stand on private land you are authorised to use, such as a workshop yard, a leased plot or a family property, with the owner's permission. It can't be placed on the road or the footpath.",
+          "Many of Ramamurthy Nagar's residential lanes are narrow and busy, so access is checked before anything is sent. Share a location pin and photos of the approach, the gate, any tight corners, overhead wires or trees, and the spot you have in mind; the ground there should be level and firm, with suitable supports under the corners. From these details the transport team chooses the vehicle and a safe way to lift and unload the unit, and plans the delivery for a time when traffic allows. A 20 ft container suits many sites here, but whether one fits yours is confirmed only after the access has been checked.",
+        ],
+        // Brief §6: Bellandur's "Planning delivery through a society gate or narrow lane" covers lifting access.
+        inlineLinks: [
+          {
+            before: "Gate widths, tight turns and lifting a unit over a boundary wall are covered in the delivery notes for",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-ramamurthy-nagar/shipping-container-side-wall-ramamurthy-nagar.webp",
+          alt: "Corrugated long side wall of a charcoal-grey shipping container with corner castings and forklift pockets, standing on a concrete yard",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative side view. The inside measurements of the unit offered are listed in your quotation.",
+        },
+        table: {
+          caption:
+            "Capacities are rounded. Exact dimensions vary by manufacturer, the 10 ft size is a fabricated unit rather than a standard sea-freight size, and your quotation confirms which sizes are available.",
+          headers: ["Container size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft", "~15 m³", "A small printer's roll store or a compact equipment depot"],
+            ["20 ft", "~33 m³", "Signage materials and finished boards, or a healthcare rental depot with properly separated zones"],
+            ["40 ft", "~67 m³", "A larger printing inventory with big boards and frames, where site access permits"],
+          ],
+        },
+      },
+      {
+        heading: "Choosing the Right Container Grade",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Three grades are common. One-trip units have crossed the sea once and look almost new. Cargo-worthy units are older but still fit to carry freight. Wind-and-watertight units have retired from shipping and are sold on the promise that they keep the weather out.",
+          "Printing media and healthcare equipment both need a clean, dry interior, so look closely at the floor and walls, the door seals and how well the doors close and lock. Ask what ventilation the unit has and how moisture will be kept down, and check the locking arrangement and lockbox. Inspect the unit, or recent dated photos of it, before you agree to it.",
+        ],
+        // Brief §6 inspection link: /products/cargo-storage-containers ("Key Inspection Points"); see the header.
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Read our checklist on",
+            link: { label: "how to inspect a used shipping container", href: "/products/cargo-storage-containers" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Ramamurthy Nagar",
+        placement: "afterSolutions",
+        paragraphs: ["The price of a container here depends on these choices:"],
+        bullets: [
+          { title: "Size", text: "a 10, 20 or 40 ft unit." },
+          { title: "Grade", text: "one-trip, cargo-worthy or wind-and-watertight, and the condition of the actual unit." },
+          { title: "Roll racks and board slots", text: "sized to your media widths and board dimensions." },
+          {
+            title: "Partitions or separate storage zones",
+            text: "to keep clean and returned equipment apart, or a second unit where one container can't separate them safely.",
+          },
+          { title: "Shelving and lighting", text: "shelves for accessories and consumables, and lights where specified." },
+          {
+            title: "Ventilation, shading or climate control",
+            text: "vents, a shade cover, insulation or an air-conditioned fit-out, depending on what you store.",
+          },
+          { title: "Security", text: "a lockbox and heavy-duty locks." },
+          { title: "Delivery and unloading", text: "the distance, the approach to your site and the lifting method." },
+          { title: "Purchase or rental", text: "an outright price or monthly hire charges." },
+        ],
+        closing: [
+          "Container prices track the international freight market, so your quotation says how long its figure stays valid. Send a list of what will go inside and the site location, and you'll get an itemised quote.",
+        ],
+      },
+      {
+        heading: "Storage Container on Rent in Ramamurthy Nagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Gearing up for an election or festival signage season, or growing your rental fleet ahead of demand? Ask us about storage containers on rent in Ramamurthy Nagar. Each hire quotation lists the rental term, the specific unit with its condition, and the drop-off and pick-up arrangements.",
+        ],
+        inlineLinks: [
+          {
+            before: "Rental sizes and monthly terms are on our",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          {
+            title: "Share your storage requirements and location",
+            text: "what you'll keep, roughly how much, and where on the property the unit would stand.",
+          },
+          { title: "Receive a recommendation and quotation", text: "covering the size, grade, racks, zones, ventilation and delivery." },
+          { title: "Confirm landowner permission and site suitability", text: "written consent from the owner, and a level spot a truck can reach." },
+          {
+            title: "Arrange delivery after route and access verification",
+            text: "the lane, the gate and the unloading spot are checked before a date is agreed.",
+          },
+          {
+            title: "Request additional services or collection if offered",
+            text: "extra racks, a second unit or collection at the end of a hire, where your order includes them.",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          { title: "Organised printing-material storage", text: "racks for rolls, slots for boards and a place for every frame and tool." },
+          { title: "Protection for finished signboards", text: "padded, upright storage labelled by job." },
+          { title: "Practical rack and shelving options", text: "chosen around your media widths, board sizes and equipment." },
+          {
+            title: "Clean and returned equipment kept apart",
+            text: "zones planned around your cleaning workflow, or a second store where one container isn't enough.",
+          },
+          {
+            title: "Heat-aware storage guidance",
+            text: "shading, ventilation and, where needed, insulation or cooling discussed before you buy.",
+          },
+          { title: "Clear advice on what doesn't belong", text: "flammable inks and solvents, and oxygen cylinders, need their own approved storage." },
+          { title: "Suitable container sizes", text: "10, 20 or 40 ft, chosen for the volume you hold and the space you have." },
+          { title: "Delivery planning", text: "lanes, gates and the unloading spot checked before a truck is sent." },
+          { title: "Itemised quotations", text: "every cost on its own line." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How should flex and vinyl rolls be stored in a container?",
+        answer:
+          "Horizontally on clean racks, or as the manufacturer recommends, kept in their wrapping and off the floor. Shade the container and give it ventilation, but don't rely on vents alone to keep heat-sensitive vinyl within its temperature limits; ask about insulation or cooling if those limits are tight.",
+      },
+      {
+        question: "Can printing inks and solvents be stored in the container?",
+        answer:
+          "Only as their safety data sheets and the applicable requirements allow. Many solvent-based products are flammable, and an ordinary container is not approved flammable-liquid storage, so keep them in separate storage that meets those requirements.",
+      },
+      {
+        question: "Can a medical equipment rental business use a container as a depot?",
+        answer:
+          "It can be used to store rental stock: cleaned and disinfected equipment in a clean zone, returned items held apart until they have been inspected and cleaned, and a register for every item. A partition alone may not give adequate separation, so plan the cleaning workflow and hygiene requirements, check the medical-device rules that apply, and use separate stores if needed.",
+      },
+      {
+        question: "Can oxygen cylinders be stored in the container?",
+        answer:
+          "No. Oxygen cylinders are pressurised and need compliant storage of their own. Oxygen concentrators and other sensitive devices should be kept within their manufacturers' storage conditions, which may call for verified environmental controls that a standard container does not provide.",
+      },
+      {
+        question: "What's the difference between RM Nagar and Ramamurthy Nagar?",
+        answer:
+          "None. They are the same neighbourhood; the shorter name is simply what many people use in conversation and on addresses.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "We can't promise a delivery time before checking three things: which suitable units are available, what racks or fit-out you need, and how a truck can reach your site. Share your target date with the enquiry, and the quotation will set out a realistic schedule once those checks are done.",
+      },
+    ],
+
+    ctaHeading: "Storage for the Signs Above Shops and the Care Inside Homes",
+    ctaText: `Whether you're printing the next batch of shop boards or delivering a hospital bed to a family who needs it tomorrow, we'll quote a container that keeps your stock clean, organised and ready. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Ramamurthy Nagar, Hoysala Nagar, Akshaya Nagar, Kowdenahalli and Vijinapura.`,
+    // Brief §6: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Shipping Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Ramamurthy Nagar",
+      intro:
+        "Pick a container, say how many you need and give the Ramamurthy Nagar-area address, and tell us if you'd prefer to hire. Mention what will go inside (rolls, boards, frames or rental equipment) and any limits on access to the site, and we'll reply with a quotation.",
+    },
+    // The cargo category, the inspection guide and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it has no yard, depot or branch in Ramamurthy Nagar. Each container is offered subject to availability, and its size, grade, condition, inside dimensions, fittings (racks, slots, partitions, shelves, lights, vents, locks), any hire terms and its delivery, unloading and collection are set out only in its written quotation; no delivery date or vehicle access is promised. The four images are illustrative renders of one converted container, not photographs taken in Ramamurthy Nagar or of a delivered or fitted unit, and the glazing, lining, lights and air conditioner they show are not part of a plain storage container. Sign printers and healthcare equipment rental businesses are described as typical users, not as clients or past projects, and the neighbourhoods named indicate where we welcome enquiries, not confirmed delivery points. A standard container is not climate-controlled, is not approved storage for flammable liquids or oxygen cylinders, and is not certified for medical use. Notes on media, inks and solvents, cleaning and disinfection, infection control, batteries, oxygen, site access and placement are general information only; they are not legal, regulatory, medical, safety or engineering advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
