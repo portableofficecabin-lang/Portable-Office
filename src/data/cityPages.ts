@@ -34880,7 +34880,7 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Exterior view of an olive steel shipping container with closed cargo doors and locking bars beside planted beds on a paved yard",
       width: 1200,
       height: 896,
-      caption: "Illustrative render of a storage container exterior.",
+      caption: "Render of a container exterior, shown for illustration only.",
     },
     featureImage: {
       src: "/images/cities/shipping-container-indiranagar/storage-container-empty-interior-indiranagar.webp",
@@ -34888,7 +34888,7 @@ export const CITY_PAGES: CityPage[] = [
       width: 1774,
       height: 887,
       caption:
-        "Illustrative empty interior. Keg racks, shelving, hanging rails and lighting are fitted only where agreed and quoted for the selected unit.",
+        "An empty interior, for illustration. Keg racks, shelves, garment rails and lights go in only if they're part of your agreed quotation.",
     },
 
     h1: "Shipping & Storage Containers in Indiranagar",
@@ -34902,7 +34902,7 @@ export const CITY_PAGES: CityPage[] = [
         "A shipping container on private land nearby can take the pressure off. Portable Office Cabin supplies",
       link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
       after:
-        " in Indiranagar that can be set up for the bar trade and the fashion trade. Tell us what you'll store and where the container can stand, and we'll suggest a size and layout.",
+        " in Indiranagar that can be set up for the bar trade and the fashion trade. Let us know what needs storing and where the unit could go, and we'll propose a size and fit-out.",
     },
 
     whyHeading: "Storage for Bars, Pubs & Breweries",
@@ -34921,7 +34921,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas We Serve",
     areasText:
-      "We supply shipping and storage containers across Indiranagar (also written Indira Nagar), including 100 Feet Road, 12th Main, CMH Road, HAL 2nd Stage and HAL 3rd Stage. We also welcome enquiries from Defence Colony, Domlur, Jeevan Bima Nagar, Halasuru and Old Airport Road. Delivery to each site is confirmed once its access has been checked.",
+      "We supply shipping and storage containers across Indiranagar (also written Indira Nagar), including 100 Feet Road, 12th Main, CMH Road, HAL 2nd Stage and HAL 3rd Stage. We also welcome enquiries from Defence Colony, Domlur, Jeevan Bima Nagar, Halasuru and Old Airport Road. We confirm delivery after checking access to the specific site.",
 
     extraSections: [
       {
@@ -34975,11 +34975,11 @@ export const CITY_PAGES: CityPage[] = [
           alt: "Top-down view of an olive shipping container roof on a paved surface",
           width: 1774,
           height: 887,
-          caption: "Illustrative overhead view. Plan a firm, level area with clearance around the footprint for the cargo doors and unloading.",
+          caption: "Top-down render. Keep a clear margin around the unit for opening the doors and for unloading.",
         },
         paragraphs: [
           "Indiranagar is short on land. Containers must sit on private land with the owner's permission, such as a building's service area, a back lot or a vacant plot nearby, never on roads or footpaths. Many businesses keep their container a short drive away on cheaper land.",
-          "Before dispatch, share the site pin and photos of the approach, gate, bends, trees and overhead cables, and of the placement area. The transport team surveys the route and the unloading space, then confirms the delivery vehicle, the unloading method and a delivery window, at quieter hours where the route allows; no size or access is promised before that check.",
+          "Send the site pin and photos of the lane, the gate, corners, trees, overhead wires and the spot you have in mind. The transport team then surveys the route and the unloading space and confirms the vehicle, the unloading method and a delivery window, at quieter hours where the route allows. Size and access are only confirmed after that survey.",
         ],
         inlineLinks: [
           {
@@ -34997,11 +34997,11 @@ export const CITY_PAGES: CityPage[] = [
           alt: "Corrugated end wall of an olive shipping container with corner castings and forklift pockets on a paved yard",
           width: 1448,
           height: 1086,
-          caption: "Illustrative end-wall view. Ask for recent photographs of the actual unit's walls, roof, floor and doors.",
+          caption: "End-wall render. Before you accept a unit, ask for up-to-date photos of its walls, roof, floor and doors.",
         },
         table: {
           caption:
-            "Approximate internal volumes. Exact dimensions vary slightly by manufacturer, and the 10 ft size is a fabricated unit whose dimensions depend on the build; the quotation states those of the actual unit.",
+            "Volumes are approximate and vary slightly by manufacturer. A 10 ft unit is fabricated, so its exact size depends on the build; your quotation confirms the measurements.",
           headers: ["Size", "Approx. capacity", "Typical use in Indiranagar"],
           rows: [
             ["10 ft", "~15 m³", "A bar's empty kegs and glassware, or a small boutique's off-season stock"],
@@ -35012,9 +35012,9 @@ export const CITY_PAGES: CityPage[] = [
         // Brief §9 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
         inlineLinks: [
           {
-            before: "For a clean, dry used unit, start with our guide on",
+            before: "Buying a used unit for garments? Read",
             link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
-            after: ".",
+            after: " before you commit.",
           },
         ],
       },
@@ -35026,11 +35026,11 @@ export const CITY_PAGES: CityPage[] = [
           alt: "Closed double cargo doors of an olive shipping container with four vertical locking bars, handles and a lockbox at the centre",
           width: 1448,
           height: 1086,
-          caption: "Illustrative render of the locking bars and lockbox. The locks supplied are confirmed in the quotation for the selected unit.",
+          caption: "Doors, locking bars and lockbox (render). The quotation names the locks included with your unit.",
         },
-        paragraphs: ["The price of your container depends on:"],
+        paragraphs: ["Your quotation is built from:"],
         bullets: [
-          { title: "Size", text: "10 ft, 20 ft or 40 ft." },
+          { title: "Size", text: "10, 20 or 40 ft." },
           { title: "Grade", text: "choose a clean, dry container for garments." },
           { title: "Interior condition", text: "the floor, walls and seals of the actual unit." },
           { title: "Fit-out", text: "keg racks, hanging rails and shelving." },
@@ -35041,10 +35041,10 @@ export const CITY_PAGES: CityPage[] = [
           },
           { title: "Security", text: "a lockbox and heavy-duty locks." },
           { title: "Delivery and site access", text: "the route, the vehicle and the unloading method." },
-          { title: "Purchase or rental", text: "a purchase price, or rental charges for the agreed term." },
+          { title: "Buy or hire", text: "an outright price, or hire charges over the agreed period." },
           {
-            title: "Market rates",
-            text: "container prices track the global shipping market, so ask how long your quotation stays valid.",
+            title: "Market movement",
+            text: "prices follow international shipping markets, so check the quotation's validity date.",
           },
         ],
         closing: ["Tell us what you'll store and where, and we'll send an itemised quotation."],
@@ -35053,7 +35053,7 @@ export const CITY_PAGES: CityPage[] = [
         heading: "Storage Container on Rent in Indiranagar",
         placement: "afterSolutions",
         paragraphs: [
-          "Need extra space for the festive rush or between collections? Ask us about storage containers on rent in Indiranagar. The rental term, the unit's size and condition, and the delivery and collection arrangements are set out in the quotation.",
+          "Need extra space for the festive rush or between collections? Ask us about storage containers on rent in Indiranagar. Hire length, the unit's size and condition, and delivery and pick-up are all spelled out in the quotation.",
         ],
         inlineLinks: [
           {
@@ -35093,7 +35093,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Space Behind the Scenes",
-    ctaText: `Whether you're clearing empty kegs out of a busy bar or keeping last season's collection crisp and ready, we'll quote a container that frees up Indiranagar's most expensive rooms. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Indiranagar, Domlur, HAL, Defence Colony, Halasuru and Old Airport Road.`,
+    ctaText: `Whether you're clearing empty kegs out of a busy bar or keeping last season's collection crisp and ready, we'll quote a container that frees up Indiranagar's most expensive rooms. Ring ${COMPANY.phones[0].display} or WhatsApp ${COMPANY.whatsapp.display}, or send the details to ${COMPANY.email.sales}. Serving Indiranagar, Domlur, HAL, Defence Colony, Halasuru and Old Airport Road.`,
     // Brief §9: the final CTA's "request a storage container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Storage Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -35104,7 +35104,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Container enquiry for Indiranagar",
       intro:
-        "Choose a container and quantity, add your site pin or address in or near Indiranagar, and say whether you want to buy or rent. List what you'll store, whether any of it needs controlled conditions, and the access to the placement area, and the team will reply with an itemised quotation.",
+        "Pick the container and quantity, give your address in or near Indiranagar and say whether you'd buy or hire. Tell us what will go inside, whether any of it needs controlled temperature or humidity, and how a truck reaches the spot; an itemised quotation follows.",
     },
     // Brief §9: the Indiranagar portable shop page heads the related products (anchor "Portable shop cabins in
     // Indiranagar"). The cargo category and the rental product are linked in the body, so they are not repeated.
@@ -35118,7 +35118,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
     ],
 
-    disclaimer: `Containers are supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch in Indiranagar. Units are offered subject to availability, and the quotation for each sets out its size, grade, condition and internal dimensions, any keg racks, shelving, hanging rails, lighting, vents, insulation, air-conditioning, locks or lockbox, any rental terms, and the delivery, unloading and collection arrangements; no delivery date, container size or vehicle access is guaranteed before the site check. The five images are illustrative renders of one container, not photographs taken in Indiranagar or of a delivered or fitted unit, and none shows kegs, furniture, glassware or garments. The bars, breweries, boutiques and fashion labels described are examples of uses, not clients or past projects, and the roads and localities named describe where enquiries are welcome, not confirmed delivery points. HAL 2nd Stage and HAL 3rd Stage are locality names, and Portable Office Cabin is not affiliated with Hindustan Aeronautics Limited. Guidance on kegs, alcohol stock, gas cylinders, garment care, moisture and temperature, site access and placement is general information, not legal, excise, fire-safety, conservation or engineering advice.`,
+    disclaimer: `The factory supplying these containers is Portable Office Cabin's unit at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, with sales handled from the company's Electronic City office in Bengaluru; there is no company yard, depot or branch in Indiranagar. Stock is limited, and each quotation describes the unit's size, grade, condition and inside measurements, any keg racks, shelving, garment rails, lighting, vents, insulation, air-conditioning, locks or lockbox, any hire terms, and how delivery, unloading and collection will be handled. No delivery date, size or vehicle access is promised before the site has been surveyed. The five images are renders of one container, not photos taken in Indiranagar, and they do not show kegs, furniture, glassware, garments or a fitted unit. Bars, breweries, boutiques and fashion labels appear as example uses rather than customers or past work, and the roads and localities listed indicate where we take enquiries, not confirmed delivery points. HAL 2nd Stage and HAL 3rd Stage are locality names, and Portable Office Cabin is not affiliated with Hindustan Aeronautics Limited. What this page says about kegs, alcohol stock, gas cylinders, garment care, moisture, temperature, access and placement is general guidance, not legal, excise, fire-safety, conservation or engineering advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
