@@ -18889,8 +18889,11 @@ export const CITY_PAGES: CityPage[] = [
    * the cargo category's location links and the Karnataka shipping nearby blocks.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × the Mahadevapura locality, Whitefield
-   * Road, Hoodi, Garudacharpalya, KR Puram, Basavanagar and the ITPL Road approach, for hotel FF&E,
-   * banquet furniture overflow, mall and hotel maintenance spares and residential interior staging.
+   * Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach, for hotel FF&E, banquet
+   * furniture overflow, mall and hotel maintenance spares and residential interior staging. KR Puram
+   * is left to its own shipping page (the owner's KR Puram content reply of 2026-11-16, Part 4): it is
+   * not a keyword, area, delivery or CTA term here; the second of the two pages to merge adds the
+   * Mahadevapura → KR Puram link (anchor "KR Puram").
    * Not the civic zone: Whitefield, Marathahalli and Bellandur are not targeted, and Marathahalli ORR no
    * longer names Mahadevapura in its areas. Housing-society spares (Bellandur), office fit-out staging
    * (Shivamogga), event equipment (Marathahalli ORR) and used-container inspection (Athipattu) are not
@@ -18916,7 +18919,7 @@ export const CITY_PAGES: CityPage[] = [
     metaDescription:
       "Shipping and storage containers in Mahadevapura for hotel furniture, banquet equipment, mall maintenance spares and apartment interior contractors. Get a quote.",
     keywords:
-      "shipping container in Mahadevapura, cargo container Mahadevapura, storage container Mahadevapura, used shipping container Mahadevapura, storage container Hoodi, storage container KR Puram, storage container Garudacharpalya, shipping container price in Mahadevapura, storage container for rent in Mahadevapura",
+      "shipping container in Mahadevapura, cargo container Mahadevapura, storage container Mahadevapura, used shipping container Mahadevapura, storage container Hoodi, storage container Garudacharpalya, shipping container price in Mahadevapura, storage container for rent in Mahadevapura",
     // The Mahadevapura locality on Whitefield Road (not the civic zone).
     geo: {
       region: "IN-KA",
@@ -19029,7 +19032,7 @@ export const CITY_PAGES: CityPage[] = [
         },
         paragraphs: [
           "Containers must sit on private land, such as a hotel's service yard, a mall's back-of-house area, a contractor's agreed spot inside an apartment project or a vacant plot, always with the permission of the property owner, builder or association.",
-          "Whitefield Road and the area around KR Puram are heavily congested, so delivery timing is planned around the traffic after a route check. Share the site pin and photos of the approach road, gate, bends, overhead cables and placement area. The transport team confirms the vehicle, the unloading method and the delivery window once it has checked the access; no delivery time is fixed before then.",
+          "Whitefield Road and the ITPL Road approach are heavily congested, so delivery timing is planned around the traffic after a route check. Share the site pin and photos of the approach road, gate, bends, overhead cables and placement area. The transport team confirms the vehicle, the unloading method and the delivery window once it has checked the access; no delivery time is fixed before then.",
         ],
         // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers tight-site delivery.
         inlineLinks: [
@@ -19158,7 +19161,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas We Serve",
     areasText:
-      "We supply shipping and storage containers in the Mahadevapura locality and nearby, including Whitefield Road, Hoodi, Garudacharpalya, KR Puram, Basavanagar and the ITPL Road approach. Delivery access is checked for each site.",
+      "We supply shipping and storage containers in the Mahadevapura locality and nearby, including Whitefield Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach. Delivery access is checked for each site.",
 
     faqs: [
       {
@@ -19191,7 +19194,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Space to Work While the Work Gets Done",
-    ctaText: `Whether you're refreshing hotel rooms, juggling banquet furniture between events, keeping a mall's spares in order or fitting kitchens across a new tower, we'll quote a container set up to keep everything organised and ready when you need it. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Mahadevapura, Whitefield Road, Hoodi, Garudacharpalya and KR Puram.`,
+    ctaText: `Whether you're refreshing hotel rooms, juggling banquet furniture between events, keeping a mall's spares in order or fitting kitchens across a new tower, we'll quote a container set up to keep everything organised and ready when you need it. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Mahadevapura, Whitefield Road, Hoodi and Garudacharpalya.`,
     // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Shipping Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
