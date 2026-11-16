@@ -602,6 +602,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Bannerghatta Road (kennel and shelter supplies, landscaping and nursery stores, farmhouse lock-ups;
     // owner brief 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+    // BTM Layout (last-mile parcel overflow, festival committee storage and bike rental fleet stores;
+    // owner brief 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in BTM Layout", href: "/cities-we-serve/shipping-container-btm-layout" },
   ],
 };
 
