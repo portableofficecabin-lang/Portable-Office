@@ -114,6 +114,26 @@ export interface CityPageSection {
    * in Bellandur, whose "From enquiry to placement" steps come before its areas). Unset = <ul>, as before.
    */
   ordered?: boolean;
+  /**
+   * Optional H3 sub-sections rendered at the end of the section, after its inline links (first used by
+   * Shipping & Storage Containers in Indiranagar, whose boutique section closes with the brief's H3
+   * "Designer Sample Archives", and on Thanisandra Main Road, whose brief puts H3s under its scaffolding
+   * and vehicle-storage H2s). Each renders its heading as an H3, then its paragraphs, an optional bulleted
+   * or numbered list and optional closing paragraphs, with the section's classes and motion. Unset =
+   * nothing rendered, so every other page's HTML is unchanged.
+   */
+  subsections?: CityPageSubsection[];
+}
+
+/** An H3 sub-section inside an extra section (see CityPageSection.subsections). */
+export interface CityPageSubsection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: CityPageListItem[];
+  /** Optional: render the bullets as a numbered list (<ol>). Unset = <ul>. */
+  ordered?: boolean;
+  /** Optional paragraphs after the bullets. Unset = nothing rendered. */
+  closing?: string[];
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -30727,6 +30747,460 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Doddaballapur. Delivery, unloading, placement and any connections are planned for each order, and delivery dates are not guaranteed. The layouts, fixtures, fittings, materials and service provisions mentioned on this page are points to discuss; only the items expressly confirmed in the approved specification and quotation form part of a supply. The three images are illustrative images of one two-cubicle toilet cabin design with one Western toilet and one Indian squat pan; other configurations look different, and the images do not show an installation in Doddaballapur or a customer project. The Doddaballapur industrial area, Apparel Park and Textile Park are named only to describe locations; Portable Office Cabin is not affiliated with their developers or operators or with any unit there, and the towns, roads and parks named here are places we accept delivery enquiries from, not clients, completed projects or confirmed delivery areas. The walking-time figures are a hypothetical example. The planning notes are general guidance, not engineering, public-health, legal or compliance advice: a cabin supply does not guarantee the result of any buyer or social-compliance audit, and wastewater handling and disposal must comply with applicable local requirements.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN HORAMAVU — stock stores for AC and appliance installation
+   * businesses (units, copper pipe, brackets, kits and tools) and organised storage for tent house and
+   * shamiana suppliers (canopies, carpets, poles, furniture, lighting and catering vessels), north-east
+   * Bengaluru: Horamavu, Horamavu Agara, Horamavu Main Road, Kalkere, Rampura and the Kalkere lake area.
+   *
+   * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, links and image
+   * plan used as given; the brief's root slug became /cities-we-serve/<slug>, the convention of every
+   * location page). Source copy: the owner's content reply of 2026-11-16 13:31Z ("Pasted text
+   * (20261116-133218).txt"), kept section by section with the brief's corrections: refrigerant cylinders,
+   * old units still holding refrigerant, generator fuel and LPG are kept out of a general-purpose
+   * container and no container is described as approved for hazardous or pressurised contents; heavy
+   * tables are not stood on their edges against a wall (racks or flat stacks, restrained where needed);
+   * vessels are stored covered on shelves rather than "upside down"; no repellent is named; no stacking
+   * limit or floor load is assumed beyond the manufacturer's box markings; no 20 ft fit is promised
+   * without a site check; no delivery day counts ([X] / [X–Y] removed), hours, prices or "no hidden
+   * costs". [Brand Name] → Portable Office Cabin. Mapped onto the template in the brief's order:
+   *   • H1 and intro; the second intro paragraph is `introLink` ("shipping containers" → the cargo
+   *     category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Stock Stores for AC & Appliance Installation Businesses" (two H3s) and "Storage for Tent House &
+   *     Shamiana Suppliers" (four H3s) → two afterIntro extra sections with `subsections`; the feature
+   *     band (empty interior) follows them.
+   *   • Placement and delivery, sizes, grade, price, rental and "How It Works" (ordered) → six
+   *     afterSolutions extra sections (the why and solutions slots are unused).
+   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
+   *     placement, so it renders after the areas and before the FAQs, as in the brief.
+   *   • FAQs (the source's six; the delivery answer gives no day count) → faqs; "Storage for the
+   *     Businesses That Keep Homes Cool and Celebrations Running" → CTA (phone, WhatsApp and e-mail from
+   *     COMPANY) + enquiry form.
+   * Rental is in the catalogue (Shipping Container Rental: 10, 20 and 40 ft, monthly terms), so the
+   * rental section and the 10 ft row stay.
+   *
+   * LINKS (brief §5): "shipping containers" → the cargo category (intro); "shipping containers in
+   * Bellandur" (its gate-and-lane delivery section) closes the placement section; "how to inspect a used
+   * shipping container" → Shipping Container in Athipattu, the Chennai-area page whose "Used Container
+   * Inspection" section is a seven-point checklist (the Chennai product page has one sentence on
+   * inspection, so it is not a guide); the rental product; the CTA button "Request a Storage Container
+   * Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block from repeating Bellandur or the
+   * category. Inbound: the Karnataka shipping hub, the cargo category's location links and the Karnataka
+   * shipping nearby blocks. The Hennur Road and KR Puram pages are not live yet, so they are not linked.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Horamavu, Horamavu Agara, Horamavu Main
+   * Road, Kalkere and Rampura, for AC and appliance installer stock and tent house / shamiana rental
+   * stock. Not named anywhere on the page: Ramamurthy Nagar, KR Puram and TC Palya (KR Puram page),
+   * Kalyan Nagar, HRBR Layout, HBR Layout and Hennur Road (Hennur Road page) and Banaswadi (kept free for
+   * a later page). Not targeted: hotel and banquet furniture overflow (Mahadevapura), festival committee
+   * equipment (BTM Layout), solar and borewell contractors (Kanakapura Road), church and party-supply
+   * stock (Hennur Road). "Bengaluru" stays out of the meta title.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/horamavu shipping city page/
+   * Storage Containers in Horamavu/cabin (1–5).webp", no EXIF / XMP / ICC) of one rust-red container
+   * with a grey frame and grey cargo doors. Each is copied with its VP8 data byte-for-byte plus an XMP
+   * dc:title / dc:description that labels it a render. (2) three-quarter exterior = hero / og:image (the
+   * brief's hero exterior); (1) empty interior = feature band; (4) cargo doors with locking bars = AC
+   * section; (5) roof from above = placement section; (3) side wall = grade section. No image shows AC
+   * units, copper pipe, shamiana fabric, catering vessels or tent frames, so the brief's five
+   * application filenames are not used and no alt text claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-horamavu",
+    city: "Horamavu",
+    listTitle: "Shipping & Storage Containers in Horamavu",
+    metaTitle: "Shipping Container in Horamavu | AC & Tent House Storage",
+    metaDescription:
+      "Shipping and storage containers in Horamavu for AC installers, copper pipes, appliance stock, tent house equipment, shamianas and catering vessels. Get a quote.",
+    keywords:
+      "shipping container in Horamavu, cargo container Horamavu, storage container Horamavu, storage container Horamavu Agara, storage container Kalkere, used shipping container Horamavu, shipping container price in Horamavu, storage container for rent in Horamavu",
+    // Approximate centre of the Horamavu locality (north-east Bengaluru), between Horamavu Agara and Kalkere.
+    geo: {
+      region: "IN-KA",
+      placename: "Horamavu, Bengaluru, Karnataka, India",
+      position: "13.0260;77.6600",
+      icbm: "13.0260, 77.6600",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and the cargo category are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-horamavu/shipping-container-horamavu-front.webp",
+      alt: "Exterior view of a shipping container suitable for equipment storage, with rust-red corrugated sides and closed grey cargo doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a steel container for equipment and stock storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-horamavu/shipping-container-interior-horamavu.webp",
+      alt: "Empty, lit interior of a steel shipping container with corrugated walls and a timber floor, before racks or shelves are fitted",
+      width: 1774,
+      height: 887,
+      caption:
+        "Illustrative empty interior. Racks, shelves, cages, bins and tool boards are fitted only where agreed and listed in the quotation.",
+    },
+
+    h1: "Shipping & Storage Containers in Horamavu",
+    tagline:
+      "Secure stock stores for AC and appliance installers, and dry, organised storage for tent house and shamiana suppliers.",
+    intro: [
+      "Horamavu is a busy mix of homes, apartment blocks and small businesses, and two local trades keep a lot of it running. As the summers get hotter, AC and appliance installers are out every day fitting units in flats, houses and offices. And when a family plans a wedding, a housewarming or a naming ceremony, it's often a local tent house that arrives with the shamiana, the chairs, the carpets and the big cooking vessels.",
+    ],
+    introLink: {
+      before:
+        "Both trades run out of small yards and family plots, with stock that is valuable, heavy or easily spoilt by damp. Portable Office Cabin supplies",
+      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " in Horamavu that can be set up as an organised, lockable store for that equipment and for seasonal inventory. What goes inside, from coil racks to fabric shelving, is decided with you and itemised in the quote.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Our containers go to customers throughout Horamavu: Horamavu Agara, Horamavu Main Road, Kalkere, Rampura and the streets around Kalkere lake. Access to every site is looked at before we fix a delivery.",
+
+    extraSections: [
+      {
+        heading: "Stock Stores for AC & Appliance Installation Businesses",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-horamavu/shipping-container-cargo-doors-horamavu.webp",
+          alt: "Closed double cargo doors of a shipping container with four vertical locking bars and cam handles",
+          width: 1774,
+          height: 887,
+          caption:
+            "Illustrative render of the cargo doors. Padlocks, a lockbox and an internal copper cage are optional extras, priced line by line if you want them.",
+        },
+        paragraphs: [
+          "An AC or appliance installation business carries bulky, costly stock: boxed indoor and outdoor units, coils of copper pipe, wall brackets and stands, and the kits and tools each job needs. Copper is the item most often stolen from yards, and a dropped or badly stacked outdoor unit can be a write-off.",
+          "A container gives that stock one secure, orderly home:",
+        ],
+        bullets: [
+          {
+            title: "Indoor and outdoor units",
+            text: "kept in their boxes, the right way up as the manufacturer's arrows show, and never stacked higher than the box markings allow.",
+          },
+          {
+            title: "Heavy outdoor units",
+            text: "on the floor or on supports suited to their weight, spread along the container rather than piled in one corner.",
+          },
+          { title: "Copper pipe coils", text: "in a separate lockable section or cage." },
+          { title: "Brackets, stands and fasteners", text: "sorted on shelves and in labelled bins." },
+          { title: "Drain pipes and insulation tubes", text: "on their own shelf, kept clean and uncrushed." },
+          { title: "Installation kits", text: "packed and labelled for each job before the team leaves." },
+          {
+            title: "Vacuum pumps, gauges and flaring tools",
+            text: "on a tool board or in a lockable cabinet, so missing items are noticed straight away.",
+          },
+          { title: "A stock register", text: "recording each unit's model and serial number as it comes in and goes out." },
+        ],
+        subsections: [
+          {
+            heading: "Secure Storage for Copper Pipes and Installation Tools",
+            paragraphs: [
+              "Losses usually happen in small amounts: a coil here, a gauge set there, and nobody can say when it went. Layout and records close most of those gaps.",
+            ],
+            bullets: [
+              { title: "A lockable cage or section", text: "for copper, opened only by the people who issue stock." },
+              { title: "Racks sized for coils", text: "so they sit flat and their ends stay sealed and clean." },
+              { title: "Labelled bins", text: "for fittings, flare nuts, tape and fasteners, so a short kit is spotted while it's packed." },
+              { title: "A tool board with outlines", text: "showing at a glance which pump or gauge set is out on a job." },
+              {
+                title: "An inventory register",
+                text: "for pipe lengths, units and tools issued and returned, which also speeds up dispatch on busy mornings.",
+              },
+            ],
+            closing: [
+              "A container with good locks makes theft harder and slower; it does not make it impossible. Keep keys controlled and check the register against the stock regularly.",
+            ],
+          },
+          {
+            heading: "Safe Handling of AC Units and Refrigerants",
+            paragraphs: [
+              "Some things an AC business handles do not belong in an ordinary storage container:",
+            ],
+            bullets: [
+              {
+                title: "Refrigerant gas cylinders",
+                text: "are pressurised. Keep them in storage arranged for gas cylinders under the rules that apply to you and the supplier's instructions, not in a general-purpose container.",
+              },
+              {
+                title: "Old AC units still holding refrigerant",
+                text: "should have the refrigerant recovered by qualified technicians before the units are stored or scrapped.",
+              },
+              {
+                title: "Removed and scrap units",
+                text: "should go to authorised recyclers, following the recycling and disposal requirements that apply to your business.",
+              },
+            ],
+            closing: [
+              "A standard shipping container is a dry, lockable store for boxed units, pipe, fittings and tools. It is not approved or certified for hazardous or pressurised substances.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage for Tent House & Shamiana Suppliers",
+        placement: "afterIntro",
+        paragraphs: [
+          "A tent house supplies almost everything a family function needs: shamianas and canopies, poles and frames, carpets, chairs and tables, lights and cables, and large cooking and serving vessels. Between bookings, all of it has to be stored properly, or it comes back out mouldy, rusty or broken just when the next event needs it.",
+          "A container keeps that stock together, off the ground and easy to load. Here is how to set it up.",
+        ],
+        subsections: [
+          {
+            heading: "Shamiana Fabric, Canopies and Carpets",
+            bullets: [
+              {
+                title: "Dry everything completely first",
+                text: "fabric or carpets packed away damp after an evening event can develop mould and a smell within days.",
+              },
+              { title: "Roll carpets", text: "instead of folding them tightly, so they don't crease or crack." },
+              { title: "Raised racks", text: "keep rolls and folded canopies off the floor and away from any condensation." },
+              {
+                title: "Breathable covers",
+                text: "protect fabric from dust where needed; avoid sealing damp fabric in plastic.",
+              },
+              {
+                title: "Moisture management",
+                text: "suitable ventilation, a dry floor and regular airing on dry days help limit condensation inside the steel shell.",
+              },
+              {
+                title: "Pest and mould checks",
+                text: "inspect for rodents, insects and mould spots between bookings, and deal with any problem straight away.",
+              },
+            ],
+          },
+          {
+            heading: "Poles, Frames, Chairs and Tables",
+            bullets: [
+              { title: "Sort poles and frames by length", text: "so a complete set for each tent size is quick to find and load." },
+              { title: "Load-rated racks", text: "chosen for the weight of steel poles and frames, with heavy items on the lowest levels." },
+              { title: "Chairs on trolleys", text: "stacked to a safe height on trolleys that roll straight out to the vehicle." },
+              {
+                title: "Tables stored securely",
+                text: "flat-stacked or in racks, with straps or restraints where needed. Don't stand heavy tables on their edges where they could tip.",
+              },
+              { title: "A clear loading path", text: "an aisle kept free to the doors, so stock goes in and out without lifting over other items." },
+            ],
+          },
+          {
+            heading: "Catering Vessels, Lighting and Electrical Accessories",
+            bullets: [
+              { title: "Clean and dry vessels thoroughly", text: "before they go in, so no food residue or water is left behind." },
+              { title: "Covered, hygienic storage", text: "on shelves that keep vessels off the floor, with covers against dust and insects." },
+              { title: "Tested lights and cables", text: "checked after each event and coiled neatly before storage." },
+              { title: "Labelled faulty equipment", text: "any damaged string, fitting or cable tagged and set aside for repair." },
+              { title: "A separate shelf for fragile items", text: "bulbs, decorative lights and small electrical accessories kept apart from heavy stock." },
+            ],
+            closing: [
+              "Generator fuel, LPG cylinders and other hazardous materials need their own approved storage. Don't keep them in a general-purpose container.",
+            ],
+          },
+          {
+            heading: "Wedding Season Inventory Management",
+            paragraphs: [
+              "Wedding and function seasons bring back-to-back bookings, and the busiest weeks are when items go missing or come back damaged. A few habits keep the store working:",
+            ],
+            bullets: [
+              { title: "Next event nearest the entrance", text: "staged near the doors the day before, so loading is quick." },
+              { title: "Dispatch and return registers", text: "listing what goes to each venue and what comes back, so nothing is left behind." },
+              { title: "Labelled stock", text: "every rack, bundle and crate marked, so a set can be picked by anyone in the team." },
+              { title: "Inspection on return", text: "fabric, poles, furniture and lights checked before they go back on the racks." },
+              { title: "Damaged stock kept apart", text: "in a marked area, so it isn't sent out by mistake." },
+              { title: "An efficient loading layout", text: "the most-used items closest to the doors and seasonal extras at the back." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Placement & Delivery in Horamavu",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-horamavu/shipping-container-roof-overhead-horamavu.webp",
+          alt: "Top-down view of a rust-red shipping container roof on a paved yard beside a planted border",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative render seen from above. Leave space in front of the doors so they open fully and stock can be carried in and out.",
+        },
+        paragraphs: [
+          "The container has to go on private ground that you own or have the owner's go-ahead to use: a business yard, a leased plot or a family property. It can't be placed on the road or the footpath. Many Horamavu streets are narrow residential lanes with parked vehicles and school and office traffic, so the route and the delivery time are planned together.",
+          "Send us a location pin and a few phone photos of the lane leading in, the gate, any low cables or branches, and the exact spot you have in mind. That spot needs level, firm ground with proper supports under the corners, and enough room for the truck to reach it and set the container down without risk to people, walls or parked vehicles.",
+          "A 20 ft container suits many sites here, but whether it fits yours depends on the lane width, the gate and the space at the placement spot. That is confirmed after the site check, not assumed.",
+        ],
+        // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers access checks.
+        inlineLinks: [
+          {
+            before: "Our page on",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " walks through how gate widths and tight lanes are measured up before delivery day.",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Capacities are rounded. Exact sizes differ a little between manufacturers (and between builds of the fabricated 10 ft unit), so the internal measurements, availability and site access are confirmed for the actual container before you order.",
+          headers: ["Container size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft", "~15 m³", "Copper pipes, installation tools and small AC stock"],
+            ["20 ft", "~33 m³", "AC installation inventory or tent house equipment"],
+            ["40 ft", "~67 m³", "Larger shamiana, carpet and event-equipment inventory, on sites with room to deliver"],
+          ],
+        },
+      },
+      {
+        heading: "Choosing the Right Container Grade",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-horamavu/shipping-container-side-wall-horamavu.webp",
+          alt: "Corrugated side wall of a rust-red shipping container with a grey steel frame and forklift pockets",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative render of the side wall. Ask for current photos of the actual unit, inside and out, before you confirm it.",
+        },
+        paragraphs: [
+          "One-trip containers have carried a single load since manufacture and are usually the cleanest choice. Cargo-worthy containers are used units still fit to carry cargo at sea. Wind-and-watertight units are retired from sea service but still shut out rain and wind; they're often fine for tools and hardware, and a less safe bet for fabric.",
+          "For AC units, carpets and shamiana fabric, look for a dry, clean interior, sound door seals that close evenly, good locking hardware and suitable ventilation. Check for rust patches, roof dents that could hold water, old residues and any sign of leaks. The grade is a starting point; the actual condition of the unit decides how well it protects your stock from moisture.",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "For a step-by-step checklist, see",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Horamavu",
+        placement: "afterSolutions",
+        paragraphs: ["Several things set the final figure:"],
+        bullets: [
+          { title: "Size", text: "a 10, 20 or 40 ft unit." },
+          { title: "Grade", text: "how new and how sound the unit is." },
+          { title: "Racks and shelves", text: "for units, coils, fabric rolls, vessels and furniture." },
+          { title: "Lockable copper storage", text: "an internal cage or a locked section." },
+          { title: "Tool boards", text: "for pumps, gauges and hand tools." },
+          { title: "Lighting", text: "if you need to pick stock in the evening." },
+          { title: "Ventilation", text: "vents to help limit condensation." },
+          { title: "Security", text: "a lockbox and heavy-duty padlocks." },
+          { title: "Delivery and unloading", text: "the route, the site access and the lifting method." },
+          { title: "Purchase or rental", text: "buying outright, or hiring monthly for a set period." },
+        ],
+        closing: [
+          "Because container costs rise and fall with global freight, a quote holds only for a set number of days. Share a rough stock list and your site location, and you'll get a line-by-line quotation.",
+        ],
+      },
+      {
+        heading: "Storage Container on Rent in Horamavu",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Need extra room for the summer AC rush, or for a wedding season packed with bookings? Storage containers on rent in Horamavu can cover just those busy months. Your quote spells out the hire period, the unit and its fittings, and how it is dropped off and picked up again.",
+        ],
+        inlineLinks: [
+          {
+            before: "See hire sizes and monthly terms on our",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { title: "Share what you need to store", text: "and the delivery location in Horamavu." },
+          { title: "Receive a recommendation and quotation", text: "covering the size, grade and any racks, cages or shelves." },
+          { title: "Confirm permission and site suitability", text: "the landowner's consent, firm level ground and access for unloading." },
+          { title: "Arrange delivery", text: "once the route and site access have been checked." },
+          {
+            title: "Ask for extra services or collection",
+            text: "a different rack layout, a second unit, or pick-up when a hire ends, if available for your order.",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          { title: "Organised stores for AC installers", text: "units, coils, fittings and kits each with their own place." },
+          { title: "Lockable copper and tool storage", text: "internal cages, tool boards and registers that make losses easier to spot." },
+          { title: "Dry layouts for tent house fabric", text: "raised racks, breathable covers and ventilation planned for shamianas and carpets." },
+          { title: "Sorting and inventory support", text: "layouts that keep the next job or event nearest the doors." },
+          { title: "Sizes to suit the site", text: "10 ft, 20 ft or 40 ft, chosen after the access check." },
+          { title: "Delivery planning", text: "routes and timing worked out for narrow residential lanes." },
+          { title: "Itemised quotations", text: "container, fittings, transport and any hire listed separately, so you can compare." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can an AC installer store units and copper pipes in a container?",
+        answer:
+          "Yes. Keep units boxed and upright as the manufacturer's markings show, stack them no higher than the boxes allow, put heavy outdoor units on the floor or on suitable supports, lock copper coils in a cage or separate section, and keep brackets and fittings in labelled bins.",
+      },
+      {
+        question: "Can refrigerant gas cylinders be stored in the container?",
+        answer:
+          "No. Refrigerant cylinders are pressurised and need storage arranged for gas cylinders under the rules that apply to you. A general-purpose container isn't approved for them, and old units still holding refrigerant should have it recovered by qualified technicians.",
+      },
+      {
+        question: "How should a tent house store shamiana fabric and carpets?",
+        answer:
+          "Dry everything completely, roll carpets instead of folding them tightly, keep fabric on raised racks under breathable covers, manage condensation with ventilation, and check regularly for pests and mould.",
+      },
+      {
+        question: "How should catering vessels be stored?",
+        answer:
+          "Clean and dry them thoroughly, then keep them covered on shelves off the floor. Store generator fuel and LPG cylinders elsewhere, in storage approved for them.",
+      },
+      {
+        question: "Which size works best in Horamavu?",
+        answer:
+          "A 20 ft container suits many installers and tent houses, a 10 ft unit can hold copper, tools and small stock, and a 40 ft unit suits large inventories where the site has room. The right size depends on your stock and on the access check for your lane and gate.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "It varies. A plain container that's already in stock can usually be arranged sooner than one with racks or a copper cage fitted, and the route and unloading conditions at your site matter too. Give us the date you're aiming for, and your quotation will show a realistic schedule.",
+      },
+    ],
+
+    ctaHeading: "Storage for the Businesses That Keep Homes Cool and Celebrations Running",
+    ctaText: `Whether you're fitting ACs across the city or setting up shamianas for the next big wedding, we'll quote a container laid out to keep your stock secure, dry and ready for the next job. Ring ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display}, or write to ${COMPANY.email.sales}. We serve Horamavu, Horamavu Agara, Kalkere and Rampura.`,
+    // Brief §5: the final CTA's "request a storage container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Storage Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Horamavu",
+      intro:
+        "Choose a container and quantity, add your Horamavu site address or pin, and say whether you want to buy or rent. List what you'll store, such as AC units, copper pipe, shamianas or vessels, and the team will reply with an itemised quotation.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch in Horamavu. Units are offered subject to availability, and the quotation for each sets out its size, grade, condition and internal dimensions, any racks, cages, shelves, tool boards, lighting, vents or locks, any rental terms, and the delivery, unloading and collection arrangements; no delivery date, site fit or vehicle access is guaranteed. No container described here is approved or certified for refrigerant cylinders, fuel, LPG or other hazardous or pressurised materials, and no layout prevents theft, moisture, mould or pests entirely. The five images are illustrative renders of one container, not photographs taken in Horamavu or of a fitted or delivered unit. The trades described are examples of uses, not clients or past projects, and the places named describe where enquiries are welcome, not confirmed delivery points. Guidance on stacking, refrigerants, recycling, storage, hygiene, placement and lifting is general information, not legal, safety or engineering advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
