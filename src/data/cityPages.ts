@@ -17551,6 +17551,8 @@ export const CITY_PAGES: CityPage[] = [
    * school storage. Bellandur keeps household, society and shop storage in Bellandur; Marathahalli ORR
    * keeps commercial storage on the ORR; Koramangala (/products/shipping-container-in-kormangala)
    * keeps offices, cafés and conversions. No other shipping page names JP Nagar or its localities.
+   * Bannerghatta Road brief (2026-11-16): Arekere, Bilekahalli, Gottigere and Bannerghatta Road moved to
+   * the Bannerghatta Road page; the areas text is that brief's replacement, plus a "Bannerghatta Road" link.
    *
    * Images: five owner-dropped lossy VP8 webp renders ("public/images/JP Nagar city page/JP Nagar
    * shipping container page/cabin (1–5).webp", 1445×1088 ×4 and 2336×1760, no EXIF / XMP / ICC
@@ -17654,8 +17656,15 @@ export const CITY_PAGES: CityPage[] = [
     customLinks: [{ label: "Shipping container rental options", href: "/products/shipping-container-rental" }],
 
     areasHeading: "Areas we serve",
+    // Bannerghatta Road brief (2026-11-16): Arekere, Bilekahalli, Gottigere and Bannerghatta Road now belong to
+    // the Bannerghatta Road page, so this list is the brief's replacement and that road gets a link instead.
     areasText:
-      "We welcome enquiries from JP Nagar (Jayaprakash Narayan Nagar), from 1st to 9th Phase, and nearby Puttenahalli, Sarakki, Arekere, Bilekahalli, Gottigere, Kothnur and Jaraganahalli. We also consider sites along Bannerghatta Road and Kanakapura Road. Delivery is assessed for each site.",
+      "We welcome enquiries from JP Nagar 1st to 9th Phase, Puttenahalli, Sarakki, Kothnur and Jaraganahalli, and nearby areas along Kanakapura Road. Delivery is assessed for each site.",
+    areasInlineLink: {
+      before: "For kennel, nursery or farmhouse storage along",
+      link: { label: "Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+      after: ", see our page for that corridor.",
+    },
 
     howHeading: "From enquiry to placement",
     howSteps: [
@@ -17787,6 +17796,368 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; there is no container yard, depot or office in JP Nagar. Each container is offered subject to stock, and its size, condition, grade, fittings, any rental terms and the delivery, unloading, collection and relocation arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or placed in JP Nagar. The sizes named are examples; the dimensions that apply are those of the specific unit. JP Nagar and the localities and roads listed are named only to describe the area served, and the home, family and school uses described are examples rather than clients, past projects or confirmed delivery areas. Guidance on packing, storage conditions, site access, placement and permissions is general information, not engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS ALONG BANNERGHATTA ROAD — feed stores for kennels and animal
+   * shelters, stores for landscapers and nurseries, and lock-ups for farmhouses and weekend homes,
+   * from Bilekahalli out towards Bannerghatta National Park (south Bengaluru).
+   *
+   * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas and image plan
+   * used as given). Source copy: the owner's content reply of 2026-11-16 07:11Z ("Pasted text
+   * (20261116-071213).txt"), kept section by section with the brief's corrections: no "rodent-proof",
+   * temperature-controlled or wildlife-proof claim, no alarm sensor (not a confirmed accessory), no
+   * delivery hours or day counts and no price. "Metro works" became "the elevated metro line" (the
+   * viaduct stands either way). The slug starts with "shipping-container-", so cityFamily() puts the page
+   * in the shipping-container family; `directoryLabel` says "along" because the place is a road.
+   * Mapped onto the template in the brief's order:
+   *   • H1 and intro; the second intro paragraph is `introLink` ("shipping containers" → the cargo
+   *     category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Feed & Supply Stores for Kennels, Pet Boarding & Animal Shelters" → why (intro, seven bullets,
+   *     the medicines note as whyOutro); the feature band (empty interior) follows it.
+   *   • Landscapers and nurseries, farmhouses, delivery, sizes, grade, price, rental and "How It Works"
+   *     (ordered) → eight afterSolutions extra sections (the solutions slot is unused).
+   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
+   *     placement, so it renders after the areas and before the FAQs, as in the brief.
+   *   • FAQs (the source's six; the delivery answer gives no day count) → faqs; "Storage for Life
+   *     Between the City and the Forest" → CTA (phone, WhatsApp and e-mail from COMPANY) + enquiry form.
+   * Rental is in the catalogue (Shipping Container Rental: 10, 20 and 40 ft, monthly terms), so the
+   * rental section stays. The 10 ft row stays too: the cargo catalogue lists a 10 ft fabricated size.
+   *
+   * LINKS (brief §5): "shipping containers" → the cargo category (intro); "shipping containers in
+   * Bellandur" (its gate-and-lane delivery section) closes the delivery section; "how to inspect a used
+   * shipping container" → Shipping Container in Athipattu, the Chennai-area page whose "Used Container
+   * Inspection" section is a seven-point checklist (the Chennai product page has one sentence on
+   * inspection, so it is not a guide); "shipping container rental" → the rental product; the CTA button
+   * "Request a Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block from
+   * repeating Bellandur or the category. Inbound: JP Nagar's areas ("Bannerghatta Road"), the Karnataka
+   * shipping hub, the cargo category's location links and the Karnataka shipping nearby blocks.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Bannerghatta Road, Bilekahalli, Arekere,
+   * Hulimavu, Kalena Agrahara, Gottigere, Basavanapura and Bannerghatta, for kennel and shelter supplies,
+   * landscaping and nursery stores and farmhouse lock-ups. JP Nagar no longer lists the corridor's
+   * localities. Jigani and Anekal are named only as a direction (Jigani has its own shipping page).
+   * Hospitals (Vellore), pet grooming shops (Indiranagar), farm inputs (Krishnagiri) and used-container
+   * inspection (Athipattu) are not targeted.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Bannerghatta Road city page
+   * shipping container/Bannerghatta Road page/cabin (1–5).webp", no EXIF / XMP / ICC) of one container
+   * with blue-grey cargo doors. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title /
+   * dc:description that labels it a render. (1) three-quarter exterior = hero / og:image (the brief's
+   * front exterior); (2) cargo doors with locking bars and a lockbox = farmhouse section (the brief's
+   * "secure locking arrangement"); (5) empty interior = feature band; (4) roof from above = delivery
+   * section; (3) end wall = grade section. No image shows feed bins, garden tools, nursery supplies or
+   * a delivery, so those image slots are not used and no alt text claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-bannerghatta-road",
+    city: "Bannerghatta Road",
+    listTitle: "Shipping & Storage Containers on Bannerghatta Road",
+    directoryLabel: "Shipping containers along Bannerghatta Road",
+    metaTitle: "Shipping Container on Bannerghatta Road | Storage & Cargo",
+    metaDescription:
+      "Shipping and storage containers on Bannerghatta Road for kennels, pet boarding, landscapers, nurseries and farmhouse storage. Request a quote.",
+    keywords:
+      "shipping container on Bannerghatta Road, cargo container Bannerghatta Road, storage container Bannerghatta Road, storage container Hulimavu, storage container Arekere, storage container Gottigere, used shipping container Bannerghatta Road, shipping container price on Bannerghatta Road, storage container for rent on Bannerghatta Road",
+    // The road at Hulimavu, about midway between Bilekahalli and Gottigere.
+    geo: {
+      region: "IN-KA",
+      placename: "Bannerghatta Road, Bengaluru, Karnataka, India",
+      position: "12.8778;77.5965",
+      icbm: "12.8778, 77.5965",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and the cargo category are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-bannerghatta-road/shipping-container-bannerghatta-road-front.webp",
+      alt: "Exterior view of a steel shipping container with closed blue-grey cargo doors and a corrugated side wall",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a storage container exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-bannerghatta-road/storage-container-empty-interior-bannerghatta-road.webp",
+      alt: "Empty interior of a steel shipping container with corrugated walls and a wooden floor, seen through the open cargo doors",
+      width: 1774,
+      height: 887,
+      caption:
+        "Illustrative empty interior. Racks, sealed bins and vents are fitted only where agreed and quoted for the selected unit.",
+    },
+
+    h1: "Shipping & Storage Containers Along Bannerghatta Road",
+    tagline:
+      "Feed stores for kennels and shelters, stores for landscapers and nurseries, and lock-ups for farmhouses along Bannerghatta Road.",
+    intro: [
+      "Bannerghatta Road starts out as one of Bengaluru's busiest city roads, lined with hospitals, malls, apartment towers and the elevated metro line. Keep driving south and it slowly changes. Gated villas give way to plant nurseries, pet boarding farms, landscaping yards and weekend farmhouses, until the road reaches the edge of Bannerghatta National Park.",
+    ],
+    introLink: {
+      before:
+        "The businesses and homes along that journey have storage needs you won't find in the city centre: animal feed, garden tools, plant pots, and belongings in homes that sit empty during the week. Portable Office Cabin supplies",
+      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " along Bannerghatta Road for exactly these needs. Tell us what you'll store and where the container will stand, and we'll suggest a size and set-up.",
+    },
+
+    whyHeading: "Feed & Supply Stores for Kennels, Pet Boarding & Animal Shelters",
+    whyIntro:
+      "The open land towards Bannerghatta is home to pet boarding farms, kennels, dog trainers, animal shelters and rescue groups. They all go through large amounts of feed and supplies, and all of it needs to stay dry, clean and away from rats. A container can be set up as a lockable feed and supply store:",
+    whyBullets: [
+      { title: "Sealed bins", text: "keep dry feed in sealed bins, never in open sacks on the floor." },
+      { title: "Racks", text: "keep bins, sacks and boxes off the ground." },
+      { title: "First in, first out", text: "use older stock first and check expiry dates." },
+      { title: "Separate shelves", text: "for bedding, bowls, leashes and grooming supplies." },
+      { title: "Cleaning chemicals and disinfectants on their own shelf", text: "well away from food." },
+      {
+        title: "Ventilation",
+        text: "ask about vents to keep the air fresh and limit moisture, and check regularly for damp or condensation.",
+      },
+      {
+        title: "A rodent-control plan",
+        text: "a feed store is the first place rats will look, so keep the floor clean, close bins after use and check for signs of pests.",
+      },
+    ],
+    whyOutro:
+      "Medicines: store veterinary medicines as their labels advise. Many need cool, controlled conditions, which a plain container doesn't provide.",
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We supply shipping and storage containers along Bannerghatta Road, including Bilekahalli, Arekere, Hulimavu, Kalena Agrahara, Gottigere and Basavanapura, out towards Bannerghatta and in the direction of Jigani and Anekal. Delivery to each site is confirmed once its access has been checked.",
+
+    extraSections: [
+      {
+        heading: "Stores for Landscapers, Nurseries & Garden Contractors",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Bannerghatta Road and its side lanes are home to plant nurseries, landscaping companies and garden maintenance teams that look after villas and campuses across south Bengaluru. Their tools and supplies tend to spread across open yards, where they rust, crack or go missing.",
+          "A container keeps it all organised:",
+        ],
+        bullets: [
+          { title: "Tool racks", text: "for spades, rakes, shears, hoses and mowers." },
+          { title: "Shelving", text: "for irrigation pipes and fittings, drip lines, sprinklers and timers." },
+          { title: "Stacked pot storage", text: "sorted by size." },
+          { title: "Potting mix, cocopeat and compost bags", text: "on pallets, kept dry so they don't clump or rot." },
+          { title: "A small bench", text: "for repairing tools or preparing orders." },
+          {
+            title: "Fertilisers and pesticides",
+            text: "stored only as their labels, safety instructions and the applicable regulations require, separate from everything else and out of reach of children and animals. A general storage container is not automatically suitable for them.",
+          },
+          { title: "A lockbox and heavy-duty locks", text: "because tools and mowers are tempting targets." },
+        ],
+        closing: ["Living plants shouldn't go inside. They need light and air. The container is for everything that supports them."],
+      },
+      {
+        heading: "Secure Storage for Farmhouses & Weekend Homes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-bannerghatta-road/farmhouse-storage-container-bannerghatta.webp",
+          alt: "Closed double cargo doors of a blue-grey shipping container with four vertical locking bars, handles and a lockbox at the centre",
+          width: 1448,
+          height: 1086,
+          caption: "Illustrative render of the locking bars and lockbox. The locks supplied are confirmed in the quotation for the selected unit.",
+        },
+        paragraphs: [
+          "Towards Bannerghatta and beyond, many families keep farmhouses or weekend homes that stay empty for days or weeks at a time. Empty homes on the city's edge attract thieves, and garden furniture, tools, pumps and equipment are easy to carry off.",
+          "A container gives you a lock-up for when you're away:",
+        ],
+        bullets: [
+          { title: "Garden and patio furniture", text: "brought in when you leave." },
+          { title: "Tools, pumps and small machinery", text: "kept off the open plot between visits." },
+          { title: "Spare household items", text: "that you don't want to leave in an empty house." },
+          { title: "Heavy-duty locks and a lockbox", text: "ask which suit the selected unit." },
+          { title: "A caretaker or neighbour", text: "who can check on it during the week." },
+        ],
+        closing: [
+          "Near the forest edge: Bannerghatta National Park is home to elephants, sloth bears and leopards, and wildlife does sometimes wander beyond its boundaries. A locked container is not wildlife-proof, so don't store food, animal feed or anything with a strong smell in a farmhouse container near the forest, and keep it firmly locked.",
+        ],
+      },
+      {
+        heading: "Delivery Along Bannerghatta Road",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-bannerghatta-road/shipping-container-roof-overhead-bannerghatta-road.webp",
+          alt: "Top-down view of a blue-grey shipping container roof on a concrete yard between yellow painted lines",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative overhead view. Plan a firm, level area with clearance around the footprint for the cargo doors and unloading.",
+        },
+        paragraphs: [
+          "The city end of Bannerghatta Road carries heavy traffic, so the delivery window is planned around the traffic and any road or metro works on the route. Further out, plots are larger and access is usually easier, which sometimes leaves room for a 40 ft container. The container must always sit on private land, with the landowner's permission, never on the road or footpath.",
+          "Before dispatch, share the site pin and photos of the approach road, gate, bends, trees and overhead cables, and of the placement area. The ground must be firm and level, with room for the vehicle to reach it and for the container to be unloaded. Once the transport team has these details, it confirms whether a 20 ft or 40 ft unit and the unloading method suit your site; access and timing are confirmed for each site, not promised in advance.",
+        ],
+        // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers lifting access.
+        inlineLinks: [
+          {
+            before: "For gate, lane and lifting checks on tighter plots, see our page on",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Approximate internal volumes. Exact dimensions vary slightly by manufacturer, and the 10 ft size is a fabricated unit whose dimensions depend on the build; the quotation states those of the actual unit.",
+          headers: ["Size", "Approx. capacity", "Typical use on Bannerghatta Road"],
+          rows: [
+            ["10 ft", "~15 m³", "A small kennel's feed store or a garden maintenance team's tools"],
+            ["20 ft", "~33 m³", "A pet boarding centre's supplies, a landscaper's store or a farmhouse lock-up"],
+            ["40 ft", "~67 m³", "Large nurseries and landscaping yards, on bigger plots further out"],
+          ],
+        },
+      },
+      {
+        heading: "Choosing a Container Grade",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-bannerghatta-road/shipping-container-end-wall-bannerghatta-road.webp",
+          alt: "Corrugated steel end wall of a grey shipping container with corner castings on a paved yard",
+          width: 1448,
+          height: 1086,
+          caption: "Illustrative end-wall view. Ask for recent photographs of the actual unit's walls, roof, floor and doors.",
+        },
+        paragraphs: [
+          "One-trip containers have made a single voyage and are usually in the best condition. Cargo-worthy containers are used units that remain structurally sound enough to carry cargo. Wind-and-watertight (WWT) units have retired from shipping but are graded to keep out wind and rain, and suit general storage where appearance matters less.",
+          "For feed stores and farmhouse lock-ups, choose a clean one-trip or excellent cargo-worthy container. For tools and nursery supplies, a sound cargo-worthy unit offers good value. Whatever the grade, inspect the actual unit or its recent photographs before you accept it.",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "For a full checklist, see our guide on",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price on Bannerghatta Road",
+        placement: "afterSolutions",
+        paragraphs: ["The container price depends on:"],
+        bullets: [
+          { title: "Size", text: "10 ft, 20 ft or 40 ft." },
+          { title: "Grade and condition", text: "one-trip, cargo-worthy, or wind-and-watertight." },
+          { title: "Fit-out", text: "racks, shelving, bins, benches and vents." },
+          { title: "Security", text: "a lockbox and heavy-duty locks." },
+          { title: "Delivery", text: "the distance along the road and the access to your site." },
+          { title: "Buy or rent", text: "a purchase price, or rental charges for the agreed term." },
+          {
+            title: "Market rates",
+            text: "container prices move with the global shipping market, so check how long your quotation is valid.",
+          },
+        ],
+        closing: ["Tell us what you'll store and where, and we'll send an itemised quote."],
+      },
+      {
+        heading: "Storage Container on Rent on Bannerghatta Road",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Need extra storage for a busy landscaping season or a farmhouse renovation? Ask us about storage containers on rent along Bannerghatta Road. The rental term, the unit's size and condition, and the delivery and collection arrangements are set out in the quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "For the sizes available on hire and how rental works, see",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { title: "Tell us what you'll store and where", text: "share photos of the plot and the approach road." },
+          { title: "Get a recommendation and an itemised quote", text: "including any racks, bins and security fittings." },
+          { title: "Prepare a level base", text: "on your land." },
+          {
+            title: "Confirm delivery and placement",
+            text: "the transport team checks the access, then agrees the delivery window and the container's position with you.",
+          },
+          { title: "Ask about support after delivery", text: "extra racks, more units or collection, where offered for your order." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          {
+            title: "Feed and supply stores",
+            text: "planned with sealed bins, racks, ventilation and a rodent-control routine for kennels, boarding farms and shelters.",
+          },
+          { title: "Organised stores", text: "with tool racks, shelving and pallets for landscapers and nurseries." },
+          { title: "Lock-ups for farmhouses", text: "with heavy-duty locks and a lockbox, for homes that stand empty during the week." },
+          { title: "Wildlife-aware advice", text: "on what not to store at properties near the national park." },
+          { title: "Size options", text: "10 ft, 20 ft and 40 ft, from city plots to larger land further out." },
+          { title: "Practical site planning", text: "the approach, base and placement checked from your photos before delivery." },
+          { title: "Clear, itemised quotes", text: "the container, fit-out, delivery and any rental terms listed separately." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can animal feed be stored in a shipping container?",
+        answer:
+          "Yes, in sealed bins on racks, used first in, first out, with a rodent-control plan and regular checks for damp. Store veterinary medicines separately, as their labels advise.",
+      },
+      {
+        question: "Can a landscaping business use a container as its store?",
+        answer:
+          "Yes. Fit tool racks, shelving for irrigation fittings, pot storage and pallets for potting mix. Keep fertilisers and pesticides separate, stored as their labels and the applicable regulations require.",
+      },
+      {
+        question: "Is a container safe for storing things at an empty farmhouse?",
+        answer:
+          "A locked steel container is a practical store for furniture, tools and pumps, though no store is theft-proof. Use heavy-duty locks and a lockbox, and ideally have someone check on it during the week. Near the forest edge, don't store food or anything with a strong smell.",
+      },
+      {
+        question: "Can I store plants in a container?",
+        answer: "No. Living plants need light and air. Use the container for pots, tools, soil and supplies.",
+      },
+      {
+        question: "Can a 40 ft container be delivered on Bannerghatta Road?",
+        answer:
+          "Sometimes, on larger plots further out with good access. Closer to the city, a 20 ft container is usually more practical. The transport team confirms what fits once it has your site details.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Lead times depend on stock, any fit-out and the access to your site. Share your target date, and the quotation will set out the expected schedule.",
+      },
+    ],
+
+    ctaHeading: "Storage for Life Between the City and the Forest",
+    ctaText: `Whether you run a boarding farm full of happy dogs, a landscaping crew that keeps south Bengaluru green, or a weekend farmhouse you want to keep safe, we'll quote a container set up for life along Bannerghatta Road. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Bannerghatta Road, Hulimavu, Arekere, Gottigere, Kalena Agrahara and out towards Bannerghatta.`,
+    // Brief §5: the final CTA's "request a container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Bannerghatta Road",
+      intro:
+        "Pick a container and quantity, add your site pin or address along Bannerghatta Road, and say whether you want to buy or rent. Describe what you'll store, the approach road and the placement area, and the team will reply with an itemised quotation.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch on Bannerghatta Road. Units are offered subject to availability, and the quotation for each sets out its size, grade, condition and internal dimensions, any racks, bins, vents, locks or lockbox, any rental terms, and the delivery, unloading and collection arrangements; no delivery date or vehicle access is guaranteed. The five images are illustrative renders of one container, not photographs taken on Bannerghatta Road or of a delivered or fitted unit. The kennels, shelters, nurseries, landscapers and farmhouses described are examples of uses, not clients or past projects, and the places named describe where enquiries are welcome, not confirmed delivery points; Bannerghatta National Park is named only to describe the area. Guidance on feed, medicines, fertilisers and pesticides, pest control, wildlife, site access and placement is general information, not veterinary, agronomic, legal, safety or engineering advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
