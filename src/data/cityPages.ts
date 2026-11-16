@@ -34668,6 +34668,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas we serve",
     areasText:
       "We welcome enquiries from Koramangala 1st to 8th Block, Ejipura, Adugodi, Venkatapura, Jakkasandra, ST Bed Layout and the National Games Village area. Delivery is assessed for each site.",
+    // 2026-11-16 (HSR Layout brief §5): the service-area link to the neighbouring HSR Layout page, whose
+    // intent is owner-builder storage, house moves and community equipment. The shipping nearby block
+    // skips an areasInlineLink href, so HSR Layout is linked once on this page.
+    areasInlineLink: {
+      before: "For storage while building a home or moving house nearby, see our container page for",
+      link: { label: "HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+      after: ".",
+    },
 
     howHeading: "From enquiry to placement",
     howSteps: [
@@ -34992,6 +35000,445 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a shop, office or yard in Indiranagar. Delivery, unloading and placement are assessed and arranged for each site, and delivery dates are not guaranteed. Hire of a shop cabin is subject to availability and the quotation. The footprints, layouts, fitting rooms, display fittings, lighting, joined modules, wet-area and grooming fit-outs, utility provisions, branding, installation, collection and removal described on this page are options to discuss; what is supplied is confirmed in the approved drawing, specification and quotation for each order. The images on this page are illustrative renders of one portable shop cabin design, not photographs of installations in Indiranagar, and they do not show the apparel, gallery or grooming layouts described. The roads, localities and venues named here are used only to describe locations; they are not clients, completed projects or confirmed sites. HAL 2nd Stage and HAL 3rd Stage are locality names, and Portable Office Cabin is not affiliated with Hindustan Aeronautics Limited. Business activity, site use and outdoor signage are subject to the site owner and the relevant local authority; the notes on this page are general planning guidance, not legal, licensing, electrical or engineering advice.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN HSR LAYOUT (south-east Bengaluru) —
+   * /cities-we-serve/shipping-container-hsr-layout
+   *
+   * Owner brief of 2026-11-16 ("HSR Layout shipping container city page"). The brief proposes
+   * /shipping-container-hsr-layout; city pages live under /cities-we-serve/, so the page follows that
+   * convention (one indexable URL, no root alias). No HSR Layout page, redirect or sitemap entry existed.
+   * Meta title, meta description, H1, primary and secondary keywords, section order, sizes table and
+   * areas list are the brief's. The brief's source text file was not available to this build, so the
+   * paragraphs, bullets, FAQ answers and CTA text are written from the brief's per-section outline
+   * ("[Brand Name]" → Portable Office Cabin) and are for owner review.
+   * Mapped onto the template in the brief's order, nothing dropped:
+   *   Intro → intro + heroCta (Request a Quote, Call, WhatsApp; number and link from COMPANY).
+   *   "Building Your Own Home in HSR" → why (titled bullets) + the interior image as the feature band.
+   *   "Moving House or Moving Cities" → solutions (titled items). No loaded-container or interstate
+   *     transport is mentioned: the site offers none.
+   *   Community storage, delivery and placement, container sizes, container grades, price, rental and
+   *     "How It Works" (ordered) → seven afterSolutions extra sections, so the steps stay before areas.
+   *   "Areas We Serve" → areas. "Why Choose Portable Office Cabin" → a default extra section (after
+   *     the areas, as the brief orders it). FAQs: the brief's six topics. CTA: "Room to Build, Move
+   *     and Grow" + the cargo-category enquiry form (rental models kept: the brief covers hire).
+   * Facts checked against the catalogue: 10 ft units are listed ("10 ft fabricated" on Cargo Container
+   * for Sale; "10 ft / 20 ft / 40 ft / 40 ft High Cube" on Shipping Container Rental), so the brief's
+   * 10 ft row stays; rental is offered on monthly terms with pickup coordination (product 18), so the
+   * rental section and a collection step stay, both quote-dependent. Capacities are the brief's
+   * approximate figures. No ₹ figure, stock, lead time or delivery hour.
+   *
+   * LINKS (brief §5): delivery section → Bellandur, "shipping containers in Bellandur"; grades section
+   * → "how to inspect a used shipping container": no Chennai page is an inspection guide (the Chennai
+   * product page has one seller-side sentence), so it points to the Chennai-area Athipattu page
+   * (Ennore–Kattupalli), whose "Used Container Inspection" section is a seven-point checklist, as on
+   * the JP Nagar and Koramangala pages; sizes section → "shipping containers" (the cargo category);
+   * "How It Works" → "request a shipping container quotation" (the on-page enquiry form); rental
+   * section → /products/shipping-container-rental. Koramangala links here from its areas section
+   * (anchor "HSR Layout"); the cargo category's location list and the Karnataka hub list this page.
+   * `nearbySkipsBodyLinks` keeps the nearby block from repeating Bellandur.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container × HSR Layout, for owner-builder material
+   * storage, house moves and community equipment. Bellandur keeps renovation, society and household
+   * storage; Marathahalli ORR keeps commercial storage; Koramangala keeps partitioned self-storage,
+   * kitchens and bicycles; JP Nagar keeps builder-led rebuilds, downsizing and schools. No other
+   * shipping page names HSR Layout; Haralur Road is also in Bellandur's areas list (the road joins both).
+   *
+   * Images: five owner-dropped lossy VP8 webp files ("public/images/HSR Layout shipping city page/HSR
+   * LAYOUT SHIPPING CONTAINER CITY PAGE/cabin (1–5).webp", no EXIF / XMP / ICC, origin not documented)
+   * of one red-orange container in a container yard. VP8 data copied byte-for-byte with an XMP
+   * dc:title / dc:description marking each as illustrative (no creator, copyright, GPS or date set).
+   * Cargo doors (1) = hero / og:image; empty interior (4) = the brief's interior slot (feature band);
+   * roof view (5), three-quarter view (3, 515 px) and end wall (2) illustrate the delivery, sizes and
+   * grades sections. No image shows construction materials, packed household goods or community
+   * equipment, so those three slots are skipped. No alt text or caption names a size or a location.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-hsr-layout",
+    city: "HSR Layout",
+    listTitle: "Shipping & Storage Containers in HSR Layout",
+    metaTitle: "Shipping Container in HSR Layout | Storage & Cargo Containers",
+    metaDescription:
+      "Explore shipping and storage containers in HSR Layout for home construction materials, household moves and community equipment. Request a quote.",
+    keywords:
+      "shipping container in HSR Layout, cargo container HSR Layout, storage container HSR Layout, storage container for rent in HSR Layout, used shipping container HSR Layout, shipping container price in HSR Layout, monthly storage container HSR Layout",
+    geo: {
+      region: "IN-KA",
+      placename: "HSR Layout, Bengaluru, Karnataka, India",
+      position: "12.9121;77.6446",
+      icbm: "12.9121, 77.6446",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1408 × 1056 px (read from its VP8 header); the brief asks for the social preview image.
+    ogImageDimensions: true,
+    // Bellandur is linked in the delivery section, so the nearby block leaves it out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-hsr-layout/shipping-container-hsr-layout-front.webp",
+      alt: "Shipping container exterior with closed double cargo doors and locking bars for secure storage",
+      width: 1408,
+      height: 1056,
+      caption: "Illustrative container exterior.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-hsr-layout/shipping-container-storage-interior-hsr-layout.webp",
+      alt: "Empty interior of a shipping container with corrugated steel walls and a plywood floor, with space for stored materials",
+      width: 1672,
+      height: 941,
+      caption: "Illustrative empty interior. Racks and shelving are fitted only where agreed for the unit.",
+    },
+
+    h1: "Shipping & Storage Containers in HSR Layout",
+    tagline:
+      "Lockable container storage for owner-built homes, house moves and neighbourhood groups in HSR Layout.",
+    intro: [
+      "Building your own house, moving home or looking after equipment for a residents' group? A shipping container gives you lockable storage on your own plot or on another site you have permission to use. Portable Office Cabin welcomes shipping and storage container enquiries from HSR Layout. Describe the items, the period you need them kept and the spot available on site, and we will suggest a size, grade and delivery plan.",
+    ],
+
+    whyHeading: "Building Your Own Home in HSR",
+    whyIntro:
+      "When you manage your own construction, finishing materials often arrive weeks before they are fixed. A container on the plot keeps them locked and dry between delivery and installation, and lets you see what is left before you reorder.",
+    whyBullets: [
+      {
+        title: "Tiles, granite and sanitaryware",
+        text: "Keep tile cartons and granite on pallets or timber bearers, stand slabs on edge with support as the supplier advises, and leave sanitaryware boxed until the plumber is ready to fit it.",
+      },
+      {
+        title: "Electrical fittings, doors and hardware",
+        text: "Store switches, cable coils, door frames, shutters, hinges and locks in labelled boxes so each contractor can be issued exactly what the job needs.",
+      },
+      {
+        title: "Paints and adhesives",
+        text: "Keep tins and tile adhesives sealed and upright, follow the storage advice on each label, ventilate the unit when it is open and keep fuel and gas cylinders out of it.",
+      },
+      {
+        title: "Material issue register",
+        text: "Note what arrives, what goes to which contractor and what comes back. A simple register or photo log shows a shortage before it holds up the work.",
+      },
+      {
+        title: "Racks and protective storage",
+        text: "Ask about racks or shelving to keep materials off the floor and grouped by trade, and cover anything that could be scratched or chipped.",
+      },
+      {
+        title: "Small-plot placement and access",
+        text: "On a compact plot, choose a spot that stays clear of excavation, scaffolding, concrete work and material unloading as the build moves on, and agree it with your contractor before delivery.",
+      },
+    ],
+    whyOutro:
+      "Give the keys to one responsible person and look inside regularly for damp, leaks or damage while the construction continues.",
+
+    solutionsHeading: "Moving House or Moving Cities",
+    solutionsIntro:
+      "A container gives your belongings somewhere to wait when the dates for leaving one home and entering the next do not line up.",
+    solutions: [
+      {
+        title: "Temporary storage while moving",
+        text: "Keep furniture and cartons on a suitable private site while a new lease begins, a home is readied or a move to another city is arranged.",
+      },
+      {
+        title: "Packing at a manageable pace",
+        text: "With the unit already on site, you can pack and load room by room over several days instead of on a single moving day.",
+      },
+      {
+        title: "Interim storage for household goods",
+        text: "Hold furniture, appliances and boxes between homes for as long as you need, preparing appliances as their manufacturers recommend.",
+      },
+      {
+        title: "Working with packers and movers",
+        text: "Share the container's position, door opening and street access with your packers and movers so they can plan the loading and the vehicles they bring.",
+      },
+      {
+        title: "Inventory",
+        text: "Number each carton, list its contents and room, and photograph valuable pieces before they go in. Keep a copy of the list away from the container.",
+      },
+      {
+        title: "Fragile goods",
+        text: "Wrap glass, mirrors and electronics well, keep them where heavier items cannot crush them, and mark which way up they travel.",
+      },
+      {
+        title: "Insurance",
+        text: "Check whether your home or moving policy covers goods kept in a container, and arrange suitable cover if it does not.",
+      },
+    ],
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We welcome container enquiries from HSR Layout Sectors 1 to 7, Agara, Somasundarapalya, Parangipalya, Haralur Road, Kudlu Gate, Silk Board and Bommanahalli. Each placement site is checked before a delivery date is agreed.",
+
+    extraSections: [
+      {
+        heading: "Storage for Community & Volunteer Groups",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Residents' associations, volunteer teams and local clubs often need one shared, lockable place for the equipment they use through the year.",
+        ],
+        bullets: [
+          {
+            title: "Neighbourhood clean-up equipment",
+            text: "Gloves, brooms, rakes, sacks, bins and high-visibility vests kept together and ready for the next drive.",
+          },
+          {
+            title: "Event supplies",
+            text: "Canopies, folding chairs and tables, banners, lights and decorations for festivals and community gatherings.",
+          },
+          {
+            title: "Tree-planting tools",
+            text: "Spades, crowbars, watering cans, hoses and tree guards in one place between planting days.",
+          },
+          {
+            title: "Shared access",
+            text: "Decide who holds the keys, keep a sign-out sheet for items taken and returned, and post contact numbers inside the door.",
+          },
+          {
+            title: "Landowner or authority permission",
+            text: "Place the unit only where the landowner, association or relevant authority has agreed. A road, footpath or park needs the required approval first.",
+          },
+        ],
+      },
+      {
+        heading: "Delivery & Placement",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hsr-layout/shipping-container-roof-view-hsr-layout.webp",
+          alt: "Top-down view of a shipping container's corrugated roof on a concrete yard",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative overhead view. Plan for the footprint plus room to open the cargo doors and unload.",
+        },
+        paragraphs: [
+          "Containers are placed on private land, or on another site where the owner or the relevant authority has given permission.",
+          "Streets in HSR Layout can be narrowed by parked vehicles, trees, overhead cables and tight corners. Send the site pin, gate width and photographs of the approach and the placement spot so the vehicle and the unloading method can be planned.",
+          "Where a crane or side-lifter is needed, we confirm that it can work safely at the site. Delivery is confirmed only after the site access has been checked, and you prepare a firm, level base with space in front of the cargo doors.",
+        ],
+        // Brief §5: the Bellandur page's gate-and-lane delivery section (the neighbouring area to the east).
+        inlineLinks: [
+          {
+            before: "For gate, lane and unloading checks in a neighbouring area, see our page on",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hsr-layout/shipping-container-three-quarter-view-hsr-layout.webp",
+          alt: "Three-quarter view of a shipping container showing its cargo doors and corrugated side wall",
+          width: 515,
+          height: 388,
+          caption: "Illustrative three-quarter view.",
+        },
+        paragraphs: [
+          "Measure your largest items and the space available on site, then allow room for an aisle so you can reach what you need.",
+        ],
+        table: {
+          caption:
+            "Approximate internal volumes. 10 ft units are fabricated; the size, internal dimensions and door opening of the unit offered are confirmed in its quotation.",
+          headers: ["Size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft", "15 m³", "Compact site or community storage"],
+            ["20 ft", "33 m³", "Home-building storage and household moves"],
+            ["40 ft", "67 m³", "Larger storage requirements"],
+          ],
+        },
+        // Brief §5: product selection and sizes → the cargo category.
+        inlineLinks: [
+          {
+            before: "Compare specifications across our",
+            link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Choosing a Container Grade",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hsr-layout/shipping-container-end-wall-hsr-layout.webp",
+          alt: "Corrugated end wall of a shipping container with corner castings and forklift pockets",
+          width: 1448,
+          height: 1086,
+          caption: "Illustrative end-wall view. Inspect the walls, frame and corner castings of the actual unit.",
+        },
+        paragraphs: [
+          "Containers come in different conditions. Ask which grades are available in your size and for your dates, as not every grade is in stock at all times.",
+        ],
+        bullets: [
+          {
+            title: "One-trip",
+            text: "Used for a single voyage after manufacture, so the panels, doors and floor are close to new. Usually the highest-priced grade.",
+          },
+          {
+            title: "Cargo-worthy",
+            text: "A used container in a condition considered fit to carry cargo. Expect dents, surface rust and earlier repairs.",
+          },
+          {
+            title: "Wind and watertight",
+            text: "A used container that keeps out wind and rain but is no longer used for shipping, often chosen for static storage on land.",
+          },
+        ],
+        closing: [
+          "Whatever the grade, check the floor, roof, doors, seals and locks of the actual unit, or ask for current photographs of it.",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "Choosing a used unit? Learn",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in HSR Layout",
+        placement: "afterSolutions",
+        paragraphs: ["The price of a container for an HSR Layout site depends on:"],
+        bullets: [
+          { title: "Container size", text: "10 ft, 20 ft or 40 ft." },
+          { title: "Condition and grade", text: "One-trip, cargo-worthy or wind and watertight." },
+          { title: "Shelving and accessories", text: "Racks, lighting, vents or other agreed fittings." },
+          { title: "Locking system", text: "Padlocks, a lockbox or other agreed security hardware." },
+          { title: "Delivery access and transport", text: "The distance, the vehicle needed and the unloading method." },
+          { title: "Rental duration", text: "For hire, the number of months and the collection at the end." },
+          { title: "Buy or rent", text: "Whether you need the unit for a few months or want to keep it." },
+        ],
+        closing: ["Share your requirement and you will receive a quotation that lists each of these separately."],
+      },
+      {
+        heading: "Storage Container on Rent in HSR Layout",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If you only need storage for the length of a build or a move, ask about renting a container on monthly terms. Share your start date and expected storage period: the hire terms, delivery and collection are set out in the quotation. For a long period, compare the total hire cost with buying a unit.",
+        ],
+        links: [{ label: "Monthly shipping container rental", href: "/products/shipping-container-rental" }],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          {
+            title: "Enquiry",
+            text: "Tell us what you want to store and for how long, and send the site pin with photos of the access.",
+          },
+          {
+            title: "Recommendation",
+            text: "We suggest a size, grade and any fittings, with an itemised quotation to buy or rent.",
+          },
+          {
+            title: "Permission",
+            text: "You confirm that the landowner, association or authority allows the container in the agreed spot, and prepare the base.",
+          },
+          {
+            title: "Delivery",
+            text: "Once the access has been checked, we agree on the delivery date and the unloading method.",
+          },
+          {
+            title: "Support",
+            text: "Contact us with questions while the container is in use; a hired unit is collected as set out in its quotation.",
+          },
+        ],
+        // Brief §5: the enquiry link → the on-page enquiry form (the hero quotation button's target).
+        inlineLinks: [
+          {
+            before: "Have your site pin and access photos ready? Use the form below to",
+            link: { label: "request a shipping container quotation", href: "#category-enquiry" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          {
+            title: "One team from enquiry to delivery",
+            text: "The same team handles your questions, quotation and delivery planning.",
+          },
+          {
+            title: "Options to buy or rent",
+            text: "10 ft, 20 ft and 40 ft units in different grades, subject to availability.",
+          },
+          {
+            title: "Itemised quotations",
+            text: "The container, fittings, transport and unloading are listed separately.",
+          },
+          {
+            title: "Site access checked first",
+            text: "We review the approach and placement spot with you before a delivery date is fixed.",
+          },
+          {
+            title: "Fittings on request",
+            text: "Racks, shelving, lighting and locks can be quoted for the selected unit.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I keep a container on my plot while my house is being built?",
+        answer:
+          "Yes, if there is a spot that will stay clear of excavation, scaffolding and deliveries for the whole build, and a delivery vehicle can reach it. Agree the position with your contractor before ordering.",
+      },
+      {
+        question: "Which construction materials can be stored on site in a container?",
+        answer:
+          "Tiles, granite, sanitaryware, electrical fittings, doors, hardware and other boxed fittings are typical. Store paints and adhesives as their labels advise, and keep fuel and gas cylinders out of the container.",
+      },
+      {
+        question: "Can I use a container while moving house?",
+        answer:
+          "Yes. Place it on a site you are allowed to use, pack at your own pace and keep your belongings there until the new home is ready. Coordinate the loading with your packers and movers.",
+      },
+      {
+        question: "What should I not store in a container?",
+        answer:
+          "Do not store fuel, gas cylinders, explosives or other hazardous goods, perishable food, plants, animals or anything illegal. Keep cash, jewellery, important documents and medicines with you.",
+      },
+      {
+        question: "Can a residents' group store community equipment in a container?",
+        answer:
+          "Yes, once the landowner, association or relevant authority has approved the spot. Agree who holds the keys and keep a record of items taken out and returned.",
+      },
+      {
+        question: "How long does delivery take in HSR Layout?",
+        answer:
+          "It depends on the availability of the chosen unit, any fit-out and the access at your site. Share your target date and the schedule is confirmed in your quotation.",
+      },
+    ],
+
+    ctaHeading: "Room to Build, Move and Grow",
+    ctaText:
+      "Tell us what you need to store, the size you have in mind, your dates and your HSR Layout site pin, and we will prepare a quotation. Call, message us on WhatsApp or use the enquiry form below.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry for HSR Layout",
+      intro:
+        "Pick a container and quantity, enter your HSR Layout address or PIN and choose purchase or hire. A line on the items and the storage period helps the team prepare an itemised quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Our cabins are made at the Portable Office Cabin factory near Hosur in Tamil Nadu, and our Bengaluru office is in Electronic City; HSR Layout has no Portable Office Cabin yard, depot or office. Every container is subject to availability. Its quotation sets out the size, grade, condition, internal dimensions and fittings, any rental terms, and who arranges transport, unloading, positioning and collection; arrival dates and times are not guaranteed. All images are illustrative; none was taken in HSR Layout or shows a delivered unit. Capacities are approximate. The localities named show where we accept enquiries, and the building, moving and community uses are examples, not clients or past projects. Advice here on materials, packing, insurance, permissions and site access is general information, not legal, safety, engineering or insurance advice.",
   },
 ];
 
