@@ -604,6 +604,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Containers along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
     // HSR Layout (owner-builder storage, house moves and community equipment; owner brief 2026-11-16), after Bannerghatta Road.
     { name: "Shipping Containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+    // Doddanekundi (aerospace and precision parts stores, IT asset disposal staging; owner brief
+    // 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in Doddanekundi", href: "/cities-we-serve/shipping-container-doddanekundi" },
   ],
 };
 
