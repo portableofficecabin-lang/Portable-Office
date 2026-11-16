@@ -34921,7 +34921,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas We Serve",
     areasText:
-      "We supply shipping and storage containers across Indiranagar (also written Indira Nagar), including 100 Feet Road, 12th Main, CMH Road, HAL 2nd Stage and HAL 3rd Stage. We also welcome enquiries from Defence Colony, Domlur, Jeevan Bima Nagar, Halasuru and Old Airport Road. We confirm delivery after checking access to the specific site.",
+      "Our shipping and storage containers are available across Indiranagar (also written Indira Nagar), including 100 Feet Road, 12th Main, CMH Road, HAL 2nd Stage and HAL 3rd Stage. We also welcome enquiries from Defence Colony, Domlur, Jeevan Bima Nagar, Halasuru and Old Airport Road. We confirm delivery after checking access to the specific site.",
 
     extraSections: [
       {
@@ -34978,12 +34978,12 @@ export const CITY_PAGES: CityPage[] = [
           caption: "Top-down render. Keep a clear margin around the unit for opening the doors and for unloading.",
         },
         paragraphs: [
-          "Indiranagar is short on land. Containers must sit on private land with the owner's permission, such as a building's service area, a back lot or a vacant plot nearby, never on roads or footpaths. Many businesses keep their container a short drive away on cheaper land.",
+          "Indiranagar is short on land. A container may only stand on private property with the owner's consent: a building's service area, a back lot or a vacant plot nearby, never on roads or footpaths. Many businesses keep their container a short drive away on cheaper land.",
           "Send the site pin and photos of the lane, the gate, corners, trees, overhead wires and the spot you have in mind. The transport team then surveys the route and the unloading space and confirms the vehicle, the unloading method and a delivery window, at quieter hours where the route allows. Size and access are only confirmed after that survey.",
         ],
         inlineLinks: [
           {
-            before: "Gate, lane and lifting checks for tight sites are covered on our page for",
+            before: "Tight lane or narrow gate? The lifting and access notes are on our page about",
             link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
             after: ".",
           },
@@ -35047,7 +35047,7 @@ export const CITY_PAGES: CityPage[] = [
             text: "prices follow international shipping markets, so check the quotation's validity date.",
           },
         ],
-        closing: ["Tell us what you'll store and where, and we'll send an itemised quotation."],
+        closing: ["Describe the stock and the site, and every item is priced separately in the quotation."],
       },
       {
         heading: "Storage Container on Rent in Indiranagar",
@@ -35088,7 +35088,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How quickly can you deliver?",
         answer:
-          "That depends on which units are available, any rails, racks or lighting to be fitted, and the route to your site. Share your target date, and the quotation will set out the expected schedule.",
+          "It varies with the units in stock, any rails, racks or lighting to install, and the route in. Tell us your target date; the quotation shows the schedule we can offer.",
       },
     ],
 
