@@ -286,6 +286,16 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     // Optional numbered list (since 2026-11-07): the section's bullets render inside an <ol>.
     if (s.ordered && s.bullets && s.bullets.length > 0) m("extra", `extra section ${i + 1} numbered list`, `<ol class="list-decimal pl-6`);
     (s.closing ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} closing ${j + 1}`, x));
+    // Optional H3 subsections (since 2026-11-16): heading (as an <h3>), paragraphs, bullets and closing.
+    (s.subsections ?? []).forEach((sub, k) => {
+      const at = `extra section ${i + 1} subsection ${k + 1}`;
+      t("extra", `${at} heading`, sub.heading);
+      const h3Text = sub.heading.replace(/&/g, "&amp;").replace(/'/g, "&#x27;");
+      items.push({ group: "extra", label: `${at} heading is an <h3>`, test: (mk) => mk.includes(`>${h3Text}</h3>`) });
+      (sub.paragraphs ?? []).forEach((x, j) => t("extra", `${at} paragraph ${j + 1}`, x));
+      (sub.bullets ?? []).forEach((b, j) => { t("extra", `${at} bullet ${j + 1} title`, b.title ?? ""); t("extra", `${at} bullet ${j + 1} text`, b.text); });
+      (sub.closing ?? []).forEach((x, j) => t("extra", `${at} closing ${j + 1}`, x));
+    });
     // Optional links (since 2026-11-05): label text and href.
     (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
     // Optional inline-link paragraphs (since 2026-11-10): lead-in, label and href.

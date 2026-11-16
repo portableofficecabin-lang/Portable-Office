@@ -114,6 +114,21 @@ export interface CityPageSection {
    * in Bellandur, whose "From enquiry to placement" steps come before its areas). Unset = <ul>, as before.
    */
   ordered?: boolean;
+  /**
+   * Optional H3 subsections rendered after the closing paragraphs and before the links (first used by
+   * Shipping & Storage Containers in Brookefield, whose brief puts an H3 inside each of two H2s). Each
+   * has a heading and optional paragraphs, bullets and closing paragraphs, with the section's classes
+   * and motion. Unset = nothing rendered, so every other page's HTML is unchanged.
+   */
+  subsections?: CityPageSubsection[];
+}
+
+/** An H3 block inside an extra section (see CityPageSection.subsections). */
+export interface CityPageSubsection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: CityPageListItem[];
+  closing?: string[];
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -35439,6 +35454,479 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Our cabins are made at the Portable Office Cabin factory near Hosur in Tamil Nadu, and our Bengaluru office is in Electronic City; HSR Layout has no Portable Office Cabin yard, depot or office. Every container is subject to availability. Its quotation sets out the size, grade, condition, internal dimensions and fittings, any rental terms, and who arranges transport, unloading, positioning and collection; arrival dates and times are not guaranteed. All images are illustrative; none was taken in HSR Layout or shows a delivered unit. Capacities are approximate. The localities named show where we accept enquiries, and the building, moving and community uses are examples, not clients or past projects. Advice here on materials, packing, insurance, permissions and site access is general information, not legal, safety, engineering or insurance advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN BROOKEFIELD (east Bengaluru) —
+   * /cities-we-serve/shipping-container-brookefield
+   *
+   * Owner brief of 2026-11-16 ("Shipping & Storage Containers in Brookefield"), with its source text
+   * (the owner's content session, 2026-11-16 09:54Z). The brief proposes /shipping-container-brookefield;
+   * city pages live under /cities-we-serve/, so the page follows that convention (one indexable URL, no
+   * root alias). No Brookefield shipping page, redirect or sitemap entry existed. Meta title, meta
+   * description, H1, keywords, section order, sizes table, areas, five steps and six FAQs are the
+   * brief's; the copy is the source's ("[Brand Name]" → Portable Office Cabin), with the brief's
+   * corrections: no claim that a partition stops pests, cleaning and repair work only with suitable
+   * ventilation, electrical and fire-safety provisions, no cooked, fresh or chilled food in a container,
+   * no food-safe claim, no placement on a road or footpath without authorisation, and the "[X] days"
+   * delivery placeholders replaced by availability-based wording (no lead time is promised).
+   * Mapped onto the template in the brief's order, nothing dropped:
+   *   Intro → intro + introLink ("shipping containers" → the cargo category) + heroCta.
+   *   "Mini-Hubs for Furniture & Appliance Rental Businesses" and "Storage for Donation Drives, CSR
+   *     Collections & NGOs" → two afterIntro extra sections, each with its H3 ("Separate Returned
+   *     Furniture From Clean Stock"; "Keep Donated Goods Clean and Usable", plus the source's volunteer
+   *     and records list) via the new optional `subsections` field.
+   *   Placement & delivery, sizes, grade, price, rental and "How It Works" (ordered) → six
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas We Serve" → areas. "Why Choose Portable Office Cabin" → a default extra section (after the
+   *     areas, as the brief orders it). FAQs: the brief's six. CTA: "Room for Renting, Returning and
+   *     Giving" + the cargo-category enquiry form (rental models kept: rental is offered).
+   * Facts checked against the catalogue: 10 ft units are listed ("10 ft fabricated" on Cargo Container
+   * for Sale; "10 ft / 20 ft / 40 ft / 40 ft High Cube" on Shipping Container Rental), so the 10 ft row
+   * stays; rental is offered on monthly terms (Shipping Container Rental), so the rental section and the
+   * collection step stay, both quote-dependent. Capacities are the brief's approximate figures. No ₹
+   * figure, stock, lead time or delivery hour.
+   *
+   * LINKS (brief §5): delivery section → "shipping containers in Bellandur"; grade section → "how to
+   * inspect a used shipping container": no Chennai page is an inspection guide, so it points to the
+   * Chennai-area Athipattu page, whose "Used Container Inspection" section is a seven-point checklist
+   * (as JP Nagar, Koramangala and Bannerghatta Road do); intro → "shipping containers" (the cargo
+   * category); final CTA button "Request a Storage Container Quotation" → /contact; rental section →
+   * /products/shipping-container-rental. Inbound: the cargo category's location list and the Karnataka
+   * shipping hub; every Karnataka shipping page's nearby block lists this page automatically.
+   * `nearbySkipsBodyLinks` keeps the nearby block from repeating Bellandur.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Brookefield, Thubarahalli and the
+   * Brookefield stretch of ITPL Main Road, for furniture and appliance rental mini-hubs with their
+   * returns handling, and donation drives, CSR collections and NGO relief material. Marathahalli ORR
+   * keeps PG and hostel furniture and commercial storage; Koramangala keeps individual self-storage;
+   * HSR Layout keeps community tools and event gear. Whitefield, ITPL proper, the EPIP Zone, Kundalahalli
+   * and AECS Layout are not named. "Brookfield" appears once (FAQ 5). The Marathahalli office-cabin page
+   * names Brookefield for a different product and is unchanged.
+   *
+   * Images: five owner-dropped lossy VP8 webp files ("public/images/Storage Containers in Brookefield/
+   * Storage Containers in Brookefield/cabin (1–5).webp", no EXIF / XMP / ICC, origin not documented) of
+   * one green container with beige frame, cargo doors and a glazed side door. VP8 data copied
+   * byte-for-byte with an XMP dc:title / dc:description marking each as illustrative (no creator,
+   * copyright, GPS or date set). Three-quarter view with cargo doors (2) = hero / og:image; side with the
+   * glazed door (1) = mini-hub section; roof (4) = delivery section; plain side wall (5) = grade section.
+   * Image 3, a furnished office interior, is not used: it would misrepresent a storage container. No
+   * image shows furniture, appliances, returns, donations or school kits, so those slots are skipped.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-brookefield",
+    city: "Brookefield",
+    listTitle: "Shipping & Storage Containers in Brookefield",
+    metaTitle: "Shipping Container in Brookefield | Furniture & Donation Storage",
+    metaDescription:
+      "Shipping and storage containers in Brookefield for furniture rental mini-hubs, appliance returns, NGO donation drives and CSR collections. Request a quote.",
+    keywords:
+      "shipping container in Brookefield, cargo container Brookefield, storage container Brookefield, storage container Thubarahalli, storage container ITPL Main Road, used shipping container Brookefield, shipping container price in Brookefield, storage container for rent in Brookefield",
+    // Approximate centre of Brookefield, on ITPL Main Road near Brookefield Mall.
+    geo: {
+      region: "IN-KA",
+      placename: "Brookefield, Bengaluru, Karnataka, India",
+      position: "12.9665;77.7175",
+      icbm: "12.9665, 77.7175",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur is linked in the delivery section, so the nearby block leaves it out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-brookefield/shipping-container-brookefield-front.webp",
+      alt: "Exterior view of a green shipping container with cargo doors, locking bars and a glazed side door",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render. The glazed side door is an optional modification; a standard unit opens through its cargo doors.",
+    },
+
+    h1: "Shipping & Storage Containers in Brookefield",
+    tagline:
+      "Container mini-hubs for furniture and appliance rental businesses, and clean, organised storage for donation drives, CSR collections and NGOs.",
+    intro: [
+      "Brookefield is full of people who've come to Bengaluru for work, often for a year or two, sometimes for a single project. Many of them rent their beds, sofas, fridges and washing machines rather than buying them. Many also work for companies that run regular donation drives, collecting clothes, books and essentials for people who need them.",
+    ],
+    introLink: {
+      before:
+        "Both create a steady flow of things that need to be stored, sorted and moved on. Portable Office Cabin supplies",
+      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " in Brookefield for rental businesses that want stock close to their customers, and for the companies and NGOs behind giving drives. A container on your own site can hold delivery-ready stock, keep returned items apart until they've been checked, and give donations a dry, lockable place to be sorted.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Our storage containers go to businesses, campuses and NGOs across Brookefield, including the Brookefield stretch of ITPL Main Road, Thubarahalli and the residential lanes around them. Each address is confirmed after its access is checked.",
+
+    extraSections: [
+      {
+        heading: "Mini-Hubs for Furniture & Appliance Rental Businesses",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-brookefield/storage-container-side-door-brookefield.webp",
+          alt: "Side view of a green shipping container with a corrugated wall and a glazed side door with a keypad lock",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative render. A lockable side door like this one is a modification, quoted separately where it suits the unit.",
+        },
+        paragraphs: [
+          "Furniture and appliance rental businesses do best when they can deliver fast and collect without fuss. A central warehouse on the city's edge means long trips through traffic. A container mini-hub in Brookefield keeps popular items close to the customers who rent them.",
+          "Set up the hub for speed and hygiene:",
+        ],
+        bullets: [
+          {
+            title: "Delivery-ready stock",
+            text: "beds, sofas, tables and study desks, wrapped in protective covers and tagged, kept nearest the doors.",
+          },
+          {
+            title: "Asset tags and an inventory register",
+            text: "scan or log every item in and out, so you always know what's in the hub, what's out with customers and what's waiting for inspection.",
+          },
+          {
+            title: "Appliances prepared for storage",
+            text: "drain washing machines, defrost and dry fridges, store each one the way up its manufacturer advises, and leave the doors slightly open to prevent smells and mould.",
+          },
+          {
+            title: "Mattresses in breathable covers",
+            text: "off the floor and away from damp, stored flat or upright as their makers recommend.",
+          },
+          { title: "A separate returns quarantine area", text: "for items coming back from customers, kept apart from clean stock." },
+          { title: "An inspection and cleaning routine", text: "before anything goes back into the rental stock." },
+          {
+            title: "A minor repair bench, where suitable",
+            text: "a small bench at the back for quick fixes, like tightening joints and replacing knobs, before items go back out.",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Separate Returned Furniture From Clean Stock",
+            paragraphs: [
+              "Returned furniture can bring dust, damage and pests, especially bedbugs in mattresses, sofas and bed frames. Keep returns apart from clean stock until they've been inspected, cleaned and, if needed, treated.",
+            ],
+            bullets: [
+              { title: "Dust and dirt", text: "vacuum and wipe down returned items before they go anywhere near clean stock." },
+              {
+                title: "Damage inspection",
+                text: "check joints, legs, fabric and fittings, and log any damage against the item's asset tag.",
+              },
+              {
+                title: "Pests and bedbugs",
+                text: "look closely at seams, joints and crevices. If you find signs of pests, have the item treated by a pest-control professional before it's reissued.",
+              },
+              { title: "Cleaning before reissue", text: "clean and dry every item fully before it returns to the rental stock." },
+              {
+                title: "Segregated storage",
+                text: "give returns their own marked zone, away from delivery-ready stock, and bag or wrap anything you're unsure about.",
+              },
+              {
+                title: "Inventory control",
+                text: "mark each item as returned, under inspection, in repair or ready, so nothing goes out again before it's been checked.",
+              },
+            ],
+            closing: [
+              "A partition or a marked zone helps keep returns and clean stock apart, but it doesn't stop pests spreading on its own. Inspection, cleaning and, where needed, professional treatment do that.",
+              "Cleaning, repairs or power-tool work inside a container need ventilation, lighting, safe wiring and fire-safety provisions suited to the work. Agree these for the selected unit before you plan a workbench or cleaning area inside it.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage for Donation Drives, CSR Collections & NGOs",
+        placement: "afterIntro",
+        paragraphs: [
+          "Companies in and around Brookefield often run donation drives through the year, collecting winter clothes, school kits, books, toys and dry rations. NGOs collect, sort and distribute all of it. Between the collection and the handover, everything needs a clean, dry, organised home.",
+          "Sort it as it comes in:",
+        ],
+        bullets: [
+          { title: "Clothes", text: "by type, size and season, in labelled bins or bags." },
+          { title: "Books", text: "by age group and language." },
+          { title: "School kits and stationery", text: "packed per child or per school." },
+          { title: "Toys and games", text: "checked for broken or missing parts." },
+          {
+            title: "Dry rations",
+            text: "sealed packs only, with expiry dates visible. Check the dates as packs arrive and hand out the earliest-expiring stock first.",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Keep Donated Goods Clean and Usable",
+            paragraphs: ["Damp, pests and dirt can spoil a whole drive's worth of giving. Keep it fit to give:"],
+            bullets: [
+              { title: "Clean clothing", text: "ask donors to give only washed, usable items, and set aside anything that isn't." },
+              {
+                title: "Dry, protected storage",
+                text: "keep bins, bags and cartons on racks or pallets, off the floor, and close the doors in the rain.",
+              },
+              {
+                title: "Shelving for packaged food",
+                text: "keep sealed dry rations on their own shelves, off the floor and away from damp and cleaning products.",
+              },
+              {
+                title: "Pest prevention",
+                text: "sweep the floor often, keep bin lids shut, watch for droppings or gnaw marks and agree a pest-control plan.",
+              },
+              {
+                title: "Damaged goods kept apart",
+                text: "put torn, stained, broken or expired items in a separate marked area for recycling or disposal.",
+              },
+              {
+                title: "Ventilation and moisture",
+                text: "ask about vents, use desiccants and check for condensation, because damp ruins donated clothes and books quickly.",
+              },
+            ],
+            closing: [
+              "Don't store cooked food, fresh produce or anything that needs refrigeration. A standard storage container has no temperature control and isn't a food-safe store, so dry rations should stay sealed in their original packs.",
+            ],
+          },
+          {
+            heading: "Volunteers, Records and Sorting Space",
+            bullets: [
+              { title: "A volunteer sign-in register", text: "for everyone who uses the container, with times in and out." },
+              {
+                title: "A distribution log",
+                text: "recording what went out, when and to which school, group or partner organisation, which is useful for CSR reporting.",
+              },
+              {
+                title: "Lighting and a sorting table",
+                text: "so volunteers can work comfortably. Ask for lights and sockets as part of the fit-out if you need them.",
+              },
+            ],
+            closing: [
+              "A donation container usually sits on a company campus, at an NGO's premises or on private land, with the owner's permission.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Placement & Delivery",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-brookefield/shipping-container-roof-view-brookefield.webp",
+          alt: "Top-down view of a green shipping container roof with corner castings on a paved yard",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative overhead view. Plan the footprint plus clear space for lifting, unloading and opening the cargo doors.",
+        },
+        paragraphs: [
+          "Containers must sit on private land, such as a business yard, a company campus service area, an NGO's premises or a vacant plot, with the owner's permission. A container is never placed on a public road or footpath without the required authorisation.",
+          "ITPL Main Road and the lanes around Brookefield are busy for much of the day, so the delivery is timed around the traffic once the route has been surveyed. Send us the site location with pictures of the road in, the gate, any sharp turns, low branches or overhead wires, and the exact spot where the container will stand. That spot needs firm, level ground that a truck can reach, with enough clear space to lift the container down safely. From these, the transport team works out which size fits, how it will be unloaded and when it can arrive.",
+        ],
+        // Brief §5: the Bellandur page's gate-and-lane delivery section.
+        inlineLinks: [
+          {
+            before: "Delivering through a narrow society gate or lane? Our page on",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " explains the access checks.",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Size the container for what the hub or the drive holds at its busiest, plus an aisle for loading and a separate zone for returns or sorting.",
+        ],
+        table: {
+          caption:
+            "Capacities are rough internal volumes and differ a little between makers. 10 ft units are fabricated rather than cut down, and your quotation gives the actual unit's size, inside measurements and availability.",
+          headers: ["Size", "Approximate capacity", "Typical use in Brookefield"],
+          rows: [
+            ["10 ft", "~15 m³", "Small donation drives and compact returns storage"],
+            ["20 ft", "~33 m³", "Furniture rental mini-hubs and CSR sorting storage"],
+            ["40 ft", "~67 m³", "Larger rental stock hubs with a segregated returns area, on sites with good access"],
+          ],
+        },
+      },
+      {
+        heading: "Choosing a Container Grade",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-brookefield/shipping-container-side-wall-brookefield.webp",
+          alt: "Corrugated side wall of a green shipping container with forklift pockets and corner castings",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative side view. Check the walls, frame, floor, roof and seals of the actual unit before you accept it.",
+        },
+        paragraphs: [
+          "Upholstered furniture, mattresses, clothes and books all need a clean, dry box. Whichever grade you pick, look over the unit itself, or current photos of it, before it's delivered.",
+        ],
+        bullets: [
+          {
+            title: "Clean interior",
+            text: "no strong smells, residue or loose debris from earlier cargo, so upholstery and donated clothes stay clean.",
+          },
+          {
+            title: "Dry and leak-free",
+            text: "a sound roof, walls, floor and door seals, with no daylight showing through when the doors are shut.",
+          },
+          {
+            title: "One-trip",
+            text: "shipped once from the factory with cargo and then retired, so nearly new; the best match for upholstered stock and donations.",
+          },
+          {
+            title: "Cargo-worthy",
+            text: "a used container still sound enough to carry cargo, with some dents and surface rust; good value for boxed appliances.",
+          },
+          {
+            title: "Wind-and-watertight",
+            text: "no longer fit to ship, but still sealed against rain and wind; fine for static storage if looks don't matter.",
+          },
+          { title: "Ventilation", text: "ask about vents to limit condensation around mattresses, upholstery, clothes and books." },
+          { title: "Security fittings", text: "a lockbox to shield the padlock and sound locking bars, checked on the actual unit." },
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "Buying a used unit? Follow our checklist for",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you pay.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Brookefield",
+        placement: "afterSolutions",
+        paragraphs: ["What a rental hub or donation container costs comes down to:"],
+        bullets: [
+          { title: "Size", text: "whether a 10, 20 or 40 ft unit suits the stock or the drive." },
+          { title: "Grade and condition", text: "a one-trip box costs more than a cargo-worthy or wind-and-watertight one, and the actual unit's state matters too." },
+          { title: "Shelving and racks", text: "for wrapped furniture, boxed appliances, bins and sealed rations." },
+          { title: "Returns partition", text: "a partition or marked zone that keeps returned items apart from clean stock." },
+          { title: "Repair bench and sorting tables", text: "where they suit the unit and the work planned inside it." },
+          { title: "Lighting and ventilation", text: "lights, sockets and vents, added only if they're part of the agreed fit-out." },
+          { title: "Locks", text: "padlocks and a lockbox to protect the hub's stock or the drive's donations." },
+          { title: "Delivery and unloading", text: "the route, the vehicle and the lifting method your site needs." },
+          { title: "Purchase or rental", text: "buying outright, or hiring by the month for as long as you need it." },
+        ],
+        closing: [
+          "Global shipping demand also moves container prices, so note the validity date on your quote. Share what you'll keep inside and where the container will go, and you'll get an itemised quotation.",
+        ],
+      },
+      {
+        heading: "Storage Container on Rent in Brookefield",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Running a seasonal donation drive, or testing a new rental hub location before you commit? Ask us about storage containers on rent in Brookefield. Your quotation covers how long you'll hire the unit, its size and condition, and how it's delivered and collected.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire sizes and terms are listed on our page for",
+            link: { label: "monthly container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          {
+            title: "Share your storage requirements and location",
+            text: "what you'll store, roughly how much and for how long, with the site pin and photos of the access.",
+          },
+          {
+            title: "Receive a container recommendation and quotation",
+            text: "a suggested size and grade, with any racks, partitions, benches or sorting tables itemised.",
+          },
+          {
+            title: "Confirm landowner or campus permission",
+            text: "from the landowner, the campus facilities team or the NGO premises, and prepare a firm, level base.",
+          },
+          {
+            title: "Arrange delivery after site verification",
+            text: "once the route and the placement area have been checked, the delivery window and unloading method are agreed with you.",
+          },
+          {
+            title: "Request additional services or collection",
+            text: "ask us about layout changes, extra units or collecting a hired unit when you're done.",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          {
+            title: "Rental inventory organisation",
+            text: "racks, zoning and an asset-tag routine planned around delivery-ready stock.",
+          },
+          {
+            title: "Separate returns handling",
+            text: "a returns area kept apart from clean stock, with room for inspection and cleaning where the unit suits it.",
+          },
+          { title: "Donation storage and sorting", text: "shelving, bins and sorting space for drives, CSR collections and NGOs." },
+          { title: "Suitable container sizes", text: "10, 20 and 40 ft units, as stock allows." },
+          { title: "Security options", text: "padlocks and a lockbox, quoted with the unit." },
+          { title: "Delivery access planning", text: "route, base and placement agreed with you before any date is set." },
+          { title: "Itemised quotations", text: "each cost (container, fit-out, transport and any hire) shown on its own line." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a furniture rental business run a mini-hub from a container?",
+        answer:
+          "Yes. Keep delivery-ready stock near the doors, tag and register every item, store appliances drained and dried with their doors ajar, and keep returns in a separate area until they've been inspected and cleaned.",
+      },
+      {
+        question: "Why keep returned furniture separate?",
+        answer:
+          "Returned items can carry dust, damage and pests such as bedbugs. Keeping them apart until they're inspected, cleaned and, where needed, professionally treated stops problems reaching clean stock. A partition alone doesn't stop pests.",
+      },
+      {
+        question: "Can a company use a container for a donation drive?",
+        answer:
+          "Yes, on its campus or another site where it has permission. Sort clothes, books, school kits and toys as they come in, keep dry rations sealed and dated, and keep a volunteer sign-in register and a distribution log.",
+      },
+      {
+        question: "What donations shouldn't be stored in a container?",
+        answer:
+          "Cooked food, fresh produce and anything that needs refrigeration, because a standard container has no temperature control. Clothes should be washed before they're donated, and damaged or expired items set aside.",
+      },
+      {
+        question: "Is it Brookefield or Brookfield?",
+        answer: "Both spellings are used for the same neighbourhood in east Bengaluru, and we serve it under either name.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "A unit held in stock can usually go out sooner than one that needs racks, partitions or other fit-out, and the route is checked first. Tell us when your hub or drive needs to open, and the quotation will give a delivery estimate for that unit. No date is fixed until the order is confirmed.",
+      },
+    ],
+
+    ctaHeading: "Room for Renting, Returning and Giving",
+    ctaText: `Whether you're running a rental hub that needs to deliver a bed by tomorrow, or a donation drive that needs to get winter clothes to the right families, we'll quote a container set up to keep things clean, organised and moving. Phone us on ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp or write to ${COMPANY.email.sales}. We cover Brookefield, its stretch of ITPL Main Road and Thubarahalli.`,
+    // Brief §5: the final CTA's "request a storage container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Storage Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Brookefield storage container enquiry",
+      intro:
+        "Choose a container and quantity, add the Brookefield address or pin where it will stand, and tell us if you're buying or hiring. A line on whether it's for a rental hub or a donation drive, and what goes inside, helps the team prepare an itemised quotation.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its Bengaluru office in Electronic City; Brookefield has no Portable Office Cabin depot or branch. Each unit depends on availability. Its quotation lists the size, grade, condition and inside measurements, any racks, partitions, benches, lights, vents or locks, the hire terms where relevant, and who handles delivery, unloading and collection; no delivery date or time is guaranteed. All four pictures are computer renders of a single container for illustration; none was photographed in Brookefield, none shows a delivered or fitted unit, and the glazed side door in them is a modification, not a standard feature. Capacities are approximate. The rental firms, companies and NGOs mentioned illustrate typical uses; they are not customers or completed projects, and localities are listed only to show where we take enquiries. Advice here on pests, cleaning, appliances, food, permissions and access is general guidance only, not pest-control, food-safety, legal, electrical, fire-safety or engineering advice.`,
   },
 ];
 
