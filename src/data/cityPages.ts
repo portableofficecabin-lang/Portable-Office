@@ -114,6 +114,26 @@ export interface CityPageSection {
    * in Bellandur, whose "From enquiry to placement" steps come before its areas). Unset = <ul>, as before.
    */
   ordered?: boolean;
+  /**
+   * Optional H3 sub-sections rendered at the end of the section, after its inline links (first used by
+   * Shipping & Storage Containers in Indiranagar, whose boutique section closes with the brief's H3
+   * "Designer Sample Archives", and on Thanisandra Main Road, whose brief puts H3s under its scaffolding
+   * and vehicle-storage H2s). Each renders its heading as an H3, then its paragraphs, an optional bulleted
+   * or numbered list and optional closing paragraphs, with the section's classes and motion. Unset =
+   * nothing rendered, so every other page's HTML is unchanged.
+   */
+  subsections?: CityPageSubsection[];
+}
+
+/** An H3 sub-section inside an extra section (see CityPageSection.subsections). */
+export interface CityPageSubsection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: CityPageListItem[];
+  /** Optional: render the bullets as a numbered list (<ol>). Unset = <ul>. */
+  ordered?: boolean;
+  /** Optional paragraphs after the bullets. Unset = nothing rendered. */
+  closing?: string[];
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -31835,6 +31855,502 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin's factory is near Hosur in Tamil Nadu and its Karnataka office is in Electronic City Phase 1, Bengaluru; the company does not run a yard, depot or office anywhere in Chamarajanagar district. Containers are offered subject to stock. The unit's size, grade, condition, fit-out, finish, any hire period and the transport, unloading, placement and collection arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one steel container, not photographs taken in Chamarajanagar district or of a unit that has been supplied. Badanaguppe–Kellamballi, Kollegal, Gundlupet, Bandipur, MM Hills, the Biligiri Rangana Hills and the other places named show the area enquiries may come from. Portable Office Cabin has no affiliation with any industrial area, forest or wildlife authority, temple, fair organiser, resort or business there, and none of the uses or places described should be read as a customer, a finished project or a confirmed delivery point. Containers are not offered as food-grade or hazardous-goods storage. Notes on food storage, hazardous materials, floor and rack loads, routes, access restrictions and placement are general guidance, not food-safety, engineering, legal or regulatory advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS ON HENNUR ROAD — storage for churches, parishes and choirs, for music
+   * schools' instruments and equipment (with honest climate-control limits), and for the seasonal stock
+   * of décor and party-supply sellers (north Bengaluru: Hennur Road, Hennur Cross, Kalyan Nagar, HRBR
+   * Layout, HBR Layout, Kothanur, Byrathi, Geddalahalli, Hennur Bande and Babusapalya).
+   *
+   * Owner brief of 2026-11-16 ("CLAUDE AI MASTER COMMAND — Shipping & Storage Containers on Hennur
+   * Road"): meta title, meta description, H1, keywords, local areas, links and image plan used as given;
+   * the brief's root slug became /cities-we-serve/<slug>, the convention of every location page. Source
+   * copy: the owner's content reply of 2026-11-16 13:27Z ("Pasted text(20261116-132918).txt"), kept
+   * section by section with the brief's corrections: no piano in an ordinary, unconditioned container;
+   * an insulated or air-conditioned fit-out is described as quoted against a specification, never as a
+   * stock item or a guaranteed temperature or humidity; no helium cylinders, fireworks, explosives or
+   * other hazardous goods; no promised quiet-hour delivery; no delivery day counts ([X] / [X–Y] removed),
+   * price or certification. Mapped onto the template in the brief's order:
+   *   • H1 and intro; the second intro paragraph is `introLink` ("shipping containers" → the cargo
+   *     category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Storage for Churches, Parishes & Choirs" → an afterIntro extra section with three H3
+   *     `subsections`; the feature band (empty interior render) follows it.
+   *   • "Instruments & Music School Storage" (two H3s), "Seasonal Stock for Décor & Party-Supply
+   *     Sellers" (one H3), "Placement & Delivery", "Container Sizes", "Choosing a Container Grade", price,
+   *     rental and "How It Works" (ordered) → afterSolutions extra sections (the why and solutions slots
+   *     are unused).
+   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
+   *     placement, so it renders after the areas and before the FAQs, as in the brief.
+   *   • The source's six FAQs (the delivery answer without placeholders) → faqs; "Storage for
+   *     Celebrations, All Year Round" → CTA (phone, WhatsApp and e-mail from COMPANY) + enquiry form.
+   * Rental is in the catalogue (Shipping Container Rental, monthly terms), so the rental section stays.
+   * The sibling pages describe 10 ft as a modified size, so its row says so.
+   *
+   * LINKS (brief §5): "shipping containers" → the cargo category (intro); "climate-controlled container
+   * options" → the Vellore page, whose "Insulated and air-conditioned storage enquiries" section explains
+   * how such a fit-out is specified (instruments section, before the piano H3; the anchor and target the
+   * Doddanekundi page uses); "shipping containers in Bellandur" (its society-gate and narrow-lane delivery
+   * section) in the placement section; "how to inspect a used shipping container" → Shipping Container in
+   * Athipattu, the Chennai-area page whose "Used Container Inspection" section is a checklist (the target
+   * every sibling uses for this anchor); rental terms → the rental product; the CTA button "Request a
+   * Shipping Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block from repeating
+   * Bellandur or the category. Inbound: the Karnataka shipping hub, the cargo category's location links,
+   * the directory and the Karnataka shipping nearby blocks. The only live mention of Hennur is the
+   * villa-construction page's areas list (a different service), so no sibling's copy changes.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Hennur Road and the localities above, for
+   * church, parish and choir storage, instrument and music-school storage, and décor and party-supply
+   * stock. Not targeted: Thanisandra, Nagawara and Jakkur (Thanisandra Main Road page), Yelahanka and
+   * Bagalur Road (Yelahanka page), Horamavu, Kalkere and Rampura (Horamavu page, in progress) and
+   * Banaswadi (kept for a possible future page); Hindu festival committees and
+   * Rajyotsava gear (BTM Layout), showroom festive stock (Marathahalli), donation drives (Brookefield) and
+   * music practice-room cabins (Hubballi–Dharwad porta cabins, a different product). "Kothanur" is the
+   * north Bengaluru locality; the JP Nagar page's "Kothnur" is a different place.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/shipping container on Hennur Road
+   * city page/shipping container on Hennur Road/cabin (1–5).webp", no EXIF / XMP / ICC) of one dark green
+   * container. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title / dc:description that
+   * labels it a render. (2) three-quarter view = hero / og:image (the brief's hero filename); (3) empty lit
+   * interior = feature band; (4) roof from above = placement section; (1) side wall = sizes section;
+   * (5) cargo doors with seals and a lockbox = grade section. No image shows church decorations, choir or
+   * sound equipment, instruments, festive stock or party supplies, and none shows a climate-controlled
+   * unit, so those slots are not used and no alt text or caption claims them; no alt text names a size
+   * or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-hennur-road",
+    city: "Hennur Road",
+    listTitle: "Shipping & Storage Containers on Hennur Road",
+    directoryLabel: "Shipping containers on Hennur Road",
+    metaTitle: "Shipping Container on Hennur Road | Church & Décor Storage",
+    metaDescription:
+      "Shipping and storage containers on Hennur Road for church equipment, choir supplies, music school instruments and seasonal décor stock. Request a quote.",
+    keywords:
+      "shipping container on Hennur Road, cargo container Hennur, storage container Hennur Road, storage container Kalyan Nagar, storage container HRBR Layout, storage container Kothanur, used shipping container Hennur, shipping container price on Hennur Road, storage container for rent on Hennur Road",
+    // An approximate point on Hennur Road between Hennur Cross and Kothanur.
+    geo: {
+      region: "IN-KA",
+      placename: "Hennur Road, Bengaluru, Karnataka, India",
+      position: "13.0400;77.6420",
+      icbm: "13.0400, 77.6420",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and the cargo category are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-hennur-road/shipping-container-hennur-road-front.webp",
+      alt: "Exterior view of a shipping container suitable for storage: a dark green steel unit seen at an angle, its doors shut and locking bars in place",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render, shown for storage enquiries; it is not a photograph of a container delivered on Hennur Road.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-hennur-road/shipping-container-interior-hennur-road.webp",
+      alt: "Inside an empty steel container: ribbed grey walls, a reddish plywood floor and two strip lights on the ceiling, with no shelving fitted yet",
+      width: 1672,
+      height: 941,
+      caption:
+        "Illustrative empty interior. Shelving, rails, bins, lighting and vents are fitted only as agreed and quoted, and a plain container like this one is not climate-controlled.",
+    },
+
+    h1: "Shipping & Storage Containers on Hennur Road",
+    tagline:
+      "Organised storage for churches, choirs and music schools, and off-season space for décor and party-supply sellers' stock.",
+    intro: [
+      "Drive down Hennur Road or through Kalyan Nagar in December and the neighbourhood is at its most festive: stars lit in windows, cribs outside churches and carols drifting from parish halls. The rest of the year it stays busy with choir practice, music lessons, parish events and a lively trade in decorations and party supplies.",
+    ],
+    introLink: {
+      before:
+        "All of that leaves things to keep somewhere: cribs and stars between Christmases, sound systems and fete stalls between events, instruments that need careful handling, and stock that arrives months before it sells. Portable Office Cabin supplies",
+      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " on Hennur Road that can be set up for each of these, with the shelving, rails and moisture control for each unit set out in its quotation.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We supply shipping and storage containers along Hennur Road and across Kalyan Nagar, including Hennur Cross, HRBR Layout, HBR Layout, Kothanur, Byrathi, Geddalahalli, Hennur Bande and Babusapalya. We check each site's access before fixing a delivery date.",
+
+    extraSections: [
+      {
+        heading: "Storage for Churches, Parishes & Choirs",
+        placement: "afterIntro",
+        paragraphs: [
+          "Christmas, Easter, feast days, fetes and parish events each come with their own gear, and between times it tends to end up in a back room, a corridor or a parishioner's garage. A container on the church grounds can give all of it one organised, lockable home.",
+          "Run it with a simple system: label every box by season and event, keep an inventory register of what goes in and what comes out, and agree who holds the keys, so nothing goes missing between one celebration and the next.",
+        ],
+        subsections: [
+          {
+            heading: "Christmas Decorations and Crib Storage",
+            bullets: [
+              {
+                title: "Crib figures",
+                text: "wrapped one by one in tissue or bubble wrap, then boxed and labelled, with the most fragile pieces on the lower shelves.",
+              },
+              { title: "Stars and lanterns", text: "flat-packed where their design allows, and kept well away from damp." },
+              { title: "Christmas lights", text: "tested before packing, coiled and boxed, with any faulty string tagged for repair." },
+              { title: "Artificial trees", text: "in their original boxes or in fitted covers." },
+              {
+                title: "Protection against moisture",
+                text: "boxes kept off the floor on shelves or pallets, with vents and moisture absorbers to limit condensation.",
+              },
+            ],
+            closing: [
+              "Plaster, ceramic and glass pieces are more often broken in handling than in storage, so pad them well, never stack heavy boxes on top of them, and carry them in and out one box at a time.",
+            ],
+          },
+          {
+            heading: "Parish Feasts, Fetes and Community Events",
+            bullets: [
+              { title: "Folding tables and canopies", text: "folded, bundled and labelled with the stall or event they belong to." },
+              { title: "Banners", text: "rolled rather than folded where possible, and stored dry." },
+              { title: "Games and fete equipment", text: "sorted into bins, one for each stall." },
+              { title: "Chairs", text: "stacked on trolleys so they can be wheeled straight out on the day." },
+              {
+                title: "A seasonal equipment register",
+                text: "noting what each event uses, what went out and what came back damaged or short.",
+              },
+            ],
+          },
+          {
+            heading: "Choir Robes and Sound Equipment",
+            bullets: [
+              {
+                title: "Speakers, mixers and microphones",
+                text: "kept in their protective cases on raised shelving, never directly on the floor.",
+              },
+              { title: "Choir robes", text: "hung on a rail in breathable garment covers rather than plastic bags, which trap moisture." },
+              {
+                title: "Moisture control",
+                text: "vents and moisture absorbers checked regularly, especially through the monsoon, because damp harms both fabric and electronics.",
+              },
+            ],
+            closing: [
+              "Robes and audio gear can share a container when each has its own zone, the robes hang clear of the equipment and the space stays dry. Keep the inventory register up to date, and give keys only to the people the parish names.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Instruments & Music School Storage",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Music schools and families around Kalyan Nagar and Hennur sometimes need space for a few weeks or months: during a renovation, while moving premises, or when a teaching room has to be cleared. Some instruments cope with storage well; others need far more care than a plain steel box can give.",
+        ],
+        // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers the fit-out.
+        inlineLinks: [
+          {
+            before:
+              "Before choosing storage for a piano or another wooden instrument, read about our",
+            link: { label: "climate-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+            after: ", which explain how an insulated and air-conditioned fit-out is specified and quoted.",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Piano Storage Requires Climate Control",
+            paragraphs: [
+              "Pianos are highly sensitive to changes in temperature and humidity. In an ordinary, unconditioned steel container, Bengaluru's summer heat and monsoon damp can swell or crack the wood, rust the strings and upset the action, so we don't recommend storing a piano in one.",
+              "A piano needs controlled, steady conditions, specialist piano movers to handle it, and its manufacturer's storage requirements confirmed before it goes anywhere. An insulated and air-conditioned container fit-out can be discussed and quoted against a written specification, but air conditioning alone may not hold humidity steady, and no temperature or humidity level is promised unless the approved specification states it.",
+            ],
+            closing: [
+              "If suitable conditions can't be specified for your piano, a storage facility designed for instruments is the better choice, and we'll say so.",
+            ],
+          },
+          {
+            heading: "Keyboards, Guitars, Violins and Other Instruments",
+            bullets: [
+              {
+                title: "Keyboards, amplifiers and electronic instruments",
+                text: "boxed or in their cases on shelves, off the floor, with moisture control.",
+              },
+              {
+                title: "Guitars, violins and other wooden instruments",
+                text: "in hard cases, stored upright or as their makers advise, and never against the steel walls or under the roof, which heat up in the afternoon sun.",
+              },
+              {
+                title: "Humidity management",
+                text: "ventilation and moisture absorbers reduce damp but don't control humidity, so wooden instruments are safest in controlled conditions.",
+              },
+              {
+                title: "Music stands, chairs and teaching materials",
+                text: "stacked, boxed and labelled so a classroom can be set up again quickly.",
+              },
+            ],
+            closing: [
+              "For a valuable or vintage instrument, ask its maker or a specialist technician how it should be stored before choosing any container.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Seasonal Stock for Décor & Party-Supply Sellers",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Shops and wholesalers selling decorations and party supplies buy months ahead of each season, then hold whatever is left until the next one. Christmas, New Year, Diwali, birthdays and weddings each bring a rush, and between them the stock needs somewhere dry, orderly and secure.",
+          "A container can hold that stock in order:",
+        ],
+        bullets: [
+          { title: "Christmas lights and electrical décor", text: "tested, boxed and shelved, with faulty items kept apart." },
+          { title: "Artificial trees and wreaths", text: "in covers or in their original cartons." },
+          { title: "Fragile ornaments and clay lamps", text: "padded and kept on the lower shelves, where a fall does the least damage." },
+          { title: "Paper decorations, banners and backdrops", text: "sealed against damp and kept off the floor." },
+          { title: "Seasonal inventory zones", text: "each festival's stock in its own labelled zone, with the next season's nearest the doors." },
+          { title: "Stock rotation", text: "older stock moved forward so it sells first, with a count at the start and end of every season." },
+          {
+            title: "Pest prevention",
+            text: "no food or food packaging inside, gaps sealed, and regular checks for droppings or chewed paper and fabric.",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Heat-Sensitive Party Supplies",
+            paragraphs: ["A closed steel container can get very hot on a sunny afternoon, and some party stock doesn't tolerate that:"],
+            bullets: [
+              {
+                title: "Latex balloons",
+                text: "deteriorate with heat and light, so keep them sealed in their packs, in the dark and as cool as possible, and sell the oldest first.",
+              },
+              { title: "Candles and wax décor", text: "can soften, bend or melt." },
+              { title: "Heat-sensitive packaging", text: "shrink wrap, adhesives and printed foil can warp, stick or fade." },
+            ],
+            closing: [
+              "If your stock includes many candles, wax items or other heat-sensitive lines, an insulated and air-conditioned fit-out may be needed, quoted against the temperature that stock requires; otherwise keep those lines in cooler storage elsewhere.",
+              "Never store helium cylinders or any other compressed gas, fireworks, explosives or other hazardous goods in an ordinary shipping container. They need storage that meets the safety rules that apply to them.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Placement & Delivery",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hennur-road/shipping-container-roof-overhead-hennur-road.webp",
+          alt: "Overhead shot of a dark green container roof, its corrugations running across and a corner casting at each corner, on grey paving",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative overhead view. Allow a firm, level spot with room around it to unload the container and swing its doors fully open.",
+        },
+        paragraphs: [
+          "A container must stand on private land with the owner's permission: church grounds, a school compound, a business yard or a leased plot. Public roads and footpaths are never an option. The ground has to be firm and level, and some sites need a simple base, such as a concrete pad or plinths, so the container sits evenly and its doors open freely.",
+          "Hennur Road and the roads through Kalyan Nagar are busy for much of the day. Before a delivery is booked, share a location pin with photos of the road in, the gate, sharp bends, overhanging trees or cables, and where you want the unit. From those, the route is verified and an unloading method chosen so the container can be lifted and set down safely. You can ask for a slot outside the busiest hours; whether one is possible depends on the route and the transport team, and it is confirmed with the booking rather than promised in advance.",
+        ],
+        // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers access checks.
+        inlineLinks: [
+          {
+            before: "Gated compounds and narrow lanes need extra checks; the ones we run are set out on the page for",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hennur-road/shipping-container-side-wall-hennur-road.webp",
+          alt: "Long side of a dark green steel container: a corrugated wall between corner posts, with two forklift pockets in the bottom rail",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative render of the side wall. No size is implied; the quotation gives the actual unit's internal dimensions.",
+        },
+        paragraphs: [
+          "All sizes depend on stock. Choose by what you'll store and how you'll reach it: shelving down both sides with an aisle in the middle uses less of the volume than the figures suggest.",
+        ],
+        table: {
+          caption:
+            "Approximate internal volumes. The 10 ft size is a modified unit, offered subject to stock and build; internal dimensions and door openings vary by manufacturer, and the quotation gives the figures for the actual unit.",
+          headers: ["Size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft (modified)", "~15 m³", "Small parish decorations and choir equipment"],
+            ["20 ft", "~33 m³", "Parish event storage, music school equipment and décor stock"],
+            ["40 ft", "~67 m³", "Wholesale decoration inventory and larger institutional stores, on sites with room for it"],
+          ],
+        },
+      },
+      {
+        heading: "Choosing a Container Grade",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hennur-road/shipping-container-cargo-doors-hennur-road.webp",
+          alt: "Shut cargo doors on the end of a green container, showing four vertical locking bars, black rubber seals and a lockbox at the centre",
+          width: 1671,
+          height: 941,
+          caption: "Illustrative render of the cargo doors. Locks, seals and vents are confirmed for the actual unit in its quotation.",
+        },
+        paragraphs: [
+          "There are three common grades. One-trip units have been shipped once and are almost new. Cargo-worthy units are older, with years at sea behind them, yet still sound enough to carry freight. Wind-and-watertight units are retired from shipping and graded only to keep the weather out.",
+          "Décor, robes, paper stock and electronics need a clean, dry, leak-free unit, so a one-trip or a well-kept cargo-worthy container is usually the better choice. Whatever the grade, check the actual unit, in person or in recent photos, for:",
+        ],
+        bullets: [
+          { title: "A clean interior", text: "no residue, smell or debris left from earlier cargo." },
+          { title: "Door seals", text: "rubber gaskets intact, so the doors close tightly." },
+          { title: "Leaks", text: "no daylight showing through the roof, walls or doors once they're shut." },
+          { title: "Ventilation", text: "vents that suit what you'll store, to limit condensation." },
+          { title: "Moisture management", text: "a dry, sound floor, with room for moisture absorbers." },
+          { title: "Security fittings", text: "working lock rods and handles, with space for a lockbox and heavy-duty locks." },
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a checklist.
+        inlineLinks: [
+          {
+            before: "Our checklist on",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " covers each of these points in more detail.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price on Hennur Road",
+        placement: "afterSolutions",
+        paragraphs: ["The price of a container on Hennur Road depends on:"],
+        bullets: [
+          { title: "Size", text: "10 ft (modified), 20 ft or 40 ft." },
+          { title: "Grade and condition", text: "which of the three grades, and how the actual unit has worn." },
+          { title: "Shelving and hanging rails", text: "shelves for boxes and audio gear, and rails for choir robes." },
+          { title: "Padded storage and bins", text: "padded shelves for fragile pieces and labelled bins for small items." },
+          { title: "Lighting and ventilation", text: "interior lights and vents, where agreed." },
+          {
+            title: "Climate control",
+            text: "an insulated and air-conditioned fit-out, quoted against a specification, if your instruments or stock need one.",
+          },
+          { title: "Security", text: "heavy-duty padlocks and a lockbox that covers them." },
+          { title: "Delivery and unloading", text: "the route, the site access and the lifting method." },
+          { title: "Purchase or rental", text: "buy the unit outright, or hire it for an agreed period." },
+          {
+            title: "Market rates",
+            text: "container prices track global shipping costs, so a quotation holds only until the date it states.",
+          },
+        ],
+        closing: ["Describe the items and the site, and we'll reply with a quotation that lists every part separately."],
+      },
+      {
+        heading: "Storage Container on Rent on Hennur Road",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Need room for Christmas stock from October to January, or a home for the parish's equipment while the hall is renovated? Ask about a storage container on rent on Hennur Road. The quotation sets out the hire period, the unit and its condition, and how it will be delivered and later collected.",
+        ],
+        inlineLinks: [
+          {
+            before: "Which sizes are on hire and what the monthly charges cover are explained under",
+            link: { label: "shipping container rental terms", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          {
+            title: "Share what you need to store and where",
+            text: "including anything fragile, heat-sensitive or valuable, such as instruments.",
+          },
+          {
+            title: "Receive a recommendation and quotation",
+            text: "covering the unit, any shelving, rails or bins, any climate-control fit-out, and the delivery.",
+          },
+          { title: "Confirm placement permission", text: "from the church, school, landowner or whoever manages the site." },
+          {
+            title: "Arrange delivery after site verification",
+            text: "after the route and the chosen spot are checked, you agree the delivery slot and where the container sits.",
+          },
+          {
+            title: "Ask about further services",
+            text: "layout changes, an extra unit or collection at the end, where these are offered for your order.",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          {
+            title: "Organised church and parish storage",
+            text: "shelving, rails and labelling that keep Christmas, feast-day and fete equipment in order.",
+          },
+          { title: "Practical event layouts", text: "tables, canopies and chairs on trolleys near the doors, ready for the next event." },
+          {
+            title: "Accurate instrument advice",
+            text: "including the plain fact that a piano doesn't belong in an ordinary, unconditioned container.",
+          },
+          {
+            title: "Seasonal stock organisation",
+            text: "zones by festival, stock rotation and heat-aware advice for balloons, candles and wax.",
+          },
+          { title: "Security options", text: "a lockbox and heavy-duty locks suited to the unit you choose." },
+          { title: "Delivery access planning", text: "route and site checks for busy roads and compound gates." },
+          {
+            title: "Itemised quotations",
+            text: "the container, each fitting, the delivery and any rental listed separately.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a church store its Christmas cribs and decorations in a container?",
+        answer:
+          "Yes. Wrap each crib figure separately, flat-pack stars where you can, test and coil the lights, and label every box by season and event. Keep the boxes on shelves with moisture absorbers, and keep an inventory register so you know what's inside.",
+      },
+      {
+        question: "Can I store a piano in a shipping container?",
+        answer:
+          "Not in an ordinary, unconditioned one: swings in heat and humidity can seriously damage a piano. It needs controlled, steady conditions, specialist movers and its manufacturer's storage requirements. An insulated and air-conditioned fit-out can be discussed and quoted against a specification, but if suitable conditions can't be confirmed, use a facility designed for instruments.",
+      },
+      {
+        question: "Can choir robes and sound equipment be stored together?",
+        answer:
+          "Yes, in separate zones. Hang the robes in breathable covers on a rail, keep speakers, mixers and microphones in their cases on raised shelves, and keep moisture under control throughout.",
+      },
+      {
+        question: "Can party-supply sellers store balloons and candles in a container?",
+        answer:
+          "Balloons can be stored if they stay sealed, dark and as cool as possible. Candles and wax décor can soften or melt in a hot container, so they may need an insulated and air-conditioned fit-out or cooler storage elsewhere. Helium cylinders, fireworks and other hazardous goods must never go in an ordinary container.",
+      },
+      {
+        question: "Can a décor seller keep off-season stock in a container?",
+        answer:
+          "Yes. Pad fragile ornaments and clay lamps, keep paper décor sealed and off the floor, test lights before packing, keep pests out, and arrange the stock in labelled zones by season.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "There's no fixed lead time: it turns on stock, on any shelving or fit-out you want, and on the route and access to your site. Give us your target date and the quotation will state the expected schedule.",
+      },
+    ],
+
+    ctaHeading: "Storage for Celebrations, All Year Round",
+    ctaText: `Whether you're packing the parish crib away until next December, keeping a music school's equipment safe through a renovation, or holding next season's decorations, we'll quote a container set up for what you store. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Hennur Road, Kalyan Nagar, HRBR Layout, Kothanur, Byrathi and Geddalahalli.`,
+    // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Shipping Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Hennur Road",
+      intro:
+        "Pick a container and quantity, share your site's pin or address near Hennur Road or Kalyan Nagar, and say whether you'd like to buy or rent. Tell us what you'll store, including any instruments or heat-sensitive stock, and you'll receive an itemised quotation.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or storage facility on Hennur Road or in Kalyan Nagar. This page describes how a container placed, with permission, on the customer's own or leased land can be used; it is not an offer of a managed storage, instrument-care or moving service. Each unit is subject to availability, and its quotation states its size, grade, condition and internal dimensions, any shelving, rails, bins, lighting, vents, locks or insulated and air-conditioned fit-out, any hire terms, and how it is delivered, unloaded and collected; delivery dates, delivery times and site access are not guaranteed. No container is offered as climate-controlled storage unless its approved specification says so, no temperature or humidity level is guaranteed otherwise, and no container is offered for helium cylinders, fireworks, explosives or other hazardous goods. All five images are illustrative renders of one container; none is a photograph taken on Hennur Road or of a delivered or fitted unit. Churches, choirs, music schools and décor and party-supply sellers are mentioned to illustrate uses, not as clients or completed projects, and Portable Office Cabin is not affiliated with any church, parish, school or business in the area; the localities listed show where enquiries are welcome, not confirmed delivery points. The advice here on instruments, decorations, heat-sensitive stock, pests, hazardous goods, placement and permissions is general in nature and is not engineering, safety, legal or instrument-care advice; follow the instrument and product manufacturers' instructions.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN MADURAI — the general portable-cabin intent for Madurai city and the places
