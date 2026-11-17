@@ -207,9 +207,10 @@ export interface CityPage {
   /**
    * Optional Service JSON-LD for the page, built by the promotion pages' generator: provider = our
    * factory (never the target city), areaServed = this page's city and geo, no offers. Unset = no
-   * Service block, as before.
+   * Service block, as before. `alternateName` (optional, first used by Portable Cabins in Jayanagar for
+   * its porta / prefabricated cabin synonyms) adds the Service's other names; unset = none, as before.
    */
-  serviceJsonLd?: { serviceType: string };
+  serviceJsonLd?: { serviceType: string; alternateName?: string[] };
   /**
    * Optional: declare the hero image's `width` / `height` (which must be its actual pixel size) as
    * og:image:width / og:image:height (first used by Shipping & Storage Containers in Bellandur, whose
@@ -38548,6 +38549,377 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office or yard in Bellandur. Delivery, unloading and placement are arranged for each order, and the schedule is confirmed in the quotation. The layouts, footprints, finishes, insulation, electrical provisions and furniture described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative design renders of one office cabin, not photographs of installations in Bellandur. Bellandur, the Bellandur Post (560103) area and the localities listed are named only to describe where enquiries are welcome; they are not clients, completed projects or confirmed delivery sites. The notes on association approvals, placement, lake and drain works and power billing are general guidance, not legal, engineering or electrical advice; the association, project authority or site team confirms the requirements that apply to each site.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN JAYANAGAR — the general portable-cabin intent for Jayanagar, south Bengaluru
+   * (Jayanagar 1st to 9th Block, incl. 4th Block and 4th T Block, Tilak Nagar, Byrasandra and Yediyur):
+   * rooms people live, work and practise in, inside a family compound. Three uses: an accessible room
+   * for an elderly parent, a private consultation room for a doctor, physiotherapist or counsellor,
+   * and a dance practice studio.
+   *
+   * Owner brief of 2026-11-17 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Portable Cabins in
+   * Jayanagar"; source text = the owner's content session reply of 2026-11-17 13:00Z, "Pasted
+   * text(20261117-130324).txt"): slug (under the /cities-we-serve/ convention), meta title, meta
+   * description and H1 as given; the source's sections, features, size table, areas, steps and the
+   * seven FAQs, in the brief's order, with the brief's qualifications applied (accessibility designed
+   * against the user's needs and applicable standards, no compliance claim; a cabin does not authorise
+   * a clinic; no complete-soundproofing promise; sprung or shock-absorbing floor for dance; no
+   * exemption from local approvals; utility connections by qualified personnel). Removed from the
+   * source: the [Brand Name], [Phone Number], [Email Address] and the [X] / [X–Y] delivery-day
+   * placeholders (the FAQ answers by availability instead), "Custom sizes are always available",
+   * "No hidden costs" and the "we connect power, water and drainage" promise. Mapped onto the template:
+   *   intro (+ `introLink` to the portable cabin product hub, anchor "portable cabins", and the hero
+   *   contact row) → "A Room for Elderly Parents", "Consultation Rooms for Doctors, Physiotherapists
+   *   & Counsellors" (H3 subsections), "Dance Practice Studios", "Placing a Cabin in a Jayanagar
+   *   Compound", "Portable Cabin Sizes", "Portable Cabin Price in Jayanagar", "Portable Cabin on Rent
+   *   in Jayanagar" and "How It Works" (numbered) as `afterIntro` extra sections → "Areas We Serve" →
+   *   "Why Choose Portable Office Cabin" (extra section without placement, so it follows the areas as
+   *   in the brief) → FAQs → CTA "A New Room, Right Where Your Family Needs It" (Request a Portable
+   *   Cabin Quotation → /contact, Call and WhatsApp from COMPANY, e-mail in the text). The why,
+   *   solutions, features, custom and how slots are unset.
+   * Rental: kept, qualified. The company offers portable cabin rental (/rental-service, linked); whether
+   * a FITTED cabin (bathroom, accessibility, clinic or studio fit-out) is available on rent is confirmed
+   * for each enquiry. Owner to confirm (reported in the PR).
+   *
+   * INTERLINKS: out → /products/portable-cabin (intro, "portable cabins"), /rental-service, /contact
+   * (CTA), the Bangalore and Karnataka portable-cabin hubs and /cities-we-serve (related links). In →
+   * the "Portable Cabin|Bangalore", "Portable Cabin|Karnataka" and "Porta Cabin|Karnataka" hub lists
+   * (seoPromotions) and the /cities-we-serve directory (automatic). No product page sells an accessible,
+   * clinic or studio cabin, so the brief's "accessible portable cabin options / consultation room
+   * cabins" links are omitted. The Jayanagar SHIPPING CONTAINER page is not on main or in any PR
+   * (checked 2026-11-17), so the dance-section link "storage containers in Jayanagar" and its
+   * reciprocal "portable cabins in Jayanagar" wait for that page: add both in the same release as it.
+   *
+   * KEYWORD OWNERSHIP: portable / porta / prefabricated / readymade cabin × Jayanagar, Tilak Nagar,
+   * Byrasandra and Yediyur; elder rooms, private consultation, physiotherapy and counselling rooms and
+   * dance practice studios. Not here: office-cabin terms (Bellandur, Marathahalli, Devarabisanahalli),
+   * music practice rooms (Hubballi–Dharwad), hospital campus and health camp cabins (Madurai,
+   * Dharmapuri), container storage (the future Jayanagar container page), and no neighbouring area
+   * (JP Nagar, BTM Layout, Banashankari) is named.
+   *
+   * Images: three owner-dropped webp renders ("public/images/jayanagar portable cabin city
+   * page/jayanagar portable cabin/cabin (1–3).webp", 1774×887, plain VP8, no EXIF / XMP / ICC), copied
+   * with their image data byte-for-byte under descriptive names, with a truthful XMP dc:title /
+   * dc:description ("Illustrative render of …") added; no camera, GPS, date or creator data. They show
+   * one charcoal container-style cabin. (2) front elevation (wide window, wood-finish door, lit canopy)
+   * → hero and og:image with the brief's file name; (1) aerial view → "Placing a Cabin"; (3) plain long
+   * side → "Portable Cabin Sizes". Every image is captioned as an illustrative render. No elder-room,
+   * accessible-bathroom, consultation, counselling or dance-studio image was supplied, so those five
+   * slots are omitted (reported), and no caption or alt text claims a ramp or step-free entrance.
+   *
+   * Geo: Jayanagar 4th Block, 12.9293 N 77.5826 E (owner to review).
+   *
+   * No ₹ figure, stock, lead time, client, completed project, certification or approval claim. Opts
+   * into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers; porta /
+   * prefabricated cabin alternate names) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-jayanagar",
+    city: "Jayanagar",
+    listTitle: "Portable Cabins in Jayanagar",
+    metaTitle: "Portable Cabin in Jayanagar | Elder Rooms, Clinics & Dance Studios",
+    metaDescription:
+      "Portable cabins in Jayanagar for senior-friendly rooms, private doctor and physiotherapy consultations, counselling rooms and dance practice studios. Get a quote.",
+    keywords:
+      "Portable Cabin in Jayanagar, Porta Cabin Jayanagar, Prefabricated Cabin Jayanagar, Readymade Cabin Jayanagar, Portable Cabin Jayanagar 4th Block, Portable Cabin Tilak Nagar, Portable Cabin Byrasandra, Portable Cabin Manufacturers Jayanagar, Portable Cabin Price in Jayanagar, Porta Cabin Cost Jayanagar, Portable Cabin on Rent in Jayanagar, Elder Room Cabin, Granny Annex Cabin, Accessible Portable Room, Senior-Friendly Cabin with Attached Bathroom, Home Clinic Cabin, Consultation Room Cabin, Physiotherapy Room Cabin, Counselling Room Cabin, Dance Practice Studio Cabin",
+    geo: { region: "IN-KA", placename: "Jayanagar, Bengaluru, Karnataka, India", position: "12.9293;77.5826", icbm: "12.9293, 77.5826" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin", alternateName: ["Porta Cabins in Jayanagar", "Prefabricated Cabins in Jayanagar"] },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-jayanagar/portable-cabin-jayanagar-front.webp",
+      alt: "Exterior view of a portable cabin in a walled, landscaped compound, with a wide window and a wood-finish door",
+      width: 1774,
+      height: 887,
+      caption: "Illustrative design render of a portable cabin, not a photograph of a cabin in Jayanagar. The ramp, accessibility and room fit-outs described on this page are not shown.",
+    },
+    ogImageDimensions: true,
+
+    h1: "Portable Cabins in Jayanagar",
+    tagline: "Accessible rooms for elderly parents, private consultation rooms and dance practice studios for Jayanagar homes",
+    intro: [
+      "Jayanagar is a neighbourhood where families stay for generations. Grandparents live with their children, doctors and therapists have long seen patients close to home, and dance teachers train their students in the same rooms year after year. Many of its houses sit on generous plots with compounds and gardens.",
+      "That extra space can become something useful: a ground-floor room for an elderly parent, a quiet consultation room or a studio for dance practice. Portable Office Cabin manufactures portable cabins, also called porta cabins, prefabricated cabins or readymade cabins, at its factory near Hosur and supplies them for these uses in Jayanagar. Each cabin is built at the factory, then delivered and placed in your compound, so most of the building work happens away from your home.",
+      "Whether a cabin can go in your compound depends on site access, the building and land-use permissions that apply, and how power, water and drainage will be connected. Share photographs of the compound and gate, and these are reviewed with you before the quotation.",
+    ],
+    introLink: {
+      before: "Browse the standard sizes, materials and specifications of our",
+      link: { label: "portable cabins", href: "/products/portable-cabin" },
+      after: " before planning a room.",
+    },
+    heroCta: true,
+    ctaButtonLabel: "Request a Portable Cabin Quotation",
+
+    extraSections: [
+      {
+        heading: "A Room for Elderly Parents",
+        placement: "afterIntro",
+        paragraphs: [
+          "As parents get older, stairs, narrow bathrooms and high thresholds can become real risks, and rebuilding part of the house can take months and turn family life upside down. An accessible room in the family compound can keep a parent close to the family, in a ground-floor space planned around their comfort and safety.",
+          "A portable cabin is not automatically safe or suitable for every person’s mobility needs. Plan the room around the person who will live in it, with input from the people who know their needs, such as their doctor or therapist.",
+        ],
+        subsections: [
+          {
+            heading: "Step-Free Entry and Accessible Movement",
+            bullets: [
+              { title: "Step-free entry", text: "a suitable access ramp with handrails up to the door." },
+              { title: "A wide entrance door", text: "with lever handles, planned for a wheelchair or walker." },
+              { title: "Anti-skid flooring", text: "throughout the room." },
+              { title: "Circulation space", text: "for a wheelchair or walker, including room to turn beside the bed and in the bathroom." },
+              { title: "Bedside access", text: "clear space beside the bed for getting in and out safely." },
+            ],
+            closing: [
+              "The ramp slope, door clearances and wheelchair turning space are designed against the applicable accessibility standards and the needs of the person who will use the room. Compliance with a particular standard is confirmed only when it is part of the agreed specification.",
+            ],
+          },
+          {
+            heading: "Attached Bathroom with Accessibility Features",
+            bullets: [
+              { title: "Roll-in shower", text: "a shower area without a step or lip, where the layout and drainage allow it." },
+              { title: "Grab bars", text: "beside the toilet and in the shower." },
+              { title: "Toilet height", text: "a toilet at a suitable height, or a raised toilet seat." },
+              { title: "Shower seat", text: "a fold-down seat in the shower area." },
+              { title: "Wet-area flooring", text: "an anti-skid floor finish in the bathroom." },
+              { title: "Hot water", text: "a hot-water provision, where offered and confirmed in the quotation." },
+              { title: "Water and drainage", text: "connections to your home’s water supply and drainage." },
+            ],
+            closing: ["Bathroom layouts and accessible clearances are planned individually for each cabin."],
+          },
+          {
+            heading: "Comfort, Lighting and Safety",
+            bullets: [
+              { title: "Thermal insulation and an AC provision", text: "to keep the room comfortable through Bengaluru’s warm afternoons and cool nights." },
+              { title: "Emergency call bell", text: "connected to a receiving point in the main house, or wherever someone will hear it." },
+              { title: "Lighting", text: "bright general lighting, plus soft night lights for moving around after dark." },
+              { title: "Windows", text: "positioned for seated viewing where practical, so a parent can look out at the garden." },
+              { title: "Sockets", text: "within easy reach, including near the bed for phones, lamps and medical devices." },
+              { title: "Safe circulation", text: "clear routes between the bed, the bathroom and the door." },
+            ],
+            closing: [
+              "These features support comfort and safety, but they do not guarantee medical safety or make a room suitable for independent living for every person. Confirm that the room meets the user’s care needs before they move in.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Consultation Rooms for Doctors, Physiotherapists & Counsellors",
+        placement: "afterIntro",
+        paragraphs: [
+          "Doctors and therapists in Jayanagar have a long tradition of seeing people close to home. A dedicated cabin can keep a practice separate from family life and give patients a professional, private space, subject to the permissions and requirements that apply to the practice.",
+        ],
+        subsections: [
+          {
+            heading: "General Medical Consultation Room",
+            bullets: [
+              { text: "A consultation desk and patient chairs." },
+              { text: "An examination couch with a privacy screen." },
+              { text: "A washbasin for hand hygiene." },
+              { text: "Lockable storage for records and supplies." },
+              { text: "Bright, even lighting for examinations." },
+              { text: "A small waiting corner, or a shaded seating area outside, where space allows." },
+            ],
+          },
+          {
+            heading: "Physiotherapy Room",
+            bullets: [
+              { text: "Space for a treatment table and exercise equipment." },
+              { text: "Wall bars or rails for guided exercises, where offered and engineered for the loads they will carry." },
+              { text: "Anti-skid flooring." },
+              { text: "Good ventilation and an AC provision." },
+            ],
+          },
+          {
+            heading: "Counselling Room",
+            bullets: [
+              { text: "Acoustic insulation to help keep conversations private." },
+              { text: "A layout planned for privacy." },
+              { text: "Comfortable seating and soft furnishings." },
+              { text: "Warm lighting for a calm atmosphere." },
+              { text: "Frosted or screened windows." },
+            ],
+            closing: [
+              "Acoustic insulation reduces how much sound passes through the walls, door and windows. Complete soundproofing is not promised: the result depends on the build, the openings and the surroundings.",
+            ],
+          },
+          {
+            heading: "Clinic Permissions and Compliance",
+            paragraphs: [
+              "A portable cabin does not by itself authorise anyone to run a medical, physiotherapy or counselling practice. Before seeing patients, check the requirements that apply to your practice and your site, including:",
+            ],
+            bullets: [
+              { text: "Land-use and building permissions for the cabin and its use." },
+              { text: "Clinic or professional registration requirements." },
+              { text: "Fire safety and accessibility requirements." },
+              { text: "Water supply and sanitation arrangements." },
+              { text: "Biomedical waste management rules, where the practice produces clinical waste." },
+            ],
+            closing: [
+              "The cabin is not a certified healthcare facility unless that is documented for the order, and the permissions remain the practitioner’s to obtain.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Dance Practice Studios",
+        placement: "afterIntro",
+        paragraphs: [
+          "Many of Jayanagar’s dance teachers teach from home, but practising in a living room is hard on the floor, the furniture and the neighbours. A practice studio in the compound can give teachers and students a space of their own, with:",
+        ],
+        bullets: [
+          { title: "Dance flooring", text: "a suitable wooden or engineered floor. Ordinary wooden flooring is not automatically safe for repeated jumps and footwork, so for regular practice a properly designed sprung or shock-absorbing floor system is recommended." },
+          { title: "Wall mirrors", text: "along one side." },
+          { title: "Sound system provisions", text: "power and mounting points for speakers." },
+          { title: "Ventilation and an AC provision", text: "because dance is hot work." },
+          { title: "Acoustic insulation", text: "to reduce how much music and ankle-bell sound reaches the neighbours." },
+          { title: "A changing corner", text: "with hooks and a mirror." },
+        ],
+        closing: [
+          "Structural loading, floor performance, ventilation and noise control are considered together when the studio layout is planned, and practice hours that suit the neighbours help too.",
+        ],
+      },
+      {
+        heading: "Placing a Cabin in a Jayanagar Compound",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/portable-cabin-jayanagar/portable-cabin-jayanagar-aerial-view.webp",
+          alt: "Aerial view of a portable cabin roof beside trees, with a long window and an entrance canopy along one side",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative aerial render of the same cabin design, showing its footprint, roof and entrance canopy.",
+        },
+        paragraphs: ["A portable cabin is not exempt from local approvals. Before ordering, check:"],
+        bullets: [
+          { title: "Local rules", text: "the building and land-use rules that apply to structures in your compound, including setback requirements." },
+          { title: "Compound space", text: "room for the cabin with clear space around it." },
+          { title: "Access pathways", text: "clear routes for walking and parking, and emergency access to the house and the cabin." },
+          { title: "Gate width and overhead obstructions", text: "the gate opening, and tree branches, cables or balconies over the delivery path." },
+          { title: "Delivery route", text: "Jayanagar’s roads are generally wide but tree-lined, so the route to your gate is checked before delivery, and delivery is planned for a quiet time where possible." },
+          { title: "Ground preparation", text: "a level, firm base suited to the cabin and the ground conditions." },
+          { title: "Services", text: "the electrical supply, and water and drainage connections for rooms with a bathroom or a clinic washbasin." },
+          { title: "Neighbouring properties", text: "noise management through sound insulation and sensible hours, especially for consultation rooms and studios." },
+        ],
+      },
+      {
+        heading: "Portable Cabin Sizes",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/portable-cabin-jayanagar/portable-cabin-jayanagar-side-view.webp",
+          alt: "Plain long side of a charcoal portable cabin without doors or windows",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative render of the same cabin’s plain long side. Door and window positions are planned for each layout.",
+        },
+        table: {
+          caption: "These are planning examples, not guaranteed accessibility-compliant or clinically approved layouts. Clear internal dimensions, structural suitability and availability are confirmed in the quotation.",
+          headers: ["Application", "Illustrative size", "Features"],
+          rows: [
+            ["Counselling room", "10 × 8 ft", "Acoustic treatment, seating and privacy"],
+            ["Consultation room", "12 × 10 ft", "Desk, examination couch, washbasin and storage"],
+            ["Elder room with bathroom", "20 × 10 ft", "Accessible entrance, bathroom, grab bars and call bell"],
+            ["Physiotherapy room", "20 × 10 ft", "Treatment space, suitable flooring and ventilation"],
+            ["Dance practice studio", "20 × 10 ft or joined cabins", "Dance floor, mirrors, acoustic treatment and ventilation"],
+          ],
+        },
+        closing: ["Other sizes and joined-cabin layouts can be discussed; whether a particular size can be built is confirmed for each enquiry."],
+      },
+      {
+        heading: "Portable Cabin Price in Jayanagar",
+        placement: "afterIntro",
+        paragraphs: ["The price of a portable cabin depends on:"],
+        bullets: [
+          { title: "Size and layout", text: "the cabin size and how the room is arranged." },
+          { title: "Construction", text: "MS or PUF-insulated." },
+          { title: "Accessibility features", text: "the ramp and entrance design, door clearances, grab bars and the emergency call system." },
+          { title: "Plumbing", text: "an attached bathroom or washbasin, with water and drainage connections." },
+          { title: "Fit-out", text: "consultation furniture, flooring, mirrors and acoustic insulation." },
+          { title: "Comfort", text: "thermal insulation, AC provision and lighting." },
+          { title: "Delivery and installation", text: "the route, unloading and placement at your site." },
+          { title: "Purchase or rental", text: "whether you buy the cabin or rent it." },
+        ],
+        closing: ["Tell us who the room is for and how it will be used, and we will send an itemised quotation."],
+      },
+      {
+        heading: "Portable Cabin on Rent in Jayanagar",
+        placement: "afterIntro",
+        paragraphs: [
+          "Caring for a parent while you plan a longer-term arrangement, or starting a practice before committing to a purchase? Ask about renting a portable cabin through our rental service. Whether a cabin with a particular fit-out, such as an attached bathroom, accessibility features, clinic fittings or a dance floor, is available on rent, and for how long, is confirmed for each enquiry.",
+        ],
+        links: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterIntro",
+        ordered: true,
+        bullets: [
+          { text: "Share the intended use and your requirements: who the room is for, what it is for and any mobility needs." },
+          { text: "Share photographs of your compound, the proposed placement area and the gate." },
+          { text: "Receive a proposed layout and an itemised quotation, including the accessibility, plumbing and comfort features." },
+          { text: "We manufacture the approved cabin at our factory." },
+          { text: "We deliver and place the cabin, and the planned power, water and drainage connections are arranged." },
+        ],
+        closing: ["Utility connections are made by suitably qualified personnel, with any permissions they need."],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          { text: "Layouts planned for family use, around who will use the room and how." },
+          { text: "Accessibility-oriented design options, such as step-free entry, grab bars and call bells." },
+          { text: "Consultation-room configurations that keep a practice separate from the home." },
+          { text: "Dance studio fit-outs with suitable flooring, mirrors and acoustic insulation." },
+          { text: "Plumbing and electrical provisions planned from the start." },
+          { text: "A check of the delivery route, gate and placement area before delivery." },
+          { text: "Itemised quotations." },
+        ],
+      },
+    ],
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We welcome portable cabin enquiries from across Jayanagar, 1st to 9th Block, including Jayanagar 4th Block and 4th T Block, and from Tilak Nagar, Byrasandra and Yediyur. Share the site address and photographs of the gate: delivery feasibility, the route and placement are confirmed in the quotation.",
+
+    faqs: [
+      {
+        question: "Can a portable cabin be a safe room for an elderly parent?",
+        answer: "It can be planned as a ground-floor room with step-free entry, a ramp with handrails, a wide door, anti-skid flooring, an attached bathroom with grab bars, an emergency call bell and good lighting. Whether it suits a particular person depends on their mobility and care needs, so plan the ramp slope, door widths and turning space around the person who will use it. Accessibility features are not certified against a standard unless that is part of the agreed specification.",
+      },
+      {
+        question: "Can the cabin have an attached bathroom?",
+        answer: "Yes. An attached bathroom can be planned with grab bars, a fold-down shower seat and, where the layout and drainage allow, a roll-in shower. The water supply and drainage connections to your home are planned in advance and made by qualified plumbers, and the bathroom layout, clearances and any hot-water provision are confirmed in the quotation.",
+      },
+      {
+        question: "Can I run a clinic from a portable cabin in my compound?",
+        answer: "A cabin can be laid out as a consultation room, but it does not by itself authorise you to run a clinic. Check the clinic or professional registration requirements for your practice, land-use and building permissions, fire and accessibility requirements, water and sanitation arrangements and, where applicable, the biomedical waste management rules before you start seeing patients.",
+      },
+      {
+        question: "Can a counselling room be soundproofed?",
+        answer: "Acoustic insulation, door seals, soft furnishings and screened windows reduce how much sound passes in and out, which helps keep conversations private. Complete soundproofing is not promised: the result depends on the build, the openings and the surroundings, so discuss the level of privacy you need before approving the specification.",
+      },
+      {
+        question: "Can a dance teacher use a portable cabin as a studio?",
+        answer: "Yes. A cabin can be fitted out as a practice studio with a suitable floor, wall mirrors, acoustic insulation, ventilation, an AC provision and a changing corner. For regular practice, ask for a properly designed sprung or shock-absorbing floor system rather than ordinary wooden flooring, and plan the floor loading, ventilation and noise control with the layout.",
+      },
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer: "Yes. “Porta cabin”, “portable cabin”, “prefabricated cabin” and “readymade cabin” all describe a ready-built room delivered to your site, and this page covers them all for Jayanagar.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer: "The schedule depends on the layout and fittings, production availability, transport and site permissions. Accessible rooms and custom fit-outs need more planning than a standard cabin. Share your target date, and the schedule is confirmed in the quotation.",
+      },
+    ],
+
+    ctaHeading: "A New Room, Right Where Your Family Needs It",
+    ctaText: `Whether it’s a comfortable room for a parent, a quiet place to see patients or a studio where students can dance, tell us who the room is for and how it will be used, and share photographs of your compound and gate. Call or WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Jayanagar 1st to 9th Block, Tilak Nagar, Byrasandra and Yediyur.`,
+    // The brief's CTA is the quotation request (→ /contact) plus Call and WhatsApp from COMPANY (on by
+    // default); an empty list drops the two default container-office buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office or yard in Jayanagar. Jayanagar, its blocks and the localities listed are named only to describe where enquiries are welcome; they are not clients, completed projects or confirmed delivery sites. The layouts, sizes, accessibility features, bathroom and clinic fittings, flooring, insulation and other features described here are options; what is supplied is confirmed in the approved specification and quotation for each order, and delivery, unloading and placement are arranged for each site without guaranteed dates. The images are illustrative design renders of one cabin, not photographs of installations in Jayanagar, and they do not show the accessibility, bathroom, clinic or studio fit-outs described. Accessibility features are not certified against a standard unless that is specified for the order, a cabin is not a certified healthcare facility, and acoustic insulation reduces but does not eliminate sound. The notes on accessibility, clinic permissions, biomedical waste, dance flooring, placement and utility connections are general guidance, not medical, legal, engineering or regulatory advice.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN VIRUDHUNAGAR — the general portable-cabin intent for Virudhunagar district
