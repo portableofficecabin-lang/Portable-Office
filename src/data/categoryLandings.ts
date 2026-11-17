@@ -295,6 +295,12 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Shipping containers along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
       // HSR Layout storage page (owner brief, 2026-11-16), appended so the live links keep their positions.
       { name: "Shipping containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+      // Doddanekundi storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Shipping containers in Doddanekundi", href: "/cities-we-serve/shipping-container-doddanekundi" },
+      // BTM Layout storage page (owner brief, 2026-11-16), appended so the live links keep their positions.
+      { name: "Shipping containers in BTM Layout", href: "/cities-we-serve/shipping-container-btm-layout" },
+      // Mahadevapura storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Storage containers in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
       // Thanisandra Main Road storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
       { name: "Storage containers in Thanisandra", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
     ],
