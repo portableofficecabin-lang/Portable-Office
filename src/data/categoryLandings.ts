@@ -303,6 +303,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
       // KR Puram storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
       { name: "Shipping containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
+      // Thanisandra Main Road storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Storage containers in Thanisandra", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
       // Ramamurthy Nagar storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
       { name: "Shipping containers in Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
     ],
