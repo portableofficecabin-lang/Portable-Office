@@ -34351,6 +34351,392 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN HEBBAL, BENGALURU — accessory, merchandise and PDI-supply stores for
+   * car dealerships on Bellary Road, and field-kit stores for agri-tech teams and agricultural research
+   * groups (north Bengaluru: Hebbal Kempapura, Kodigehalli, Bhadrappa Layout, Byatarayanapura, Ganganagar
+   * and the Hebbal stretch of Bellary Road).
+   *
+   * Owner brief of 2026-11-17 ("CLAUDE AI MASTER COMMAND — Shipping & Storage Containers in Hebbal,
+   * Bengaluru": meta title, meta description, H1, keywords, local areas, links, image plan and copy used
+   * as given; the brief's root slug became /cities-we-serve/<slug>, the convention of every location
+   * page). Kept section by section with the brief's own guards: no unverified price, stock, delivery time,
+   * certification or climate-controlled product; batteries, fuel, gas cylinders, agricultural chemicals,
+   * biological samples and temperature-sensitive seeds are kept out of a general-purpose container; no
+   * business address in Hebbal. Mapped onto the template in the brief's order:
+   *   • H1 and intro (two paragraphs); the third is `introLink` ("shipping and storage containers" → the
+   *     cargo category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Shipping Containers for Car Dealerships on Bellary Road" → an afterIntro extra section with two
+   *     H3s through `subsections` ("Dealership Storage Applications", the brief's seven items; "Fuel, Gas
+   *     Cylinders, Batteries and Chemicals", the brief's exclusion line plus its battery FAQ); the feature
+   *     band (empty interior render) follows it.
+   *   • "Storage Containers for Agri-Tech and Research Equipment" → solutions: the brief's six storage
+   *     applications and four cautions as four numbered H3s (the sensitive-electronics item carries the
+   *     Vellore link); general note as solutionsOutro.
+   *   • Placement and delivery, sizes, price, rental and "How to Order" (ordered) → five afterSolutions
+   *     extra sections.
+   *   • "Areas Served" → areas; "Why Choose Portable Office Cabin?" → an extra section without a placement,
+   *     so it renders after the areas and before the FAQs, as in the brief.
+   *   • The brief's eight FAQs → faqs (the FAQPage JSON-LD covers only these visible questions); "Request a
+   *     Shipping Container Quotation in Hebbal" → CTA (phone, WhatsApp and e-mail from COMPANY) + form.
+   * Rental is in the catalogue (Shipping Container Rental: 10, 20 and 40 ft, monthly terms, deposit and
+   * lock-in confirmed in the agreement), so the brief's conditional rental section stays. The 10 ft row
+   * stays as "if available": the cargo and rental catalogues list a 10 ft fabricated size.
+   *
+   * LINKS (brief §5): "shipping and storage containers" → the cargo category (intro); "Options for
+   * insulated or air-conditioned containers" → the Vellore page's insulated / AC fit-out section (the
+   * brief's "Climate-controlled container options" is softened: that page quotes fit-outs against a
+   * stated requirement and guarantees no climate performance); "container delivery and placement" → the
+   * Bellandur page's gate-and-lane delivery section; "used shipping container inspection checklist" →
+   * Shipping Container in Athipattu, the Chennai-area page whose "Used Container Inspection" section is a
+   * checklist (the brief's /shipping-container-chennai route does not exist); "storage container rental" →
+   * the rental product; the CTA button "Request a Container Quotation" → /contact. Anchors differ from the
+   * siblings' anchors for the same targets. `nearbySkipsBodyLinks` keeps the nearby block from repeating
+   * them. Inbound: the Karnataka shipping hub, the cargo category's location links, the Karnataka shipping
+   * nearby blocks (Thanisandra, Yelahanka, Hennur Road and the rest) and the "Hebbal" delivery-area chip on
+   * the Shipping Container in Bangalore page.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Hebbal (Bengaluru), Hebbal Kempapura,
+   * Kodigehalli, Bhadrappa Layout, Byatarayanapura, Ganganagar and Bellary Road (Hebbal), for car
+   * dealership accessories, merchandise and PDI supplies and for agri-tech and research field kits. The
+   * Hebbal shop page is Mysuru's Hebbal (portable shop × Hebbal, Mysuru) and keeps its own keywords: every
+   * title, H1 and description here says "Bengaluru", and FAQ 1 tells the two apart. Not targeted:
+   * Thanisandra, Nagawara, Jakkur and Amruthahalli and private vehicle storage (Thanisandra Main Road page),
+   * Yelahanka, Kogilu and Attur Layout (Yelahanka page), tyres and service-centre spares (Marathahalli ORR),
+   * farm inputs and agricultural supplies (Krishnagiri). No live page names these localities for this
+   * product, so no sibling's copy changes.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Storage Containers in Hebbal,
+   * Bengaluru city page/Storage Containers in Hebbal, Bengaluru/cabin (1–5).webp", 60–143 KB, no EXIF /
+   * XMP / ICC) of one olive-green container. Each is copied with its VP8 data byte-for-byte plus an XMP
+   * dc:title / dc:description that labels it a render (no GPS, camera or location data). (2) three-quarter
+   * exterior = hero / og:image (the brief's hero filename); (3) empty interior = feature band; (4) roof from
+   * above = placement section; (5) side wall = sizes section; (1) cargo doors = price section (condition of
+   * a used unit). No image shows boxed vehicle accessories, field equipment, or a unit of a known length,
+   * so the brief's dealership, agri-tech, "20 ft" and "40 ft" image slots are not used and no alt text or
+   * filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-hebbal-bengaluru",
+    city: "Hebbal, Bengaluru",
+    listTitle: "Shipping & Storage Containers in Hebbal, Bengaluru",
+    directoryLabel: "Shipping containers in Hebbal, Bengaluru",
+    metaTitle: "Shipping Container in Hebbal, Bengaluru | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Hebbal, Bengaluru, for car dealership accessories, merchandise and agri-tech field equipment. Request a quote.",
+    keywords:
+      "shipping container in Hebbal Bengaluru, cargo container Hebbal Bangalore, storage container Hebbal Bengaluru, storage container Hebbal Kempapura, storage container Kodigehalli, storage container Byatarayanapura, storage container Bellary Road Hebbal, used shipping container Hebbal Bengaluru, shipping container price in Hebbal Bengaluru",
+    // Approximate: Hebbal Junction on Bellary Road, north Bengaluru.
+    geo: {
+      region: "IN-KA",
+      placename: "Hebbal, Bengaluru, Karnataka, India",
+      position: "13.0358;77.5970",
+      icbm: "13.0358, 77.5970",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Vellore, Bellandur, Athipattu, the cargo category and the rental product are linked in the body.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-hebbal-bengaluru/shipping-container-hebbal-bengaluru.webp",
+      alt: "Three-quarter view of an olive-green steel shipping container with closed cargo doors and vertical locking bars, standing on a paved yard",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render, not a photograph taken in Hebbal or of a delivered unit.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-hebbal-bengaluru/shipping-container-interior-hebbal-bengaluru.webp",
+      alt: "Empty interior of a steel shipping container with olive-green corrugated walls, a dark plywood floor and closed cargo doors at the far end",
+      width: 1672,
+      height: 940,
+      caption:
+        "Illustrative render of an empty unit. Shelves, racks, bins, lighting and vents are added only if your quotation lists them.",
+    },
+
+    h1: "Shipping & Storage Containers in Hebbal, Bengaluru",
+    tagline:
+      "Accessory and merchandise stores for car dealerships, and secure field-kit stores for agri-tech and research teams, in Hebbal, Bengaluru.",
+    intro: [
+      "Hebbal is one of north Bengaluru's key commercial and transport hubs. Bellary Road runs through it towards the airport, and the junction links that corridor with the residential layouts and business areas on either side.",
+      "Car dealerships along Bellary Road, and the research organisations and agri-tech teams working around Hebbal, often need orderly storage for accessories, merchandise, equipment and field supplies.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " for businesses in Hebbal, Bengaluru, that need flexible, lockable storage on their own premises. Describe what you plan to store and where the container would go, and we'll recommend a size and a storage layout.",
+    },
+
+    solutionsHeading: "Storage Containers for Agri-Tech and Research Equipment",
+    solutionsIntro:
+      "Agricultural research organisations, field technicians and agri-tech businesses need a secure base for the equipment that goes out for field tests and trials and comes back at the end of the day. Properly prepared, a container can hold that kit:",
+    solutions: [
+      {
+        title: "Sampling Tools, Field Instruments and Plot Markers",
+        text: "Soil sampling equipment, corers and sample collection tools, field measuring instruments and plot markers can sit on shelves or in bins labelled by project or trial plot, so each team picks up a complete kit before it leaves for the field.",
+      },
+      {
+        title: "Weather Instruments, Sensors and Drone Cases",
+        text: "Weather monitoring instruments, sensor equipment and agricultural drone cases and accessories are best kept in their protective cases, off the floor. Sensitive electronic equipment may need controlled temperature and humidity, which a plain steel container does not provide. Store drone batteries exactly as their manufacturer instructs, and charge them only where appropriate safety provisions are in place.",
+        // Brief §5: the Vellore page's insulated and air-conditioned fit-out section (anchor softened, see the header).
+        link: { label: "Options for insulated or air-conditioned containers", href: "/cities-we-serve/shipping-container-vellore" },
+      },
+      {
+        title: "Cleaned Equipment, Packing Benches and Registers",
+        text: "Field equipment is cleaned before it goes back into storage and returned to its protective case. A packing bench near the doors gives teams a place to assemble kits, and an inventory register records what has gone out, with whom, and when it came back.",
+      },
+      {
+        title: "What Needs Separate, Controlled Storage",
+        text: "Pesticides, fertilisers and hazardous agricultural chemicals require separate, compliant storage. Biological samples and temperature-sensitive seeds should be kept in suitably controlled environments, not in an ordinary unconditioned container.",
+      },
+    ],
+    solutionsOutro:
+      "These notes are general guidance only. Always go by the equipment maker's instructions and any safety rules or institutional procedures that cover your equipment and samples.",
+
+    areasHeading: "Areas Served Around Hebbal, Bengaluru",
+    areasText:
+      "We welcome container enquiries from Hebbal, Bengaluru, and its neighbourhoods, including Hebbal Kempapura, Kodigehalli, Bhadrappa Layout, Byatarayanapura, Ganganagar and the Hebbal stretch of Bellary Road. Each delivery is confirmed after the site's access has been checked.",
+
+    extraSections: [
+      {
+        heading: "Shipping Containers for Car Dealerships on Bellary Road",
+        placement: "afterIntro",
+        paragraphs: [
+          "Car dealerships handle a wide range of accessories, merchandise and pre-delivery supplies, and showroom stockrooms fill up fast. A shipping container placed within the dealership's own yard, where the site owner permits it, adds lockable storage close to the workshop and the delivery bay.",
+        ],
+        subsections: [
+          {
+            heading: "Dealership Storage Applications",
+            bullets: [
+              { title: "Vehicle accessories", text: "floor mats, seat covers, mud flaps, door visors and decorative accessories, sorted on labelled shelves." },
+              {
+                title: "Electronic accessories",
+                text: "boxed infotainment systems, cameras and parking sensors, kept in their packaging under suitable environmental conditions. A plain steel container heats up in the sun, so plan shading, ventilation or insulation before costly electronics go in.",
+              },
+              { title: "Large accessories", text: "roof carriers, body kits and bumpers on racks sized for them, rather than stacked on top of each other." },
+              { title: "Promotional merchandise", text: "branded merchandise, gift sets and the accessories handed over at customer deliveries." },
+              {
+                title: "PDI supplies",
+                text: "protective films, cleaning materials and other suitable consumables, stored as their manufacturers instruct.",
+              },
+              { title: "Inventory management", text: "labelled shelves and a set area for each vehicle model, so the right kit is found for every delivery." },
+              { title: "Seasonal inventory", text: "extra room for festive-season accessories and merchandise when bookings peak." },
+            ],
+          },
+          {
+            heading: "Fuel, Gas Cylinders, Batteries and Chemicals",
+            paragraphs: [
+              "Fuel, gas cylinders, damaged batteries and hazardous chemicals must not be kept in a general-purpose container. New vehicle batteries belong there only where the storage arrangement meets the battery manufacturer's instructions and the safety requirements that apply; otherwise give them separate, appropriate storage.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Container Placement and Delivery in Hebbal",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hebbal-bengaluru/shipping-container-roof-overhead-hebbal-bengaluru.webp",
+          alt: "Top-down view of an olive-green shipping container roof on a paved yard, with the cargo-door hinges at one end",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative view from above. Allow clear space at the door end for the doors to swing open and for loading.",
+        },
+        paragraphs: [
+          "A container can be placed on suitable private premises with the necessary permissions: a commercial property, a dealership yard, an industrial plot or a research campus. It cannot stand on the road or the footpath.",
+          "Bellary Road and the Hebbal junction carry heavy airport and city traffic, so a delivery is planned around the traffic and any restrictions that apply to goods vehicles. Before a date is agreed, we check:",
+        ],
+        bullets: [
+          { title: "Site access", text: "how the vehicle reaches the spot, and whether it has room to turn." },
+          { title: "Container size and unloading", text: "the size ordered and how it will come off the vehicle." },
+          { title: "Ground preparation", text: "a level, firm base with suitable support under the corners." },
+          { title: "Permissions", text: "the landowner's consent and any local requirements that apply." },
+          { title: "Lifting equipment", text: "room for a crane or other handling equipment to work safely." },
+          { title: "Road restrictions and scheduling", text: "a delivery slot that suits the route and your site's working hours." },
+        ],
+        closing: [
+          "Delivery arrangements and timelines are confirmed for your actual site and the equipment available; none is promised before these checks.",
+        ],
+        // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers lifting access.
+        inlineLinks: [
+          {
+            before: "For narrow gates, tight turns and lifts over a boundary wall, see our notes on",
+            link: { label: "container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " for Bellandur.",
+          },
+        ],
+      },
+      {
+        heading: "Available Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hebbal-bengaluru/shipping-container-side-wall-hebbal-bengaluru.webp",
+          alt: "Corrugated side wall of an olive-green shipping container with corner castings and forklift pockets, on a paved yard",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative side view. Your quotation states the internal dimensions of the unit offered.",
+        },
+        table: {
+          caption:
+            "Capacities are approximate and rounded. Exact dimensions and capacity depend on the container's specification; 10 ft units are fabricated rather than standard sea-freight boxes and are offered only when available, and your quotation confirms which sizes can be supplied.",
+          headers: ["Container size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft, if available", "~15 m³", "Compact storage for research equipment"],
+            ["20 ft", "~33 m³", "Dealership accessories or field equipment"],
+            ["40 ft", "~67 m³", "Larger inventories and equipment stores, where site access permits"],
+          ],
+        },
+      },
+      {
+        heading: "Shipping Container Price in Hebbal, Bengaluru",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hebbal-bengaluru/shipping-container-cargo-doors-hebbal-bengaluru.webp",
+          alt: "Closed cargo doors of an olive-green shipping container, with four vertical locking bars, lever handles and door hinges",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative render. On a used unit, check the door seals, hinges and locking bars of the actual container before you agree to it.",
+        },
+        paragraphs: ["The price of a shipping container depends on its size, condition, specification and delivery. A quotation for Hebbal weighs these factors:"],
+        bullets: [
+          { title: "Dimensions", text: "a 10, 20 or 40 ft unit." },
+          { title: "Condition", text: "new or used." },
+          { title: "Structural condition and weather resistance", text: "of the actual unit offered." },
+          { title: "Shelving and storage modifications", text: "racks, shelves and bins planned around your stock." },
+          { title: "Ventilation and electrical provisions", text: "vents, lights and power points, where specified." },
+          { title: "Security", text: "locks and access arrangements." },
+          { title: "Transport and unloading", text: "the distance to your site and the lifting method." },
+          { title: "Additional equipment or modifications", text: "anything else your storage plan needs." },
+        ],
+        closing: [
+          "Share what you plan to store and where the container will go, and you'll receive a quotation based on a verified specification. Prices are given only in that written quotation.",
+        ],
+        // Brief §5 inspection link: Athipattu's "Used Container Inspection" checklist (no Chennai route exists).
+        inlineLinks: [
+          {
+            before: "Buying a used unit? Go through our",
+            link: { label: "used shipping container inspection checklist", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you agree to one.",
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers on Rent in Hebbal",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Portable Office Cabin also rents out storage containers, which can suit a dealership that needs extra space for the festive season or a research team with a fixed field season. Each rental quotation states the container size, the rental period and any minimum term, the transport charges for delivery and collection, and any deposit; these are confirmed in the rental agreement before dispatch.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and booking are explained on our",
+            link: { label: "storage container rental", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { title: "Share the size and the use", text: "the container size you need and what it will store." },
+          { title: "Give the delivery location", text: "the address, and the exact spot on the property for the container." },
+          { title: "Discuss modifications", text: "shelving, ventilation, lighting, locks or other equipment." },
+          { title: "Receive a quotation", text: "based on a verified specification." },
+          { title: "Confirm access, permissions and delivery", text: "the route, the landowner's consent and the unloading plan." },
+          { title: "Place the order", text: "and coordinate delivery and placement with our team." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        bullets: [
+          { title: "Container options", text: "10, 20 and 40 ft units, new or used, to buy or to rent, subject to availability." },
+          { title: "Fit-outs that suit your stock", text: "shelves, racks, bins, vents, lighting and locks, as agreed in the quotation." },
+          { title: "Clear quotations", text: "each cost on its own line, against a verified specification." },
+          { title: "Delivery coordination", text: "route, access and unloading checked before a vehicle is sent." },
+          {
+            title: "Straight advice on what doesn't belong",
+            text: "fuel, gas cylinders, damaged batteries, agricultural chemicals and biological samples need other storage.",
+          },
+          { title: "Manufacturer near Hosur", text: "our factory is near Hosur, with an office in Electronic City, Bengaluru." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Is this page about Hebbal in Bengaluru or Hebbal in Mysuru?",
+        answer:
+          "Hebbal in Bengaluru: the area around Hebbal Junction and Bellary Road in the north of the city. Hebbal in Mysuru is a separate place.",
+      },
+      {
+        question: "Can a shipping container store car dealership accessories?",
+        answer:
+          "Yes. With suitable shelving, ventilation and storage conditions, a container can hold boxed accessories, merchandise and other dealership inventory.",
+      },
+      {
+        question: "Can a shipping container store agricultural research equipment?",
+        answer:
+          "Yes. General field equipment, sampling tools and protective cases can be kept in a properly prepared container. Sensitive equipment may need environmental controls, and chemicals, biological samples and temperature-sensitive seeds need separate, suitable storage.",
+      },
+      {
+        question: "Can vehicle batteries be stored inside a shipping container?",
+        answer:
+          "Only where the storage arrangement meets the battery manufacturer's instructions and the safety requirements that apply. Damaged batteries must never go into general storage.",
+      },
+      {
+        question: "Can agricultural drones be stored inside a container?",
+        answer:
+          "Drones and their cases can be stored where the environmental and security conditions are suitable. Their batteries need a storage arrangement the manufacturer approves, and charging needs appropriate safety provisions.",
+      },
+      {
+        question: "Are shipping containers available in 20 ft and 40 ft sizes?",
+        answer:
+          "These are the common sizes, and a 10 ft fabricated unit may also be available. Confirm current availability and the specification of the unit offered before you order.",
+      },
+      {
+        question: "What is the shipping container price in Hebbal?",
+        answer:
+          "It depends on the container's size and condition, any modifications, and transport and unloading. Request a quotation for current pricing.",
+      },
+      {
+        question: "How long does delivery take?",
+        answer:
+          "That depends on stock availability, any customisation, site access and transport arrangements. Your quotation confirms the estimated timeline before you place an order.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Hebbal",
+    ctaText: `Whether you need organised storage for dealership inventory or a dedicated store for field equipment, we can talk through the shipping container options that suit you. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Hebbal, Bengaluru, Karnataka.`,
+    // The CTA box button → /contact.
+    ctaButtonLabel: "Request a Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Hebbal, Bengaluru",
+      intro:
+        "Choose a container and quantity, add the site address in or near Hebbal and say whether you'd like to buy or rent. Tell us what you plan to store and how vehicles reach the site, and we'll send a quotation.",
+    },
+    // The cargo category, the inspection checklist and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it has no yard, depot or branch in Hebbal. Each container is offered subject to availability, and its size, condition, inside dimensions, fittings (shelves, racks, bins, vents, lights, locks), any rental terms and its delivery, unloading and collection are set out only in its written quotation; no delivery date or vehicle access is promised. The five images are illustrative renders of one container, not photographs taken in Hebbal or of a delivered or fitted unit. Car dealerships, research organisations and agri-tech teams are described as typical users, not as clients or past projects; Portable Office Cabin is not affiliated with any dealership, vehicle manufacturer, university or research institution, and the neighbourhoods named indicate where we welcome enquiries, not confirmed delivery points. A standard container is not climate-controlled and is not approved storage for fuel, gas cylinders, damaged batteries, agricultural chemicals or biological samples. Notes on batteries, drones, chemicals, samples, site access and placement are general information only; they are not legal, regulatory, safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN YELAHANKA — packing and crating stores for air freight forwarders
    * and exporters, and tack rooms for riding schools and equestrian centres (north Bengaluru: Yelahanka
    * New Town, Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu, Kattigenahalli, the Yelahanka
