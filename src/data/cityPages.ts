@@ -390,6 +390,13 @@ export interface CityPage {
    * district-wide enquiries to the Ranipet district page). Unset = no element.
    */
   areasInlineLink?: CityPageInlineLink;
+  /**
+   * Optional further inline-link paragraphs, rendered straight after `areasInlineLink` and before
+   * `areasLinks` (first used by Shipping & Storage Containers in JP Nagar, whose areas section points both
+   * to Bannerghatta Road and to Kanakapura Road). Counted as body links for `nearbySkipsBodyLinks`.
+   * Unset = no element, so every other page's HTML is unchanged.
+   */
+  areasInlineLinks?: CityPageInlineLink[];
 
   /**
    * The ordering ("how") section. Optional since 2026-11-07 on the same terms as the "why" section: it
@@ -17573,6 +17580,8 @@ export const CITY_PAGES: CityPage[] = [
    * keeps offices, cafés and conversions. No other shipping page names JP Nagar or its localities.
    * Bannerghatta Road brief (2026-11-16): Arekere, Bilekahalli, Gottigere and Bannerghatta Road moved to
    * the Bannerghatta Road page; the areas text is that brief's replacement, plus a "Bannerghatta Road" link.
+   * Kanakapura Road brief (2026-11-16): "and nearby areas along Kanakapura Road" left the areas text (the
+   * brief's revised list), and a "Kanakapura Road" link to that road's page follows the Bannerghatta one.
    *
    * Images: five owner-dropped lossy VP8 webp renders ("public/images/JP Nagar city page/JP Nagar
    * shipping container page/cabin (1–5).webp", 1445×1088 ×4 and 2336×1760, no EXIF / XMP / ICC
@@ -17679,12 +17688,20 @@ export const CITY_PAGES: CityPage[] = [
     // Bannerghatta Road brief (2026-11-16): Arekere, Bilekahalli, Gottigere and Bannerghatta Road now belong to
     // the Bannerghatta Road page, so this list is the brief's replacement and that road gets a link instead.
     areasText:
-      "We welcome enquiries from JP Nagar 1st to 9th Phase, Puttenahalli, Sarakki, Kothnur and Jaraganahalli, and nearby areas along Kanakapura Road. Delivery is assessed for each site.",
+      "We welcome enquiries from JP Nagar 1st to 9th Phase, Puttenahalli, Sarakki, Kothnur and Jaraganahalli. Delivery is assessed for each site.",
     areasInlineLink: {
       before: "For kennel, nursery or farmhouse storage along",
       link: { label: "Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
       after: ", see our page for that corridor.",
     },
+    // Kanakapura Road brief (2026-11-16): that road left the areas text above and owns its own page.
+    areasInlineLinks: [
+      {
+        before: "Staging solar panels or storing borewell equipment further south along",
+        link: { label: "Kanakapura Road", href: "/cities-we-serve/shipping-container-kanakapura-road" },
+        after: "? See our page for that road.",
+      },
+    ],
 
     howHeading: "From enquiry to placement",
     howSteps: [
@@ -18904,6 +18921,317 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin operates from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and an office in Electronic City, Bengaluru. It does not run a yard, depot or branch in KR Puram. Every container depends on stock at the time of order; its dimensions, grade, condition, fittings (zones, shelves, drum supports, lights, power points, locks), any hire terms and the transport, unloading and collection are fixed only by its written quotation, and neither a delivery date nor vehicle access is promised. All five pictures are illustrative renders of a single container; none was photographed in KR Puram or shows a delivered or fitted unit. Portable Office Cabin has no connection with Indian Railways or with any telecom operator or internet provider, and KR Puram railway station is mentioned only to locate the area. Parcel consolidators, transporters and network contractors are described as typical users, not as customers or past jobs, and the localities listed show where enquiries are welcome rather than confirmed delivery points. Notes on consignments, restricted cargo, cable drums, equipment, batteries, site access and placement are general guidance, not legal, regulatory, safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS ALONG KANAKAPURA ROAD — staging stores for rooftop solar installers
+   * and secure stores for borewell and water contractors, from Konanakunte out towards Kaggalipura
+   * (south Bengaluru).
+   *
+   * Owner brief of 2026-11-16 (two pages: this one and Indiranagar; meta title, meta description, H1,
+   * keywords and local areas used as given). Source copy: the owner's content reply of 2026-11-16
+   * 09:46Z ("Pasted text(20261116-094744).txt", Page 1), kept section by section with the brief's
+   * corrections: "[Brand Name]" → Portable Office Cabin; no delivery day counts, prices or guaranteed
+   * 40 ft access; ventilation is not presented as temperature control for electronics; batteries are
+   * never charged in the container and damaged or swollen ones are left to specialist handling; fuel
+   * stays out under the applicable fuel-storage rules. "The metro ends at Thalaghattapura" became
+   * "metro stations now line the road from Konanakunte to Thalaghattapura" (the Green Line runs on to
+   * Silk Institute). "Copper cable is a top target" became "a common target"; "a job board" became the
+   * brief's job-wise issue register. The slug starts with "shipping-container-", so cityFamily() puts the
+   * page in the shipping-container family; `directoryLabel` says "along" because the place is a road.
+   * Mapped onto the template in the brief's order:
+   *   • H1 and intro; the second intro paragraph is `introLink` ("shipping containers" → the cargo
+   *     category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Staging Stores for Rooftop Solar Installers" → why (intro, eight bullets, the battery note as
+   *     whyOutro); the feature band (empty interior) follows it.
+   *   • Borewell contractors, placement and delivery, sizes, price and rental → five afterSolutions
+   *     extra sections (the solutions slot is unused).
+   *   • "Areas We Serve" → areas; FAQs (the source's five; the delivery answer gives no day count) →
+   *     faqs; "Storage for the Trades Building South Bengaluru's Next Homes" → CTA (phone, WhatsApp and
+   *     e-mail from COMPANY) + enquiry form.
+   * Rental is in the catalogue (Shipping Container Rental: 10, 20, 40 ft and 40 ft High Cube, monthly
+   * terms), so the rental section stays. 40 ft high cube is a catalogue size (Cargo Container for Sale).
+   *
+   * LINKS (brief §5): "shipping containers" → the cargo category (intro); "shipping containers in
+   * Bellandur" (its gate-and-lane delivery section) closes the delivery section; "how to inspect a used
+   * shipping container" → Shipping Container in Athipattu, the Chennai-area page whose "Used Container
+   * Inspection" section is a seven-point checklist (the Chennai product page has one sentence on
+   * inspection, so it is not a guide); "shipping container rental" → the rental product; the CTA button
+   * "Request a Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block from
+   * repeating Bellandur or the category. Inbound: JP Nagar's areas ("Kanakapura Road", new
+   * `areasInlineLinks`), the Karnataka shipping hub, the cargo category's location links and the
+   * Karnataka shipping nearby blocks.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kanakapura Road, Konanakunte,
+   * Doddakallasandra, Vajarahalli, Thalaghattapura, Anjanapura and Kaggalipura, for rooftop solar
+   * installer staging and borewell contractor stores. JP Nagar no longer names Kanakapura Road in its
+   * areas. Harohalli is named only as a direction. Solar farm O&M stores (a future Koppal shipping page),
+   * owner-builder material stores (HSR Layout) and kennels, landscaping and farmhouse storage
+   * (Bannerghatta Road) are not targeted. The Kanakapura town and Vasanthapura pages that mention the
+   * road sell portable cabins, a different product.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Kanakapura road city page/
+   * Kanakapura Road/cabin (1–5).webp", no EXIF / XMP / ICC) of one cream container. Each is copied with
+   * its VP8 data byte-for-byte plus an XMP dc:title / dc:description that labels it a render. (3)
+   * three-quarter exterior = hero / og:image (the brief's front exterior); (1) empty interior = feature
+   * band; (4) cargo doors with locking bars and a lockbox = borewell section (the locked store); (2) roof
+   * from above = delivery section; (5) end wall = sizes section. No image shows solar panels, inverters,
+   * casing pipes, pumps or cable drums, so the brief's four content image slots are not used and no alt
+   * text claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-kanakapura-road",
+    city: "Kanakapura Road",
+    listTitle: "Shipping & Storage Containers on Kanakapura Road",
+    directoryLabel: "Shipping containers along Kanakapura Road",
+    metaTitle: "Shipping Container on Kanakapura Road | Solar & Borewell Storage",
+    metaDescription:
+      "Shipping and storage containers on Kanakapura Road for rooftop solar installers, panel staging, borewell pipes, pumps and contractor equipment. Request a quote.",
+    keywords:
+      "shipping container on Kanakapura Road, cargo container Kanakapura Road, storage container Kanakapura Road, storage container Konanakunte, storage container Thalaghattapura, used shipping container Kanakapura Road, shipping container price on Kanakapura Road, storage container for rent on Kanakapura Road",
+    // The road at Doddakallasandra metro station, between Konanakunte and Thalaghattapura.
+    geo: {
+      region: "IN-KA",
+      placename: "Kanakapura Road, Bengaluru, Karnataka, India",
+      position: "12.8847;77.5528",
+      icbm: "12.8847, 77.5528",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and the cargo category are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-kanakapura-road/shipping-container-kanakapura-road-front.webp",
+      alt: "Exterior view of a cream steel shipping container with closed cargo doors and locking bars on a paved forecourt",
+      width: 1200,
+      height: 896,
+      caption: "Exterior render for illustration; the unit you're offered is described in its quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-kanakapura-road/storage-container-empty-interior-kanakapura-road.webp",
+      alt: "Empty interior of a cream shipping container with corrugated walls and a brown plank floor, seen through the open cargo doors",
+      width: 1672,
+      height: 941,
+      caption:
+        "Empty interior, shown for illustration. Any shelving, racks, cable stands or vents are added only when they appear in your quotation.",
+    },
+
+    h1: "Shipping & Storage Containers Along Kanakapura Road",
+    tagline:
+      "Staging stores for rooftop solar installers and lockable stores for borewell and water contractors along Kanakapura Road.",
+    intro: [
+      "Drive out along Kanakapura Road and you'll watch south Bengaluru grow in real time. Metro stations now line the road from Konanakunte to Thalaghattapura, and beyond them, villa communities, plotted layouts and new homes spread towards the countryside. Two kinds of contractors are never far behind: rooftop solar installers fitting panels on new roofs, and borewell teams making sure every new home has water.",
+    ],
+    introLink: {
+      before:
+        "Both work with expensive, theft-prone equipment that arrives in batches and has to wait somewhere safe before it's installed. Portable Office Cabin supplies",
+      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " along Kanakapura Road that can be set up for exactly these trades. Share what needs storing and where it will be placed, and we'll recommend a size and an interior layout.",
+    },
+
+    whyHeading: "Staging Stores for Rooftop Solar Installers",
+    whyIntro:
+      "Solar installers often buy panels, inverters and mounting structures in bulk to get better prices, then install them across several homes over a few weeks. Panels are fragile, inverters are valuable, and both are popular with thieves. A container makes a secure staging store:",
+    whyBullets: [
+      {
+        title: "Panels in their original packaging",
+        text: "stored the way the manufacturer recommends (often on edge on a padded base), never stacked loose.",
+      },
+      {
+        title: "Safe stacking limits",
+        text: "don't overload stacks; follow the manufacturer's limit for how many boxes can sit on each other.",
+      },
+      { title: "Inverters and controllers boxed on shelves", text: "off the floor and away from damp." },
+      { title: "Racks for mounting rails, clamps and fasteners", text: "sorted by size." },
+      { title: "Cable drums on a simple stand", text: "so cable can be unrolled without unloading the drum." },
+      { title: "Labels by customer or site", text: "so each job's kit is packed together." },
+      {
+        title: "Ventilation and temperature",
+        text: "ask about vents to limit heat build-up and condensation. Vents don't keep a steel container within the storage temperature range that electronics may need, so check the manufacturer's limits for inverters and controllers.",
+      },
+      { title: "A lockbox and heavy-duty locks", text: "we'll advise which fit the unit you choose." },
+    ],
+    whyOutro:
+      "Batteries: store lithium battery packs exactly as the manufacturer specifies. Never charge batteries inside an ordinary storage container, and don't keep damaged or swollen batteries in it: they need specialist handling.",
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We supply shipping and storage containers along Kanakapura Road, including Konanakunte, Doddakallasandra, Vajarahalli, Thalaghattapura, Anjanapura and Kaggalipura, and out in the direction of Harohalli. Each site's access is checked before delivery is confirmed.",
+
+    extraSections: [
+      {
+        heading: "Stores for Borewell & Water Contractors",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kanakapura-road/shipping-container-cargo-doors-lockbox-kanakapura-road.webp",
+          alt: "Closed double cargo doors of a cream shipping container with four vertical locking bars, handles and a lockbox at the centre",
+          width: 1448,
+          height: 1086,
+          caption: "Cargo doors with locking bars and a central lockbox (render). Which locks come with your unit is stated in its quotation.",
+        },
+        paragraphs: [
+          "New homes along Kanakapura Road usually start with a borewell. Drilling contractors, pump installers and water-system teams work from site to site with heavy, valuable equipment that needs a secure base nearby.",
+          "A container keeps it organised:",
+        ],
+        bullets: [
+          { title: "Pipe racks", text: "for PVC and steel casing pipes, sorted by diameter." },
+          { title: "A locked section", text: "for drill bits, hammers and other high-value tooling." },
+          { title: "Shelves for submersible pumps", text: "starters and control panels, kept boxed and dry." },
+          { title: "Cable drums", text: "copper cable is a common target for thieves, so keep it locked away." },
+          { title: "Fittings bins", text: "for valves, couplers and clamps." },
+          { title: "A job-wise issue register", text: "recording which pipes and pumps went to which site." },
+        ],
+        closing: [
+          "Keep out: fuel for compressors and generators. Store it separately from the container, in storage that meets the applicable fuel-storage requirements.",
+        ],
+      },
+      {
+        heading: "Placement & Delivery",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kanakapura-road/shipping-container-roof-overhead-kanakapura-road.webp",
+          alt: "Top-down view of a cream shipping container roof on a paved yard",
+          width: 1774,
+          height: 887,
+          caption: "Roof seen from above (render). Leave clear space around the container so the doors open fully and it can be unloaded safely.",
+        },
+        paragraphs: [
+          "Containers must sit on private land with the owner's permission, such as your own yard, a project yard or a leased plot, never on the road or the service lane. Plots further out along Kanakapura Road are usually larger and easier to reach, so a 40 ft container is sometimes possible there. On compact plots closer to the city, a 20 ft unit is usually more practical.",
+          "For a quotation, send the site pin with photos of the access road, the gate, any tight turns, low branches or overhead wires, and the spot where the container will sit. That spot needs a firm, level base that the delivery truck can get close to, with space to lift the container off, by crane if the site calls for one. The transport team uses these details to confirm which size fits (20 ft or 40 ft) and how it will be unloaded; nothing is promised until that check is done.",
+        ],
+        // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers lifting access.
+        inlineLinks: [
+          {
+            before: "Delivering to a compact plot? Gate, lane and lifting checks are covered on our page for",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kanakapura-road/shipping-container-end-wall-kanakapura-road.webp",
+          alt: "Corrugated end wall of a cream shipping container with corner castings and forklift pockets on a paved yard",
+          width: 1448,
+          height: 1086,
+          caption: "End wall with forklift pockets (render). Request current photos of the specific unit, including its floor, roof and door seals.",
+        },
+        table: {
+          caption:
+            "Capacities are approximate and differ a little between manufacturers; your quotation gives the exact internal size and door opening of the unit offered.",
+          headers: ["Size", "Approx. capacity", "Typical use on Kanakapura Road"],
+          rows: [
+            ["20 ft", "~33 m³", "Solar kit for several homes, or a borewell team's pumps, cables and tools"],
+            ["40 ft", "~67 m³", "Bulk solar stock and full-length casing pipe racks"],
+            ["40 ft high cube", "~76 m³", "Taller racking for panels and pipes"],
+          ],
+        },
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        inlineLinks: [
+          {
+            before: "Choosing a used unit? Our checklist explains",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price on Kanakapura Road",
+        placement: "afterSolutions",
+        paragraphs: ["What you pay depends on:"],
+        bullets: [
+          { title: "Size", text: "20 ft, 40 ft or 40 ft high cube." },
+          { title: "Grade and condition", text: "new or used, and the condition of the actual unit." },
+          { title: "Racks and shelving", text: "pipe racks, shelves for boxed equipment and fittings bins." },
+          { title: "Padded storage", text: "padded bases for panels stored on edge." },
+          { title: "Cable stands", text: "for drums that are unrolled on site." },
+          { title: "Locking", text: "a lockbox and heavy-duty locks." },
+          { title: "Delivery", text: "how far out along the road the site is, and how easy it is to reach." },
+          { title: "Buying or renting", text: "one purchase price, or a rental charge for the term you agree." },
+          {
+            title: "Market rates",
+            text: "container prices follow the global shipping market, so each quotation is valid for a limited time.",
+          },
+        ],
+        closing: ["Send the list of equipment and the site location, and we'll price each item separately."],
+      },
+      {
+        heading: "Storage Container on Rent on Kanakapura Road",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Running a big solar order or a busy drilling season? Ask us about storage containers on rent along Kanakapura Road. Your quotation lists the hire period, the unit's size and condition, and how delivery and collection will work.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire sizes and monthly terms are listed under",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can solar panels be stored in a shipping container?",
+        answer:
+          "Yes, in their original packaging, stored as the manufacturer recommends, without overloading stacks, with ventilation and strong locks. Check the manufacturer's storage temperature and humidity limits too, because vents alone don't control the temperature inside a steel container.",
+      },
+      {
+        question: "Can lithium batteries be stored in the container?",
+        answer:
+          "Only exactly as the manufacturer specifies. Never charge them inside an ordinary storage container, and don't keep damaged or swollen batteries in it: they need specialist handling.",
+      },
+      {
+        question: "How should a borewell contractor organise a container?",
+        answer:
+          "Use pipe racks sorted by diameter, a locked section for bits and hammers, shelves for pumps, starters and control panels, locked cable drums and a job-wise issue register.",
+      },
+      {
+        question: "Can I store compressor fuel in the container?",
+        answer:
+          "No. Keep fuel for compressors and generators out of the container, in storage that meets the applicable fuel-storage requirements.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, on any racks or shelving we fit first, and on reaching your plot. Give us the date you need it by, and we'll put the expected schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Storage for the Trades Building South Bengaluru's Next Homes",
+    ctaText: `Whether you're staging panels for the next ten rooftops or keeping a drilling team's pumps and cables safe between jobs, we'll quote a container set up for your trade. Phone ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display}, or email ${COMPANY.email.sales}. Serving Kanakapura Road, Konanakunte, Thalaghattapura, Anjanapura and beyond.`,
+    // Brief §5: the final CTA's "request a container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Kanakapura Road",
+      intro:
+        "Select the container and how many you need, then give the site pin or address on or near Kanakapura Road and tell us whether you're buying or renting. Mention the panels, pipes, pumps or tools you'll keep in it and how a truck reaches the plot; we'll reply with an itemised quotation.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur in Tamil Nadu, and runs a Bengaluru office in Electronic City; it operates no yard, depot or branch on Kanakapura Road. Every container is subject to stock. Its quotation states the size, grade, condition and internal measurements, the racks, shelving, padded bases, cable stands, vents, locks or lockbox included, any hire terms, and who handles delivery, unloading and collection. Delivery dates, container sizes and vehicle access are confirmed only after the site check. All five pictures are renders of a single container rather than photographs from Kanakapura Road, and none shows solar or borewell equipment or a fitted-out unit. Solar installers and borewell contractors are mentioned as typical users, not as customers or completed jobs; the localities, the metro and Harohalli are named to describe the area, not to confirm delivery points. Notes on storing panels, inverters, batteries, pumps, cables and fuel, and on access and placement, are general guidance rather than electrical, fire-safety, legal or engineering advice; always follow the equipment makers' instructions and the regulations that apply.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

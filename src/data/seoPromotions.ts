@@ -631,6 +631,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Horamavu (AC and appliance installer stock, tent house and shamiana storage; owner brief
     // 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+    // Kanakapura Road (rooftop solar staging and borewell contractor stores; owner brief 2026-11-16), appended.
+    { name: "Shipping Containers along Kanakapura Road", href: "/cities-we-serve/shipping-container-kanakapura-road" },
   ],
 };
 

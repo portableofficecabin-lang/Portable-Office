@@ -121,6 +121,7 @@ function bodyLinks(page: CityPage): CityPageLink[] {
     page.featuresInlineLink?.link,
     ...(page.customLinks ?? []),
     page.areasInlineLink?.link,
+    ...(page.areasInlineLinks ?? []).map((il) => il.link),
     ...(page.howLinks ?? []),
     ...(page.extraSections ?? []).flatMap((sec) => [
       ...(sec.links ?? []),
@@ -708,6 +709,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <p className={`${p}${mc("reveal")}`}>{page.areasText}</p>
         {/* Optional inline-link paragraph after the areas text (`areasInlineLink`); unset = no element. */}
         {page.areasInlineLink && renderInlineLink(page.areasInlineLink)}
+        {/* Optional further inline-link paragraphs (`areasInlineLinks`); unset = nothing rendered. */}
+        {page.areasInlineLinks?.map((il) => renderInlineLink(il))}
         {/* Optional contextual links after the areas text (`areasLinks`); unset = nothing rendered. */}
         {page.areasLinks && page.areasLinks.length > 0 && renderLinks(page.areasLinks)}
 
@@ -866,11 +869,13 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           /* `areasLinks` and `areasInlineLink` hrefs are skipped too, so a sibling the areas section already
              links is not repeated; with `nearbySkipsBodyLinks` set, so are the siblings linked anywhere in the
              body. (No shipping page set `areasInlineLink` before Koramangala's HSR Layout link of 2026-11-16,
-             so every other page's nearby block is unchanged.) */
+             so every other page's nearby block is unchanged.) The same goes for `areasInlineLinks`, first set
+             by JP Nagar's Kanakapura Road link. */
           existingHrefs={[
             ...(page.relatedLinks ?? []),
             ...(page.areasLinks ?? []),
             ...(page.areasInlineLink ? [page.areasInlineLink.link] : []),
+            ...(page.areasInlineLinks ?? []).map((il) => il.link),
             ...(page.nearbySkipsBodyLinks ? bodyLinks(page) : []),
           ].map((l) => l.href)}
           motion={page.motion}
