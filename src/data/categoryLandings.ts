@@ -297,6 +297,22 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Shipping containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
       // Doddanekundi storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
       { name: "Shipping containers in Doddanekundi", href: "/cities-we-serve/shipping-container-doddanekundi" },
+      // BTM Layout storage page (owner brief, 2026-11-16), appended so the live links keep their positions.
+      { name: "Shipping containers in BTM Layout", href: "/cities-we-serve/shipping-container-btm-layout" },
+      // Mahadevapura storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Storage containers in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+      // KR Puram storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Shipping containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
+      // Thanisandra Main Road storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Storage containers in Thanisandra", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+      // Brookefield storage page (owner brief, 2026-11-16), appended so the live links keep their positions.
+      { name: "Shipping containers in Brookefield", href: "/cities-we-serve/shipping-container-brookefield" },
+      // Hennur Road storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Shipping containers on Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
+      // Yelahanka storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Shipping containers in Yelahanka", href: "/cities-we-serve/shipping-container-yelahanka" },
+      // Horamavu storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Shipping containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
       // Kanakapura Road storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
       { name: "Shipping containers along Kanakapura Road", href: "/cities-we-serve/shipping-container-kanakapura-road" },
     ],

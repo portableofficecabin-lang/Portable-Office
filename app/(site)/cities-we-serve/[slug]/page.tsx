@@ -305,6 +305,20 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       {sec.links && sec.links.length > 0 && renderLinks(sec.links)}
       {/* Optional inline-link paragraphs after the links (`inlineLinks`); unset = nothing rendered. */}
       {sec.inlineLinks?.map((il) => renderInlineLink(il))}
+      {/* Optional H3 sub-sections (`subsections`), each with its paragraphs, an optional bulleted or
+          numbered list and optional closing paragraphs; unset = nothing rendered. */}
+      {sec.subsections?.map((sub) => (
+        <section key={sub.heading}>
+          <h3 className={`${h3}${mc("reveal")}`}>{sub.heading}</h3>
+          {sub.paragraphs?.map((text) => (
+            <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
+          ))}
+          {sub.bullets && sub.bullets.length > 0 && renderSectionList(sub.bullets, sub.ordered)}
+          {sub.closing?.map((text) => (
+            <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
+          ))}
+        </section>
+      ))}
     </section>
   );
 
@@ -518,6 +532,9 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                     </Link>
                   </p>
                 )}
+                {/* Optional checklist (`bullets`, see CityPageListItem): the extra sections' list markup;
+                    unset = no element. */}
+                {s0.bullets && s0.bullets.length > 0 && renderSectionList(s0.bullets)}
                 {/* Optional captioned images (`images`, see CityPageListItem); unset = no element. Two
                     columns from `sm` up; with an odd count the first image spans both, so no figure is
                     left alone at half width. Lazy-loaded: these sit far below the fold. */}

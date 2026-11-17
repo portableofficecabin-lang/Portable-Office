@@ -196,6 +196,11 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     t("solutions", "solutions intro", p.solutionsIntro ?? "");
     (p.solutions ?? []).forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
     (p.solutions ?? []).forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
+    // Optional checklist under a solutions item (since 2026-11-16): every bullet's title and text.
+    (p.solutions ?? []).forEach((s, i) => s.bullets?.forEach((b, j) => {
+      if (b.title) t("solutions", `layout ${i + 1} bullet ${j + 1} title`, b.title);
+      t("solutions", `layout ${i + 1} bullet ${j + 1} text`, b.text);
+    }));
     // Optional captioned images under a solutions item (since 2026-11-05): src, alt and caption.
     (p.solutions ?? []).forEach((s, i) => s.images?.forEach((img, j) => {
       items.push({ group: "images", label: `layout ${i + 1} image ${j + 1} src`, test: (mk) => imageNeedle(img.src).test(mk) });
@@ -256,6 +261,13 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   t("areas", "areas text", p.areasText);
   // Optional areas links (since 2026-11-07): label text and href.
   (p.areasLinks ?? []).forEach((l, i) => { t("areas", `areas link ${i + 1} "${l.label}"`, l.label); m("areas", `areas link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  // Optional areas inline link (since 2026-11-16 in this audit): lead-in, label and href.
+  if (p.areasInlineLink) {
+    const il = p.areasInlineLink;
+    t("areas", "areas inline link lead-in", il.before);
+    t("areas", `areas inline link "${il.link.label}"`, il.link.label);
+    m("areas", `areas inline link href ${il.link.href}`, `href="${il.link.href}"`);
+  }
   // Optional section (since 2026-11-07): audited whenever the page sets it.
   if (p.howHeading) {
     t("how", "how heading", p.howHeading);
@@ -293,6 +305,17 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
       t("extra", `extra section ${i + 1} inline link ${j + 1} lead-in`, il.before);
       t("extra", `extra section ${i + 1} inline link ${j + 1} "${il.link.label}"`, il.link.label);
       m("extra", `extra section ${i + 1} inline link ${j + 1} href ${il.link.href}`, `href="${il.link.href}"`);
+    });
+    // Optional H3 sub-sections (since 2026-11-16), at the end of the section: the heading inside an <h3>,
+    // then paragraphs, bullets, the numbered-list markup when `ordered`, and closing paragraphs.
+    (s.subsections ?? []).forEach((sub, k) => {
+      const at = `extra section ${i + 1} subsection ${k + 1}`;
+      const headRe = new RegExp(`<h3[^>]*>${squash(sub.heading).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</h3>`);
+      items.push({ group: "extra", label: `${at} heading is an <h3>`, test: (mk) => headRe.test(mk) });
+      (sub.paragraphs ?? []).forEach((x, j) => t("extra", `${at} paragraph ${j + 1}`, x));
+      (sub.bullets ?? []).forEach((b, j) => { t("extra", `${at} bullet ${j + 1} title`, b.title ?? ""); t("extra", `${at} bullet ${j + 1} text`, b.text); });
+      if (sub.ordered && sub.bullets && sub.bullets.length > 0) m("extra", `${at} numbered list`, `<ol class="list-decimal pl-6`);
+      (sub.closing ?? []).forEach((x, j) => t("extra", `${at} closing ${j + 1}`, x));
     });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
     // heading and the next fixed heading in the visible text. A page without those optional sections
