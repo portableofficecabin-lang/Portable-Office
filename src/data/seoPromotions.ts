@@ -610,6 +610,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // BTM Layout (last-mile parcel overflow, festival committee storage and bike rental fleet stores;
     // owner brief 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in BTM Layout", href: "/cities-we-serve/shipping-container-btm-layout" },
+    // Mahadevapura (hotel FF&E, banquet overflow, mall and hotel spares, interior staging; owner brief
+    // 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
   ],
 };
 
