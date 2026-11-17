@@ -33150,6 +33150,450 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN YELAHANKA — packing and crating stores for air freight forwarders
+   * and exporters, and tack rooms for riding schools and equestrian centres (north Bengaluru: Yelahanka
+   * New Town, Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu, Kattigenahalli, the Yelahanka
+   * stretch of Doddaballapur Road and the Yelahanka side of Bagalur Road).
+   *
+   * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, links and image
+   * plan used as given; the brief's root slug became /cities-we-serve/<slug>, the convention of every
+   * location page). Source copy: the owner's content reply of 2026-11-16 13:25Z ("Pasted text
+   * (20261116-132627).txt"), kept section by section with the brief's corrections: storing timber is never
+   * presented as making it ISPM 15 compliant; security-screened air cargo is never to be returned to an
+   * ordinary container; dangerous goods and restricted batteries are kept out of a packing store; vents
+   * and desiccants are not presented as enough for valuable leather in humid weather; a standard container
+   * is not offered as storage for veterinary medicines; no 40 ft unit is promised for a plot without a
+   * site-access assessment; no delivery day counts ([X] / [X–Y] removed), prices or stock. "Attur" is
+   * written "Attur Layout" (the Yelahanka locality), because the Mettur–Salem shipping page uses "Attur"
+   * for the Salem-district town; "Puttenahalli" is left out (a JP Nagar locality on another page).
+   * Mapped onto the template in the brief's order:
+   *   • H1 and intro; the second intro paragraph is `introLink` ("shipping containers" → the cargo
+   *     category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Packing & Crating Stores for Air Freight Forwarders & Exporters" → an afterIntro extra section
+   *     with two H3s ("Export Wood Packaging and ISPM-15", "Pre-Pickup Storage for Packed Goods") through
+   *     `subsections`; the feature band (glazed side with a desk) follows it.
+   *   • "Tack Rooms for Riding Schools & Equestrian Centres" (two H3s: leather care, feed and medicines),
+   *     "Placement & Delivery", "Container Sizes", "Choosing a Container Grade", price, rental and "How
+   *     It Works" (ordered) → seven afterSolutions extra sections (the why and solutions slots are unused).
+   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
+   *     placement, so it renders after the steps and before the FAQs, as in the brief.
+   *   • The source's six FAQs, revised for ISPM 15, screened cargo and delivery timing → faqs; "Storage
+   *     for the Gateway to the North" → CTA (phone, WhatsApp and e-mail from COMPANY) + enquiry form.
+   * Rental is in the catalogue (Shipping Container Rental, monthly terms), so the rental section stays.
+   *
+   * LINKS (brief §5): "shipping containers" → the cargo category (intro); "climate-controlled container
+   * options" → the Vellore page (its "Insulated and air-conditioned storage enquiries" section) after the
+   * tack-room fittings; "shipping containers in Bellandur" (its gate and narrow-lane delivery section) in
+   * the placement section; "how to inspect a used shipping container" → Shipping Container in Athipattu,
+   * the Chennai-area page whose "Used Container Inspection" section is a checklist (the target the other
+   * Bengaluru shipping pages use for this anchor); "renting a shipping container" → the rental product;
+   * the CTA button "Request a Shipping Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the
+   * nearby block from repeating Bellandur, Vellore or the category. Inbound: the Karnataka shipping hub,
+   * the cargo category's location links and the Karnataka shipping nearby blocks.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Yelahanka, Yelahanka New Town, Yelahanka
+   * Old Town, Attur Layout, Allalasandra, Kogilu, Kattigenahalli, the Yelahanka stretch of Doddaballapur
+   * Road and the Yelahanka side of Bagalur Road, for air freight packing and export crating material
+   * stores and equestrian tack rooms. Not targeted: Thanisandra, Nagawara, Jakkur and Amruthahalli (the
+   * Thanisandra Main Road page), Hebbal (Bengaluru; the Hebbal shop page is Mysuru's Hebbal), Devanahalli
+   * and Doddaballapur as separate markets, rail and road consignment staging (KR Puram), shipper-owned
+   * containers and CSC plates (Chennai), kennel and shelter feed (Bannerghatta Road) and boutique garment
+   * care (Indiranagar). The container-office and porta-cabin pages that list Yelahanka sell other products.
+   *
+   * Images: four owner-dropped lossy VP8 webp renders ("public/images/Yelahanka shipping city page/Storage
+   * Containers in Yelahanka/cabin (1–4).webp", no EXIF / XMP / ICC) of one dark green container with a
+   * wood-framed glazed side panel. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title /
+   * dc:description that labels it a render. (2) three-quarter view with cargo doors = hero / og:image;
+   * (3) side elevation with a glazed door and a desk inside = feature band, captioned as an office-style
+   * fit-out; (1) roof from above = placement section; (4) plain side wall = sizes section. No image shows
+   * crate timber, packing supplies, saddles or bridles, so the brief's four interior slots are not used
+   * and no alt text or caption claims them; no alt text names a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-yelahanka",
+    city: "Yelahanka",
+    listTitle: "Shipping & Storage Containers in Yelahanka",
+    directoryLabel: "Shipping containers in Yelahanka",
+    metaTitle: "Shipping Container in Yelahanka | Export & Tack Storage",
+    metaDescription:
+      "Shipping and storage containers in Yelahanka for export packing materials, air freight crating supplies and riding school tack rooms. Request a container quote.",
+    keywords:
+      "shipping container in Yelahanka, cargo container Yelahanka, storage container Yelahanka, storage container Yelahanka New Town, storage container Kogilu, storage container Doddaballapur Road, used shipping container Yelahanka, shipping container price in Yelahanka, storage container for rent in Yelahanka",
+    // Yelahanka New Town, north Bengaluru (approximate).
+    geo: {
+      region: "IN-KA",
+      placename: "Yelahanka, Bengaluru, Karnataka, India",
+      position: "13.1007;77.5963",
+      icbm: "13.1007, 77.5963",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur, Vellore and the cargo category are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-yelahanka/shipping-container-yelahanka-front.webp",
+      alt: "Exterior view of a shipping container suitable for storage: green corrugated steel, closed cargo doors and a timber-clad glazed section in one side",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a storage container's exterior, not a photograph of a unit delivered in Yelahanka.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-yelahanka/shipping-container-glazed-side-yelahanka.webp",
+      alt: "Container side with a glass sliding door and window set in timber cladding, showing a desk, office chairs and shelves inside",
+      width: 1774,
+      height: 887,
+      caption:
+        "Illustrative render of an office-style fit-out behind a glazed door, not a packing store or tack room. Any documents desk, shelving, racks or hooks are part of a quoted fit-out.",
+    },
+
+    h1: "Shipping & Storage Containers in Yelahanka",
+    tagline:
+      "Packing and crating stores for air freight forwarders and exporters, and lockable tack rooms for riding schools and equestrian centres.",
+    intro: [
+      "Yelahanka has grown from an old market town into the gateway to north Bengaluru. The highway to the international airport runs past it, and businesses that pack, crate and forward air freight work along the roads leading to the cargo terminal. Further out, where the city meets open land, riding schools and equestrian centres make use of the space for arenas, paddocks and stables.",
+    ],
+    introLink: {
+      before:
+        "Two very different trades, one shared need: dry, organised, lockable storage close to where the work happens. Portable Office Cabin supplies",
+      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " in Yelahanka for both, set up as a packing store or a tack room, with the fittings and the route to your site agreed in the quotation.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Shipping and storage containers are supplied across Yelahanka New Town and Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu and Kattigenahalli, along the Yelahanka stretch of Doddaballapur Road and on the Yelahanka side of Bagalur Road. Every delivery is planned around the site's own approach and ground.",
+
+    extraSections: [
+      {
+        heading: "Packing & Crating Stores for Air Freight Forwarders & Exporters",
+        placement: "afterIntro",
+        paragraphs: [
+          "Forwarders and exporters near the airport road pack, crate and label shipments every working day, and they get through a great deal of material doing it: timber and plywood for crates, cushioning, cartons, strapping and pallets. When all of it is dry, sorted and within reach, a consignment can be packed without a search for the right carton or a straight sheet of ply.",
+          "Laid out for the job, a container works as a packing and crating store:",
+        ],
+        bullets: [
+          { title: "Treated timber and plywood", text: "stored flat on timber bearers, off the floor and away from damp, so boards stay straight and dry." },
+          {
+            title: "Treated and untreated wood kept apart",
+            text: "in separate, clearly marked stacks, so stock treated for export never mixes with stock that hasn't been.",
+          },
+          { title: "Foam, bubble wrap and air pillows", text: "on shelves or in covered bins, kept clear of dust." },
+          { title: "Cartons sorted by size", text: "flat-packed and labelled, with the sizes used most often nearest the door." },
+          {
+            title: "Strapping, stretch film, tape and corner protectors",
+            text: "in labelled bins, so a packing bench can be restocked in a single trip.",
+          },
+          {
+            title: "Pallets",
+            text: "stacked neatly by type, with damaged pallets moved to their own marked stack until they are repaired or discarded.",
+          },
+          {
+            title: "A label-printing and documentation desk",
+            text: "a small desk where labels are printed and shipping paperwork is prepared; power points and lighting are fitted only as quoted.",
+          },
+          { title: "Suitable lighting", text: "enough light to read labels and check packing during early and late shifts." },
+        ],
+        subsections: [
+          {
+            heading: "Export Wood Packaging and ISPM-15",
+            paragraphs: [
+              "ISPM 15 is the international standard, adopted under the International Plant Protection Convention, for wood packaging material moved in international trade: crates, pallets, dunnage and similar items made of solid wood. Packaging within its scope generally has to be treated by an approved method and carry the official mark, applied by an authorised treatment provider. Packaging made wholly of processed wood, such as plywood, is generally outside its scope, but the requirements depend on the material and on the destination country.",
+              "Keeping timber in a container does not make it ISPM 15 compliant. Treatment and marking are carried out by an authorised provider; the container's role is only to keep treated stock dry, clean and apart from untreated wood until it is used. Before a consignment is crated, confirm what it needs with your crate supplier, treatment provider or forwarder.",
+            ],
+          },
+          {
+            heading: "Pre-Pickup Storage for Packed Goods",
+            paragraphs: [
+              "Finished consignments sometimes wait a day or two for collection. Goods that are suitably packed can be held in a locked container until the forwarder collects them, as long as the goods, their packaging and any handling instructions allow it.",
+            ],
+            closing: [
+              "Important for air cargo: once a consignment has been security-screened for air transport, it usually has to stay within an approved secure supply chain until it is loaded. Don't move screened cargo back into an ordinary storage container. Use the container only for goods that have not yet entered that chain, and follow your freight forwarder's instructions and the aviation-security requirements that apply.",
+              "Dangerous goods, lithium batteries shipped as cargo and other restricted or hazardous items need specialist handling and storage. They don't belong in a general-purpose packing-material store.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Tack Rooms for Riding Schools & Equestrian Centres",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Riding schools and equestrian centres on Bengaluru's northern edge depend on their tack: saddles, bridles, girths, numnahs, rugs and grooming kits. Good tack is costly to replace, and leather reacts badly to damp, heat and dust, so where it is kept matters as much as how it is used.",
+          "A container can be fitted out as a lockable tack room with:",
+        ],
+        bullets: [
+          { title: "Saddle racks", text: "fixed to the walls, so each saddle rests on a support that holds its shape." },
+          { title: "Bridle hooks", text: "rounded hooks that carry a bridle without creasing the headpiece." },
+          { title: "Labels for each horse", text: "on racks, hooks and bins, so every horse's kit stays together." },
+          { title: "Rug rails", text: "where rugs hang open and can air between uses." },
+          { title: "Saddle-pad storage", text: "rails or slatted shelves where numnahs and pads dry out." },
+          { title: "Grooming kits, boots and bandages", text: "in labelled boxes on shelves." },
+          { title: "Ventilation", text: "vents that let damp air escape; leather left in stale, humid air soon grows mould." },
+          { title: "Moisture management", text: "a dry floor, sound door seals and humidity watched through the wet months." },
+          { title: "A cleaning bench", text: "for cleaning and conditioning tack after use." },
+          { title: "Security locks", text: "heavy-duty locks and a lockbox, because saddles are valuable and easy to carry off." },
+        ],
+        // Brief §5: the Vellore page's insulated and air-conditioned storage section, at the moisture fittings.
+        inlineLinks: [
+          {
+            before: "Where vents alone can't keep the air dry enough, insulated and air-conditioned units are described among our",
+            link: { label: "climate-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Protecting Saddles and Leather Tack",
+            paragraphs: ["Leather lasts when it is supported, dry and cared for:"],
+            bullets: [
+              {
+                title: "Proper saddle support",
+                text: "a rack that suits the saddle's shape, never a saddle left on the floor or stood on its front arch.",
+              },
+              { title: "Dry storage", text: "tack put away clean and dry, never wet from a ride or a wash." },
+              { title: "Moisture control", text: "ventilation, with humidity kept in check through the monsoon." },
+              { title: "Cleaning and conditioning", text: "a regular routine with products suited to the leather." },
+              { title: "Regular inspections", text: "stitching, buckles and leather checked for wear and for the first signs of mould." },
+              {
+                title: "Protection from mould and dust",
+                text: "breathable covers on saddles, and bridles hung where air can move around them.",
+              },
+            ],
+            closing: [
+              "Ordinary vents and desiccant packs help, but in humid conditions they may not be enough to protect valuable leather. Where tack is expensive, or the container will stay closed for long spells, ask about insulation, dehumidification or air conditioning, specified for the actual unit and confirmed in the quotation.",
+            ],
+          },
+          {
+            heading: "Feed and Veterinary Medicine Precautions",
+            paragraphs: [
+              "Keep horse feed in sealed, pest-resistant bins, and away from the tack where you can: spilt feed draws rodents, and rodents chew leather.",
+              "Store veterinary medicines exactly as their labels and your vet direct, and follow any requirements that apply to them. Many need a controlled temperature or other conditions that a standard shipping container does not provide, so a container is not offered as storage for medicines.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Placement & Delivery",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-yelahanka/shipping-container-roof-view-yelahanka.webp",
+          alt: "Roof of a green shipping container seen from directly above, with corner castings, standing on a paved yard",
+          width: 1774,
+          height: 887,
+          caption:
+            "Illustrative view from above. The container stands on firm, level ground with space around it for unloading and for opening the doors.",
+        },
+        paragraphs: [
+          "A container is placed only on private land where you have the landowner's permission, such as a freight forwarder's yard, an exporter's premises or an equestrian centre's grounds. It never goes on a public road or footpath.",
+          "The ground needs to be firm and level, or prepared with a suitable base, and the delivery vehicle needs a clear route to the spot, with space for the container to be lifted off and lowered into place. Plots on Yelahanka's outer edges are often roomier than those in central Bengaluru, but whether a 40 ft unit is practical depends on the gate, the turning space, overhead cables, branches and the ground, so it is assessed for each site before it is offered. Send a location pin with photos of the approach, and the route, the lifting and unloading method and a suitable delivery time are agreed with you.",
+        ],
+        // Brief §5: Bellandur's gate and narrow-lane delivery section covers lifting over tight approaches.
+        inlineLinks: [
+          {
+            before: "Tight approaches, such as a gated entrance or a narrow lane, need their own lifting plan, as described for",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-yelahanka/shipping-container-side-wall-yelahanka.webp",
+          alt: "Plain corrugated side wall of a green shipping container, with forklift pockets along its base",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative side view. No size is implied; dimensions are confirmed in the quotation for the container you're offered.",
+        },
+        paragraphs: [
+          "Availability varies by size and grade. For crate timber and tack, the usable wall length and the door opening often matter more than the headline volume.",
+        ],
+        table: {
+          caption:
+            "Approximate internal volumes. Dimensions and capacity vary by manufacturer and unit; the actual figures, and whether a size is available, are confirmed in the quotation.",
+          headers: ["Size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["20 ft", "~33 m³", "A small export packing store, or a riding school's tack room"],
+            ["40 ft", "~67 m³", "A larger crating-material store, or equestrian equipment storage"],
+            ["40 ft high cube", "~76 m³", "Taller racks for timber, pallets and bulky packing supplies"],
+          ],
+        },
+      },
+      {
+        heading: "Choosing a Container Grade",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A grade describes the steel box's condition. One-trip containers have made a single voyage and are close to new. Cargo-worthy containers have seen years of service and can still carry freight. Wind-and-watertight containers have left shipping service but still keep out wind and rain, the minimum for any store.",
+          "Packing materials and leather both need a dry box, so whichever grade you choose, inspect the container you're offered, on site or through recent photos, for:",
+        ],
+        bullets: [
+          { title: "A dry, clean interior", text: "no damp patches, residue or odour left by earlier cargo." },
+          { title: "Door seals", text: "gaskets intact, with no daylight showing around the closed doors." },
+          { title: "Security fittings", text: "sound locking bars and handles, with room for a lockbox and heavy-duty padlocks." },
+          {
+            title: "Suitable ventilation",
+            text: "existing or added vents that let moist air out, so condensation doesn't gather on the walls and drip onto stock.",
+          },
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a checklist.
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Our guide on",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " lists what to look at before you accept it.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Yelahanka",
+        placement: "afterSolutions",
+        paragraphs: ["No two quotations are the same. The price reflects:"],
+        bullets: [
+          { title: "Size", text: "a 20 ft, 40 ft or 40 ft high cube unit." },
+          { title: "Grade", text: "whether the box is one-trip, cargo-worthy or wind-and-watertight." },
+          { title: "Timber bearers, shelving and storage bins", text: "for crate timber, packing materials and pallets." },
+          { title: "Saddle racks and bridle hooks", text: "with rug rails, labels and bins for a tack room." },
+          { title: "A desk and lighting", text: "for labels and paperwork, where agreed." },
+          { title: "Ventilation or climate control", text: "from added vents to insulation and air conditioning, as specified." },
+          { title: "Security", text: "heavy-duty locks and a lockbox." },
+          { title: "Delivery access", text: "the distance, the route and how the unit is unloaded at your site." },
+          { title: "Purchase or rental", text: "buying the unit outright, or hiring it for an agreed period." },
+        ],
+        closing: [
+          "Container prices also move with the international freight market, so every quotation states how long it remains valid. Tell us what the container will hold and where it will stand, and you'll receive an itemised quotation.",
+        ],
+      },
+      {
+        heading: "Storage Container on Rent in Yelahanka",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A busy export season can outgrow the packing room, and a stable rebuild can leave the tack with nowhere to go. For needs like these, ask about a storage container on rent in Yelahanka: the quotation sets out the hire period, the unit offered and its condition, and the delivery and collection arrangements.",
+        ],
+        inlineLinks: [
+          {
+            before: "How hire works, which sizes are offered and what each rental includes are explained on",
+            link: { label: "renting a shipping container", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          {
+            title: "Share your storage requirements and location",
+            text: "what you'll store, roughly how much of it, and where the container will stand.",
+          },
+          {
+            title: "Receive a container recommendation and quotation",
+            text: "with the size, grade, fittings, delivery and any hire term itemised.",
+          },
+          { title: "Confirm landowner permission", text: "for the exact spot where the container will be placed." },
+          {
+            title: "Arrange delivery after site verification",
+            text: "once the route and the ground have been checked, a delivery slot is agreed with you.",
+          },
+          {
+            title: "Request additional services or collection",
+            text: "such as extra racks, a second unit or collection at the end of a hire, where offered.",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          {
+            title: "Organised packing-material storage",
+            text: "bearers, shelves and bins that keep timber, cushioning and cartons sorted and dry.",
+          },
+          {
+            title: "Practical crating-material layouts",
+            text: "treated and untreated wood kept apart, with damaged pallets set to one side.",
+          },
+          {
+            title: "Equestrian tack-room configurations",
+            text: "saddle racks, bridle hooks, rug rails and a cleaning bench, arranged horse by horse.",
+          },
+          { title: "Security options", text: "heavy-duty locks and a lockbox suited to the unit." },
+          { title: "Suitable container sizes", text: "20 ft, 40 ft or 40 ft high cube, depending on stock and on what the site allows." },
+          { title: "Delivery access planning", text: "the route, the ground and the unloading method checked for each site." },
+          {
+            title: "Itemised quotations",
+            text: "the container, each fitting, the delivery and any hire term shown on separate lines.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can an exporter store crating materials in a container?",
+        answer:
+          "Yes. Keep timber and plywood flat on bearers and dry, store treated and untreated wood in separate, marked stacks, and organise cushioning, cartons, strapping and pallets on shelves and in bins. The container keeps the materials dry and secure; it does not treat or certify wood packaging.",
+      },
+      {
+        question: "Can packed air cargo wait in my container before pickup?",
+        answer:
+          "Suitably packed goods can wait in a locked container before they enter the secure air cargo supply chain. Once a consignment has been security-screened, it usually has to stay within that approved chain, so don't return it to your own container; check your freight forwarder's requirements. Dangerous goods and restricted batteries don't belong in a general packing store.",
+      },
+      {
+        question: "What is ISPM-15?",
+        answer:
+          "ISPM 15 is the international standard for wood packaging material, such as crates and pallets, moved in international trade. Packaging within its scope generally needs an approved treatment and an official mark applied by an authorised provider. Storing wood in a container doesn't make it compliant; your crate supplier, treatment provider or forwarder can confirm what each destination requires.",
+      },
+      {
+        question: "Can a riding school use a container as a tack room?",
+        answer:
+          "Yes. It can be fitted with saddle racks, labelled bridle hooks, rug rails, shelves for grooming kits, ventilation, a cleaning bench and heavy-duty locks. The layout and fittings are agreed and quoted for the actual unit.",
+      },
+      {
+        question: "How do I stop leather tack going mouldy?",
+        answer:
+          "Put tack away clean and dry, keep the container ventilated, control the humidity, and clean, condition and inspect the leather regularly. In humid weather, vents and desiccants alone may not be enough for valuable tack, so ask about insulation, dehumidification or air conditioning.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Delivery timing depends on stock, on any racks, hooks or other fittings to be installed first, and on your site's access. Share your target date when you enquire; the quotation sets out a delivery schedule based on the unit actually available.",
+      },
+    ],
+
+    ctaHeading: "Storage for the Gateway to the North",
+    ctaText: `Whether you're crating shipments bound for the airport or keeping a riding school's saddles dry and secure, tell us how you work and we'll put together a container and a quotation to match. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Yelahanka New Town, Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu and Kattigenahalli.`,
+    // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Shipping Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Yelahanka",
+      intro:
+        "Pick a container model and how many you need, add the address or map pin of a site in or around Yelahanka, and say whether you plan to buy or hire and what you'll keep inside: packing materials, crate timber or tack. You'll get an itemised quotation in reply.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers for Yelahanka are dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and handled through its Electronic City office in Bengaluru; the company has no yard, depot or office in Yelahanka. The uses described here, a packing and crating store and a tack room, are ways a customer can set up a container on land they own or are authorised to use; Portable Office Cabin does not run a storage, packing, freight-forwarding, wood-treatment or air cargo security service. Stock varies, so the unit offered, its size, grade, condition and dimensions, the fittings (bearers, shelves, bins, racks, hooks, a desk, lighting, vents, climate control, locks), any hire period and the delivery, unloading and collection are set out in writing in each quotation; no delivery date, site access or fit of a particular size on a plot is promised. The four images are renders of one container with a glazed side panel, included for illustration only: none was photographed in Yelahanka, and none shows a delivered unit, a packing store or a tack room. Forwarders, exporters, riding schools and equestrian centres appear as examples of who might use a container, not as customers or finished projects, and the localities named are areas where enquiries are welcome rather than confirmed delivery sites. Information on ISPM 15, air cargo security, dangerous goods, leather care, humidity, feed and veterinary medicines is general guidance, not regulatory, legal, veterinary or compliance advice; follow the requirements of your forwarder, treatment provider, vet and product manufacturers.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & CARGO CONTAINERS IN CHAMARAJANAGAR — storage containers for granite processing
    * supplies, turmeric storage planning, factory packing stores at Badanaguppe–Kellamballi, delivery
    * near forest routes, temple fairs and resort renovations across Chamarajanagar district.
