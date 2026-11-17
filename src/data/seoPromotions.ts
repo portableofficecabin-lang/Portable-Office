@@ -613,6 +613,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Mahadevapura (hotel FF&E, banquet overflow, mall and hotel spares, interior staging; owner brief
     // 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+    // KR Puram (rail and road consignment staging, fibre and telecom contractor stores; owner brief 2026-11-16),
+    // after Mahadevapura, appended so the live links keep their positions.
+    { name: "Shipping Containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
   ],
 };
 
