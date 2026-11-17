@@ -363,6 +363,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             geoPlacename: page.geo.placename,
             geoPosition: page.geo.position,
             keyword: page.serviceJsonLd.serviceType,
+            /* Optional (`serviceJsonLd.alternateName`); unset = no alternateName, as before. */
+            alternateName: page.serviceJsonLd.alternateName,
           })}
         />
       )}
