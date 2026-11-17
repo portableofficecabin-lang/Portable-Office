@@ -628,6 +628,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Yelahanka (air freight packing and export crating stores, equestrian tack rooms; owner brief
     // 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Yelahanka", href: "/cities-we-serve/shipping-container-yelahanka" },
+    // Horamavu (AC and appliance installer stock, tent house and shamiana storage; owner brief
+    // 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
   ],
 };
 
