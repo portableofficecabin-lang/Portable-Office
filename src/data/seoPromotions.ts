@@ -635,6 +635,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Containers along Kanakapura Road", href: "/cities-we-serve/shipping-container-kanakapura-road" },
     // Indiranagar (bar and brewery storage, boutique garment stores and sample archives; owner brief 2026-11-16), appended.
     { name: "Shipping Containers in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+    // Ramamurthy Nagar (sign and flex printers' stock, home healthcare equipment rental depots; owner
+    // brief 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
   ],
 };
 
