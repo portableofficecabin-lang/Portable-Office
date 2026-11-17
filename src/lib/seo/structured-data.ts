@@ -763,6 +763,12 @@ export function generatePromotionStructuredData(content: {
   geoPlacename: string;
   geoPosition: string;
   keyword: string;
+  /**
+   * Optional other names of the service, e.g. the porta / prefabricated cabin synonyms a city page
+   * covers (first used by Portable Cabins in Jayanagar). Unset or empty = no `alternateName`, so every
+   * promotion page and every other city page emits exactly the JSON-LD it did before.
+   */
+  alternateName?: string[];
 }) {
   const [latitude, longitude] = content.geoPosition.split(";").map((v) => v.trim());
   const image = absoluteUrl(content.imageUrl);
@@ -773,6 +779,7 @@ export function generatePromotionStructuredData(content: {
     "@context": "https://schema.org",
     "@type": "Service",
     name: content.h1,
+    ...(content.alternateName && content.alternateName.length > 0 ? { alternateName: content.alternateName } : {}),
     description: content.metaDescription,
     url: content.canonicalUrl,
     image,
