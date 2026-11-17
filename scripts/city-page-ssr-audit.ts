@@ -196,6 +196,11 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     t("solutions", "solutions intro", p.solutionsIntro ?? "");
     (p.solutions ?? []).forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
     (p.solutions ?? []).forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
+    // Optional checklist under a solutions item (since 2026-11-16): every bullet's title and text.
+    (p.solutions ?? []).forEach((s, i) => s.bullets?.forEach((b, j) => {
+      if (b.title) t("solutions", `layout ${i + 1} bullet ${j + 1} title`, b.title);
+      t("solutions", `layout ${i + 1} bullet ${j + 1} text`, b.text);
+    }));
     // Optional captioned images under a solutions item (since 2026-11-05): src, alt and caption.
     (p.solutions ?? []).forEach((s, i) => s.images?.forEach((img, j) => {
       items.push({ group: "images", label: `layout ${i + 1} image ${j + 1} src`, test: (mk) => imageNeedle(img.src).test(mk) });
@@ -256,6 +261,13 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   t("areas", "areas text", p.areasText);
   // Optional areas links (since 2026-11-07): label text and href.
   (p.areasLinks ?? []).forEach((l, i) => { t("areas", `areas link ${i + 1} "${l.label}"`, l.label); m("areas", `areas link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
+  // Optional areas inline link (since 2026-11-16 in this audit): lead-in, label and href.
+  if (p.areasInlineLink) {
+    const il = p.areasInlineLink;
+    t("areas", "areas inline link lead-in", il.before);
+    t("areas", `areas inline link "${il.link.label}"`, il.link.label);
+    m("areas", `areas inline link href ${il.link.href}`, `href="${il.link.href}"`);
+  }
   // Optional section (since 2026-11-07): audited whenever the page sets it.
   if (p.howHeading) {
     t("how", "how heading", p.howHeading);
