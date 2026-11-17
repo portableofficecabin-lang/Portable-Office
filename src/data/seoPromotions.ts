@@ -287,6 +287,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Portable cabins for Jayanagar homes (elder rooms, consultation rooms, dance studios; owner brief of
     // 2026-11-17); the page links back here. Appended so the live links keep their positions.
     { name: "Portable Cabins in Jayanagar", href: "/cities-we-serve/portable-cabin-jayanagar" },
+    // Portable cabins for rider rest points, EV charging lounges and apartment amenity rooms in Mahadevapura
+    // (owner brief 2026-11-17); the page links back here. After the live lines so they keep their positions.
+    { name: "Portable Cabins in Mahadevapura", href: "/cities-we-serve/portable-cabin-mahadevapura" },
     // Portable cabins along Bannerghatta Road (shelter rooms, caretaker quarters, nature classrooms; owner brief
     // 2026-11-17); the page links back here. After the live lines so they keep their positions.
     { name: "Portable Cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
@@ -538,6 +541,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Office Cabins in Bellandur", href: "/cities-we-serve/portable-office-cabin-bellandur" },
     // Portable-cabin page for Jayanagar, Bengaluru (owner brief 2026-11-17), here and on Porta Cabin; appended so the live links keep their positions.
     { name: "Portable Cabins in Jayanagar", href: "/cities-we-serve/portable-cabin-jayanagar" },
+    // Portable cabin page for Mahadevapura, Bengaluru (owner brief 2026-11-17), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Mahadevapura", href: "/cities-we-serve/portable-cabin-mahadevapura" },
     // Portable cabins along Bannerghatta Road (owner brief 2026-11-17), here and on Porta Cabin; appended so the live links keep their positions.
     { name: "Portable Cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
     ...hubLinksFor([
@@ -577,6 +582,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Porta Cabins in Koppal", href: "/cities-we-serve/porta-cabin-koppal" },
     // Portable / porta cabin page for Jayanagar, Bengaluru (owner brief 2026-11-17), here and on Portable Cabin; appended so the live links keep their positions.
     { name: "Porta Cabins in Jayanagar", href: "/cities-we-serve/portable-cabin-jayanagar" },
+    // Portable cabin page for Mahadevapura, Bengaluru (owner brief 2026-11-17), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Prefabricated Cabins in Mahadevapura", href: "/cities-we-serve/portable-cabin-mahadevapura" },
     // Portable cabins along Bannerghatta Road (owner brief 2026-11-17), here and on Portable Cabin; appended so the live links keep their positions.
     { name: "Porta Cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
     ...hubLinksFor([
@@ -652,6 +659,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Ramamurthy Nagar (sign and flex printers' stock, home healthcare equipment rental depots; owner
     // brief 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
+    // Hebbal, Bengaluru (car dealership accessory and merchandise stores, agri-tech and research field kits;
+    // owner brief 2026-11-17), appended so the live links keep their positions. Not Hebbal, Mysuru.
+    { name: "Shipping Containers in Hebbal, Bengaluru", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
   ],
 };
 
