@@ -35658,7 +35658,7 @@ export const CITY_PAGES: CityPage[] = [
       width: 1672,
       height: 941,
       caption:
-        "Illustrative render of an empty unit. Hose racks, shelving, bins, tool boards and lights are fitted only when your quotation includes them.",
+        "Illustrative render of an empty shell. Hose racks, shelving, bins, tool boards and lights are added only where they appear in your quotation.",
     },
 
     h1: "Shipping & Storage Containers in Panathur",
@@ -35672,12 +35672,12 @@ export const CITY_PAGES: CityPage[] = [
         "Behind them are the businesses that keep it all running: water tanker operators, and contractors who maintain apartment sewage treatment plants (STPs), water treatment plants and lifts. Portable Office Cabin supplies",
       link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
       after:
-        " in Panathur that can give them a secure, organised store close to the buildings they serve. Tell us what you need to keep and where the unit would stand, and we'll suggest a size and an inside layout.",
+        " in Panathur that work as a secure, well-ordered store near the buildings they look after. Send a rough list of your stock and a description of the site, and we'll propose a unit size and a rack plan to match.",
     },
 
     solutionsHeading: "Stores for Building Services Contractors",
     solutionsIntro:
-      "Every apartment complex in Panathur has plant rooms that need regular care: sewage treatment plants, water treatment and RO systems, and lifts. The contractors who maintain them often look after many buildings at once, and they need the right spare close at hand when something fails at night or over a weekend. A container on land you're permitted to use can hold that stock in clearly separated sections:",
+      "Every apartment complex in Panathur has plant rooms that need regular care: sewage treatment plants, water treatment and RO systems, and lifts. The contractors who maintain them often look after many buildings at once, and they need the right spare close at hand when something fails at night or over a weekend. Placed on a yard or plot you have permission to use, one container can keep that stock in clearly separated sections:",
     solutions: [
       {
         title: "STP Maintenance Contractor Storage",
@@ -35687,7 +35687,7 @@ export const CITY_PAGES: CityPage[] = [
           { title: "Pump spares", text: "impellers, seals and bearings kept boxed and dry until they are fitted." },
           { title: "Diffusers and fittings", text: "in bins marked with sizes, so a replacement is matched quickly." },
           { title: "Valves", text: "on a rack grouped by type and size." },
-          { title: "Maintenance tools", text: "on a tool board, so anything missing is noticed before a crew leaves." },
+          { title: "Maintenance tools", text: "hung on an outlined board, so a gap shows at once if a spanner hasn't come back." },
         ],
       },
       {
@@ -35716,17 +35716,17 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Lift Maintenance Contractor Storage",
         // Prose rather than a checklist: the template renders an item's link between its text and its bullets.
-        text: "Lift contractors keep electronic parts, heavy components and consumables side by side, and each needs different care. Keep controller boards and other electronic parts in anti-static packaging on dry shelves, and sort sensors, switches and door operator parts into labelled bins by lift make and model. Put heavier components on appropriately rated lower racks, never on high shelves, store lubricants in a separate section as their product labels require, and keep tools and test equipment in padded cases, with a job log recording which spare went to which building. Electronics need temperature and humidity within the range their manufacturer gives, and a standard container is not climate-controlled, so discuss insulation or cooling before boards go inside.",
+        text: "Lift contractors keep electronic parts, heavy components and consumables side by side, and each needs different care. Keep controller boards and other electronic parts in anti-static packaging on dry shelves, and sort sensors, switches and door operator parts into labelled bins by lift make and model. Put heavier components on appropriately rated lower racks, never on high shelves, store lubricants in a separate section as their product labels require, and keep tools and test equipment in padded cases, with a job log recording which spare went to which building. Electronics need temperature and humidity within the range their manufacturer gives, and a standard container is not climate-controlled, so raise insulation or cooling with us before any boards are stored.",
         // Brief §5: the Vellore page's insulated and air-conditioned fit-out section (anchor softened, see the header).
         link: { label: "Insulated and air-conditioned container options", href: "/cities-we-serve/shipping-container-vellore" },
       },
     ],
     solutionsOutro:
-      "This is general storage guidance: follow each manufacturer's instructions for membranes, reagents, electronics and lubricants. Keeping safety equipment in good order does not by itself make confined-space work safe: that work needs a risk assessment, trained people, atmospheric testing, a rescue plan and any permits that apply.",
+      "These notes are general: the instructions from each maker of membranes, reagents, electronics and lubricants come first. Keeping safety equipment in good order does not by itself make confined-space work safe: that work needs a risk assessment, trained people, atmospheric testing, a rescue plan and any permits that apply.",
 
     areasHeading: "Areas We Serve",
     areasText:
-      "Containers are supplied throughout Panathur, including Panathur Main Road, Panathur Road, Balagere, Balagere Road and the area around the Panathur railway underpass. Every delivery is confirmed once we have checked how the site can be reached.",
+      "We take container enquiries from across Panathur: Panathur Main Road, Panathur Road, Balagere, Balagere Road and the streets around the Panathur railway underpass. Each delivery is confirmed only after the route to the site has been checked.",
 
     extraSections: [
       {
@@ -35780,16 +35780,16 @@ export const CITY_PAGES: CityPage[] = [
           alt: "Top-down view of an oxide-red shipping container roof on a paved surface, with the cargo-door end and its hinges on the right",
           width: 1774,
           height: 887,
-          caption: "Illustrative view from above. Leave clear space beyond the footprint for the doors to open and for loading.",
+          caption: "Illustrative overhead render. Plan working room around the unit: the cargo doors swing outwards and need clearance for loading.",
         },
         paragraphs: [
-          "The container has to stand on private land you are authorised to use, such as your yard, a leased plot or an agreed spot inside a client's apartment complex with the owner's or association's permission. It can't be placed on the road or the footpath.",
-          "Panathur's roads can be very congested, and the railway underpass limits which vehicles can pass, so the route is checked before anything is sent. Share a location pin and photos of the approach, the gate (with its width), any tight corners, overhead wires or trees, and the spot you have in mind; the ground there should be level and firm, with suitable supports under the corners. From these details the transport team chooses the vehicle, the route and a safe way to lift and unload the unit. A 20 ft container is often the practical choice on a constrained site, but whether one fits yours is confirmed only after the site has been measured and the access checked.",
+          "A container may only be set down on private land you have the right to use: your own yard, a leased plot, or an agreed corner of a client's apartment complex with written permission from the owner or the residents' association. Roads and footpaths are not an option.",
+          "Traffic on Panathur's roads can be heavy, and the railway underpass restricts the height and length of vehicles that can pass beneath it, so we plan the route before anything is dispatched. Send us a map pin and a few photos covering the approach road, the gate and its measured width, sharp bends, low cables or branches, and the exact standing spot. That spot needs firm, level ground and proper supports at the corner castings. With this, our transport team picks a suitable truck, a route that avoids the obstacles, and a safe lifting and unloading method. On a cramped plot a 20 ft unit is often the sensible choice, though we confirm it will fit only after the site has been measured and the access assessed.",
         ],
         // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers lifting access.
         inlineLinks: [
           {
-            before: "Gate widths, tight turns and lifting a unit over a boundary wall are covered in the delivery notes for",
+            before: "For lifting a unit over a compound wall or through a narrow society gate, see the notes on our page for",
             link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
             after: ".",
           },
@@ -35800,10 +35800,10 @@ export const CITY_PAGES: CityPage[] = [
         placement: "afterSolutions",
         table: {
           caption:
-            "Capacities are rounded. Exact dimensions, usable volume and floor-loading capacity vary by unit and manufacturer, the 10 ft size is a fabricated unit rather than a standard sea-freight size, and your quotation confirms which sizes are available.",
+            "Rounded figures. Usable volume, internal dimensions and floor-loading capacity differ from unit to unit; the 10 ft option is fabricated rather than a sea-freight standard, and the quotation confirms whether each size is in stock.",
           headers: ["Container size", "Approximate capacity", "Typical application"],
           rows: [
-            ["10 ft", "~15 m³", "A small tanker operator's store or a lift parts inventory"],
+            ["10 ft", "~15 m³", "Hose and pump spares for a small tanker fleet, or a lift contractor's parts stock"],
             ["20 ft", "~33 m³", "STP, water treatment and lift contractor spares in separate sections"],
             ["40 ft", "~67 m³", "A larger contractor inventory, where site access permits"],
           ],
@@ -35820,13 +35820,13 @@ export const CITY_PAGES: CityPage[] = [
           caption: "Illustrative render of cargo doors with locking bars and a lockbox. Check the door seals and locks of the actual unit offered.",
         },
         paragraphs: [
-          "Three grades are common. One-trip units have crossed the sea once and look almost new. Cargo-worthy units are older but still fit to carry freight. Wind-and-watertight units have retired from shipping and are sold on the promise that they keep the weather out.",
-          "Pump spares, filters and electronics all need a dry, clean interior, so look closely at the floor and walls, the door seals and how well the doors close and lock. Ask what ventilation the unit has and how moisture will be managed, and check the locking arrangement and lockbox. A standard container, whatever its grade, is not climate-controlled. Inspect the unit, or recent dated photos of it, before you agree to it.",
+          "You'll usually be offered one of three grades. A one-trip container has made a single export voyage and is close to new. A cargo-worthy container has more years at sea behind it but is still fit to carry cargo. A wind-and-watertight container has left the shipping trade and is sold simply as a weatherproof box.",
+          "For pump spares, filter cartridges and electronic parts, the inside must be clean and stay dry. Check the floor for soft spots or stains, look along the walls and roof for rust or pinholes, and make sure the door gaskets seal and the doors shut and lock firmly. Ask which vents are fitted and how condensation will be controlled, and look at the locking bars and lockbox. No grade turns a standard container into climate-controlled storage. See the actual unit, or recently dated photographs of it, before you commit.",
         ],
         // Brief §5 inspection link: /products/cargo-storage-containers ("Key Inspection Points"); see the header.
         inlineLinks: [
           {
-            before: "Considering a used unit? Read our checklist on",
+            before: "Buying second-hand? Use our checklist on",
             link: { label: "how to inspect a used shipping container", href: "/products/cargo-storage-containers" },
             after: ".",
           },
@@ -35835,32 +35835,32 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Shipping Container Price in Panathur",
         placement: "afterSolutions",
-        paragraphs: ["The price of a container here depends on these choices:"],
+        paragraphs: ["What you pay for a container in Panathur comes down to:"],
         bullets: [
-          { title: "Size", text: "a 10, 20 or 40 ft unit." },
-          { title: "Grade", text: "one-trip, cargo-worthy or wind-and-watertight, and the condition of the actual unit." },
+          { title: "Size", text: "10 ft, 20 ft or 40 ft." },
+          { title: "Grade", text: "which of the three grades you choose, and how good the particular unit is." },
           { title: "Hose racks and shelving", text: "sized to your hose lengths, pump spares and plant-room parts." },
           { title: "Labelled bins and tool boards", text: "for fittings, small parts and tools." },
           { title: "Safety gear section", text: "a marked area for monitors, harnesses and breathing protection." },
           { title: "Lighting and ventilation", text: "lights and vents where specified." },
           { title: "Climate-control requirements", text: "insulation or an air-conditioned fit-out, if membranes or electronics need it." },
           { title: "Security fittings", text: "a lockbox and heavy-duty locks." },
-          { title: "Delivery access", text: "the distance, the route to your site and the lifting method." },
-          { title: "Purchase or rental", text: "an outright price or monthly hire charges." },
+          { title: "Delivery access", text: "how far the unit travels, the way into your site and how it is lifted off." },
+          { title: "Buying or hiring", text: "a one-time purchase price, or a monthly rental charge." },
         ],
         closing: [
-          "Container prices track the international freight market, so your quotation says how long its figure stays valid. Tell us what you'll store and where, and you'll get an itemised quote.",
+          "Because container prices follow global freight rates, every quotation states how long its price holds. Tell us what you'll store and where, and we'll send a quote with each cost listed separately.",
         ],
       },
       {
         heading: "Storage Container on Rent in Panathur",
         placement: "afterSolutions",
         paragraphs: [
-          "Taking on a new maintenance contract, or adding tankers ahead of the dry months? Ask us about storage containers on rent in Panathur. Each hire quotation lists the rental term, the specific unit with its condition, and the drop-off and pick-up arrangements.",
+          "Taking on a new maintenance contract, or adding tankers ahead of the dry months? A storage container on rent in Panathur adds space for as long as the work lasts. The hire quotation names the unit and its condition, the rental period, and how drop-off and collection will work.",
         ],
         inlineLinks: [
           {
-            before: "Rental sizes and monthly terms are on our",
+            before: "See rental sizes and monthly hire terms on the",
             link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
             after: " page.",
           },
@@ -35872,18 +35872,18 @@ export const CITY_PAGES: CityPage[] = [
         ordered: true,
         bullets: [
           {
-            title: "Share what you'll store and where",
-            text: "the equipment and spares, roughly how much, and the proposed location of the unit.",
+            title: "Tell us the equipment and the location",
+            text: "list what will be stored, roughly how much of it, and where you'd like the unit placed.",
           },
-          { title: "Receive a recommendation and quotation", text: "covering the size, grade, racks, bins, safety-gear section and delivery." },
-          { title: "Confirm permission", text: "written consent from the landowner or the client complex where the unit will stand." },
+          { title: "Get a recommendation and a quotation", text: "the size, grade, racks, bins, safety-gear area and delivery, each priced." },
+          { title: "Confirm permission", text: "written consent from the landowner, or from the client complex where the unit will stand." },
           {
             title: "Arrange delivery and placement",
-            text: "the route, the gate and the unloading spot are checked before a date is agreed.",
+            text: "a date is fixed once the access route, gate width and unloading area have been confirmed.",
           },
           {
-            title: "Request extra fit-out or collection if offered",
-            text: "layout changes, a second unit or collection at the end of a hire, where your order includes them.",
+            title: "Add fit-out or collection if offered",
+            text: "changes to the layout, an extra unit, or pick-up when a hire ends, where your order covers them.",
           },
         ],
       },
@@ -35896,8 +35896,8 @@ export const CITY_PAGES: CityPage[] = [
           { title: "Security options", text: "heavy-duty locks and a lockbox." },
           { title: "Suitable shelving and racks", text: "chosen around the weight and size of what you keep." },
           { title: "Clear advice on what doesn't belong", text: "chlorine, treatment chemicals and fuel need their own approved storage." },
-          { title: "Delivery planning", text: "the route, the gate and the unloading spot checked before a truck is sent." },
-          { title: "Itemised quotations", text: "every cost on its own line." },
+          { title: "Delivery planning", text: "underpass, gate and unloading checks done before dispatch." },
+          { title: "Itemised quotations", text: "each item and service priced separately." },
         ],
       },
     ],
@@ -35931,12 +35931,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How quickly can you deliver?",
         answer:
-          "We can't promise a delivery time before checking three things: which suitable units are available, what racks or fit-out you need, and how a truck can reach your site. Share your target date with the enquiry, and the quotation will set out a realistic schedule once those checks are done.",
+          "That depends on three things we check first: whether a suitable unit is available, what fit-out you've asked for, and how a truck can get to your site, including whether the underpass is on its route. Tell us your target date when you enquire, and the quotation will give a realistic timeline once those checks are complete.",
       },
     ],
 
     ctaHeading: "Storage for the People Who Keep Panathur Running",
-    ctaText: `Whether you're keeping a tanker fleet's hoses and pumps ready, or the spares that keep apartment STPs, water plants and lifts working day and night, we'll quote a container set up for the job. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Panathur, Panathur Main Road, Balagere and the area around the railway underpass.`,
+    ctaText: `Whether you're keeping a tanker fleet's hoses and pumps ready, or the spares that keep apartment STPs, water plants and lifts working day and night, we'll quote a container set up for the job. Call ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display}, or write to ${COMPANY.email.sales}. Serving Panathur, Panathur Main Road, Balagere and the area around the railway underpass.`,
     // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Shipping Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -35947,7 +35947,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Container enquiry for Panathur",
       intro:
-        "Pick a container, say how many you need and give the Panathur-area address, and tell us if you'd prefer to hire. Mention what will go inside (hoses, pump spares, plant-room parts or lift components) and any limits on access to the site, and we'll reply with a quotation.",
+        "Choose a container and quantity, add the Panathur or Balagere address, and say whether you'd like to buy or hire. Note what will be stored (hoses, pump spares, plant-room parts or lift components) and anything that limits access, such as the underpass or a narrow gate, and we'll send a quotation.",
     },
     // The cargo category, the inspection guide and the rental product are linked in the body, so they are not repeated here.
     relatedLinksHeading: "Related products",
