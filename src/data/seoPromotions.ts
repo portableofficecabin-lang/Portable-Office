@@ -607,6 +607,21 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Doddanekundi (aerospace and precision parts stores, IT asset disposal staging; owner brief
     // 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Doddanekundi", href: "/cities-we-serve/shipping-container-doddanekundi" },
+    // BTM Layout (last-mile parcel overflow, festival committee storage and bike rental fleet stores;
+    // owner brief 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in BTM Layout", href: "/cities-we-serve/shipping-container-btm-layout" },
+    // Mahadevapura (hotel FF&E, banquet overflow, mall and hotel spares, interior staging; owner brief
+    // 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+    // KR Puram (rail and road consignment staging, fibre and telecom contractor stores; owner brief 2026-11-16),
+    // after Mahadevapura, appended so the live links keep their positions.
+    { name: "Shipping Containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
+    // Thanisandra Main Road (scaffolding-hire component stores and car and motorbike storage; owner brief
+    // 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+    // Brookefield (furniture and appliance rental mini-hubs, donation drives and CSR collections; owner
+    // brief 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in Brookefield", href: "/cities-we-serve/shipping-container-brookefield" },
     // Hennur Road (church, parish and choir storage, music-school instruments, décor and party-supply stock;
     // owner brief 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers on Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
