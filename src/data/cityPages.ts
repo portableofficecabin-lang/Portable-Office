@@ -20093,6 +20093,12 @@ export const CITY_PAGES: CityPage[] = [
    * the anchor "Doddanekundi" (`whyInlineLink`); `nearbySkipsBodyLinks` keeps the nearby block from
    * repeating it. The Marathahalli office-cabin page keeps Doddanekundi (a different product).
    *
+   * Kundalahalli brief (2026-11-17): Kundalahalli has its own shipping container page (clean linen and
+   * laundry stock, camera and production gear), so it left the areas list and is linked from the areas
+   * section instead (`areasInlineLinks`, anchor "shipping containers in Kundalahalli"). It was never a
+   * keyword here. Munnekollal, AECS Layout, Kadubeesanahalli, Varthur Road and Old Airport Road stay.
+   * The Marathahalli office-cabin page keeps Kundalahalli (a different product).
+   *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
    * ────────────────────────────────────────────────────────────────────────────────────── */
   {
@@ -20204,13 +20210,21 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas we serve",
     areasText:
-      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout and Kadubeesanahalli. We also consider sites along Varthur Road and Old Airport Road. Delivery access is assessed for each location.",
+      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Munnekollal, AECS Layout and Kadubeesanahalli. We also consider sites along Varthur Road and Old Airport Road. Delivery access is assessed for each location.",
     // Mahadevapura brief (2026-11-16): hotel, mall and interior-staging storage there is that page's intent.
     areasInlineLink: {
       before: "For hotel, mall and apartment-interior storage around",
       link: { label: "Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
       after: ", see our page for that locality.",
     },
+    // Kundalahalli brief (2026-11-17): clean linen and laundry stock and camera and production gear storage there are that page's intent.
+    areasInlineLinks: [
+      {
+        before: "For clean linen stock, or camera and production gear storage around Kundalahalli Gate, see our page on",
+        link: { label: "shipping containers in Kundalahalli", href: "/cities-we-serve/shipping-container-kundalahalli" },
+        after: ".",
+      },
+    ],
     // Bellandur cross-link (agreed with the Bellandur page, added by #227 as the second to go live): residential storage is that page's intent.
     areasLinks: [{ label: "Storage containers for homes and societies in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" }],
 
@@ -41159,8 +41173,9 @@ export const CITY_PAGES: CityPage[] = [
    * returns handling, and donation drives, CSR collections and NGO relief material. Marathahalli ORR
    * keeps PG and hostel furniture and commercial storage; Koramangala keeps individual self-storage;
    * HSR Layout keeps community tools and event gear. Whitefield, ITPL proper, the EPIP Zone, Kundalahalli
-   * and AECS Layout are not named. "Brookfield" appears once (FAQ 5). The Marathahalli office-cabin page
-   * names Brookefield for a different product and is unchanged.
+   * and AECS Layout are not named. Kundalahalli has its own shipping container page (2026-11-17).
+   * "Brookfield" appears once (FAQ 5). The Marathahalli office-cabin page names Brookefield for a
+   * different product and is unchanged.
    *
    * Images: five owner-dropped lossy VP8 webp files ("public/images/Storage Containers in Brookefield/
    * Storage Containers in Brookefield/cabin (1–5).webp", no EXIF / XMP / ICC, origin not documented) of
@@ -41586,6 +41601,428 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers are supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its Bengaluru office in Electronic City; Brookefield has no Portable Office Cabin depot or branch. Each unit depends on availability. Its quotation lists the size, grade, condition and inside measurements, any racks, partitions, benches, lights, vents or locks, the hire terms where relevant, and who handles delivery, unloading and collection; no delivery date or time is guaranteed. All four pictures are computer renders of a single container for illustration; none was photographed in Brookefield, none shows a delivered or fitted unit, and the glazed side door in them is a modification, not a standard feature. Capacities are approximate. The rental firms, companies and NGOs mentioned illustrate typical uses; they are not customers or completed projects, and localities are listed only to show where we take enquiries. Advice here on pests, cleaning, appliances, food, permissions and access is general guidance only, not pest-control, food-safety, legal, electrical, fire-safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN KUNDALAHALLI — clean linen stores for laundry services that supply
+   * PGs, co-living homes and small hospitality businesses, and camera, lens, lighting and production gear
+   * stores for photographers, studios and camera rental businesses (Kundalahalli, east Bengaluru).
+   *
+   * Owner brief of 2026-11-17 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Kundalahalli"): meta title, meta description, H1, keywords, local modifiers, section order, H2 / H3
+   * headings, sizes table and the eight FAQs are the brief's, and so is the copy (the owner's content reply
+   * of 2026-11-17 13:53Z, as arranged in the brief), lightly edited for flow and British spelling. The
+   * route follows the site convention (/cities-we-serve/…), not the brief's root slug. The tagline,
+   * captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Left out, as the brief instructs for anything unverified: CCTV mounting (offered for office cabins,
+   * not for storage containers), quiet-hour or timed delivery, prices, discounts, delivery charges,
+   * deposits and minimum hire periods. Rental stays: the catalogue's Shipping Container Rental lists 10,
+   * 20 and 40 ft and 40 ft High Cube units on terms from one month to five years. The 10 ft row stays:
+   * 10 ft units are listed on Cargo Container for Sale and on the rental product.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container" → the cargo category) + heroCta.
+   *   "Shipping Containers for Linen & Laundry Services" and "Shipping Containers for Photographers &
+   *     Camera Rental Businesses" → two afterIntro extra sections, their H3s as `subsections`.
+   *   Placement & delivery, sizes, price (H3 "Pricing considerations"), rent and "How to Order a
+   *     Shipping Container" (ordered) → afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Kundalahalli" → areas. "Why Choose Portable Office Cabin?" → a default extra
+   *     section (after the areas, as in the brief). FAQs: the brief's eight. CTA: the brief's closing
+   *     section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): camera section → "climate-controlled container options" (the Vellore page's
+   * insulated / AC fit-out section, the anchor other pages already use); sizes section → "used shipping
+   * container inspection": no Chennai page is an inspection guide, so it points to the Chennai-area
+   * Athipattu page and its seven-point "Used Container Inspection" checklist, as the sibling pages do;
+   * delivery section → "container delivery and placement" (Bellandur's gate-and-lane notes); rental
+   * section → /products/shipping-container-rental; intro → the cargo category. Inbound: the Marathahalli
+   * ORR page's areas ("shipping containers in Kundalahalli"), the Karnataka shipping hub, the cargo
+   * category's location links and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps the nearby block from repeating Bellandur.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kundalahalli, Kundalahalli Gate, Kundalahalli
+   * Colony, the Kundalahalli lake area and the metro station area, for clean linen and laundry stock and
+   * for camera, lens, lighting and production gear, including camera rental inventory. Not targeted:
+   * Marathahalli and the ORR (commercial storage), Brookefield and Thubarahalli (rental mini-hubs and
+   * donations), Mahadevapura (hotel FF&E; hotel linen is not targeted), Chennai and Athipattu (used-container
+   * inspection), Doddanekundi (IT asset disposal), Vellore (insulated and AC fit-outs) and Whitefield.
+   * The Marathahalli ORR page no longer names Kundalahalli in its areas; the Marathahalli office-cabin page
+   * keeps it (a different product). "Bengaluru" stays out of the title, as the brief asks; the geo meta
+   * and the Service JSON-LD's areaServed carry "Kundalahalli, Bengaluru, Karnataka".
+   *
+   * Images: five owner-supplied PNG renders ("public/images/kundalahalli portable city page/Storage
+   * Containers in Kundalahalli/cabin (1–5).png", no EXIF / XMP) of one white container, encoded to lossy
+   * WebP at their own sizes (10.2 MB → 0.45 MB in all) with an XMP dc:title / dc:description that labels
+   * each one a render (no creator, GPS or date). (1) three-quarter exterior = hero / og:image (the brief's
+   * hero filename); (2) empty interior = linen section; (5) cargo doors with a lockbox = camera section;
+   * (3) roof from above = delivery section; (4) side wall = sizes section. No image shows linen, laundry
+   * stock, cameras or lighting gear, so the brief's four use-case image slots are not used, and no alt
+   * text or caption claims them. No alt text or caption names a size.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-kundalahalli",
+    city: "Kundalahalli",
+    listTitle: "Shipping & Storage Containers in Kundalahalli",
+    metaTitle: "Shipping Container in Kundalahalli | Linen & Camera Gear Storage",
+    metaDescription:
+      "Shipping and storage containers in Kundalahalli for laundry and linen services, photographers, studios and camera rental businesses. Enquire about options.",
+    keywords:
+      "shipping container in Kundalahalli, cargo container Kundalahalli, storage container Kundalahalli, storage container Kundalahalli Gate, storage container near Kundalahalli metro, used shipping container Kundalahalli, shipping container price in Kundalahalli, storage container for rent in Kundalahalli",
+    // Approximate point between Kundalahalli Gate and Kundalahalli lake, east Bengaluru (for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Kundalahalli, Bengaluru, Karnataka, India",
+      position: "12.9610;77.7140",
+      icbm: "12.9610, 77.7140",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur is linked in the delivery section, so the nearby block leaves it out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-kundalahalli/shipping-container-kundalahalli.webp",
+      alt: "Shipping container exterior with white corrugated steel walls and double cargo doors, suitable for commercial storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a storage container exterior, not a photograph of a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Kundalahalli",
+    tagline:
+      "Clean linen stores for laundry services, and organised gear stores for photographers, studios and camera rental businesses.",
+    intro: [
+      "Kundalahalli is a busy residential and commercial locality in East Bengaluru, known for the Kundalahalli Gate junction, its metro station, paying guest accommodation, co-living properties and the businesses nearby.",
+      "Laundry service providers, photographers, creative studios and camera rental businesses here often need organised storage for valuable inventory and equipment.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " solutions for businesses that need additional storage space in Kundalahalli.",
+    },
+
+    areasHeading: "Areas Served Around Kundalahalli",
+    areasText:
+      "This page covers shipping and storage container requirements in Kundalahalli, Kundalahalli Gate, Kundalahalli Colony, the Kundalahalli lake area and the Kundalahalli metro station area. We look at the approach road and the placement spot for each site before a delivery is confirmed.",
+
+    extraSections: [
+      {
+        heading: "Shipping Containers for Linen & Laundry Services",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kundalahalli/storage-container-interior-kundalahalli.webp",
+          alt: "Empty shipping container interior with white corrugated walls, a ribbed ceiling and a wooden floor, looking towards the closed cargo doors",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of an empty interior before fit-out. Shelving, vents and lighting are added only where they are part of the quoted specification.",
+        },
+        paragraphs: [
+          "PG accommodation, co-living properties and small hospitality businesses need regular supplies of fresh bedsheets, pillow covers, towels and blankets.",
+          "Laundry service providers handling several properties can use a suitably prepared shipping container to organise clean linen inventory between deliveries.",
+        ],
+        subsections: [
+          {
+            heading: "Clean linen storage applications",
+            bullets: [
+              { title: "Bedsheets and pillow covers", text: "arrange clean, dry stock by property and size." },
+              { title: "Towels and blankets", text: "store them on suitable covered shelving." },
+              { title: "Property-wise organisation", text: "use clearly labelled storage sections for different customers." },
+              { title: "Stock rotation", text: "follow a first-in, first-out inventory system." },
+              {
+                title: "Moisture protection",
+                text: "use suitable ventilation and humidity control to reduce dampness and the risk of mould.",
+              },
+              { title: "Pest management", text: "inspect and maintain the storage area regularly." },
+              { title: "Delivery records", text: "keep inventory movement and delivery logs." },
+            ],
+          },
+          {
+            heading: "Important storage precautions",
+            paragraphs: [
+              "Only completely dry, clean linen should enter the clean-stock area. Keep linen raised off the floor, with enough clearance around it for ventilation and inspection.",
+              "Used or dirty linen must stay separate from clean stock. Store detergents and laundry chemicals according to their labels and any applicable requirements, away from clean linen.",
+              "For sensitive fabrics, assess whether additional humidity control is needed.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Containers for Photographers & Camera Rental Businesses",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kundalahalli/shipping-container-cargo-doors-kundalahalli.webp",
+          alt: "Closed double cargo doors of a white shipping container with four locking bars, cam handles and a central lockbox",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative render. Locks and access arrangements are confirmed on the actual unit before any equipment goes inside.",
+        },
+        paragraphs: [
+          "Photography studios, wedding photographers, production teams and camera rental businesses handle expensive equipment that needs organised storage and suitable environmental protection.",
+          "A properly modified shipping container can provide additional space for equipment, cases, accessories and inventory handling.",
+        ],
+        // Brief §5: camera and lens humidity protection → the Vellore page's insulated / AC fit-out section.
+        inlineLinks: [
+          {
+            before:
+              "Lenses and electronics may need more than a vented box. Insulation and air-conditioning, quoted against the conditions your gear requires, are covered under our",
+            link: { label: "climate-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Camera and lens storage",
+            bullets: [
+              { text: "Camera bodies stored in protective cases." },
+              { text: "Lenses kept in suitable dry cabinets or humidity-controlled conditions." },
+              { text: "Drone equipment kept in protective carrying cases." },
+              { text: "Padded shelving for delicate equipment." },
+              { text: "Labelled compartments for accessories." },
+              { text: "Equipment inspection and maintenance records." },
+            ],
+            closing: [
+              "Important: excessive humidity and condensation can damage camera lenses and electronic equipment. A standard unconditioned shipping container may not be suitable without appropriate environmental controls.",
+            ],
+          },
+          {
+            heading: "Lighting and production equipment storage",
+            bullets: [
+              { text: "Light stands and C-stands on suitable racks." },
+              { text: "Lighting equipment in protective cases." },
+              { text: "Cables and extension leads coiled and labelled." },
+              { text: "Tripods and mounting accessories organised by type." },
+              { text: "Photography backdrops stored on suitable supports." },
+              { text: "Small production accessories in labelled bins." },
+            ],
+          },
+          {
+            heading: "Camera rental business storage",
+            paragraphs: ["A camera rental business may benefit from:"],
+            bullets: [
+              { text: "Inventory records kept by serial number." },
+              { text: "Equipment checkout and return registers." },
+              { text: "Testing and inspection benches." },
+              { text: "Secure storage compartments." },
+              { text: "Appropriate locks and access controls." },
+              { text: "Insurance arrangements for valuable equipment." },
+            ],
+            closing: [
+              "Battery storage and charging must follow the manufacturer's requirements and applicable fire-safety precautions.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Kundalahalli",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kundalahalli/shipping-container-roof-view-kundalahalli.webp",
+          alt: "Top-down view of a white shipping container roof with four corner castings, on a paved yard",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative overhead view. Allow for the footprint plus clear space to lift the container down and swing its doors open.",
+        },
+        paragraphs: [
+          "Shipping containers may be placed on suitable private premises, leased commercial plots or authorised service areas.",
+          "Before installation, consider:",
+        ],
+        bullets: [
+          { text: "Road access and vehicle movement." },
+          { text: "Container dimensions." },
+          { text: "Ground preparation." },
+          { text: "Crane and unloading access." },
+          { text: "Property owner permissions." },
+          { text: "Applicable local requirements." },
+          { text: "Delivery scheduling." },
+        ],
+        closing: [
+          "Kundalahalli Gate and the roads around it carry heavy traffic. Delivery planning has to allow for access restrictions and congestion, so the route is checked and a delivery window agreed with you before a unit sets out.",
+        ],
+        // Brief §5: access and unloading considerations → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Lifting into a compact PG compound or past a narrow gate? The access checks are set out in our guide to",
+            link: { label: "container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " for tight Bellandur sites.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kundalahalli/shipping-container-side-wall-kundalahalli.webp",
+          alt: "Corrugated white steel wall of a shipping container with two forklift pockets and corner castings, on a paved yard",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative render. Your quotation gives the actual unit's size, inside measurements and condition.",
+        },
+        paragraphs: [
+          "Choose a size that holds your stock at its busiest, with an aisle left clear for loading and checking items.",
+        ],
+        table: {
+          caption:
+            "Capacities are approximate. Exact dimensions and capacity depend on the container specification, and the availability of each size is confirmed in your quotation.",
+          headers: ["Container size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft", "~15 m³", "Compact photography equipment storage"],
+            ["20 ft", "~33 m³", "Clean linen stock or camera rental inventory"],
+            ["40 ft", "~67 m³", "Larger laundry inventory operations"],
+          ],
+        },
+        // Brief §5: container condition and buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Thinking of a used unit? Work through our checklist for",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you decide.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Kundalahalli",
+        placement: "afterSolutions",
+        paragraphs: ["Shipping container prices depend on several factors."],
+        subsections: [
+          {
+            heading: "Pricing considerations",
+            bullets: [
+              { text: "Container size and condition." },
+              { text: "New or used container grade." },
+              { text: "Shelving and interior modifications." },
+              { text: "Ventilation and humidity-control requirements." },
+              { text: "Electrical and lighting arrangements." },
+              { text: "Security provisions." },
+              { text: "Transportation and unloading." },
+              { text: "Site accessibility." },
+              { text: "Additional modifications." },
+            ],
+            closing: ["You can request a quotation based on your storage requirements."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container on Rent in Kundalahalli",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Need extra room for a busy season, or want to try a container before buying one? Portable Office Cabin rents shipping containers on terms from one month to five years, depending on the requirement. Your quotation sets out the hire period, the unit's size and condition, transport to your site and how the container is collected when the hire ends.",
+        ],
+        inlineLinks: [
+          {
+            before: "Rental sizes and terms are listed under",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Share your required container size." },
+          { text: "Explain the intended storage application." },
+          { text: "Discuss shelving, ventilation and environmental requirements." },
+          { text: "Provide the delivery location and site access details." },
+          { text: "Request a quotation." },
+          { text: "Confirm specifications, permissions and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides container solutions for commercial and industrial requirements. For Kundalahalli customers, that includes:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "10, 20 and 40 ft units, subject to availability." },
+          { title: "Storage-oriented fit-outs", text: "shelving, power points and lighting, specified for the unit you choose." },
+          { title: "Interior shelving", text: "planned around linen bundles, equipment cases and labelled bins." },
+          {
+            title: "Ventilation and environmental options",
+            text: "vents, insulation and AC provision, quoted against the conditions your stock needs.",
+          },
+          { title: "Security fittings", text: "padlocks and a lockbox, checked on the actual unit." },
+          {
+            title: "Quotation and delivery coordination",
+            text: "an itemised quotation, then route and placement checks before a delivery date is agreed.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can clean linen be stored inside a shipping container?",
+        answer:
+          "Yes, provided the container is clean, dry, adequately ventilated and suitable for textile storage. Humidity and pest control are important.",
+      },
+      {
+        question: "Can dirty linen be stored with clean linen?",
+        answer: "No. Used linen should stay in a separate collection and storage area to prevent contamination.",
+      },
+      {
+        question: "Can camera lenses be stored inside a shipping container?",
+        answer:
+          "Camera lenses need appropriate humidity and temperature conditions. Dry cabinets or a suitable climate-controlled environment may be necessary.",
+      },
+      {
+        question: "Can camera batteries and drone batteries be stored inside containers?",
+        answer:
+          "Battery storage must follow the manufacturer's instructions and applicable safety requirements. Charging should only take place in an arrangement made specifically suitable for it.",
+      },
+      {
+        question: "What storage arrangements are useful for camera rental businesses?",
+        answer:
+          "Protective shelving, dry cabinets, equipment racks, inventory registers, testing areas and suitable security provisions.",
+      },
+      {
+        question: "What is the price of a shipping container in Kundalahalli?",
+        answer:
+          "Pricing depends on size, condition, customisation and delivery requirements. Request a quotation for current details.",
+      },
+      {
+        question: "What container sizes are available?",
+        answer:
+          "20 ft and 40 ft are the common shipping container sizes, and 10 ft units are also listed. Confirm actual availability and specifications before ordering.",
+      },
+      {
+        question: "How long does delivery take?",
+        answer:
+          "Delivery timelines depend on container availability, customisation, transport and site access. You'll get a confirmed estimate with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Kundalahalli",
+    ctaText: `Whether you need additional clean linen storage or organised space for photography and production equipment, Portable Office Cabin can discuss suitable container options for your requirements. Call ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Kundalahalli, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Kundalahalli storage container enquiry",
+      intro:
+        "Pick a container and quantity, add the Kundalahalli address or map pin, and say whether you want to buy or hire. Tell us if it will hold linen stock or camera and production gear, plus any shelving, ventilation or humidity needs, so the quotation covers them.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds and supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs its Bengaluru office from Electronic City; it has no depot, yard or branch in Kundalahalli. What a unit offers is set by its quotation: size, grade, condition and inside measurements, any shelving, vents, insulation, lighting, power points or locks, the hire terms where it is rented, and how it is delivered, unloaded and collected. Stock varies, and no delivery date or time is guaranteed. The five pictures are computer renders of one container for illustration; none was taken in Kundalahalli or shows a delivered or fitted unit. Capacities are approximate. Laundry services, PGs, co-living operators, studios and camera rental businesses are named to describe typical uses, not as customers or finished projects, and the localities are listed only to show where enquiries are welcome. Notes on linen hygiene, humidity, batteries, chemicals, permissions and site access are general guidance, not fire-safety, electrical, legal or engineering advice.`,
   },
 ];
 
