@@ -141,6 +141,13 @@ export interface CityPageSubsection {
   ordered?: boolean;
   /** Optional paragraphs after the bullets. Unset = nothing rendered. */
   closing?: string[];
+  /**
+   * Optional paragraphs that each carry one inline contextual link, rendered after the closing paragraphs
+   * (first used by Portable Cabins Along Bannerghatta Road, whose feed-storage H3 points at that road's
+   * storage-container page). Counted as body links for `nearbySkipsBodyLinks`. Unset = nothing rendered,
+   * so every other page's HTML is unchanged.
+   */
+  inlineLinks?: CityPageInlineLink[];
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -1265,7 +1272,13 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Delivery Enquiries Near Jigani",
     areasText:
-      "We welcome delivery enquiries from Jigani and the surrounding areas (Jigani Town, Jigani Industrial Area, Jigani Link Road, Haragadde, Kallubalu, Bukkasagara and Kyalasanahalli); the nearby industrial belts of Bommasandra, Attibele, Harohalli and Electronic City; and the towns and main roads of Anekal, Chandapura, Hennagara, Bannerghatta Road, Hosur Road and Sarjapura. If your site is anywhere in south Bengaluru or Anekal taluk, just give us a call. We confirm delivery feasibility and charges after reviewing the site and access.",
+      "We welcome delivery enquiries from Jigani and the surrounding areas (Jigani Town, Jigani Industrial Area, Jigani Link Road, Haragadde, Kallubalu, Bukkasagara and Kyalasanahalli); the nearby industrial belts of Bommasandra, Attibele, Harohalli and Electronic City; and the towns and main roads of Anekal, Chandapura, Hennagara, Hosur Road and Sarjapura. If your site is anywhere in south Bengaluru or Anekal taluk, just give us a call. We confirm delivery feasibility and charges after reviewing the site and access.",
+    // Bannerghatta Road portable-cabin brief (2026-11-17): that road left this list for its own page, linked here.
+    areasInlineLink: {
+      before: "For animal-care rooms, caretaker quarters and nature-camp classrooms, see our",
+      link: { label: "portable cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
+      after: ".",
+    },
 
     howHeading: "Getting a Cabin into Your Jigani Site",
     howSteps: [
@@ -18020,6 +18033,15 @@ export const CITY_PAGES: CityPage[] = [
         closing: [
           "Near the forest edge: Bannerghatta National Park is home to elephants, sloth bears and leopards, and wildlife does sometimes wander beyond its boundaries. A locked container is not wildlife-proof, so don't store food, animal feed or anything with a strong smell in a farmhouse container near the forest, and keep it firmly locked.",
         ],
+        // Portable-cabin brief (2026-11-17, §5C): the reciprocal link to the road's portable-cabin page, whose
+        // caretaker quarters suit a caretaker who lives on the plot.
+        inlineLinks: [
+          {
+            before: "For a caretaker who lives on the plot, see our",
+            link: { label: "portable cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
+            after: ".",
+          },
+        ],
       },
       {
         heading: "Delivery Along Bannerghatta Road",
@@ -18202,6 +18224,471 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers are supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch on Bannerghatta Road. Units are offered subject to availability, and the quotation for each sets out its size, grade, condition and internal dimensions, any racks, bins, vents, locks or lockbox, any rental terms, and the delivery, unloading and collection arrangements; no delivery date or vehicle access is guaranteed. The five images are illustrative renders of one container, not photographs taken on Bannerghatta Road or of a delivered or fitted unit. The kennels, shelters, nurseries, landscapers and farmhouses described are examples of uses, not clients or past projects, and the places named describe where enquiries are welcome, not confirmed delivery points; Bannerghatta National Park is named only to describe the area. Guidance on feed, medicines, fertilisers and pesticides, pest control, wildlife, site access and placement is general information, not veterinary, agronomic, legal, safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS ALONG BANNERGHATTA ROAD — isolation, treatment and adoption rooms for animal
+   * shelters and kennels, caretaker quarters for farmhouses and weekend homes, and nature-camp
+   * classrooms, from Bilekahalli out towards Bannerghatta National Park (south Bengaluru).
+   *
+   * Owner brief of 2026-11-17 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Portable Cabins on Bannerghatta
+   * Road": meta title, meta description, H1, keywords, local areas and image plan used as given; the
+   * brief's slug follows this route's convention). Source copy: the owner's content reply of 2026-11-17
+   * 13:06Z ("Pasted text(20261117-130638).txt"), kept section by section with the brief's corrections:
+   *   • isolation: a cabin is not an infection-control facility by itself; the vet-approved layout,
+   *     airflow, sanitation, wastewater and protocols are named, and a foot dip is only one part of them;
+   *   • treatment room: medicines, procedures and biomedical waste follow their own rules; not a licensed
+   *     veterinary facility; hot water only where quoted;
+   *   • caretaker quarters: no improvised LPG cylinder cage (qualified gas installer instead); no
+   *     snake-proof or wildlife-proof claim; exterior lighting planned with wildlife and neighbours in mind;
+   *   • solar-ready electrics and an alarm or call link are left out: neither is a confirmed offering in
+   *     the catalogue (the brief: include only when offered);
+   *   • nature classrooms: occupancy agreed per room; permissions checked parcel by parcel (protected-area
+   *     and eco-sensitive-zone rules), and land ownership alone does not authorise placement;
+   *   • no daylight-only delivery promise, no "custom sizes are always available", no "no hidden costs",
+   *     no [X] day counts and no price.
+   * Rental stays: /rental-service is the site's "Portable Cabin Rental Service" (monthly hire), so the
+   * rental section is worded as hire subject to the rental quotation.
+   * Mapped onto the template in the brief's order:
+   *   • H1, tagline and intro; the second intro paragraph is `introLink` ("portable cabins" → the main
+   *     Portable Cabin product page); heroCta row (/contact · Call · WhatsApp).
+   *   • Shelters, caretaker quarters and nature classrooms (each with the brief's H3s as `subsections`),
+   *     placement and delivery, sizes, price, rental and "How It Works" (ordered) → eight afterSolutions
+   *     extra sections (the why, solutions and how slots are unused).
+   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
+   *     placement, so it renders after the areas and before the FAQs, as in the brief.
+   *   • FAQs (the source's seven; the delivery answer gives no day count) → faqs; "Rooms for Life Between
+   *     the City and the Forest" → CTA (phone, WhatsApp and e-mail from COMPANY). No enquiry form: portable
+   *     cabins have no category enquiry landing, so the quotation button goes to /contact.
+   *
+   * LINKS (brief §5): intro "portable cabins" → /products/portable-cabin; the feed-storage H3 →
+   * "storage containers on Bannerghatta Road" (the shipping page, which links back from its farmhouse
+   * section with "portable cabins on Bannerghatta Road"); the kitchenette H3 → the toilet-and-pantry
+   * guide; the classroom H3 → the schools-and-classrooms guide; the rental section → /rental-service;
+   * the areas → Portable Cabins in Jigani (that page owns Jigani; this one names the Jigani and Anekal
+   * direction only); the CTA button "Request a Portable Cabin Quotation" → /contact. Sub-section links use
+   * `CityPageSubsection.inlineLinks`, new on this page. Inbound: the shipping page, the Jigani page's
+   * areas (which no longer list Bannerghatta Road), the Bangalore portable-cabin hub, both Karnataka
+   * portable/porta hubs and the /cities-we-serve directory.
+   *
+   * KEYWORD OWNERSHIP: portable / porta / prefabricated / readymade cabin × Bannerghatta Road,
+   * Bilekahalli, Arekere, Hulimavu, Kalena Agrahara, Gottigere, Basavanapura and Bannerghatta, for animal
+   * shelter isolation, treatment and adoption rooms, farmhouse caretaker quarters (single-household staff
+   * rooms) and nature-camp classrooms. Not targeted: storage containers (the Bannerghatta Road shipping
+   * page), elder rooms, consultation rooms and dance studios (Jayanagar), labour colonies (Madurai),
+   * eco-tourism reception and interpretation (Chamarajanagar), study halls (Hubballi–Dharwad), pet
+   * grooming shops (Indiranagar), office-cabin intents (site, marketing, home, sales and tech-park
+   * offices), and JP Nagar, Jayanagar, Electronic City or Bengaluru-wide terms.
+   *
+   * Images: three owner-dropped lossy VP8 webp renders ("public/images/Portable Cabins on Bannerghatta
+   * Road city page/Portable Cabins on Bannerghatta Road/cabin (1–3).webp", no EXIF / XMP / ICC) of one
+   * green corrugated-steel cabin. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title /
+   * dc:description that labels it a render. (2) front with a four-panel sliding glass front = hero /
+   * og:image (the brief's hero exterior); (3) solid side wall with two exterior lights = caretaker
+   * section; (1) roof from above = placement section. No image shows an isolation room, a treatment room,
+   * caretaker quarters, a classroom or an adoption room, so those image slots are not used and no alt
+   * text claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-bannerghatta-road",
+    city: "Bannerghatta Road",
+    listTitle: "Portable Cabins on Bannerghatta Road",
+    metaTitle: "Portable Cabin on Bannerghatta Road | Shelter & Caretaker Rooms",
+    metaDescription:
+      "Portable cabins on Bannerghatta Road for animal shelter isolation and treatment rooms, farmhouse caretaker quarters and nature-camp classrooms. Request a quote.",
+    keywords:
+      "portable cabin on Bannerghatta Road, porta cabin Bannerghatta Road, prefabricated cabin Bannerghatta Road, readymade cabin Bannerghatta Road, portable cabin Hulimavu, portable cabin Gottigere, portable cabin Arekere, portable cabin manufacturers Bannerghatta Road, portable cabin price on Bannerghatta Road, porta cabin cost Bannerghatta Road, portable cabin on rent on Bannerghatta Road, animal shelter isolation cabin, vet treatment room cabin, caretaker quarters cabin, nature camp classroom cabin",
+    // The road at Hulimavu, about midway between Bilekahalli and Gottigere (as on the shipping page).
+    geo: {
+      region: "IN-KA",
+      placename: "Bannerghatta Road, Bengaluru, Karnataka, India",
+      position: "12.8778;77.5965",
+      icbm: "12.8778, 77.5965",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+    // The hero is 1672 × 941 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-bannerghatta-road/portable-cabin-bannerghatta-road-front.webp",
+      alt: "Green corrugated-steel portable cabin with a four-panel sliding glass front and a bright interior with white wall panels and a wood-look floor",
+      width: 1672,
+      height: 941,
+      caption: "Illustrative render. The AC unit and exhaust fan shown are optional fittings, included only where quoted.",
+    },
+
+    h1: "Portable Cabins Along Bannerghatta Road",
+    tagline:
+      "Rooms for animal shelters and kennels, caretaker quarters for farmhouses and classrooms for nature camps, from the city end of the road out towards the forest.",
+    intro: [
+      "Bannerghatta Road changes as you drive it. Near the city it's hospitals, malls and apartment towers. Further south, the land opens up into animal shelters and boarding kennels, weekend farmhouses and nature camps, until it meets the edge of Bannerghatta National Park, where elephants, leopards and sloth bears live.",
+    ],
+    introLink: {
+      before:
+        "Out here, people need rooms for work that doesn't fit in a city building: caring for sick and rescued animals, living on a farm to look after it, and teaching children about the forest next door. Portable Office Cabin builds",
+      link: { label: "portable cabins", href: "/products/portable-cabin" },
+      after:
+        " for all three along Bannerghatta Road. You may know them as porta cabins, prefabricated cabins or readymade cabins: rooms built at our factory, delivered to your land and set in place, with the layout, ventilation and utilities agreed before the build starts.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Our portable cabins go to plots all along Bannerghatta Road: Bilekahalli, Arekere, Hulimavu, Kalena Agrahara, Gottigere and Basavanapura, then on past Bannerghatta towards Jigani and Anekal. We check each site's access from your photographs before a delivery is agreed.",
+    // Owner rule (2026-11-05): Jigani has its own portable-cabin page, so it is linked rather than listed.
+    areasInlineLink: {
+      before: "For factory, site-office and security cabins in and around Jigani, see our page on",
+      link: { label: "portable cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+      after: ".",
+    },
+
+    extraSections: [
+      {
+        heading: "Isolation & Treatment Rooms for Shelters and Kennels",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Animal shelters, rescue groups and boarding kennels near Bannerghatta care for animals that sometimes arrive sick, injured or unvaccinated. Keeping them apart from healthy animals is one of the most important things a shelter can do to limit the spread of disease, and separate rooms make that work easier to organise.",
+        ],
+        subsections: [
+          {
+            heading: "Animal Shelter Isolation Cabin",
+            paragraphs: ["An isolation cabin can be planned with:"],
+            bullets: [
+              { title: "A separate entrance", text: "ideally positioned away from the main kennels and the route healthy animals use." },
+              { title: "Washable walls and flooring", text: "smooth, sealed surfaces that stand up to frequent cleaning and disinfection." },
+              {
+                title: "Floor drainage",
+                text: "a floor that falls towards a drain, connected to an outlet and wastewater arrangement that suits the site and the applicable rules.",
+              },
+              { title: "Kennel spaces or cages", text: "sized for the animals you care for." },
+              {
+                title: "A hygiene station at the door",
+                text: "a handwash point, hooks for dedicated aprons and gloves, and a foot dip if your vet recommends one.",
+              },
+              { title: "Dedicated cleaning tools", text: "kept in the isolation room and used nowhere else." },
+              { title: "Ventilation", text: "planned so that air moves away from healthy animals, not towards them." },
+              { title: "Insulation and temperature control", text: "because sick animals need steady warmth or cooling." },
+              { title: "Lighting", text: "bright, with easy-to-clean fittings." },
+            ],
+            closing: [
+              "A cabin does not isolate an infection on its own. Isolation depends on a layout your veterinarian has approved, suitable ventilation and airflow, a cleaning and disinfection routine, safe wastewater disposal and the infection-control protocols your staff follow every day; a foot dip is only one small part of those. We build the room to the layout you agree with your vet, and the shelter's procedures make it work.",
+            ],
+          },
+          {
+            heading: "Veterinary Treatment Room Cabin",
+            paragraphs: ["A treatment room gives a visiting or resident vet a clean, well-lit place to examine animals. It can include:"],
+            bullets: [
+              { title: "An examination table", text: "with good overhead lighting." },
+              { title: "A washbasin", text: "with hot-water provision where the quotation includes it." },
+              { title: "A lockable medicine cabinet", text: "with medicines stored as their labels and the applicable rules require." },
+              { title: "Records storage", text: "shelves or a cabinet for files and basic equipment." },
+              { title: "Easy-clean surfaces", text: "throughout the room." },
+            ],
+            closing: [
+              "Veterinary procedures, medicine storage and the handling of biomedical waste are governed by their own rules, so follow your vet's guidance and the requirements of the relevant authorities. The cabin is a room for that work; it is not a licensed veterinary facility in itself.",
+            ],
+          },
+          {
+            heading: "Adoption Meeting Room Cabin",
+            paragraphs: ["Families meeting an animal before adopting need a calm room of their own. An adoption room can include:"],
+            bullets: [
+              { title: "Comfortable seating", text: "for the family and a member of staff." },
+              { title: "A calm setting", text: "away from busy kennels, with ventilation and insulation for comfort." },
+              { title: "An interaction area", text: "with space for supervised play between the family and the animal." },
+              { title: "Paperwork space", text: "for adoption forms and records." },
+              { title: "Safe, washable surfaces", text: "easy to clean between visits." },
+            ],
+            closing: [
+              "Keep the adoption room well apart from the isolation and treatment rooms, so that visiting families never pass through them.",
+            ],
+          },
+          {
+            heading: "Storage for Animal Feed and Shelter Supplies",
+            paragraphs: [
+              "Feed, bedding and cleaning supplies are better kept out of the rooms where animals are examined, isolated or introduced to families.",
+            ],
+            inlineLinks: [
+              {
+                before: "For lockable feed and supply stores, see our",
+                link: { label: "storage containers on Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Caretaker Quarters for Farmhouses & Weekend Homes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-bannerghatta-road/portable-cabin-side-wall-exterior-lights-bannerghatta.webp",
+          alt: "Solid corrugated side wall of a green portable cabin with two exterior wall lights near the roofline",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of a solid side wall with two exterior lights. Windows, mesh, grilles and lighting for caretaker quarters are set out in the approved layout.",
+        },
+        paragraphs: [
+          "Many farmhouses and weekend homes towards Bannerghatta are looked after by a caretaker or watchman who lives on site, often in a rough shed or a spare corner. A caretaker cabin gives them a decent, safe room of their own, and gives you someone on the property through the week. These are single-household staff rooms, planned for one caretaker or a small family.",
+        ],
+        subsections: [
+          {
+            heading: "Bedroom and Living Space",
+            bullets: [
+              { title: "A sleeping area", text: "with space for a bed." },
+              { title: "Storage", text: "shelves or a cupboard for clothes and belongings." },
+              { title: "Ventilation", text: "windows and vents placed so that air moves through the room." },
+              { title: "Thermal insulation", text: "a PUF-insulated build helps the room stay comfortable through hot afternoons and cool nights." },
+              { title: "Lighting", text: "inside the room and at the entrance." },
+              { title: "Suitable windows", text: "sized for light and air, with grilles." },
+              { title: "A secure entrance", text: "a well-fitted, lockable door." },
+            ],
+          },
+          {
+            heading: "Kitchenette and Attached Bathroom",
+            bullets: [
+              { title: "A kitchen counter and sink", text: "with ventilation for cooking." },
+              { title: "An attached bathroom", text: "with a water supply." },
+              { title: "Water storage", text: "a water tank, where the quotation includes one." },
+              { title: "Drainage and wastewater", text: "planned for the site before the cabin is placed." },
+            ],
+            closing: [
+              "Gas safety: if the kitchenette will use LPG, have the cylinder, regulator, piping and any outdoor cylinder position installed and checked by a qualified gas installer or your gas distributor, following the applicable safety requirements. Don't improvise a cylinder enclosure.",
+            ],
+            inlineLinks: [
+              {
+                before: "For layout ideas, see our guide to",
+                link: { label: "portable cabins with an attached toilet and pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Insect and Wildlife-Aware Design",
+            paragraphs: ["Near the forest, a few details make a cabin harder for snakes, insects and rodents to get into:"],
+            bullets: [
+              { title: "A raised base", text: "where it suits the site, so the floor doesn't sit at ground level." },
+              { title: "Sealed gaps", text: "around pipes, cables and panel joints." },
+              { title: "Well-fitted doors", text: "with no gap at the threshold." },
+              { title: "Insect mesh", text: "on windows and vents." },
+              { title: "Secure windows", text: "with grilles." },
+              { title: "Exterior lighting", text: "so the path and the door can be seen at night." },
+              { title: "Clear surroundings", text: "with grass and undergrowth around the cabin kept cut back." },
+              { title: "Safe food and waste storage", text: "food and kitchen waste kept sealed and indoors." },
+            ],
+            closing: [
+              "No cabin is completely snake-proof or wildlife-proof. These measures reduce the ways in, and day-to-day habits do the rest. Plan exterior lights with wildlife, neighbours and any local requirements in mind: light the path and the door rather than the open land beyond. Follow forest department advice for your area.",
+            ],
+          },
+          {
+            heading: "Optional Electrical and Security Features",
+            paragraphs: ["Where they suit the site and are listed in the quotation:"],
+            bullets: [
+              { title: "Exterior security lighting", text: "beside the door and along the path." },
+              { title: "Additional door and window security", text: "stronger locks and grilles." },
+            ],
+            closing: ["These are options, not standard items; what is included is set out in the quotation for your cabin."],
+          },
+        ],
+      },
+      {
+        heading: "Nature-Camp Classrooms",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Nature camps, farm schools and outdoor education groups bring children and families to the open land near Bannerghatta to learn about birds, trees, insects and the forest. When it rains or the sun is fierce, they need a proper room.",
+        ],
+        subsections: [
+          {
+            heading: "Classroom Layout",
+            paragraphs: ["A nature classroom cabin can include:"],
+            bullets: [
+              { title: "Large windows or sliding panels", text: "so the room feels open to the outdoors." },
+              { title: "Insect mesh", text: "on windows, panels and vents." },
+              { title: "Student seating", text: "benches, mats or stools for a group." },
+              { title: "Display walls", text: "for charts, maps, posters and children's work." },
+              { title: "Storage", text: "for learning materials." },
+              { title: "Fans and ventilation", text: "for hot afternoons." },
+              { title: "A drinking water point", text: "inside or beside the cabin." },
+              { title: "A first-aid cabinet", text: "in a place every group leader knows." },
+            ],
+            closing: [
+              "How many children a room can hold depends on its internal size, exits and ventilation and on the requirements that apply to your programme, so agree the occupancy before the layout is drawn.",
+            ],
+            inlineLinks: [
+              {
+                before: "For seating, window and door planning in teaching rooms, see",
+                link: { label: "portable cabins for schools and classrooms", href: "/products/portable-cabin/for-schools-and-classrooms" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Outdoor Learning Equipment Storage",
+            paragraphs: [
+              "Built-in cupboards and shelves keep field kits, binoculars, magnifying glasses, maps, books, posters and student materials dry, sorted and ready for the next group.",
+            ],
+          },
+          {
+            heading: "Wildlife Safety and Permissions",
+            paragraphs: [
+              "Groups near the forest edge need clear rules: wildlife safety signage, supervised movement between the cabin and the trails, an emergency access route that a vehicle can use, safe sanitation, and a cabin placed away from paths that wildlife uses.",
+              "Permissions depend on the exact land parcel. Land near Bannerghatta National Park may fall under protected-area restrictions or eco-sensitive zone rules, and what applies differs from one parcel to the next. Before installation, check the parcel's status with the forest department and the local authorities and obtain any approvals it needs; owning the land does not by itself permit a cabin to be placed on it.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Placement & Delivery on Bannerghatta Road",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-bannerghatta-road/portable-cabin-roof-overhead-bannerghatta-road.webp",
+          alt: "Top-down view of a green portable cabin's corrugated roof, with a sliding glass front along one long side, on a paved yard",
+          width: 1774,
+          height: 887,
+          caption:
+            "Illustrative view from above. Leave clear space around the cabin's footprint for unloading, the doors and the service connections.",
+        },
+        paragraphs: [
+          "The cabin goes on private land and only with the owner's agreement, never on the road or the footpath, and within the local building rules for the plot. Further out along Bannerghatta Road, plots are usually larger and easier to reach; closer to the city, the road is busy and approaches are tight.",
+          "Before delivery, share photographs of the approach road, the gate (with its width and height), bends, trees and overhead cables, and the placement area. Prepare the ground firm and level, make sure the delivery vehicle can get close, and leave space to unload the cabin safely. Water, power and drainage, including where the wastewater goes, are planned before the cabin arrives.",
+          "Near the forest edge, plan the installation for daylight where appropriate and within any restrictions that apply to the area, and keep the work footprint small. The delivery date is confirmed once the build and the site access have been checked; it isn't promised in advance.",
+        ],
+      },
+      {
+        heading: "Portable Cabin Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Illustrative planning sizes, not standard models. Internal dimensions, occupancy, animal-welfare needs, ventilation and what can be built are confirmed for each order, and not every custom size is available.",
+          headers: ["Application", "Illustrative size", "Key features"],
+          rows: [
+            ["Treatment room", "10 × 8 ft", "Examination table, sink and storage"],
+            ["Adoption meeting room", "10 × 8 ft", "Seating and a safe interaction area"],
+            ["Isolation cabin", "20 × 10 ft", "Separate entrance, washable surfaces and planned ventilation"],
+            ["Caretaker quarters", "20 × 10 ft", "Sleeping area, kitchenette and bathroom"],
+            ["Nature classroom", "20 × 10 ft or joined cabins", "Windows, seating, display space and storage"],
+          ],
+        },
+      },
+      {
+        heading: "Portable Cabin Price on Bannerghatta Road",
+        placement: "afterSolutions",
+        paragraphs: ["The price of a portable cabin depends on:"],
+        bullets: [
+          { title: "Size and layout", text: "the footprint and the rooms inside it." },
+          { title: "Construction", text: "MS or PUF-insulated panels." },
+          { title: "Finishes", text: "washable wall finishes and the flooring." },
+          { title: "Hygiene fittings", text: "drainage, ventilation and any animal-care fit-out." },
+          { title: "Living fittings", text: "a kitchenette, a bathroom and a water tank." },
+          { title: "Forest-edge details", text: "insect mesh, a raised base and exterior lighting." },
+          { title: "Electrical work", text: "wiring, lights, fans and sockets." },
+          { title: "Security", text: "door and window grilles and locks." },
+          { title: "Delivery", text: "the distance and the access to your site." },
+          { title: "Purchase or rental", text: "a purchase price, or hire charges for the agreed term." },
+        ],
+        closing: ["Tell us what the cabin is for and where it will stand, and we'll send an itemised quotation."],
+      },
+      {
+        heading: "Portable Cabin on Rent on Bannerghatta Road",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Running a seasonal nature camp, or need a room for a few months while a permanent building is planned? Ask us whether a suitable cabin is available on hire along Bannerghatta Road. Availability, the hire term, the fit-out and any cleaning and return conditions (important for animal-care use) are set out in the rental quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "For how hire works, see our",
+            link: { label: "portable cabin rental service", href: "/rental-service" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { title: "Share the intended use and location", text: "what the cabin is for and where it will stand." },
+          { title: "Share photographs", text: "of the site, the gate and the approach road." },
+          { title: "Receive a proposed layout and quotation", text: "including any animal-care, living or classroom fittings." },
+          { title: "Manufacture", text: "we build the approved cabin at our factory." },
+          { title: "Delivery and connections", text: "we deliver and position the cabin, and the planned service connections are arranged." },
+        ],
+        closing: [
+          "Water, drainage and electrical connections are made by suitably qualified people, with any approvals the site needs; the quotation sets out who arranges each one.",
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          { title: "Animal-care layouts", text: "isolation, treatment and adoption rooms planned around the layout your vet approves." },
+          { title: "Caretaker quarters", text: "a sleeping area, kitchenette and attached bathroom in one compact cabin." },
+          { title: "Nature-classroom options", text: "large windows, insect mesh, seating, display walls and storage." },
+          { title: "Practical material choices", text: "MS or PUF-insulated construction, with washable finishes where hygiene matters." },
+          { title: "Ventilation and utility planning", text: "airflow, water, drainage and power agreed before the build." },
+          { title: "Site access assessment", text: "the approach, gate and base checked from your photographs before delivery." },
+          { title: "Itemised quotations", text: "the cabin, its fittings, transport and any hire terms shown line by line." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a portable cabin be used as an isolation room for an animal shelter?",
+        answer:
+          "It can house one, but the cabin alone doesn't isolate an infection. We build the room with a separate entrance, washable surfaces, floor drainage, kennel space, ventilation and temperature control, to a layout your veterinarian approves. Isolation then depends on that layout, safe wastewater disposal and the shelter's cleaning and infection-control protocols.",
+      },
+      {
+        question: "Can a cabin work as a vet treatment room?",
+        answer:
+          "Yes, as a room fitted with an examination table, a washbasin, a lockable medicine cabinet, records storage and easy-clean surfaces. Procedures, medicine storage and biomedical waste must follow your vet's guidance and the applicable rules, and the cabin is not a licensed veterinary facility in itself.",
+      },
+      {
+        question: "Can a farmhouse caretaker live in a portable cabin?",
+        answer:
+          "Yes. Caretaker quarters can combine a sleeping area, storage, a kitchenette, an attached bathroom, insulation, insect mesh, secure doors and windows, and exterior lighting. Any LPG installation should be fitted and checked by a qualified gas installer, following the applicable safety requirements.",
+      },
+      {
+        question: "How do you keep snakes out of a cabin near the forest?",
+        answer:
+          "A raised base where suitable, sealed gaps, well-fitted doors, insect mesh on windows and vents, and cleared surroundings all reduce the ways in. No cabin is completely snake-proof, so keep food and waste sealed and follow forest department advice for your area.",
+      },
+      {
+        question: "Can a nature camp use a cabin as a classroom?",
+        answer:
+          "Yes, with large windows or sliding panels, insect mesh, seating, display walls, storage, a drinking water point and a first-aid cabinet. Occupancy is agreed for the room's size and exits, and a site near Bannerghatta National Park needs its permissions checked parcel by parcel with the forest department and the local authorities before installation.",
+      },
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer:
+          "Yes. Porta cabin, portable cabin, prefabricated cabin and readymade cabin all describe a room built off site and delivered ready to place. This page covers all of them along Bannerghatta Road.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "It depends on the layout, the fittings, the production schedule and your site's access. Share your target date with your enquiry, and the quotation will show the schedule we expect.",
+      },
+    ],
+
+    ctaHeading: "Rooms for Life Between the City and the Forest",
+    ctaText: `Whether you're nursing rescued animals back to health, giving your farmhouse caretaker a proper home, or teaching children about the forest next door, we'll plan a portable cabin that fits life along Bannerghatta Road. To talk it through, call ${COMPANY.phones[0].display} or WhatsApp ${COMPANY.whatsapp.display}, or email ${COMPANY.email.sales}. Enquiries are welcome from Bilekahalli to Basavanapura and on towards Bannerghatta.`,
+    // Brief §5: the final CTA's "request a portable cabin quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Portable Cabin Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    // The product page, both guides and the rental service are linked in the body, so they are not repeated here.
+    relatedLinks: [
+      { label: "Portable Cabins", href: "/products/category/portable-cabins" },
+      { label: "Insulated Portable Cabins: PUF Panels & Cooling", href: "/products/portable-cabin/insulation-and-cooling" },
+      { label: "Portable Cabin Installation & Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable cabins are built by Portable Office Cabin at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and it has an office in Electronic City, Bengaluru; it has no factory, yard, depot or branch on Bannerghatta Road. The layouts, sizes, fittings and uses described are examples for discussion: what is supplied is fixed by the approved layout and the quotation for each order, with optional items included only where quoted. The three images are illustrative renders of one cabin design, not photographs taken on Bannerghatta Road or near Bannerghatta National Park, and not of a completed shelter, veterinary, caretaker or classroom installation. The shelters, kennels, farmhouses and nature camps mentioned illustrate possible uses; they are not clients or completed projects, and the localities are named to describe the area we serve, not as confirmed delivery points; Bannerghatta National Park is named only to describe the area. A cabin is not in itself an infection-control facility, a licensed veterinary facility or a wildlife-proof structure. Guidance on animal care, hygiene, gas safety, wildlife, permissions, site access and placement is general information, not veterinary, safety, legal or engineering advice, and delivery dates and vehicle access are confirmed for each site rather than guaranteed.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

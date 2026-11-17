@@ -316,6 +316,12 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
       (sub.bullets ?? []).forEach((b, j) => { t("extra", `${at} bullet ${j + 1} title`, b.title ?? ""); t("extra", `${at} bullet ${j + 1} text`, b.text); });
       if (sub.ordered && sub.bullets && sub.bullets.length > 0) m("extra", `${at} numbered list`, `<ol class="list-decimal pl-6`);
       (sub.closing ?? []).forEach((x, j) => t("extra", `${at} closing ${j + 1}`, x));
+      // Optional inline-link paragraphs (since 2026-11-17): lead-in, label and href.
+      (sub.inlineLinks ?? []).forEach((il, j) => {
+        t("extra", `${at} inline link ${j + 1} lead-in`, il.before);
+        t("extra", `${at} inline link ${j + 1} "${il.link.label}"`, il.link.label);
+        m("extra", `${at} inline link ${j + 1} href ${il.link.href}`, `href="${il.link.href}"`);
+      });
     });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
     // heading and the next fixed heading in the visible text. A page without those optional sections

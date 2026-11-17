@@ -126,6 +126,7 @@ function bodyLinks(page: CityPage): CityPageLink[] {
     ...(page.extraSections ?? []).flatMap((sec) => [
       ...(sec.links ?? []),
       ...(sec.inlineLinks ?? []).map((il) => il.link),
+      ...(sec.subsections ?? []).flatMap((sub) => (sub.inlineLinks ?? []).map((il) => il.link)),
     ]),
   ].filter((l): l is CityPageLink => !!l);
 }
@@ -306,7 +307,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       {/* Optional inline-link paragraphs after the links (`inlineLinks`); unset = nothing rendered. */}
       {sec.inlineLinks?.map((il) => renderInlineLink(il))}
       {/* Optional H3 sub-sections (`subsections`), each with its paragraphs, an optional bulleted or
-          numbered list and optional closing paragraphs; unset = nothing rendered. */}
+          numbered list, optional closing paragraphs and optional inline-link paragraphs; unset = nothing
+          rendered. */}
       {sec.subsections?.map((sub) => (
         <section key={sub.heading}>
           <h3 className={`${h3}${mc("reveal")}`}>{sub.heading}</h3>
@@ -317,6 +319,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           {sub.closing?.map((text) => (
             <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
           ))}
+          {/* Optional inline-link paragraphs (`inlineLinks`, first Bannerghatta Road); unset = nothing rendered. */}
+          {sub.inlineLinks?.map((il) => renderInlineLink(il))}
         </section>
       ))}
     </section>
