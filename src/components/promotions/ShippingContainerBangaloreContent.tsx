@@ -118,6 +118,11 @@ const CUSTOMIZATION = [
 ];
 
 const DELIVERY_AREAS = ["Whitefield", "Electronic City", "Peenya", "Bommasandra", "Jigani", "Yelahanka", "Devanahalli", "Sarjapur Road", "Hebbal", "Tumakuru Road", "Hosur"];
+/* Delivery-area chips that have their own shipping-container location page link to it (owner brief of
+   2026-11-17: the Hebbal, Bengaluru storage page). Every other chip stays plain text. */
+const DELIVERY_AREA_LINKS: Record<string, { href: string; title: string }> = {
+  Hebbal: { href: "/cities-we-serve/shipping-container-hebbal-bengaluru", title: "Shipping containers in Hebbal, Bengaluru" },
+};
 
 const WHY_US = [
   "Manufacturer, not middleman — factory-direct pricing from our own Kamandoddi (Tamil Nadu) factory near Hosur, about 40 km from Bangalore",
@@ -302,7 +307,11 @@ export function ShippingContainerBangaloreContent() {
             </p>
             <div className="flex flex-wrap gap-2">
               {DELIVERY_AREAS.map((a) => (
-                <span key={a} className="inline-flex items-center gap-1 bg-muted text-muted-foreground text-xs font-medium px-3 py-1.5 rounded-full"><MapPin className="h-3 w-3 text-accent" />{a}</span>
+                DELIVERY_AREA_LINKS[a] ? (
+                  <Link key={a} href={DELIVERY_AREA_LINKS[a].href} title={DELIVERY_AREA_LINKS[a].title} className="inline-flex items-center gap-1 bg-muted text-foreground text-xs font-medium px-3 py-1.5 rounded-full underline underline-offset-2 hover:text-accent"><MapPin className="h-3 w-3 text-accent" />{a}</Link>
+                ) : (
+                  <span key={a} className="inline-flex items-center gap-1 bg-muted text-muted-foreground text-xs font-medium px-3 py-1.5 rounded-full"><MapPin className="h-3 w-3 text-accent" />{a}</span>
+                )
               ))}
             </div>
           </div>

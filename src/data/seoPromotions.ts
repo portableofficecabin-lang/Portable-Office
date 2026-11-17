@@ -645,6 +645,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Ramamurthy Nagar (sign and flex printers' stock, home healthcare equipment rental depots; owner
     // brief 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
+    // Hebbal, Bengaluru (car dealership accessory and merchandise stores, agri-tech and research field kits;
+    // owner brief 2026-11-17), appended so the live links keep their positions. Not Hebbal, Mysuru.
+    { name: "Shipping Containers in Hebbal, Bengaluru", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
   ],
 };
 
