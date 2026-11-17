@@ -619,6 +619,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Thanisandra Main Road (scaffolding-hire component stores and car and motorbike storage; owner brief
     // 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+    // Brookefield (furniture and appliance rental mini-hubs, donation drives and CSR collections; owner
+    // brief 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers in Brookefield", href: "/cities-we-serve/shipping-container-brookefield" },
   ],
 };
 
