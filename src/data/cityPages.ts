@@ -20504,6 +20504,15 @@ export const CITY_PAGES: CityPage[] = [
         closing: [
           "Working with the builder or association: many complexes have rules for where contractors can keep material, when deliveries can happen and how lifts are used. Agree on a container spot and schedule before you start.",
         ],
+        // Portable cabin brief (2026-11-17, §5C): the reciprocal link to the Mahadevapura portable cabin page, for
+        // the clubhouse amenity rooms a complex may need while its flats are being fitted out.
+        inlineLinks: [
+          {
+            before: "If the association also needs a temporary gym, playroom or reading room while the clubhouse is built or renovated, see our",
+            link: { label: "portable cabins in Mahadevapura", href: "/cities-we-serve/portable-cabin-mahadevapura" },
+            after: ".",
+          },
+        ],
       },
       {
         heading: "Placement & Delivery",
@@ -38656,6 +38665,442 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office or yard in Marathahalli. Delivery, unloading and placement are arranged for each order, and delivery dates are not guaranteed. The layouts, fittings, partitions, data cabling, acoustic treatment, backup-power provisions, joined layouts and toilet or pantry configurations described on this page are options to discuss; what is supplied is confirmed in the approved drawing, specification and quotation for each order. The images on this page are illustrative images of one office cabin design, not photographs of installations in Marathahalli. The project types and places named here are not clients, completed projects or confirmed delivery areas, and placement on a campus, road or housing site is subject to the approval of whoever is responsible for it. The notes on video calls, backup power and drainage are general planning guidance, not electrical, acoustic or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN MAHADEVAPURA — rest points for delivery riders near malls and food courts,
+   * waiting lounges at EV charging hubs, and temporary amenity rooms (gym, children's playroom, reading
+   * room) for apartment complexes (the Mahadevapura locality on Whitefield Road, east Bengaluru).
+   *
+   * Owner brief of 2026-11-17 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Portable Cabins in
+   * Mahadevapura": meta title, meta description, H1, keywords, local areas, section plan, link plan and
+   * image plan used as given). Source copy: the owner's content reply of 2026-11-17 13:10Z ("Pasted
+   * text(20261117-131112).txt"), kept section by section with the brief's corrections: "[Brand Name]" →
+   * Portable Office Cabin; no traction-battery charging inside a rest cabin; chargers outside the lounge
+   * and installed by the operator, with no EV-infrastructure certification claimed; a floor-load and
+   * vibration assessment for heavy gym equipment; playroom safety tied to its layout, fittings and
+   * supervision; no fixed delivery hours ("quiet-hour delivery" became timing planned after a route
+   * check), no day counts, no price, no "no hidden costs", no "custom sizes always available" and no
+   * relocation or resale promise. The tagline, the three rider-rest and three EV-lounge H3 paragraphs
+   * (the brief adds those H3s), the gym / playroom / reading-room closing notes, the placement
+   * checklists, the image alt text and captions, the size-table caption, the link lead-ins and the
+   * disclaimer were written for their slots.
+   * Mapped onto the template in the brief's order (no template change):
+   *   • H1, tagline, intro (the source's two paragraphs), `introLink` ("portable cabins" → the portable
+   *     cabins category) and the heroCta row (quotation · Call · WhatsApp).
+   *   • Rider rest, EV lounge and apartment amenity H2s → afterSolutions extra sections whose H3s are
+   *     `subsections`; placement and delivery, sizes, price, rental and "How It Works" (ordered) → five
+   *     more afterSolutions extra sections (no why / solutions / features / custom / how slots).
+   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
+   *     placement, so it renders after the areas and before the FAQs, as in the brief.
+   *   • FAQs: the source's six, qualified as the brief asks (the delivery answer gives no day count);
+   *     "Small Rooms for a Busy Corridor" → CTA (phone, WhatsApp and e-mail from COMPANY). No enquiry
+   *     form: the portable-cabins category has no category landing, so /api/enquiries would reject it.
+   * Rental is offered for standard cabins (/rental-service: site office cabins, security cabins and toilet
+   * blocks on hire), so the rental section stays, with hire of a fitted-out room confirmed per quotation.
+   *
+   * LINKS (brief §5): "portable cabins" → /products/category/portable-cabins (intro); "storage containers
+   * in Mahadevapura" (the brief's reciprocal anchor) closes the placement section, for furniture, spares
+   * or equipment; "prefabricated cabin options" → Prefabricated Portable Cabin (MS frame, PUF panels)
+   * from the price section; "portable cabin rental service" → /rental-service; the CTA button "Request a
+   * Portable Cabin Quotation" → /contact. Inbound: the Mahadevapura shipping page's interior-contractor
+   * section ("portable cabins in Mahadevapura", for clubhouse amenity rooms), the Bangalore and
+   * Karnataka portable-cabin hubs and the Karnataka porta-cabin hub ("Prefabricated Cabins in
+   * Mahadevapura"), and the /cities-we-serve directory (local-service group, Karnataka).
+   *
+   * KEYWORD OWNERSHIP: portable / porta / prefabricated / readymade cabin × the Mahadevapura locality,
+   * Whitefield Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach, for rider rest
+   * points, EV charging waiting lounges and apartment amenity rooms. Not targeted: container storage
+   * (the Mahadevapura shipping page), office, site, sales, marketing or home offices (the Marathahalli
+   * and Bellandur office-cabin pages; Marathahalli keeps Mahadevapura in its delivery line), hospital
+   * attender waiting cabins (Madurai), pilgrim rest points (Chamarajanagar), factory welfare cabins
+   * (Cheyyar), elder rooms, consultation rooms and dance studios (Jayanagar), and KR Puram, Whitefield,
+   * Marathahalli or Bengaluru as targets.
+   *
+   * Images: three owner-dropped lossy VP8 webp renders ("public/images/Portable Cabins in Mahadevapura
+   * city page/Portable Cabins in Mahadevapura/cabin (1–3).webp", no EXIF / XMP / ICC) of one teal
+   * container-style cabin with wood-slat cladding. Each is copied with its VP8 data byte-for-byte plus an
+   * XMP dc:title / dc:description that labels it a render. (2) glazed front = hero / og:image (the brief's
+   * "portable-cabin-mahadevapura-front"); (1) roof from above = placement section; (3) long side wall =
+   * sizes section. No image shows a rider rest point, an EV lounge, a gym, a playroom or a reading room,
+   * so those five slots of the brief are not used and no alt text or caption claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (provider = our factory,
+   * areaServed = Mahadevapura, no offers) and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-mahadevapura",
+    city: "Mahadevapura",
+    listTitle: "Portable Cabins in Mahadevapura",
+    metaTitle: "Portable Cabin in Mahadevapura | Rider Rest & EV Lounge Cabins",
+    metaDescription:
+      "Portable cabins in Mahadevapura for delivery rider rest points, EV charging lounges and apartment gyms, playrooms and reading rooms. Request a quote.",
+    keywords:
+      "portable cabin in Mahadevapura, porta cabin Mahadevapura, prefabricated cabin Mahadevapura, readymade cabin Mahadevapura, portable cabin Hoodi, portable cabin Garudacharpalya, portable cabin Whitefield Road, portable cabin price in Mahadevapura, porta cabin cost Mahadevapura, portable cabin on rent in Mahadevapura, delivery rider rest cabin, EV charging waiting lounge cabin, apartment amenity cabin, temporary gym cabin, kids play room cabin, reading room cabin",
+    // The Mahadevapura locality on Whitefield Road (not the civic zone): the same point as its shipping page.
+    geo: {
+      region: "IN-KA",
+      placename: "Mahadevapura, Bengaluru, Karnataka, India",
+      position: "12.9913;77.6874",
+      icbm: "12.9913, 77.6874",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+    // The hero is 1536 × 1024 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-mahadevapura/portable-cabin-mahadevapura-front.webp",
+      alt: "Exterior view of a teal portable cabin with wood-slat cladding and a glazed double door, suitable for an amenity or waiting room",
+      width: 1536,
+      height: 1024,
+      caption: "Illustrative render of a portable cabin exterior. The layout and fittings for each use are agreed in the quotation.",
+    },
+
+    h1: "Portable Cabins in Mahadevapura",
+    tagline:
+      "Rest points for delivery riders, waiting lounges at EV charging hubs, and temporary gyms, playrooms and reading rooms for apartment complexes.",
+    intro: [
+      "Mahadevapura never stops moving. Delivery riders queue outside its malls and food courts at every mealtime. Electric cars pull in to charge while their drivers look for somewhere to wait. Behind Whitefield Road, large apartment complexes keep adding residents faster than their clubhouses can keep up.",
+      "Each of these needs a small, well-planned room in the right spot: shade and a charging point for riders, a comfortable lounge for EV drivers, a gym or playroom while the clubhouse is being built or upgraded. Portable Office Cabin builds portable cabins in Mahadevapura for these everyday needs. They're also called porta cabins, prefabricated cabins or readymade cabins: rooms built at our factory, then delivered and placed on a site that has been checked and approved.",
+    ],
+    // Brief §5: the main portable cabin page (the category, which owns the head term) from the introduction.
+    introLink: {
+      before: "For standard designs, sizes and specifications, browse our",
+      link: { label: "portable cabins", href: "/products/category/portable-cabins" },
+      after: ".",
+    },
+    heroCta: true,
+
+    extraSections: [
+      {
+        heading: "Rest Points for Delivery Riders",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Delivery riders spend hours waiting outside restaurants, malls and busy pickup points between orders, often standing in the sun or rain with nowhere to sit, drink water or charge their phones. A simple, shaded rest point makes a real difference to their day.",
+          "A rider rest cabin can provide:",
+        ],
+        bullets: [
+          { title: "Shaded seating", text: "with fans or good ventilation." },
+          { title: "A drinking water point", text: "for riders between orders." },
+          { title: "Phone charging sockets", text: "for phones and power banks." },
+          { title: "USB charging provisions", text: "beside the seating." },
+          { title: "An entrance canopy", text: "for shelter from the rain." },
+          { title: "A first-aid kit", text: "for minor injuries." },
+          { title: "An emergency and safety notice board", text: "for helpline numbers and safety tips." },
+          { title: "Two-wheeler parking outside", text: "with the bikes kept out of the cabin itself." },
+        ],
+        subsections: [
+          {
+            heading: "Comfortable Seating and Weather Protection",
+            paragraphs: [
+              "Seating along the walls lets riders sit between orders without blocking the door or the walkway. A canopy over the entrance keeps the rain off people going in and out, and fans, openable windows or vents keep the air moving on warm afternoons. The number of seats and the positions of the fans and windows are agreed in the layout for each site.",
+            ],
+          },
+          {
+            heading: "Phone Charging and Electrical Safety",
+            paragraphs: [
+              "Phone charging sockets and USB points are placed away from the drinking water point and wired on protected circuits, with the electrical load planned for the number of points you ask for. Connection to the site's power supply is made by a qualified electrician with the property owner's approval.",
+              "Safety note: don't charge e-bike or e-scooter traction batteries inside an ordinary rider rest cabin. Battery charging needs an appropriately designed and approved installation with its own fire-safety arrangements.",
+            ],
+          },
+          {
+            heading: "Suitable Locations for Rider Rest Cabins",
+            paragraphs: [
+              "A rest point may suit a mall, a restaurant cluster, a delivery platform, a commercial property owner or a CSR initiative that wants to give riders somewhere to wait. It goes on private land with the owner's permission, close to the pickup points but clear of driveways and footpaths.",
+              "Toilets should be available nearby, either in an existing facility or in a separately planned toilet unit.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Waiting Lounges at EV Charging Hubs",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Charging an electric car takes time, from around twenty minutes to over an hour depending on the charger and the vehicle. Drivers and passengers need somewhere comfortable to wait, especially at busy hubs near malls and along Whitefield Road.",
+          "An EV charging waiting lounge can include:",
+        ],
+        bullets: [
+          { title: "Seating", text: "for drivers and their families." },
+          { title: "Insulation", text: "to help keep the lounge comfortable through Bengaluru's afternoons." },
+          { title: "An AC provision", text: "with a power point and mounting for an air conditioner." },
+          { title: "A Wi-Fi provision", text: "with power and a mounting point for the operator's router." },
+          { title: "Phone and laptop charging sockets", text: "beside the seats." },
+          { title: "A vending or coffee corner", text: "with power and space for the operator's machines." },
+          { title: "A charger status display provision", text: "a screen point for charger status or queue information." },
+          { title: "A glass front", text: "with a clear view of the charging bays." },
+          { title: "An accessible entrance ramp", text: "for wheelchair users, prams and luggage." },
+          { title: "A restroom", text: "an attached toilet module or an existing facility nearby, if offered for your site." },
+        ],
+        subsections: [
+          {
+            heading: "Comfortable Waiting Area",
+            paragraphs: [
+              "Seating arranged to face the charging bays lets people keep an eye on their car. The glass front brings in daylight, and lighting is planned for evening use. Insulation and an AC provision help keep the room comfortable in the afternoon heat, and ventilation keeps the air fresh when the lounge is busy. The number of seats and the AC capacity are worked out from how many people the lounge must hold.",
+            ],
+          },
+          {
+            heading: "Charging Status and Digital Facilities",
+            paragraphs: [
+              "A screen point near the entrance can carry the operator's charger status or queue display, and the Wi-Fi provision gives the operator's router power and a safe mounting position. Phone and laptop sockets go near the seats, and a vending or coffee machine gets its own power point. The operator supplies and runs the screen, the network and the machines.",
+            ],
+          },
+          {
+            heading: "EV Charging Safety and Site Layout",
+            paragraphs: [
+              "The vehicle chargers stay outside the lounge. The EV charging operator designs, installs and maintains the charging equipment in accordance with the applicable electrical and fire-safety requirements; a cabin is not certified as EV charging infrastructure.",
+              "Keep the lounge separate from the charging bays and their cables, with clear access, an unobstructed emergency route and a step-free path from the parking area to the ramp.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Temporary Amenity Rooms for Apartment Complexes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Large apartment complexes around Mahadevapura often hand over flats before the clubhouse is finished, or close the clubhouse for months of renovation. Residents still want somewhere to exercise, somewhere for the children to play and somewhere quiet to read. A temporary amenity cabin can fill that gap until the permanent facility opens.",
+        ],
+        subsections: [
+          {
+            heading: "Temporary Gym Cabin",
+            bullets: [
+              { title: "Suitable rubber flooring", text: "to protect the floor surface and cut noise." },
+              { title: "Wall mirrors", text: "along one wall." },
+              { title: "An AC provision and ventilation", text: "because a gym gets hot quickly." },
+              { title: "An equipment-specific layout", text: "planned around the machines you choose." },
+              { title: "Electrical sockets", text: "for treadmills, cross-trainers and other powered equipment." },
+              { title: "Load distribution", text: "heavy machines placed so their weight is spread across the floor structure." },
+            ],
+            closing: [
+              "Heavy gym equipment, especially treadmills and other dynamic exercise machines, needs a verified floor-load and vibration assessment before the layout is fixed. Rubber flooring protects the floor surface; it does not on its own make a cabin structurally suitable for a gym.",
+            ],
+          },
+          {
+            heading: "Children's Playroom Cabin",
+            bullets: [
+              { title: "Soft, washable flooring", text: "that is easy to keep clean." },
+              { title: "Rounded edges", text: "and child-appropriate fittings." },
+              { title: "Safe windows", text: "low windows with safety grilles." },
+              { title: "Parent visibility", text: "a viewing window so parents can watch from outside." },
+              { title: "Ventilation and an AC provision", text: "for a comfortable room." },
+              { title: "Toy storage", text: "for toys and play equipment." },
+            ],
+            closing: [
+              "Plan for age-appropriate adult supervision, safe exits and the fire-safety requirements that apply to the complex. Whether a playroom is safe for children depends on its final layout and fittings, so have them reviewed before the room opens.",
+            ],
+          },
+          {
+            heading: "Reading and Quiet Room Cabin",
+            bullets: [
+              { title: "Insulation", text: "for a quieter room." },
+              { title: "Bookshelves", text: "for a community library." },
+              { title: "Warm lighting", text: "for reading." },
+              { title: "Comfortable seating", text: "for a quiet atmosphere." },
+            ],
+            closing: [
+              "Anchor the shelves securely so they cannot tip, and use safe, properly installed electrical points for lamps and sockets.",
+            ],
+          },
+          {
+            heading: "Placement Within Apartment Complexes",
+            paragraphs: ["Amenity cabins go where the builder, property owner or residents' association agrees. Before ordering, check:"],
+            bullets: [
+              { title: "Permission", text: "from the association or the property owner." },
+              { title: "Walkway access", text: "a clear, well-lit path for residents." },
+              { title: "Driveway clearance", text: "away from driveways and vehicle turning areas." },
+              { title: "Emergency access", text: "fire and emergency routes kept open." },
+              { title: "Utility connections", text: "power, and water where needed, planned with the facility team." },
+              { title: "Building rules", text: "the rules of the complex and any local requirements that apply." },
+              { title: "Relocation planning", text: "how the cabin will leave when the clubhouse is ready." },
+            ],
+            closing: [
+              "When the permanent clubhouse opens, a cabin may be moved to another use or sold, subject to an inspection of its condition and arrangements for lifting and transport; neither is guaranteed.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Placement & Delivery in Mahadevapura",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-mahadevapura/portable-cabin-mahadevapura-roof-overhead.webp",
+          alt: "Top-down view of a teal portable cabin's corrugated roof and wood-clad glazed end on a paved yard beside a planter",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative top view. The cabin's position, door clearance and unloading space are agreed for each site.",
+        },
+        paragraphs: [
+          "Cabins must sit on authorised private land, such as a mall's service area, an EV charging hub's premises, a restaurant cluster's forecourt or an apartment complex's grounds, with the permission of the landowner, operator or association. They are not placed on public roads or footpaths without lawful authorisation.",
+          "Before delivery, we plan:",
+        ],
+        bullets: [
+          { title: "Permission", text: "confirmed by the landowner, operator or association." },
+          { title: "Route and gate checks", text: "photos of the approach road, the gate, any tight turns and overhead cables." },
+          { title: "Ground preparation", text: "a level, firm base where the cabin will stand." },
+          { title: "Safe unloading", text: "space for the vehicle and a lifting method agreed for the site." },
+          { title: "Electrical and water planning", text: "where the supply comes from and who connects it." },
+        ],
+        closing: [
+          "Whitefield Road and the ITPL Road approach are congested, so the delivery time is planned after the route check and agreed with you.",
+        ],
+        // Brief §5C: the reciprocal link to the Mahadevapura shipping page, in a sentence about commercial storage.
+        inlineLinks: [
+          {
+            before: "If the same mall, hotel or apartment complex also needs lockable space for furniture, spares or equipment, see our",
+            link: { label: "storage containers in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-mahadevapura/portable-cabin-mahadevapura-side-wall.webp",
+          alt: "Long corrugated side wall of a teal container-style portable cabin with wood-slat corner trims on a paved yard",
+          width: 1536,
+          height: 1024,
+          caption: "Illustrative side view. The internal dimensions of the cabin you choose are confirmed in its quotation.",
+        },
+        // Sizes use no-break spaces (\u00a0) so a footprint never splits over two lines on a narrow phone.
+        table: {
+          caption: "Illustrative planning sizes, not fixed products.",
+          headers: ["Application", "Illustrative size", "Key features"],
+          rows: [
+            ["Rider rest cabin", "10\u00a0×\u00a08\u00a0ft", "Seating, drinking water, charging points and canopy"],
+            ["Reading room", "10\u00a0×\u00a08\u00a0ft", "Insulation, shelves and lighting"],
+            ["EV charging lounge", "20\u00a0×\u00a010\u00a0ft", "AC provision, seating, Wi-Fi provision and glass front"],
+            ["Gym cabin", "20\u00a0×\u00a010\u00a0ft or joined cabins", "Suitable flooring, mirrors, ventilation and sockets"],
+            ["Children's playroom", "20\u00a0×\u00a010\u00a0ft", "Soft flooring, safe windows and storage"],
+          ],
+        },
+        closing: [
+          "Before ordering, verify the internal dimensions, how many people the room must hold and the weight of any equipment. Other sizes can be discussed, and the quotation confirms what can be built for your site.",
+        ],
+      },
+      {
+        heading: "Portable Cabin Price in Mahadevapura",
+        placement: "afterSolutions",
+        paragraphs: ["The price of a portable cabin depends on:"],
+        bullets: [
+          { title: "Size and layout", text: "the footprint and how the room is arranged." },
+          { title: "Construction", text: "MS or PUF-insulated." },
+          { title: "Fit-out", text: "seating, rubber or soft flooring, mirrors, shelving and vending-machine provisions." },
+          { title: "Electricals", text: "electrical sockets, USB charging provisions, AC points, lighting and display-screen provisions." },
+          { title: "Comfort", text: "insulation, ventilation and canopies." },
+          { title: "Access", text: "ramps and glass fronts." },
+          { title: "Delivery and installation", text: "transport, unloading and placement at your site." },
+          { title: "Purchase or rental", text: "buying outright or hiring, where hire is offered for the cabin you need." },
+        ],
+        closing: ["Tell us what the cabin is for and where it will go, and we'll send an itemised quotation."],
+        // Brief §5A: a verified portable cabin product page that supports the topic (MS frame, PUF panels, sizes).
+        inlineLinks: [
+          {
+            before: "To compare standard builds with an MS frame and PUF-insulated panels, see our",
+            link: { label: "prefabricated cabin options", href: "/products/prefabricated-portable-cabin" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin on Rent in Mahadevapura",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Need a gym or playroom only until the clubhouse reopens, or want to trial a rider rest point first? Ask us about portable cabins on rent in Mahadevapura. Hire is offered for selected standard cabins; whether a cabin with the fit-out you need can be supplied on hire, and on what terms, is confirmed in your quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "For the cabins currently offered on hire and their terms, see our",
+            link: { label: "portable cabin rental service", href: "/rental-service" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Share the intended cabin use and location." },
+          { text: "Receive a proposed layout and an itemised quotation, including the fit-out and electricals." },
+          { text: "Confirm permission from the property owner, operator or association." },
+          { text: "We manufacture the approved cabin at our factory." },
+          { text: "We deliver and place the cabin after the site has been verified." },
+        ],
+        closing: [
+          "Electrical, water and other service connections at the site are made by suitably qualified personnel, with any approvals they need.",
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          { title: "Rider rest cabin layouts", text: "shade, drinking water and charging planned around riders' waiting time." },
+          { title: "EV lounge configurations", text: "seating, glazing and AC, Wi-Fi and screen provisions, with the chargers kept outside." },
+          { title: "Apartment amenity room options", text: "gyms, playrooms and reading rooms while a clubhouse is built or renovated." },
+          { title: "Electrical and comfort planning", text: "sockets, charging points, AC points, lighting, insulation and ventilation planned into the layout." },
+          { title: "Customisable interiors", text: "flooring, mirrors, shelving and seating chosen for the use." },
+          { title: "Site access assessment", text: "the route, gate and placement area checked before delivery." },
+          { title: "Itemised quotations", text: "the cabin, fit-out, delivery and any rental terms listed line by line." },
+        ],
+      },
+    ],
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We supply portable cabins across Mahadevapura, including Whitefield Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach. Delivery access is checked for each site.",
+
+    faqs: [
+      {
+        question: "Can a portable cabin be used as a rest point for delivery riders?",
+        answer:
+          "Yes. A rider rest cabin can have shaded seating, a drinking water point, phone and USB charging points, an entrance canopy and a first-aid kit. Bikes park outside, and e-bike or e-scooter batteries shouldn't be charged inside an ordinary rest cabin; that needs a separately designed and approved charging installation.",
+      },
+      {
+        question: "Can a cabin be an EV charging waiting lounge?",
+        answer:
+          "Yes. A lounge can have seating, insulation, an AC provision, Wi-Fi and screen provisions, a vending corner and a glass front facing the charging bays. The chargers stay outside the lounge, and the charging operator installs and maintains them to the applicable electrical and fire-safety requirements.",
+      },
+      {
+        question: "Can an apartment complex use a cabin as a temporary gym?",
+        answer:
+          "Yes, once the equipment has been checked. A gym cabin can have suitable rubber flooring, mirrors, an AC provision, ventilation and sockets, with the layout planned around your machines. Treadmills and other heavy or dynamic equipment need a verified floor-load and vibration assessment before the layout is confirmed.",
+      },
+      {
+        question: "Can a cabin be a safe playroom for children?",
+        answer:
+          "A playroom cabin can be planned with soft, washable flooring, rounded edges, safe windows, a viewing window for parents and toy storage. Whether it is safe depends on the final layout and fittings, age-appropriate supervision, safe exits and the fire-safety requirements that apply, so these are reviewed before the room opens.",
+      },
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer:
+          "Yes. Porta cabin, portable cabin, prefabricated cabin and readymade cabin all describe a room built at the factory and delivered to your site.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "It depends on the size and fit-out, what is available, the production schedule and how easily the delivery vehicle can reach your site. Tell us your target date and we'll confirm a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Small Rooms for a Busy Corridor",
+    ctaText: `Whether you're giving delivery riders a break from the sun, giving EV drivers somewhere comfortable to wait, or giving residents a gym before the clubhouse opens, we'll build a portable cabin that makes life in Mahadevapura a little easier. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Mahadevapura, Whitefield Road, Hoodi, Garudacharpalya and Basavanagar.`,
+    // Brief §5: the final CTA's "request a portable cabin quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Portable Cabin Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons; the
+    // call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    // The portable cabins category, the prefabricated cabin product and the rental service are linked in the body.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Portable Cabin Sizes & Specifications", href: "/products/portable-cabin" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds its cabins at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office is in Electronic City, Bengaluru; it has no factory, yard or branch in Mahadevapura. Every cabin is subject to availability. Its quotation states the dimensions, construction, fit-out and electrical provisions, any rental terms, and who arranges transport, unloading, placement and utility connections; no delivery date or time window is guaranteed. The rider rest, EV lounge, gym, playroom and reading room layouts on this page are planning examples: a cabin is not certified as EV charging infrastructure, gym use depends on a verified floor-load and vibration assessment, and a playroom's suitability for children depends on its final layout, fittings and supervision. All three images are illustrative renders of one container-style cabin; none was photographed in Mahadevapura or shows a supplied unit, a rider rest point, an EV charging hub or an apartment amenity room. Mahadevapura, Whitefield Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach indicate where enquiries can come from; they do not identify customers or completed installations. Portable Office Cabin has no affiliation with any mall, restaurant, delivery platform, EV charging operator, apartment builder or residents' association. Notes on electrical and fire safety, loading, accessibility and permissions are general guidance, not engineering, electrical or legal advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

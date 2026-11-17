@@ -284,6 +284,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Portable office cabins for Marathahalli and the Outer Ring Road (east Bengaluru, owner brief of
     // 2026-11-07); the page links back to this hub. After the live lines so they keep their positions.
     { name: "Portable Office Cabins in Marathahalli", href: "/cities-we-serve/portable-office-cabin-marathahalli" },
+    // Portable cabins for rider rest points, EV charging lounges and apartment amenity rooms in Mahadevapura
+    // (owner brief 2026-11-17); the page links back here. After the live lines so they keep their positions.
+    { name: "Portable Cabins in Mahadevapura", href: "/cities-we-serve/portable-cabin-mahadevapura" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
@@ -530,6 +533,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Koppal", href: "/cities-we-serve/porta-cabin-koppal" },
     // Office-cabin page for Bellandur, Bengaluru (2026-11-07), after the portable-cabin city pages already listed.
     { name: "Portable Office Cabins in Bellandur", href: "/cities-we-serve/portable-office-cabin-bellandur" },
+    // Portable cabin page for Mahadevapura, Bengaluru (owner brief 2026-11-17), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Mahadevapura", href: "/cities-we-serve/portable-cabin-mahadevapura" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -565,6 +570,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Porta Cabins in Chamarajanagar", href: "/cities-we-serve/porta-cabin-chamarajanagar" },
     // Porta / portable cabin page for Koppal (2026-11-09), here and on Portable Cabin; appended so the live links keep their positions.
     { name: "Porta Cabins in Koppal", href: "/cities-we-serve/porta-cabin-koppal" },
+    // Portable cabin page for Mahadevapura, Bengaluru (owner brief 2026-11-17), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Prefabricated Cabins in Mahadevapura", href: "/cities-we-serve/portable-cabin-mahadevapura" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
