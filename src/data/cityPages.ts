@@ -121,6 +121,26 @@ export interface CityPageSection {
    * in Bellandur, whose "From enquiry to placement" steps come before its areas). Unset = <ul>, as before.
    */
   ordered?: boolean;
+  /**
+   * Optional H3 sub-sections rendered at the end of the section, after its inline links (first used by
+   * Shipping & Storage Containers in Indiranagar, whose boutique section closes with the brief's H3
+   * "Designer Sample Archives", and on Thanisandra Main Road, whose brief puts H3s under its scaffolding
+   * and vehicle-storage H2s). Each renders its heading as an H3, then its paragraphs, an optional bulleted
+   * or numbered list and optional closing paragraphs, with the section's classes and motion. Unset =
+   * nothing rendered, so every other page's HTML is unchanged.
+   */
+  subsections?: CityPageSubsection[];
+}
+
+/** An H3 sub-section inside an extra section (see CityPageSection.subsections). */
+export interface CityPageSubsection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: CityPageListItem[];
+  /** Optional: render the bullets as a numbered list (<ol>). Unset = <ul>. */
+  ordered?: boolean;
+  /** Optional paragraphs after the bullets. Unset = nothing rendered. */
+  closing?: string[];
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -32138,6 +32158,452 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures near Hosur, Tamil Nadu, and its Karnataka office is at Electronic City Phase 1, Bengaluru; it has no yard, depot or office anywhere in Uttara Kannada. Each container is supplied subject to availability, and its size, grade, condition, fittings, any hire term and its delivery, unloading, placement and collection are set out in its quotation; no delivery date is guaranteed. The images are illustrative renders of one steel shipping container, not photographs taken in Uttara Kannada or of a supplied unit. Karwar, Sirsi, Gokarna, Dandeli, NH 66 and the other towns, roads and harbours are named only to show where enquiries are welcome: Portable Office Cabin is not affiliated with any port, harbour, forest, tourism or road authority or with any business there, and none of the uses or places mentioned is a client, a completed project or a confirmed delivery location. Notes on routes, slopes, placement, drainage, flood exposure, food storage, monsoon upkeep and permissions are general guidance, not engineering, food-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS ON THANISANDRA MAIN ROAD — component stores for scaffolding and
+   * formwork hire yards, and covered, lockable storage for private cars and motorbikes while their
+   * owners are away (north Bengaluru: Thanisandra, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli,
+   * Jakkur, Amruthahalli). The first shipping-container page in north Bengaluru.
+   *
+   * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, links and image
+   * plan used as given; the brief's root slug became /cities-we-serve/<slug>, the convention of every
+   * location page). Source copy: the owner's content reply of 2026-11-16 09:58Z ("Pasted text
+   * (20261116-095825).txt"), kept section by section with the brief's corrections: no promise that a
+   * car fits a 20 ft unit or that two cars fit a 40 ft one (fit = vehicle dimensions × the actual unit's
+   * interior and door opening × a safe loading method with driver exit); no "drive in and step out"
+   * advice; no EV charging inside a container; ventilation is not presented as making fuel or batteries
+   * safe; no floor or rack load is assumed; no delivery day counts ([X] / [X–Y] removed), hours or price.
+   * Vehicle storage is described as a use of a container on the customer's land, assessed per vehicle,
+   * not as a ready-to-use storage service. Mapped onto the template in the brief's order:
+   *   • H1 and intro; the second intro paragraph is `introLink` ("shipping containers" → the cargo
+   *     category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Component Stores for Scaffolding & Formwork Hire Yards" → an afterIntro extra section with two
+   *     H3s ("Organizing Scaffolding Components", "Safe Storage of Heavy Steel Components") through the
+   *     new optional `subsections`; the feature band (interior render) follows it.
+   *   • "Vehicle Storage While You're Away" (three H3s: preparation steps as a numbered list, fit and
+   *     access, electric vehicles), "Placement & Delivery", "Container Sizes", "Choosing a Container
+   *     Grade", price, rental and "How It Works" (ordered) → seven afterSolutions extra sections (the
+   *     why and solutions slots are unused).
+   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
+   *     placement, so it renders after the steps and before the FAQs, as in the brief.
+   *   • The source's six FAQs, revised for vehicle fit, EVs and delivery timing → faqs; "Storage for a
+   *     Road on the Rise" → CTA (phone, WhatsApp and e-mail from COMPANY) + enquiry form.
+   * Rental is in the catalogue (Shipping Container Rental, monthly terms), so the rental section stays.
+   *
+   * LINKS (brief §5): "shipping containers" → the cargo category (intro); "shipping containers in
+   * Bellandur" (its society-gate and narrow-lane delivery section) in the placement section; "how to
+   * inspect a used shipping container" → Shipping Container in Athipattu, the Chennai-area page whose
+   * "Used Container Inspection" section is a checklist (the target the Bannerghatta Road and HSR Layout
+   * pages use for this anchor); "renting a shipping container" → the rental product; the CTA button
+   * "Request a Storage Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block
+   * from repeating Bellandur or the category. Inbound: the Karnataka shipping hub, the cargo category's
+   * location links and the Karnataka shipping nearby blocks. No live page names Thanisandra or its
+   * localities, so no sibling's copy changes.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Thanisandra Main Road, Thanisandra,
+   * Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli, for scaffolding-hire
+   * component stores and private car and motorbike storage. Not targeted: Hennur, Hebbal (Bengaluru) and
+   * Yelahanka (kept for possible future pages; the Hebbal shop page is Mysuru's Hebbal), owner-builder
+   * materials (HSR Layout), dealers' building materials (Shivamogga), contractor material stores
+   * (Dharmapuri), bicycles (Koramangala), bike-rental fleet gear (BTM Layout), and household moves or
+   * family storage (HSR Layout, JP Nagar).
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/thanisandra shipping container
+   * city page/Thanisandra Main Road/cabin (1–5).webp", no EXIF / XMP / ICC) of one dark green container
+   * with a wood-framed glazed side panel. Each is copied with its VP8 data byte-for-byte plus an XMP
+   * dc:title / dc:description that labels it a render. (2) three-quarter view with cargo doors = hero /
+   * og:image; (1) lined interior = feature band; (5) roof from above = placement section; (4) plain side
+   * wall = sizes section; (3) side elevation with the glazed panel = grade section. No image shows
+   * scaffolding parts, formwork accessories, a car or a motorbike, so those slots are not used and no
+   * alt text or caption claims them; no alt text names a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-thanisandra-main-road",
+    city: "Thanisandra Main Road",
+    listTitle: "Shipping & Storage Containers on Thanisandra Main Road",
+    directoryLabel: "Shipping containers on Thanisandra Main Road",
+    metaTitle: "Shipping Container on Thanisandra Main Road | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers on Thanisandra Main Road for scaffolding hire components, formwork accessories and long-term car or motorbike storage. Request a quote.",
+    keywords:
+      "shipping container on Thanisandra Main Road, cargo container Thanisandra, storage container Thanisandra, storage container Nagawara, storage container Hegde Nagar, storage container Jakkur, used shipping container Thanisandra, shipping container price on Thanisandra Main Road, storage container for rent in Thanisandra",
+    // The road near Thanisandra, between Nagawara to the south and Hegde Nagar to the north (approximate).
+    geo: {
+      region: "IN-KA",
+      placename: "Thanisandra Main Road, Bengaluru, Karnataka, India",
+      position: "13.0560;77.6330",
+      icbm: "13.0560, 77.6330",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and the cargo category are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-thanisandra-main-road-front.webp",
+      alt: "Three-quarter view of a dark green shipping container with closed cargo doors, vertical locking bars and a wood-framed glazed panel in its side wall",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a container exterior, not a photograph of a delivered unit.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-interior-thanisandra.webp",
+      alt: "Lined interior of a modified shipping container with a wood-effect floor, ceiling lights, a wall-mounted air conditioner, an exhaust fan and a tall glazed panel",
+      width: 1672,
+      height: 941,
+      caption:
+        "Illustrative render of a lined, glazed interior, not a component or vehicle store. Racks, bins, ramps, vents and lighting are fitted only as agreed and quoted.",
+    },
+
+    h1: "Shipping & Storage Containers on Thanisandra Main Road",
+    tagline:
+      "Component stores for scaffolding and formwork hire yards, and covered, lockable storage for cars and motorbikes while their owners are away.",
+    intro: [
+      "Thanisandra Main Road has changed beyond recognition. Fields and old villages have given way to apartment towers, tech campuses, mixed-use developments and busy shops, with cranes on the skyline and new projects starting all the time. It is also part of north Bengaluru, on the city's side of the airport, where many residents travel or work abroad for months or years at a time.",
+    ],
+    introLink: {
+      before:
+        "That mix creates two very different storage needs: scaffolding hire businesses with thousands of small parts to track, and people who need somewhere safe to keep a car or motorbike while they're away. Portable Office Cabin supplies",
+      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " and cargo containers along Thanisandra Main Road for both, with the fit-out, the vehicle's fit and the site's access checked before anything is confirmed.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We supply shipping and storage containers along Thanisandra Main Road, including Thanisandra, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli. Each site's access is checked before delivery is confirmed.",
+
+    extraSections: [
+      {
+        heading: "Component Stores for Scaffolding & Formwork Hire Yards",
+        placement: "afterIntro",
+        paragraphs: [
+          "Every tower going up in north Bengaluru stands inside a frame of scaffolding and formwork, much of it hired. Long tubes and props can sit on outdoor racks, but the small parts are another story: couplers and clamps, base jacks and U-heads, pins, wedges and ties go missing quickly when they're left in open piles.",
+          "Set up properly, a container becomes a lockable component store:",
+        ],
+        bullets: [
+          { title: "Labelled bins", text: "one for each component type and size, so every coupler, clamp, pin, wedge and tie has a place." },
+          { title: "Heavy-duty racks", text: "with a stated load rating that suits the steel parts they will hold." },
+          { title: "Pallets and an even floor load", text: "steel parts are heavy, so spread crates across the floor instead of piling them in one spot." },
+          { title: "A hire-out and return register", text: "recording what goes to each site and what comes back." },
+          { title: "A quarantine bin for damaged parts", text: "bent, cracked or worn items kept apart until they are repaired or scrapped." },
+          { title: "Corrosion protection", text: "keep parts dry, and oil or treat them as needed before they go on the shelf." },
+          { title: "Wide access aisles", text: "with pallet-truck access where the floor, the door sill and the ground outside allow it." },
+        ],
+        subsections: [
+          {
+            heading: "Organizing Scaffolding Components",
+            paragraphs: [
+              "Sort by component first and by size second: couplers and clamps by type, base jacks and U-heads by length, and pins, wedges and ties by size. Keep the parts that go out most often nearest the doors, and give each bin a label that matches its line in the register, so a site's order can be picked and checked in one pass.",
+              "A counting tip: standardise bundles, such as bags of 50 or crates of 100 where practical, so counting at hire-out and on return is quick and accurate.",
+            ],
+          },
+          {
+            heading: "Safe Storage of Heavy Steel Components",
+            paragraphs: ["A crate of couplers or base jacks weighs more than it looks. Plan the layout around these checks:"],
+            bullets: [
+              { title: "Rack load ratings", text: "each level's rated load, from the rack's supplier, never exceeded on any shelf." },
+              {
+                title: "Floor-load limits",
+                text: "the limit stated for the actual container, including the point loads under rack feet and pallet-truck wheels.",
+              },
+              { title: "Weight distribution", text: "the heaviest crates on the lowest levels, spread along the container rather than at one end." },
+              {
+                title: "Secure stacking",
+                text: "bins and crates stacked only as high as they stay stable, with nothing overhanging a shelf edge.",
+              },
+              { title: "Safe manual handling", text: "heavy crates moved with a pallet truck or by two people, not lifted alone." },
+              { title: "Clear access routes", text: "the aisle and doorway kept free, so no one climbs over stock." },
+            ],
+            closing: [
+              "No standard container floor or rack is assumed to suit a particular load. The ratings that apply are those confirmed for the selected unit and its racks in the quotation.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Vehicle Storage While You're Away",
+        placement: "afterSolutions",
+        paragraphs: [
+          "North Bengaluru is close to the airport, and many residents work abroad, travel for long stretches or move between cities. A car or motorbike left in an open lot for months is exposed to dust, sun, theft and, very often in Bengaluru, rats that chew through wiring.",
+          "Placed on your own land, a container can serve as a covered, lockable garage once the vehicle's fit and a safe way in and out have been confirmed. A vehicle set-up can include:",
+        ],
+        bullets: [
+          { title: "Long-term car storage", text: "for a passenger car whose dimensions have been checked against the actual unit." },
+          { title: "Motorbike storage", text: "a 20 ft unit can often hold more than one bike, each secured on its own." },
+          { title: "Weather and dust protection", text: "a clean, wind-and-watertight unit keeps rain, sun and dust off the vehicle." },
+          { title: "Security", text: "heavy-duty locks and a lockbox; ask which suit the selected unit." },
+          { title: "A suitable ramp", text: "matched to the door sill height and the vehicle's ground clearance." },
+          { title: "Wheel chocks and tie-down points", text: "to keep the vehicle firmly in place." },
+          { title: "Rodent prevention", text: "gaps sealed and the floor kept free of food and packaging." },
+          { title: "Regular inspections", text: "by a family member or caretaker every few weeks." },
+        ],
+        subsections: [
+          {
+            heading: "Preparing a Car or Motorbike for Storage",
+            ordered: true,
+            bullets: [
+              { title: "Clean the vehicle thoroughly", text: "inside and out, because food crumbs attract rodents." },
+              { title: "Battery", text: "follow the manufacturer's battery-storage guidance, for example on disconnecting it." },
+              { title: "Fuel", text: "leave the tank as the manufacturer recommends for long-term storage." },
+              { title: "Tyre pressures", text: "check them and set them as the manufacturer recommends." },
+              { title: "Leaks", text: "inspect for oil, coolant or fuel leaks, and don't store a vehicle that is leaking." },
+              { title: "Rodent access", text: "seal gaps, and check for droppings or nests on every visit." },
+              { title: "A breathable cover", text: "one that lets moisture escape, not a plastic sheet." },
+              { title: "Insurance and documents", text: "keep them current, and tell your insurer the vehicle is in storage." },
+              { title: "Periodic inspections", text: "arrange visits to check for leaks, rodents and damp." },
+            ],
+          },
+          {
+            heading: "Vehicle Fit and Access Requirements",
+            paragraphs: [
+              "A 20 ft container may accommodate many passenger cars, but whether yours fits depends on more than length. Before a vehicle store is quoted, these are compared:",
+            ],
+            bullets: [
+              { title: "Vehicle length, width and height", text: "including mirrors, roof rails and accessories." },
+              { title: "Container internal dimensions", text: "those of the actual unit, which vary by manufacturer." },
+              { title: "Door opening dimensions", text: "the cargo-door opening is narrower and lower than the space inside." },
+              { title: "Safe loading method", text: "a ramp, winch or other equipment suited to the vehicle and the site." },
+              { title: "Driver exit and recovery access", text: "room for the driver to get out safely, and to reach the vehicle again." },
+            ],
+            closing: [
+              "Don't drive into a container if the driver can't then get out safely. Load and unload with a verified method, suitable equipment and enough room around the doors. No car is guaranteed to fit a 20 ft container, and two cars are not promised for a 40 ft one: share the make, model and dimensions, and the fit is checked against the actual unit.",
+            ],
+          },
+          {
+            heading: "Electric Vehicle Storage",
+            paragraphs: [
+              "An electric car or scooter needs more care. Follow the manufacturer's long-term storage guidance, including the recommended battery charge level, have the battery's condition checked, and assess the fire risk of the proposed set-up before choosing a container at all. Some EVs are better kept in a facility designed for them.",
+              "Never charge an EV inside an ordinary shipping container, and don't assume ventilation makes a vehicle's fuel or battery safe to store. Spare fuel cans, gas cylinders and other flammables never belong in a container with a vehicle.",
+            ],
+            closing: [
+              "If safe storage can't be confirmed for your vehicle and the proposed configuration, it won't be quoted as a vehicle store.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Placement & Delivery",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-roof-overhead-thanisandra.webp",
+          alt: "Green container roof seen from directly above, with a corner casting at each corner, on a paved yard beside a planted bed",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative view from above. The placement area needs a firm, level base and clear space for unloading and for opening the cargo doors.",
+        },
+        paragraphs: [
+          "A container belongs on private land that you own or lease, or where the landowner has given permission, such as a hire yard, a leased plot or a family property; never on a public road or footpath. Plan a firm, level base that a delivery truck can get close to, with enough clear space around it to lift the container off and set it down safely.",
+          "Thanisandra Main Road is busy for much of the day and slow at peak hours, so each delivery gets its own route plan and time slot. Send the location pin with photos of the access road, the gate, any tight turns, low branches or overhead cables, and the exact place you want the container. From those, the transport team works out how the unit will be unloaded and whether a 20 ft or a 40 ft container is practical there; access and timing are agreed for each site rather than promised up front.",
+        ],
+        // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers lifting access.
+        inlineLinks: [
+          {
+            before: "If the container must pass a society gate or a narrow lane, the extra checks are covered on our page about",
+            link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-side-wall-thanisandra.webp",
+          alt: "Side elevation of a green shipping container with a plain corrugated steel wall and forklift pockets along its base",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative side elevation. The image states no size; the dimensions that apply are those quoted for the actual unit.",
+        },
+        paragraphs: [
+          "Every size is subject to stock. For a vehicle, the deciding figures are the door opening and the internal width and height, not the volume.",
+        ],
+        table: {
+          caption:
+            "Approximate internal volumes. Internal dimensions, door openings and floor ratings vary by manufacturer and unit; the figures that count are those quoted for the unit you're offered. Vehicle capacity is never judged from volume alone.",
+          headers: ["Size", "Approx. capacity", "Typical use on Thanisandra Main Road"],
+          rows: [
+            ["20 ft", "~33 m³", "A hire yard's component store, or possibly one suitable vehicle after a fit check"],
+            ["40 ft", "~67 m³", "A larger component inventory, or vehicle storage subject to a fit assessment, on sites with good access"],
+            ["40 ft high cube", "~76 m³", "Taller racks, or vehicles that need more internal height, subject to stock and a fit check"],
+          ],
+        },
+      },
+      {
+        heading: "Choosing a Container Grade",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-glazed-side-panel-thanisandra.webp",
+          alt: "Side elevation of a green shipping container with a wood-framed glazed panel set into its corrugated wall",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render with a glazed panel fitted. The grade describes the steel box's condition; a panel, vent or lock is a separate, quoted modification.",
+        },
+        paragraphs: [
+          "You'll usually be offered one of three grades. One-trip units have made a single voyage, so they are nearly new. Cargo-worthy units are used shipping containers with years of service behind them that remain fit to carry freight. Wind-and-watertight units have left shipping service but are graded to keep out rain and wind, which is the minimum for any store.",
+          "For a vehicle, choose a clean, dry unit with no leaks at the roof or door seals; for steel components, a sound cargo-worthy unit with a solid floor is usually the practical choice. Before accepting any grade, look over the actual unit, in person or in recent photographs, for:",
+        ],
+        bullets: [
+          { title: "Interior cleanliness", text: "no residue, odour or loose debris from earlier cargo." },
+          { title: "Leaks", text: "with the doors shut, any daylight through the roof, walls or seals means water can get in." },
+          { title: "Floor condition", text: "no soft, cracked or damaged boards where racks or wheels will stand." },
+          { title: "Suitable ventilation", text: "vents that suit what you'll store, to limit condensation." },
+          { title: "Security fittings", text: "sound lock rods and handles, and a position for a lockbox and heavy-duty locks." },
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a checklist.
+        inlineLinks: [
+          {
+            before: "Before you accept a used unit, read",
+            link: { label: "how to inspect a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price on Thanisandra Main Road",
+        placement: "afterSolutions",
+        paragraphs: ["Each quotation is built from:"],
+        bullets: [
+          { title: "Size", text: "20 ft, 40 ft or 40 ft high cube." },
+          { title: "Grade", text: "one-trip, cargo-worthy or wind-and-watertight; a clean, dry, leak-free unit for vehicles." },
+          { title: "Heavy-duty racks and storage bins", text: "for scaffolding and formwork components." },
+          { title: "Vehicle fittings", text: "a ramp, wheel chocks and tie-down points." },
+          { title: "Ventilation and lighting", text: "vents, and any lighting, where agreed." },
+          { title: "Locking", text: "heavy-duty locks and a lockbox." },
+          { title: "Delivery and unloading", text: "the route, the access and the unloading method for your site." },
+          { title: "Purchase or rental", text: "buy the unit outright, or hire it at the charges quoted for your period." },
+          { title: "Storage duration", text: "for a rental, how long you need it, from a building season to a year abroad." },
+          {
+            title: "Market rates",
+            text: "box prices move with world freight markets, so note the date until which each quotation holds.",
+          },
+        ],
+        closing: ["Let us know what's going in, how long it will stay and where the unit will stand, and an itemised quotation follows."],
+      },
+      {
+        heading: "Storage Container on Rent on Thanisandra Main Road",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Heading abroad for a year, or short of component space for a busy building season? Ask about a storage container on rent on Thanisandra Main Road. Your quotation lists the hire period, which unit you'd get and what condition it is in, and how it is delivered and later collected.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes on hire, rental terms and what is included are explained under",
+            link: { label: "renting a shipping container", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How It Works",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          {
+            title: "Share what you'll store and for how long",
+            text: "and where the container will stand. For a vehicle, include its make, model and dimensions.",
+          },
+          {
+            title: "Receive a recommendation and quotation",
+            text: "covering the unit, any racks, bins, ramp, chocks and tie-downs, and the delivery.",
+          },
+          { title: "Confirm placement permission", text: "from the landowner, for the exact spot." },
+          {
+            title: "Delivery after route and site checks",
+            text: "the route and site are checked first, then the delivery slot and the container's exact position are agreed with you.",
+          },
+          {
+            title: "Ask about additional services",
+            text: "extra racks, a second unit, or collection when you no longer need it, if available for your order.",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin",
+        bullets: [
+          { title: "Organised component stores", text: "bins and racks that stop small scaffolding parts going missing." },
+          {
+            title: "Inventory-friendly layouts",
+            text: "labelled bins, standard bundles and a hire-out and return register that make counting quick.",
+          },
+          { title: "Security options", text: "locks and a lockbox matched to the unit you choose." },
+          {
+            title: "Vehicle-storage assessments",
+            text: "your vehicle's dimensions, the actual unit's door opening and interior, and the loading method checked before a vehicle store is quoted.",
+          },
+          { title: "Practical sizes", text: "20 ft, 40 ft and 40 ft high cube, subject to stock." },
+          { title: "Delivery planning", text: "route and site checks for a busy main road." },
+          {
+            title: "Itemised quotations",
+            text: "each part on its own line: the container, racks and fittings, delivery, and any rental term.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a scaffolding hire business use a container for small components?",
+        answer:
+          "Yes. Sort couplers, clamps, pins, wedges and ties into labelled bins on racks rated for their weight, spread heavy crates across the floor within the unit's stated limits, keep a hire-out and return register, and set aside a quarantine bin for damaged parts.",
+      },
+      {
+        question: "Will my car fit in a 20 ft container?",
+        answer:
+          "Many passenger cars do, but not every one. It depends on the car's length, width and height, the actual unit's internal dimensions and door opening, and a safe way to load it that lets the driver get out. Share the make, model and dimensions, and the fit is checked before any quotation.",
+      },
+      {
+        question: "How do I stop rats damaging my stored car?",
+        answer:
+          "Clean the car thoroughly inside and out, seal gaps in the container, keep the floor free of food and packaging, use rodent deterrents, and arrange check-ins every few weeks to look for droppings, nests or chewed wiring.",
+      },
+      {
+        question: "Can I store an electric vehicle in a container?",
+        answer:
+          "Only after checking the manufacturer's storage guidance and the battery's condition, and assessing the fire risk of the set-up; some EVs are better kept in a facility designed for them. Never charge an EV inside an ordinary shipping container.",
+      },
+      {
+        question: "Can I keep spare fuel with my stored vehicle?",
+        answer: "No. Never store spare fuel cans, gas cylinders or other flammables in the container with a vehicle.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on which units are in stock, any racks or fittings to be added, and the route and access to your site. Tell us when you need it, and the quotation will state the expected delivery schedule.",
+      },
+    ],
+
+    ctaHeading: "Storage for a Road on the Rise",
+    ctaText: `Whether you're keeping thousands of scaffolding parts counted and close to your next site, or keeping your car or motorbike protected while you're away, we'll quote a container set up for the job. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Thanisandra, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli.`,
+    // Brief §5: the final CTA's "request a storage container quotation" → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Storage Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Container enquiry for Thanisandra Main Road",
+      intro:
+        "Choose a container and quantity, give your site's pin or address near Thanisandra Main Road, and tell us whether you'd buy or rent, what you'll store and for how long. For a vehicle, add its make, model and dimensions. The reply is an itemised quotation.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin supplies containers through its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its Electronic City office in Bengaluru, and has no yard, depot, garage or vehicle-storage facility on or near Thanisandra Main Road. This page describes how a container placed on the customer's own or leased land can be used; it is not an offer of a managed storage, vehicle-storage, insurance or inspection service. Each unit is subject to availability, and its quotation states its size, grade, condition, internal dimensions, door opening and floor rating, any racks, bins, ramp, chocks, tie-downs, vents, lighting or locks, any hire terms, and how the unit is delivered, unloaded and collected; delivery dates, site access and vehicle fit are not guaranteed. All five images are renders of a single container with a glazed side panel, shown for illustration; none is a photograph taken on Thanisandra Main Road or of a delivered unit, a component store or a vehicle store. Scaffolding hire yards and vehicle owners are mentioned to illustrate uses; they are not clients or completed projects, and the localities listed show where enquiries are invited, not places where a delivery is confirmed. Guidance on loads, racking, handling, batteries, fuel, electric vehicles, fire risk, pests, insurance, placement and permissions is general information, not engineering, safety, legal or insurance advice; follow the vehicle and equipment manufacturers' instructions.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
