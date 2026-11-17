@@ -531,6 +531,9 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                     </Link>
                   </p>
                 )}
+                {/* Optional checklist (`bullets`, see CityPageListItem): the extra sections' list markup;
+                    unset = no element. */}
+                {s0.bullets && s0.bullets.length > 0 && renderSectionList(s0.bullets)}
                 {/* Optional captioned images (`images`, see CityPageListItem); unset = no element. Two
                     columns from `sm` up; with an odd count the first image spans both, so no figure is
                     left alone at half width. Lazy-loaded: these sit far below the fold. */}
