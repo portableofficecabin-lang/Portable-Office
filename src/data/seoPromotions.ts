@@ -622,6 +622,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Brookefield (furniture and appliance rental mini-hubs, donation drives and CSR collections; owner
     // brief 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Brookefield", href: "/cities-we-serve/shipping-container-brookefield" },
+    // Hennur Road (church, parish and choir storage, music-school instruments, décor and party-supply stock;
+    // owner brief 2026-11-16), appended so the live links keep their positions.
+    { name: "Shipping Containers on Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
   ],
 };
 

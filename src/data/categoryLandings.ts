@@ -307,6 +307,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers in Thanisandra", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
       // Brookefield storage page (owner brief, 2026-11-16), appended so the live links keep their positions.
       { name: "Shipping containers in Brookefield", href: "/cities-we-serve/shipping-container-brookefield" },
+      // Hennur Road storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
+      { name: "Shipping containers on Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
