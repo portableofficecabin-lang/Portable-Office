@@ -18600,7 +18600,7 @@ export const CITY_PAGES: CityPage[] = [
    * "KR Puram") is added by whichever of this page and Mahadevapura (#257) merges second.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × KR Puram, Tin Factory, Old Madras Road,
-   * Ramamurthy Nagar, TC Palya, Battarahalli, Kithaganur, Doorvaninagar and Medahalli, for rail and road
+   * TC Palya, Battarahalli, Kithaganur, Doorvaninagar and Medahalli, for rail and road
    * consignment staging before dispatch and for active fibre and telecom roll-out stock (cable drums,
    * splicing and test kit, boxed CPE, installation tools). Mahadevapura (#257) drops KR Puram from its
    * keywords, areas and CTA. Hoskote is named only as a direction. Not targeted here: last-mile parcel
@@ -18626,7 +18626,7 @@ export const CITY_PAGES: CityPage[] = [
     metaDescription:
       "Shipping and storage containers in KR Puram for consignment staging near Old Madras Road and secure storage of fibre cables, splicing tools and telecom equipment.",
     keywords:
-      "shipping container in KR Puram, cargo container KR Puram, storage container KR Puram, storage container Ramamurthy Nagar, storage container Old Madras Road, used shipping container KR Puram, shipping container price in KR Puram, storage container for rent in KR Puram",
+      "shipping container in KR Puram, cargo container KR Puram, storage container KR Puram, storage container Old Madras Road, used shipping container KR Puram, shipping container price in KR Puram, storage container for rent in KR Puram",
     // Approximate: between KR Puram railway station and the Old Madras Road junction.
     geo: {
       region: "IN-KA",
@@ -18718,7 +18718,14 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas We Serve",
     areasText:
-      "Enquiries are welcome from KR Puram, Tin Factory, Ramamurthy Nagar, TC Palya, Battarahalli, Kithaganur, Doorvaninagar, Medahalli and sites along the Old Madras Road corridor in the direction of Hoskote. Each delivery is confirmed after we have reviewed how the site can be reached.",
+      "Enquiries are welcome from KR Puram, Tin Factory, TC Palya, Battarahalli, Kithaganur, Doorvaninagar, Medahalli and sites along the Old Madras Road corridor in the direction of Hoskote. Each delivery is confirmed after we have reviewed how the site can be reached.",
+    // Ramamurthy Nagar brief (2026-11-16, §5): Ramamurthy Nagar has its own shipping page, so the areas section
+    // links to it (anchor "Ramamurthy Nagar") instead of listing it. nearbySkipsBodyLinks keeps it single.
+    areasInlineLink: {
+      before: "Storage for sign and flex printers and for home healthcare equipment rental depots is covered on our page for",
+      link: { label: "Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
+      after: ".",
+    },
 
     extraSections: [
       {
@@ -18880,7 +18887,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Storage for a Neighbourhood Built on Connections",
-    ctaText: `Whether you consolidate parcels for the next train out, run part loads down Old Madras Road or keep a fibre crew stocked for the next connection, we'll quote a container set up to keep your goods organised and secure. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving KR Puram, Tin Factory, Ramamurthy Nagar and the Old Madras Road corridor.`,
+    ctaText: `Whether you consolidate parcels for the next train out, run part loads down Old Madras Road or keep a fibre crew stocked for the next connection, we'll quote a container set up to keep your goods organised and secure. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving KR Puram, Tin Factory and the Old Madras Road corridor.`,
     // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Shipping Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
