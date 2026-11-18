@@ -38145,6 +38145,598 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN YESHWANTHPUR — extra space for wholesale grain, pulse and spice
+   * traders around the APMC yard (bagged dry commodities, lot records, empty gunny bags and PP sacks,
+   * crates, platform scales and sack trolleys), and for lorry transporters and booking agents
+   * (tarpaulins, ropes and lashing gear, truck tools and non-hazardous spares) in northwest Bengaluru.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Yeshwanthpur"): meta title, meta description, H1, keywords, local modifiers, section order, H2 / H3
+   * headings, sizes table and the eleven FAQs are the brief's, and so is the copy, lightly edited for flow
+   * and British spelling. The brief's notes to the implementer ("Do not assume…", "Never instruct…",
+   * "link to … only if…", "Do not guarantee…", "Conditional section…", "Highlight only verified…", "Use
+   * verified company phone numbers…") are instructions, not page copy; where they carry a customer-facing
+   * caution it is written as one ("Pallets and ventilation alone do not guarantee safe food storage", "Do
+   * not attempt to fumigate an enclosed container yourself"). The route follows the site convention
+   * (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins, enquiry-form
+   * intro and disclaimer were written for their slots. Spelling variants appear once each in the visible
+   * copy: "Yesvantpur" (intro: the railway junction's official name), "Yeshwantpur" and "Yeshwanthpura"
+   * (areas). Tumkur Road appears once, as a transport corridor in the delivery section.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists 10, 20, 40 ft and 40 ft High Cube units on terms from one month to five years, with transport,
+   * pickup, deposit and lock-in confirmed in the rental agreement before dispatch; no amount is stated
+   * here); the 10 ft row keeps the brief's "(if available)". Racks, shelving, lighting and ventilation are
+   * listed options on the storage container; pallets, hooks, bins and insulation are price factors "where
+   * the quotation includes them", not standard equipment. The optional Kannada search terms are not used:
+   * the page is in English, and a Kannada phrase in the meta keywords would not be read by anyone.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   Grain, pulse and spice traders; lorry transporters and booking agents → two afterIntro extra
+   *     sections, their H3s as `subsections` (the interior render heads the traders' section).
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered) → afterSolutions
+   *     extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Yeshwanthpur" → areas. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's eleven. CTA: the brief's closing
+   *   section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): spice H3 → "questions to settle before an insulated or AC fit-out" (the Vellore page's
+   * insulated and air-conditioned storage section). The brief allows the Vellore link for onions,
+   * potatoes and fresh produce only if that page genuinely covers them; it does not (it covers insulated
+   * and AC fit-out enquiries, not ventilated or refrigerated produce storage), so the "What this page does
+   * not cover" H3 carries no link. Placement section → "delivery planning for restricted sites" (Bellandur's
+   * gate-and-lane delivery notes); sizes section → "condition checks for a used shipping container": the
+   * brief's /shipping-container-chennai does not exist, so it points to the Chennai-area Athipattu page and
+   * its "Used Container Inspection" checklist, as Kasturi Nagar and RR Nagar do; rental section →
+   * /products/shipping-container-rental; intro → the cargo category ("Existing shipping container product
+   * page"). Two sibling links keep the brief's §6 distinctions visible: the traders' section →
+   * "kirana and provision-store backstock in Banashankari" (shop backstock is that page's intent), and the
+   * transporters' section → "consignment staging containers in KR Puram" (parcel and part-load staging
+   * is that page's intent). Areas → the Peenya Industrial Area shipping container product (Peenya is not
+   * a keyword here). Anchors differ from the siblings' anchors for the same targets. Inbound: the Peenya
+   * product page's industries section ("storage containers for wholesale traders and transporters in
+   * Yeshwanthpur"; Yeshwanthpur leaves that page's areas FAQ), the Karnataka shipping hub ("Shipping
+   * Containers in Yeshwanthpur"), the cargo category's location links ("Storage containers in
+   * Yeshwanthpur") and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this
+   * page's nearby block from repeating Bellandur, Banashankari or KR Puram.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Yeshwanthpur (Yeshwantpur, Yesvantpur,
+   * Yeshwanthpura), Yeshwanthpur Industrial Suburb, the APMC yard area and Goraguntepalya, for wholesale
+   * grain, pulse and spice traders' bagged stock, packing materials and market equipment, and for lorry
+   * transporters' tarpaulins, lashing gear, tools and spares. Not targeted: Rajajinagar and
+   * Subramanyanagar (Rajajinagar page); Malleshwaram, Mahalakshmi Layout, Jalahalli and Mathikere (kept for
+   * possible future pages); Peenya (its product page); Tumkur Road as a location; kirana backstock
+   * (Banashankari); cattle feed (Varthur); restaurant dry storage and tyre shops (Marathahalli ORR); rail
+   * and parcel consignment staging (KR Puram); parked vehicles (Thanisandra Main Road); truck-yard guard
+   * posts (Salem security cabins); climate-controlled units (Vellore); onion, potato and fresh-produce
+   * storage (named only as goods NOT to keep in an ordinary container). "Bengaluru" stays out of the
+   * title, as the brief asks; the geo meta and the Service JSON-LD's areaServed carry "Yeshwanthpur,
+   * Bengaluru, Karnataka".
+   *
+   * Images: four owner-dropped lossy VP8 WebP renders ("public/images/Storage Containers in Yeshwanthpur
+   * city page/Storage Containers in Yeshwanthpur/cabin (1–4).webp", 52–247 KB, no EXIF / XMP / ICC) of one
+   * dark grey container. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title /
+   * dc:description that labels it an illustrative render (no creator, GPS, camera or date). (2)
+   * three-quarter exterior = hero / og:image (the brief's hero filename); (1) empty interior = traders'
+   * section (the brief's "container interior" filename); (4) roof from above = placement section; (3) side
+   * wall = sizes section. No image shows grain or pulse bags, gunny bags, crates, scales, tarpaulins,
+   * lashing gear or truck spares, so the brief's six use-case image slots are not used, and no alt text,
+   * caption or filename claims those items, pallets, shelves, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-yeshwanthpur",
+    city: "Yeshwanthpur",
+    listTitle: "Shipping & Storage Containers in Yeshwanthpur",
+    metaTitle: "Shipping Container in Yeshwanthpur | Grain & Transport Storage",
+    metaDescription:
+      "Shipping and storage containers in Yeshwanthpur for grain, pulse and spice traders, plus lorry transporters storing tarpaulins, lashing gear and spares.",
+    keywords:
+      "shipping container in Yeshwanthpur, cargo container Yeshwanthpur, storage container Yeshwanthpur, storage container Yeshwantpur, storage container Yeshwanthpur Industrial Suburb, storage container near the APMC yard Yeshwanthpur, storage container Goraguntepalya, used shipping container Yeshwanthpur, shipping container price in Yeshwanthpur, storage container for rent in Yeshwanthpur, grain storage container, pulses and dal storage container, spice trader storage container, APMC trader storage container, gunny bag and crate storage, platform scale and sack trolley storage, lorry transporter storage container, tarpaulin storage container, lashing belt and chain storage, truck spares storage container, transport company equipment store",
+    // Approximate point near Yeshwanthpur Circle, northwest Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Yeshwanthpur, Bengaluru, Karnataka, India",
+      position: "13.0240;77.5500",
+      icbm: "13.0240, 77.5500",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur, Banashankari, KR Puram and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-yeshwanthpur/shipping-container-yeshwanthpur.webp",
+      alt: "Dark grey steel shipping container with closed double cargo doors and four locking bars, on a paved yard, suitable for wholesale inventory or transport equipment storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a closed container; it was not photographed in Yeshwanthpur or at the APMC yard.",
+    },
+
+    h1: "Shipping & Storage Containers in Yeshwanthpur",
+    tagline:
+      "Dry, orderly room for wholesale traders' bagged stock, sacks and scales, and for lorry transporters' tarpaulins, lashing gear and truck spares.",
+    intro: [
+      "Yeshwanthpur is an important commercial and transport area in northwest Bengaluru, known for wholesale trading, industrial businesses and road and rail connectivity; its railway junction carries the official name Yesvantpur.",
+      "Grain, pulse and spice traders may require additional space for bagged commodities, packaging materials and market-handling equipment.",
+      "Lorry transporters and booking agents may also need organised storage for tarpaulins, ropes, lashing belts, tools and vehicle spares.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Yeshwanthpur for these commercial storage requirements.",
+    },
+
+    areasHeading: "Areas Served Around Yeshwanthpur",
+    areasText:
+      "This page covers shipping and storage container enquiries from Yeshwanthpur (also written Yeshwantpur, or Yeshwanthpura in Kannada usage), the Yeshwanthpur Industrial Suburb, the APMC yard area and Goraguntepalya. Compounds here range from trader godowns off market lanes to transport yards, so the approach, the gate and the standing spot are checked for each address before a delivery date is fixed.",
+    // Peenya is not a keyword here; its factories have their own shipping container page.
+    areasInlineLinks: [
+      {
+        before: "Running a factory in the Peenya Industrial Area instead? See our page on",
+        link: { label: "storage containers for Peenya's industrial units", href: "/products/shipping-container-in-peenya-industrial" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Grain, Pulse & Spice Traders",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-yeshwanthpur/yeshwanthpur-storage-container-interior.webp",
+          alt: "Empty storage container interior with light grey corrugated walls, a ribbed ceiling and a brown plywood floor, looking towards the closed cargo doors",
+          width: 1672,
+          height: 940,
+          caption:
+            "Illustrative render of an empty interior before fit-out. Pallets, racks, hooks and vents are added only where your quotation lists them.",
+        },
+        paragraphs: [
+          "Wholesale traders handle stock arriving and leaving in bags, crates and bulk consignments.",
+          "A suitably designed shipping container may provide additional storage space for compatible dry commodities and market equipment.",
+          "However, ordinary metal containers can experience significant heat and condensation. Food and agricultural commodities must be stored only where the actual container conditions, hygiene controls and applicable requirements are suitable.",
+        ],
+        // Brief §6: wholesale bagged commodities are kept apart from kirana backstock (the Banashankari page).
+        inlineLinks: [
+          {
+            before: "Stocking a neighbourhood shop rather than trading wholesale lots? Shop overflow is covered on our page on",
+            link: { label: "kirana and provision-store backstock in Banashankari", href: "/cities-we-serve/shipping-container-banashankari" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Bagged grain and pulse storage",
+            paragraphs: [
+              "Possible commodities include rice, wheat, dal, pulses and other compatible dry grains. Storage arrangements may include:",
+            ],
+            bullets: [
+              { text: "Suitable pallets or raised supports." },
+              { text: "Adequate separation from walls." },
+              { text: "Labelled stock sections." },
+              { text: "Stable stacking." },
+              { text: "Appropriate ventilation and moisture control." },
+              { text: "Routine inspection for pests and condensation." },
+              { text: "Suitable cleaning arrangements." },
+            ],
+            closing: ["Pallets and ventilation alone do not guarantee safe food storage."],
+          },
+          {
+            heading: "Lot-wise stock organisation",
+            paragraphs: ["Traders may benefit from keeping records of:"],
+            bullets: [
+              { text: "Commodity type." },
+              { text: "Supplier." },
+              { text: "Batch or lot number." },
+              { text: "Arrival date." },
+              { text: "Quantity." },
+              { text: "Storage position." },
+              { text: "Dispatch status." },
+            ],
+            closing: ["Use a stock-rotation system suited to each product's shelf life and handling requirements."],
+          },
+          {
+            heading: "Moisture and condensation control",
+            paragraphs: [
+              "Condensation can damage bagged agricultural products. Before using a container for grain or pulses, assess:",
+            ],
+            bullets: [
+              { text: "The condition of the container roof and walls." },
+              { text: "Ventilation requirements." },
+              { text: "Insulation or lining." },
+              { text: "Moisture levels." },
+              { text: "Temperature fluctuations." },
+              { text: "Water ingress." },
+              { text: "Pest entry points." },
+              { text: "Commodity-specific storage requirements." },
+            ],
+            closing: ["Where appropriate, use suitable moisture monitoring and environmental controls."],
+          },
+          {
+            heading: "Spice trader storage",
+            paragraphs: [
+              "Spices may be sensitive to humidity, heat, odours and contamination. A container may be considered only where the storage environment is appropriate for the specific packaged product.",
+              "Keep products in suitable sealed packaging and follow the food-safety requirements that apply to them.",
+            ],
+            // Brief §5: specialised storage requirements → the Vellore page's insulated / AC fit-out section.
+            inlineLinks: [
+              {
+                before: "If a supplier sets temperature or humidity limits for a product, start with the",
+                link: { label: "questions to settle before an insulated or AC fit-out", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " on our Vellore page.",
+              },
+            ],
+          },
+          {
+            heading: "Empty gunny bags and PP sacks",
+            paragraphs: ["A shipping container may also hold empty packaging materials such as:"],
+            bullets: [
+              { text: "Gunny bags." },
+              { text: "Polypropylene sacks." },
+              { text: "Packaging liners." },
+              { text: "Empty cartons." },
+              { text: "Labels." },
+              { text: "Other dry packing materials." },
+            ],
+            closing: ["Keep these materials clean, dry and organised."],
+          },
+          {
+            heading: "Crates and handling equipment",
+            paragraphs: ["Suitable storage may be arranged for:"],
+            bullets: [
+              { text: "Empty crates." },
+              { text: "Platform weighing scales." },
+              { text: "Sack trolleys." },
+              { text: "Hand trucks." },
+              { text: "Bag-stitching machines." },
+              { text: "Packaging tools." },
+              { text: "Dry tarpaulins." },
+            ],
+            closing: ["Store heavy equipment on suitable supports and keep handling routes clear."],
+          },
+          {
+            heading: "Pest control and fumigation",
+            paragraphs: ["Agricultural stock may attract insects and rodents. Suitable measures can include:"],
+            bullets: [
+              { text: "Good housekeeping." },
+              { text: "Appropriate door seals." },
+              { text: "Routine inspections." },
+              { text: "Proper stock rotation." },
+              { text: "Professional pest-management arrangements." },
+            ],
+            closing: [
+              "Fumigation must only be carried out by appropriately licensed and qualified professionals under the applicable regulations. Do not attempt to fumigate an enclosed container yourself.",
+              "Entry after treatment must follow the pest-control operator's clearance procedures.",
+            ],
+          },
+          {
+            heading: "What this page does not cover",
+            paragraphs: ["An ordinary shipping container should not be treated as suitable storage for:"],
+            bullets: [
+              { text: "Onions." },
+              { text: "Potatoes." },
+              { text: "Fresh fruits." },
+              { text: "Fresh vegetables." },
+              { text: "Other products that need specialised ventilation or temperature control." },
+            ],
+            closing: ["These commodities may require purpose-designed ventilated or refrigerated storage, which is outside the scope of this page."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Lorry Transporters & Booking Agents",
+        placement: "afterIntro",
+        paragraphs: [
+          "Transport operators often handle equipment that moves between trucks, drivers and loading locations.",
+          "A suitable storage container can provide organised space for non-hazardous transport equipment and compatible spare parts.",
+        ],
+        // Brief §6: road transporters' equipment is kept apart from consignment staging (the KR Puram page).
+        inlineLinks: [
+          {
+            before: "Holding parcels and part loads between collection and dispatch, rather than lorry gear? That is the subject of our page on",
+            link: { label: "consignment staging containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Tarpaulin storage",
+            paragraphs: ["Tarpaulins may be stored:"],
+            bullets: [
+              { text: "Folded and fully dry." },
+              { text: "Labelled by size." },
+              { text: "On pallets or racks." },
+              { text: "Away from sharp objects." },
+              { text: "In separate sections for usable and repair-pending items." },
+            ],
+            closing: ["Dry wet tarpaulins before they go into storage."],
+          },
+          {
+            heading: "Ropes and lashing equipment",
+            paragraphs: ["Transport equipment may include:"],
+            bullets: [
+              { text: "Ropes." },
+              { text: "Lashing belts." },
+              { text: "Ratchet straps." },
+              { text: "Chains." },
+              { text: "Load binders." },
+              { text: "Hooks." },
+              { text: "Edge protectors." },
+            ],
+            closing: [
+              "Organise these items on appropriately rated racks, hooks and bins.",
+              "Inspect load-securing equipment according to the applicable safety requirements before it is reused.",
+            ],
+          },
+          {
+            heading: "Truck tools and spare parts",
+            paragraphs: ["A container may accommodate compatible items such as:"],
+            bullets: [
+              { text: "Wheel chocks." },
+              { text: "Tool kits." },
+              { text: "Filters." },
+              { text: "Belts." },
+              { text: "Bulbs." },
+              { text: "Mechanical spare parts." },
+              { text: "Non-hazardous maintenance accessories." },
+            ],
+            closing: ["Store heavy equipment low and make sure racks are securely installed."],
+          },
+          {
+            heading: "Transport equipment issue register",
+            paragraphs: ["Transport operators may use a simple inventory register recording:"],
+            bullets: [
+              { text: "Vehicle registration or fleet number." },
+              { text: "Driver or responsible person." },
+              { text: "Equipment issued." },
+              { text: "Quantity." },
+              { text: "Issue date." },
+              { text: "Return date." },
+              { text: "Equipment condition." },
+            ],
+            closing: ["A register like this helps keep track of shared transport equipment."],
+          },
+          {
+            heading: "Safety precautions",
+            paragraphs: ["An ordinary equipment-storage container must not be assumed suitable for hazardous substances."],
+            bullets: [
+              { text: "Do not store petrol, diesel or fuel drums in an ordinary storage container." },
+              { text: "Oils, greases and other chemicals need storage arrangements appropriate to their classification and the applicable regulations." },
+              { text: "Lead-acid batteries need manufacturer-approved storage and spill precautions." },
+              { text: "Do not charge vehicle batteries inside an ordinary storage-only container." },
+              { text: "Keep wet tarpaulins out until they are dry." },
+              { text: "Maintain clear access and appropriate fire-safety arrangements." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Yeshwanthpur",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-yeshwanthpur/shipping-container-roof-view-yeshwanthpur.webp",
+          alt: "Top-down view of a dark grey shipping container roof with corrugated panels and four corner castings, standing on gravel",
+          width: 1672,
+          height: 940,
+          caption: "Illustrative render from above. Allow room beyond the footprint for the lift and for both cargo doors to swing fully open.",
+        },
+        paragraphs: [
+          "Shipping containers may be placed on suitable, authorised private premises, such as commercial compounds, transport yards and approved storage areas.",
+          "Before installation, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Suitable ground conditions." },
+          { text: "Container dimensions." },
+          { text: "Road and gate clearance." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Crane or unloading requirements." },
+          { text: "Safe access for workers." },
+          { text: "Applicable local regulations." },
+          { text: "Emergency access." },
+        ],
+        closing: [
+          "Placement inside an APMC market yard or a transport terminal requires authorisation from the relevant authority.",
+          "Busy market and transport roads, the Tumkur Road corridor among them, can affect delivery planning, so a delivery time or unloading method is agreed only after a site assessment.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Is the compound behind a narrow gate or on a crowded market lane? Read our notes on",
+            link: { label: "delivery planning for restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " on our Bellandur page.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-yeshwanthpur/shipping-container-side-wall-yeshwanthpur.webp",
+          alt: "Long corrugated side of a dark grey shipping container with corner castings and two forklift pockets, on a gravel yard in front of a steel shed",
+          width: 1671,
+          height: 941,
+          caption: "Illustrative render of the side wall. The quotation for the actual unit states its length, inside measurements and condition.",
+        },
+        table: {
+          caption:
+            "Approximate volumes only. Exact dimensions, floor load capacity and availability are confirmed in the quotation for the actual unit.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft (if available)", "~15 m³", "Transport equipment, packaging materials or small trader inventory"],
+            ["20 ft", "~33 m³", "Suitable bagged stock, market equipment or lorry transport accessories"],
+            ["40 ft", "~67 m³", "Larger wholesale inventory or transport equipment, where site access permits"],
+          ],
+        },
+        closing: ["Storage suitability depends on the commodity, the environmental conditions and the loading requirements."],
+        // Brief §5: container condition and buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Considering a second-hand unit? Before you commit, go through our",
+            link: { label: "condition checks for a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Yeshwanthpur",
+        placement: "afterSolutions",
+        paragraphs: ["Shipping container pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Pallet and racking requirements." },
+          { text: "Storage hooks and bins." },
+          { text: "Ventilation and insulation." },
+          { text: "Lighting." },
+          { text: "Security features." },
+          { text: "Transportation and unloading." },
+          { text: "Site access." },
+          { text: "Supply prices at the time of quotation." },
+        ],
+        closing: ["Request an itemised quotation based on the intended storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Yeshwanthpur",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be needed during seasonal stock arrivals or periods of heavier transport activity. Shipping containers can be hired in 10, 20 and 40 ft and 40 ft High Cube sizes, on terms from one month to five years. Before the unit is dispatched, the rental agreement confirms the hire period, any deposit, the transport charges and the collection conditions.",
+        ],
+        inlineLinks: [
+          {
+            before: "See",
+            link: { label: "storage container hire options", href: "/products/shipping-container-rental" },
+            after: " for the current rental range.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the commodities or equipment to be stored." },
+          { text: "Confirm the storage and safety requirements." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss pallets, racks, hooks, bins and ventilation." },
+          { text: "Provide the proposed delivery location." },
+          { text: "Confirm site access and permissions." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise the specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For traders and transporters in Yeshwanthpur, that covers:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "10, 20 and 40 ft lengths, new or used, depending on current stock." },
+          { title: "Storage-oriented modifications", text: "each one itemised in the quotation for your unit." },
+          {
+            title: "Pallet and racking provisions",
+            text: "racks, shelves, hooks and bins planned around sacks and crates, or around tarpaulins, straps and spares.",
+          },
+          { title: "Locking arrangements", text: "lockable double cargo doors, checked on the actual unit." },
+          { title: "Lighting and ventilation options", text: "quoted for the goods or equipment you plan to keep." },
+          {
+            title: "Quotation and delivery coordination",
+            text: "an itemised quote first, then a check of the route, gate and standing spot before delivery is booked.",
+          },
+        ],
+        closing: [
+          "An ordinary container is not automatically food-safe, pest-proof or temperature-controlled, and it is not a store for hazardous materials.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can grain and pulses be stored in a shipping container?",
+        answer:
+          "Potentially, where the actual storage environment meets the commodity's moisture, temperature, hygiene and pest-control requirements.",
+      },
+      {
+        question: "Can bagged commodities be placed directly on the container floor?",
+        answer:
+          "Suitable pallets or raised supports are generally preferable, subject to the product's handling and storage requirements.",
+      },
+      {
+        question: "Can spices be stored inside a shipping container?",
+        answer: "Only where the container provides appropriate conditions for the specific packaged spice products.",
+      },
+      {
+        question: "Can onions and potatoes be stored in an ordinary shipping container?",
+        answer:
+          "An ordinary closed container is generally unsuitable, because these products may require specialised ventilation or temperature control.",
+      },
+      {
+        question: "Can traders fumigate commodities inside a container?",
+        answer:
+          "Any fumigation must be managed by qualified and appropriately licensed professionals under the applicable safety requirements.",
+      },
+      {
+        question: "Can lorry transporters store tarpaulins and lashing equipment in a container?",
+        answer: "Yes, provided the equipment is suitably cleaned, dried, organised and stored safely.",
+      },
+      {
+        question: "Can truck spare parts be stored in a container?",
+        answer: "Many compatible non-hazardous spare parts can be stored using suitable racks and protective arrangements.",
+      },
+      {
+        question: "Can diesel drums or batteries be kept inside the container?",
+        answer:
+          "An ordinary storage container should not be used for fuel storage or battery charging. Hazardous materials require suitable specialised arrangements.",
+      },
+      {
+        question: "Can a shipping container be placed inside the APMC yard?",
+        answer: "Only with permission from the relevant authority and subject to the applicable site requirements.",
+      },
+      {
+        question: "What is the shipping container price in Yeshwanthpur?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Yeshwanthpur",
+    ctaText: `Whether you need additional storage for wholesale grain and pulse inventory or organised space for tarpaulins, lashing equipment and transport spares, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Phone ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Yeshwanthpur, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Shipping Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Yeshwanthpur storage container enquiry",
+      intro:
+        "Choose a container type and quantity, give the Yeshwanthpur godown, yard or compound address (a map pin is fine) and say whether you want to buy or hire. Tell us whether it will hold bagged grain, pulses, spices or packing materials, or tarpaulins, lashing gear and truck spares, and list any pallets, racks, hooks, bins or vents to include in the price.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds and supplies its containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. Its Bengaluru office is in Electronic City; it has no yard, depot, godown or branch in Yeshwanthpur or at the APMC yard. The written quotation or rental agreement for each unit sets out its size, grade, condition, inside dimensions and payload, any pallets, racks, hooks, bins, lighting, ventilation, insulation or locks, the hire terms for a rented unit, and how delivery, unloading and collection are handled. Stock changes, and no delivery date or time is promised in advance. The four pictures are illustrative renders of one container: none was taken in Yeshwanthpur, and none shows a delivered or fitted unit, grain, spices, packing materials, tarpaulins or transport equipment. Capacities are approximate. Wholesale traders, lorry transporters and booking agents are named as examples of typical uses, not as clients or completed projects, and the localities show where we take enquiries. An ordinary container is not food-grade storage, is not climate-controlled, and is not rated for fuel, chemicals or battery charging. The notes on commodities, moisture, pests, fumigation, load-securing equipment, hazardous materials, permissions and site access are general guidance, not food-safety, pest-control, legal, electrical or engineering advice; always follow the applicable regulations and the supplier's or manufacturer's instructions.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN HEBBAL, BENGALURU — accessory, merchandise and PDI-supply stores for
    * car dealerships on Bellary Road, and field-kit stores for agri-tech teams and agricultural research
    * groups (north Bengaluru: Hebbal Kempapura, Kodigehalli, Bhadrappa Layout, Byatarayanapura, Ganganagar
