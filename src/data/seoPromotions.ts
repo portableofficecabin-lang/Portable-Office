@@ -296,6 +296,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Portable cabins for terrace rooms and temporary family living during house reconstruction in Kaggadasapura
     // (owner brief 2026-11-18); the page links back here. After the live lines so they keep their positions.
     { name: "Portable Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
+    // Portable cabins for makeup, costume and green rooms at film and TV shoots, and bridal and rest rooms for
+    // home ceremonies, in Rajarajeshwari Nagar (owner brief 2026-11-18); the page links back here. Appended so
+    // the live links keep their positions.
+    { name: "Portable Cabins in Rajarajeshwari Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
@@ -550,6 +554,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
     // Portable / porta cabin page for Kaggadasapura, Bengaluru (owner brief 2026-11-18), here and on Porta Cabin; appended so the live links keep their positions.
     { name: "Portable Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
+    // Portable / porta cabin page for Rajarajeshwari Nagar, Bengaluru (owner brief 2026-11-18), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Rajarajeshwari Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -593,6 +599,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Porta Cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
     // Portable / porta cabin page for Kaggadasapura, Bengaluru (owner brief 2026-11-18), here and on Portable Cabin; appended so the live links keep their positions.
     { name: "Porta Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
+    // Portable / porta cabin page for Rajarajeshwari Nagar, Bengaluru (owner brief 2026-11-18), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Porta Cabins in RR Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",

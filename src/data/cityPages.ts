@@ -18580,6 +18580,14 @@ export const CITY_PAGES: CityPage[] = [
               { text: "When belongings will be returned." },
             ],
             closing: ["These terms should be agreed directly between the homeowner and the production company."],
+            // RR Nagar portable cabin brief (2026-11-18): makeup, costume and green rooms for shoots are that page's intent.
+            inlineLinks: [
+              {
+                before: "If the production also needs private rooms for its artists on the property, see our",
+                link: { label: "portable makeup and green rooms in RR Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
+                after: ".",
+              },
+            ],
           },
         ],
       },
@@ -43942,6 +43950,601 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin builds its cabins at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office is in Electronic City, Bengaluru; it has no factory, yard or branch in Kaggadasapura. Every cabin is subject to availability, and its quotation states the dimensions, construction, fit-out, electrical and plumbing provisions, any hire terms, and who arranges transport, unloading, lifting, placement and utility connections; no delivery date or installation time is guaranteed. Portable Office Cabin does not assess or certify the structural capacity of a terrace, does not guarantee that any rooftop can carry a cabin, and does not obtain building permissions or association consent; a terrace installation needs a qualified structural engineer's approval and the permissions that apply, and a crane lift is planned and carried out by a qualified lifting contractor. The sizes on this page are illustrative layouts, not stock, and relocation or reuse of a cabin after reconstruction is not promised. All five images are illustrative renders of one container-style cabin on a paved yard; none was photographed in Kaggadasapura, shows a supplied unit or shows a terrace installation, a bedroom or a bathroom, and the roof deck and staircase they show are design options, not standard items. Kaggadasapura, Kaggadasapura Main Road, the lake area, Malleshpalya, Vignana Nagar, Nagavarapalya and GM Palya indicate where enquiries can come from; they do not identify customers or completed installations. Notes on structural safety, waterproofing, gas, electrical and fire safety, construction-site placement and permissions are general guidance, not engineering or legal advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN RAJARAJESHWARI NAGAR (RR NAGAR) — makeup, costume and green rooms for film and TV
+   * shoots at residential locations, and bridal rooms and rest rooms for weddings and ceremonies held at
+   * home (west Bengaluru).
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Portable Cabins in Rajarajeshwari
+   * Nagar (RR Nagar)"): SEO title, meta description, H1, keywords, section order, H2 / H3 headings, sizes
+   * table and the eleven FAQs are the brief's, and so is the copy, lightly edited for flow and British
+   * spelling. Route: the city-page convention /cities-we-serve/portable-cabin-rajarajeshwari-nagar, not
+   * the brief's root slug (no city page lives at the root). The brief's notes to the implementer are
+   * applied, not printed:
+   *   • no colour-rendering index or lighting rating is claimed; the lighting is agreed with the makeup team
+   *     and stated in the quotation;
+   *   • standard sockets are never said to carry every styling tool: circuits follow the equipment list;
+   *   • the attached toilet is offered (the "Portable Cabin with Toilet & Pantry" guide), but not in every
+   *     size: the guide's "in a 20×8, a toilet takes roughly a quarter of the floor" is used as the example;
+   *   • rental (the brief's conditional section): /rental-service hires out site office cabins, toilet
+   *     blocks, security cabins and containers, each with its own minimum period, but no fitted makeup,
+   *     green or bridal room, so the section says hire of one is confirmed per quotation and quotes no
+   *     period, deposit or charge; the brief's "makeup room on rent for TV shoot" keyword is left out;
+   *   • the porta-cabin section explains the two names to readers instead of printing the brief's SEO note;
+   *   • no price, discount, delivery time, ready-to-use or comfort promise; Portable Office Cabin does not
+   *     supply vanity vans (said in the comparison H3);
+   *   • the brief's optional Kannada search terms are not used (no Kannada copy on the page to carry them).
+   * Written for the slots: the tagline, the link lead-ins, the image alt text and captions, the rental
+   * paragraph, the "Why choose" item texts and closing, and the disclaimer.
+   * Mapped onto the template in the brief's order (no template change):
+   *   • H1, tagline, intro (the brief's four paragraphs), `introLink` (portable cabins category) and the
+   *     heroCta row (quotation · Call · WhatsApp).
+   *   • Shoots, bridal rooms, rest rooms, ceremonies, sizes (table), porta vs portable, price, rent and
+   *     "How to Order a Portable Cabin" (ordered) → afterSolutions extra sections; the shoot and bridal
+   *     H3s are `subsections`.
+   *   • "Areas Served Around Rajarajeshwari Nagar" → areas; "Why Choose Portable Office Cabin?" → an extra
+   *     section without a placement (after the areas, before the FAQs, as in the brief).
+   *   • FAQs: the brief's eleven; the closing request → CTA (phone, WhatsApp and e-mail from COMPANY). No
+   *     enquiry form: the portable-cabins category has no category landing, so /api/enquiries rejects it.
+   *
+   * LINKS (brief §5, routes checked): intro → "portable cabins" (category); two-room layouts → the layouts
+   * guide (factory-fitted partitions); attached toilet → the toilet and pantry guide; shoot placement →
+   * "shipping containers for furniture storage in RR Nagar" (the RR Nagar shipping page, #280, owns
+   * shoot-house furniture storage); rest rooms → "ground-floor rooms for elderly parents in Jayanagar"
+   * (that page owns the permanent elder room; this one is a room for a day's function); sizes → the sizes
+   * guide; porta section → the porta cabin product page; price → the price guide; rent → /rental-service;
+   * how to order → the installation and site preparation guide; the CTA button → /contact. The pair with
+   * the RR Nagar security cabin page (session cc's, not yet released) — "portable security cabins in RR
+   * Nagar" here, "makeup and green room cabins in RR Nagar" there — is added by whichever of the two pages
+   * is released second, so neither links to a 404.
+   * Inbound: the Bangalore and Karnataka portable-cabin hubs ("Portable Cabins in Rajarajeshwari Nagar"),
+   * the Karnataka porta-cabin hub ("Porta Cabins in RR Nagar"), the RR Nagar shipping page's shoot-house
+   * section ("portable makeup and green rooms in RR Nagar") and the /cities-we-serve directory.
+   *
+   * KEYWORD OWNERSHIP: portable / porta / prefab cabin, portable room and PUF cabin × Rajarajeshwari Nagar,
+   * RR Nagar, Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and
+   * Gattigere, for makeup, costume, green and vanity rooms at film and TV shoots, and bridal rooms and rest
+   * rooms for home ceremonies. Not targeted: shipping or storage containers (the RR Nagar shipping page),
+   * security cabins or guard posts (the RR Nagar security page), shop cabins (the RR Nagar shop page),
+   * production or site offices, changing rooms (Dharmapuri; this page says "costume room"), toilet-cabin
+   * vanity units (Devanahalli), permanent elder rooms, consultation rooms and dance studios (Jayanagar),
+   * caretaker quarters (Bannerghatta Road), amenity rooms (Mahadevapura), terrace and living cabins
+   * (Kaggadasapura), music and study rooms (Hubballi–Dharwad), homestay cottages (Uttara Kannada), wedding
+   * supplier storage (Horamavu), and Kengeri, Nagarbhavi or Mysore Road (kept for possible future pages).
+   * "Bengaluru" stays out of the title, as the brief asks; the geo meta and the Service JSON-LD's
+   * areaServed carry "Rajarajeshwari Nagar, Bengaluru, Karnataka".
+   *
+   * Images: four owner-dropped lossy VP8 webp renders ("public/images/Portable Cabins in Rajarajeshwari
+   * Nagar city page/Portable Cabins in Rajarajeshwari Nagar/cabin (1–4).webp", no EXIF / XMP / ICC) of one
+   * grey corrugated-steel cabin. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title /
+   * dc:description that labels it a render (no creator, GPS or date). (1) three-quarter exterior with two
+   * wood-finish doors = hero / og:image (the brief's "portable-cabin-rajarajeshwari-nagar"); (2) unfurnished
+   * interior with LED panels and a split AC = shoot section; (3) side wall with two windows = bridal
+   * section (window orientation); (4) a door at each end = sizes (two-room layouts). None shows a makeup
+   * counter, mirror, costume rail, sofa, bridal room, rest room or toilet, so the brief's six use-case
+   * image slots are not used and no alt text or caption claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (provider = our factory,
+   * areaServed = Rajarajeshwari Nagar, alternateName = the porta and prefabricated cabin names, no offers,
+   * so no Product schema with invented prices) and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-rajarajeshwari-nagar",
+    city: "Rajarajeshwari Nagar",
+    listTitle: "Portable Cabins in Rajarajeshwari Nagar (RR Nagar)",
+    metaTitle: "Portable Cabin in RR Nagar | Makeup, Green & Bridal Rooms",
+    metaDescription:
+      "Portable and porta cabins in RR Nagar for makeup, costume and green rooms at film and TV shoots, plus bridal and private rest rooms for home ceremonies.",
+    keywords:
+      "portable cabin in RR Nagar, portable cabin in Rajarajeshwari Nagar, porta cabin in RR Nagar, prefab cabin RR Nagar, portable room RR Nagar, PUF cabin RR Nagar, portable cabin Ideal Homes Township, portable cabin Kenchenahalli, portable cabin Pattanagere, portable cabin Halagevaderahalli, portable cabin Channasandra, portable cabin Gattigere, portable cabin manufacturers near RR Nagar, makeup room cabin, green room cabin for shoots, vanity cabin for film shoot, artist rest room cabin, costume room cabin, bridal room cabin, bride's dressing room for home wedding, rest room cabin for elders at functions, portable room for home ceremonies, portable cabin price in RR Nagar, portable cabin on rent in RR Nagar, porta cabin near RR Nagar",
+    // Approximate point in Rajarajeshwari Nagar, the same as the RR Nagar shipping-container page (rounded; owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Rajarajeshwari Nagar, Bengaluru, Karnataka, India",
+      position: "12.9200;77.5200",
+      icbm: "12.9200, 77.5200",
+    },
+    motion: true,
+    // Brief §2 / §7: "porta cabin" (and the prefab synonym) as the Service's other names.
+    serviceJsonLd: { serviceType: "Portable Cabin", alternateName: ["Porta Cabins in RR Nagar", "Prefabricated Cabins in Rajarajeshwari Nagar"] },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-rajarajeshwari-nagar/portable-cabin-rajarajeshwari-nagar.webp",
+      alt: "Grey corrugated-steel portable cabin with two wood-finish doors and three barred windows on a concrete yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a cabin exterior, not a unit delivered in RR Nagar. Doors, windows and rooms are planned to your layout in the quotation.",
+    },
+
+    h1: "Portable Cabins in Rajarajeshwari Nagar (Porta Cabins)",
+    tagline: "Makeup, costume and green rooms for shoots at home, and bridal and rest rooms for family ceremonies, built to your layout.",
+    intro: [
+      "Rajarajeshwari Nagar, commonly called RR Nagar, is an established residential locality in West Bengaluru with independent houses, apartments and residential layouts.",
+      "Homes used as film and television shooting locations may need additional private rooms for artists, makeup teams and costumes.",
+      "Families hosting weddings and traditional ceremonies at home may also need temporary space for bridal preparation and guest comfort.",
+      "Portable Office Cabin offers portable cabin and porta cabin solutions in RR Nagar for these temporary room requirements.",
+    ],
+    // Brief §5: the general portable cabin page (the category, which owns the head term) from the introduction.
+    introLink: {
+      before: "For our standard cabin designs and specifications, browse our",
+      link: { label: "portable cabins", href: "/products/category/portable-cabins" },
+      after: ".",
+    },
+    heroCta: true,
+
+    extraSections: [
+      {
+        heading: "Makeup, Costume & Green Rooms for Film and TV Shoots",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-rajarajeshwari-nagar/portable-cabin-interior-led-lighting-ac.webp",
+          alt: "Unfurnished portable cabin interior with wood-finish wall panels, ceiling LED panel lights, a split air conditioner and barred sliding windows",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of an unfurnished interior. Makeup counters, mirrors and extra sockets are fitted only where they are part of your quoted layout.",
+        },
+        paragraphs: [
+          "Film and television productions sometimes use residential properties as shooting locations.",
+          "Where the house has few spare rooms, a suitable portable cabin may provide additional space for artists and production support activities.",
+        ],
+        subsections: [
+          {
+            heading: "Makeup room cabins",
+            paragraphs: ["A portable makeup room may be configured with:"],
+            bullets: [
+              { text: "Makeup counters." },
+              { text: "Mirrors with suitable lighting." },
+              { text: "Seating for artists." },
+              { text: "Electrical sockets for styling equipment." },
+              { text: "Ventilation." },
+              { text: "Air-conditioning provision." },
+              { text: "A lockable entrance door." },
+              { text: "Suitable interior finishing." },
+            ],
+            closing: ["The layout is planned around the number of users and the space available."],
+          },
+          {
+            heading: "Makeup lighting requirements",
+            paragraphs: [
+              "Makeup rooms benefit from lighting that lets artists judge skin tones and makeup colours accurately.",
+              "Possible specifications include:",
+            ],
+            bullets: [
+              { text: "High colour-rendering LED lighting." },
+              { text: "Consistent light distribution." },
+              { text: "An appropriate colour temperature." },
+              { text: "Suitable mirror placement." },
+              { text: "Glare reduction." },
+              { text: "Safe electrical connections." },
+            ],
+            closing: ["The actual lighting design should be agreed with the makeup team; the fittings are then set out in your quotation."],
+          },
+          {
+            heading: "Electrical requirements for styling tools",
+            paragraphs: [
+              "Hair dryers, straighteners and other styling equipment can draw significant electrical loads.",
+              "Before installation:",
+            ],
+            bullets: [
+              { text: "Confirm the expected number of devices." },
+              { text: "Check each device's power rating." },
+              { text: "Size the electrical circuits to suit." },
+              { text: "Provide suitable earthing and protection." },
+              { text: "Avoid overloaded extension boards." },
+              { text: "Use qualified electricians for the installation." },
+            ],
+            closing: [
+              "Standard cabin sockets are not assumed to carry every styling tool: the circuits are planned around your equipment list before the cabin is built.",
+            ],
+          },
+          {
+            heading: "Costume room cabins",
+            paragraphs: ["A costume room may include:"],
+            bullets: [
+              { text: "Costume rails." },
+              { text: "Full-length mirrors." },
+              { text: "Shelves for accessories." },
+              { text: "Suitable seating." },
+              { text: "Lockable storage." },
+              { text: "Ventilation." },
+              { text: "Adequate lighting." },
+            ],
+            closing: ["Keep costumes organised by artist, scene or production schedule."],
+          },
+          {
+            heading: "Green rooms for artists",
+            paragraphs: ["A portable green room can give artists a private place to rest between filming sessions.", "Possible features include:"],
+            bullets: [
+              { text: "A sofa or other comfortable seating." },
+              { text: "A small table." },
+              { text: "Air-conditioning or a fan." },
+              { text: "Insulated walls and roof." },
+              { text: "Drinking-water provision, where arranged." },
+              { text: "A lockable door." },
+              { text: "Privacy window treatments." },
+            ],
+          },
+          {
+            heading: "Two-room portable cabin layouts",
+            paragraphs: ["Larger productions may need separate rooms for different artists or departments.", "A custom cabin may be planned with:"],
+            bullets: [
+              { text: "Two independent rooms." },
+              { text: "Separate entrances or internal access." },
+              { text: "Dedicated makeup stations." },
+              { text: "Costume storage." },
+              { text: "Optional attached toilets." },
+              { text: "Appropriate electrical and ventilation provisions." },
+            ],
+            closing: ["Room dimensions and privacy requirements are confirmed before manufacturing."],
+            inlineLinks: [
+              {
+                before: "Partitions are fitted at the factory, before the cabin leaves. For how a cabin is divided into rooms, see our guide to",
+                link: { label: "portable cabin layouts and interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Attached toilet option",
+            paragraphs: ["A makeup or green room cabin may include an attached toilet. The design must account for:"],
+            bullets: [
+              { text: "Water supply." },
+              { text: "Plumbing." },
+              { text: "Wastewater disposal." },
+              { text: "Ventilation." },
+              { text: "Cleaning access." },
+              { text: "Appropriate privacy." },
+            ],
+            closing: [
+              "Not every cabin size can take a toilet comfortably. In a 20\u00a0×\u00a08\u00a0ft cabin, for example, a toilet takes up roughly a quarter of the floor, so the room is sized with the toilet in the plan.",
+            ],
+            inlineLinks: [
+              {
+                before: "For how an attached toilet is built and connected to water and drainage, see our",
+                link: { label: "attached toilet and pantry guide", href: "/products/portable-cabin/with-toilet-and-pantry" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Portable cabin versus vanity van",
+            paragraphs: [
+              "A stationary portable cabin, sometimes called a vanity cabin, may suit a production that uses the same authorised location over an extended period.",
+              "A vanity van may be more practical for productions that move frequently between locations.",
+              "The right option depends on the schedule, site access, transport requirements and the space available. Portable Office Cabin builds cabins; it does not supply vanity vans.",
+            ],
+          },
+          {
+            heading: "Placement at residential shoot locations",
+            paragraphs: ["Before installation:"],
+            bullets: [
+              { text: "Obtain the homeowner's or landowner's permission." },
+              { text: "Confirm the private space available." },
+              { text: "Check access for transport and unloading." },
+              { text: "Maintain emergency access." },
+              { text: "Avoid blocking neighbours' entrances." },
+              { text: "Keep safe distances from generators and other equipment." },
+              { text: "Confirm the local requirements that apply." },
+            ],
+            // Brief §5: the RR Nagar shipping page (#280) owns furniture storage while a house hosts a shoot.
+            inlineLinks: [
+              {
+                before: "If the house's own furniture has to be moved out for the shoot, see our",
+                link: { label: "shipping containers for furniture storage in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Bridal Rooms for Weddings & Home Ceremonies",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-rajarajeshwari-nagar/portable-cabin-side-wall-windows.webp",
+          alt: "Side wall of a grey corrugated portable cabin with two barred windows and an orange roof trim",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative side view. For a bridal room, the direction the windows and door face is agreed before the cabin is built.",
+        },
+        paragraphs: [
+          "Families hosting weddings and traditional ceremonies at home may need additional private space for preparation.",
+          "A portable bridal room can give the bride and close family members a dedicated area, subject to the space available and the necessary permissions.",
+        ],
+        subsections: [
+          {
+            heading: "Bridal makeup and dressing area",
+            paragraphs: ["Possible features include:"],
+            bullets: [
+              { text: "A full-length mirror." },
+              { text: "A makeup counter." },
+              { text: "Suitable lighting." },
+              { text: "Comfortable seating." },
+              { text: "Air-conditioning or a fan." },
+              { text: "A lockable door." },
+              { text: "Privacy window treatments." },
+              { text: "Space for clothing and accessories." },
+            ],
+          },
+          {
+            heading: "Bridal room with attached toilet",
+            paragraphs: [
+              "Where the layout and site allow, a bridal room may include an attached toilet.",
+              "Confirm the plumbing, water supply, wastewater arrangements and space it needs before the layout is finalised.",
+            ],
+          },
+          {
+            heading: "Privacy and security",
+            paragraphs: ["A bridal room should be positioned to give reasonable privacy. Consider:"],
+            bullets: [
+              { text: "Door and window orientation." },
+              { text: "Privacy film or curtains." },
+              { text: "Controlled access." },
+              { text: "Suitable exterior lighting." },
+              { text: "Safe pedestrian access." },
+            ],
+            closing: [
+              "A lockable door does not guarantee the security of jewellery, cash or valuable gifts. Keep valuables under the supervision of a responsible family member.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Rest Rooms for Elders at Home Functions",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Traditional home ceremonies can involve long schedules and crowded gathering spaces.",
+          "A portable rest room can give elderly family members and other guests a quiet place to sit and rest during the function.",
+          "Possible features include:",
+        ],
+        bullets: [
+          { text: "Comfortable seating." },
+          { text: "A fan or AC." },
+          { text: "Appropriate ventilation." },
+          { text: "Good lighting." },
+          { text: "Safe entry steps, or a ramp where needed." },
+          { text: "Slip-resistant flooring, where specified." },
+          { text: "Toilet access, where available." },
+        ],
+        closing: ["Plan access around the needs of the people who will use the room."],
+        // The Jayanagar page owns the permanent room for an elderly parent; this one is a room for a day's function.
+        inlineLinks: [
+          {
+            before: "This is a room for the day of a function. For a permanent room at home for a parent who should avoid stairs, see our",
+            link: { label: "ground-floor rooms for elderly parents in Jayanagar", href: "/cities-we-serve/portable-cabin-jayanagar" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabins for Traditional Ceremonies",
+        placement: "afterSolutions",
+        paragraphs: ["Temporary private rooms may be considered for events such as:"],
+        bullets: [
+          { text: "Home weddings." },
+          { text: "Gruhapravesha ceremonies." },
+          { text: "Upanayana functions." },
+          { text: "Seemantha ceremonies." },
+          { text: "Other permitted family gatherings." },
+        ],
+        closing: [
+          "Install the cabin only on authorised premises, and keep it clear of cooking areas, temporary electrical equipment, emergency routes and shamiana supports.",
+          "Do not place a cabin on a public road or footpath without the required legal authorisation.",
+        ],
+      },
+      {
+        heading: "Portable Cabin Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-rajarajeshwari-nagar/two-door-portable-cabin.webp",
+          alt: "Grey portable cabin with an orange door at each end and two barred windows between them",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative render of a cabin with a door at each end, a layout that can be divided into two rooms with separate entrances.",
+        },
+        // Sizes use no-break spaces (\u00a0) so a footprint never splits over two lines on a narrow phone.
+        table: {
+          caption: "Example planning sizes, not confirmed stock or standard offerings.",
+          headers: ["Proposed size", "Possible application"],
+          rows: [
+            ["10\u00a0×\u00a08\u00a0ft", "Compact makeup room or small bridal room"],
+            ["20\u00a0×\u00a010\u00a0ft", "Makeup and costume room or larger bridal room, with an optional toilet subject to layout"],
+            ["30\u00a0×\u00a010\u00a0ft", "Two-room green room arrangement, or a bridal room and rest room combination"],
+            ["40\u00a0×\u00a010\u00a0ft", "Larger multi-room configuration"],
+            ["Custom size", "Application-specific layouts"],
+          ],
+        },
+        closing: [
+          "These are example planning sizes. Manufacturing capability, usable internal space, equipment clearances and transport feasibility are confirmed in your quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "For standard footprints and internal measurements, see our",
+            link: { label: "portable cabin sizes and dimensions guide", href: "/products/portable-cabin/sizes-and-dimensions" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Porta Cabin or Portable Cabin?",
+        placement: "afterSolutions",
+        paragraphs: [
+          "The terms \"porta cabin\" and \"portable cabin\" are commonly used for the same thing: a prefabricated, movable cabin structure.",
+          "Whichever term you search for in RR Nagar, this page covers the same cabins: makeup, costume and green rooms for shoots, and bridal and rest rooms for home ceremonies.",
+        ],
+        inlineLinks: [
+          {
+            before: "For more designs sold under that name, see our",
+            link: { label: "porta cabin models", href: "/products/porta-cabin" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin Price in RR Nagar",
+        placement: "afterSolutions",
+        paragraphs: ["Portable cabin pricing depends on:"],
+        bullets: [
+          { text: "Size and layout." },
+          { text: "The number of rooms." },
+          { text: "Structural materials." },
+          { text: "Wall and roof insulation." },
+          { text: "Interior finishing." },
+          { text: "Makeup counters and mirrors." },
+          { text: "Lighting specifications." },
+          { text: "Electrical load requirements." },
+          { text: "Air-conditioning provisions." },
+          { text: "Attached toilet requirements." },
+          { text: "Privacy features." },
+          { text: "Transportation and unloading." },
+          { text: "Site access." },
+        ],
+        closing: ["You can request a quotation based on your intended use and the specifications you need."],
+        inlineLinks: [
+          {
+            before: "For how size, insulation and fit-out shape the cost, see our",
+            link: { label: "portable cabin price guide", href: "/products/portable-cabin/price-and-cost-guide" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin on Rent in RR Nagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Makeup rooms and bridal rooms are often needed only for a shoot or a ceremony. Our rental fleet covers standard units such as site office cabins and toilet blocks, and each unit has its own minimum hire period. A makeup, green or bridal room is fitted out to your layout, so its availability on hire, the hire period, any deposit, and delivery and collection are all set out in your quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "For the units we hire out today and their minimum periods, see our",
+            link: { label: "cabin rental service", href: "/rental-service" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Portable Cabin",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Tell us whether the cabin is for a shoot or a ceremony." },
+          { text: "Confirm the expected number of users." },
+          { text: "Select the cabin size." },
+          { text: "Discuss makeup stations, seating and room partitions." },
+          { text: "Confirm the lighting, AC and electrical requirements." },
+          { text: "Specify any toilet requirements." },
+          { text: "Share the proposed installation location." },
+          { text: "Confirm site access and permissions." },
+          { text: "Request a quotation." },
+          { text: "Finalise the specifications and delivery arrangements." },
+        ],
+        inlineLinks: [
+          {
+            before: "The cabin needs a level base and a clear approach when it arrives. For what to prepare, see our guide to",
+            link: { label: "preparing a site for cabin delivery", href: "/products/portable-cabin/installation-and-site-preparation" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin manufactures portable cabins for commercial and temporary applications. For a makeup, green, bridal or rest room in RR Nagar, that means:",
+        ],
+        bullets: [
+          { title: "Customisable cabin dimensions", text: "sized to the number of users and the space on your property." },
+          { title: "Interior room partitions", text: "fitted at the factory, for two rooms or a separate costume area." },
+          { title: "Counters and furniture", text: "counters, seating and storage sized for the cabin, supplied with the order where your layout includes them." },
+          { title: "Electrical and lighting arrangements", text: "concealed wiring, LED lighting and extra sockets planned around your equipment list." },
+          { title: "Insulated wall and roof options", text: "PUF panels that help keep the room cooler for artists or guests." },
+          { title: "AC provisions", text: "an AC point, support and conduit fitted at the factory." },
+          { title: "Toilet options", text: "an attached toilet where the cabin size and your site's water and drainage connections allow." },
+          { title: "Quotation and delivery coordination", text: "transport and unloading planned with you before delivery." },
+        ],
+        closing: [
+          "We don't promise a delivery date or a comfort level in advance, and a cabin is ready to use only once your site's power, and any water and drainage, have been connected.",
+        ],
+      },
+    ],
+
+    areasHeading: "Areas Served Around Rajarajeshwari Nagar",
+    areasText:
+      "This page covers portable cabin and porta cabin requirements in Rajarajeshwari Nagar (RR Nagar), Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere. Access for the delivery vehicle and the space where the cabin will stand are checked for each house or plot before a delivery is confirmed.",
+
+    faqs: [
+      {
+        question: "Can a portable cabin be used as a makeup room for a film or TV shoot?",
+        answer: "Yes, where the cabin is configured with suitable lighting, mirrors, electrical provisions, ventilation and privacy.",
+      },
+      {
+        question: "What lighting is suitable for a makeup room?",
+        answer: "High colour-rendering, well-positioned LED lighting is often useful. The exact specification should be agreed with the makeup team.",
+      },
+      {
+        question: "Is a portable cabin better than a vanity van?",
+        answer: "A stationary cabin may suit a long-running shoot at one location, while a van may be better for productions that move frequently.",
+      },
+      {
+        question: "Can a portable cabin support hair dryers and styling equipment?",
+        answer: "Yes, if the electrical installation is designed for the actual equipment load and installed by qualified personnel.",
+      },
+      {
+        question: "Can a bridal room cabin be used for a wedding at home?",
+        answer: "Yes, subject to authorised placement, suitable dimensions and the facilities you need.",
+      },
+      {
+        question: "Can a bridal cabin include an attached toilet?",
+        answer: "Potentially, depending on the cabin size, the layout and the plumbing arrangements available.",
+      },
+      {
+        question: "Is it safe to store jewellery in a bridal room cabin?",
+        answer: "A lockable cabin does not guarantee security. Keep valuable items under responsible supervision.",
+      },
+      {
+        question: "Can a portable cabin be used as a rest room for elders?",
+        answer: "Yes, provided it offers suitable access, seating, ventilation and comfort for the people using it.",
+      },
+      {
+        question: "Are porta cabins and portable cabins the same?",
+        answer: "The terms are commonly used interchangeably for prefabricated, movable cabin structures.",
+      },
+      {
+        question: "What is the portable cabin price in RR Nagar?",
+        answer: "Pricing depends on size, materials, interior fittings, customisation and delivery requirements.",
+      },
+      {
+        question: "How quickly can a portable cabin be delivered?",
+        answer:
+          "Delivery depends on availability, manufacturing, customisation, transport and site access. Ask for a confirmed timeline with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Cabin Quotation in RR Nagar",
+    ctaText: `Whether you need a makeup or green room for a film shoot, a bridal preparation room for a home wedding or a private rest room for a family ceremony, Portable Office Cabin can discuss suitable cabin options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Service area: Rajarajeshwari Nagar, Bengaluru, Karnataka.`,
+    // The CTA box button → /contact.
+    ctaButtonLabel: "Request a Cabin Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons; the
+    // call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    // The category, the layouts, toilet, sizes, price and installation guides, the porta cabin page and the
+    // rental service are linked in the body.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Portable Cabin Sizes & Specifications", href: "/products/portable-cabin" },
+      { label: "Insulated Portable Cabins — PUF Panels & Cooling", href: "/products/portable-cabin/insulation-and-cooling" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds its cabins at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office is in Electronic City, Bengaluru; it has no factory, yard or branch in Rajarajeshwari Nagar. Every cabin is subject to availability, and its quotation states the dimensions, layout, fit-out, lighting, electrical and plumbing provisions, any hire terms, and who arranges transport, unloading, placement and utility connections; no delivery date is guaranteed. Portable Office Cabin does not supply vanity vans, does not obtain permissions from homeowners, landowners, neighbours or the authorities, and does not guarantee the security of anything kept in a cabin. The sizes on this page are example planning sizes, not stock. All four images are illustrative renders of one grey cabin; none was photographed in RR Nagar or shows a supplied unit, and none shows a makeup counter, mirror, costume rail, sofa, bridal room, rest room or toilet. Film and television productions and families are named to describe typical uses, not as customers, and Rajarajeshwari Nagar, Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere indicate where enquiries can come from, not completed installations. Notes on lighting, electrical loads, plumbing, placement, privacy and permissions are general guidance, not electrical, engineering or legal advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
