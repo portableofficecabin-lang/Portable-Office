@@ -695,6 +695,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Rajarajeshwari Nagar (furniture storage for houses rented for TV and film shoots, college motorsport
     // teams' vehicles, spares and tools; owner brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Rajarajeshwari Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
+    // Kasturi Nagar (aquarium shops' empty tanks, pumps and service kits; trophy and memento sellers' stock
+    // and finished orders; owner brief 2026-11-18), appended so the live links keep their positions.
+    { name: "Shipping Containers in Kasturi Nagar", href: "/cities-we-serve/shipping-container-kasturi-nagar" },
   ],
 };
 
