@@ -36089,7 +36089,10 @@ export const CITY_PAGES: CityPage[] = [
    * "Request a Shipping Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block
    * from repeating them. Inbound: the Karnataka shipping hub, the cargo category's location links and the
    * Karnataka shipping nearby blocks; the KR Puram page's link (anchor "Ramamurthy Nagar") is added
-   * once KR Puram (#260) is on main.
+   * once KR Puram (#260) is on main. Rajajinagar brief (2026-11-18): the signage section links "paper
+   * and board storage for printing presses in Rajajinagar" (that page owns paper, board and
+   * print-packaging storage); it links back here for flex and vinyl roll storage. Rajajinagar is not a
+   * keyword here.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Ramamurthy Nagar, RM Nagar, Ramamurthy
    * Nagar Main Road, Hoysala Nagar, Akshaya Nagar (RM Nagar), Kowdenahalli and Vijinapura, for signage
@@ -36206,6 +36209,14 @@ export const CITY_PAGES: CityPage[] = [
           { title: "Ladders and installation equipment", text: "harnesses, tool bags and fixings kept together on one wall, ready for the next site." },
           { title: "Tools", text: "on a tool board, so anything missing is noticed before a crew leaves." },
           { title: "Job tracking register", text: "a board or book showing which signs are ready, which are waiting and where each one is going." },
+        ],
+        // Rajajinagar brief (2026-11-18): paper, board and print-packaging storage are that page's intent.
+        inlineLinks: [
+          {
+            before: "Running an offset press or a packaging unit rather than a sign shop? Paper reams and reels, finished cartons and cutting dies are covered on our page on",
+            link: { label: "paper and board storage for printing presses in Rajajinagar", href: "/cities-we-serve/shipping-container-rajajinagar" },
+            after: ".",
+          },
         ],
         subsections: [
           {
@@ -36446,6 +36457,584 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it has no yard, depot or branch in Ramamurthy Nagar. Each container is offered subject to availability, and its size, grade, condition, inside dimensions, fittings (racks, slots, partitions, shelves, lights, vents, locks), any hire terms and its delivery, unloading and collection are set out only in its written quotation; no delivery date or vehicle access is promised. The four images are illustrative renders of one converted container, not photographs taken in Ramamurthy Nagar or of a delivered or fitted unit, and the glazing, lining, lights and air conditioner they show are not part of a plain storage container. Sign printers and healthcare equipment rental businesses are described as typical users, not as clients or past projects, and the neighbourhoods named indicate where we welcome enquiries, not confirmed delivery points. A standard container is not climate-controlled, is not approved storage for flammable liquids or oxygen cylinders, and is not certified for medical use. Notes on media, inks and solvents, cleaning and disinfection, infection control, batteries, oxygen, site access and placement are general information only; they are not legal, regulatory, medical, safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN RAJAJINAGAR — stores for printing presses and print-packaging units
+   * (paper reams and board, paper reels, finished cartons and labels, dispatch staging, cutting dies,
+   * printing plates, press rollers and spares) in Rajajinagar, also written Rajaji Nagar (west Bengaluru).
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Rajajinagar"): meta title, meta description, H1, keywords, local modifiers, section order, H2 / H3
+   * headings, sizes table and the eleven FAQs are the brief's, and so is the copy, lightly edited for flow
+   * and British spelling; the brief's notes to the implementer ("Do not claim…", "Confirm… before
+   * publishing") are turned into customer-facing cautions or left out. The route follows the site
+   * convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins,
+   * enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the conditional rental section stays (Shipping
+   * Container Rental lists 10, 20, 40 ft and 40 ft High Cube units on terms from one month to five years,
+   * with deposit and lock-in confirmed in the rental agreement; no deposit, price or delivery charge is
+   * stated here); the 10 ft row stays without "if available" (10 ft units are listed on Cargo Container
+   * for Sale and on the rental product; the caption says it is a fabricated size). No payload figure is
+   * given. Shelving, lighting, ventilation, lockable double doors and interior fit-out are catalogue
+   * options; pallet racks, die racks, plate holders, reel supports and dispatch bays are described as
+   * quoted interior fit-out, not standard equipment. No climate control, pharmaceutical compliance or
+   * fire-safety approval is claimed.
+   * Mapped onto the template in the brief's order:
+   *   Intro (two paragraphs) + introLink ("shipping and storage container solutions" → the cargo
+   *     category) + heroCta.
+   *   "Shipping Containers for Printing Presses", "… for Finished Print Jobs & Packaging Dispatch",
+   *     "… for Cutting Dies, Printing Plates & Press Spares" and "Fire Safety for Paper & Board Storage
+   *     Containers" → four afterIntro extra sections, their H3s as `subsections`.
+   *   Placement & delivery, sizes, price, rent and "How to Order a Shipping Container" (ordered) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Rajajinagar" → areas. "Why Choose Portable Office Cabin?" → a default extra
+   *     section (after the areas, as in the brief). FAQs: the brief's eleven. CTA: the brief's closing
+   *     section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): moisture subsection → "climate-controlled container storage options" (the Vellore
+   * page's insulated and air-conditioned storage section; it quotes fit-outs against a stated requirement
+   * and guarantees no climate performance, hence "options"); delivery section → "planning a delivery
+   * through a narrow lane or gate" (Bellandur's gate-and-lane notes); sizes section → "key inspection
+   * points for a used container" on /products/cargo-storage-containers: the brief's
+   * /shipping-container-chennai does not exist, and this is the inspection target the owner chose for
+   * Coimbatore, Uttara Kannada and Ramamurthy Nagar; printing section → "flex and vinyl roll storage in
+   * Ramamurthy Nagar" (that page owns sign and flex media); areas → the Peenya Industrial Area shipping
+   * container product (Peenya is not a keyword here); rental section → /products/shipping-container-rental;
+   * intro → the cargo category. Anchors differ from the siblings' anchors for the same targets. Inbound:
+   * the Karnataka shipping hub ("Shipping Containers in Rajajinagar"), the cargo category's location links
+   * ("Commercial storage containers in Rajajinagar"), Ramamurthy Nagar's signage section ("paper and board
+   * storage for printing presses in Rajajinagar"), the Peenya product page's industries section ("storage
+   * containers for printing presses in Rajajinagar"; Rajajinagar leaves that page's areas FAQ) and every
+   * Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps the nearby block from repeating
+   * Bellandur, Vellore or Ramamurthy Nagar.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Rajajinagar and Rajaji Nagar, Rajajinagar
+   * 1st to 6th Block, Rajajinagar Industrial Estate, Rajajinagar Industrial Town, Dr Rajkumar Road, West
+   * of Chord Road, Navarang, Prakash Nagar, Gayathri Nagar and Subramanyanagar, for printing presses and
+   * packaging units: paper and board, paper reels, printed cartons and labels, dispatch staging, cutting
+   * dies, printing plates and press spares. Not targeted: signage, flex and vinyl rolls (Ramamurthy
+   * Nagar), books and library stock (Jayanagar brief), office archives and restaurant packaging
+   * (Marathahalli ORR), D2C finished goods and e-commerce packing (Koramangala), recyclables and paper
+   * bales (Kaggadasapura), climate-controlled units (Vellore). Malleshwaram, Basaveshwaranagar, Mahalakshmi
+   * Layout, Yeshwanthpur and Peenya are not named as served areas (the brief keeps them for possible future
+   * pages), and Vijayanagar is not named (the Mysuru shop page uses Vijayanagar, Mysuru). "Bengaluru"
+   * stays out of the title, as the brief asks; the geo meta and the Service JSON-LD's areaServed carry
+   * "Rajajinagar, Bengaluru, Karnataka".
+   *
+   * Images: three owner-dropped lossy VP8 WebP renders ("public/images/Storage Containers in Rajajinagar
+   * city page/Storage Containers in Rajajinagar/cabin (1–3).webp", 50–113 KB, no EXIF / XMP / ICC) of one
+   * beige container. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title / dc:description
+   * that labels it a render (no creator, GPS, camera or date). (1) three-quarter exterior = hero /
+   * og:image (the brief's hero filename); (3) roof from above = delivery section; (2) side wall = sizes
+   * section. No image shows paper reams, reels, cutting dies, cartons or press spares, so the brief's
+   * five use-case image slots are not used, and no alt text, caption or filename claims those items, a
+   * size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-rajajinagar",
+    city: "Rajajinagar",
+    listTitle: "Shipping & Storage Containers in Rajajinagar",
+    metaTitle: "Shipping Container in Rajajinagar | Print & Packaging Storage",
+    metaDescription:
+      "Shipping and storage containers in Rajajinagar for printing presses and packaging units storing paper, board, finished cartons, labels, cutting dies and press spares.",
+    keywords:
+      "shipping container in Rajajinagar, shipping container in Rajaji Nagar, cargo container Rajajinagar, storage container Rajajinagar, storage container Rajajinagar Industrial Estate, storage container Rajajinagar Industrial Town, storage container Dr Rajkumar Road, storage container West of Chord Road, storage container Navarang, storage container Prakash Nagar, used shipping container Rajajinagar, shipping container price in Rajajinagar, storage container for rent in Rajajinagar, printing press storage container, paper and board storage container",
+    // Approximate point near Dr Rajkumar Road, central Rajajinagar (for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Rajajinagar, Bengaluru, Karnataka, India",
+      position: "12.9915;77.5525",
+      icbm: "12.9915, 77.5525",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur, Vellore and Ramamurthy Nagar are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-rajajinagar/shipping-container-rajajinagar.webp",
+      alt: "Beige steel shipping container seen from a front corner, cargo doors closed and latched, standing on paving between industrial sheds",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a closed container, not a photograph of a unit delivered in Rajajinagar.",
+    },
+
+    h1: "Shipping & Storage Containers in Rajajinagar",
+    tagline:
+      "Dry, orderly storage for paper and board, finished print jobs, cutting dies and press spares, for printing presses and packaging units.",
+    intro: [
+      "Rajajinagar is an established commercial and industrial area in West Bengaluru, home to printing presses, packaging businesses and related manufacturing.",
+      "Printing businesses often handle large quantities of paper, board, finished cartons, labels and production accessories.",
+    ],
+    introLink: {
+      before:
+        "For printing presses and packaging units in Rajajinagar, also written as Rajaji Nagar, that need additional, organised storage space, Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: ".",
+    },
+
+    areasHeading: "Areas Served Around Rajajinagar",
+    areasText:
+      "Enquiries are welcome from across Rajajinagar 1st to 6th Block, the Rajajinagar Industrial Estate and Rajajinagar Industrial Town, Dr Rajkumar Road and West of Chord Road, and from Navarang, Prakash Nagar, Gayathri Nagar and Subramanyanagar. We check how each site can be reached before agreeing a delivery date.",
+    // Peenya is not a keyword here; its factories have their own shipping container page.
+    areasInlineLinks: [
+      {
+        before: "Factories in the Peenya Industrial Area, a little further north-west, are covered on our page on",
+        link: { label: "shipping containers for Peenya Industrial Area", href: "/products/shipping-container-in-peenya-industrial" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Shipping Containers for Printing Presses",
+        placement: "afterIntro",
+        paragraphs: [
+          "Printing presses need storage for paper, board and other production materials.",
+          "A suitable shipping container can provide additional storage space for stock waiting to enter production.",
+        ],
+        // Brief §6: sign, flex and vinyl media belong to the Ramamurthy Nagar page.
+        inlineLinks: [
+          {
+            before: "Storing sign media rather than paper? Large-format rolls and finished boards are covered in our notes on",
+            link: { label: "flex and vinyl roll storage in Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Paper and board storage",
+            paragraphs: ["Recommended storage arrangements include:"],
+            bullets: [
+              { text: "Keep paper reams and board on suitable pallets or racks." },
+              { text: "Maintain appropriate clearance from the floor and walls." },
+              { text: "Protect stock from water ingress and condensation." },
+              { text: "Leave the protective mill packaging on until the stock is needed." },
+              { text: "Organise stock by paper grade, size and GSM." },
+              { text: "Record the date each delivery of stock arrives." },
+              { text: "Rotate inventory on a first-in, first-out basis." },
+              { text: "Keep heavier materials on appropriately rated lower supports." },
+            ],
+          },
+          {
+            heading: "Paper reel storage",
+            paragraphs: [
+              "Paper reels need suitable handling and support to prevent damage. Depending on the reel specification and the manufacturer's recommendations:",
+            ],
+            bullets: [
+              { text: "Use appropriate pallets, cradles or reel supports." },
+              { text: "Prevent reels from rolling or tipping." },
+              { text: "Protect the reel edges." },
+              { text: "Avoid excessive stacking." },
+              { text: "Keep handling access clear." },
+              { text: "Follow the paper supplier's storage orientation and handling instructions." },
+            ],
+            closing: [
+              "Don't assume every reel should be stored the same way up: the right orientation depends on the reel and on what its supplier specifies.",
+            ],
+          },
+          {
+            heading: "Moisture protection for paper stock",
+            paragraphs: [
+              "Paper can absorb moisture and change dimensions, which affects how it runs on the press. A standard steel shipping container can experience condensation and temperature fluctuations, so suitable precautions may include:",
+            ],
+            bullets: [
+              { text: "Inspecting the roof and door seals." },
+              { text: "Monitoring temperature and humidity." },
+              { text: "Providing appropriate ventilation." },
+              { text: "Using dehumidification where required." },
+              { text: "Keeping stock away from wet surfaces." },
+              { text: "Acclimatising paper before printing, according to the supplier's instructions." },
+            ],
+            closing: [
+              "Ventilation alone does not guarantee controlled humidity. Sensitive grades may need a specifically designed climate-controlled storage system.",
+            ],
+            // Brief §5: the Vellore page's insulated and air-conditioned storage section (anchor softened, see the header).
+            inlineLinks: [
+              {
+                before: "Where a paper grade comes with humidity or temperature limits, see the questions to settle first in our",
+                link: { label: "climate-controlled container storage options", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " on our Vellore page.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Containers for Finished Print Jobs & Packaging Dispatch",
+        placement: "afterIntro",
+        paragraphs: [
+          "Printing and packaging businesses often need temporary storage for finished products awaiting collection or delivery.",
+          "A container can help organise completed jobs by customer, batch and dispatch schedule.",
+        ],
+        subsections: [
+          {
+            heading: "Printed carton storage",
+            paragraphs: [
+              "Finished cartons can be stored in appropriately packed and labelled stacks. Recommended arrangements include:",
+            ],
+            bullets: [
+              { text: "Customer-wise storage bays." },
+              { text: "Job-number identification." },
+              { text: "Batch labels." },
+              { text: "Protective wrapping." },
+              { text: "Suitable pallets and racks." },
+              { text: "Clear access for dispatch." },
+              { text: "Inventory registers." },
+            ],
+          },
+          {
+            heading: "Printed labels and packaging materials",
+            paragraphs: ["Suitable storage can be arranged for:"],
+            bullets: [
+              { text: "Boxed label rolls." },
+              { text: "Printed packaging sleeves." },
+              { text: "Folded cartons." },
+              { text: "Brochures and stationery." },
+              { text: "Completed print jobs." },
+            ],
+            closing: ["Follow any product-specific environmental requirements for each item."],
+          },
+          {
+            heading: "Pharmaceutical packaging jobs",
+            paragraphs: [
+              "Where a printing unit supplies pharmaceutical customers, finished packaging materials may need controlled segregation and traceability. A suitable storage system may include:",
+            ],
+            bullets: [
+              { text: "Separate customer or batch areas." },
+              { text: "Clear product identification." },
+              { text: "Stock movement records." },
+              { text: "Appropriate protection against contamination." },
+              { text: "Restricted access where required." },
+            ],
+            closing: [
+              "An ordinary container is not automatically suitable for storing regulated pharmaceutical packaging. Check your customer's quality requirements and the standards that apply before you use one.",
+            ],
+          },
+          {
+            heading: "Dispatch staging",
+            paragraphs: [
+              "A dedicated dispatch section near the container entrance can help organise completed orders. Useful arrangements include:",
+            ],
+            bullets: [
+              { text: "Job-wise labelled bays." },
+              { text: "Dispatch registers." },
+              { text: "Clearly marked collection areas." },
+              { text: "Safe loading access." },
+              { text: "Finished stock kept apart from rejected stock." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Containers for Cutting Dies, Printing Plates & Press Spares",
+        placement: "afterIntro",
+        paragraphs: [
+          "Printing and packaging units often keep production tooling for repeat orders.",
+          "Properly organised storage makes these items easy to find when a customer reorders.",
+        ],
+        subsections: [
+          {
+            heading: "Cutting die storage",
+            paragraphs: ["Cutting dies can be stored on appropriately designed racks. Recommended practices include:"],
+            bullets: [
+              { text: "Label each die by customer and job number." },
+              { text: "Use stable racks suited to each die's size and weight." },
+              { text: "Protect the cutting edges." },
+              { text: "Stop dies from falling or shifting." },
+              { text: "Maintain an inventory register." },
+              { text: "Keep heavy dies on suitably rated supports." },
+            ],
+          },
+          {
+            heading: "Printing plate storage",
+            paragraphs: ["Where printing plates are kept for repeat jobs:"],
+            bullets: [
+              { text: "Use protective sleeves or suitable holders." },
+              { text: "Label plates by job number." },
+              { text: "Protect them against scratching." },
+              { text: "Follow the manufacturer's storage instructions." },
+              { text: "Maintain a searchable archive." },
+            ],
+          },
+          {
+            heading: "Press rollers and spare parts",
+            paragraphs: ["Press rollers and other components may need dedicated supports. Storage considerations include:"],
+            bullets: [
+              { text: "Preventing damage to rubber surfaces." },
+              { text: "Supporting rollers as the manufacturer recommends." },
+              { text: "Protecting bearings and precision surfaces." },
+              { text: "Using labelled spare-parts bins." },
+              { text: "Keeping heavy components on stable racks." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Fire Safety for Paper & Board Storage Containers",
+        placement: "afterIntro",
+        paragraphs: [
+          "Paper and cardboard are combustible, so a container used for printing stock needs its fire precautions assessed. Important requirements include:",
+        ],
+        bullets: [
+          { text: "No smoking or open flames." },
+          { text: "Suitable fire extinguishers and emergency arrangements, based on a fire-risk assessment." },
+          { text: "Electrical work carried out by qualified personnel." },
+          { text: "Suitable lighting and wiring." },
+          { text: "Clear access routes." },
+          { text: "Safe stock stacking." },
+          { text: "Incompatible materials kept apart." },
+          { text: "Regular housekeeping." },
+        ],
+        subsections: [
+          {
+            heading: "Materials requiring separate storage",
+            paragraphs: [
+              "Printing inks, solvents, press washes, adhesives and other hazardous chemicals must be kept in line with each product's safety data sheet and whatever regulations apply to it. Don't assume they are safe in an ordinary paper-storage container, or automatically safe in a pressroom.",
+              "Paper trim and production waste should go through suitable recycling or waste-management arrangements.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Container Placement & Delivery in Rajajinagar",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-rajajinagar/shipping-container-roof-view-rajajinagar.webp",
+          alt: "Top-down view of a beige container's corrugated roof and corner castings, with the cargo-door end on the right and small planters on the paving beside it",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render from above. Plan for more than the footprint: the lift needs clear space, and both doors must be able to swing fully open.",
+        },
+        paragraphs: [
+          "A container can stand on commercial or industrial premises that you own or are authorised to use.",
+          "Before delivery, assess:",
+        ],
+        bullets: [
+          { text: "Road width." },
+          { text: "Vehicle access." },
+          { text: "Container size." },
+          { text: "Ground stability." },
+          { text: "Loading and unloading requirements." },
+          { text: "Crane or lifting equipment access." },
+          { text: "Property-owner permissions." },
+          { text: "Applicable local regulations." },
+          { text: "Emergency access." },
+        ],
+        closing: [
+          "Sites in the Rajajinagar Industrial Estate and in the surrounding residential blocks can have quite different access constraints, so the transport route and the unloading plan are confirmed before a delivery schedule is promised.",
+        ],
+        // Brief §5: access and unloading → the Bellandur page's gate-and-lane delivery section.
+        inlineLinks: [
+          {
+            before: "If the lorry has to turn into a tight lane or the unit must be lifted past a gate, read our notes on",
+            link: { label: "planning a delivery through a narrow lane or gate", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " on our Bellandur page.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-rajajinagar/shipping-container-side-wall-rajajinagar.webp",
+          alt: "Long ribbed side of a beige shipping container, showing its corner castings and the forklift pockets at the base, beside a warehouse with roller shutters",
+          width: 1671,
+          height: 941,
+          caption: "Illustrative render of the side wall. The quotation for the actual unit gives its size, inside measurements and condition.",
+        },
+        paragraphs: [
+          "Choose the size from your pallet footprint, reel diameters or tooling dimensions, leaving an aisle so stock can be reached without moving everything else.",
+        ],
+        table: {
+          caption:
+            "Capacities are rounded and vary with each container's specification. 10 ft units are fabricated, not a standard sea-freight size. Which sizes are in stock, and the payload each can take, are stated when we quote.",
+          headers: ["Container size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft", "~15 m³", "Cutting dies, printing plates and spare-parts storage"],
+            ["20 ft", "~33 m³", "Paper stock and finished-job staging"],
+            ["40 ft", "~67 m³", "Larger packaging stock and multiple pallet storage"],
+          ],
+        },
+        // Brief §5: condition and buying guidance → the cargo product's "Key Inspection Points" (see the header).
+        inlineLinks: [
+          {
+            before: "Thinking of a second-hand unit? Go through the",
+            link: { label: "key inspection points for a used container", href: "/products/cargo-storage-containers" },
+            after: " before you agree to buy it.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Rajajinagar",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "Whether the unit is new or used." },
+          { text: "Its structural condition and how weathertight it is." },
+          { text: "Pallet storage requirements." },
+          { text: "Shelving and die racks." },
+          { text: "Dispatch bays." },
+          { text: "Ventilation and humidity-control requirements." },
+          { text: "Electrical and fire-safety provisions." },
+          { text: "Security features." },
+          { text: "Transportation and unloading." },
+          { text: "Site access." },
+        ],
+        closing: ["Ask for a quotation built on your specification and the site address."],
+      },
+      {
+        heading: "Storage Container on Rent in Rajajinagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Need extra space for a seasonal rush of packaging orders rather than for good? Hire is available too: the rental range covers 10 ft, 20 ft, 40 ft and 40 ft High Cube containers, on terms from one month to five years. Before anything is dispatched, your rental agreement sets out the hire period, the deposit, the transport charges and how the unit is collected when the hire ends.",
+        ],
+        inlineLinks: [
+          {
+            before: "See",
+            link: { label: "container rental sizes and hire terms", href: "/products/shipping-container-rental" },
+            after: " for the current rental range.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Confirm the container size." },
+          { text: "Share your pallet dimensions, paper reel sizes or tooling dimensions." },
+          { text: "Discuss shelving, racks and environmental requirements." },
+          { text: "Provide the proposed delivery location." },
+          { text: "Confirm site access and permissions." },
+          { text: "Obtain a quotation." },
+          { text: "Finalise the specification and arrange delivery." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "We build and supply containers for commercial and industrial storage. What that means for a press or packaging unit in Rajajinagar:",
+        ],
+        bullets: [
+          { title: "Shipping container size options", text: "10, 20 and 40 ft units, new or used, depending on what is in stock." },
+          {
+            title: "Storage-oriented interior modifications",
+            text: "a bare unit fitted out for storage, with shelving, lights and vents chosen to suit it.",
+          },
+          {
+            title: "Shelving and racks",
+            text: "pallet racking, die racks and shelves laid out around your reels, pallets and tooling, each item priced in the fit-out quotation.",
+          },
+          {
+            title: "Secure compartments",
+            text: "every unit closes with lockable double doors; partitions or lockable cages inside are added when you order them.",
+          },
+          {
+            title: "Ventilation and electrical provisions",
+            text: "vents, lights and power points, fitted where your quotation includes them.",
+          },
+          {
+            title: "Quotation and delivery coordination",
+            text: "a single itemised quote for the container, its fit-out and transport, with the route and unloading spot checked before we fix a date.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can paper be stored in a shipping container?",
+        answer:
+          "Yes, where the container gives suitable protection from moisture, condensation and large temperature fluctuations.",
+      },
+      {
+        question: "How should paper reels be stored?",
+        answer:
+          "Follow the reel manufacturer's storage and handling instructions. Suitable supports, protective packaging and safe stacking are important.",
+      },
+      {
+        question: "Can humidity damage printing paper?",
+        answer:
+          "Yes. Paper absorbs moisture, so humidity monitoring and appropriate environmental control may be necessary.",
+      },
+      {
+        question: "Can finished cartons and labels be stored in a container?",
+        answer:
+          "Yes, provided the storage conditions suit the products and meet any customer-specific quality requirements.",
+      },
+      {
+        question: "Can pharmaceutical packaging materials be stored in a shipping container?",
+        answer:
+          "Only where the storage system meets the applicable quality, segregation, traceability and environmental requirements.",
+      },
+      {
+        question: "Can cutting dies and printing plates be stored inside a container?",
+        answer:
+          "Yes. Suitable racks, protective holders and inventory records help keep repeat-order tooling organised.",
+      },
+      {
+        question: "Can printing inks and solvents be stored with paper stock?",
+        answer:
+          "They should not be mixed with ordinary paper stock unless the arrangement has been specifically assessed and meets the applicable requirements.",
+      },
+      {
+        question: "How many pallets fit inside a shipping container?",
+        answer:
+          "It depends on the pallet dimensions, the loading pattern, the rack configuration, the container's specification and its weight limits.",
+      },
+      {
+        question: "Where can the container be placed?",
+        answer:
+          "On suitable premises where you are authorised to place it, subject to the property owner's permission, site conditions and applicable regulations.",
+      },
+      {
+        question: "What is the shipping container price in Rajajinagar?",
+        answer:
+          "Pricing depends on size, condition, modifications and delivery requirements, so ask us for a quotation with today's figures.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "That depends on stock availability, customisation, transport and site access. Confirm the timeline when you request a quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Rajajinagar",
+    ctaText: `Whether you need storage for paper and board, finished print jobs, packaging inventory or cutting dies and press spare parts, Portable Office Cabin can talk you through suitable shipping container options. Call ${COMPANY.phones[0].display}, WhatsApp us on ${COMPANY.whatsapp.display} or e-mail us at ${COMPANY.email.sales}. Service area: Rajajinagar, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Shipping Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Rajajinagar storage container enquiry",
+      intro:
+        "Tell us the container size and quantity, where in Rajajinagar it will go (an address or a location pin) and whether you want to buy or hire. Say what it will hold (paper and board, reels, finished cartons, dies or spares) with your pallet or reel sizes, and list any racks, dispatch bays, vents or lights to include in the price.",
+    },
+    // The cargo category, the inspection guide, the Peenya product and the rental product are linked in the body.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Every container is supplied through Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. We also have a Bengaluru office in Electronic City, but no yard, depot or branch in Rajajinagar. What you receive (size, grade, condition, inside measurements and payload; any racks, shelving, bins, partitions, vents, lights or locks; any hire terms; and the delivery, unloading and collection) is fixed only by your written quotation or rental agreement. Stock moves, and we promise no delivery date in advance. The three images on this page are renders of one container made for illustration; they were not photographed in Rajajinagar and do not show a unit we have delivered or fitted out. Capacities are rounded estimates. Printing presses and packaging units appear here as examples of how containers are used, not as named customers or finished projects, and the localities listed simply show where we take enquiries from. An ordinary container is not climate-controlled, is not rated storage for flammable inks or solvents, and carries no certification for regulated pharmaceutical packaging. Everything here about paper, reels, moisture, tooling, fire precautions, hazardous materials, permissions and site access is general guidance and not professional fire-safety, electrical, legal, quality or engineering advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

@@ -681,6 +681,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Varthur (uPVC, aluminium and glass window installers' stores, dairy farm feed and equipment; owner
     // brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+    // Rajajinagar (printing presses and print-packaging units; owner brief 2026-11-18), appended so the
+    // live links keep their positions.
+    { name: "Shipping Containers in Rajajinagar", href: "/cities-we-serve/shipping-container-rajajinagar" },
     // Rajarajeshwari Nagar (furniture storage for houses rented for TV and film shoots, college motorsport
     // teams' vehicles, spares and tools; owner brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Rajarajeshwari Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
