@@ -662,6 +662,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Hebbal, Bengaluru (car dealership accessory and merchandise stores, agri-tech and research field kits;
     // owner brief 2026-11-17), appended so the live links keep their positions. Not Hebbal, Mysuru.
     { name: "Shipping Containers in Hebbal, Bengaluru", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+    // Panathur (water tanker operators' yard stores, STP, water treatment and lift contractors' spares;
+    // owner brief 2026-11-17), appended so the live links keep their positions.
+    { name: "Shipping Containers in Panathur", href: "/cities-we-serve/shipping-container-panathur" },
   ],
 };
 
