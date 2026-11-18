@@ -33352,6 +33352,12 @@ export const CITY_PAGES: CityPage[] = [
             link: { label: "shipping containers in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
             after: ".",
           },
+          // RR Nagar portable cabin brief (2026-11-18): makeup, costume and green rooms for shoots are that page's intent.
+          {
+            before: "Do the artists also need somewhere to get ready on the property? See our",
+            link: { label: "makeup and green room cabins in RR Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
+            after: ".",
+          },
         ],
         subsections: [
           {
@@ -44529,13 +44535,13 @@ export const CITY_PAGES: CityPage[] = [
    * shoot-house furniture storage); rest rooms → "ground-floor rooms for elderly parents in Jayanagar"
    * (that page owns the permanent elder room; this one is a room for a day's function); sizes → the sizes
    * guide; porta section → the porta cabin product page; price → the price guide; rent → /rental-service;
-   * how to order → the installation and site preparation guide; the CTA button → /contact. The pair with
-   * the RR Nagar security cabin page (session cc's, not yet released) — "portable security cabins in RR
-   * Nagar" here, "makeup and green room cabins in RR Nagar" there — is added by whichever of the two pages
-   * is released second, so neither links to a 404.
+   * how to order → the installation and site preparation guide; the CTA button → /contact. Shoot placement
+   * also → "portable security cabins in RR Nagar" (the RR Nagar security page, #281, released first, owns
+   * guard posts at filming locations); this page, released second, adds both halves of that pair.
    * Inbound: the Bangalore and Karnataka portable-cabin hubs ("Portable Cabins in Rajarajeshwari Nagar"),
    * the Karnataka porta-cabin hub ("Porta Cabins in RR Nagar"), the RR Nagar shipping page's shoot-house
-   * section ("portable makeup and green rooms in RR Nagar") and the /cities-we-serve directory.
+   * section ("portable makeup and green rooms in RR Nagar"), the RR Nagar security page's shoot-location
+   * section ("makeup and green room cabins in RR Nagar") and the /cities-we-serve directory.
    *
    * KEYWORD OWNERSHIP: portable / porta / prefab cabin, portable room and PUF cabin × Rajarajeshwari Nagar,
    * RR Nagar, Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and
@@ -44766,11 +44772,17 @@ export const CITY_PAGES: CityPage[] = [
               { text: "Keep safe distances from generators and other equipment." },
               { text: "Confirm the local requirements that apply." },
             ],
-            // Brief §5: the RR Nagar shipping page (#280) owns furniture storage while a house hosts a shoot.
+            // Brief §5: the RR Nagar shipping page (#280) owns furniture storage while a house hosts a shoot, and the
+            // RR Nagar security page (#281) owns guard posts at filming locations.
             inlineLinks: [
               {
                 before: "If the house's own furniture has to be moved out for the shoot, see our",
                 link: { label: "shipping containers for furniture storage in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
+                after: ".",
+              },
+              {
+                before: "For dedicated guard posts at filming locations, see our",
+                link: { label: "portable security cabins in RR Nagar", href: "/cities-we-serve/portable-security-cabin-rajarajeshwari-nagar" },
                 after: ".",
               },
             ],
