@@ -18104,6 +18104,9 @@ export const CITY_PAGES: CityPage[] = [
    * the Bannerghatta Road page; the areas text is that brief's replacement, plus a "Bannerghatta Road" link.
    * Kanakapura Road brief (2026-11-16): "and nearby areas along Kanakapura Road" left the areas text (the
    * brief's revised list), and a "Kanakapura Road" link to that road's page follows the Bannerghatta one.
+   * Banashankari brief (2026-11-18): neighbouring Banashankari has its own shipping container page (Gombe
+   * Habba doll collections, doll sellers' stock, kirana backstock), linked after the Kanakapura Road one
+   * (anchor "storage containers for Dasara dolls in Banashankari"). Banashankari is not a keyword here.
    *
    * Images: five owner-dropped lossy VP8 webp renders ("public/images/JP Nagar city page/JP Nagar
    * shipping container page/cabin (1–5).webp", 1445×1088 ×4 and 2336×1760, no EXIF / XMP / ICC
@@ -18222,6 +18225,12 @@ export const CITY_PAGES: CityPage[] = [
         before: "Staging solar panels or storing borewell equipment further south along",
         link: { label: "Kanakapura Road", href: "/cities-we-serve/shipping-container-kanakapura-road" },
         after: "? See our page for that road.",
+      },
+      // Banashankari brief (2026-11-18): Gombe Habba doll collections there are that page's intent.
+      {
+        before: "Packing away a Gombe Habba doll collection after Navaratri in neighbouring Banashankari? See our page on",
+        link: { label: "storage containers for Dasara dolls in Banashankari", href: "/cities-we-serve/shipping-container-banashankari" },
+        after: ".",
       },
     ],
 
@@ -20240,6 +20249,524 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin manufactures at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur in Tamil Nadu, and runs a Bengaluru office in Electronic City; it operates no yard, depot or branch on Kanakapura Road. Every container is subject to stock. Its quotation states the size, grade, condition and internal measurements, the racks, shelving, padded bases, cable stands, vents, locks or lockbox included, any hire terms, and who handles delivery, unloading and collection. Delivery dates, container sizes and vehicle access are confirmed only after the site check. All five pictures are renders of a single container rather than photographs from Kanakapura Road, and none shows solar or borewell equipment or a fitted-out unit. Solar installers and borewell contractors are mentioned as typical users, not as customers or completed jobs; the localities, the metro and Harohalli are named to describe the area, not to confirm delivery points. Notes on storing panels, inverters, batteries, pumps, cables and fuel, and on access and placement, are general guidance rather than electrical, fire-safety, legal or engineering advice; always follow the equipment makers' instructions and the regulations that apply.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN BANASHANKARI — storage for Gombe Habba (Dasara) doll collections,
+   * seasonal doll sellers' stock, and kirana and provision stores' packaged backstock (Banashankari,
+   * South Bengaluru).
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers
+   * in Banashankari"): meta title, meta description, H1, keywords, local modifiers, section order, H2 /
+   * H3 headings, sizes table and the ten FAQs are the brief's, and so is the copy, lightly edited for
+   * flow and British spelling ("Organised shelving and inventory"). Lines in the brief that were
+   * instructions to the writer ("Do not promise quiet-hour delivery…", "Verify available sizes…", "Do
+   * not describe it as rodent-proof…") are not printed; the last one is rewritten as a precaution for
+   * the reader. The route follows the site convention (/cities-we-serve/…), not the brief's root slug.
+   * The tagline, captions, link lead-ins, rental paragraph, enquiry-form intro and disclaimer were
+   * written for their slots.
+   * Checked against the catalogue before publishing, as the brief asks: the rental section stays (the
+   * Shipping Container Rental product lists 10, 20, 40 ft and 40 ft High Cube units on terms from one
+   * month to five years; no deposit, price or delivery charge is stated here); the 10 ft row stays
+   * (10 ft units are listed on Cargo Container for Sale and on the rental product). Shelving,
+   * lighting, ventilation and insulation (20ft Storage Container, Shipping Container GP) and lockable
+   * double cargo doors are catalogue items; padded sections and lockable compartments are described as
+   * quoted fit-out. No conservation, pest-proofing, temperature control or food-storage certification
+   * is claimed, and the page sells or hires containers; it does not offer a storage service.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) +
+   *     heroCta.
+   *   The doll-collection, doll-seller and kirana sections → three afterIntro extra sections, their H3s
+   *     as `subsections`.
+   *   Placement & delivery, sizes, price, rent and "How to Order a Shipping Container" (ordered) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Banashankari" → areas. "Why Choose Portable Office Cabin?" → a default extra
+   *     section (after the areas, as in the brief). FAQs: the brief's ten. CTA: the brief's closing
+   *     section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): clay-doll H3 → "climate-controlled container options" (Vellore's insulated and
+   * air-conditioned storage section); delivery section → "container delivery and placement"
+   * (Bellandur's gate-and-lane notes); sizes section → "used shipping container inspection": the
+   * brief's /shipping-container-chennai does not exist, so it points to the Chennai-area Athipattu
+   * page and its "Used Container Inspection" checklist, as the sibling pages do; rental section →
+   * /products/shipping-container-rental; intro → the cargo category. Inbound: the JP Nagar page's
+   * areas ("storage containers for Dasara dolls in Banashankari"), the Karnataka shipping hub, the
+   * cargo category's location links and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps the nearby block from repeating Bellandur or Vellore.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Banashankari (1st, 2nd and 3rd Stage),
+   * Kathriguppe, Hosakerehalli, Girinagar, Padmanabhanagar, Kumaraswamy Layout, Chikkalasandra,
+   * Uttarahalli and Ittamadu, for Gombe Habba / Bombe Habba / Golu doll collections and display steps,
+   * seasonal doll sellers' stock, and kirana and provision store backstock. Not targeted: Jayanagar,
+   * Tilak Nagar, Byrasandra and Yediyur (the Jayanagar pages), JP Nagar and its localities, Kanakapura
+   * Road and its localities (the temple's name does not make that road a target), festival committee
+   * pandal materials (BTM Layout), décor and party-supply sellers (Hennur Road), restaurant dry storage
+   * and showroom festive stock (Marathahalli ORR), D2C finished goods (Koramangala), tent houses and
+   * wedding suppliers (Horamavu) and climate-controlled units (Vellore). Basavanagudi, Hanumanthanagar,
+   * Thyagaraja Nagar and Srinivasanagar are not named (reserved for a possible Basavanagudi page).
+   * "Bengaluru" stays out of the title, as the brief asks; the geo meta and the Service JSON-LD's
+   * areaServed carry "Banashankari, Bengaluru, Karnataka".
+   *
+   * Images: four owner-supplied WebP renders ("public/images/Storage Containers in Banashankari city
+   * page/Storage Containers in Banashankari/cabin (1–4).webp", lossy VP8, no EXIF / XMP) of one
+   * charcoal-grey container, kept byte-identical (VP8 bitstream untouched, 0.35 MB in all) with an XMP
+   * dc:title / dc:description added that labels each one a render (no creator, GPS or date).
+   * (2) three-quarter exterior = hero / og:image (the brief's hero filename); (4) side wall with vents
+   * = doll-collection section; (3) side wall with a glazed personnel door = kirana section; (1) roof
+   * from above = delivery section. No image shows dolls, crates, cartons or shelving, so the brief's
+   * five use-case image slots are not used, and no alt text or caption claims them. No alt text or
+   * caption names a size.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-banashankari",
+    city: "Banashankari",
+    listTitle: "Shipping & Storage Containers in Banashankari",
+    metaTitle: "Shipping Container in Banashankari | Doll & Kirana Storage",
+    metaDescription:
+      "Shipping and storage containers in Banashankari for Gombe Habba doll collections, doll sellers and kirana store overflow stock. Enquire about storage options.",
+    keywords:
+      "shipping container in Banashankari, cargo container Banashankari, storage container Banashankari, storage container Banashankari 2nd Stage, storage container Banashankari 3rd Stage, storage container Kathriguppe, storage container Padmanabhanagar, storage container Kumaraswamy Layout, storage container Uttarahalli, used shipping container Banashankari, shipping container price in Banashankari, storage container for rent in Banashankari, Gombe Habba doll storage, kirana store storage container",
+    // Approximate point in Banashankari 2nd Stage, South Bengaluru (for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Banashankari, Bengaluru, Karnataka, India",
+      position: "12.9250;77.5470",
+      icbm: "12.9250, 77.5470",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and Vellore are linked in the body, so the nearby block leaves them out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-banashankari/shipping-container-banashankari.webp",
+      alt: "Three-quarter view of a charcoal-grey steel shipping container with locking bars on its double cargo doors and a glazed side door, on a paved yard with low planters",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of the exterior; it is not a container delivered in Banashankari.",
+    },
+
+    h1: "Shipping & Storage Containers in Banashankari",
+    tagline:
+      "Extra room for Gombe Habba doll collections, a doll seller's festival stock or a kirana store's packaged backstock, with shelving and fittings chosen for what you keep.",
+    intro: [
+      "Banashankari is a well-established South Bengaluru neighbourhood known for its residential communities, traditional celebrations and local businesses.",
+      "During Dasara, many families arrange their Gombe Habba doll collections for Navaratri celebrations. Kirana and provision stores also manage changing stock requirements throughout the year, particularly during festival seasons.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " for customers requiring additional storage space in Banashankari.",
+    },
+
+    areasHeading: "Areas Served Around Banashankari",
+    areasText:
+      "We welcome shipping and storage container enquiries from Banashankari 1st Stage, 2nd Stage and 3rd Stage, Kathriguppe, Hosakerehalli, Girinagar, Padmanabhanagar, Kumaraswamy Layout, Chikkalasandra, Uttarahalli and Ittamadu. For each address, the road access and the spot where the container will stand are checked before a delivery date is agreed.",
+
+    extraSections: [
+      {
+        heading: "Shipping Containers for Gombe Habba & Dasara Doll Storage",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-banashankari/shipping-container-side-wall-vents-banashankari.webp",
+          alt: "Corrugated charcoal-grey steel side wall of a shipping container with two small vents near its top corners and forklift pockets along the base",
+          width: 1816,
+          height: 866,
+          caption:
+            "Illustrative render of a plain side wall. Small vents like these let air move but do not control heat or humidity; shelving, padded sections or insulation are added only where your quotation lists them.",
+        },
+        paragraphs: [
+          "Gombe Habba, also called Bombe Habba (and Golu in Tamil households), is an important festive tradition in Karnataka, where families arrange dolls and decorative displays during Navaratri.",
+          "Over time, these collections may include traditional wooden dolls, clay figures, themed sets and inherited family pieces.",
+          "After the celebrations, families need suitable storage to protect their collections from dust, humidity, pests and accidental damage.",
+        ],
+        subsections: [
+          {
+            heading: "Safe storage for traditional dolls",
+            paragraphs: [
+              "A suitably prepared shipping container can provide additional storage space for doll collections. Recommended arrangements include:",
+            ],
+            bullets: [
+              { text: "Wrap individual dolls in suitable protective materials." },
+              { text: "Use padded boxes for fragile pieces." },
+              { text: "Organise themed collections separately." },
+              { text: "Label boxes with their contents." },
+              { text: "Keep photographs or records of each display arrangement." },
+              { text: "Use suitable shelves rather than placing boxes directly on the floor." },
+              { text: "Protect sensitive materials against excessive moisture and heat." },
+            ],
+          },
+          {
+            heading: "Pattada Gombe storage",
+            paragraphs: [
+              "Traditional Pattada Gombe dolls may hold significant sentimental or heritage value.",
+              "Store them in appropriately sized protective boxes, away from areas exposed to water, excessive heat or physical impact.",
+              "Delicate painted surfaces and older materials may need specialist conservation advice before they are wrapped or sealed.",
+            ],
+          },
+          {
+            heading: "Clay and papier-mâché doll storage",
+            paragraphs: [
+              "Clay and papier-mâché dolls can be particularly sensitive to moisture and impact. Suitable precautions include:",
+            ],
+            bullets: [
+              { text: "Individual protective wrapping." },
+              { text: "Padded storage boxes." },
+              { text: "Stable shelving." },
+              { text: "Humidity monitoring." },
+              { text: "Regular inspections." },
+              { text: "Protection from condensation and water ingress." },
+            ],
+            closing: [
+              "A standard shipping container does not automatically provide museum-grade storage conditions. Valuable heritage collections may require controlled environmental storage.",
+            ],
+            // Brief §5: environmental protection for delicate collections → Vellore's insulated / AC storage section.
+            inlineLinks: [
+              {
+                before:
+                  "Where a collection needs a set temperature or humidity range, what an insulated or air-conditioned fit-out involves is set out under our",
+                link: { label: "climate-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " in Vellore.",
+              },
+            ],
+          },
+          {
+            heading: "Doll display steps and stands",
+            paragraphs: [
+              "Gombe Habba displays often use temporary steps, stands and supporting structures.",
+              "Where appropriate, dismantle these components and store them separately on racks or against suitable supports.",
+              "Keep heavy components away from fragile dolls.",
+            ],
+          },
+          {
+            heading: "Shared storage for families",
+            paragraphs: [
+              "Where permitted and practically suitable, several families may arrange separate labelled storage sections within one container.",
+              "Shared storage needs agreed access arrangements, inventory records and appropriate security.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Containers for Gombe Habba Doll Sellers",
+        placement: "afterIntro",
+        paragraphs: [
+          "Seasonal doll sellers may buy stock ahead of Navaratri and keep unsold inventory for future festivals.",
+          "A storage container can help organise boxed products, protective packaging and display accessories.",
+        ],
+        subsections: [
+          {
+            heading: "Doll seller inventory storage",
+            bullets: [
+              { text: "Organise stock by product type and size." },
+              { text: "Use protective dividers for fragile clay dolls." },
+              { text: "Label crates clearly." },
+              { text: "Maintain inventory records." },
+              { text: "Keep heavier stock on lower shelves." },
+              { text: "Protect products against humidity and pests." },
+              { text: "Separate damaged items from saleable stock." },
+            ],
+            closing: ["Storage conditions must suit the actual materials and packaging."],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Containers for Kirana & Provision Store Backstock",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-banashankari/storage-container-glazed-side-door-banashankari.webp",
+          alt: "Charcoal-grey container side wall with a glazed personnel door, through which an empty, lit room with pale wood-effect walls is visible, between two low planters",
+          width: 1802,
+          height: 872,
+          caption:
+            "Illustrative render, shown empty. A personnel door, windows, lighting and shelving are fit-out options priced in the quotation; a plain storage container has cargo doors only.",
+        },
+        paragraphs: [
+          "Kirana stores and provision shops in Banashankari often operate from compact commercial premises.",
+          "During seasonal demand or bulk purchasing, additional storage may be needed for sealed packaged goods and non-perishable inventory.",
+          "A suitably prepared shipping container can serve as an additional backstock area on an authorised site.",
+        ],
+        subsections: [
+          {
+            heading: "Suitable packaged goods storage",
+            paragraphs: [
+              "Depending on the container's environmental conditions and product storage requirements, suitable items may include:",
+            ],
+            bullets: [
+              { text: "Sealed household products." },
+              { text: "Packaged toiletries." },
+              { text: "Paper products." },
+              { text: "Plastic household items." },
+              { text: "Non-perishable merchandise." },
+              { text: "Certain sealed dry goods, where food-storage requirements are met." },
+            ],
+            closing: [
+              "Food products must be stored according to the manufacturer's instructions and applicable food-safety requirements.",
+            ],
+          },
+          {
+            heading: "Organised shelving and inventory",
+            paragraphs: ["A kirana storage container may include:"],
+            bullets: [
+              { text: "Category-wise shelving." },
+              { text: "Clearly labelled stock locations." },
+              { text: "Suitable heavy-load racks." },
+              { text: "First-expiry-first-out inventory rotation." },
+              { text: "Stock registers or inventory software." },
+              { text: "Clear access aisles." },
+              { text: "Regular inspection schedules." },
+            ],
+          },
+          {
+            heading: "Moisture, pest and temperature control",
+            paragraphs: ["Important precautions include:"],
+            bullets: [
+              { text: "Inspect the container's door seals." },
+              { text: "Keep the interior clean and dry." },
+              { text: "Use appropriate pest-management arrangements." },
+              { text: "Monitor temperature and humidity." },
+              { text: "Store products on suitable racks." },
+              { text: "Keep food products separate from incompatible chemicals." },
+              { text: "Avoid storing products beyond their recommended temperature limits." },
+            ],
+            closing: [
+              "A standard metal shipping container can become hot and humid inside. Unless the actual unit's design and operating conditions have been checked, do not treat it as rodent-proof, temperature-controlled or suitable for every food product.",
+            ],
+          },
+          {
+            heading: "Materials not suitable for general container storage",
+            paragraphs: ["Do not use an ordinary retail backstock container for:"],
+            bullets: [
+              { text: "Fireworks." },
+              { text: "Fuel or kerosene." },
+              { text: "Gas cylinders." },
+              { text: "Unprotected hazardous chemicals." },
+              { text: "Perishable food requiring refrigeration." },
+              { text: "Products requiring environmental conditions the container cannot maintain." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Container Placement & Delivery in Banashankari",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-banashankari/shipping-container-roof-view-banashankari.webp",
+          alt: "Overhead view of a charcoal-grey container's corrugated steel roof and its four corner castings on a weathered concrete yard",
+          width: 1799,
+          height: 874,
+          caption:
+            "Illustrative render from above. Allow space beyond the footprint for the crane's lift and for the cargo doors to swing fully open.",
+        },
+        paragraphs: [
+          "Shipping containers may be placed on suitable private commercial premises, yards or other authorised sites.",
+          "Before delivery, assess:",
+        ],
+        bullets: [
+          { text: "Road width and vehicle access." },
+          { text: "Container size and turning space." },
+          { text: "Ground stability." },
+          { text: "Crane and unloading arrangements." },
+          { text: "Property-owner permission." },
+          { text: "Applicable local approvals." },
+          { text: "Safe access and emergency requirements." },
+        ],
+        closing: [
+          "Some residential and commercial roads may have limited access. Delivery feasibility is checked before a schedule is confirmed.",
+        ],
+        // Brief §5: site access and unloading considerations → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Before a lorry is booked, send photos of the approach road and gate; our notes on",
+            link: { label: "container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " in Bellandur list what else to look at, from overhead cables to the ground under the unloading spot.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Choose the size from the volume you need to hold at the busiest time of year, leaving an aisle so boxes and cartons can be reached without unloading everything.",
+        ],
+        table: {
+          caption:
+            "Approximate capacities. Exact capacity depends on the container specification, and the sizes in stock are confirmed in your quotation.",
+          headers: ["Container size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft", "~15 m³", "Compact doll collection or small retail backstock"],
+            ["20 ft", "~33 m³", "Doll seller inventory or provision store storage"],
+            ["40 ft", "~67 m³", "Larger storage requirements where site access permits"],
+          ],
+        },
+        // Brief §5: container condition and buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Considering a second-hand unit? Work through our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist before you buy.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Banashankari",
+        placement: "afterSolutions",
+        paragraphs: ["Container pricing depends on:"],
+        bullets: [
+          { text: "Size and condition." },
+          { text: "New or used container grade." },
+          { text: "Structural condition and weather resistance." },
+          { text: "Shelving and padded storage sections." },
+          { text: "Ventilation and moisture protection." },
+          { text: "Security features." },
+          { text: "Electrical and lighting provisions." },
+          { text: "Transportation and unloading." },
+          { text: "Site access and installation requirements." },
+        ],
+        closing: ["You can request a quotation based on how you plan to use the container."],
+      },
+      {
+        heading: "Storage Container on Rent in Banashankari",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hiring can suit a need that comes and goes with the festival season. Portable Office Cabin rents shipping containers in 10, 20 and 40 ft and 40 ft High Cube sizes, on terms from one month to five years. Your quotation sets out the hire period, the unit, any transport charges and how the container is returned at the end of the hire.",
+        ],
+        inlineLinks: [
+          {
+            before: "Current rental sizes and terms are listed under",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain what you need to store." },
+          { text: "Select the required container size." },
+          { text: "Discuss shelving, protective packaging and environmental requirements." },
+          { text: "Provide the proposed delivery location." },
+          { text: "Confirm site access and permissions." },
+          { text: "Request a quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides container-related solutions for commercial and storage applications. For customers in Banashankari, that covers:",
+        ],
+        bullets: [
+          { title: "Shipping container size options", text: "10, 20 and 40 ft units, new or used, subject to stock." },
+          {
+            title: "Storage-oriented interior modifications",
+            text: "shelving, lighting, ventilation and insulation, specified for the unit you choose.",
+          },
+          {
+            title: "Suitable shelving and racks",
+            text: "laid out around doll boxes, dismantled display steps or cartons of packaged goods, and quoted as part of the fit-out.",
+          },
+          {
+            title: "Locking arrangements",
+            text: "lockable double cargo doors, with lockable compartments for shared or high-value storage where quoted.",
+          },
+          {
+            title: "Ventilation provisions",
+            text: "additional vents where quoted, to help limit condensation; vents do not control temperature.",
+          },
+          {
+            title: "Quotation and delivery coordination",
+            text: "one itemised quotation for the container, its fit-out and transport, and a check of the route and unloading spot before delivery is scheduled.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can Gombe Habba dolls be stored in a shipping container?",
+        answer:
+          "Yes, where the container provides suitable environmental conditions, protective packaging and security. Sensitive collections may require controlled storage.",
+      },
+      {
+        question: "How should clay dolls be packed?",
+        answer:
+          "Use suitable individual wrapping, padded boxes and stable shelving. Protect the dolls from moisture, heat and physical impact.",
+      },
+      {
+        question: "How should Pattada Gombe dolls be stored?",
+        answer:
+          "Keep them in appropriately sized protective boxes. Valuable or delicate heritage dolls may require specialist conservation guidance.",
+      },
+      {
+        question: "Can multiple families share one storage container?",
+        answer:
+          "Potentially, with suitable storage sections, security arrangements, inventory records and authorised access.",
+      },
+      {
+        question: "Can kirana stores use shipping containers for overflow stock?",
+        answer:
+          "Yes, for suitable packaged products where storage conditions and applicable food-safety requirements are met.",
+      },
+      {
+        question: "How can pests be controlled?",
+        answer:
+          "Maintain cleanliness, inspect seals, use appropriate packaging and arrange suitable pest-management measures.",
+      },
+      {
+        question: "Can fireworks be stored inside a shipping container?",
+        answer:
+          "An ordinary storage container must not be used for fireworks storage. Such materials require specialised, legally compliant facilities.",
+      },
+      {
+        question: "Where can a container be placed?",
+        answer:
+          "On suitable authorised private premises or other legally approved sites, subject to site access and applicable permissions.",
+      },
+      {
+        question: "What is the shipping container price in Banashankari?",
+        answer: "Pricing depends on size, condition, modifications and transportation requirements.",
+      },
+      {
+        question: "How long does delivery take?",
+        answer:
+          "Delivery depends on container availability, customisation, transport and site accessibility. Obtain a confirmed estimate when requesting a quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Banashankari",
+    ctaText: `Whether you need storage for traditional Dasara dolls, seasonal doll inventory or kirana store backstock, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Banashankari, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Banashankari storage container enquiry",
+      intro:
+        "Tell us the container size, whether you want to buy or rent, and the Banashankari address or a map pin. Say whether it will hold a family doll collection, a doll seller's stock or shop backstock, and list any shelving, padded sections, lighting or vents you want, so they can be included in the price.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds and supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has a Bengaluru office in Electronic City. It has no depot, yard or storage facility in Banashankari: this page offers containers for sale or hire, not a storage service. Each unit's size, grade, condition, inside measurements, fittings (shelving, padded sections, partitions, lights, vents, insulation, locks), any rental terms and its delivery, unloading and later collection are fixed only in its written quotation; stock varies and no delivery date is promised. The four pictures are computer-generated renders of one container, shown for illustration: none was taken in Banashankari, and none shows a delivered unit, a doll collection or a shop's stock. Capacities are approximate. Families, doll sellers and kirana stores are described as typical uses, not as customers or past projects, and the localities listed show where enquiries are welcome. A standard container is not climate-controlled, museum-grade, rodent-proof or certified for food storage, and must not hold fireworks, fuel, gas cylinders or hazardous chemicals. The notes on packing dolls, heritage pieces, food products, pests, site access and permissions are general information, not conservation, food-safety, legal or engineering advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
