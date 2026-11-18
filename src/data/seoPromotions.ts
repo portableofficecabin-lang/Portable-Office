@@ -293,6 +293,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Portable cabins along Bannerghatta Road (shelter rooms, caretaker quarters, nature classrooms; owner brief
     // 2026-11-17); the page links back here. After the live lines so they keep their positions.
     { name: "Portable Cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
+    // Portable cabins for terrace rooms and temporary family living during house reconstruction in Kaggadasapura
+    // (owner brief 2026-11-18); the page links back here. After the live lines so they keep their positions.
+    { name: "Portable Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
@@ -545,6 +548,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Mahadevapura", href: "/cities-we-serve/portable-cabin-mahadevapura" },
     // Portable cabins along Bannerghatta Road (owner brief 2026-11-17), here and on Porta Cabin; appended so the live links keep their positions.
     { name: "Portable Cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
+    // Portable / porta cabin page for Kaggadasapura, Bengaluru (owner brief 2026-11-18), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -586,6 +591,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Prefabricated Cabins in Mahadevapura", href: "/cities-we-serve/portable-cabin-mahadevapura" },
     // Portable cabins along Bannerghatta Road (owner brief 2026-11-17), here and on Portable Cabin; appended so the live links keep their positions.
     { name: "Porta Cabins on Bannerghatta Road", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
+    // Portable / porta cabin page for Kaggadasapura, Bengaluru (owner brief 2026-11-18), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Porta Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
