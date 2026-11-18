@@ -672,6 +672,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Panathur (water tanker operators' yard stores, STP, water treatment and lift contractors' spares;
     // owner brief 2026-11-17), appended so the live links keep their positions.
     { name: "Shipping Containers in Panathur", href: "/cities-we-serve/shipping-container-panathur" },
+    // Kaggadasapura (electrical and plumbing contractors' stores, neighbourhood dry recyclables; owner
+    // brief 2026-11-18), appended so the live links keep their positions.
+    { name: "Shipping Containers in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
   ],
 };
 

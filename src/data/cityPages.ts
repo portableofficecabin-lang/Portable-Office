@@ -20187,7 +20187,10 @@ export const CITY_PAGES: CityPage[] = [
    * different product). Electronics repair stock (not on the published Marathahalli page), industrial
    * scrap and general e-waste segregation (Shoolagiri), large-project equipment preservation (hydel,
    * Visakhapatnam), climate-controlled units (Vellore) and used-container inspection (Athipattu) are not
-   * targeted.
+   * targeted. Kaggadasapura brief (2026-11-18): neighbouring Kaggadasapura has its own shipping
+   * container page (electrical and plumbing contractors' stores, dry recyclables), linked from the areas
+   * section (`areasInlineLinks`, anchor "storage containers for contractors in Kaggadasapura"); it
+   * links back here for IT asset disposal staging. Kaggadasapura is not a keyword here.
    *
    * Images: five owner-dropped lossy VP8 webp renders ("public/images/Doddanekundi shipping container
    * city page/Storage Containers in Doddanekundi/cabin (1–5).webp", no EXIF / XMP / ICC) of one
@@ -20292,6 +20295,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas We Serve",
     areasText:
       "We supply shipping and storage containers across Doddanekundi (also spelt Doddanakundi or Doddenakundi), including the Doddanekundi Industrial Area, Doddanekundi Extension, Karthik Nagar, Vibhutipura, the HAL airport side and the Outer Ring Road stretch at Doddanekundi. Each site's access is checked before a delivery is confirmed.",
+    // Kaggadasapura brief (2026-11-18): electrical and plumbing contractors' stores and dry recyclables there are that page's intent.
+    areasInlineLinks: [
+      {
+        before: "Storing cable, pipes and fittings, or sorted dry recyclables, in neighbouring Kaggadasapura? See our page on",
+        link: { label: "storage containers for contractors in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -36847,6 +36858,461 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it has no yard, depot or branch in Panathur. Each container is offered subject to availability, and its size, grade, condition, inside dimensions, floor loading, fittings (racks, shelves, bins, tool boards, lights, vents, locks), any hire terms and its delivery, unloading and collection are set out only in its written quotation; no delivery date, route or vehicle access is promised. The four images are illustrative renders of one container, not photographs taken in Panathur or of a delivered or fitted unit. Water tanker operators and building services contractors are described as typical users, not as clients or past projects, and the places named indicate where we welcome enquiries, not confirmed delivery points. A standard container is not climate-controlled and is not approved storage for chlorine, treatment chemicals or fuel. Notes on hoses, pump spares, chemicals, RO membranes, electronics, lubricants, confined-space equipment, site access and placement are general information only; they are not legal, regulatory, safety or engineering advice.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN KAGGADASAPURA — lockable trade stores for electrical and plumbing
+   * contractors (copper cable, switchgear, fittings, pipes, tools), and dry storage for neighbourhood
+   * recyclables dealers and dry waste collection centres (Kaggadasapura, east Bengaluru).
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI — COMPLETE SEO PAGE IMPLEMENTATION COMMAND", Shipping & Storage
+   * Containers in Kaggadasapura): meta title, meta description, H1, keywords, local modifiers, section
+   * order, H2 / H3 headings, sizes table and the eight FAQs are the brief's, and so is the copy, lightly
+   * edited for flow and British spelling. The brief's bold "Materials that must not be mixed with ordinary
+   * dry recyclables" label is an H3 here. The route follows the site convention (/cities-we-serve/…), not
+   * the brief's root slug. The tagline, captions, link lead-ins, enquiry-form intro and disclaimer were
+   * written for their slots.
+   * Checked against the catalogue before publishing, as the brief asks: the rental section stays (the
+   * Shipping Container Rental product lists 10, 20, 40 ft and 40 ft High Cube units on terms from one month
+   * to five years; no deposit, price or delivery charge is stated here); the 10 ft row stays (10 ft units
+   * are listed on Cargo Container for Sale and on the rental product). Shelving, lighting, ventilation,
+   * lockable double doors and interior fit-out are catalogue options; racks, cages and lockable
+   * compartments are described as quoted interior fit-out, not as standard equipment. No waste-management,
+   * fire-safety or regulatory authorisation is claimed.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("cargo and storage containers" → the cargo category) + heroCta.
+   *   "Shipping Containers for Electrical & Plumbing Contractors" and "Storage Containers for Recyclables
+   *     Dealers & Dry Waste Collection Centres" → two afterIntro extra sections, their H3s as `subsections`.
+   *   Placement & delivery, sizes, price (H3 "Main pricing factors"), rent and "How to Order a Shipping
+   *     Container" (ordered) → afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Kaggadasapura" → areas. "Why Choose Portable Office Cabin?" → a default extra
+   *     section (after the areas, as in the brief). FAQs: the brief's eight. CTA: the brief's closing
+   *     section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): delivery section → "container delivery and placement" (Bellandur's gate-and-lane
+   * notes); sizes section → "used shipping container inspection": the brief's /shipping-container-chennai
+   * does not exist, so it points to the Chennai-area Athipattu page and its "Used Container Inspection"
+   * checklist, as the sibling pages do; recyclables section → "secure staging for IT asset disposal" (the
+   * Doddanekundi page, which owns e-waste staging; this page only says e-waste is kept apart); rental
+   * section → /products/shipping-container-rental; intro → the cargo category. Inbound: the Doddanekundi
+   * page's areas ("storage containers for contractors in Kaggadasapura"), the Karnataka shipping hub, the
+   * cargo category's location links and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps the nearby block from repeating Bellandur or Doddanekundi.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kaggadasapura, Kaggadasapura Main Road, the
+   * Kaggadasapura lake area, Malleshpalya, Vignana Nagar, Nagavarapalya and GM Palya, for electrical and
+   * plumbing contractors' materials and for neighbourhood dry recyclables and dry waste collection storage.
+   * Not targeted: Byrasandra (Jayanagar), Vibhutipura and IT asset / e-waste staging (Doddanekundi),
+   * industrial factory scrap segregation (Shoolagiri), fibre and telecom cable drums (KR Puram), STP, water
+   * treatment and lift contractors (Panathur), borewell contractors (Kanakapura Road), owner-builder
+   * materials (HSR Layout) and used-container inspection (Athipattu). CV Raman Nagar and New Thippasandra
+   * are not named (the brief keeps them for possible future pages). "Portable cabin" stays out of the
+   * title, H1 and meta: a separate Kaggadasapura portable-cabin page (terrace rooms, temporary family
+   * accommodation) owns it. "Bengaluru" stays out of the title, as the brief asks; the geo meta and the
+   * Service JSON-LD's areaServed carry "Kaggadasapura, Bengaluru, Karnataka".
+   *
+   * Images: four owner-supplied WebP renders ("public/images/Kaggadasapura shipping city page/Storage
+   * Containers in Kaggadasapura/cabin (1–4).webp", lossy VP8, no EXIF / XMP) of one dark green container,
+   * kept byte-identical (VP8 bitstream untouched, 0.42 MB in all) with an XMP dc:title / dc:description
+   * added that labels each one a render (no creator, GPS or date). (2) three-quarter exterior = hero /
+   * og:image (the brief's hero filename); (1) empty interior = contractor section; (4) roof from above =
+   * delivery section; (3) side wall = sizes section. No image shows cable, switchgear, pipes or
+   * recyclables, so the brief's five use-case image slots are not used, and no alt text or caption claims
+   * them. No alt text or caption names a size.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-kaggadasapura",
+    city: "Kaggadasapura",
+    listTitle: "Shipping & Storage Containers in Kaggadasapura",
+    metaTitle: "Shipping Container in Kaggadasapura | Contractor & Recycling Storage",
+    metaDescription:
+      "Shipping and storage containers in Kaggadasapura for electrical and plumbing contractors storing cables, pipes and fittings, and recyclers handling sorted dry materials.",
+    keywords:
+      "shipping container in Kaggadasapura, cargo container Kaggadasapura, storage container Kaggadasapura, storage container Kaggadasapura Main Road, storage container Malleshpalya, storage container Vignana Nagar, storage container Nagavarapalya, used shipping container Kaggadasapura, shipping container price in Kaggadasapura, storage container for rent in Kaggadasapura",
+    // Approximate point on Kaggadasapura Main Road, east Bengaluru (for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Kaggadasapura, Bengaluru, Karnataka, India",
+      position: "12.9845;77.6790",
+      icbm: "12.9845, 77.6790",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and Doddanekundi are linked in the body, so the nearby block leaves them out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-kaggadasapura/shipping-container-kaggadasapura.webp",
+      alt: "Three-quarter view of a dark green steel shipping container with its doors shut and locking bars down, on a paved courtyard with planters",
+      width: 1200,
+      height: 896,
+      caption: "Exterior shown as an illustrative render; it is not a unit delivered in Kaggadasapura.",
+    },
+
+    h1: "Shipping & Storage Containers in Kaggadasapura",
+    tagline:
+      "Lockable trade stores for electrical and plumbing contractors, and dry, orderly space for neighbourhood recyclables dealers.",
+    intro: [
+      "Kaggadasapura is a busy residential and commercial neighbourhood in East Bengaluru, where electrical contractors, plumbing service providers and local recycling businesses need practical storage space for their daily operations.",
+      "Electrical and plumbing contractors handle valuable tools, copper cables, switchgear, pipes and fittings. Neighbourhood recyclables dealers manage sorted paper, cardboard, plastic, glass and metal.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin supplies",
+      link: { label: "cargo and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Kaggadasapura for businesses that need organised, secure storage.",
+    },
+
+    areasHeading: "Areas Served Around Kaggadasapura",
+    areasText:
+      "We take shipping and storage container enquiries from across Kaggadasapura, including Kaggadasapura Main Road and the Kaggadasapura lake area, and from neighbouring Malleshpalya, Vignana Nagar, Nagavarapalya and GM Palya. Before a delivery date is agreed, we look at how the lorry will reach your site and where the container will stand.",
+
+    extraSections: [
+      {
+        heading: "Shipping Containers for Electrical & Plumbing Contractors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kaggadasapura/storage-container-interior-kaggadasapura.webp",
+          alt: "View into an empty container through its open green doors, showing pale corrugated side walls, a ribbed steel roof and a dark plywood floor",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render, shown bare before any fit-out. Racks, bins, lockable compartments, lights and vents go in only where your quotation lists them.",
+        },
+        paragraphs: [
+          "Electrical and plumbing contractors often run several projects at once, so they need reliable storage for materials, equipment and tools.",
+          "A properly fitted shipping container can keep trade stock in order and make inventory easier to manage.",
+        ],
+        subsections: [
+          {
+            heading: "Electrical contractor storage",
+            bullets: [
+              { title: "Copper cable storage", text: "use secured compartments or lockable cages for valuable cable coils and drums." },
+              { title: "Switchgear and distribution boards", text: "keep boxed electrical equipment dry and organised by rating." },
+              {
+                title: "MCBs and electrical fittings",
+                text: "arrange switches, sockets, glands, lugs and other small components in labelled bins.",
+              },
+              { title: "Lighting equipment", text: "store light fittings and fans in protective packaging." },
+              { title: "Conduits and trunking", text: "use racks organised by length and diameter." },
+              {
+                title: "Electrical tools",
+                text: "set aside designated storage for testers, crimpers, drills and cable-pulling equipment.",
+              },
+            ],
+          },
+          {
+            heading: "Plumbing contractor storage",
+            bullets: [
+              { title: "CPVC, UPVC and GI pipes", text: "store pipes on suitable racks by type, diameter and length." },
+              { title: "Plumbing fittings", text: "organise elbows, tees, couplers, clamps and valves in labelled bins." },
+              { title: "Sanitary fittings", text: "keep taps, mixers and showers in protective packaging." },
+              {
+                title: "Tools and accessories",
+                text: "arrange cutting tools, wrenches and installation equipment in dedicated compartments.",
+              },
+              {
+                title: "Solvent cements and sealants",
+                text: "store them according to the manufacturer's instructions and applicable fire-safety requirements, separately from general stock where required.",
+              },
+            ],
+          },
+          {
+            heading: "Contractor inventory management",
+            paragraphs: ["A shipping container can support organised daily operations through:"],
+            bullets: [
+              { text: "Project-wise material kits." },
+              { text: "Inventory issue and return registers." },
+              { text: "Labelled shelving and storage bins." },
+              { text: "Periodic stock inspections." },
+              { text: "Suitable lighting and ventilation." },
+              { text: "Lockable storage for valuable materials." },
+            ],
+            closing: ["These arrangements can help contractors manage stock across multiple job sites."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Recyclables Dealers & Dry Waste Collection Centres",
+        placement: "afterIntro",
+        paragraphs: [
+          "Neighbourhood recyclables dealers and dry waste collection centres handle materials such as paper, cardboard, plastic, glass and metals.",
+          "A suitable shipping container can provide a designated storage area for clean, sorted, non-hazardous dry recyclables.",
+        ],
+        // Brief §6: e-waste staging belongs to the Doddanekundi page; this page only says it is kept apart.
+        inlineLinks: [
+          {
+            before:
+              "Retired laptops, monitors and servers are e-waste, not dry recyclables, and are handled separately. For holding such equipment securely until an authorised recycler collects it, see our guide to",
+            link: { label: "secure staging for IT asset disposal", href: "/cities-we-serve/shipping-container-doddanekundi" },
+            after: " in Doddanekundi.",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Suitable recyclables storage applications",
+            bullets: [
+              { title: "Paper and cardboard", text: "stable, appropriately sized bale stacks with safe access clearance." },
+              { title: "Rigid plastics", text: "separate, labelled storage bays." },
+              { title: "Plastic film", text: "clean, dry material in suitable bags or containers." },
+              { title: "Glass", text: "sturdy bins designed to minimise breakage and handling risks." },
+              { title: "Metal recyclables", text: "organised compartments according to material type." },
+              { title: "Weighing and inventory", text: "space for suitable weighing equipment and record-keeping." },
+            ],
+          },
+          {
+            heading: "Safe storage requirements",
+            paragraphs: [
+              "Dry recyclables storage needs appropriate fire precautions, housekeeping and ventilation. Important considerations include:",
+            ],
+            bullets: [
+              { text: "Maintain safe access and emergency exits." },
+              { text: "Keep combustible materials away from heat sources." },
+              { text: "Prohibit smoking and open flames." },
+              { text: "Use compliant electrical wiring and fittings." },
+              { text: "Provide suitable fire protection based on a site-specific risk assessment." },
+              { text: "Avoid unstable stacking and overloading." },
+              { text: "Keep up regular cleaning and pest management." },
+            ],
+          },
+          {
+            heading: "Materials that must not be mixed with ordinary dry recyclables",
+            bullets: [
+              { text: "E-waste." },
+              { text: "Batteries." },
+              { text: "Hazardous chemicals." },
+              { text: "Gas cylinders and aerosols." },
+              { text: "Medical and biomedical waste." },
+              { text: "Other regulated hazardous materials." },
+            ],
+            closing: [
+              "Such materials need separate handling through appropriately authorised facilities.",
+              "Dry waste collection operations may require local authority permissions and compliance with applicable waste-management regulations.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Container Placement & Delivery in Kaggadasapura",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kaggadasapura/shipping-container-roof-view-kaggadasapura.webp",
+          alt: "Overhead view of a green container's corrugated roof and its four corner castings, throwing a shadow across bare concrete",
+          width: 1774,
+          height: 887,
+          caption:
+            "Illustrative render from above. Besides the footprint, keep room clear for the crane's lift and for both doors to open fully.",
+        },
+        paragraphs: [
+          "Shipping containers can be placed on suitable private commercial land, in contractor yards or at authorised collection facilities.",
+          "Before delivery, evaluate:",
+        ],
+        bullets: [
+          { text: "Site access and road width." },
+          { text: "Container size and transport vehicle access." },
+          { text: "Crane and unloading requirements." },
+          { text: "Ground stability and support." },
+          { text: "Property-owner permissions." },
+          { text: "Applicable local approvals." },
+          { text: "Safe loading and unloading arrangements." },
+        ],
+        closing: [
+          "Kaggadasapura Main Road and the residential lanes around it can restrict access. Confirm the delivery route and the unloading arrangements before committing to a schedule.",
+        ],
+        // Brief §5: access and delivery considerations → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Where the lorry or crane has to work past a tight gate or down a narrow lane, the checks we make are explained in our notes on",
+            link: { label: "container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " in Bellandur.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kaggadasapura/shipping-container-side-wall-kaggadasapura.webp",
+          alt: "Corrugated dark green steel side wall of a shipping container with grey corner posts and two forklift pockets, on a concrete yard",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative render of the side wall. Dimensions, inside measurements and condition are given on the quotation for the actual unit.",
+        },
+        paragraphs: [
+          "Size the container for your stock at its peak, with an aisle left clear so materials can be issued, returned and counted easily.",
+        ],
+        table: {
+          caption:
+            "Approximate capacities. Exact dimensions and capacities depend on each container's specification; which sizes are in stock is confirmed when you receive your quotation.",
+          headers: ["Container size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft", "~15 m³", "Small contractor tools and fittings"],
+            ["20 ft", "~33 m³", "Electrical or plumbing contractor inventory"],
+            ["40 ft", "~67 m³", "Larger stock or dry recyclables storage"],
+          ],
+        },
+        // Brief §5: container condition and buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Buying second-hand? Before paying for a unit, go over the points in our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Kaggadasapura",
+        placement: "afterSolutions",
+        paragraphs: ["Shipping container prices depend on size, condition, specification and customisation."],
+        subsections: [
+          {
+            heading: "Main pricing factors",
+            bullets: [
+              { text: "Container dimensions." },
+              { text: "New or used condition." },
+              { text: "Structural condition and weather resistance." },
+              { text: "Cable cages and secure compartments." },
+              { text: "Pipe racks and shelving." },
+              { text: "Storage bins and partitions." },
+              { text: "Lighting and ventilation." },
+              { text: "Suitable fire-safety provisions." },
+              { text: "Locks and security arrangements." },
+              { text: "Transportation and unloading." },
+              { text: "Site accessibility." },
+            ],
+            closing: [
+              "You can request a quotation based on the container size you need, its intended use and the delivery location.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container on Rent in Kaggadasapura",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If you would rather hire than buy, Portable Office Cabin also rents shipping containers in 10, 20 and 40 ft and 40 ft High Cube sizes, for anything from one month to five years. The hire period, the unit supplied, the transport charges and the collection arrangements at the end of the hire are all written into your quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "See",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " for the sizes and hire terms currently offered.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Share the intended storage application." },
+          { text: "Confirm the required container size." },
+          { text: "Explain the type and quantity of materials." },
+          { text: "Discuss shelving, racks, security and other modifications." },
+          { text: "Provide the proposed delivery location." },
+          { text: "Obtain a quotation." },
+          { text: "Confirm specifications, permissions and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides container-related solutions for commercial and industrial storage requirements. For customers in Kaggadasapura, that means:",
+        ],
+        bullets: [
+          { title: "Suitable container size options", text: "new or used 10, 20 and 40 ft units, as stock allows." },
+          {
+            title: "Storage-oriented fit-outs",
+            text: "shelving, lighting and ventilation, specified for the unit you choose.",
+          },
+          {
+            title: "Shelving and pipe racks",
+            text: "planned around cable coils, pipe lengths, boxed fittings or bales, and quoted as interior fit-out.",
+          },
+          {
+            title: "Secure compartments",
+            text: "lockable double cargo doors on every unit, with internal partitions or lockable compartments where quoted.",
+          },
+          {
+            title: "Quotation and delivery coordination",
+            text: "one itemised quotation covering the unit, its fit-out and transport, followed by a check of the route and the unloading spot before a delivery date is fixed.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can electrical contractors store copper cable in shipping containers?",
+        answer:
+          "Yes. Copper cable can be stored in an appropriately secured container using suitable racks, lockable compartments and inventory controls.",
+      },
+      {
+        question: "How should plumbing pipes be stored?",
+        answer:
+          "Pipes should be supported on suitable racks according to their type, size and the manufacturer's requirements. Plastic pipes should be protected from excessive heat and ultraviolet exposure.",
+      },
+      {
+        question: "Can paper and cardboard bales be stored inside containers?",
+        answer:
+          "Clean, dry paper and cardboard may be stored in a suitable container with stable stacking, appropriate fire precautions, ventilation and safe access.",
+      },
+      {
+        question: "Can e-waste and batteries be stored with ordinary recyclables?",
+        answer:
+          "No. E-waste and batteries need separate, compliant handling and should not be mixed with ordinary dry recyclables.",
+      },
+      {
+        question: "Does a dry waste collection centre require permission?",
+        answer:
+          "Permissions and regulatory requirements depend on the location and the operating model. Confirm the applicable requirements with the relevant local authority.",
+      },
+      {
+        question: "What container sizes are commonly available?",
+        answer:
+          "20 ft and 40 ft are common shipping container sizes, and the catalogue also lists 10 ft units. Actual stock and specifications are confirmed with your quotation.",
+      },
+      {
+        question: "What is the shipping container price in Kaggadasapura?",
+        answer:
+          "Pricing depends on size, condition, modifications, transportation and unloading requirements. Request a quotation for current figures.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport arrangements and site access. Your quotation states the expected timeline; confirm it before you order.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Kaggadasapura",
+    ctaText: `Whether you need organised storage for electrical and plumbing materials or suitable space for sorted dry recyclables, Portable Office Cabin can discuss container options based on your requirements. You can reach us on ${COMPANY.phones[0].display}, on WhatsApp at ${COMPANY.whatsapp.display} or by e-mail at ${COMPANY.email.sales}. Service area: Kaggadasapura, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Kaggadasapura storage container enquiry",
+      intro:
+        "Tell us the container size and how many you need, the Kaggadasapura address or a map pin, and whether you plan to buy or rent. Mention whether it will hold electrical or plumbing stock or sorted recyclables, and any racks, bins, lockable compartments or ventilation you need, so they can be priced in.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. The company's Bengaluru office is in Electronic City, and it keeps no depot, yard or branch in Kaggadasapura. The quotation for each unit fixes its size, grade, condition and inside measurements; any racks, shelving, bins, partitions, lockable compartments, vents, lighting or locks; rental terms if it is hired; and how it is delivered, unloaded and later collected. Stock changes, and no delivery date is guaranteed. All four pictures are computer-generated images of a single container, used for illustration only: none was photographed in Kaggadasapura, and none shows a delivered or fitted-out unit. Capacity figures are approximate. Electrical and plumbing contractors, recyclables dealers and dry waste collection centres appear here as examples of typical uses, not as customers or completed jobs; the localities are named only to show where we accept enquiries. A container supply does not include waste collection, recycling, permits or fire-safety approval, and the notes on materials, fire precautions, hazardous items, permissions and site access are general information, not professional fire-safety, electrical, legal or engineering advice.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN MADURAI — the general portable-cabin intent for Madurai city and the places
