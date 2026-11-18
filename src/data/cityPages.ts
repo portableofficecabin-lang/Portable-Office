@@ -18503,6 +18503,14 @@ export const CITY_PAGES: CityPage[] = [
           "Homeowners who rent their properties to film and television productions may need to move personal furniture and household belongings out for the duration of the shoot.",
           "A suitable storage container can provide additional space on an authorised private property while the house is being used for filming.",
         ],
+        // RR Nagar security-cabin brief (2026-11-18): a guard post at a shoot location is that page's intent.
+        inlineLinks: [
+          {
+            before: "For filming locations that require a dedicated guard post, explore our",
+            link: { label: "portable security cabins in RR Nagar", href: "/cities-we-serve/portable-security-cabin-rajarajeshwari-nagar" },
+            after: ".",
+          },
+        ],
         subsections: [
           {
             heading: "Furniture storage during shooting",
@@ -33094,6 +33102,532 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru. Delivery, unloading and placement are arranged for each order, the supports depend on the site, and production and delivery dates are not guaranteed. The cabin types, sizes, materials, insulation, fittings, provisions, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. CCTV cameras, boom barriers, access-control readers, networking equipment and software are not part of a cabin unless the quotation lists them. The images on this page are illustrative renders of two Portable Office Cabin compact security cabin designs, shown with optional furniture and fittings; other cabin types look different, and the images are not photographs of installations in Shoolagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Shoolagiri estate and planned expansion are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate or company there, and the gate positions, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions and safety procedures. A portable cabin is not a wildlife-proof shelter, and the notes on insulation, ventilation, toilets, relocation, wildlife and supports are general guidance, not engineering, safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SECURITY CABINS IN RAJARAJESHWARI NAGAR (RR NAGAR) — the security-cabin intent for RR Nagar
+   * in west Bengaluru: guard cabins with visitor desks and parcel shelves at apartment and gated-community
+   * gates, temporary guard posts at houses used as TV and film shoot locations, and watchman cabins on
+   * independent-house construction sites. The first security-cabin city page in Karnataka.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Portable Security Cabins in
+   * Rajarajeshwari Nagar (RR Nagar)"): meta title, meta description, H1, keywords, local modifiers,
+   * section order, H2 / H3 headings, types and sizes tables, ordering steps and the eleven FAQs are the
+   * brief's, and so is the copy, lightly edited for flow and British spelling. The brief's notes to the
+   * implementer ("Do not claim…", "Do not guarantee…", "Conditional section…", "Verify…") are
+   * instructions, not page copy; where they limit a claim, the page states the limit plainly instead
+   * (e.g. CCTV cameras and boom barriers are supplied only where listed in the quotation). The route
+   * follows the site convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions,
+   * link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks:
+   *   • Rental: no security cabin is offered on rent (the Security Cabin and Guard Security Cabin products
+   *     list sale prices only), so the brief's two conditional rental sections, the shoot-rental H3 and the
+   *     rental keyword are left out.
+   *   • Types: MS, PUF-insulated, AC-provision and attached-toilet cabins are listed options (Security
+   *     Cabin product: materials, insulation, "AC provision"; the cabins-with-toilet guide). The FRP row is
+   *     left out: earlier owner briefs excluded FRP security cabins until confirmed (owner to confirm).
+   *   • Sizes: the Security Cabin product lists "3'×3' kiosks to 10'×8' multi-person"; the brief's four
+   *     example sizes fall inside that range and are presented as planning examples, not stock sizes.
+   *   • No price, delivery time, rating, certification or business address is stated.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("portable security cabins" → the Security Cabin product) + heroCta.
+   *   Apartments & gated communities, replacing a guard room, film & TV shoot locations and house
+   *     construction sites → four afterIntro extra sections, their H3s as `subsections`.
+   *   Types, sizes, price and "How to Order" (ordered) → afterSolutions extra sections, so the steps stay
+   *     before the areas. "Areas Served Around Rajarajeshwari Nagar" → areas. "Why Choose Portable Office
+   *     Cabin?" → a default extra section (after the areas, as in the brief). FAQs: the brief's eleven.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the security-cabins
+   *     enquiry form.
+   *
+   * LINKS (brief §5): intro → /products/security-cabin (general specifications); "Guard post versus living
+   * quarters" → the Bannerghatta Road portable-cabin page's caretaker-quarters section (the brief's
+   * protected owner of watchman living quarters); toilet H3 → the cabins-with-toilet guide; shoot section →
+   * the RR Nagar shipping-container page ("shipping containers in RR Nagar", household furniture storage
+   * during shoots; live since #280). Inbound: that page's shoot-house section ("portable security cabins in
+   * RR Nagar", the brief's anchor and context), the security-cabins category's location links
+   * ("Rajarajeshwari Nagar") and two new promotion hub keys (Security Cabin | Bangalore and | Karnataka),
+   * which this page links back to.
+   *
+   * KEYWORD OWNERSHIP: security cabin / guard cabin / guard room / watchman cabin × Rajarajeshwari Nagar,
+   * RR Nagar, Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and
+   * Gattigere, for apartment and gated-community gates (visitor desks, parcel shelves), film and TV shoot
+   * locations and house construction sites. Not targeted: Kengeri, Nagarbhavi and Mysore Road (kept for
+   * possible future pages), Uttarahalli, industrial gate security (the Krishnagiri, Shoolagiri and Salem
+   * pages), watchman living quarters (Bannerghatta Road), apartment-association offices (Bellandur) and
+   * delivery-rider rest points (Mahadevapura). Household storage during shoots belongs to the RR Nagar
+   * shipping-container page. "Bengaluru" stays out of the title, as the brief asks; the geo meta and the
+   * Service JSON-LD's areaServed carry "Rajarajeshwari Nagar, Bengaluru, Karnataka". Kannada search terms
+   * (optional in the brief) are not used.
+   *
+   * Images: three owner-supplied WebP images ("public/images/Security Cabins in Rajarajeshwari Nagar city
+   * page/Security Cabins in Rajarajeshwari Nagar/cabin (1–3).webp", lossy VP8, no EXIF / XMP) of one
+   * grey corrugated security cabin design, kept byte-identical (VP8 bitstream untouched) with an XMP
+   * dc:title / dc:description added that labels each one a render (no creator, GPS or date). (2)
+   * three-quarter exterior, 1200 × 896 = hero / og:image (the brief's hero filename); (1) interior with
+   * the guard desk, 1451 × 1084 = apartments section; (3) front view, 1451 × 1084 = shoot-location
+   * section. No image shows an apartment gate, parcel shelves, a shoot location, a construction site, a
+   * PUF panel or a toilet, so the brief's other image slots are not used and no alt text claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-security-cabin-rajarajeshwari-nagar",
+    city: "Rajarajeshwari Nagar",
+    listTitle: "Portable Security Cabins in Rajarajeshwari Nagar (RR Nagar)",
+    metaTitle: "Portable Security Cabin in RR Nagar | Gate & Site Guard Cabins",
+    metaDescription:
+      "Portable security cabins in RR Nagar for apartment gates, gated communities, TV and film shoot locations, and house construction sites. Request a quotation.",
+    keywords:
+      "portable security cabin in RR Nagar, portable security cabin in Rajarajeshwari Nagar, security cabin RR Nagar, security guard cabin Rajarajeshwari Nagar, guard room RR Nagar, watchman cabin RR Nagar, security cabin Ideal Homes Township, security cabin Kenchenahalli, security cabin Pattanagere, security cabin Halagevaderahalli, prefabricated security cabin RR Nagar, security cabin manufacturers near RR Nagar, apartment gate security cabin, gated community security cabin, security cabin with visitor desk, security cabin with parcel shelf, security cabin for film shooting location, watchman cabin for house construction, portable security cabin price in RR Nagar",
+    // Approximate point in Rajarajeshwari Nagar, west Bengaluru (rounded; the same point as the RR Nagar
+    // shipping-container page; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Rajarajeshwari Nagar, Bengaluru, Karnataka, India",
+      position: "12.9200;77.5200",
+      icbm: "12.9200, 77.5200",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Security Cabin" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-security-cabin-rajarajeshwari-nagar/portable-security-cabin-rajarajeshwari-nagar.webp",
+      alt: "Portable security guard cabin with windows and a lockable entrance door: grey corrugated walls with a dark lower band, a wide glazed window with a counter ledge, a door under a small canopy and a grilled window",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a portable security cabin, not a photograph of a cabin installed in RR Nagar.",
+    },
+
+    h1: "Portable Security Cabins in Rajarajeshwari Nagar (RR Nagar)",
+    tagline:
+      "Guard cabins for apartment and gated-community gates, temporary guard posts for TV and film shoot locations, and watchman cabins for house construction sites.",
+    intro: [
+      "Rajarajeshwari Nagar, commonly called RR Nagar, is an established residential locality in West Bengaluru with apartment complexes, gated communities, independent houses and construction activity.",
+      "Security guards at residential entrances manage visitors, deliveries, parcels and vehicle movements throughout the day.",
+      "Temporary filming locations and house construction sites may also require dedicated guard posts.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "portable security cabins", href: "/products/security-cabin" },
+      after: " in RR Nagar for these residential, temporary and construction-related applications.",
+    },
+
+    areasHeading: "Areas Served Around Rajarajeshwari Nagar",
+    areasText:
+      "This page covers portable security cabin requirements in Rajarajeshwari Nagar (RR Nagar), Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere. Many entrances here open onto residential streets with parked cars and narrow lanes, so the approach and the spot where the cabin will stand are checked for each property before a delivery is confirmed.",
+
+    extraSections: [
+      {
+        heading: "Security Cabins for Apartments & Gated Communities",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/portable-security-cabin-rajarajeshwari-nagar/security-cabin-interior-desk-rajarajeshwari-nagar.webp",
+          alt: "Security cabin interior with a long guard desk under a wide window, two monitors, a desk phone, a handheld radio and an open register, beside a grilled window and the entrance door",
+          width: 1451,
+          height: 1084,
+          caption:
+            "Illustrative render. Monitors, phones and radios are not part of the cabin; desks, shelves and electrical points are fitted as quoted.",
+        },
+        paragraphs: [
+          "Apartment and gated-community entrances often require a dedicated space for security personnel to manage visitors and monitor access.",
+          "A suitably designed portable security cabin can provide a compact guard post with appropriate visibility, working space and security equipment provisions.",
+        ],
+        subsections: [
+          {
+            heading: "Visitor management desk",
+            paragraphs: ["Depending on the cabin size and layout, a visitor management desk may accommodate:"],
+            bullets: [
+              { text: "Visitor entry registers." },
+              { text: "Visitor management tablets." },
+              { text: "Intercom equipment." },
+              { text: "Basic stationery." },
+              { text: "Delivery records." },
+              { text: "Access-control accessories." },
+            ],
+          },
+          {
+            heading: "Sliding service window",
+            paragraphs: [
+              "A sliding service window can allow security personnel to communicate with visitors and delivery riders without repeatedly leaving the cabin.",
+              "Its position should be planned according to the entrance layout and the guard's visibility requirements.",
+            ],
+          },
+          {
+            heading: "Parcel storage shelves",
+            paragraphs: ["Apartment security cabins may require space for temporary parcel handling. Suitable arrangements can include:"],
+            bullets: [
+              { text: "Compact parcel shelves." },
+              { text: "Labelled storage sections." },
+              { text: "A dedicated delivery register." },
+              { text: "Clear access to the service window." },
+              { text: "Separation of parcels from electrical equipment." },
+            ],
+            closing: ["Parcel storage should not obstruct emergency exits or the guard's working space."],
+          },
+          {
+            heading: "Visibility around the entrance",
+            paragraphs: ["A guard cabin may include windows positioned to provide suitable views of:"],
+            bullets: [
+              { text: "The main gate." },
+              { text: "The visitor entrance." },
+              { text: "The driveway." },
+              { text: "The vehicle access lane." },
+              { text: "Pedestrian movement." },
+            ],
+            closing: ["The exact number and position of windows should be confirmed based on the site layout."],
+          },
+          {
+            heading: "CCTV, intercom & boom barrier provisions",
+            paragraphs: ["Where required, a security cabin may include provisions for:"],
+            bullets: [
+              { text: "CCTV monitor placement." },
+              { text: "Intercom equipment." },
+              { text: "Boom barrier controls." },
+              { text: "Visitor management systems." },
+              { text: "Electrical sockets." },
+              { text: "Network cabling." },
+            ],
+            closing: [
+              "Installation and integration of electrical and access-control systems must be carried out by qualified personnel. CCTV cameras, boom barriers and other electronic systems are supplied only where they are listed in your quotation.",
+            ],
+          },
+          {
+            heading: "Lighting & ventilation",
+            paragraphs: ["For long security shifts, suitable provisions may include:"],
+            bullets: [
+              { text: "Interior lighting." },
+              { text: "Exterior lighting." },
+              { text: "A ceiling or wall fan." },
+              { text: "Ventilation windows." },
+              { text: "An insulated roof or walls." },
+              { text: "AC provision where required." },
+              { text: "Emergency lighting where specified." },
+            ],
+            closing: ["Actual features depend on the selected cabin design."],
+          },
+        ],
+      },
+      {
+        heading: "Replacing an Existing Guard Room",
+        placement: "afterIntro",
+        paragraphs: [
+          "Some residential communities may want to replace an old guard room with a prefabricated security cabin.",
+          "Before replacement:",
+        ],
+        ordered: true,
+        bullets: [
+          { text: "Assess the available entrance space." },
+          { text: "Confirm the proposed cabin dimensions." },
+          { text: "Review visibility and traffic movement." },
+          { text: "Plan electrical and communication connections." },
+          { text: "Obtain association or property-owner approval." },
+          { text: "Arrange installation and transition." },
+        ],
+        closing: [
+          "Where site conditions permit, the new cabin may be positioned before the old guard room is removed. Keeping security cover running through the changeover depends on a site-specific installation plan.",
+        ],
+      },
+      {
+        heading: "Temporary Security Cabins for Film & TV Shoot Locations",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/portable-security-cabin-rajarajeshwari-nagar/security-cabin-front-view-rajarajeshwari-nagar.webp",
+          alt: "Front view of a compact portable security cabin with a lockable door under a small canopy and a grilled window, in grey corrugated walls with a dark lower band",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative render of a compact guard cabin, not a cabin at a shoot location.",
+        },
+        paragraphs: [
+          "Residential properties in RR Nagar may be used as filming locations for television and film productions.",
+          "Temporary guard posts may be required to manage entrance access, visitor movement and production-related security arrangements.",
+          "A compact portable security cabin can provide a dedicated place for security personnel during the filming period.",
+        ],
+        // Brief §5: household storage during a shoot is the RR Nagar shipping-container page's intent.
+        inlineLinks: [
+          {
+            before: "Need somewhere to keep household furniture while the house is used for filming? See our",
+            link: { label: "shipping containers in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Security cabin features for shoot locations",
+            paragraphs: ["Depending on requirements:"],
+            bullets: [
+              { text: "Single-guard or two-guard layout." },
+              { text: "Clear view of the property entrance." },
+              { text: "Suitable service window." },
+              { text: "Lighting." },
+              { text: "Fan or ventilation." },
+              { text: "Electrical provision." },
+              { text: "Lockable door." },
+              { text: "Compact footprint." },
+            ],
+          },
+          {
+            heading: "Placement at filming locations",
+            paragraphs: ["Before placement:"],
+            bullets: [
+              { text: "Obtain homeowner or landowner permission." },
+              { text: "Confirm suitable private space." },
+              { text: "Check vehicle and pedestrian access." },
+              { text: "Keep emergency routes clear." },
+              { text: "Avoid obstructing neighbours' entrances." },
+              { text: "Confirm applicable local requirements." },
+            ],
+            closing: ["A temporary cabin must not be placed on a public road or footpath without the required legal authorisation."],
+          },
+        ],
+      },
+      {
+        heading: "Watchman Cabins for House Construction Sites",
+        placement: "afterIntro",
+        paragraphs: [
+          "Independent house and small apartment construction projects may require a dedicated guard post while building materials and equipment remain on site.",
+          "A portable watchman cabin can provide shelter and working space for security personnel.",
+        ],
+        subsections: [
+          {
+            heading: "Compact site watchman cabin",
+            paragraphs: ["Possible features include:"],
+            bullets: [
+              { text: "Guard seating." },
+              { text: "A small desk." },
+              { text: "Suitable windows." },
+              { text: "A lockable door." },
+              { text: "Lighting." },
+              { text: "Fan or ventilation." },
+              { text: "Electrical provision." },
+            ],
+          },
+          {
+            heading: "Security cabin with attached toilet",
+            paragraphs: ["Where required, a watchman cabin may include an attached toilet. The design must account for:"],
+            bullets: [
+              { text: "Cabin dimensions." },
+              { text: "Plumbing." },
+              { text: "Water supply." },
+              { text: "Wastewater disposal." },
+              { text: "Ventilation." },
+              { text: "Cleaning access." },
+              { text: "Applicable site requirements." },
+            ],
+            closing: ["Not every cabin size can accommodate a toilet; the layout is confirmed on the approved drawing."],
+            inlineLinks: [
+              {
+                before: "Layouts, plumbing and the space a toilet compartment takes are covered in our guide to",
+                link: { label: "cabins with an attached toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Relocatable security cabin",
+            paragraphs: [
+              "A portable security cabin may be relocated between construction sites, subject to its structural condition, transport arrangements and applicable permissions. Each move is planned and quoted on its own.",
+            ],
+          },
+          {
+            heading: "Guard post versus living quarters",
+            paragraphs: [
+              "This page covers security guard posts, not residential accommodation. A cabin where a watchman or caretaker lives needs a different layout, with sleeping space, a kitchenette and a bathroom.",
+            ],
+            inlineLinks: [
+              {
+                before: "For a watchman's or caretaker's living quarters, see our",
+                link: { label: "portable cabins for caretaker quarters", href: "/cities-we-serve/portable-cabin-bannerghatta-road" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Types of Portable Security Cabins",
+        placement: "afterSolutions",
+        table: {
+          caption: "Each type is built to the specification confirmed in your quotation; features can be combined to suit the entrance.",
+          headers: ["Cabin type", "Typical application"],
+          rows: [
+            ["Single-guard security cabin", "Small apartment gates, parking entrances and temporary shoot locations"],
+            ["Two-guard security cabin", "Larger apartment and gated-community entrances"],
+            ["Security cabin with attached toilet", "Construction sites or locations without nearby facilities"],
+            ["PUF-insulated security cabin", "Sites requiring improved thermal insulation"],
+            ["MS security cabin", "General security and construction-site applications"],
+            ["AC security cabin", "Guard posts requiring air-conditioning provision"],
+          ],
+        },
+      },
+      {
+        heading: "Portable Security Cabin Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Example planning sizes within our listed range of 3 × 3 ft kiosks to 10 × 8 ft multi-person cabins, not stock specifications. The actual dimensions and usable internal space are confirmed on the approved drawing with your quotation.",
+          headers: ["Proposed size", "Possible application"],
+          rows: [
+            ["4 × 4 ft", "Compact single-guard booth"],
+            ["6 × 4 ft", "Single guard with a small desk"],
+            ["8 × 6 ft", "Two-guard cabin with visitor management space"],
+            ["10 × 8 ft", "Larger security cabin, potentially with a toilet depending on the layout"],
+            ["Custom size", "Community gates requiring specialised configurations"],
+          ],
+        },
+        closing: ["Measure the entrance and list what the cabin must hold, such as the guards, a desk, shelves and equipment, before choosing a size."],
+      },
+      {
+        heading: "Portable Security Cabin Price in RR Nagar",
+        placement: "afterSolutions",
+        paragraphs: ["Security cabin pricing depends on:"],
+        bullets: [
+          { text: "Cabin dimensions." },
+          { text: "MS or PUF construction." },
+          { text: "Wall and roof insulation." },
+          { text: "Door and window configuration." },
+          { text: "A visitor desk." },
+          { text: "Parcel shelves." },
+          { text: "Electrical and lighting provisions." },
+          { text: "CCTV and intercom points." },
+          { text: "AC provision." },
+          { text: "Toilet installation." },
+          { text: "Interior and exterior finishing." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request a quotation based on your specific requirements."],
+      },
+      {
+        heading: "How to Order a Portable Security Cabin",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain where the cabin will be installed." },
+          { text: "Confirm whether one or two guards will use it." },
+          { text: "Select the required dimensions." },
+          { text: "Discuss windows, desk, shelves and electrical provisions." },
+          { text: "Confirm any toilet or AC requirements." },
+          { text: "Provide the installation location." },
+          { text: "Check site access and permissions." },
+          { text: "Request a quotation." },
+          { text: "Finalise the specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin manufactures portable cabin solutions for commercial and site applications. For RR Nagar customers, that includes:",
+        ],
+        bullets: [
+          { title: "Compact security cabin designs", text: "from single-guard booths to two-guard cabins, sized on the approved drawing." },
+          { title: "Customisable doors and windows", text: "positioned around the gate, the driveway and the visitor approach." },
+          { title: "MS or PUF construction options", text: "MS-framed cabins, or PUF-insulated walls and roof for a sunny entrance." },
+          { title: "Interior desk and shelving provisions", text: "a visitor desk, register space and parcel shelves where the layout allows." },
+          { title: "Electrical and lighting provisions", text: "lighting, fan and socket points, with provisions for CCTV, intercom and network equipment." },
+          { title: "Attached toilet options", text: "where the cabin size and the site's water and drainage arrangements permit." },
+          {
+            title: "Quotation and delivery coordination",
+            text: "an itemised quotation, then route and placement checks before a delivery date is agreed.",
+          },
+        ],
+        closing: [
+          "We manufacture and deliver the cabin. Staffing, security equipment and procedures at the gate remain with your association, site team or security provider.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What size security cabin is suitable for an apartment gate?",
+        answer:
+          "The size depends on the number of guards, visitor desk requirements, equipment and available entrance space. A 6 × 4 ft or 8 × 6 ft cabin may be considered after checking the layout.",
+      },
+      {
+        question: "Can a security cabin include parcel shelves?",
+        answer: "Yes, where the cabin design and available space permit suitable shelving.",
+      },
+      {
+        question: "Can an existing guard room be replaced with a portable cabin?",
+        answer: "Potentially, subject to site assessment, permissions and an appropriate installation plan.",
+      },
+      {
+        question: "Can a portable security cabin be used at a TV or film shoot location?",
+        answer: "Yes, where the cabin can be placed legally and safely on suitable premises.",
+      },
+      {
+        question: "Can a watchman cabin include an attached toilet?",
+        answer:
+          "Yes, where the cabin has sufficient space and suitable plumbing, water supply and wastewater arrangements are available. Not every cabin size can accommodate a toilet.",
+      },
+      {
+        question: "What is the difference between an MS and PUF security cabin?",
+        answer:
+          "MS refers to mild-steel construction, while PUF panels provide insulation. Actual thermal performance, strength and cost depend on the complete design.",
+      },
+      {
+        question: "Can CCTV and boom barrier controls be installed?",
+        answer:
+          "Suitable electrical and equipment provisions may be included, subject to the design and qualified installation. Cameras, barriers and other equipment are supplied only where listed in the quotation.",
+      },
+      {
+        question: "Can a security cabin be relocated?",
+        answer: "Yes, where its construction, condition and transport arrangements permit relocation.",
+      },
+      {
+        question: "Is a portable security cabin ready to use immediately after delivery?",
+        answer:
+          "That depends on the supplied configuration, site preparation, electrical connections and any required installation work.",
+      },
+      {
+        question: "What is the portable security cabin price in RR Nagar?",
+        answer: "Pricing depends on size, materials, features, customisation and delivery requirements.",
+      },
+      {
+        question: "How quickly can a security cabin be delivered?",
+        answer:
+          "Delivery depends on availability, manufacturing requirements, customisation and site access. You'll get a confirmed timeline with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Security Cabin Quotation in RR Nagar",
+    ctaText: `Whether you need a security cabin for an apartment entrance, a temporary film shooting location or a house construction site, Portable Office Cabin can discuss suitable cabin options based on your requirements. Call ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Rajarajeshwari Nagar, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "security-cabins",
+      noun: "security cabin",
+      heading: "RR Nagar security cabin enquiry",
+      intro:
+        "Pick a cabin and quantity, add the RR Nagar address or map pin, and tell us whether the cabin is for an apartment or community gate, a shoot location or a house construction site, how many guards will use it and which fittings you need, so the quotation covers the right size.",
+    },
+    // The Security Cabin product and the cabins-with-toilet guide are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "All Security Cabin Models", href: "/products/category/security-cabins" },
+      { label: "Guard Security Cabin with All-Round Windows", href: "/products/guard-security-cabin" },
+      { label: "MS Sheet or PUF Panel Cabins", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "PUF Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
+      { label: "Security Cabin in Bangalore", href: "/promotions/security-cabin-in-bangalore" },
+      { label: "Security Cabin in Karnataka", href: "/promotions/security-cabin-in-karnataka" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Portable Cabins in Jayanagar", href: "/cities-we-serve/portable-cabin-jayanagar" },
+        { label: "Shipping Containers in Banashankari", href: "/cities-we-serve/shipping-container-banashankari" },
+        { label: "Shipping Containers in Rajajinagar", href: "/cities-we-serve/shipping-container-rajajinagar" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin builds its security cabins at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs its Bengaluru office from Electronic City; it has no office, yard or branch in Rajarajeshwari Nagar. What a cabin includes is set by its approved drawing and quotation: size, materials, insulation, doors and windows, desks and shelves, electrical, CCTV, intercom, network and AC provisions, any toilet, finishes, and how it is delivered and unloaded. Cameras, boom barriers, intercoms, monitors and other equipment are supplied only where listed in the quotation, and their installation and integration are carried out by qualified personnel. The sizes shown are planning examples, not stock sizes, and no delivery date is guaranteed. The three pictures are computer renders of one security cabin design for illustration; none was taken in RR Nagar or shows a cabin installed at an apartment gate, a shoot location or a construction site. Apartment associations, gated communities, homeowners, production companies and builders are named to describe typical uses, not as customers or finished projects, and the localities are listed only to show where enquiries are welcome. A security cabin provides workspace for security staff; it does not by itself make a property secure. Notes on placement, permissions, toilets, relocation and electrical work are general guidance, not legal, electrical or engineering advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
