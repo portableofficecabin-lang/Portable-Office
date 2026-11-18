@@ -465,6 +465,14 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Security Cabins in Salem", href: "/cities-we-serve/portable-security-cabin-salem" },
     { name: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
   ],
+  // Bangalore and Karnataka security-cabin hubs — Portable Security Cabins in Rajarajeshwari Nagar (owner brief,
+  // 2026-11-18), the first Karnataka security-cabin city page; it links back to both hubs.
+  "Security Cabin|Bangalore": [
+    { name: "Portable Security Cabins in Rajarajeshwari Nagar", href: "/cities-we-serve/portable-security-cabin-rajarajeshwari-nagar" },
+  ],
+  "Security Cabin|Karnataka": [
+    { name: "Portable Security Cabins in Rajarajeshwari Nagar", href: "/cities-we-serve/portable-security-cabin-rajarajeshwari-nagar" },
+  ],
   // Karnataka hubs — every Karnataka container-office city page built since this map existed, so the
   // state hub reaches each local page (TN precedent: every city on all four keyword hubs). The Tumkur
   // page ships on branch feat/city-tumkur; its link resolves once that PR is merged. Hoskote and the
