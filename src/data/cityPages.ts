@@ -36969,6 +36969,15 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas Served Around Kaggadasapura",
     areasText:
       "We take shipping and storage container enquiries from across Kaggadasapura, including Kaggadasapura Main Road and the Kaggadasapura lake area, and from neighbouring Malleshpalya, Vignana Nagar, Nagavarapalya and GM Palya. Before a delivery date is agreed, we look at how the lorry will reach your site and where the container will stand.",
+    // Reciprocal link to the Kaggadasapura portable cabin page (terrace rooms and temporary family living, not
+    // storage), added in that page's release (#276), which went live second.
+    areasInlineLinks: [
+      {
+        before: "Looking for a terrace room, or somewhere for the family to live while the house is rebuilt, rather than storage? See our",
+        link: { label: "portable cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -41229,6 +41238,520 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin builds its cabins at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office is in Electronic City, Bengaluru; it has no factory, yard or branch in Mahadevapura. Every cabin is subject to availability. Its quotation states the dimensions, construction, fit-out and electrical provisions, any rental terms, and who arranges transport, unloading, placement and utility connections; no delivery date or time window is guaranteed. The rider rest, EV lounge, gym, playroom and reading room layouts on this page are planning examples: a cabin is not certified as EV charging infrastructure, gym use depends on a verified floor-load and vibration assessment, and a playroom's suitability for children depends on its final layout, fittings and supervision. All three images are illustrative renders of one container-style cabin; none was photographed in Mahadevapura or shows a supplied unit, a rider rest point, an EV charging hub or an apartment amenity room. Mahadevapura, Whitefield Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach indicate where enquiries can come from; they do not identify customers or completed installations. Portable Office Cabin has no affiliation with any mall, restaurant, delivery platform, EV charging operator, apartment builder or residents' association. Notes on electrical and fire safety, loading, accessibility and permissions are general guidance, not engineering, electrical or legal advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN KAGGADASAPURA — terrace cabins (guest, hobby, gardening, family and quiet rooms)
+   * and temporary family living cabins during house reconstruction, for the Kaggadasapura residential
+   * neighbourhood in east Bengaluru.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Portable Cabins in
+   * Kaggadasapura": SEO title, meta description, H1, keywords, arranged page content, image plan, link plan
+   * and keyword-ownership table used as given, with the notes below). Route: the city-page convention
+   * /cities-we-serve/portable-cabin-kaggadasapura, not the brief's root slug (no city page lives at the
+   * root). The brief's notes to the implementer are applied, not printed:
+   *   • rooftop suitability is never promised: every terrace line depends on a qualified structural
+   *     engineer's approval and the permissions that apply, and the company certifies neither;
+   *   • on-site panel assembly is offered because the catalogue supplies cabins in knock-down form (the
+   *     porta cabin and prefab porta cabin product pages); the lift is planned by a qualified contractor;
+   *   • rental (the brief's conditional section): /rental-service lists site office, toilet, security,
+   *     store-room and staff accommodation cabins on hire, not a family living cabin, so the section says
+   *     hire of a fitted terrace or living cabin is confirmed per quotation and quotes no period, deposit
+   *     or charge;
+   *   • the porta-cabin section explains the two names to readers instead of printing the brief's SEO note;
+   *   • no LPG cylinder position, no relocation or reuse promise, no price, discount or timeline, no site
+   *     visit or engineering service (the customer arranges the structural assessment and approvals);
+   *   • the "Why choose" list keeps the benefits the catalogue supports (attached toilet and pantry
+   *     plumbing: the "Portable Cabin with Toilet & Pantry" guide).
+   * Written for the slots: the tagline, the link lead-ins, the image alt text and captions, the second
+   * porta-cabin sentences, the "Why choose" item texts and closing, and the disclaimer.
+   * Mapped onto the template in the brief's order (no template change):
+   *   • H1, tagline, intro (the brief's three paragraphs), `introLink` (portable cabins category) and the
+   *     heroCta row (quotation · Call · WhatsApp).
+   *   • Terrace cabins and temporary living cabins → afterSolutions extra sections whose H3s are
+   *     `subsections` (links inside an H3 use the subsection `inlineLinks` added for Bannerghatta Road);
+   *     sizes (table), price, rent, porta vs portable and "How to Order a Portable Cabin" (ordered) → five
+   *     more afterSolutions extra sections.
+   *   • "Areas Served Around Kaggadasapura" → areas; "Why Choose Portable Office Cabin?" → an extra
+   *     section without a placement (after the areas, before the FAQs, as in the brief).
+   *   • FAQs: the brief's ten; the closing request → CTA (phone, WhatsApp and e-mail from COMPANY). No
+   *     enquiry form: the portable-cabins category has no category landing, so /api/enquiries rejects it.
+   *
+   * LINKS (brief §5, routes checked): "portable cabins" → the portable cabins category (intro); terrace
+   * applications → "portable office cabins in Bellandur" (home offices, which that page owns) and
+   * "portable cabins for elderly parents in Jayanagar" (the brief's "family accommodation" anchor narrowed
+   * to what that page covers: its "A Room for Elderly Parents" section); living section → "storage
+   * containers during house reconstruction" (JP Nagar, whose "Long-term storage during a home rebuild"
+   * owns that intent); bathroom and kitchenette → the toilet and pantry guide; price → the MS vs PUF
+   * materials guide; rent → /rental-service; porta section → the porta cabin product page (its "Rooftop
+   * Porta Cabins & Sheds"); how to order → the installation and site preparation guide; the CTA button →
+   * /contact. The reciprocal pair with the Kaggadasapura shipping-container page (session 14's, not yet
+   * released) is added by whichever of the two pages is released second, so neither links to a 404.
+   * Inbound: the Bangalore and Karnataka portable-cabin hubs and the Karnataka porta-cabin hub ("Porta
+   * Cabins in Kaggadasapura"), and the /cities-we-serve directory.
+   *
+   * KEYWORD OWNERSHIP: portable / porta / prefab cabin, portable room, PUF panel cabin, terrace / rooftop
+   * cabins and temporary family living cabins × Kaggadasapura, Kaggadasapura Main Road, the lake area,
+   * Malleshpalya, Vignana Nagar, Nagavarapalya and GM Palya. Not targeted: shipping, cargo or storage
+   * containers (the Kaggadasapura shipping page; "storage container" stays out of this title and H1),
+   * home offices (Bellandur), elder rooms, consultation rooms and dance studios (Jayanagar), caretaker
+   * quarters (Bannerghatta Road), amenity rooms and rider rest points (Mahadevapura), music practice and
+   * study rooms (Hubballi–Dharwad), homestay guest rooms (Uttara Kannada), artisan workshops (Koppal),
+   * storage during house reconstruction (JP Nagar), and CV Raman Nagar, New Thippasandra or Bengaluru
+   * as targets (Bengaluru is kept out of the title, as the brief asks).
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Portable Cabins in Kaggadasapura
+   * city page/Portable Cabins in Kaggadasapura/cabin (1–5).webp", no EXIF / XMP / ICC) of one green
+   * container-style cabin with sliding glass doors, a railed roof deck and a spiral staircase, standing on
+   * a paved yard. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title / dc:description
+   * that labels it a render. (4) glazed front = hero / og:image (the brief's "portable-cabin-kaggadasapura");
+   * (1) interior furnished as a study = terrace section; (3) long side with two windows = living section;
+   * (5) corner view = sizes; (2) top view = how to order. None shows a building terrace, panel assembly, a
+   * bedroom or a bathroom, so the brief's terrace-room, PUF-assembly, bedroom and bathroom slots are not
+   * used and no alt text or caption claims them; no image is captioned as a rooftop installation.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (provider = our factory,
+   * areaServed = Kaggadasapura, alternateName = the porta and prefabricated cabin names, no offers, so no
+   * Product schema with invented prices) and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-kaggadasapura",
+    city: "Kaggadasapura",
+    listTitle: "Portable Cabins in Kaggadasapura",
+    metaTitle: "Portable Cabin in Kaggadasapura | Terrace & Living Cabins",
+    metaDescription:
+      "Portable cabins in Kaggadasapura for terrace guest rooms, hobby spaces and temporary family accommodation during home reconstruction. Explore options.",
+    keywords:
+      "portable cabin in Kaggadasapura, porta cabin in Kaggadasapura, prefab cabin Kaggadasapura, portable room Kaggadasapura, PUF panel cabin Kaggadasapura, portable cabin Kaggadasapura Main Road, portable cabin Malleshpalya, portable cabin Vignana Nagar, portable cabin Nagavarapalya, portable cabin GM Palya, terrace cabin, rooftop cabin, prefab terrace room, lightweight cabin for terrace, temporary living cabin during house construction, portable cabin price in Kaggadasapura",
+    // Approximate point on Kaggadasapura Main Road, the same as the Kaggadasapura shipping-container page (owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Kaggadasapura, Bengaluru, Karnataka, India",
+      position: "12.9845;77.6790",
+      icbm: "12.9845, 77.6790",
+    },
+    motion: true,
+    // Brief §2 / §7: "porta cabin" (and the prefab synonym) as the Service's other names.
+    serviceJsonLd: { serviceType: "Portable Cabin", alternateName: ["Porta Cabins in Kaggadasapura", "Prefabricated Cabins in Kaggadasapura"] },
+    // The hero is 1672 × 941 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-kaggadasapura/portable-cabin-kaggadasapura.webp",
+      alt: "Exterior view of a green prefabricated portable cabin with sliding glass doors, a railed roof deck and a spiral staircase",
+      width: 1672,
+      height: 941,
+      caption:
+        "Illustrative render of a cabin exterior on a paved yard; the roof deck and staircase are design options, not standard items. Size, layout and fittings are agreed in the quotation.",
+    },
+
+    h1: "Portable Cabins in Kaggadasapura (Porta Cabins)",
+    tagline: "Terrace rooms for guests, hobbies and family time, and temporary living cabins for families rebuilding their homes.",
+    intro: [
+      "Kaggadasapura is a residential neighbourhood in East Bengaluru, with independent houses, apartment buildings and properties undergoing renovation or reconstruction.",
+      "For homeowners requiring an additional room or temporary accommodation during rebuilding, portable cabins can provide flexible space without the same construction process as a conventional masonry room.",
+      "Portable Office Cabin offers portable cabin solutions in Kaggadasapura for terrace rooms, personal hobby spaces and temporary family living requirements, subject to site suitability and necessary approvals.",
+    ],
+    // Brief §5: the category (which owns the head term) from the introduction.
+    introLink: {
+      before: "To see our standard cabin designs before you plan a terrace or living cabin, browse our",
+      link: { label: "portable cabins", href: "/products/category/portable-cabins" },
+      after: ".",
+    },
+    heroCta: true,
+
+    extraSections: [
+      {
+        heading: "Terrace Cabins: Additional Space on Your Rooftop",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-kaggadasapura/insulated-portable-cabin-interior.webp",
+          alt: "Interior of a portable cabin with wood-finish wall panelling, LED ceiling lights, a split air conditioner, a desk and sliding glass doors",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative interior render, furnished here as a study; it does not show a terrace installation. A guest, hobby or family room is laid out to your requirements.",
+        },
+        paragraphs: [
+          "A terrace cabin is a prefabricated room designed for installation on a suitable rooftop or terrace.",
+          "Depending on the design, the cabin may be manufactured as a complete unit or assembled from prefabricated panels at the installation location.",
+          "Terrace cabins can provide additional usable space, but installation requires structural verification, waterproofing protection, wind-resistance design and applicable permissions.",
+        ],
+        subsections: [
+          {
+            heading: "Terrace cabin applications",
+            bullets: [
+              {
+                title: "Guest rooms",
+                text: "A suitable insulated cabin can provide accommodation for visiting relatives or family guests. An attached bathroom may be considered where structural capacity, drainage, water supply and permissions allow.",
+              },
+              { title: "Personal hobby rooms", text: "A terrace cabin can provide dedicated space for painting, sewing, model-making and other personal activities." },
+              { title: "Terrace gardening rooms", text: "A compact cabin can accommodate gardening tools, seed trays, potting materials and related equipment." },
+              { title: "Additional family rooms", text: "A properly designed cabin may provide additional personal space for family members." },
+              { title: "Quiet relaxation rooms", text: "Insulated cabins can be designed for personal relaxation and other low-impact residential uses." },
+            ],
+            // Brief §5: the Bellandur page owns home offices; the Jayanagar page's ground-floor elder room is the
+            // family-accommodation page the brief names (anchor narrowed to what it covers).
+            inlineLinks: [
+              {
+                before: "If the room will mainly be used for working from home, see our",
+                link: { label: "portable office cabins in Bellandur", href: "/cities-we-serve/portable-office-cabin-bellandur" },
+                after: ", which cover home office layouts.",
+              },
+              {
+                before: "A terrace room is reached by stairs. For a ground-floor room for a parent who should avoid them, see our",
+                link: { label: "portable cabins for elderly parents in Jayanagar", href: "/cities-we-serve/portable-cabin-jayanagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Structural safety requirements for rooftop cabins",
+            paragraphs: ["Before installing any portable cabin on a terrace:"],
+            ordered: true,
+            bullets: [
+              { text: "Obtain an assessment from a qualified structural engineer." },
+              { text: "Verify the load-bearing capacity of the roof slab, beams, columns and supporting structure." },
+              { text: "Consider the cabin's dead load, occupancy load, wind forces and other applicable loads." },
+              { text: "Design an appropriate support and anchoring system." },
+              { text: "Protect existing roof waterproofing and drainage." },
+              { text: "Keep rainwater outlets accessible." },
+              { text: "Check municipal building permissions and approved building plans." },
+              { text: "Obtain required property-owner or association permissions." },
+              { text: "Confirm safe access, emergency egress and electrical arrangements." },
+            ],
+            closing: [
+              "Not every terrace can carry a portable cabin. Whether yours can depends on a qualified structural engineer's approval and the local requirements that apply.",
+            ],
+          },
+          {
+            heading: "Terrace cabin installation methods",
+            bullets: [
+              {
+                title: "Crane-assisted installation",
+                text: "A completed cabin may be lifted onto a terrace where the route, crane access, structural conditions and lifting arrangements permit. A qualified lifting contractor must plan and execute the lift.",
+              },
+              {
+                title: "On-site panel assembly",
+                text: "Where lifting a complete unit is impractical, a cabin can be supplied in knock-down form and its prefabricated panels assembled on the terrace, if the design suits it and the installation has been approved. Whether this is possible for your cabin is confirmed in the quotation.",
+              },
+            ],
+          },
+          {
+            heading: "Insulation and comfort",
+            paragraphs: ["Terrace cabins may be designed with:"],
+            bullets: [
+              { text: "PUF-insulated walls and roofing." },
+              { text: "Suitable ventilation." },
+              { text: "Weather-resistant exterior finishes." },
+              { text: "Windows with appropriate sun protection." },
+              { text: "Electrical lighting and fan provisions." },
+              { text: "Optional air-conditioning provisions." },
+              { text: "Appropriate roof waterproofing interfaces." },
+            ],
+            closing: ["The final specification follows the actual cabin design and is set out in your quotation."],
+          },
+        ],
+      },
+      {
+        heading: "Temporary Family Living Cabins During House Reconstruction",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-kaggadasapura/portable-cabin-side-windows.webp",
+          alt: "Side view of a green container-style portable cabin with two sliding windows and wall-mounted lights",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative side view. The rooms, doors and windows of a living cabin are planned with you before it is built.",
+        },
+        paragraphs: [
+          "Rebuilding or substantially renovating a home may require families to arrange temporary accommodation.",
+          "A portable living cabin can provide temporary residential space on a suitable, authorised site while construction work takes place.",
+        ],
+        // Brief §5: the JP Nagar container page owns storage during a home rebuild (the brief's anchor).
+        inlineLinks: [
+          {
+            before: "Your furniture and belongings need somewhere safe during the rebuild too. For lockable storage, see our",
+            link: { label: "storage containers during house reconstruction", href: "/cities-we-serve/shipping-container-jp-nagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Living cabin features",
+            paragraphs: ["Depending on the selected design and available services, a family living cabin may include:"],
+            bullets: [
+              { text: "Sleeping and living areas." },
+              { text: "Insulated walls and roofing." },
+              { text: "Doors and windows with suitable security." },
+              { text: "Lighting and ventilation." },
+              { text: "Electrical outlets and fan provisions." },
+              { text: "Wardrobes or storage shelves." },
+              { text: "A compact kitchenette." },
+              { text: "An attached bathroom and toilet." },
+              { text: "An optional shaded entrance or sit-out." },
+            ],
+          },
+          {
+            heading: "Bathroom and kitchenette arrangements",
+            paragraphs: [
+              "Bathroom facilities require suitable water supply, drainage and sanitation connections.",
+              "Kitchenette arrangements should include safe electrical design and ventilation. Induction cooking may be considered where the electrical installation is appropriately designed.",
+              "Any LPG installation must follow the gas supplier's requirements and applicable safety rules, including where the cylinder is kept.",
+            ],
+            // A catalogue guide that supports the attached-bathroom and kitchenette lines.
+            inlineLinks: [
+              {
+                before: "For how an attached toilet and pantry are built and connected, see our guide to a",
+                link: { label: "portable cabin with toilet and pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Safe placement during construction",
+            paragraphs: ["A temporary family living cabin must be located outside the construction hazard zone. Consider:"],
+            bullets: [
+              { text: "Excavation and foundation work." },
+              { text: "Falling materials." },
+              { text: "Scaffolding and temporary structures." },
+              { text: "Crane movement and lifting operations." },
+              { text: "Construction vehicle access." },
+              { text: "Fire and electrical safety." },
+              { text: "Safe pedestrian access and emergency evacuation." },
+              { text: "Required separation from construction activities." },
+            ],
+            closing: [
+              "The site engineer and construction contractor must approve the proposed placement.",
+              "Never place a residential cabin on a public road or footpath without lawful authorisation.",
+            ],
+          },
+          {
+            heading: "Reusing the cabin after reconstruction",
+            paragraphs: [
+              "A portable cabin used for temporary accommodation may potentially be relocated or repurposed after construction. For example, it may become a guest room or hobby room on a newly constructed terrace.",
+              "However, this depends on:",
+            ],
+            bullets: [
+              { text: "The cabin's condition and relocatability." },
+              { text: "Structural design of the new building." },
+              { text: "Approved lifting and anchoring arrangements." },
+              { text: "Available terrace space." },
+              { text: "Municipal permissions." },
+              { text: "Transportation and installation feasibility." },
+            ],
+            closing: ["Relocation or reuse is never promised in advance: each needs a technical check first."],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin Sizes in Kaggadasapura",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-kaggadasapura/portable-cabin-corner-view.webp",
+          alt: "Corner view of a green container-style portable cabin with steel end doors, a glazed side wall and a railed roof deck",
+          width: 1200,
+          height: 896,
+          caption: "Illustrative corner view. Exact dimensions and weight are set out for each cabin before you order.",
+        },
+        // Sizes use no-break spaces (\u00a0) so a footprint never splits over two lines on a narrow phone.
+        table: {
+          caption: "Illustrative layout sizes, not confirmed stock or standard offerings.",
+          headers: ["Cabin size", "Potential application"],
+          rows: [
+            ["10\u00a0×\u00a08\u00a0ft", "Compact terrace hobby or gardening room"],
+            ["20\u00a0×\u00a010\u00a0ft", "Guest room or compact temporary living cabin"],
+            ["30\u00a0×\u00a010\u00a0ft", "Larger family living layout"],
+            ["40\u00a0×\u00a010\u00a0ft", "Multi-area temporary family accommodation"],
+          ],
+        },
+        closing: [
+          "Actual dimensions, weight, occupancy and layout must be verified against available products and site requirements before you order.",
+        ],
+      },
+      {
+        heading: "Portable Cabin Price in Kaggadasapura",
+        placement: "afterSolutions",
+        paragraphs: ["Portable cabin prices depend on:"],
+        bullets: [
+          { text: "Cabin size and layout." },
+          { text: "MS frame or PUF panel construction." },
+          { text: "Wall and roof insulation." },
+          { text: "Flooring and interior finishes." },
+          { text: "Doors and windows." },
+          { text: "Electrical installations." },
+          { text: "Bathroom and kitchenette requirements." },
+          { text: "Plumbing and sanitation connections." },
+          { text: "Transportation and unloading." },
+          { text: "Rooftop lifting or on-site assembly." },
+          { text: "Structural support and anchoring requirements." },
+        ],
+        closing: ["You can request a quotation based on your intended application, site details and specifications."],
+        // Brief §5: a product guide that supports the MS frame / PUF panel line of the list.
+        inlineLinks: [
+          {
+            before: "To compare MS sheet and PUF panel construction before you decide, see our guide to",
+            link: { label: "portable cabin materials", href: "/products/portable-cabin/materials-ms-vs-puf" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabins on Rent in Kaggadasapura",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hire is offered for selected standard cabins, such as site office cabins, toilet cabins and staff accommodation units. A terrace room or a family living cabin with a bathroom and kitchenette is built to your layout, so whether one can be supplied on hire, and the hire period, any deposit, and the transport and collection arrangements, are confirmed in your quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "To see which standard cabins can be hired today, see our",
+            link: { label: "portable cabin hire options", href: "/rental-service" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Porta Cabin or Portable Cabin: What Is the Difference?",
+        placement: "afterSolutions",
+        paragraphs: [
+          "The terms \"porta cabin\" and \"portable cabin\" are commonly used for prefabricated, movable or relocatable cabin structures. In practice they describe the same thing: a room built in a factory, brought to your property and able to be moved again later.",
+          "Whichever name you search for, this page covers porta cabins and portable cabins in Kaggadasapura, for terrace rooms and for temporary family living.",
+        ],
+        inlineLinks: [
+          {
+            before: "For porta cabin builds, including lightweight cabins for RCC rooftops, see our",
+            link: { label: "porta cabin range", href: "/products/porta-cabin" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Portable Cabin",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-kaggadasapura/portable-cabin-top-view.webp",
+          alt: "Top-down view of a green container-style portable cabin with a railed wooden roof deck, planters and a spiral staircase on a paved yard",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative top view, not a terrace installation. Your site's access, space and clearances are checked before the cabin is built.",
+        },
+        ordered: true,
+        bullets: [
+          { text: "Explain whether the cabin is intended for terrace use or temporary living." },
+          { text: "Share the required size and layout." },
+          { text: "Provide site details and access information." },
+          { text: "Arrange a structural assessment and the necessary approvals, where applicable." },
+          { text: "Discuss insulation, bathroom, kitchenette and electrical requirements." },
+          { text: "Obtain a quotation and a proposed installation plan." },
+          { text: "Confirm the design, delivery and installation arrangements." },
+        ],
+        inlineLinks: [
+          {
+            before: "For what to prepare before a cabin arrives, see our guide to",
+            link: { label: "portable cabin installation and site preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "We manufacture prefabricated cabins at our factory and plan each one around how it will be used. For a terrace room or a temporary living cabin, that means:",
+        ],
+        bullets: [
+          { title: "Prefabricated cabin construction", text: "the cabin is built at our factory, so far less work happens at your home." },
+          { title: "Layout customisation", text: "room sizes, partitions, doors and windows arranged for a guest room, hobby room or living cabin." },
+          { title: "Insulated wall and roof options", text: "PUF-insulated panels for a cooler room on an exposed terrace." },
+          { title: "Suitable doors, windows and interior finishes", text: "chosen for residential use." },
+          { title: "Electrical and plumbing provisions", text: "lighting, fans, sockets and AC points, with an attached toilet and pantry where your site can be connected." },
+          { title: "Delivery and installation coordination", text: "transport, unloading and placement planned with you, with any lift handled by a qualified lifting contractor." },
+        ],
+        closing: [
+          "We don't certify a terrace's structural capacity, guarantee that a rooftop is suitable or obtain municipal approvals: those come from a qualified structural engineer and the relevant authority.",
+        ],
+      },
+    ],
+
+    areasHeading: "Areas Served Around Kaggadasapura",
+    areasText:
+      "We supply portable cabins in Kaggadasapura, along Kaggadasapura Main Road and around the Kaggadasapura lake area, and in Malleshpalya, Vignana Nagar, Nagavarapalya and GM Palya. Road access for the delivery vehicle, and for a crane where one is needed, is checked for each address.",
+    // Brief §5: the reciprocal link to the Kaggadasapura shipping-container page (commercial storage), added in
+    // this page's release because #275 was released first (agreed with that page's session).
+    areasInlineLink: {
+      before: "For lockable storage in the same neighbourhood, see our",
+      link: { label: "shipping containers in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+      after: ".",
+    },
+
+    faqs: [
+      {
+        question: "Can a portable cabin be installed on a terrace?",
+        answer:
+          "A portable cabin may be installed on a suitable terrace after a qualified structural engineer confirms its capacity and the necessary approvals are obtained.",
+      },
+      {
+        question: "Is permission required for a terrace cabin?",
+        answer:
+          "Permission requirements depend on the property and applicable building regulations. Confirm requirements with the relevant authority and obtain association consent where necessary.",
+      },
+      {
+        question: "Can a portable cabin be assembled on a rooftop?",
+        answer:
+          "Some prefabricated panel systems may be suitable for on-site assembly, subject to product availability, engineering requirements and safe access.",
+      },
+      {
+        question: "Will a terrace cabin become too hot?",
+        answer:
+          "Insulation, ventilation, shading and suitable cooling arrangements can help manage indoor temperatures. Actual performance depends on design and site conditions.",
+      },
+      {
+        question: "Can a family live in a portable cabin while rebuilding a house?",
+        answer:
+          "A properly designed and authorised temporary living cabin may provide accommodation where sanitation, utilities, fire safety and separation from construction hazards are addressed.",
+      },
+      {
+        question: "Can a portable cabin have an attached bathroom?",
+        answer: "Yes, depending on the cabin design, available space and suitable plumbing and sanitation arrangements.",
+      },
+      {
+        question: "Can the cabin be reused after construction?",
+        answer:
+          "Potentially, provided its condition, design, transportation and new installation location are suitable and the necessary approvals are obtained.",
+      },
+      {
+        question: "Is a porta cabin the same as a portable cabin?",
+        answer: "The terms are commonly used interchangeably for prefabricated cabin structures.",
+      },
+      {
+        question: "What is the portable cabin price in Kaggadasapura?",
+        answer: "Pricing depends on size, construction type, fittings, delivery and installation requirements.",
+      },
+      {
+        question: "How long does installation take?",
+        answer:
+          "The timeline depends on manufacturing, customisation, site preparation, approvals and the installation method. We confirm the schedule in the quotation, before you order.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Cabin Quotation in Kaggadasapura",
+    ctaText: `Whether you need an additional terrace room or temporary family accommodation during house reconstruction, Portable Office Cabin can discuss suitable prefabricated cabin options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Service area: Kaggadasapura, Bengaluru, Karnataka.`,
+    // The CTA box button → /contact.
+    ctaButtonLabel: "Get a Portable Cabin Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons; the
+    // call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    // The category, the materials, installation and toilet-and-pantry guides, the porta cabin range and the
+    // rental service are linked in the body.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Portable Cabin Sizes & Specifications", href: "/products/portable-cabin" },
+      { label: "Insulated Portable Cabins — PUF Panels & Cooling", href: "/products/portable-cabin/insulation-and-cooling" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds its cabins at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office is in Electronic City, Bengaluru; it has no factory, yard or branch in Kaggadasapura. Every cabin is subject to availability, and its quotation states the dimensions, construction, fit-out, electrical and plumbing provisions, any hire terms, and who arranges transport, unloading, lifting, placement and utility connections; no delivery date or installation time is guaranteed. Portable Office Cabin does not assess or certify the structural capacity of a terrace, does not guarantee that any rooftop can carry a cabin, and does not obtain building permissions or association consent; a terrace installation needs a qualified structural engineer's approval and the permissions that apply, and a crane lift is planned and carried out by a qualified lifting contractor. The sizes on this page are illustrative layouts, not stock, and relocation or reuse of a cabin after reconstruction is not promised. All five images are illustrative renders of one container-style cabin on a paved yard; none was photographed in Kaggadasapura, shows a supplied unit or shows a terrace installation, a bedroom or a bathroom, and the roof deck and staircase they show are design options, not standard items. Kaggadasapura, Kaggadasapura Main Road, the lake area, Malleshpalya, Vignana Nagar, Nagavarapalya and GM Palya indicate where enquiries can come from; they do not identify customers or completed installations. Notes on structural safety, waterproofing, gas, electrical and fire safety, construction-site placement and permissions are general guidance, not engineering or legal advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
