@@ -36969,6 +36969,15 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas Served Around Kaggadasapura",
     areasText:
       "We take shipping and storage container enquiries from across Kaggadasapura, including Kaggadasapura Main Road and the Kaggadasapura lake area, and from neighbouring Malleshpalya, Vignana Nagar, Nagavarapalya and GM Palya. Before a delivery date is agreed, we look at how the lorry will reach your site and where the container will stand.",
+    // Reciprocal link to the Kaggadasapura portable cabin page (terrace rooms and temporary family living, not
+    // storage), added in that page's release (#276), which went live second.
+    areasInlineLinks: [
+      {
+        before: "Looking for a terrace room, or somewhere for the family to live while the house is rebuilt, rather than storage? See our",
+        link: { label: "portable cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -41665,6 +41674,13 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas Served Around Kaggadasapura",
     areasText:
       "We supply portable cabins in Kaggadasapura, along Kaggadasapura Main Road and around the Kaggadasapura lake area, and in Malleshpalya, Vignana Nagar, Nagavarapalya and GM Palya. Road access for the delivery vehicle, and for a crane where one is needed, is checked for each address.",
+    // Brief §5: the reciprocal link to the Kaggadasapura shipping-container page (commercial storage), added in
+    // this page's release because #275 was released first (agreed with that page's session).
+    areasInlineLink: {
+      before: "For lockable storage in the same neighbourhood, see our",
+      link: { label: "shipping containers in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+      after: ".",
+    },
 
     faqs: [
       {
