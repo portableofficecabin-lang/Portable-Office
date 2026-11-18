@@ -668,6 +668,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kaggadasapura (electrical and plumbing contractors' stores, neighbourhood dry recyclables; owner
     // brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+    // Rajajinagar (printing presses and print-packaging units; owner brief 2026-11-18), appended so the
+    // live links keep their positions.
+    { name: "Shipping Containers in Rajajinagar", href: "/cities-we-serve/shipping-container-rajajinagar" },
   ],
 };
 

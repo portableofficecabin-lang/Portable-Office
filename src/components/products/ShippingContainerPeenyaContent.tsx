@@ -91,7 +91,7 @@ const faqs = [
   },
   {
     q: "Which areas near Peenya do you serve?",
-    a: "We serve all four phases of Peenya Industrial Area, plus nearby industrial zones including Rajajinagar, Yeshwanthpur, Jalahalli, Dasarahalli, Nagasandra, Tumkur Road corridor, and extensions to Nelamangala, Dobbaspet, and Bidadi."
+    a: "We serve all four phases of Peenya Industrial Area, plus nearby industrial zones including Yeshwanthpur, Jalahalli, Dasarahalli, Nagasandra, Tumkur Road corridor, and extensions to Nelamangala, Dobbaspet, and Bidadi."
   },
 ];
 
@@ -361,6 +361,11 @@ export function ShippingContainerPeenyaContent() {
             </div>
           ))}
         </div>
+        {/* Rajajinagar brief (2026-11-18): printing and packaging storage in Rajajinagar has its own page. */}
+        <p className="mt-6 text-muted-foreground">
+          Print shops and packaging units a short way south-east, in Rajajinagar, will find paper, carton and die storage set out on our page about{" "}
+          <Link href="/cities-we-serve/shipping-container-rajajinagar" className="text-accent hover:underline">storage containers for printing presses in Rajajinagar</Link>.
+        </p>
       </section>
 
       {/* Buying Checklist */}
