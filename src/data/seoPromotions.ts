@@ -706,6 +706,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kasturi Nagar (aquarium shops' empty tanks, pumps and service kits; trophy and memento sellers' stock
     // and finished orders; owner brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Kasturi Nagar", href: "/cities-we-serve/shipping-container-kasturi-nagar" },
+    // Yeshwanthpur (wholesale grain, pulse and spice traders' bagged stock and market equipment; lorry
+    // transporters' tarpaulins, lashing gear and spares; owner brief 2026-11-18), appended so the live links
+    // keep their positions.
+    { name: "Shipping Containers in Yeshwanthpur", href: "/cities-we-serve/shipping-container-yeshwanthpur" },
     // Vijayanagar, Bengaluru (upholstery workshops' and mattress makers' furniture, fabric and foam; agarbatti
     // units' bamboo sticks, packaging and packed stock; owner brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Vijayanagar, Bengaluru", href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru" },
