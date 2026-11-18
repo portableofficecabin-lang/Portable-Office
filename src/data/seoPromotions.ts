@@ -678,6 +678,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Banashankari (Gombe Habba doll collections, doll sellers' stock, kirana backstock; owner brief
     // 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Banashankari", href: "/cities-we-serve/shipping-container-banashankari" },
+    // Varthur (uPVC, aluminium and glass window installers' stores, dairy farm feed and equipment; owner
+    // brief 2026-11-18), appended so the live links keep their positions.
+    { name: "Shipping Containers in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
   ],
 };
 
