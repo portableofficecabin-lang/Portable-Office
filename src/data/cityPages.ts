@@ -45322,8 +45322,9 @@ export const CITY_PAGES: CityPage[] = [
    *
    * LINKS (brief §5): sizes section → /products/portable-shop-cabin ("portable shop cabins"); design
    * section → /products/portable-cabin/layouts-and-interiors ("custom portable cabin layouts"); food-
-   * protection H3 → /products/portable-cabin/insulation-and-cooling; community-placement H3 → the
-   * security-cabins category (the RR Nagar security-cabin page is not live yet, so it is not linked).
+   * protection H3 → /products/portable-cabin/insulation-and-cooling; community-placement H3 → the RR
+   * Nagar security-cabin page (#281), anchor "portable security cabins in RR Nagar" (the brief's guard-post
+   * reference; that page's brief asks for no link back).
    * Inbound: the shop product page's "Portable shops by location" list, the /cities-we-serve directory
    * card and one areas paragraph on the RR Nagar shipping-container page (placement agreed with that
    * page's session). The nearby block links back to that page.
@@ -45667,7 +45668,7 @@ export const CITY_PAGES: CityPage[] = [
             inlineLinks: [
               {
                 before: "For a dedicated guard post at the community gate, see our",
-                link: { label: "security cabins", href: "/products/category/security-cabins" },
+                link: { label: "portable security cabins in RR Nagar", href: "/cities-we-serve/portable-security-cabin-rajarajeshwari-nagar" },
                 after: ".",
               },
             ],
