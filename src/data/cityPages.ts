@@ -35320,6 +35320,557 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN KASTURI NAGAR — extra space for aquarium shops and aquarium
+   * maintenance services (empty tanks, filters, pumps, spares, substrate, décor, stands and service kits),
+   * and for trophy and memento sellers (cups, heavy bases, plaques, medals, ribbons and finished award
+   * orders) in East Bengaluru.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Kasturi Nagar"): meta title, H1, keywords, local modifiers, section order, H2 / H3 headings, sizes
+   * table and the eleven FAQs are the brief's, and so is the copy, lightly edited for flow and British
+   * spelling. The meta description is the brief's with "storing … storing" folded into possessives, so it
+   * fits the site's 160-character limit (the brief's text is 165). The brief's notes to the implementer
+   * ("Do not invent…", "Do not guarantee…", "Conditional section…", "Present only verified
+   * capabilities…", "Do not target…", "Use verified company phone numbers…") are instructions, not page
+   * copy, and are left out. The route follows the site convention (/cities-we-serve/…), not the brief's
+   * root slug. The tagline, captions, link lead-ins, enquiry-form intro and disclaimer were written for
+   * their slots. "Kasthuri Nagar" appears once in the visible copy (areas), as the brief asks.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists 10, 20, 40 ft and 40 ft High Cube units on terms from one month to five years; no deposit, price
+   * or delivery charge is stated here); the 10 ft row stays without "if available" (10 ft units are listed
+   * on Cargo Container for Sale and on the rental product; the table caption says each size's
+   * availability is confirmed in the quotation); shelving, lighting and ventilation are listed options on
+   * the storage container. Padded shelving, drawers, bins and crate bays are price factors "where they are
+   * part of the quotation", not standard equipment. The optional Kannada search terms are not used: the
+   * page is in English, and a Kannada phrase in the meta keywords would not be read by anyone.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Aquarium shops, trophy sellers and "Protecting Fragile Inventory" → three afterIntro extra sections,
+   *     their H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered) → afterSolutions
+   *     extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Kasturi Nagar" → areas. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's eleven. CTA: the brief's closing
+   *   section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): placement section → "shipping container delivery and placement" (Bellandur's
+   * gate-and-lane delivery notes, the brief's anchor); sizes section → "used shipping container
+   * inspection": the brief's /shipping-container-chennai does not exist, so it points to the Chennai-area
+   * Athipattu page and its "Used Container Inspection" checklist, as RR Nagar does; rental section →
+   * /products/shipping-container-rental; intro → the cargo category ("Existing shipping container product
+   * page"). Inbound: the Hennur Road page's décor and party-supply section (`inlineLinks`, "storage
+   * containers for trophy and memento sellers in Kasturi Nagar"; that page sets `nearbySkipsBodyLinks`,
+   * so its nearby block does not repeat it), the Karnataka shipping hub ("Shipping Containers in Kasturi
+   * Nagar"), the cargo category's location links ("Storage containers in Kasturi Nagar") and every
+   * Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from
+   * repeating Bellandur.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kasturi Nagar (Kasthuri Nagar), Doctors
+   * Layout, Bhuvanagiri and Sadananda Nagar, for aquarium-shop and aquarium-maintenance inventory and for
+   * trophy and memento sellers' stock and finished award orders. Not targeted: Banaswadi, OMBR Layout
+   * and Pai Layout (kept for possible future pages); East of NGEF Layout; Old Madras Road, Tin Factory, TC
+   * Palya and Doorvaninagar (KR Puram); Vijinapura (Ramamurthy Nagar); Baiyappanahalli and Benniganahalli;
+   * Kalyan Nagar, HRBR Layout and décor or party supplies (Hennur Road); Horamavu and tent-house stock
+   * (Horamavu); schools' sports-day props (JP Nagar); window glass (Varthur); live animals or pet supplies
+   * (Bannerghatta Road; live fish and plants are named only as items NOT to keep in a container).
+   * "Bengaluru" stays out of the title, as the brief asks; the geo meta and the Service JSON-LD's
+   * areaServed carry "Kasturi Nagar, Bengaluru, Karnataka".
+   *
+   * Images: four owner-supplied WebP images ("public/images/Storage Containers in Kasturi Nagar city
+   * page/Storage Containers in Kasturi Nagar/cabin (1–4).webp", lossy VP8, no EXIF / XMP) of one grey
+   * container with khaki-trimmed cargo doors, kept byte-identical (VP8 bitstream untouched) with an XMP
+   * dc:title / dc:description added that labels each one illustrative (no creator, GPS or date). (2)
+   * three-quarter exterior = hero / og:image (the brief's hero filename); (1) empty interior = aquarium
+   * section; (4) roof from above = placement section; (3) side wall = sizes section. No image shows
+   * aquarium tanks, filters, tools, trophies, medals, plaques or boxed orders, so the brief's six
+   * use-case image slots are not used, and no alt text, caption or filename claims those items, a size
+   * or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-kasturi-nagar",
+    city: "Kasturi Nagar",
+    listTitle: "Shipping & Storage Containers in Kasturi Nagar",
+    metaTitle: "Shipping Container in Kasturi Nagar | Aquarium & Trophy Storage",
+    metaDescription:
+      "Shipping and storage containers in Kasturi Nagar for aquarium shops' empty tanks, filters and maintenance kits, and trophy sellers' awards and plaques.",
+    keywords:
+      "shipping container in Kasturi Nagar, cargo container Kasturi Nagar, storage container Kasturi Nagar, storage container Kasthuri Nagar, storage container Doctors Layout, storage container Bhuvanagiri, storage container Sadananda Nagar, used shipping container Kasturi Nagar, shipping container price in Kasturi Nagar, storage container for rent in Kasturi Nagar, aquarium shop storage container, aquarium tank storage, aquarium maintenance equipment storage, aquarium filter and pump spares storage, trophy shop storage container, trophy and memento stock storage, medal and plaque storage, award order staging storage",
+    // Approximate point in Kasturi Nagar, East Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Kasturi Nagar, Bengaluru, Karnataka, India",
+      position: "13.0030;77.6590",
+      icbm: "13.0030, 77.6590",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and Athipattu are linked in the body, so the nearby block leaves them out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-kasturi-nagar/shipping-container-kasturi-nagar.webp",
+      alt: "Grey shipping container exterior with corrugated steel walls and closed double cargo doors with khaki trim and locking bars, suitable for commercial inventory storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative image only: this exterior view was not taken at a Kasturi Nagar shop or yard.",
+    },
+
+    h1: "Shipping & Storage Containers in Kasturi Nagar",
+    tagline:
+      "Extra room for aquarium shops' empty tanks, pumps and service kits, and for trophy sellers' cups, medals, plaques and finished orders.",
+    intro: [
+      "Kasturi Nagar is an established residential locality in East Bengaluru with neighbourhood shops and small commercial businesses.",
+      "Aquarium shops and maintenance services may require additional space for empty glass tanks, pumps, filters and service equipment.",
+      "Trophy and memento sellers may also need secure storage for cups, medals, plaques and completed customer orders.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Kasturi Nagar for these specialised inventory requirements.",
+    },
+
+    areasHeading: "Areas Served Around Kasturi Nagar",
+    areasText:
+      "We supply shipping and storage containers to businesses in Kasturi Nagar (also spelt Kasthuri Nagar), Doctors Layout, Bhuvanagiri and Sadananda Nagar. Shops here often stand on residential cross roads, so the approach and the exact standing spot are checked for each property before any delivery date is set.",
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Aquarium Shops & Maintenance Services",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kasturi-nagar/storage-container-interior-kasturi-nagar.webp",
+          alt: "Empty storage container interior with grey corrugated walls, a dark plywood floor and closed cargo doors at the far end",
+          width: 1450,
+          height: 1085,
+          caption:
+            "Illustrative image of an empty interior before loading. Shelves, padding, bins and lights are added only when your quotation lists them.",
+        },
+        paragraphs: [
+          "Aquarium businesses handle a range of fragile, bulky and specialised products.",
+          "A suitable shipping container can provide additional storage space for non-living inventory, subject to appropriate handling, environmental conditions and site permissions.",
+        ],
+        subsections: [
+          {
+            heading: "Empty aquarium tank storage",
+            paragraphs: ["Glass aquarium tanks require careful handling and support. Recommended precautions include:"],
+            bullets: [
+              { text: "Follow the aquarium manufacturer's storage instructions." },
+              { text: "Support tanks on suitable level surfaces." },
+              { text: "Use appropriate protective padding." },
+              { text: "Avoid unsupported edges or concentrated pressure." },
+              { text: "Protect glass panels against impacts." },
+              { text: "Keep heavy objects off the tanks." },
+              { text: "Use original crates for large tanks where available." },
+            ],
+            closing: ["Do not assume all tank designs can be stored in the same orientation."],
+          },
+          {
+            heading: "Large aquarium tank storage",
+            paragraphs: ["Larger tanks may require:"],
+            bullets: [
+              { text: "Specially designed supports." },
+              { text: "Protective packaging." },
+              { text: "Suitable lifting arrangements." },
+              { text: "Adequate clearance." },
+              { text: "Stable storage surfaces." },
+            ],
+            closing: ["Verify tank dimensions, weight and handling requirements before designing the container layout."],
+          },
+          {
+            heading: "Aquarium filters, pumps & spare parts",
+            paragraphs: ["A container may be organised with shelves and bins for:"],
+            bullets: [
+              { text: "Aquarium filters." },
+              { text: "Water pumps." },
+              { text: "Replacement impellers." },
+              { text: "Filter media." },
+              { text: "Aquarium heaters." },
+              { text: "Lighting accessories." },
+              { text: "Plumbing fittings." },
+              { text: "Electrical spare parts." },
+            ],
+            closing: ["Store products according to manufacturer instructions."],
+          },
+          {
+            heading: "Aquarium gravel and substrate storage",
+            paragraphs: [
+              "Gravel and substrate bags can be heavy. Store them on suitably rated low shelves or pallets, check the total floor loading, and avoid concentrating excessive weight in one area.",
+            ],
+          },
+          {
+            heading: "Aquarium decoration storage",
+            paragraphs: ["Suitable inventory may include:"],
+            bullets: [
+              { text: "Artificial plants." },
+              { text: "Decorative rocks." },
+              { text: "Driftwood." },
+              { text: "Background panels." },
+              { text: "Non-living display accessories." },
+            ],
+            closing: ["Fragile items should be individually protected and labelled."],
+          },
+          {
+            heading: "Aquarium stands and cabinets",
+            paragraphs: ["Aquarium stands and cabinets may be stored:"],
+            bullets: [
+              { text: "Flat-packed, where designed for disassembly." },
+              { text: "Wrapped against scratches." },
+              { text: "On stable supports." },
+              { text: "Away from moisture." },
+              { text: "With fittings and accessories labelled." },
+            ],
+          },
+          {
+            heading: "Aquarium maintenance equipment storage",
+            paragraphs: ["Aquarium maintenance technicians may need organised storage for:"],
+            bullets: [
+              { text: "Siphons." },
+              { text: "Scrapers." },
+              { text: "Buckets." },
+              { text: "Nets." },
+              { text: "Test kits." },
+              { text: "Hoses." },
+              { text: "Spare pumps." },
+              { text: "Cleaning accessories." },
+            ],
+            closing: ["Service kits can be grouped by technician, job type or customer requirements."],
+          },
+          {
+            heading: "Equipment cleaning before storage",
+            paragraphs: [
+              "Wet equipment may develop odours, mould or corrosion. Clean and dry reusable equipment according to the manufacturer's instructions before storing it.",
+            ],
+          },
+          {
+            heading: "Items not suitable for ordinary container storage",
+            paragraphs: [
+              "An ordinary shipping container is not a suitable substitute for a properly managed live-animal facility. Keep live fish, aquatic plants and other living organisms in suitable environments with appropriate care.",
+              "Fish food, medicines, water conditioners and temperature-sensitive products must be stored according to their labels and supplier instructions. Do not assume that a standard metal container maintains safe temperatures for these products.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Trophy & Memento Sellers",
+        placement: "afterIntro",
+        paragraphs: [
+          "Trophy and memento sellers often handle seasonal and event-based orders. School sports days, tournaments, annual functions and corporate events may create temporary increases in inventory.",
+          "A suitable storage container can provide additional space for organising award stock and completed orders.",
+        ],
+        subsections: [
+          {
+            heading: "Trophy cup storage",
+            paragraphs: ["Trophy cups and decorative figurines may be stored on suitably designed padded shelves. Organise stock by:"],
+            bullets: [
+              { text: "Size." },
+              { text: "Style." },
+              { text: "Material." },
+              { text: "Product code." },
+              { text: "Customer order." },
+            ],
+            closing: ["Avoid unstable stacking and protect delicate components against impact."],
+          },
+          {
+            heading: "Heavy trophy bases",
+            paragraphs: [
+              "Marble, stone and wooden trophy bases may be relatively heavy. Store them on appropriately rated lower shelves, and confirm shelf and floor loading before installation.",
+            ],
+          },
+          {
+            heading: "Acrylic plaques and wooden mementos",
+            paragraphs: ["Acrylic and wooden plaques may require protection against:"],
+            bullets: [
+              { text: "Scratches." },
+              { text: "Moisture." },
+              { text: "Excessive heat." },
+              { text: "Bending." },
+              { text: "Impact." },
+            ],
+            closing: ["Follow supplier instructions for storage orientation and protective packaging."],
+          },
+          {
+            heading: "Medal and ribbon storage",
+            paragraphs: ["Labelled drawers and bins may be used for:"],
+            bullets: [
+              { text: "Medals." },
+              { text: "Ribbons." },
+              { text: "Lanyards." },
+              { text: "Nameplates." },
+              { text: "Engraving accessories." },
+              { text: "Small decorative components." },
+            ],
+            closing: ["Organise inventory by size, colour, finish and order type."],
+          },
+          {
+            heading: "Finished trophy order storage",
+            paragraphs: ["Completed customer orders should be packed and labelled. Useful information includes:"],
+            bullets: [
+              { text: "Customer name." },
+              { text: "Order number." },
+              { text: "Event date." },
+              { text: "Quantity." },
+              { text: "Collection or dispatch status." },
+            ],
+            closing: ["Keep finished orders separate from unassembled inventory."],
+          },
+          {
+            heading: "Seasonal award inventory planning",
+            paragraphs: ["Trophy sellers may experience demand around:"],
+            bullets: [
+              { text: "School sports days." },
+              { text: "Annual school functions." },
+              { text: "Sports tournaments." },
+              { text: "Corporate award ceremonies." },
+              { text: "Retirement functions." },
+            ],
+            closing: ["A clearly labelled storage layout can help manage seasonal stock."],
+          },
+          {
+            heading: "Engraving and laser-cutting activities",
+            paragraphs: [
+              "Ordinary storage containers should not be treated as automatically suitable for engraving or laser-cutting operations, which may generate fumes, heat and fire risks. Use appropriately designed workshops with suitable extraction, ventilation, electrical installations and safety measures.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Protecting Fragile Inventory",
+        placement: "afterIntro",
+        paragraphs: [
+          "Both aquarium equipment and trophy stock may be damaged by impact, unstable stacking or poor environmental conditions.",
+          "Suitable storage arrangements may include:",
+        ],
+        bullets: [
+          { text: "Padded shelves." },
+          { text: "Stable supports." },
+          { text: "Labelled bins." },
+          { text: "Appropriate pallets." },
+          { text: "Secure crate bays." },
+          { text: "Ventilation where suitable." },
+          { text: "Moisture monitoring." },
+          { text: "Clear handling routes." },
+          { text: "Suitable lighting." },
+          { text: "Lockable doors." },
+        ],
+        closing: ["A standard shipping container does not guarantee protection against condensation or extreme internal temperatures."],
+      },
+      {
+        heading: "Container Placement & Delivery in Kasturi Nagar",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kasturi-nagar/shipping-container-roof-view-kasturi-nagar.webp",
+          alt: "Top-down view of a grey shipping container roof with four corner castings, on a paved yard beside green plants",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative overhead view. The plot has to take the footprint plus room to unload the container and swing its doors open.",
+        },
+        paragraphs: [
+          "Shipping containers may be placed on suitable, authorised private premises, such as commercial yards or approved storage areas.",
+          "Before delivery, assess:",
+        ],
+        bullets: [
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Vehicle turning space." },
+          { text: "Container dimensions." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Property-owner permission." },
+          { text: "Applicable local regulations." },
+          { text: "Emergency access." },
+        ],
+        closing: [
+          "Residential cross roads may limit delivery options. Where space is limited, a 10 ft or 20 ft container may be considered, subject to actual availability and access. Quiet-hour delivery or a particular unloading method can only be agreed after a site assessment.",
+        ],
+        // Brief §5: site access and unloading considerations → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Planning a delivery to a restricted site? Gate widths, lane parking and lifting are covered in our guide to",
+            link: { label: "shipping container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kasturi-nagar/shipping-container-side-wall-kasturi-nagar.webp",
+          alt: "Long side of a grey shipping container showing vertical corrugations, four corner castings and two forklift pockets along the base",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative image. The real unit's length, inside dimensions and door opening are given in its quotation.",
+        },
+        table: {
+          caption:
+            "Approximate volumes only. The quotation confirms each size's availability, internal dimensions and loading capacity.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft", "~15 m³", "Aquarium maintenance kits, spare parts or compact trophy inventory"],
+            ["20 ft", "~33 m³", "Aquarium tanks and equipment, or a trophy seller's stock and finished orders"],
+            ["40 ft", "~67 m³", "Larger inventory, where site access and available space permit"],
+          ],
+        },
+        closing: ["Measure your largest tanks, crates and display units before choosing a size."],
+        // Brief §5: container condition and buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Thinking of a second-hand unit for your shop? Before paying, read our guide to",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Kasturi Nagar",
+        placement: "afterSolutions",
+        paragraphs: ["Shipping container pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural grade and condition." },
+          { text: "Padded shelving, storage drawers and bins, or protective crate bays, if your quotation includes them." },
+          { text: "Lighting and ventilation." },
+          { text: "Locking and security features." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+          { text: "Current supply prices at the time of quotation." },
+        ],
+        closing: ["Request an itemised quotation based on the intended storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Kasturi Nagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful during a shop renovation or a seasonal rise in inventory. Shipping containers can be hired for anything from one month to five years. The quotation states the hire period, the unit, transport to your premises and the collection arrangements; any deposit or extension terms are confirmed when you ask for it.",
+        ],
+        inlineLinks: [
+          {
+            before: "See",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " for the sizes and hire terms on offer.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage requirement." },
+          { text: "Confirm the type and quantity of inventory." },
+          { text: "Share the dimensions of large tanks, crates or other bulky items." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelving, bins and protective supports." },
+          { text: "Provide the proposed delivery location." },
+          { text: "Confirm site access and permissions." },
+          { text: "Request a quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory applications. For Kasturi Nagar customers, that covers:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "10 ft, 20 ft and 40 ft lengths, depending on current stock." },
+          { title: "Storage-oriented modifications", text: "each one written into the quotation for your unit." },
+          { title: "Shelving and rack provisions", text: "planned around tank sizes and service kits, or around trophy stock and order bays." },
+          { title: "Locking arrangements", text: "lockable cargo doors, confirmed on the actual unit." },
+          { title: "Lighting and ventilation options", text: "quoted for the goods you plan to store." },
+          {
+            title: "Quotation and delivery coordination",
+            text: "an itemised quote first, then a check of the route and the standing spot before delivery is booked.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can empty aquarium tanks be stored in a shipping container?",
+        answer: "Yes, where they are properly supported, protected and stored according to the manufacturer's instructions.",
+      },
+      {
+        question: "How should large glass aquarium tanks be stored?",
+        answer: "Use suitable level supports, protective packaging and appropriate handling arrangements. Follow the tank manufacturer's requirements.",
+      },
+      {
+        question: "Can aquarium filters and pumps be stored in a container?",
+        answer: "Yes, provided they are suitably cleaned, dried, packed and stored according to manufacturer instructions.",
+      },
+      {
+        question: "Can live fish and aquatic plants be kept inside a standard shipping container?",
+        answer: "An ordinary storage container is not suitable for live-animal housing without a specially designed and managed environment.",
+      },
+      {
+        question: "Can fish food and aquarium medicines be stored in a container?",
+        answer:
+          "Only where the actual storage conditions comply with the product label and supplier instructions. Temperature-sensitive products may require alternative storage.",
+      },
+      {
+        question: "Can trophy cups and plaques be stored in a shipping container?",
+        answer: "Yes, using suitable padded shelves, protective packaging and appropriate environmental conditions.",
+      },
+      {
+        question: "How should finished trophy orders be organised?",
+        answer: "Pack and label them by customer, order number, quantity and event date, with a separate collection or dispatch area.",
+      },
+      {
+        question: "Can engraving and laser cutting be performed inside the storage container?",
+        answer:
+          "An ordinary storage-only container is not suitable for such operations without a separately designed and compliant workshop arrangement.",
+      },
+      {
+        question: "Where can a shipping container be placed in Kasturi Nagar?",
+        answer: "On suitable authorised private premises, subject to site conditions and applicable permissions.",
+      },
+      {
+        question: "What is the shipping container price in Kasturi Nagar?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Ask for a confirmed timeline with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Kasturi Nagar",
+    ctaText: `Whether you need storage for aquarium tanks and maintenance equipment or organised space for trophies, medals and completed orders, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Kasturi Nagar, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Kasturi Nagar",
+      intro:
+        "Pick a container type and quantity, give the Kasturi Nagar shop or yard address (a map pin works too) and tell us if you plan to buy or rent. Mention whether it is for aquarium tanks and service gear or for trophy stock and boxed orders, and give the size of your largest tank or crate, so we quote the right unit and fittings.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Containers are built and supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. Its Bengaluru office is in Electronic City, and there is no depot, yard, shop or branch in Kasturi Nagar. The quotation for each unit fixes its size, grade, condition, inside dimensions and door opening, any shelving, padding, bins, crate bays, lighting, ventilation or locks, the hire terms for a rented unit, and how delivery, unloading and collection work. Stock changes, and delivery dates and times are not guaranteed. The four pictures are illustrative images of one container: none was taken in Kasturi Nagar, and none shows a delivered or fitted unit, aquarium stock or trophies. Capacities are approximate. Aquarium shops, aquarium maintenance services and trophy sellers are mentioned as examples of typical uses, not as clients or completed projects; the localities are named to show where we take enquiries. The notes on tanks, equipment, fish food and medicines, live animals, trophies, engraving, fire risk, permissions and site access are general guidance, not safety, electrical, legal or engineering advice; always follow the manufacturer's and supplier's instructions.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS ACROSS UTTARA KANNADA — one district page for the coast (Karwar,
    * Gokarna, Kumta, Bhatkal) and the ghats (Sirsi, Yellapur, Dandeli): ghat-road access, off-season
    * tourism and adventure storage, fishing gear, sloping or laterite sites and monsoon door upkeep.
@@ -38943,6 +39494,14 @@ export const CITY_PAGES: CityPage[] = [
           {
             title: "Pest prevention",
             text: "no food or food packaging inside, gaps sealed, and regular checks for droppings or chewed paper and fabric.",
+          },
+        ],
+        // Kasturi Nagar brief (2026-11-18): trophy and memento sellers' award stock is that page's intent.
+        inlineLinks: [
+          {
+            before: "Selling trophies, medals and mementos for award seasons rather than party stock? See our page on",
+            link: { label: "storage containers for trophy and memento sellers in Kasturi Nagar", href: "/cities-we-serve/shipping-container-kasturi-nagar" },
+            after: ".",
           },
         ],
         subsections: [
