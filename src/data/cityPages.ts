@@ -18503,6 +18503,14 @@ export const CITY_PAGES: CityPage[] = [
           "Homeowners who rent their properties to film and television productions may need to move personal furniture and household belongings out for the duration of the shoot.",
           "A suitable storage container can provide additional space on an authorised private property while the house is being used for filming.",
         ],
+        // RR Nagar security-cabin brief (2026-11-18): a guard post at a shoot location is that page's intent.
+        inlineLinks: [
+          {
+            before: "For filming locations that require a dedicated guard post, explore our",
+            link: { label: "portable security cabins in RR Nagar", href: "/cities-we-serve/portable-security-cabin-rajarajeshwari-nagar" },
+            after: ".",
+          },
+        ],
         subsections: [
           {
             heading: "Furniture storage during shooting",
@@ -33125,11 +33133,12 @@ export const CITY_PAGES: CityPage[] = [
    *
    * LINKS (brief §5): intro → /products/security-cabin (general specifications); "Guard post versus living
    * quarters" → the Bannerghatta Road portable-cabin page's caretaker-quarters section (the brief's
-   * protected owner of watchman living quarters); toilet H3 → the cabins-with-toilet guide. The brief's
-   * link to the RR Nagar shipping-container page (household storage during shoots) and that page's
-   * reciprocal link are NOT added yet: that page (#280) is not live. Whichever of the two goes live second
-   * adds both. Inbound: the security-cabins category's location links ("Rajarajeshwari Nagar") and two new
-   * promotion hub keys (Security Cabin | Bangalore and | Karnataka), which this page links back to.
+   * protected owner of watchman living quarters); toilet H3 → the cabins-with-toilet guide; shoot section →
+   * the RR Nagar shipping-container page ("shipping containers in RR Nagar", household furniture storage
+   * during shoots; live since #280). Inbound: that page's shoot-house section ("portable security cabins in
+   * RR Nagar", the brief's anchor and context), the security-cabins category's location links
+   * ("Rajarajeshwari Nagar") and two new promotion hub keys (Security Cabin | Bangalore and | Karnataka),
+   * which this page links back to.
    *
    * KEYWORD OWNERSHIP: security cabin / guard cabin / guard room / watchman cabin × Rajarajeshwari Nagar,
    * RR Nagar, Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and
@@ -33327,6 +33336,14 @@ export const CITY_PAGES: CityPage[] = [
           "Residential properties in RR Nagar may be used as filming locations for television and film productions.",
           "Temporary guard posts may be required to manage entrance access, visitor movement and production-related security arrangements.",
           "A compact portable security cabin can provide a dedicated place for security personnel during the filming period.",
+        ],
+        // Brief §5: household storage during a shoot is the RR Nagar shipping-container page's intent.
+        inlineLinks: [
+          {
+            before: "Need somewhere to keep household furniture while the house is used for filming? See our",
+            link: { label: "shipping containers in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
+            after: ".",
+          },
         ],
         subsections: [
           {
