@@ -678,6 +678,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Banashankari (Gombe Habba doll collections, doll sellers' stock, kirana backstock; owner brief
     // 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Banashankari", href: "/cities-we-serve/shipping-container-banashankari" },
+    // Rajarajeshwari Nagar (furniture storage for houses rented for TV and film shoots, college motorsport
+    // teams' vehicles, spares and tools; owner brief 2026-11-18), appended so the live links keep their positions.
+    { name: "Shipping Containers in Rajarajeshwari Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
   ],
 };
 
