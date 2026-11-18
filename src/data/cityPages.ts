@@ -17557,6 +17557,509 @@ export const CITY_PAGES: CityPage[] = [
       "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; there is no container yard, depot or office in Bellandur. Each container is offered subject to stock, and its size, condition, grade, fittings, any certification, any rental terms and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or placed in Bellandur. The 20 ft footprint quoted is approximate; the dimensions and ratings that apply are those of the specific unit. Bellandur Post (560103) and the localities and roads listed are named only to describe the area served, and the storage uses described are examples rather than clients, past projects or confirmed delivery areas. Guidance on packing, condensation, site access, placement and permissions is general information, not engineering or legal advice.",
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN VARTHUR — site stores for uPVC, aluminium and glass window
+   * installers (profiles, glass panels, hardware, tools) and dry storage for working dairy farms
+   * (bagged cattle feed, supplements, clean milk cans, farm equipment) in Varthur, east Bengaluru.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Varthur"): meta title, meta description, H1, keywords, local modifiers, section order, H2 / H3
+   * headings, sizes table and the ten FAQs are the brief's, and so is the copy, lightly edited for flow
+   * and British spelling. The brief's notes to the implementer ("Do not promise…", "Verify…",
+   * "Conditional section…", "Present only verified capabilities…") are instructions, not page copy, and
+   * are left out. The route follows the site convention (/cities-we-serve/…), not the brief's root slug.
+   * The tagline, captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue before publishing, as the brief asks: the rental section stays (the
+   * Shipping Container Rental product lists 10, 20, 40 ft and 40 ft High Cube units on terms from one
+   * month to five years; no deposit, price or delivery charge is stated here); the 10 ft row stays,
+   * without the brief's "if available" (10 ft units are listed on Cargo Container for Sale and on the
+   * rental product); ~33 / ~67 m³ match the Cargo Storage Containers specs. Racks, A-frames, bins,
+   * pallets, ventilation and locks are described as items planned and priced in the quotation, not as
+   * standard equipment. No raised plinth or civil work is promised (the placement section says a raised
+   * base may be needed and the disclaimer says it is not part of a supply unless quoted). Nothing on the
+   * page claims glass-rack certification, food-grade approval or a waterproofing guarantee.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Window installers, dairy farmers and "Protecting Cattle Feed from Moisture and Pests" → three
+   *     afterIntro extra sections, their H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered) → afterSolutions
+   *     extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Varthur" → areas. "Why Choose Portable Office Cabin?" → a default extra section
+   *   (after the areas, as in the brief). FAQs: the brief's ten. CTA: the brief's closing section (phone,
+   *   WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): placement section → "shipping container delivery and placement" (Bellandur's
+   * gate-and-lane delivery notes); sizes section → "used shipping container inspection": the brief's
+   * /shipping-container-chennai does not exist, so it points to the Chennai-area Athipattu page and its
+   * "Used Container Inspection" checklist, as the sibling pages do; rental section →
+   * /products/shipping-container-rental; intro → the cargo category. Inbound: the Panathur page's areas
+   * ("storage containers for window installers in Varthur"), the Karnataka shipping hub ("Shipping
+   * Containers in Varthur"), the cargo category's location links ("Commercial storage containers in
+   * Varthur") and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps the nearby
+   * block from repeating Bellandur or Athipattu.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Varthur, Varthur Kodi, Gunjur, Sorahunase,
+   * Muthsandra and the Varthur lake area, for uPVC, aluminium and glass window installers and for dairy
+   * farms' feed and equipment. Not targeted: Varthur Road, Varthur Main Road and Kadubeesanahalli
+   * (Marathahalli ORR page), Balagere and Panathur (Panathur), Thubarahalli and Brookefield
+   * (Brookefield), signage makers' ACP sheets (Ramamurthy Nagar), electrical and plumbing contractors
+   * (Kaggadasapura), owner-builder tiles and sanitaryware (HSR Layout), scaffolding (Thanisandra Main
+   * Road), farmhouses and landscapers (Bannerghatta Road), agri-tech field kits (Hebbal, Bengaluru) and
+   * dairy packaging. Siddapura, Ramagondanahalli, Immadihalli, Hagadur, Whitefield, Sarjapur Road,
+   * Dommasandra and Kodathi are not named (the brief keeps them for other or future pages). "Bengaluru"
+   * stays out of the title, as the brief asks; the geo meta and the Service JSON-LD's areaServed carry
+   * "Varthur, Bengaluru, Karnataka".
+   *
+   * Images: three owner-supplied WebP images ("public/images/Storage Containers in Varthur city
+   * page/Storage Containers in Varthur/cabin (1–3).webp", lossy VP8, no EXIF / XMP) of a cream steel
+   * container, kept byte-identical (VP8 bitstream untouched) with an XMP dc:title / dc:description added
+   * that labels each one illustrative (no creator, GPS or date). (1) three-quarter exterior = hero /
+   * og:image (the brief's hero filename); (2) long side wall = window-installer section, beside the
+   * length check; (3) roof from above = placement section. No image shows glass, profiles, hardware,
+   * feed bags or milk cans, so the brief's five use-case image slots are not used, and no alt text or
+   * caption claims them. No alt text or caption names a size.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-varthur",
+    city: "Varthur",
+    listTitle: "Shipping & Storage Containers in Varthur",
+    metaTitle: "Shipping Container in Varthur | Glass & Dairy Storage",
+    metaDescription:
+      "Shipping and storage containers in Varthur for uPVC and glass window installers, dairy feed, milk cans and farm equipment. Request a quotation.",
+    keywords:
+      "shipping container in Varthur, cargo container Varthur, storage container Varthur, storage container Varthur Kodi, storage container Gunjur, storage container Sorahunase, storage container Muthsandra, used shipping container Varthur, 40 ft container Varthur, shipping container price in Varthur, storage container for rent in Varthur",
+    // Approximate point in Varthur village, east of Varthur lake (for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Varthur, Bengaluru, Karnataka, India",
+      position: "12.9410;77.7470",
+      icbm: "12.9410, 77.7470",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and Athipattu are linked in the body, so the nearby block leaves them out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-varthur/shipping-container-varthur.webp",
+      alt: "Cream steel shipping container seen from one corner, its grey cargo doors closed with the locking rods lowered, standing on courtyard paving beside agave planters",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative image of the container exterior; it is not a unit delivered in Varthur.",
+    },
+
+    h1: "Shipping & Storage Containers in Varthur",
+    tagline:
+      "Racked site stores for window and glass installers, and dry, well-kept space for dairy farms' feed, milk cans and tools.",
+    intro: [
+      "Varthur is a developing locality in East Bengaluru, combining residential projects, commercial activity and long-established village communities.",
+      "Window installation contractors working on villas and apartment projects often need secure storage for uPVC profiles, aluminium frames, glass panels and hardware. Dairy farmers may need extra space for bagged cattle feed, milk cans and farm equipment.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " for these commercial and agricultural storage needs in Varthur.",
+    },
+
+    areasHeading: "Areas Served Around Varthur",
+    areasText:
+      "This page covers shipping and storage container requirements in Varthur and Varthur Kodi, in Gunjur, Sorahunase and Muthsandra, and on building sites and farms around the Varthur lake area. Village lanes can be narrow and some plots sit low, so the approach road and the ground where the container will stand are looked at before any delivery date is fixed.",
+
+    extraSections: [
+      {
+        heading: "Shipping Containers for uPVC, Aluminium & Glass Window Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-varthur/shipping-container-side-wall-varthur.webp",
+          alt: "Long corrugated side wall of a cream shipping container with corner castings at each end and two forklift pockets along the base, on a concrete yard",
+          width: 1815,
+          height: 866,
+          caption:
+            "Illustrative image of the side wall. Whether full-length profiles fit depends on the usable inside length of the actual unit, which your quotation states.",
+        },
+        paragraphs: [
+          "Window installers and fabricators often work across several construction sites at once and handle fragile or valuable materials.",
+          "A suitably prepared shipping container can give them organised storage for window profiles, glass panels, hardware and installation tools.",
+        ],
+        subsections: [
+          {
+            heading: "Glass panel and glazed unit storage",
+            paragraphs: ["Glass panels need the right handling and storage arrangements. Sensible precautions include:"],
+            bullets: [
+              { text: "Store compatible glass panels upright on properly designed and secured A-frame racks." },
+              { text: "Use suitable protective padding and separators between panels." },
+              { text: "Stop panels from shifting or falling." },
+              { text: "Check glass dimensions and weight against the rack's capacity." },
+              { text: "Keep safe handling access clear." },
+              { text: "Follow the glass manufacturer's storage and handling instructions." },
+            ],
+            closing: ["Do not assume that every type of glass can be stored with the same arrangement."],
+          },
+          {
+            heading: "uPVC and aluminium profile storage",
+            paragraphs: ["Window profiles may need long, well-supported racks. Recommended arrangements include:"],
+            bullets: [
+              { text: "Separate racks by profile type and size." },
+              { text: "Label rack sections by series and colour." },
+              { text: "Protect finished surfaces from scratching." },
+              { text: "Keep the protective film on where the manufacturer recommends it." },
+              { text: "Avoid bending and unsupported overhang." },
+              { text: "Group stock by project." },
+            ],
+          },
+          {
+            heading: "Window hardware storage",
+            paragraphs: ["Small components can be kept in labelled bins, including:"],
+            bullets: [
+              { text: "Handles and hinges." },
+              { text: "Locks and rollers." },
+              { text: "Gaskets and seals." },
+              { text: "Fasteners and brackets." },
+              { text: "Mosquito mesh accessories." },
+              { text: "Installation fittings." },
+            ],
+            closing: ["Labelling bins by project helps installers make up the materials for each villa or apartment unit."],
+          },
+          {
+            heading: "Installation tool storage",
+            paragraphs: ["Depending on the requirement, storage can be set aside for:"],
+            bullets: [
+              { text: "Suction lifters." },
+              { text: "Measuring tools." },
+              { text: "Drills and hand tools." },
+              { text: "Installation accessories." },
+              { text: "Protective equipment." },
+            ],
+            closing: ["Keep heavy or delicate tools in suitable cases and secure compartments."],
+          },
+          {
+            heading: "Check profile and glass dimensions before ordering",
+            paragraphs: [
+              "A standard 20 ft container has an internal length of approximately 5.9 m, depending on its specification. Some full-length uPVC and aluminium profiles are around 6 m long or longer, so a 20 ft container may not hold them safely.",
+              "A 40 ft container may suit longer materials better, subject to the actual dimensions and the loading arrangement. Large glass panels must also pass through the container's door opening.",
+              "Verify the following before selecting a container:",
+            ],
+            ordered: true,
+            bullets: [
+              { text: "Maximum profile length." },
+              { text: "Maximum glass panel dimensions." },
+              { text: "Glass weight and handling requirements." },
+              { text: "Container internal dimensions." },
+              { text: "Door opening dimensions." },
+              { text: "Rack dimensions and loading capacity." },
+              { text: "Safe loading and unloading procedures." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Containers for Dairy Farmers",
+        placement: "afterIntro",
+        paragraphs: [
+          "Dairy farms need orderly storage for cattle feed, supplements, milk cans and equipment.",
+          "A suitable container can add storage space on an authorised farm site, provided the conditions inside it meet the needs of whatever is stored there.",
+        ],
+        subsections: [
+          {
+            heading: "Bagged cattle feed storage",
+            paragraphs: ["Recommended arrangements include:"],
+            bullets: [
+              { text: "Keep feed bags on suitable pallets or racks." },
+              { text: "Leave clearance from the walls where required." },
+              { text: "Follow the manufacturer's stacking limits." },
+              { text: "Rotate stock on a first-in, first-out basis." },
+              { text: "Record purchase dates." },
+              { text: "Inspect bags for moisture and pest damage." },
+              { text: "Monitor humidity and temperature." },
+            ],
+          },
+          {
+            heading: "Mineral mixtures and supplements",
+            paragraphs: [
+              "Keep mineral mixtures and supplements in their original labelled packaging or in suitable sealed containers, follow the manufacturer's storage requirements, and avoid exposing them to excessive heat and moisture.",
+            ],
+          },
+          {
+            heading: "Milk cans and milking equipment storage",
+            paragraphs: [
+              "Milk cans and milking equipment that have been cleaned and completely dried can be stored on suitable racks. The storage arrangement should:",
+            ],
+            bullets: [
+              { text: "Prevent contamination." },
+              { text: "Allow drainage and drying where applicable." },
+              { text: "Keep clean equipment apart from dirty tools." },
+              { text: "Protect food-contact surfaces." },
+              { text: "Follow the dairy hygiene requirements that apply." },
+            ],
+          },
+          {
+            heading: "Farm equipment and accessories",
+            paragraphs: ["A container can also make room for:"],
+            bullets: [
+              { text: "Chaff cutter spare parts." },
+              { text: "Buckets and hand tools." },
+              { text: "Ropes and mats." },
+              { text: "Maintenance accessories." },
+              { text: "Non-hazardous farm supplies." },
+            ],
+            closing: ["Keep tools apart from feed and from the hygienic milk-handling equipment."],
+          },
+        ],
+      },
+      {
+        heading: "Protecting Cattle Feed from Moisture and Pests",
+        placement: "afterIntro",
+        paragraphs: [
+          "A standard shipping container is not automatically suitable for long-term feed storage; the temperature and humidity inside it have to be assessed first.",
+          "Important precautions include:",
+        ],
+        bullets: [
+          { text: "Inspect the roof and doors for leaks." },
+          { text: "Provide appropriate ventilation." },
+          { text: "Watch for condensation." },
+          { text: "Keep feed off the floor." },
+          { text: "Maintain good housekeeping." },
+          { text: "Use suitable pest-management measures." },
+          { text: "Remove damaged or mouldy feed." },
+        ],
+        closing: [
+          "Mouldy feed should not be given to cattle, and pest-control chemicals must not contaminate feed, equipment or milk-handling areas.",
+        ],
+        subsections: [
+          {
+            heading: "Materials requiring separate storage",
+            paragraphs: ["Do not store cattle feed together with:"],
+            bullets: [
+              { text: "Diesel or petrol." },
+              { text: "Pesticides." },
+              { text: "Hazardous farm chemicals." },
+              { text: "Unprotected fuels." },
+              { text: "Veterinary medicines that need special conditions." },
+              { text: "Wet or deteriorating fodder." },
+            ],
+            closing: [
+              "Loose hay and green fodder need their own dedicated storage because of the moisture, spoilage and fire risks they carry.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Container Placement on Construction Sites & Dairy Farms",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-varthur/shipping-container-roof-view-varthur.webp",
+          alt: "Overhead view of a cream container's corrugated roof and four corner castings, with a small hinged access door set into one side wall, on bare concrete",
+          width: 1857,
+          height: 847,
+          caption:
+            "Illustrative image from above. Beyond the footprint, leave room for the crane's lift and for the cargo doors to swing fully open.",
+        },
+        paragraphs: [
+          "Shipping containers can stand on suitable private land, on authorised construction sites or on farm premises.",
+          "Before placement, consider:",
+        ],
+        bullets: [
+          { text: "Site access." },
+          { text: "Ground stability." },
+          { text: "Drainage and waterlogging." },
+          { text: "Container size." },
+          { text: "Space for loading and unloading." },
+          { text: "Crane or lifting arrangements." },
+          { text: "The property owner's permission." },
+          { text: "Applicable local requirements." },
+          { text: "Emergency and vehicle access." },
+        ],
+        closing: [
+          "On low-lying land, an engineered raised foundation or a suitable support arrangement may be needed. Tell us about the ground conditions when you enquire, so the base can be discussed before a container is dispatched.",
+        ],
+        // Brief §5: site access and unloading considerations → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "If the lorry has to turn into a farm track or squeeze past a site gate, the access checks we make are set out in our notes on",
+            link: { label: "shipping container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " in Bellandur.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Choose the size from the longest item you have to store and the most stock you expect to hold at once, then leave a clear aisle for loading and checking it.",
+        ],
+        table: {
+          caption:
+            "Approximate capacities. Exact internal dimensions and capacities depend on each container's specification, and the sizes in stock are confirmed with your quotation.",
+          headers: ["Container size", "Approximate capacity", "Typical application"],
+          rows: [
+            ["10 ft", "~15 m³", "Compact farm equipment or window hardware storage"],
+            ["20 ft", "~33 m³", "Window installer stock or bagged cattle feed"],
+            ["40 ft", "~67 m³", "Longer profiles and larger project inventory"],
+          ],
+        },
+        // Brief §5: container condition and buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Thinking of a second-hand unit? Run through the points in our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist before you pay.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Varthur",
+        placement: "afterSolutions",
+        paragraphs: ["The price of a shipping container in Varthur depends on:"],
+        bullets: [
+          { text: "Container size and condition." },
+          { text: "New or used container grade." },
+          { text: "Structural condition." },
+          { text: "Glass A-frame requirements." },
+          { text: "Profile racks and hardware bins." },
+          { text: "Pallets and equipment racks." },
+          { text: "Ventilation and moisture-control requirements." },
+          { text: "Locks and security provisions." },
+          { text: "Transportation and unloading." },
+          { text: "Site access and foundation requirements." },
+        ],
+        closing: ["Ask for a quotation based on the specification you need and the delivery location."],
+      },
+      {
+        heading: "Storage Container on Rent in Varthur",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For a single project or a season, renting may suit better than buying. Portable Office Cabin hires out shipping containers in 10, 20 and 40 ft and 40 ft High Cube sizes, on terms from one month to five years. Your rental quotation sets out the hire period, the unit, the transport charges both ways and how the container is collected or moved to another site.",
+        ],
+        inlineLinks: [
+          {
+            before: "Current hire sizes and terms are listed under",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain what the container will store." },
+          { text: "Tell us the container size you need." },
+          { text: "Give the material dimensions and loading requirements." },
+          { text: "Discuss racks, pallets and ventilation." },
+          { text: "Provide the delivery location and site access details." },
+          { text: "Request a quotation." },
+          { text: "Confirm the specification, permissions and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides container solutions for commercial, industrial and farm storage. For customers in Varthur, that includes:",
+        ],
+        bullets: [
+          { title: "Shipping container size options", text: "new or used 10, 20 and 40 ft units, subject to stock." },
+          {
+            title: "Storage-oriented modifications",
+            text: "interior fit-out specified for the unit you choose, so it suits profiles and glass or feed and equipment.",
+          },
+          {
+            title: "Shelving and racks",
+            text: "planned around profile lengths, glass sizes, hardware bins, feed pallets or milk cans, and itemised in the quotation.",
+          },
+          { title: "Security arrangements", text: "lockable double cargo doors on every unit, with extra locks where quoted." },
+          { title: "Ventilation provisions", text: "vents specified where the stored materials need air movement." },
+          {
+            title: "Quotation and delivery coordination",
+            text: "a single itemised quotation for the unit, its fittings and transport, and a check of the route and the standing spot before the delivery is booked.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can glass panels be stored inside a shipping container?",
+        answer:
+          "Yes, where the container is fitted with suitable, properly secured glass-storage racks and the handling arrangement meets the glass manufacturer's requirements.",
+      },
+      {
+        question: "Will full-length uPVC profiles fit in a 20 ft container?",
+        answer:
+          "Not necessarily. Some profiles may be longer than the usable internal length, so confirm the dimensions before ordering.",
+      },
+      {
+        question: "Can a 40 ft container be used for window installer stock?",
+        answer: "Yes, where the container's dimensions, the rack design and the site access suit the materials.",
+      },
+      {
+        question: "Can a shipping container be relocated between construction sites?",
+        answer:
+          "A container can be moved from one site to another, subject to its condition, the transport arrangements, permissions and service availability.",
+      },
+      {
+        question: "Can cattle feed be stored in a shipping container?",
+        answer:
+          "Yes, if the storage environment suits the feed and proper moisture, temperature and pest controls are kept up.",
+      },
+      {
+        question: "How should milk cans be stored?",
+        answer:
+          "Clean them and let them dry completely, following the dairy hygiene procedures that apply, then keep them in a protected area on suitable racks.",
+      },
+      {
+        question: "Can a container be placed on land that becomes waterlogged?",
+        answer:
+          "Possibly, after a site assessment and once suitable engineered ground support or a raised foundation is in place.",
+      },
+      {
+        question: "Can hay be stored inside an ordinary shipping container?",
+        answer:
+          "Loose hay and wet fodder are generally unsuitable for an ordinary enclosed container unless a specifically designed, safe storage arrangement is used.",
+      },
+      {
+        question: "What is the shipping container price in Varthur?",
+        answer: "It depends on the size, condition, modifications, transport and unloading requirements of your order.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "That depends on stock, any customisation, transport and how easily the site can be reached. Ask for a confirmed timeline when you request your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Varthur",
+    ctaText: `Whether you need storage for window installation materials or for dairy feed and farm equipment, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Varthur, Varthur Kodi, Gunjur, Sorahunase and Muthsandra, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Shipping Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Varthur storage container enquiry",
+      intro:
+        "Give us the container size, how many you need, the Varthur site address or a map pin and whether you want to buy or hire. Tell us whether it is for window and glass stock or for a dairy farm, the longest profile or largest glass panel to go in, and any racks, A-frames, pallets or vents you want priced.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. The company's Bengaluru office is in Electronic City; it has no depot, yard or branch in Varthur. Each unit's quotation fixes its size, grade, condition and inside measurements; any racks, A-frames, shelving, bins, pallets, vents or locks; rental terms if it is hired; and how it is delivered, unloaded and later collected. Site preparation, such as a raised plinth or other civil work, is not part of a container supply unless the quotation lists it. Stock changes, and no delivery date is guaranteed. The three pictures are illustrative images of a container, not photographs of a unit delivered, placed or fitted out in Varthur. Capacity figures are approximate. Window installers, fabricators and dairy farmers appear here as examples of typical uses, not as customers or completed jobs, and the localities are named only to show where enquiries are accepted. The notes on glass handling, feed storage, dairy hygiene, hazardous materials, permissions and site preparation are general information, not professional engineering, veterinary, food-safety or legal advice.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN JP NAGAR — long-term storage for home rebuilds, family
    * downsizing and school storage in JP Nagar (Jayaprakash Narayan Nagar), South Bengaluru.
    *
@@ -37623,7 +38126,10 @@ export const CITY_PAGES: CityPage[] = [
    * here: Kadubeesanahalli and Varthur Road (Marathahalli ORR page), Kariyammana Agrahara
    * (Devarabisanahalli page), Varthur as a place, Bellandur and its localities and single-society
    * maintenance storage (Bellandur page), borewell drilling (Kanakapura Road page), tyres and
-   * service-centre spares (Marathahalli ORR page).
+   * service-centre spares (Marathahalli ORR page). Varthur brief (2026-11-18): neighbouring Varthur has
+   * its own shipping container page (window and glass installers' stores, dairy farm storage), linked
+   * from the areas section (`areasInlineLinks`, anchor "storage containers for window installers in
+   * Varthur"). Varthur stays out of this page's keywords.
    *
    * Images: four owner-dropped lossy VP8 webp renders ("public/images/Storage Containers in Panathur city
    * page/Storage Containers in Panathur/cabin (1–4).webp", no EXIF / XMP / ICC) of one oxide-red container
@@ -37741,6 +38247,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas We Serve",
     areasText:
       "We take container enquiries from across Panathur: Panathur Main Road, Panathur Road, Balagere, Balagere Road and the streets around the Panathur railway underpass. Each delivery is confirmed only after the route to the site has been checked.",
+    // Varthur brief (2026-11-18): window and glass installers' stock and dairy farm storage there are that page's intent.
+    areasInlineLinks: [
+      {
+        before: "Keeping uPVC profiles and glass, or cattle feed and milk cans, in neighbouring Varthur? See our page on",
+        link: { label: "storage containers for window installers in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
