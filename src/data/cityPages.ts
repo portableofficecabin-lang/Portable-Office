@@ -37567,6 +37567,613 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN VIJAYANAGAR, BENGALURU — extra space for upholstery workshops and
+   * mattress makers (furniture awaiting repair or dispatch, fabric rolls, foam, coir, ticking, springs and
+   * hardware) and for agarbatti units (bamboo sticks, dried raw sticks, packaging and packed incense
+   * stock), with the fire, dust and chemical cautions those combustible materials need. West Bengaluru.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers
+   * in Vijayanagar, Bengaluru"): meta title, meta description, H1, keywords, local areas, section order,
+   * H2 / H3 headings, sizes table and the eleven FAQs are the brief's, and so is the copy, lightly edited
+   * for flow and British spelling. The brief's notes to the implementer ("Do not claim that fire safety is
+   * included as standard…", "Do not guarantee…", "Do not promise a particular delivery time…",
+   * "Conditional section…", "Highlight only verified capabilities…", "Use verified company phone
+   * numbers…") became plain statements of what the quotation does and does not include, or were left out.
+   * The route follows the site convention (/cities-we-serve/…) with the brief's slug. The tagline,
+   * captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue: the rental section stays (Shipping Container Rental lists 10, 20, 40 ft
+   * and 40 ft High Cube units on terms from one month to five years; no deposit, rent or delivery charge
+   * is stated here); shelving, lighting and ventilation are listed options on the storage container, and
+   * insulation and electrical fit-out on Shipping Container GP; fire-safety equipment is named only as
+   * something the quotation lists when it is supplied. The optional Kannada search terms are not used:
+   * the page is in English, and a Kannada phrase in the meta keywords would not be read by anyone.
+   * Mapped onto the template in the brief's order:
+   *   Intro (three paragraphs) + introLink ("shipping and storage container solutions" → the cargo
+   *     category, followed by the brief's combustible-materials sentence) + heroCta.
+   *   Upholstery & mattress workshops, agarbatti units, fire safety, and moisture & heat → four afterIntro
+   *     extra sections, the first two with their H3s as `subsections`.
+   *   Placement & delivery, sizes, price, rent and "How to Order a Shipping Container" (ordered) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Vijayanagar, Bengaluru" → areas. "Why Choose Portable Office Cabin?" → a
+   *     default extra section (after the areas, as in the brief). FAQs: the brief's eleven. CTA: the
+   *     brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): placement section → "restricted-site delivery guidance" (the Bellandur page's
+   * gate-and-lane delivery notes, the brief's own wording for that link); sizes section → "checking a
+   * used container before you buy": the brief's /shipping-container-chennai does not exist, so it points
+   * to the Chennai-area Athipattu page and its "Used Container Inspection" checklist, as Kasturi Nagar and
+   * RR Nagar do; areas → "shipping containers in Rajajinagar" (the neighbouring page, printing and
+   * packaging storage); rental section → /products/shipping-container-rental; intro → the cargo category
+   * ("Existing shipping container product page"). One more areas line tells the two Vijayanagars apart
+   * and sends agarbatti and sandalwood KIOSK intent in Vijayanagar, Mysuru to the Hebbal, Mysuru shop page
+   * that owns it (brief §6: "Distinguish agarbatti unit storage from agarbatti retail kiosks"). Anchors
+   * differ from the siblings' anchors for the same targets. Inbound: the Rajajinagar page's areas section
+   * (`areasInlineLinks`, "upholstery and agarbatti inventory storage containers in Vijayanagar,
+   * Bengaluru"; its nearby block then leaves this page out), the Karnataka shipping hub ("Shipping
+   * Containers in Vijayanagar, Bengaluru"), the cargo category's location links ("Storage containers in
+   * Vijayanagar, Bengaluru") and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks`
+   * keeps this page's nearby block from repeating Bellandur, Athipattu or Rajajinagar.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Vijayanagar (Bengaluru), Hosahalli,
+   * Hosahalli Extension, Marenahalli, Attiguppe, RPC Layout, Hampi Nagar (Vijayanagar 2nd Stage), MC
+   * Layout, Govindarajanagar and Saraswathi Nagar, for upholstery-workshop and mattress-material storage
+   * and agarbatti-unit inventory. "Bengaluru" is in the title, H1, description, URL, directory label and
+   * geo placename. Not targeted: Vijayanagar, Mysuru and agarbatti or sandalwood kiosks (Hebbal, Mysuru
+   * shop page); Vijayanagara district, Hosapete and Kudligi (Kudligi container-office page); Rajajinagar and
+   * West of Chord Road (Rajajinagar); Basaveshwaranagar, Nagarbhavi, Mysore Road, Malleshwaram and
+   * Mahalakshmi Layout (kept for possible future pages); furniture-rental stock (Brookefield), PG furniture
+   * (Marathahalli ORR), interior contractors' staging (Mahadevapura), timber and plywood (Shivamogga),
+   * garment fabric rolls, tent-house carpets (Horamavu) and coir products (Coimbatore; coir sheets appear
+   * here only as a mattress material). Chord Road and Magadi Road are named only as approach roads.
+   *
+   * Images: five owner-dropped lossy VP8 WebP renders ("public/images/Storage Containers in Vijayanagar,
+   * Bengaluru city page/Storage Containers in Vijayanagar, Bengaluru/cabin (1–5).webp", 48–147 KB, no
+   * EXIF / XMP / ICC) of light-coloured steel containers. Each is copied with its VP8 data byte-for-byte
+   * plus an XMP dc:title / dc:description that labels it a render (no creator, GPS, camera or date). (2)
+   * three-quarter exterior = hero / og:image (the brief's hero filename); (1) empty interior = upholstery
+   * section (the brief's interior filename); (3) cargo doors = fire-safety section; (5) roof from above =
+   * placement section; (4) end wall = sizes section. No image shows sofas, fabric rolls, foam, mattress
+   * materials, bamboo sticks or incense cartons, so the brief's six use-case image slots are not used, and
+   * no alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-vijayanagar-bengaluru",
+    city: "Vijayanagar, Bengaluru",
+    listTitle: "Shipping & Storage Containers in Vijayanagar, Bengaluru",
+    directoryLabel: "Shipping containers in Vijayanagar, Bengaluru",
+    metaTitle: "Shipping Container in Vijayanagar, Bengaluru | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Vijayanagar, Bengaluru for upholstery and mattress workshops storing foam and fabrics, and agarbatti units storing dry stock.",
+    keywords:
+      "shipping container in Vijayanagar Bengaluru, cargo container Vijayanagar Bengaluru, storage container Vijayanagar Bengaluru, storage container Hosahalli, storage container Hosahalli Extension, storage container Marenahalli, storage container Attiguppe, storage container RPC Layout, storage container Hampi Nagar, storage container MC Layout, storage container Govindarajanagar, storage container Saraswathi Nagar, used shipping container Vijayanagar Bengaluru, shipping container price in Vijayanagar Bengaluru, storage container for rent in Vijayanagar Bengaluru, upholstery workshop storage container, sofa repair storage, foam and fabric roll storage, mattress maker storage container, agarbatti unit storage container, incense stick stock storage, bamboo stick storage, agarbatti packing material storage",
+    // Approximate point near Vijayanagar metro station on Chord Road, West Bengaluru (for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Vijayanagar, Bengaluru, Karnataka, India",
+      position: "12.9710;77.5370",
+      icbm: "12.9710, 77.5370",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur, Athipattu and Rajajinagar are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-vijayanagar-bengaluru/shipping-container-vijayanagar-bengaluru.webp",
+      alt: "Pale grey steel shipping container seen from a front corner, its double cargo doors closed with vertical locking bars, on a paved courtyard with small planters along the base",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a closed container. It was not photographed in Vijayanagar and does not show a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Vijayanagar, Bengaluru",
+    tagline:
+      "Orderly, lockable space for upholstery and mattress workshops' furniture, fabric and foam, and for agarbatti units' bamboo sticks, packaging and packed stock.",
+    intro: [
+      "Vijayanagar is an established residential and commercial locality in West Bengaluru, with neighbourhood markets, shops and small workshops.",
+      "Upholstery businesses and mattress makers may need additional space for furniture awaiting repair, finished products, fabric rolls, foam and other materials.",
+      "Agarbatti units may also require organised storage for bamboo sticks, dry raw materials, packaging supplies and finished incense products.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " in Vijayanagar, Bengaluru, for these commercial storage requirements. Both kinds of business work with combustible materials, so the storage design and the fire-safety precautions matter especially here.",
+    },
+
+    areasHeading: "Areas Served Around Vijayanagar, Bengaluru",
+    areasText:
+      "We take shipping and storage container enquiries from Vijayanagar, Bengaluru, and from Hosahalli, Hosahalli Extension, Marenahalli, Attiguppe, RPC Layout, Hampi Nagar (Vijayanagar 2nd Stage), MC Layout, Govindarajanagar and Saraswathi Nagar. Chord Road and Magadi Road are the main approach roads, but many workshops stand on narrower cross roads, so each site's approach is checked before a delivery date is set.",
+    areasInlineLinks: [
+      {
+        before: "Printing presses and packaging units a little to the north have their own page:",
+        link: { label: "shipping containers in Rajajinagar", href: "/cities-we-serve/shipping-container-rajajinagar" },
+        after: ".",
+      },
+      {
+        // Brief §6: Vijayanagar, Mysuru and agarbatti or sandalwood kiosks belong to the Hebbal, Mysuru shop page.
+        before:
+          "This page covers Vijayanagar in West Bengaluru only. Vijayanagar in Mysuru and the Vijayanagara district are different places; for an agarbatti or sandalwood retail kiosk in Mysuru, see",
+        link: { label: "portable shop cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Upholstery & Mattress Workshops",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-vijayanagar-bengaluru/vijayanagar-storage-container-interior.webp",
+          alt: "Empty shipping container interior with off-white corrugated steel walls, a ribbed ceiling and a dark plywood floor, looking in from the doorway",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of a bare interior, before any fit-out. Fabric racks, storage bays, pallets and lighting come only with a quotation that names them.",
+        },
+        paragraphs: [
+          "Upholstery workshops handle a variety of bulky and delicate materials.",
+          "A suitable shipping container can provide additional space for compatible inventory, subject to appropriate fire protection, environmental conditions and site permissions.",
+        ],
+        subsections: [
+          {
+            heading: "Sofa and furniture repair storage",
+            paragraphs: ["A container may be organised into separate sections for:"],
+            bullets: [
+              { text: "Sofas awaiting repair." },
+              { text: "Chairs awaiting reupholstery." },
+              { text: "Customer furniture awaiting inspection." },
+              { text: "Finished furniture awaiting dispatch." },
+              { text: "Wrapped furniture ready for delivery." },
+            ],
+            closing: [
+              "Tag each item with the customer's name and job details, and keep finished pieces apart from furniture that is still waiting to be repaired.",
+            ],
+          },
+          {
+            heading: "Upholstery fabric roll storage",
+            paragraphs: ["Upholstery fabric rolls may be arranged on suitable racks, organised by:"],
+            bullets: [
+              { text: "Fabric type." },
+              { text: "Colour." },
+              { text: "Collection." },
+              { text: "Roll length." },
+              { text: "Customer order." },
+            ],
+            closing: ["Protect fabrics against moisture, dust, direct sunlight and unsuitable temperatures."],
+          },
+          {
+            heading: "Foam sheet and block storage",
+            paragraphs: [
+              "Foam sheets and blocks can present significant fire risks. Follow the foam manufacturer's instructions for storage orientation, stacking height and environmental conditions. Suitable arrangements may include:",
+            ],
+            bullets: [
+              { text: "Stable, properly supported stacks." },
+              { text: "Separation from heat sources." },
+              { text: "Clear aisles." },
+              { text: "Protection from physical damage." },
+              { text: "Appropriate fire precautions." },
+            ],
+            closing: ["Covering foam, or placing a fire extinguisher nearby, does not by itself make the storage safe."],
+          },
+          {
+            heading: "Mattress manufacturing materials",
+            paragraphs: ["Mattress makers may handle:"],
+            bullets: [
+              { text: "Foam sheets." },
+              { text: "Coir sheets." },
+              { text: "Cotton." },
+              { text: "Mattress ticking fabric." },
+              { text: "Springs." },
+              { text: "Webbing." },
+              { text: "Other compatible dry components." },
+            ],
+            closing: ["Store each material according to its supplier's instructions and the fire-safety requirements that apply."],
+          },
+          {
+            heading: "Finished mattress storage",
+            paragraphs: ["Finished mattresses may require:"],
+            bullets: [
+              { text: "Protective covers." },
+              { text: "Suitable support." },
+              { text: "Appropriate stacking arrangements." },
+              { text: "Protection against moisture." },
+              { text: "Clear identification." },
+              { text: "Safe loading and unloading." },
+            ],
+            closing: ["Do not fold a mattress unless its manufacturer permits it."],
+          },
+          {
+            heading: "Upholstery hardware storage",
+            paragraphs: ["Labelled bins may be used for:"],
+            bullets: [
+              { text: "Springs." },
+              { text: "Webbing." },
+              { text: "Sofa legs." },
+              { text: "Hinges." },
+              { text: "Brackets." },
+              { text: "Screws." },
+              { text: "Other hardware." },
+            ],
+            closing: ["Keep heavy components on appropriately rated shelves."],
+          },
+          {
+            heading: "Work activities and chemical storage",
+            paragraphs: [
+              "An ordinary storage container must not be assumed suitable for upholstery manufacturing work. Cutting, gluing, spraying, heating and similar activities may need a properly designed workshop with suitable ventilation, electrical installations and fire precautions.",
+              "Adhesives, contact cements, solvents and other chemicals must be stored according to their labels, safety data sheets and the regulations that apply to them. An ordinary container is not an approved flammable-chemical store.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Agarbatti Units",
+        placement: "afterIntro",
+        paragraphs: [
+          "Agarbatti businesses may handle bamboo sticks, raw incense materials, dried sticks, packaging supplies and finished products.",
+          "A suitable container can provide additional space for compatible dry inventory, once the fire, dust and environmental risks have been assessed.",
+        ],
+        subsections: [
+          {
+            heading: "Bamboo stick storage",
+            paragraphs: ["Bamboo sticks may be stored:"],
+            bullets: [
+              { text: "In dry conditions." },
+              { text: "On suitable racks." },
+              { text: "In stable bundles." },
+              { text: "Away from heat and ignition sources." },
+              { text: "With clear access aisles." },
+            ],
+            closing: ["Avoid unstable stacking."],
+          },
+          {
+            heading: "Charcoal, jigat and wood powder storage",
+            paragraphs: [
+              "Fine combustible powders can create serious fire and dust-explosion hazards under certain conditions, and sealed bags alone do not remove those risks. Before storing these materials:",
+            ],
+            bullets: [
+              { text: "Review their safety data sheets and supplier instructions." },
+              { text: "Assess the dust and fire hazards." },
+              { text: "Confirm appropriate ventilation and ignition controls." },
+              { text: "Avoid uncontrolled handling or dust generation." },
+              { text: "Use a storage arrangement approved for the actual materials." },
+            ],
+            closing: [
+              "Do not open, pour, mix or transfer combustible powders inside an ordinary storage container without a properly engineered and assessed facility.",
+            ],
+          },
+          {
+            heading: "Raw incense stick storage",
+            paragraphs: [
+              "Raw incense sticks should be dried to the appropriate condition before they are stored. Use suitable supports and packaging to reduce damage, moisture exposure and contamination.",
+            ],
+          },
+          {
+            heading: "Finished agarbatti stock",
+            paragraphs: ["Packed incense products may be organised by:"],
+            bullets: [
+              { text: "Fragrance." },
+              { text: "Batch." },
+              { text: "Manufacturing date." },
+              { text: "Quantity." },
+              { text: "Customer order." },
+              { text: "Dispatch status." },
+            ],
+            closing: ["Use suitable packaging and stock-rotation practices."],
+          },
+          {
+            heading: "Packaging material storage",
+            paragraphs: ["A container may hold compatible dry materials such as:"],
+            bullets: [
+              { text: "Empty cartons." },
+              { text: "Labels." },
+              { text: "Wrappers." },
+              { text: "Packaging inserts." },
+              { text: "Other non-hazardous supplies." },
+            ],
+            closing: ["Store combustible packaging away from heat and electrical equipment."],
+          },
+          {
+            heading: "Agarbatti inventory register",
+            paragraphs: ["Businesses may keep records covering:"],
+            bullets: [
+              { text: "Raw material receipts." },
+              { text: "Stock issued for production." },
+              { text: "Finished stock received." },
+              { text: "Batch identification." },
+              { text: "Packing quantities." },
+              { text: "Dispatch records." },
+            ],
+            closing: ["A register like this keeps track of inventory between production and delivery."],
+          },
+          {
+            heading: "Perfumes, fragrance oils and solvents",
+            paragraphs: [
+              "Some fragrance materials and solvents are flammable or otherwise hazardous. Do not keep them in an ordinary storage-only container without a material-specific safety assessment and suitable approved facilities, and follow the applicable safety data sheets and regulations.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Fire Safety for Upholstery & Agarbatti Storage",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-vijayanagar-bengaluru/shipping-container-cargo-doors-vijayanagar-bengaluru.webp",
+          alt: "A beige shipping container's closed double cargo doors, each leaf with two upright locking bars and lever handles and a lockbox at the centre, in front of an industrial shed",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render. On a standard unit the cargo doors are the only way in and out, so keep that end clear of stock.",
+        },
+        paragraphs: [
+          "Foam, fabric, cotton, bamboo, cardboard and some incense materials are combustible. Fire-safety measures should be designed for the actual materials, quantities, site and operating conditions.",
+          "Consider:",
+        ],
+        bullets: [
+          { text: "A documented fire-risk assessment." },
+          { text: "Appropriate separation from ignition sources." },
+          { text: "No-smoking controls." },
+          { text: "A suitable electrical installation." },
+          { text: "Clear access and emergency exits." },
+          { text: "Safe stacking arrangements." },
+          { text: "Appropriate fire detection and extinguishing equipment." },
+          { text: "Suitable ventilation." },
+          { text: "Good housekeeping." },
+          { text: "Proper controls for combustible dust." },
+          { text: "Safe access for emergency responders." },
+        ],
+        closing: [
+          "Fire extinguishers, detection systems and other controls must be selected for the actual hazards and the requirements that apply. Fire-safety equipment is part of the supply only where your quotation lists it.",
+          "An ordinary shipping container is not automatically fire-rated, and it is not approved for storing combustible powders, flammable chemicals or large quantities of foam.",
+        ],
+      },
+      {
+        heading: "Protecting Stock Against Moisture & Heat",
+        placement: "afterIntro",
+        paragraphs: [
+          "Standard metal containers can become hot and may experience condensation. Depending on the materials, appropriate storage may require:",
+        ],
+        bullets: [
+          { text: "Insulation." },
+          { text: "Ventilation." },
+          { text: "Moisture monitoring." },
+          { text: "Suitable pallets." },
+          { text: "Racks." },
+          { text: "Protective packaging." },
+          { text: "Leak inspections." },
+          { text: "Environmental controls." },
+        ],
+        closing: ["A standard container cannot be guaranteed to keep fabrics, foam, coir or incense products dry in all conditions."],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Vijayanagar, Bengaluru",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-vijayanagar-bengaluru/shipping-container-roof-view-vijayanagar-bengaluru.webp",
+          alt: "Top-down view of a beige shipping container's corrugated roof and four corner castings, standing on a concrete yard with the door end on the right",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render from above. The site has to take the footprint, the lorry and the lift, with room for both doors to swing open.",
+        },
+        paragraphs: [
+          "A container can go on suitable private premises that you are authorised to use, such as workshop yards, commercial compounds and approved storage areas.",
+          "Before installation, check:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road and gate width." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Container dimensions." },
+          { text: "Ground stability." },
+          { text: "Unloading arrangements." },
+          { text: "Emergency access." },
+          { text: "Fire separation requirements." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Residential and commercial cross roads may limit delivery access, even close to Chord Road or Magadi Road. On a tight plot, a 10 ft or 20 ft unit may suit better, depending on what is available and on the site itself. The delivery time and the unloading method are confirmed only after a route and site assessment.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Narrow lane, low gate or no room for a crane? Read our",
+            link: { label: "restricted-site delivery guidance", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " on the Bellandur page.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-vijayanagar-bengaluru/shipping-container-end-wall-vijayanagar-bengaluru.webp",
+          alt: "Closed end wall of a beige shipping container: a ribbed steel panel framed by corner castings, with a pair of forklift pockets in the bottom rail",
+          width: 1448,
+          height: 1086,
+          caption: "Illustrative render. The quotation for the actual unit states its length, inside dimensions and condition.",
+        },
+        table: {
+          caption:
+            "Approximate volumes only. Exact internal dimensions, floor capacity, availability and suitability for your stock are confirmed in the quotation.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft, if available", "~15 m³", "Compact fabric or packaged inventory storage"],
+            ["20 ft", "~33 m³", "Upholstery materials, furniture awaiting dispatch or suitable packaged agarbatti stock"],
+            ["40 ft", "~67 m³", "Larger inventory where site access and fire-safety requirements permit"],
+          ],
+        },
+        closing: ["Measure your largest sofas, mattress stacks and pallet loads before choosing a size, and leave an aisle."],
+        // Brief §5: condition and buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Considering a second-hand unit? Our notes on",
+            link: { label: "checking a used container before you buy", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " list what to look at first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Vijayanagar, Bengaluru",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural grade and condition." },
+          { text: "Fabric racks and storage bays." },
+          { text: "Pallets and shelving." },
+          { text: "Ventilation and insulation." },
+          { text: "Electrical provisions." },
+          { text: "Security features." },
+          { text: "Fire-safety requirements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on the actual storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Vijayanagar, Bengaluru",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be worth considering during a busy spell of upholstery orders or a seasonal build-up of agarbatti stock. Hire covers 10, 20 and 40 ft units and the 40 ft High Cube, for periods of one month up to five years. Your hire quotation sets out the period, which unit you get, the delivery to your site and how it is collected at the end; any deposit is agreed in the rental agreement.",
+        ],
+        inlineLinks: [
+          {
+            before: "See",
+            link: { label: "container hire sizes and terms", href: "/products/shipping-container-rental" },
+            after: " for the current rental range.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the materials and quantities." },
+          { text: "Confirm the fire, dust and environmental risks." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, pallets and storage sections." },
+          { text: "Confirm any insulation, ventilation or safety provisions you need." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise the specification and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin supplies shipping and storage containers for commercial equipment and inventory. What a Vijayanagar workshop or agarbatti unit can ask us for:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "a choice of 10, 20 or 40 ft, new or used, from whatever is in stock when you order." },
+          { title: "Storage-oriented modifications", text: "itemised one by one, so you see exactly what is fitted to your container." },
+          {
+            title: "Racking and shelving provisions",
+            text: "fabric-roll racks, pallet positions and shelves for hardware bins, laid out around your stock.",
+          },
+          { title: "Locking arrangements", text: "cargo doors that lock, checked on the unit you will receive." },
+          { title: "Ventilation and insulation options", text: "chosen for foam, fabric, bamboo or packed stock, and priced in the quote." },
+          {
+            title: "Quotation and delivery coordination",
+            text: "one written quote for the unit, its fittings and transport, and a route and site check before a delivery day is fixed.",
+          },
+        ],
+        closing: [
+          "An ordinary container is not fireproof or moisture-proof, and it is not automatically approved for hazardous materials.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can sofas and furniture awaiting repair be stored in a shipping container?",
+        answer: "Yes, where the items are properly supported, protected and stored under suitable conditions.",
+      },
+      {
+        question: "How should upholstery fabric rolls be stored?",
+        answer: "Use suitable racks, protect the rolls against moisture and dust, and follow the supplier's storage instructions.",
+      },
+      {
+        question: "Can foam sheets be stored inside a container?",
+        answer:
+          "Potentially, but foam presents significant fire risks. The quantity, the storage conditions and the fire-safety measures must be assessed first.",
+      },
+      {
+        question: "Can upholstery cutting and gluing be performed inside the container?",
+        answer: "An ordinary storage container is not automatically suitable for these activities. A properly designed workshop may be required.",
+      },
+      {
+        question: "Can bamboo sticks and finished agarbatti stock be stored in a container?",
+        answer: "Potentially, subject to suitable dry storage conditions and fire-safety controls.",
+      },
+      {
+        question: "Can charcoal and jigat powders be stored in an ordinary container?",
+        answer:
+          "Combustible powder storage needs a material-specific fire and dust-hazard assessment. Do not assume ordinary container storage is suitable.",
+      },
+      {
+        question: "Can fragrance oils and solvents be stored in the container?",
+        answer:
+          "Hazardous fragrance materials and solvents need suitable approved storage arrangements, based on their safety data sheets.",
+      },
+      {
+        question: "Is this page for Vijayanagar in Bengaluru or Mysuru?",
+        answer:
+          "This page covers Vijayanagar in West Bengaluru, Karnataka, around Chord Road and Magadi Road. Vijayanagar in Mysuru is a separate place.",
+      },
+      {
+        question: "Where can a shipping container be placed in Vijayanagar?",
+        answer: "On suitable authorised private premises, such as a workshop yard or commercial compound, subject to site conditions and the permissions that apply.",
+      },
+      {
+        question: "What is the shipping container price in Vijayanagar, Bengaluru?",
+        answer: "Pricing depends on size, condition, modifications, safety requirements and delivery.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "It depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Vijayanagar, Bengaluru",
+    ctaText: `Whether you need storage for upholstery materials and furniture or organised space for suitable agarbatti inventory, Portable Office Cabin can discuss shipping container options that fit what you store. Phone ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Vijayanagar, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Vijayanagar, Bengaluru container enquiry",
+      intro:
+        "Choose a container type and quantity, give the Vijayanagar workshop or yard address (a map pin is fine), and let us know if you are buying or hiring. List what will go inside, such as furniture awaiting repair, fabric rolls, foam, mattresses, bamboo sticks or packed agarbatti stock, with rough quantities, so we can quote the right size, racks and ventilation.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin supplies every container through its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs a Bengaluru office in Electronic City; it has no depot, yard, shop or branch in Vijayanagar. What you get is set by the written quotation or rental agreement for your unit: its size, grade, condition, inside dimensions and door opening; any racks, shelving, bins, bays, lighting, ventilation, insulation, electrical work, locks or fire-safety equipment; the hire terms, if you rent; and the delivery, unloading and collection. Stock moves, and no delivery date or time is promised in advance. All five pictures are illustrative renders. They were not taken in Vijayanagar and show no delivered or fitted unit, furniture, foam, fabric or agarbatti stock. Capacities are rounded. Upholstery workshops, mattress makers and agarbatti units appear as examples of how containers are used, not as customers or finished jobs, and the listed localities only show where enquiries come from. An ordinary container is not fire-rated, moisture-proof or climate-controlled, and it is not an approved store for combustible powders, flammable chemicals, fragrance oils or solvents. Everything said here about furniture, fabric, foam, mattresses, agarbatti materials, fire and dust hazards, chemicals, moisture, permissions and site access is general information rather than professional fire-safety, electrical, legal or engineering advice, and the instructions of each manufacturer and supplier come first.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN RAJAJINAGAR — stores for printing presses and print-packaging units
    * (paper reams and board, paper reels, finished cartons and labels, dispatch staging, cutting dies,
    * printing plates, press rollers and spares) in Rajajinagar, also written Rajaji Nagar (west Bengaluru).
@@ -37625,7 +38232,7 @@ export const CITY_PAGES: CityPage[] = [
    * (Marathahalli ORR), D2C finished goods and e-commerce packing (Koramangala), recyclables and paper
    * bales (Kaggadasapura), climate-controlled units (Vellore). Malleshwaram, Basaveshwaranagar, Mahalakshmi
    * Layout, Yeshwanthpur and Peenya are not named as served areas (the brief keeps them for possible future
-   * pages), and Vijayanagar is not named (the Mysuru shop page uses Vijayanagar, Mysuru). "Bengaluru"
+   * pages), and Vijayanagar is not a served area here (it has its own page, linked from the areas). "Bengaluru"
    * stays out of the title, as the brief asks; the geo meta and the Service JSON-LD's areaServed carry
    * "Rajajinagar, Bengaluru, Karnataka".
    *
@@ -37694,6 +38301,15 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Factories in the Peenya Industrial Area, a little further north-west, are covered on our page on",
         link: { label: "shipping containers for Peenya Industrial Area", href: "/products/shipping-container-in-peenya-industrial" },
+        after: ".",
+      },
+      // Vijayanagar, Bengaluru brief (2026-11-18): upholstery workshops and agarbatti units are that page's intent.
+      {
+        before: "Upholstery workshops, mattress makers and agarbatti units a little to the south-west are covered on our page on",
+        link: {
+          label: "upholstery and agarbatti inventory storage containers in Vijayanagar, Bengaluru",
+          href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru",
+        },
         after: ".",
       },
     ],
