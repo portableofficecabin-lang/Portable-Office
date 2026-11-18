@@ -18196,6 +18196,12 @@ export const CITY_PAGES: CityPage[] = [
     whyBullets: [],
     whyOutro:
       "If the container will sit on the rebuild site, agree with the builder on a location that stays clear of excavation, material deliveries and access routes as work progresses. An alternative is another suitable private plot with the owner's permission. For a long storage period, plan access for periodic checks for damp, pests and damage. Discuss separate storage for sensitive documents, electronics or valuables if they require controlled conditions or insurance.",
+    // RR Nagar brief (2026-11-18): furniture moved out while a house hosts a TV or film shoot is that page's intent.
+    whyInlineLink: {
+      before: "Moving furniture out of a house that is being rented to a TV or film crew instead? See our page on",
+      link: { label: "storage containers for shoot-house furniture in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
+      after: ".",
+    },
 
     solutionsHeading: "Storage while downsizing",
     solutionsIntro:
@@ -18364,6 +18370,560 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; there is no container yard, depot or office in JP Nagar. Each container is offered subject to stock, and its size, condition, grade, fittings, any rental terms and the delivery, unloading, collection and relocation arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or placed in JP Nagar. The sizes named are examples; the dimensions that apply are those of the specific unit. JP Nagar and the localities and roads listed are named only to describe the area served, and the home, family and school uses described are examples rather than clients, past projects or confirmed delivery areas. Guidance on packing, storage conditions, site access, placement and permissions is general information, not engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN RAJARAJESHWARI NAGAR (RR NAGAR) — short-term furniture and
+   * household storage for homeowners who rent their houses out for TV and film shoots, and organised
+   * stores for college motorsport teams' race cars, go-karts, ATVs, spares and tools (west Bengaluru).
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Rajarajeshwari Nagar (RR Nagar)"): meta title, meta description, H1, keywords, local modifiers,
+   * section order, H2 / H3 headings, sizes table and the eleven FAQs are the brief's, and so is the copy,
+   * lightly edited for flow and British spelling. The brief's notes to the implementer ("Do not invent…",
+   * "Do not guarantee…", "Conditional section…", "Present only verified capabilities…", "Do not target…")
+   * are instructions, not page copy, and are left out. The route follows the site convention
+   * (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins, enquiry-form
+   * intro and disclaimer were written for their slots. "Raja Rajeshwari Nagar" appears once (intro).
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists 10, 20, 40 ft and 40 ft High Cube units on terms from one month to five years; no deposit, price
+   * or delivery charge is stated); the 10 ft row stays without "if available" (10 ft units are listed on
+   * Cargo Container for Sale and on the rental product); shelving, lighting and ventilation are listed
+   * options on the storage container. Tyre racks, parts bins and tool cabinets are price factors "where
+   * they are part of the quotation", not standard equipment. The brief's "furniture protection
+   * arrangements" price factor is left out: packing and wrapping are not a listed service.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Shoot houses, motorsport teams, "Student Team Inventory & Handover" and "Safety Requirements for
+   *     Motorsport Storage" → four afterIntro extra sections, their H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered) → afterSolutions
+   *     extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Rajarajeshwari Nagar" → areas. "Why Choose Portable Office Cabin?" → a default
+   *   extra section (after the areas, as in the brief). FAQs: the brief's eleven. CTA: the brief's closing
+   *   section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): placement section → "container delivery and placement" (Bellandur's gate-and-lane
+   * delivery notes); sizes section → "used shipping container inspection": the brief's
+   * /shipping-container-chennai does not exist, so it points to the Chennai-area Athipattu page and its
+   * "Used Container Inspection" checklist, as the sibling pages do; rental section →
+   * /products/shipping-container-rental; intro → the cargo category. The brief's Kundalahalli link
+   * ("storage containers for camera and lighting equipment") is not added: that page (#274) is not live.
+   * Inbound: the JP Nagar page's home-rebuild section (`whyInlineLink`, "storage containers for
+   * shoot-house furniture in RR Nagar"), the Karnataka shipping hub ("Shipping Containers in Rajarajeshwari
+   * Nagar"), the cargo category's location links ("Storage containers in RR Nagar") and every Karnataka
+   * shipping page's nearby block. `nearbySkipsBodyLinks` keeps the nearby block from repeating Bellandur.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Rajarajeshwari Nagar, RR Nagar, Ideal Homes
+   * Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere, for household
+   * belongings stored while a house is used for a TV or film shoot, and for college motorsport vehicles,
+   * spares, tools and team equipment. Not targeted: Uttarahalli and Chikkalasandra (Banashankari),
+   * Rajajinagar (its own page), Kengeri, Nagarbhavi and Mysore Road (kept for possible future pages),
+   * BEML Layout and BHEL Layout, film-set props and production equipment, camera and lighting gear
+   * (Kundalahalli), furniture storage during a home rebuild (JP Nagar), general household self-storage
+   * (Koramangala) and parked-vehicle storage (Thanisandra Main Road). "Bengaluru" stays out of the title,
+   * as the brief asks; the geo meta and the Service JSON-LD's areaServed carry "Rajarajeshwari Nagar,
+   * Bengaluru, Karnataka". The villa-construction page's area list names Rajarajeshwari Nagar for a
+   * different product and is unchanged.
+   *
+   * Images: five owner-supplied WebP images ("public/images/Storage Containers in Rajarajeshwari Nagar
+   * city page/Storage Containers in Rajarajeshwari Nagar/cabin (1–5).webp", lossy VP8, no EXIF / XMP) of
+   * one cream container with a black frame, kept byte-identical (VP8 bitstream untouched) with an XMP
+   * dc:title / dc:description added that labels each one a render (no creator, GPS or date). (2)
+   * three-quarter exterior = hero / og:image (the brief's hero filename); (3) empty lined interior =
+   * shoot-house section; (1) cargo doors = motorsport section, beside the door-opening check; (4) roof
+   * from above = placement section; (5) side wall = sizes section. No image shows furniture, cartons,
+   * mattresses, a race car, spares or tools, so the brief's five use-case image slots are not used, and no
+   * alt text or caption claims them. No alt text or caption names a size.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-rajarajeshwari-nagar",
+    city: "Rajarajeshwari Nagar",
+    listTitle: "Shipping & Storage Containers in Rajarajeshwari Nagar (RR Nagar)",
+    metaTitle: "Shipping Container in RR Nagar | Shoot House & Motorsport Storage",
+    metaDescription:
+      "Shipping and storage containers in RR Nagar for homeowners storing furniture during film shoots and college motorsport teams storing race cars, tools and spares.",
+    keywords:
+      "shipping container in Rajarajeshwari Nagar, shipping container in RR Nagar, cargo container RR Nagar, storage container Rajarajeshwari Nagar, storage container RR Nagar, storage container Ideal Homes Township, storage container Kenchenahalli, storage container Pattanagere, storage container Halagevaderahalli, storage container Channasandra, storage container Gattigere, used shipping container RR Nagar, shipping container price in RR Nagar, storage container for rent in RR Nagar, furniture storage during film shoots, college motorsport team storage container",
+    // Approximate point in Rajarajeshwari Nagar, west Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Rajarajeshwari Nagar, Bengaluru, Karnataka, India",
+      position: "12.9200;77.5200",
+      icbm: "12.9200, 77.5200",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 2336 × 1760 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur and Athipattu are linked in the body, so the nearby block leaves them out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-rajarajeshwari-nagar/shipping-container-rajarajeshwari-nagar.webp",
+      alt: "Shipping container exterior with cream corrugated walls, a black steel frame and closed double cargo doors, suitable for temporary household and equipment storage",
+      width: 2336,
+      height: 1760,
+      caption: "Illustrative render of a storage container exterior, not a photograph of a unit delivered in RR Nagar.",
+    },
+
+    h1: "Shipping & Storage Containers in Rajarajeshwari Nagar (RR Nagar)",
+    tagline:
+      "Short-term space for furniture while your house hosts a TV or film shoot, and organised stores for college motorsport teams' cars, spares and tools.",
+    intro: [
+      "Rajarajeshwari Nagar, commonly called RR Nagar or Raja Rajeshwari Nagar, is an established residential locality in West Bengaluru.",
+      "The area has connections to Kannada film and television activity, and residential properties here are sometimes used as filming locations.",
+      "Engineering students and college motorsport teams may also need additional storage for competition vehicles, tools and equipment.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in RR Nagar for these temporary and specialised storage requirements.",
+    },
+
+    areasHeading: "Areas Served Around Rajarajeshwari Nagar",
+    areasText:
+      "This page covers shipping and storage container requirements in Rajarajeshwari Nagar (RR Nagar), Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere. Many of these are residential streets with parked cars and tight gates, so the approach and the spot where the container will stand are checked for each property or campus before a delivery is confirmed.",
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Houses Rented for TV & Film Shoots",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-rajarajeshwari-nagar/storage-container-interior-rajarajeshwari-nagar.webp",
+          alt: "Empty storage container interior with lined walls, a grey floor, two ceiling tube lights and a wall-mounted distribution board, seen through open cargo doors",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render of an empty interior before loading. Lining, lighting and power points are fitted only where they are part of the quoted specification.",
+        },
+        paragraphs: [
+          "Homeowners who rent their properties to film and television productions may need to move personal furniture and household belongings out for the duration of the shoot.",
+          "A suitable storage container can provide additional space on an authorised private property while the house is being used for filming.",
+        ],
+        subsections: [
+          {
+            heading: "Furniture storage during shooting",
+            paragraphs: ["Before moving household furniture:"],
+            bullets: [
+              { text: "Photograph each room and its contents." },
+              { text: "Prepare an inventory list." },
+              { text: "Wrap furniture in suitable protective materials." },
+              { text: "Label items according to their original room." },
+              { text: "Use appropriate supports for heavy furniture." },
+              { text: "Protect polished and delicate surfaces." },
+              { text: "Keep access routes clear." },
+            ],
+          },
+          {
+            heading: "Sofa and dining furniture storage",
+            paragraphs: [
+              "Sofas, tables and chairs should be protected against scratches, moisture and excessive stacking pressure. Use suitable protective covers and stable supports, and avoid placing heavy boxes on upholstered furniture.",
+            ],
+          },
+          {
+            heading: "Mattress and bedding storage",
+            paragraphs: [
+              "Mattresses and bedding need suitable dry conditions. Follow the mattress manufacturer's storage instructions, including whether upright storage is permitted, and use breathable protective covers where appropriate. Do not store damp mattresses or bedding.",
+            ],
+          },
+          {
+            heading: "Household cartons and personal belongings",
+            paragraphs: ["Label cartons by room and contents. Suitable items may include:"],
+            bullets: [
+              { text: "Books." },
+              { text: "Kitchen utensils." },
+              { text: "Clothes." },
+              { text: "Decorative items." },
+              { text: "Household accessories." },
+              { text: "Non-sensitive personal belongings." },
+            ],
+            closing: ["Fragile items should be individually protected."],
+          },
+          {
+            heading: "Family photographs and keepsakes",
+            paragraphs: [
+              "Family photographs and sentimental objects may be sensitive to heat and humidity, so use appropriate protective packaging. Valuable or irreplaceable items may be better kept in a controlled indoor environment than in an ordinary shipping container.",
+            ],
+          },
+          {
+            heading: "Household inventory before filming",
+            paragraphs: ["A written inventory can cover:"],
+            bullets: [
+              { text: "Item descriptions." },
+              { text: "Photographs." },
+              { text: "Original room locations." },
+              { text: "Existing damage." },
+              { text: "Storage box numbers." },
+              { text: "Access arrangements." },
+            ],
+            closing: ["Where relevant, inventory responsibilities can be agreed with the production company."],
+          },
+          {
+            heading: "Items that should remain with the homeowner",
+            paragraphs: [
+              "Do not store cash, jewellery, important identity documents or other highly valuable items in an ordinary storage container. Keep them in a more appropriate secure location.",
+            ],
+          },
+          {
+            heading: "Agreeing storage arrangements with the production company",
+            paragraphs: ["Before the shoot begins, clarify:"],
+            bullets: [
+              { text: "Who arranges the storage container." },
+              { text: "Who pays for transport and storage." },
+              { text: "How long the container is required." },
+              { text: "Who is responsible for moving furniture." },
+              { text: "Who has access to stored items." },
+              { text: "How damage or loss will be handled." },
+              { text: "When belongings will be returned." },
+            ],
+            closing: ["These terms should be agreed directly between the homeowner and the production company."],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Containers for College Motorsport Teams",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-rajarajeshwari-nagar/shipping-container-cargo-doors-rajarajeshwari-nagar.webp",
+          alt: "Closed double cargo doors of a cream shipping container with a black frame, four vertical locking bars, cam handles and a central lockbox",
+          width: 1445,
+          height: 1088,
+          caption: "Illustrative render. Measure the actual unit's door opening against the vehicle before you order.",
+        },
+        paragraphs: [
+          "College motorsport teams often build and maintain student competition vehicles, including go-karts, all-terrain vehicles and formula-style student racing cars.",
+          "Teams may need additional space for completed vehicles, spare parts, tools and competition equipment. A suitable shipping container can serve as an organised equipment store, subject to vehicle dimensions and safety requirements.",
+        ],
+        subsections: [
+          {
+            heading: "Student race car storage",
+            paragraphs: ["Before storing a vehicle:"],
+            bullets: [
+              { text: "Confirm its width, height and length." },
+              { text: "Check the container door opening." },
+              { text: "Verify the floor's load-bearing capacity." },
+              { text: "Use appropriate loading equipment." },
+              { text: "Secure the vehicle against movement." },
+              { text: "Follow the vehicle and component manufacturers' storage instructions." },
+              { text: "Keep safe access around the vehicle." },
+            ],
+            closing: ["Do not assume every race car fits inside a standard container."],
+          },
+          {
+            heading: "Go-kart and ATV storage",
+            paragraphs: [
+              "Go-karts and ATVs may be stored in appropriately sized containers where access and handling arrangements are suitable. Use wheel restraints, supports or stands that suit the vehicle, and never place a vehicle on unstable supports.",
+            ],
+          },
+          {
+            heading: "Motorsport spare parts storage",
+            paragraphs: ["Labelled storage bins can be organised by subsystem:"],
+            bullets: [
+              { text: "Suspension." },
+              { text: "Brakes." },
+              { text: "Steering." },
+              { text: "Powertrain." },
+              { text: "Electrical components." },
+              { text: "Fasteners." },
+              { text: "Wheels and tyres." },
+            ],
+            closing: ["Maintain an inventory register for replacement parts."],
+          },
+          {
+            heading: "Tool storage",
+            paragraphs: ["A dedicated tool section may include:"],
+            bullets: [
+              { text: "Suitable tool cabinets." },
+              { text: "Lockable drawers." },
+              { text: "Tool shadow boards." },
+              { text: "Measuring equipment cases." },
+              { text: "Labelled storage bins." },
+              { text: "Protective storage for precision tools." },
+            ],
+          },
+          {
+            heading: "Team equipment storage",
+            paragraphs: ["A container may also hold:"],
+            bullets: [
+              { text: "Team uniforms." },
+              { text: "Pit equipment." },
+              { text: "Banners." },
+              { text: "Protective covers." },
+              { text: "Spare wheels." },
+              { text: "Non-hazardous competition accessories." },
+            ],
+            closing: ["Keep heavy items on appropriately rated supports."],
+          },
+        ],
+      },
+      {
+        heading: "Student Team Inventory & Handover",
+        placement: "afterIntro",
+        paragraphs: [
+          "Student teams change members as each batch graduates, and a well-organised storage system makes the handover easier.",
+          "Recommended records include:",
+        ],
+        bullets: [
+          { text: "Vehicle identification." },
+          { text: "Parts inventory." },
+          { text: "Tool inventory." },
+          { text: "Equipment condition." },
+          { text: "Storage locations." },
+          { text: "Maintenance documentation." },
+          { text: "Responsible team members." },
+        ],
+        closing: ["Photographs and labelled storage sections help new team members locate equipment."],
+      },
+      {
+        heading: "Safety Requirements for Motorsport Storage",
+        placement: "afterIntro",
+        paragraphs: [
+          "Motorsport vehicles may contain fuels, oils, batteries and other hazardous materials. An ordinary storage container should not be assumed suitable for these hazards.",
+        ],
+        subsections: [
+          {
+            heading: "Fuel and oil",
+            paragraphs: [
+              "Follow applicable safety procedures for fuel systems and residual fluids. Do not store fuel drums, flammable liquids or other hazardous materials inside an ordinary equipment storage container.",
+            ],
+          },
+          {
+            heading: "Electric vehicle batteries",
+            paragraphs: ["High-voltage and lithium battery systems require specialised handling:"],
+            bullets: [
+              { text: "Follow the manufacturer's instructions." },
+              { text: "Follow the team's approved battery safety procedures." },
+              { text: "Use suitable battery storage arrangements." },
+              { text: "Protect against short circuits." },
+              { text: "Do not charge traction battery packs inside an ordinary storage-only container." },
+              { text: "Do not remove or disconnect high-voltage packs except through qualified procedures." },
+            ],
+          },
+          {
+            heading: "Workshop activities",
+            paragraphs: [
+              "Do not carry out welding, grinding, cutting or other hot work inside an ordinary storage container. Electrical work, charging or mechanical workshop activity needs a separately assessed and appropriately designed facility.",
+            ],
+          },
+          {
+            heading: "Fire precautions",
+            paragraphs: [
+              "Provide suitable fire-safety measures based on the materials actually stored and a site-specific risk assessment. Keep access routes clear, and use qualified personnel for electrical installations.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Container Placement on Residential Properties & College Campuses",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-rajarajeshwari-nagar/shipping-container-roof-view-rajarajeshwari-nagar.webp",
+          alt: "Top-down view of a cream shipping container roof with a black frame and four corner castings, on a paved yard between planted borders",
+          width: 1445,
+          height: 1088,
+          caption: "Illustrative overhead view. Allow for the footprint plus clear space to lift the container down and open its doors.",
+        },
+        paragraphs: [
+          "Shipping containers may be placed on suitable, authorised private premises or on college property.",
+          "Before delivery, assess:",
+        ],
+        bullets: [
+          { text: "Road and gate width." },
+          { text: "Vehicle turning space." },
+          { text: "Container dimensions." },
+          { text: "Ground stability." },
+          { text: "Crane and unloading access." },
+          { text: "Property-owner or college permission." },
+          { text: "Applicable local regulations." },
+          { text: "Emergency access." },
+          { text: "A safe distance from filming equipment and generator installations." },
+        ],
+        closing: [
+          "Residential streets may have restricted access. Quiet-hour delivery or a particular lifting arrangement can only be agreed once the site has been checked.",
+        ],
+        // Brief §5: site access and unloading considerations → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Bringing a container past a society gate or down a lane lined with parked cars? The access checks are set out in our notes on",
+            link: { label: "container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-rajarajeshwari-nagar/shipping-container-side-wall-rajarajeshwari-nagar.webp",
+          alt: "Corrugated cream side wall of a shipping container with a black frame, corner castings and two forklift pockets, on a paved yard",
+          width: 1445,
+          height: 1088,
+          caption: "Illustrative render. Your quotation gives the actual unit's size, inside measurements and door opening.",
+        },
+        table: {
+          caption:
+            "Capacities are approximate. Exact dimensions and capacities depend on the container specification, and the availability of each size is confirmed in your quotation.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft", "~15 m³", "Compact household storage or go-kart equipment"],
+            ["20 ft", "~33 m³", "Furniture and cartons, or a student race car with spares, subject to fit"],
+            ["40 ft", "~67 m³", "A larger household inventory or several team equipment sections"],
+          ],
+        },
+        closing: ["Measure large furniture and vehicles before selecting a container."],
+        // Brief §5: container condition and buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Buying a second-hand unit for the house or the team? Go through our checklist for",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in RR Nagar",
+        placement: "afterSolutions",
+        paragraphs: ["Container pricing depends on:"],
+        bullets: [
+          { text: "Size and condition." },
+          { text: "New or used container grade." },
+          { text: "Structural condition." },
+          { text: "Storage racks and shelving." },
+          { text: "Tyre racks, spare-parts bins or tool cabinets, where they are part of the quotation." },
+          { text: "Lighting and ventilation." },
+          { text: "Security features." },
+          { text: "Transportation and unloading." },
+          { text: "Site access and installation requirements." },
+        ],
+        closing: ["Request a quotation based on the intended application and delivery location."],
+      },
+      {
+        heading: "Storage Container on Rent in RR Nagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A shooting schedule or a competition season rarely needs a container for good, so short-term storage may suit both. Portable Office Cabin hires out shipping containers on terms from one month to five years. Your quotation sets out the hire period, the unit offered, transport to the property or campus and how the container is collected at the end; ask about any deposit or extension when you request it.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and hire terms are listed under",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Confirm the required container size." },
+          { text: "Share furniture or vehicle dimensions." },
+          { text: "Discuss shelving, racks and security." },
+          { text: "Provide the proposed delivery location." },
+          { text: "Confirm site access and permissions." },
+          { text: "Request a quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides container solutions for commercial and temporary storage needs. For RR Nagar customers, that includes:",
+        ],
+        bullets: [
+          { title: "Shipping container size options", text: "10, 20 and 40 ft units, subject to availability." },
+          { title: "Storage-oriented modifications", text: "specified for the unit you choose and listed in its quotation." },
+          { title: "Shelving and racks", text: "planned around furniture and cartons, or around parts bins and a vehicle bay." },
+          { title: "Locking arrangements", text: "lockable double cargo doors, checked on the actual unit." },
+          { title: "Ventilation and lighting provisions", text: "quoted to suit what will be stored." },
+          {
+            title: "Quotation and delivery coordination",
+            text: "an itemised quotation, then route and placement checks before a delivery date is agreed.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I store furniture in a container while my house is used for a TV shoot?",
+        answer: "Yes, where suitable environmental conditions, protective packaging and authorised placement are available.",
+      },
+      {
+        question: "Who pays for the storage container during filming?",
+        answer: "That depends on the agreement between the homeowner and the production company.",
+      },
+      {
+        question: "Can I keep jewellery and important documents in the container?",
+        answer: "An ordinary storage container is not recommended for such valuable or sensitive items.",
+      },
+      {
+        question: "Can a college motorsport team store a race car in a shipping container?",
+        answer: "Yes, provided the vehicle fits safely and the loading, support and storage arrangements are appropriate.",
+      },
+      {
+        question: "Can a go-kart or ATV be stored in a container?",
+        answer: "Potentially, after confirming dimensions, access, loading capacity and safety requirements.",
+      },
+      {
+        question: "Can students work on the car inside the container?",
+        answer:
+          "An ordinary storage-only container is not a workshop. Any repair or assembly activity needs a suitably designed and approved workspace.",
+      },
+      {
+        question: "Can electric race car batteries be charged inside the container?",
+        answer:
+          "Do not charge traction batteries inside an ordinary storage-only container. Use an appropriately designed charging facility.",
+      },
+      {
+        question: "Will a student race car fit through the container door?",
+        answer: "That depends on the vehicle's dimensions and the actual container door opening. Measure both before ordering.",
+      },
+      {
+        question: "Where can a shipping container be placed in RR Nagar?",
+        answer: "On suitable authorised private property or college premises, subject to site conditions and applicable permissions.",
+      },
+      {
+        question: "What is the shipping container price in RR Nagar?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. You'll get a confirmed timeline with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in RR Nagar",
+    ctaText: `Whether you need temporary furniture storage during a film shoot or equipment storage for a student motorsport team, Portable Office Cabin can discuss suitable shipping container options for your requirements. Call ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Rajarajeshwari Nagar, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "RR Nagar storage container enquiry",
+      intro:
+        "Choose a container and quantity, add the RR Nagar address or map pin, and say whether you want to buy or hire. Tell us whether it will hold household furniture during a shoot or a team's vehicle, spares and tools, with the largest item or vehicle dimensions, so the quotation covers the right size and fittings.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds and supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs its Bengaluru office from Electronic City; it has no depot, yard or branch in Rajarajeshwari Nagar. What a unit offers is set by its quotation: size, grade, condition, inside measurements and door opening, any shelving, racks, lining, lighting, ventilation, power points or locks, the hire terms where it is rented, and how it is delivered, unloaded and collected. Stock varies, and no delivery date or time is guaranteed. The five pictures are computer renders of one container for illustration; none was taken in RR Nagar or shows a delivered or fitted unit, furniture or a vehicle. Capacities are approximate. Homeowners, production companies and college motorsport teams are named to describe typical uses, not as customers or finished projects, and the localities are listed only to show where enquiries are welcome. Storage arrangements during a shoot are agreed between the homeowner and the production company. Notes on packing, inventories, vehicles, fuel, batteries, hot work, fire safety, permissions and site access are general guidance, not fire-safety, electrical, legal or engineering advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
