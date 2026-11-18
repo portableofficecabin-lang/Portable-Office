@@ -321,6 +321,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Shipping containers in Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
       // Hebbal, Bengaluru storage page (owner brief, 2026-11-17: a link back from the main shipping container page).
       { name: "Commercial storage containers in Hebbal, Bengaluru", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+      // Panathur storage page (owner brief, 2026-11-17: a link back from the main shipping container page).
+      { name: "Storage containers in Panathur", href: "/cities-we-serve/shipping-container-panathur" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
