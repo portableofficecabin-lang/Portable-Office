@@ -45950,8 +45950,10 @@ export const CITY_PAGES: CityPage[] = [
    * Karnataka shipping hub, the cargo category's location links and the Karnataka shipping nearby blocks.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Indiranagar, 100 Feet Road, 12th Main, CMH
-   * Road, HAL 2nd and 3rd Stage, Defence Colony, Domlur, Jeevan Bima Nagar, Halasuru and Old Airport Road,
-   * for bar and brewery storage, boutique garment storage and designer sample archives. The Indiranagar
+   * Road, HAL 2nd and 3rd Stage, Defence Colony, Jeevan Bima Nagar and Halasuru, for bar and brewery
+   * storage, boutique garment storage and designer sample archives. Domlur and Old Airport Road left the
+   * areas text and the CTA's serving line with the Domlur brief of 2026-11-18 (Domlur has its own page,
+   * linked from the areas section as "dedicated Domlur container page"). The Indiranagar
    * portable shop page keeps portable shops, pop-up stores, galleries and pet grooming: "pop-up", "shop"
    * and "gallery" stay out of this page's title, description and keywords, and the copy has no pop-up,
    * gallery or retail-space use ("shop" appears only as a boutique's shop, shoppers, and the
@@ -46033,7 +46035,13 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas We Serve",
     areasText:
-      "Our shipping and storage containers are available across Indiranagar (also written Indira Nagar), including 100 Feet Road, 12th Main, CMH Road, HAL 2nd Stage and HAL 3rd Stage. We also welcome enquiries from Defence Colony, Domlur, Jeevan Bima Nagar, Halasuru and Old Airport Road. We confirm delivery after checking access to the specific site.",
+      "Serving Indiranagar (also written Indira Nagar), 100 Feet Road, 12th Main, CMH Road, HAL 2nd Stage, HAL 3rd Stage, Defence Colony, Jeevan Bima Nagar and Halasuru. We confirm delivery after checking access to the specific site.",
+    // Domlur brief (2026-11-18): Domlur has its own shipping container page; the brief's reciprocal sentence.
+    areasInlineLink: {
+      before: "For shipping and storage container requirements in Domlur, explore our",
+      link: { label: "dedicated Domlur container page", href: "/cities-we-serve/shipping-container-domlur" },
+      after: ".",
+    },
 
     extraSections: [
       {
@@ -46205,7 +46213,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Space Behind the Scenes",
-    ctaText: `Whether you're clearing empty kegs out of a busy bar or keeping last season's collection crisp and ready, we'll quote a container that frees up Indiranagar's most expensive rooms. Ring ${COMPANY.phones[0].display} or WhatsApp ${COMPANY.whatsapp.display}, or send the details to ${COMPANY.email.sales}. Serving Indiranagar, Domlur, HAL, Defence Colony, Halasuru and Old Airport Road.`,
+    ctaText: `Whether you're clearing empty kegs out of a busy bar or keeping last season's collection crisp and ready, we'll quote a container that frees up Indiranagar's most expensive rooms. Ring ${COMPANY.phones[0].display} or WhatsApp ${COMPANY.whatsapp.display}, or send the details to ${COMPANY.email.sales}. Serving Indiranagar, HAL 2nd Stage, HAL 3rd Stage, Defence Colony, Jeevan Bima Nagar and Halasuru.`,
     // Brief §9: the final CTA's "request a storage container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Storage Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -46463,6 +46471,607 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a shop, office or yard in Indiranagar. Delivery, unloading and placement are assessed and arranged for each site, and delivery dates are not guaranteed. Hire of a shop cabin is subject to availability and the quotation. The footprints, layouts, fitting rooms, display fittings, lighting, joined modules, wet-area and grooming fit-outs, utility provisions, branding, installation, collection and removal described on this page are options to discuss; what is supplied is confirmed in the approved drawing, specification and quotation for each order. The images on this page are illustrative renders of one portable shop cabin design, not photographs of installations in Indiranagar, and they do not show the apparel, gallery or grooming layouts described. The roads, localities and venues named here are used only to describe locations; they are not clients, completed projects or confirmed sites. HAL 2nd Stage and HAL 3rd Stage are locality names, and Portable Office Cabin is not affiliated with Hindustan Aeronautics Limited. Business activity, site use and outdoor signage are subject to the site owner and the relevant local authority; the notes on this page are general planning guidance, not legal, licensing, electrical or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN DOMLUR — extra space for office coffee and vending machine operators
+   * (spare and returned machines, spare parts, water filters, technician kits and dry supplies) and for
+   * corporate event games rental companies (arcade cabinets, foosball and air hockey tables, giant games,
+   * VR and electronic games, accessories and event packing) in central-east Bengaluru.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Domlur"): meta title, meta description (152 characters), H1, keywords, local modifiers, section order,
+   * H2 / H3 headings, sizes table and the eleven FAQs are the brief's, and so is the copy, lightly edited
+   * for flow and British spelling. The brief's notes to the implementer ("Where relevant, link to…", "Do
+   * not recommend…", "Do not guarantee…", "Do not promise…", "Do not invent…", "Conditional section…",
+   * "Highlight only verified capabilities…", "Use verified company phone numbers…") are instructions, not
+   * page copy: the safety ones are written as guidance to the reader, the rest are left out. The route
+   * follows the site convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions,
+   * link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists 10, 20, 40 ft and 40 ft High Cube units on terms from one month to five years; no deposit, price
+   * or delivery charge is stated here); the 10 ft row stays without "if available" (10 ft units are listed
+   * on Cargo Container for Sale and on the rental product; the table caption says each size's
+   * availability is confirmed in the quotation); shelving, lighting and ventilation are listed options on
+   * the storage container, insulation on the cargo container. Racks, parts drawers and equipment
+   * restraints are price factors "if your quotation includes them", not standard equipment. The brief's
+   * "loading ramp, if offered" is left out: no container product lists a ramp. The optional Kannada search
+   * terms are not used: the page is in English, and a Kannada phrase in the meta keywords would not be
+   * read by anyone.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Coffee & vending operators, event games rentals and "Protecting Equipment Against Heat, Moisture &
+   *     Damage" → three afterIntro extra sections, their H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered) → afterSolutions
+   *     extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Domlur" → areas (+ the two neighbouring pages as areasInlineLinks, as the brief
+   *   asks: "direct customers to the relevant dedicated city pages"). "Why Choose Portable Office Cabin?"
+   *   → a default extra section (after the areas, as in the brief). FAQs: the brief's eleven. CTA: the
+   *   brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): coffee-beans H3 → "temperature-controlled container options" (the Vellore page's
+   * "Insulated and air-conditioned storage enquiries" section); placement section → "shipping container
+   * delivery and placement" (Bellandur's gate-and-lane delivery notes, the brief's anchor); sizes section →
+   * "used shipping container inspection": the brief's /shipping-container-chennai does not exist, so it
+   * points to the Chennai-area Athipattu page and its "Used Container Inspection" checklist, as Indiranagar
+   * and Kasturi Nagar do; rental section → /products/shipping-container-rental; intro → the cargo category
+   * ("Existing shipping container product page"); areas → "shipping containers in Indiranagar" and
+   * "shipping containers in Koramangala". Inbound: the Indiranagar shipping page's areas section (the
+   * brief's mandatory reciprocal sentence, "dedicated Domlur container page"), the Karnataka shipping hub
+   * ("Shipping Containers in Domlur"), the cargo category's location links ("Storage containers in Domlur")
+   * and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block
+   * from repeating Vellore or Bellandur.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Domlur, Domlur Layout, Domlur 1st Stage,
+   * Amarjyoti Layout and Kodihalli (the locality beside HAL's Old Airport Road, not the Kanakapura-taluk
+   * village on the Kanakapura portable cabin page), for office coffee and vending machine operators'
+   * equipment and for corporate event games rental equipment. Domlur moves off the Indiranagar shipping
+   * page in the same change (its areas text, CTA serving line and keyword-ownership note). Not targeted:
+   * Indiranagar, HAL 2nd / 3rd Stage, Defence Colony, Jeevan Bima Nagar and Halasuru (Indiranagar);
+   * Koramangala and Ejipura (Koramangala); Old Airport Road and Inner Ring Road are named once, as delivery
+   * corridors only. Office vending machines are kept apart from restaurant or commercial-kitchen equipment
+   * (Koramangala); event games from décor and party supplies (Hennur Road), tent-house stock (Horamavu) and
+   * sports turf or gym equipment (Marathahalli ORR); no IT asset staging (Doddanekundi), mall or building
+   * spares (Mahadevapura), branded merchandise (Hebbal) or camera and lighting gear (Kundalahalli).
+   * "Bengaluru" stays out of the title, as the brief asks; the geo meta and the Service JSON-LD's
+   * areaServed carry "Domlur, Bengaluru, Karnataka".
+   *
+   * Images: four owner-supplied WebP images ("public/images/domlur city page  storage containers/Storage
+   * Containers in Domlur/cabin (1–4).webp", lossy VP8, no EXIF / XMP) of one green container, kept
+   * byte-identical (VP8 bitstream untouched) with an XMP dc:title / dc:description added that labels each
+   * one illustrative (no creator, GPS or date). (2) three-quarter exterior = hero / og:image (the brief's
+   * hero filename); (1) empty interior = coffee and vending section; (4) roof from above = placement
+   * section; (3) side wall = sizes section. No image shows vending or coffee machines, spare parts, arcade
+   * cabinets, game tables or accessories, so the brief's seven use-case image slots are not used, and no
+   * alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-domlur",
+    city: "Domlur",
+    listTitle: "Shipping & Storage Containers in Domlur",
+    metaTitle: "Shipping Container in Domlur | Vending & Event Games Storage",
+    metaDescription:
+      "Shipping and storage containers in Domlur for office coffee and vending machines, spare parts, and corporate event games, arcade cabinets and equipment.",
+    keywords:
+      "shipping container in Domlur, cargo container Domlur, storage container Domlur, storage container Domlur Layout, storage container Domlur 1st Stage, storage container Amarjyoti Layout, storage container Kodihalli, used shipping container Domlur, shipping container price in Domlur, storage container for rent in Domlur, vending machine storage container, coffee machine operator storage, office coffee machine spares storage, vending consumables storage, vending machine equipment depot, event games rental storage container, arcade machine storage, foosball table storage, air hockey table storage, corporate event equipment storage",
+    // Approximate point in Domlur, Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Domlur, Bengaluru, Karnataka, India",
+      position: "12.9610;77.6387",
+      icbm: "12.9610, 77.6387",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out (see the field).
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-domlur/shipping-container-domlur.webp",
+      alt: "Green steel shipping container with closed double cargo doors and vertical locking bars, standing on a paved yard, suitable for commercial equipment storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative picture of a container exterior; it does not show a Domlur premises or a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Domlur",
+    tagline:
+      "Extra room for office coffee and vending operators' spare machines, parts and service kits, and for event games rental companies' arcade cabinets, game tables and accessories.",
+    intro: [
+      "Domlur is a residential and commercial neighbourhood in Bengaluru, with offices, local businesses and connections to major city roads.",
+      "Businesses supporting office operations often need storage for bulky equipment, spare parts and supplies.",
+      "Coffee and vending machine operators may require space for replacement machines and service inventory, while corporate event games rental companies need organised storage between events.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Domlur for these commercial equipment-storage requirements.",
+    },
+
+    areasHeading: "Areas Served Around Domlur",
+    areasText:
+      "Enquiries are welcome from Domlur, Domlur Layout, Domlur 1st Stage, Amarjyoti Layout and Kodihalli. Before a date is fixed, we look at the route to your gate and where the unit would stand, because road and lane widths change from one block to the next.",
+    // Brief §3 / §5: other localities go to their own pages, with the brief's anchors.
+    areasInlineLinks: [
+      {
+        before: "Need storage for bar, brewery or boutique stock in the neighbouring locality? See our page on",
+        link: { label: "shipping containers in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+        after: ".",
+      },
+      {
+        before: "For self-storage bays, restaurant equipment between moves or bicycle parking, see",
+        link: { label: "shipping containers in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Office Coffee & Vending Machine Operators",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-domlur/storage-container-interior-domlur.webp",
+          alt: "Inside an empty container: pale grey ribbed steel walls, a brown timber-board floor and closed green doors with locking bars at the far end",
+          width: 1672,
+          height: 940,
+          caption:
+            "Illustrative view of a bare interior. Shelving, parts drawers, racks, restraints or lighting are fitted only where your quote names them.",
+        },
+        paragraphs: [
+          "Office coffee and vending machine operators install, maintain and service equipment at workplaces. Their operations may involve spare machines, returned equipment, replacement parts and technician supplies.",
+          "A suitable shipping container can add storage space for compatible equipment and materials.",
+        ],
+        subsections: [
+          {
+            heading: "Spare coffee and vending machine storage",
+            paragraphs: ["Spare machines may be stored:"],
+            bullets: [
+              { text: "In the orientation specified by the manufacturer." },
+              { text: "With suitable protective packaging." },
+              { text: "On appropriate supports." },
+              { text: "With suitable restraints where necessary." },
+              { text: "Away from moisture and water ingress." },
+              { text: "With adequate handling clearance." },
+            ],
+            closing: [
+              "Tall vending machines may present a tipping hazard. Use suitable handling equipment and properly rated restraint points, and do not assume that every container has appropriate lashing points for every machine.",
+            ],
+          },
+          {
+            heading: "Returned machine service area",
+            paragraphs: ["Operators may separate returned machines from ready-to-install units. An organised layout can include:"],
+            bullets: [
+              { text: "A returned machine section." },
+              { text: "An inspection area." },
+              { text: "Equipment awaiting repair." },
+              { text: "A spare machine section." },
+              { text: "A ready-for-dispatch section." },
+            ],
+            closing: [
+              "Tag each returned machine with the customer or site, machine model, serial number, reported fault, date received and service status.",
+              "Electrical servicing should be performed only in a suitably equipped and safe workspace.",
+            ],
+          },
+          {
+            heading: "Coffee machine spare parts",
+            paragraphs: ["Labelled shelves and drawers may hold:"],
+            bullets: [
+              { text: "Grinders." },
+              { text: "Brewer components." },
+              { text: "Seals." },
+              { text: "Valves." },
+              { text: "Dispensers." },
+              { text: "Electrical boards." },
+              { text: "Replacement fittings." },
+              { text: "Other compatible parts." },
+            ],
+            closing: ["Organise components by equipment model and part number."],
+          },
+          {
+            heading: "Water filters and cartridges",
+            paragraphs: [
+              "Water filters, cartridges and related accessories should be stored according to manufacturer instructions. Protect them from contamination, excessive heat and moisture.",
+            ],
+          },
+          {
+            heading: "Technician service kits",
+            paragraphs: ["Operators may prepare service kits for daily office visits. A kit may contain:"],
+            bullets: [
+              { text: "Suitable tools." },
+              { text: "Replacement seals." },
+              { text: "Filters." },
+              { text: "Cleaning accessories." },
+              { text: "Approved spare parts." },
+              { text: "Service documentation." },
+            ],
+            closing: ["Keep service kits clearly labelled for efficient dispatch."],
+          },
+          {
+            heading: "Cups, lids and other packaging",
+            paragraphs: ["Compatible dry supplies may include:"],
+            bullets: [
+              { text: "Disposable cups." },
+              { text: "Lids." },
+              { text: "Stirrers." },
+              { text: "Sleeves." },
+              { text: "Other packaged accessories." },
+            ],
+            closing: ["Store them in sealed cartons under suitable hygienic conditions."],
+          },
+          {
+            heading: "Coffee beans, tea and premix storage",
+            paragraphs: [
+              "Coffee beans, tea, milk powders and beverage premixes may be sensitive to temperature, humidity and contamination. Do not assume an ordinary metal shipping container is suitable for storing these products. Check:",
+            ],
+            bullets: [
+              { text: "Product label instructions." },
+              { text: "Maximum permitted storage temperature." },
+              { text: "Humidity requirements." },
+              { text: "Packaging condition." },
+              { text: "Shelf life." },
+              { text: "Food-safety requirements." },
+            ],
+            closing: ["Temperature-sensitive consumables may require a properly controlled storage environment."],
+            // Brief §3 / §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section.
+            inlineLinks: [
+              {
+                before: "Insulation, air-conditioning and their limits are explained on our Vellore page, under",
+                link: { label: "temperature-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Cleaning chemicals and descalers",
+            paragraphs: [
+              "Cleaning chemicals must be stored according to their labels, safety data sheets and applicable regulations. Hazardous chemicals should not go into an ordinary container without a suitable storage assessment.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Corporate Event Games Rentals",
+        placement: "afterIntro",
+        paragraphs: [
+          "Corporate event organisers may rent entertainment equipment for office celebrations, annual functions, team-building activities and private events. Rental companies may need additional space for storing and organising equipment between bookings.",
+          "A suitable shipping container can provide a storage base for compatible games and accessories.",
+        ],
+        subsections: [
+          {
+            heading: "Arcade machine storage",
+            paragraphs: ["Arcade cabinets can be bulky and heavy. Storage arrangements may include:"],
+            bullets: [
+              { text: "Manufacturer-approved orientation." },
+              { text: "Protective blankets or packaging." },
+              { text: "Appropriate lifting equipment." },
+              { text: "Suitable restraints." },
+              { text: "Stable supports." },
+              { text: "Adequate access for loading and unloading." },
+            ],
+            closing: ["Do not assume all arcade cabinets can safely be stored upright or strapped in the same way."],
+          },
+          {
+            heading: "Foosball and air hockey tables",
+            paragraphs: ["Game tables may require:"],
+            bullets: [
+              { text: "Protective wrapping." },
+              { text: "Suitable support under the frame." },
+              { text: "Protection for playing surfaces." },
+              { text: "Secure storage of detachable legs." },
+              { text: "Separate packaging for accessories." },
+              { text: "Appropriate handling clearance." },
+            ],
+            closing: ["Follow manufacturer instructions for disassembly and storage orientation."],
+          },
+          {
+            heading: "Giant board games and carnival equipment",
+            paragraphs: ["Rental inventory may include:"],
+            bullets: [
+              { text: "Giant chess sets." },
+              { text: "Oversized board games." },
+              { text: "Carnival game stalls." },
+              { text: "Portable game counters." },
+              { text: "Interactive event props." },
+              { text: "Other reusable entertainment equipment." },
+            ],
+            closing: ["Organise items by game type, size and booking requirements."],
+          },
+          {
+            heading: "VR headsets and electronic games",
+            paragraphs: [
+              "VR equipment and electronic accessories may be sensitive to heat, humidity and impact. Use suitable protective cases and follow manufacturer storage instructions.",
+              "Rechargeable battery equipment must be handled according to the applicable battery-safety requirements. An ordinary storage container is not a battery-charging room.",
+            ],
+          },
+          {
+            heading: "Game-piece storage bins",
+            paragraphs: ["Small accessories may include:"],
+            bullets: [
+              { text: "Foosball balls." },
+              { text: "Air hockey pucks." },
+              { text: "Controllers." },
+              { text: "Game pieces." },
+              { text: "Cables." },
+              { text: "Remote controls." },
+              { text: "Fasteners." },
+              { text: "Replacement accessories." },
+            ],
+            closing: ["Use labelled bins and equipment-specific checklists."],
+          },
+          {
+            heading: "Event packing and dispatch area",
+            paragraphs: [
+              "A container layout may include a staging area near the cargo doors for equipment being prepared for the next event. Useful arrangements include:",
+            ],
+            bullets: [
+              { text: "Event-specific packing lists." },
+              { text: "Labelled equipment cases." },
+              { text: "A dispatch-ready section." },
+              { text: "A returned equipment section." },
+              { text: "A damage-inspection area." },
+              { text: "Access to loading equipment." },
+            ],
+            closing: ["Keep the cargo-door area and handling routes clear."],
+          },
+          {
+            heading: "Event inventory checklist",
+            paragraphs: ["Rental operators may record:"],
+            bullets: [
+              { text: "Event name." },
+              { text: "Customer." },
+              { text: "Equipment supplied." },
+              { text: "Accessories included." },
+              { text: "Dispatch date." },
+              { text: "Return date." },
+              { text: "Missing items." },
+              { text: "Damage observations." },
+              { text: "Maintenance requirements." },
+            ],
+            closing: ["This helps organise equipment between bookings."],
+          },
+        ],
+      },
+      {
+        heading: "Protecting Equipment Against Heat, Moisture & Damage",
+        placement: "afterIntro",
+        paragraphs: [
+          "Standard metal shipping containers can become hot and may develop condensation.",
+          "Suitable equipment storage may require:",
+        ],
+        bullets: [
+          { text: "Ventilation." },
+          { text: "Insulation where appropriate." },
+          { text: "Moisture monitoring." },
+          { text: "Protective packaging." },
+          { text: "Suitable racks." },
+          { text: "Stable supports." },
+          { text: "Appropriate restraints." },
+          { text: "Clear handling routes." },
+          { text: "Secure locking arrangements." },
+        ],
+        closing: [
+          "A standard container does not guarantee that electronic equipment is protected from extreme temperatures or humidity.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Domlur",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-domlur/shipping-container-roof-view-domlur.webp",
+          alt: "Top-down view of a green shipping container roof with corrugated panels and four corner castings, on a concrete yard",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative top-down view of a container roof. Allow for the unit's footprint, the lorry or crane that sets it down, and the full swing of its cargo doors.",
+        },
+        paragraphs: [
+          "Shipping containers may be installed on suitable authorised private premises, such as commercial yards, warehouse compounds and approved storage plots.",
+          "Before delivery, check:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Domlur's busy roads, such as the Old Airport Road and Inner Ring Road corridors, and its residential lanes may require careful transport planning. If space is tight, a 10 ft or 20 ft unit may suit, depending on stock and on how the site can be reached. Delivery at a quiet hour, or by a particular unloading method, is agreed only once the site has been seen.",
+        ],
+        // Brief §5: restricted-site delivery planning → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Tight gate, low branches or a lane lined with parked cars? Our notes on",
+            link: { label: "shipping container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " walk through what to measure first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-domlur/shipping-container-side-wall-domlur.webp",
+          alt: "Side elevation of a green container: ribbed steel panels between corner posts, with two forklift slots in the bottom rail",
+          width: 1671,
+          height: 941,
+          caption: "Illustrative side view. Your quote states the actual unit's length, internal size and door clearance.",
+        },
+        table: {
+          caption:
+            "Volumes are rounded. Whether a size is in stock, and its exact internal dimensions and payload, are confirmed in writing with the quote.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft", "~15 m³", "Spare parts, service kits and compact event inventory"],
+            ["20 ft", "~33 m³", "Spare vending machines, equipment racks and event games"],
+            ["40 ft", "~67 m³", "Larger event rental inventory, where site access permits"],
+          ],
+        },
+        closing: ["Measure your tallest machines, largest game tables and arcade cabinets before choosing a size."],
+        // Brief §5: buying and inspection guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Buying a used box for spare machines or game stock? Check it first against our checklist for",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Domlur",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving, parts drawers, storage racks and equipment restraints, if your quotation includes them." },
+          { text: "Lighting and ventilation." },
+          { text: "Insulation." },
+          { text: "Locking arrangements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on the intended storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Domlur",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful during periods of increased event bookings or equipment inventory. Hire terms run from one month up to five years. Your quote sets out the unit, the hire period, delivery to your site and how it is collected at the end; any deposit or extension terms are confirmed on request.",
+        ],
+        inlineLinks: [
+          {
+            before: "The hire range, size by size, is on our",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the equipment to be stored." },
+          { text: "Share the dimensions and weights of large machines or game tables." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelves, drawers and restraints." },
+          { text: "Confirm environmental and electrical requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check site access and permissions." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial equipment and inventory applications. What that means for businesses in Domlur:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "10 ft, 20 ft and 40 ft lengths, as stock allows at the time of order." },
+          { title: "Equipment-storage modifications", text: "every fitting is itemised on the quote for your container." },
+          {
+            title: "Shelving and rack provisions",
+            text: "laid out around spare machines and parts drawers, or around game tables and accessory bins.",
+          },
+          { title: "Locking arrangements", text: "cargo doors that lock, checked on the container delivered to you." },
+          { title: "Lighting and ventilation options", text: "priced for what you intend to keep inside." },
+          {
+            title: "Quotation and delivery coordination",
+            text: "an itemised price, then a route and placement check before the delivery date is fixed.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can coffee and vending machines be stored in a shipping container?",
+        answer:
+          "Yes, where the equipment is stored according to manufacturer instructions and protected against unsuitable environmental conditions.",
+      },
+      {
+        question: "How should tall vending machines be secured?",
+        answer:
+          "Use appropriate handling arrangements and properly rated restraints, taking the manufacturer's requirements into account.",
+      },
+      {
+        question: "Can coffee beans and premixes be stored inside a standard container?",
+        answer: "Only where the actual temperature, humidity and hygiene conditions comply with the product's storage requirements.",
+      },
+      {
+        question: "Can returned coffee machines be separated from ready-to-install machines?",
+        answer: "Yes. A suitable layout may include separate areas for returned, repair-pending and dispatch-ready equipment.",
+      },
+      {
+        question: "Can arcade cabinets and game tables be stored in a shipping container?",
+        answer: "Yes, provided they are suitably supported, packaged and protected against damage.",
+      },
+      {
+        question: "Can VR headsets be stored in a container?",
+        answer: "Potentially, if the storage conditions comply with the equipment manufacturer's temperature and humidity requirements.",
+      },
+      {
+        question: "Can batteries be charged inside an ordinary storage container?",
+        answer:
+          "Do not use an ordinary storage-only container as a battery-charging room. Charging requires suitable equipment and fire-safety arrangements.",
+      },
+      {
+        question: "Can a container include shelves and labelled equipment bins?",
+        answer: "Yes. Shelving is one of the storage options we fit, and what your unit gets is listed in its quotation.",
+      },
+      {
+        question: "Where can a shipping container be placed in Domlur?",
+        answer: "On suitable authorised private premises, subject to site conditions and applicable permissions.",
+      },
+      {
+        question: "What is the shipping container price in Domlur?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Ask for a confirmed timeline with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Domlur",
+    ctaText: `Whether you need storage for office coffee machines and service equipment or organised space for arcade cabinets, game tables and event accessories, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Domlur, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Domlur storage container enquiry",
+      intro:
+        "Choose the container type and how many you need, add the Domlur address (or drop a map pin) and mention if you are buying or hiring. Note whether it will hold spare coffee and vending machines or arcade cabinets and game tables, and give the height and weight of the largest item, so the quote covers the right unit and fittings.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Portable Office Cabin makes its containers at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, with its Bengaluru office in Electronic City. There is no yard, depot, branch or shop in Domlur. Size, grade, condition, internal dimensions, door opening and every fitting (shelves, drawers, racks, restraints, insulation, lights, vents and locks), together with hire terms and the delivery, unloading and collection arrangements, are fixed in the written quotation for each unit. Stock moves quickly, so delivery dates and times are never guaranteed. All four photos are illustrative pictures of a single container: they were not taken in Domlur and do not show a delivered or fitted unit, coffee or vending machines, or event games. Volumes are approximate. Coffee and vending operators and event games rental firms are examples of the uses we are asked about, not named customers or finished projects, and the listed localities show where enquiries are accepted. Notes on machines, consumables, chemicals, batteries, game equipment, permits and site access are general pointers only, not safety, electrical, food-safety, legal or engineering advice; follow the manufacturer's and supplier's instructions.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

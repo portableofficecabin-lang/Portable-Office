@@ -337,6 +337,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
       // Kasturi Nagar storage page (owner brief, 2026-11-18: a link back from the main shipping container page).
       { name: "Storage containers in Kasturi Nagar", href: "/cities-we-serve/shipping-container-kasturi-nagar" },
+      // Domlur storage page (owner brief, 2026-11-18: a link back from the main shipping container page).
+      { name: "Storage containers in Domlur", href: "/cities-we-serve/shipping-container-domlur" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
