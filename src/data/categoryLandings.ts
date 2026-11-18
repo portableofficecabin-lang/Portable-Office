@@ -231,12 +231,14 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "security-cabins": {
     locationHeading: "Security cabins by location",
-    // The four promotion pages, then the security-cabin city pages (Krishnagiri, Salem and Shoolagiri, 2026-11-05).
+    // The four promotion pages, then the security-cabin city pages (Krishnagiri, Salem and Shoolagiri, 2026-11-05;
+    // Rajarajeshwari Nagar, 2026-11-18, appended so the live links keep their positions).
     locationLinks: [
       ...promotionLocations("security-cabin"),
       { name: "Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { name: "Salem", href: "/cities-we-serve/portable-security-cabin-salem" },
       { name: "Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
+      { name: "Rajarajeshwari Nagar", href: "/cities-we-serve/portable-security-cabin-rajarajeshwari-nagar" },
     ],
     guideLinks: [GUIDE.materials, GUIDE.insulation, GUIDE.installation],
     relatedCategorySlugs: ["portable-cabins", "site-office-containers"],
