@@ -18486,6 +18486,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas Served Around Rajarajeshwari Nagar",
     areasText:
       "This page covers shipping and storage container requirements in Rajarajeshwari Nagar (RR Nagar), Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere. Many of these are residential streets with parked cars and tight gates, so the approach and the spot where the container will stand are checked for each property or campus before a delivery is confirmed.",
+    // RR Nagar shop-cabin brief (2026-11-18): oil, millet and gated-community shop cabins are that page's intent.
+    areasInlineLinks: [
+      {
+        before: "Planning a cold-pressed oil shop, a millet store or a convenience shop inside a gated community instead? See our page on",
+        link: { label: "portable shop cabins in RR Nagar", href: "/cities-we-serve/portable-shop-cabin-rajarajeshwari-nagar" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -45840,6 +45848,590 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a shop, office or yard in Indiranagar. Delivery, unloading and placement are assessed and arranged for each site, and delivery dates are not guaranteed. Hire of a shop cabin is subject to availability and the quotation. The footprints, layouts, fitting rooms, display fittings, lighting, joined modules, wet-area and grooming fit-outs, utility provisions, branding, installation, collection and removal described on this page are options to discuss; what is supplied is confirmed in the approved drawing, specification and quotation for each order. The images on this page are illustrative renders of one portable shop cabin design, not photographs of installations in Indiranagar, and they do not show the apparel, gallery or grooming layouts described. The roads, localities and venues named here are used only to describe locations; they are not clients, completed projects or confirmed sites. HAL 2nd Stage and HAL 3rd Stage are locality names, and Portable Office Cabin is not affiliated with Hindustan Aeronautics Limited. Business activity, site use and outdoor signage are subject to the site owner and the relevant local authority; the notes on this page are general planning guidance, not legal, licensing, electrical or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN RAJARAJESHWARI NAGAR (RR NAGAR, west Bengaluru) —
+   * /cities-we-serve/portable-shop-cabin-rajarajeshwari-nagar
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Portable Shop Cabins in
+   * Rajarajeshwari Nagar (RR Nagar)"). The brief proposes /portable-shop-cabin-rajarajeshwari-nagar; city
+   * pages live under /cities-we-serve/, so the page follows that convention (one indexable URL, no root
+   * alias). No RR Nagar shop page, redirect or sitemap entry existed.
+   * Meta title, meta description, H1, section order, H2s, H3s, sizes table, steps, areas list and the
+   * ten FAQ topics are the brief's. The brief's notes to the developer ("Do not claim …", "Verify …")
+   * are not page copy: each is turned into a plain statement for the reader or left to the disclaimer.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + heroCta (Request a Quote, Call, WhatsApp; number and link from COMPANY).
+   *   Cold-pressed oil (7 H3s), millet and organic stores (7 H3s), gated communities (6 H3s), sizes,
+   *     design and customization, price and "How to Order" (ordered) → afterSolutions extra sections,
+   *     so the steps stay before the areas.
+   *   Areas → areas. "Why Choose Portable Office Cabin?" → a default extra section (after the areas,
+   *     as the brief orders it). FAQs: the brief's ten. CTA: the brief's closing section.
+   *   "Shop Cabin on Rent in RR Nagar" is the brief's CONDITIONAL section: /rental-service lists cabins,
+   *     site offices and shipping containers but no shop cabin, so the section, the rental keyword and
+   *     the default "on rent" CTA button (ctaSecondaryLinks: []) are left out.
+   * Facts checked against the catalogue (/products/portable-shop-cabin, products.ts id 48): MS steel
+   * frame, glazed display front with a lockable door as standard, a rolling-shutter front, shelves,
+   * counter, signboard and brand colours as quoted options, other sizes quoted on request, relocatable
+   * with suitable lifting. The 8 × 6, 10 × 8 and 20 × 8 ft rows are the brief's example planning sizes,
+   * captioned as such (not stock sizes). No ₹ figure, stock, lead time, rating or certification.
+   * Kannada-script search terms (optional in the brief) are not added; "ganada enne" and "siridhanya"
+   * appear once each in the body.
+   *
+   * LINKS (brief §5): sizes section → /products/portable-shop-cabin ("portable shop cabins"); design
+   * section → /products/portable-cabin/layouts-and-interiors ("custom portable cabin layouts"); food-
+   * protection H3 → /products/portable-cabin/insulation-and-cooling; community-placement H3 → the RR
+   * Nagar security-cabin page (#281), anchor "portable security cabins in RR Nagar" (the brief's guard-post
+   * reference; that page's brief asks for no link back).
+   * Inbound: the shop product page's "Portable shops by location" list, the /cities-we-serve directory
+   * card and one areas paragraph on the RR Nagar shipping-container page (placement agreed with that
+   * page's session). The nearby block links back to that page.
+   *
+   * KEYWORD OWNERSHIP: portable / prefab / readymade shop cabin × RR Nagar (Rajarajeshwari Nagar), for
+   * cold-pressed (ganada enne) oil shops, millet and organic stores and gated-community convenience
+   * shops. The RR Nagar shipping-container page keeps shoot-house storage and student motorsport; the
+   * RR Nagar security-cabin page keeps apartment gates, shoot locations and construction guard posts.
+   * No "container shop" wording. Kengeri, Nagarbhavi and Mysore Road are not named.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Shop Cabins in Rajarajeshwari
+   * Nagar city page/Shop Cabins in Rajarajeshwari Nagar/cabin (1–5).webp", no EXIF / XMP / ICC) of one
+   * dark grey corrugated shop cabin with a wood-look rolling shutter. Four are used, VP8 data copied
+   * byte-for-byte with an XMP dc:title / dc:description marking each as illustrative (no creator,
+   * copyright, GPS or date set): three-quarter view (2) = hero / og:image; interior with shelves and
+   * counter (5) = gated-community section; roof view (4) = sizes; shutter front (3) = design. Render (1)
+   * is byte-identical to an image already on the Hassan shop page and shows no shop opening, so it is
+   * not used. No image shows an oil press, millet jars or an organic store, so those slots are skipped.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-rajarajeshwari-nagar",
+    city: "Rajarajeshwari Nagar",
+    listTitle: "Portable Shop Cabins in Rajarajeshwari Nagar (RR Nagar)",
+    metaTitle: "Portable Shop Cabin in RR Nagar | Oil, Millet & Community Shops",
+    metaDescription:
+      "Portable shop cabins in RR Nagar for cold-pressed oil shops, millet and organic stores, and gated-community convenience shops. Custom layouts and quotations.",
+    keywords:
+      "portable shop cabin in RR Nagar, portable shop cabin in Rajarajeshwari Nagar, shop cabin RR Nagar, portable shop Rajarajeshwari Nagar, prefab shop cabin RR Nagar, readymade shop cabin RR Nagar, kiosk cabin RR Nagar, cold-pressed oil shop cabin, ganada enne shop, millet store cabin, organic store cabin, gated community shop cabin, apartment convenience store cabin, portable shop cabin price in RR Nagar",
+    geo: {
+      region: "IN-KA",
+      placename: "Rajarajeshwari Nagar, Bengaluru, Karnataka, India",
+      position: "12.9200;77.5200",
+      icbm: "12.9200, 77.5200",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-shop-cabin-rajarajeshwari-nagar/portable-shop-cabin-rajarajeshwari-nagar.webp",
+      alt: "Portable shop cabin with a wood-look rolling shutter above a fold-out serving ledge, a side door and dark grey corrugated walls — illustrative render",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop cabin exterior. Final size, frontage, finish and fittings depend on the approved quotation.",
+    },
+
+    h1: "Portable Shop Cabins in Rajarajeshwari Nagar (RR Nagar)",
+    tagline: "Prefabricated shop cabins for cold-pressed oil shops, millet and organic stores, and convenience shops inside gated communities",
+    intro: [
+      "Rajarajeshwari Nagar, commonly known as RR Nagar, is an established residential locality in West Bengaluru with independent houses, apartments and gated communities.",
+      "Small retail businesses serving local residents may need compact, practical commercial spaces for selling food products and daily essentials.",
+      "Portable Office Cabin offers portable shop cabins for RR Nagar for cold-pressed oil shops, millet and organic stores, and convenience shops within gated communities.",
+    ],
+    heroCta: true,
+
+    extraSections: [
+      {
+        heading: "Portable Shop Cabins for Cold-Pressed Oil Businesses",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Cold-pressed and wood-pressed (ganada enne) oil businesses may need space for oil extraction equipment, seed storage, settling or filtering, and retail sales.",
+          "A suitably designed portable shop cabin can combine a customer-facing retail area with an equipment area, subject to structural, electrical, food-safety and local approval requirements.",
+        ],
+        subsections: [
+          {
+            heading: "Floor and structural requirements for oil presses",
+            paragraphs: ["Oil extraction equipment can place concentrated static and dynamic loads on a floor. Before the cabin is designed, confirm:"],
+            bullets: [
+              { text: "Machine weight." },
+              { text: "Machine footprint." },
+              { text: "Operating vibration." },
+              { text: "Required floor load capacity." },
+              { text: "Base-frame design." },
+              { text: "Maintenance clearance." },
+              { text: "The manufacturer's installation instructions." },
+            ],
+            closing: [
+              "A reinforced floor or a specially engineered support may be needed. A standard shop cabin is not assumed to suit every oil press: the floor and support are designed only after the machine details have been checked.",
+            ],
+          },
+          {
+            heading: "Electrical provisions for oil extraction equipment",
+            paragraphs: ["Depending on the machine specification, the equipment may need:"],
+            bullets: [
+              { text: "Single-phase or three-phase power." },
+              { text: "Dedicated electrical circuits." },
+              { text: "Appropriate earthing." },
+              { text: "Motor protection." },
+              { text: "Emergency isolation." },
+              { text: "Suitable cable routing." },
+            ],
+            closing: [
+              "Not every cold-pressed oil machine needs three-phase power, so follow the equipment manufacturer's specification. A qualified electrician should assess and install the required electrical connections.",
+            ],
+          },
+          {
+            heading: "Glass-front oil shop design",
+            paragraphs: [
+              "Where appropriate, a shop cabin can include a glass-front viewing area so customers can watch the oil being extracted. The layout should consider:",
+            ],
+            bullets: [
+              { text: "Safe separation between customers and moving machinery." },
+              { text: "Suitable guarding of mechanical components." },
+              { text: "Adequate ventilation." },
+              { text: "Safe access for maintenance." },
+              { text: "Appropriate glazing." },
+              { text: "Clear retail counter space." },
+            ],
+            closing: ["A viewing window must never compromise machine safety."],
+          },
+          {
+            heading: "Seed and oil storage",
+            paragraphs: ["Storage may be needed for:"],
+            bullets: [
+              { text: "Groundnut seeds." },
+              { text: "Sesame seeds." },
+              { text: "Coconut or copra, where applicable." },
+              { text: "Other suitable oilseeds." },
+              { text: "Filtered oil containers." },
+              { text: "Bottles and cans." },
+              { text: "Packaging materials." },
+            ],
+            closing: ["Use food-suitable storage containers and follow the applicable hygiene requirements."],
+          },
+          {
+            heading: "Settling, filtering and retail counter",
+            paragraphs: ["Depending on the business model, the cabin layout may include:"],
+            bullets: [
+              { text: "An equipment area." },
+              { text: "Settling or filtering space." },
+              { text: "A bottle-filling counter." },
+              { text: "Product display shelves." },
+              { text: "A billing counter." },
+              { text: "Oilseed cake storage, where applicable." },
+            ],
+            closing: ["Keep food handling, equipment maintenance and customer access appropriately separated."],
+          },
+          {
+            heading: "Hygiene, ventilation and fire safety",
+            paragraphs: ["Oil processing and retail need suitable controls for:"],
+            bullets: [
+              { text: "Cleaning and sanitation." },
+              { text: "Pest prevention." },
+              { text: "Temperature and ventilation." },
+              { text: "Oil spills." },
+              { text: "Waste handling." },
+              { text: "Electrical safety." },
+              { text: "Fire risks." },
+              { text: "Safe machine operation." },
+            ],
+            closing: ["Food-contact materials and surfaces should meet the applicable requirements."],
+          },
+          {
+            heading: "Permissions before opening",
+            paragraphs: ["Before opening, the business operator should confirm the requirements that apply, including:"],
+            bullets: [
+              { text: "FSSAI registration or licence, as applicable." },
+              { text: "Local trade permissions." },
+              { text: "Appropriate premises approval." },
+              { text: "Electrical connection approval." },
+              { text: "Machinery-related permissions, where applicable." },
+              { text: "Fire and other safety requirements." },
+            ],
+            closing: [
+              "Portable Office Cabin supplies the cabin. Obtaining these registrations, licences and approvals is the business operator's responsibility unless agreed otherwise in writing.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Shop Cabins for Millet & Organic Stores",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Millet (siridhanya) and organic food retailers may need compact spaces with organised displays, sealed storage and a convenient billing counter.",
+          "A portable shop cabin can be planned for retailing packaged grains, flours, ready-to-cook products and other food items.",
+        ],
+        subsections: [
+          {
+            heading: "Millet storage and display",
+            paragraphs: ["Products may include:"],
+            bullets: [
+              { text: "Foxtail millet." },
+              { text: "Little millet." },
+              { text: "Kodo millet." },
+              { text: "Barnyard millet." },
+              { text: "Finger millet (ragi)." },
+              { text: "Millet flour." },
+              { text: "Ready-to-cook millet mixes." },
+            ],
+            closing: ["Store stock according to the supplier's instructions."],
+          },
+          {
+            heading: "Sealed jars and storage bins",
+            paragraphs: ["A millet store may use:"],
+            bullets: [
+              { text: "Food-suitable sealed containers." },
+              { text: "Clearly labelled shelves." },
+              { text: "Product identification." },
+              { text: "Suitable stock rotation." },
+              { text: "Pest-management arrangements." },
+              { text: "Protection from excessive heat and moisture." },
+            ],
+            closing: ["Avoid storing open food sacks directly on the floor."],
+          },
+          {
+            heading: "Kannada and English product labels",
+            paragraphs: [
+              "Retail displays can use Kannada and English signage to help customers identify products. Food labels must comply with the applicable labelling requirements, and products should be described as organic only where the supplier's certification supports it.",
+            ],
+          },
+          {
+            heading: "Weighing and billing counter",
+            paragraphs: ["Depending on the retail model, the cabin can accommodate:"],
+            bullets: [
+              { text: "A weighing scale." },
+              { text: "Billing equipment." },
+              { text: "A payment terminal." },
+              { text: "Storage drawers." },
+              { text: "A customer service counter." },
+              { text: "Packaging materials." },
+            ],
+            closing: ["Use compliant weighing equipment where the law requires it."],
+          },
+          {
+            heading: "Additional retail products",
+            paragraphs: ["Where appropriate, a millet and organic store may also sell:"],
+            bullets: [
+              { text: "Cold-pressed oils." },
+              { text: "Jaggery." },
+              { text: "Honey." },
+              { text: "Spices." },
+              { text: "Packaged health foods." },
+              { text: "Other permitted grocery products." },
+            ],
+            closing: ["Plan suitable storage for each product category."],
+          },
+          {
+            heading: "Protecting food products",
+            paragraphs: ["Moisture, heat and pests can all affect food products. Consider:"],
+            bullets: [
+              { text: "Roof and wall insulation." },
+              { text: "Suitable ventilation." },
+              { text: "Dry storage conditions." },
+              { text: "Food-safe shelving." },
+              { text: "Sealed containers." },
+              { text: "Routine cleaning." },
+              { text: "Pest inspections." },
+            ],
+            closing: ["Insulation alone does not guarantee a controlled temperature or humidity."],
+            inlineLinks: [
+              {
+                before: "Compare the panel options in our guide to",
+                link: { label: "PUF insulation and cooling for portable cabins", href: "/products/portable-cabin/insulation-and-cooling" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Food business permissions",
+            paragraphs: [
+              "Before opening, the operator should confirm the applicable FSSAI registration or licensing requirements and local trade permissions.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Shop Cabins Inside Gated Communities",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-shop-cabin-rajarajeshwari-nagar/portable-shop-cabin-interior-shelves-counter.webp",
+          alt: "Inside a portable shop cabin: wall shelves stocked with packaged snacks, an L-shaped counter under an open serving window, lower shelves with bottled water and a steel door — illustrative render",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative shop interior with shelving and a serving counter. Shelves, counters and stock are shown for illustration and are quoted separately.",
+        },
+        paragraphs: [
+          "Larger residential communities may consider a compact convenience shop for daily household essentials.",
+          "A portable shop cabin can provide a dedicated retail counter within an approved area of the community.",
+        ],
+        subsections: [
+          {
+            heading: "Daily-needs convenience shop",
+            paragraphs: ["Depending on the permitted business activity, a community shop may sell:"],
+            bullets: [
+              { text: "Milk." },
+              { text: "Bread." },
+              { text: "Eggs." },
+              { text: "Packaged groceries." },
+              { text: "Vegetables." },
+              { text: "Daily household essentials." },
+            ],
+            closing: ["Refrigerated and perishable products need suitable temperature-controlled equipment and hygiene arrangements."],
+          },
+          {
+            heading: "Benefits for residents",
+            paragraphs: [
+              "A well-located convenience shop can make everyday items easier to buy without residents having to travel outside the community.",
+            ],
+          },
+          {
+            heading: "Benefits for resident associations",
+            paragraphs: [
+              "An association may consider a retail cabin as an amenity or a vendor-operated facility. Any rental income, maintenance arrangements and operating terms depend on the association's own agreement with the vendor, and income is not guaranteed.",
+            ],
+          },
+          {
+            heading: "Benefits for vendors",
+            paragraphs: [
+              "A compact cabin can give a vendor a practical retail space close to its customers. Commercial success depends on resident demand, operating costs, permissions and vendor management.",
+            ],
+          },
+          {
+            heading: "Community shop cabin features",
+            paragraphs: ["Depending on the design, a community shop cabin may include:"],
+            bullets: [
+              { text: "A retail counter." },
+              { text: "Shelving." },
+              { text: "A lockable door or rolling shutter." },
+              { text: "A power provision for a refrigerator." },
+              { text: "Display lighting." },
+              { text: "An exterior signage area." },
+              { text: "A sunshade or canopy." },
+              { text: "Suitable ventilation." },
+            ],
+          },
+          {
+            heading: "Community approvals and placement",
+            paragraphs: ["Before installation:"],
+            bullets: [
+              { text: "Obtain written approval from the authorised association or property owner." },
+              { text: "Confirm that commercial use is permitted." },
+              { text: "Agree operating hours and vendor terms." },
+              { text: "Check the electrical supply." },
+              { text: "Confirm waste-management arrangements." },
+              { text: "Maintain emergency access." },
+              { text: "Keep the main gate, fire access routes and pedestrian paths clear." },
+            ],
+            inlineLinks: [
+              {
+                before: "For a dedicated guard post at the community gate, see our",
+                link: { label: "portable security cabins in RR Nagar", href: "/cities-we-serve/portable-security-cabin-rajarajeshwari-nagar" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-shop-cabin-rajarajeshwari-nagar/portable-shop-cabin-roof-aerial-view.webp",
+          alt: "Portable shop cabin seen from above, with a pitched standing-seam roof, a side door and a wood-look rolling shutter over a serving ledge — illustrative render",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative view from above. Footprint, base and placement are confirmed for each site.",
+        },
+        paragraphs: [
+          "Choose a size from the shop's layout, stock and any equipment it must hold. The sizes below are starting points for planning.",
+        ],
+        table: {
+          caption:
+            "These are example planning sizes, not stock sizes. Usable internal space, clearances, equipment loads and availability are confirmed in the quotation.",
+          headers: ["Proposed size", "Possible application"],
+          rows: [
+            ["8 × 6 ft", "Compact community convenience counter"],
+            ["10 × 8 ft", "Millet store or small grocery cabin"],
+            ["20 × 8 ft", "Oil shop with separate retail and machinery areas, subject to design verification"],
+            ["Custom size", "Larger equipment or combined retail requirements"],
+          ],
+        },
+        inlineLinks: [
+          {
+            before: "For the standard 10 × 10 ft design with a glazed display front and its specifications, see our",
+            link: { label: "portable shop cabins", href: "/products/portable-shop-cabin" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "Shop Cabin Design & Customization",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-shop-cabin-rajarajeshwari-nagar/portable-shop-cabin-shutter-counter-front.webp",
+          alt: "Front of a portable shop cabin with a closed wood-look rolling shutter, a wood-look fascia and a serving ledge on three steel brackets — illustrative render",
+          width: 1451,
+          height: 1084,
+          caption: "Illustrative shutter front with a serving ledge. Frontage, finishes and fittings are confirmed in the quotation.",
+        },
+        paragraphs: ["Depending on the cabin specification, options to discuss include:"],
+        bullets: [
+          { text: "An MS structural frame." },
+          { text: "Insulated wall and roof panels." },
+          { text: "A rolling shutter." },
+          { text: "A glass-front retail area." },
+          { text: "Display shelves." },
+          { text: "A sales counter." },
+          { text: "Electrical provisions." },
+          { text: "Ventilation." },
+          { text: "Signage space." },
+          { text: "An exterior canopy." },
+          { text: "A custom interior layout." },
+        ],
+        closing: [
+          "Specialised oil-press installations need additional engineering and safety review. Fittings and equipment are supplied only as listed in the approved quotation; not every item above is standard.",
+        ],
+        inlineLinks: [
+          {
+            before: "For planning ideas, see our guide to",
+            link: { label: "custom portable cabin layouts", href: "/products/portable-cabin/layouts-and-interiors" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Price in RR Nagar",
+        placement: "afterSolutions",
+        paragraphs: ["Shop cabin pricing depends on:"],
+        bullets: [
+          { text: "Size and layout." },
+          { text: "Frame and panel materials." },
+          { text: "Insulation requirements." },
+          { text: "A rolling shutter or glass-front design." },
+          { text: "Reinforced floor requirements." },
+          { text: "Electrical specifications." },
+          { text: "Retail shelving and counters." },
+          { text: "Ventilation." },
+          { text: "Exterior finishing." },
+          { text: "Transport and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request a quotation based on the business you plan to run and the specification you need."],
+      },
+      {
+        heading: "How to Order a Portable Shop Cabin",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the type of shop you plan to operate." },
+          { text: "Share the required dimensions." },
+          { text: "Provide machinery specifications, if applicable." },
+          { text: "Discuss shelving, counters, shutters and glazing." },
+          { text: "Confirm electrical and ventilation requirements." },
+          { text: "Provide the installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request a quotation." },
+          { text: "Finalise the specification and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin manufactures portable cabins for commercial and site use. For shop cabins in RR Nagar, that includes:",
+        ],
+        bullets: [
+          { text: "Compact shop cabin designs." },
+          { text: "Custom dimensions, quoted on request." },
+          { text: "Retail counters and shelving." },
+          { text: "Glass-front or rolling-shutter configurations." },
+          { text: "Insulation and ventilation options." },
+          { text: "Electrical provisions." },
+          { text: "Quotation and delivery coordination." },
+        ],
+        closing: [
+          "Each cabin is supplied to the agreed specification. Whether a shop is legally approved, fully equipped and ready to open depends on the permissions, equipment and utility connections its operator arranges.",
+        ],
+      },
+    ],
+
+    areasHeading: "Areas Served Around Rajarajeshwari Nagar",
+    areasText:
+      "This page covers portable shop cabin requirements in Rajarajeshwari Nagar (RR Nagar), including Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere. Delivery, unloading and placement are assessed for each site.",
+
+    faqs: [
+      {
+        question: "Can a portable shop cabin accommodate a wooden oil press?",
+        answer:
+          "Potentially, with a suitably engineered floor and support structure. The machine's weight, vibration and installation requirements must be checked first.",
+      },
+      {
+        question: "Does a cold-pressed oil machine require three-phase electricity?",
+        answer: "Some machines do, while others use a different power supply. Follow the equipment manufacturer's specification.",
+      },
+      {
+        question: "Can customers watch the oil extraction process?",
+        answer: "Yes. A suitably designed viewing window can be included, with appropriate machine guarding and customer separation.",
+      },
+      {
+        question: "How can millets and flours be stored in a cabin?",
+        answer: "Use food-suitable sealed containers, suitable storage conditions, pest control and appropriate stock rotation.",
+      },
+      {
+        question: "Can a residents' association install a shop cabin inside a gated community?",
+        answer: "Potentially, subject to approval from the authorised association, any applicable permissions and suitable placement.",
+      },
+      {
+        question: "Can a community shop cabin include a refrigerator?",
+        answer: "A suitable electrical provision can be included, subject to the refrigerator's power requirements.",
+      },
+      {
+        question: "Do food shops require FSSAI registration or licensing?",
+        answer:
+          "Food business operators must comply with the applicable FSSAI requirements, which depend on the type and scale of the activity.",
+      },
+      {
+        question: "Can the shop cabin be relocated?",
+        answer:
+          "Relocation may be possible, depending on the cabin's construction and condition, the transport arrangements and the new site's requirements.",
+      },
+      {
+        question: "What is the portable shop cabin price in RR Nagar?",
+        answer: "Pricing depends on size, materials, customisation and delivery requirements. Share your shop type and specification for a quotation.",
+      },
+      {
+        question: "How quickly can a shop cabin be delivered?",
+        answer:
+          "Delivery depends on availability, manufacturing, customisation, transport and site access. Ask for a confirmed timeline with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quotation in RR Nagar",
+    ctaText:
+      "Whether you plan to open a cold-pressed oil business, a millet and organic store or a convenience shop inside a gated community, share your shop type, preferred size, any machinery details and the site location so we can discuss suitable shop cabin options.",
+    ctaButtonLabel: "Request a Quote",
+    // The brief's buttons are Request a Quote, Call and WhatsApp: an empty list drops the two default
+    // container-office buttons (one of them is "on rent", and shop cabins are not offered on hire).
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related products and guides",
+    relatedLinks: [
+      { label: "Portable Cabin Sizes and Dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
+      { label: "MS Sheet or PUF Panel Cabins", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabin Transport and Delivery", href: "/products/portable-cabin/transport-and-delivery" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Shipping & Storage Containers in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
+        { label: "Portable Shops in Indiranagar", href: "/cities-we-serve/portable-shop-indiranagar" },
+        { label: "Portable Cabins in Jayanagar", href: "/cities-we-serve/portable-cabin-jayanagar" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a shop, office or yard in Rajarajeshwari Nagar. Delivery, unloading and placement are assessed and arranged for each site, and delivery dates are not guaranteed. The sizes, layouts, reinforced floors, equipment areas, glazing, shutters, shelving, counters, insulation, ventilation, electrical provisions, canopies and signage described on this page are options to discuss; what is supplied is confirmed in the approved drawing, specification and quotation for each order. Oil extraction machinery, weighing scales, billing equipment and refrigerators are not part of the cabin unless the quotation lists them. FSSAI registration or licensing, trade permissions, electrical connection approval and the permission of the association or property owner are the business operator's responsibility unless agreed otherwise in writing. The images on this page are illustrative renders of one portable shop cabin design, not photographs of installations in Rajarajeshwari Nagar, and they do not show the oil-press, millet-store or organic-store layouts described. The localities named here are used only to describe locations; they are not clients, completed projects or confirmed sites. The notes on this page are general planning guidance, not legal, licensing, food-safety, electrical or engineering advice.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN HSR LAYOUT (south-east Bengaluru) —
