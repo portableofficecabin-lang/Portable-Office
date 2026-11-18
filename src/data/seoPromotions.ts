@@ -668,6 +668,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kaggadasapura (electrical and plumbing contractors' stores, neighbourhood dry recyclables; owner
     // brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+    // Varthur (uPVC, aluminium and glass window installers' stores, dairy farm feed and equipment; owner
+    // brief 2026-11-18), appended so the live links keep their positions.
+    { name: "Shipping Containers in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
   ],
 };
 
