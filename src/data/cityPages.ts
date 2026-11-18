@@ -37668,7 +37668,7 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Pale grey steel shipping container seen from a front corner, its double cargo doors closed with vertical locking bars, on a paved courtyard with small planters along the base",
       width: 1200,
       height: 896,
-      caption: "Illustrative render of a closed container. It was not photographed in Vijayanagar and does not show a delivered unit.",
+      caption: "Illustrative render only: a closed container, not a unit photographed or delivered in Vijayanagar.",
     },
 
     h1: "Shipping & Storage Containers in Vijayanagar, Bengaluru",
@@ -37996,7 +37996,7 @@ export const CITY_PAGES: CityPage[] = [
           alt: "Closed end wall of a beige shipping container: a ribbed steel panel framed by corner castings, with a pair of forklift pockets in the bottom rail",
           width: 1448,
           height: 1086,
-          caption: "Illustrative render. The quotation for the actual unit states its length, inside dimensions and condition.",
+          caption: "Illustrative render. Length, inside measurements and condition are written into the quotation for your unit.",
         },
         table: {
           caption:
@@ -38146,7 +38146,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Request a Shipping Container Quotation in Vijayanagar, Bengaluru",
-    ctaText: `Whether you need storage for upholstery materials and furniture or organised space for suitable agarbatti inventory, Portable Office Cabin can discuss shipping container options that fit what you store. Phone ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Vijayanagar, Bengaluru, Karnataka.`,
+    ctaText: `Whether you need storage for upholstery materials and furniture or organised space for suitable agarbatti inventory, Portable Office Cabin can discuss shipping container options that fit what you store. Speak to us on ${COMPANY.phones[0].display}, reach us on WhatsApp at ${COMPANY.whatsapp.display}, or send the details to ${COMPANY.email.sales}. Service area: Vijayanagar, Bengaluru, Karnataka.`,
     // Brief's closing section: the quotation request → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons;
@@ -38158,19 +38158,19 @@ export const CITY_PAGES: CityPage[] = [
       noun: "storage container",
       heading: "Vijayanagar, Bengaluru container enquiry",
       intro:
-        "Choose a container type and quantity, give the Vijayanagar workshop or yard address (a map pin is fine), and let us know if you are buying or hiring. List what will go inside, such as furniture awaiting repair, fabric rolls, foam, mattresses, bamboo sticks or packed agarbatti stock, with rough quantities, so we can quote the right size, racks and ventilation.",
+        "Pick the container type and how many you need, add the Vijayanagar workshop or yard address (a map pin is fine), and let us know if you are buying or hiring. List what will go inside, such as furniture awaiting repair, fabric rolls, foam, mattresses, bamboo sticks or packed agarbatti stock, with rough quantities, so we can quote the right size, racks and ventilation.",
     },
     // The cargo category and the rental product are linked in the body, so they are not repeated here.
     relatedLinksHeading: "Related products",
     relatedLinks: [
-      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
-      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
     ],
 
-    disclaimer: `Portable Office Cabin supplies every container through its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs a Bengaluru office in Electronic City; it has no depot, yard, shop or branch in Vijayanagar. What you get is set by the written quotation or rental agreement for your unit: its size, grade, condition, inside dimensions and door opening; any racks, shelving, bins, bays, lighting, ventilation, insulation, electrical work, locks or fire-safety equipment; the hire terms, if you rent; and the delivery, unloading and collection. Stock moves, and no delivery date or time is promised in advance. All five pictures are illustrative renders. They were not taken in Vijayanagar and show no delivered or fitted unit, furniture, foam, fabric or agarbatti stock. Capacities are rounded. Upholstery workshops, mattress makers and agarbatti units appear as examples of how containers are used, not as customers or finished jobs, and the listed localities only show where enquiries come from. An ordinary container is not fire-rated, moisture-proof or climate-controlled, and it is not an approved store for combustible powders, flammable chemicals, fragrance oils or solvents. Everything said here about furniture, fabric, foam, mattresses, agarbatti materials, fire and dust hazards, chemicals, moisture, permissions and site access is general information rather than professional fire-safety, electrical, legal or engineering advice, and the instructions of each manufacturer and supplier come first.`,
+    disclaimer: `Portable Office Cabin supplies every container through its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs a Bengaluru office in Electronic City; it has no depot, yard, shop or branch in Vijayanagar. What you get is set by the written quotation or rental agreement for your unit: its size, grade, condition, inside dimensions and door opening; any racks, shelving, bins, bays, lighting, ventilation, insulation, electrical work, locks or fire-safety equipment; the hire terms, if you rent; and the delivery, unloading and collection. Stock levels change, and delivery dates and times are never promised in advance. All five pictures are illustrative renders. They were not taken in Vijayanagar and show no delivered or fitted unit, furniture, foam, fabric or agarbatti stock. Capacities are rounded. Upholstery workshops, mattress makers and agarbatti units appear as examples of how containers are used, not as customers or finished jobs, and the listed localities only show where enquiries come from. An ordinary container is not fire-rated, moisture-proof or climate-controlled, and it is not an approved store for combustible powders, flammable chemicals, fragrance oils or solvents. Everything said here about furniture, fabric, foam, mattresses, agarbatti materials, fire and dust hazards, chemicals, moisture, permissions and site access is general information rather than professional fire-safety, electrical, legal or engineering advice, and the instructions of each manufacturer and supplier come first.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
