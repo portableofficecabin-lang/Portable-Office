@@ -716,6 +716,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Domlur (office coffee and vending operators' spare machines, parts and service kits; corporate event
     // games rental equipment; owner brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Domlur", href: "/cities-we-serve/shipping-container-domlur" },
+    // Vijayanagar, Bengaluru (upholstery workshops' and mattress makers' furniture, fabric and foam; agarbatti
+    // units' bamboo sticks, packaging and packed stock; owner brief 2026-11-18), appended so the live links keep their positions.
+    { name: "Shipping Containers in Vijayanagar, Bengaluru", href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru" },
   ],
 };
 
