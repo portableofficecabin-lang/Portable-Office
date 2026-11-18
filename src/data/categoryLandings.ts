@@ -327,6 +327,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Commercial storage containers in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
       // Banashankari storage page (owner brief, 2026-11-18: a link back from the main shipping container page).
       { name: "Commercial storage containers in Banashankari", href: "/cities-we-serve/shipping-container-banashankari" },
+      // Varthur storage page (owner brief, 2026-11-18: a link back from the main shipping container page).
+      { name: "Commercial storage containers in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
       // RR Nagar storage page (owner brief, 2026-11-18: a link back from the main shipping container page).
       { name: "Storage containers in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
     ],
