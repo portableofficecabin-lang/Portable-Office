@@ -722,6 +722,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // RT Nagar (footwear shops' boxed shoes and school-shoe stock; luggage and bag retailers' suitcases,
     // trolley bags and school bags; owner brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
+    // Banaswadi (antique dealers' and restorers' heritage furniture, brassware and collectibles; beverage
+    // distributors' crates, bottles and spare coolers; owner brief 2026-11-18), appended so the live links keep their positions.
+    { name: "Shipping Containers in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
   ],
 };
 
