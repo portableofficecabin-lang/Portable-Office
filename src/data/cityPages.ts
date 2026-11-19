@@ -39518,6 +39518,13 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas Served Around Hebbal, Bengaluru",
     areasText:
       "We welcome container enquiries from Hebbal, Bengaluru, and its neighbourhoods, including Hebbal Kempapura, Kodigehalli, Bhadrappa Layout, Byatarayanapura, Ganganagar and the Hebbal stretch of Bellary Road. Each delivery is confirmed after the site's access has been checked.",
+    // RT Nagar brief (2026-11-18, §5): footwear and luggage retailers' stock is that page's intent; the
+    // nearby block skips this link (areasInlineLink hrefs are always skipped).
+    areasInlineLink: {
+      before: "Footwear shops and luggage retailers in neighbouring RT Nagar have a page of their own:",
+      link: { label: "footwear and luggage inventory storage containers in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
+      after: ".",
+    },
 
     extraSections: [
       {
@@ -41570,6 +41577,584 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin builds and supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has its Bengaluru office in Electronic City; it has no yard, depot, storage facility or branch in Kalyan Nagar or the neighbouring layouts. Each unit's size, grade, condition, internal dimensions and door opening, any racks, padding, shelving, bins, supports, lighting, ventilation, insulation, air conditioning or locks, any hire terms, and its delivery, unloading and collection are set out in its quotation; stock varies, and delivery dates and times are not guaranteed. No container is offered as conservation-grade or climate-controlled storage unless its approved specification says so, no temperature or humidity level is guaranteed otherwise, and no container is offered as an approved store for aerosols, salon chemicals, solvents or other hazardous materials. The five images are illustrative renders of one container: none was taken in Kalyan Nagar, and none shows a delivered or fitted unit, salon or spa equipment, or artwork. Capacities are approximate. Salons, spas, artists, studios and art classes are mentioned to illustrate typical uses, not as clients or completed projects, and the localities listed show where enquiries are welcome, not confirmed delivery points. The notes on equipment, mirrors, linen, retail products, chemicals, artwork, art supplies, placement and permissions are general guidance, not conservation, safety, electrical, legal or engineering advice; follow the manufacturers', suppliers' and conservators' instructions.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN RT NAGAR — backstock space for footwear shops (boxed shoes by
+   * category, size and style, school-shoe season stock, seasonal rotation, returns, leather and suede) and
+   * for luggage and bag retailers (suitcases, trolley bags, nested sets, school bags, backpacks, office
+   * bags, handbags, leather bags and warranty stock) in north Bengaluru.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * RT Nagar, Bengaluru"): meta title, meta description, H1, keywords, local modifiers, section order, H2 /
+   * H3 headings, sizes table and the ten FAQs are the brief's, and so is the copy, lightly edited for flow
+   * and British spelling. "R.T. Nagar" and "Rabindranath Tagore Nagar" each appear once in the visible
+   * copy (intro), as the brief asks. The brief's notes to the implementer ("Where relevant, link to…",
+   * "Do not guarantee…", "Do not invent…", "Conditional section…", "Highlight only verified
+   * capabilities…", "Do not target…", "Use verified company phone numbers…") are instructions, not page
+   * copy: where one carries a fact for the reader it is reworded as a plain statement ("a standard
+   * container is not moisture-proof or climate-controlled…", "a delivery hour or a particular unloading
+   * method can be agreed only after the route and the site have been assessed"); otherwise it is left out.
+   * Each "suitable practices / precautions" list stays a list. The route follows the site convention
+   * (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins, enquiry-form
+   * intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; shelving, labelled bays, pallets, supports,
+   * ventilation, insulation, moisture control, lighting and security are price factors "where your
+   * quotation includes them", never stock items or guaranteed conditions. The optional Kannada search
+   * terms are not used: the page is in English. No Product JSON-LD: city pages carry no prices (file
+   * rule) and a Product block without offers earns no rich result, so the Service JSON-LD (no offers),
+   * FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   Footwear shops, luggage & bag shops and "Protecting Retail Inventory Against Heat & Moisture" →
+   *     three afterIntro extra sections, their H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered) → afterSolutions
+   *     extra sections, so the steps stay before the areas.
+   *   "Areas Served Around RT Nagar" → areas + two areasInlineLinks. "Why Choose Portable Office Cabin?" →
+   *   a default extra section (after the areas, as in the brief). FAQs: the brief's ten. CTA: the brief's
+   *   closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5): intro → the cargo category ("Existing shipping container product page"); "Leather
+   * and suede footwear storage" H3 → "temperature-controlled container options" (the Vellore page's
+   * "Insulated and air-conditioned storage enquiries" section, which explains how such a fit-out is
+   * specified and quoted against a stated temperature range); placement → "shipping container delivery
+   * and placement" (Bellandur's "Planning delivery through a society gate or narrow lane"); sizes → "used
+   * shipping container inspection": the brief's /shipping-container-chennai is not a route (the Chennai
+   * product page gives inspection one sentence), so it points to the Athipattu page's "Used Container
+   * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
+   * "shipping containers in Hebbal" (the brief: Hebbal and Ganganagar go to that page) and "shipping
+   * containers on Thanisandra Main Road". Inbound: the Hebbal, Bengaluru page's areas section (one
+   * `areasInlineLink`, "footwear and luggage inventory storage containers in RT Nagar"; its own targeting
+   * is unchanged), the Karnataka shipping hub ("Shipping Containers in RT Nagar"), the cargo category's
+   * location links ("Storage containers in RT Nagar") and every Karnataka shipping page's nearby block,
+   * Thanisandra Main Road's included (its scaffolding and vehicle-storage copy has no natural place for a
+   * body link). `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × RT Nagar (R.T. Nagar, Rabindranath Tagore
+   * Nagar; 1st and 2nd Block; RT Nagar Main Road / 80 Feet Road), Dinnur, Sultanpalya,
+   * Cholanayakanahalli, Matadahalli and Manorayanapalya, for footwear-shop stock and for luggage and bag
+   * retailers' inventory. Not targeted: Hebbal, Ganganagar, Kodigehalli and Byatarayanapura (Hebbal page;
+   * Hebbal and Ganganagar named here only in the link to it); Thanisandra, Nagawara and Hegde Nagar
+   * (Thanisandra Main Road page); Kaval Byrasandra, HMT Layout and Mekhri Circle; Sanjaynagar and Sahakar
+   * Nagar (kept for possible future pages). Kept apart from schools' textbooks and uniforms (JP Nagar),
+   * boutique stock (Indiranagar), garment stock (Bommanahalli), kirana backstock (Banashankari), furniture
+   * and electronics showrooms (Marathahalli) and climate-controlled containers as such (Vellore).
+   * "Bengaluru" stays out of the title, as the brief asks; the geo meta and the Service JSON-LD's
+   * areaServed carry "RT Nagar, Bengaluru, Karnataka".
+   *
+   * Images: four owner-supplied WebP renders ("public/images/RT nagar storage container city page/Storage
+   * Containers in RT Nagar, Bengaluru/cabin (1–4).webp", lossy VP8, no EXIF / XMP / ICC) of one grey
+   * container with taupe cargo doors, kept byte-identical (VP8 bitstream untouched) with an XMP dc:title /
+   * dc:description added that labels each one illustrative (no creator, GPS or date). (1) three-quarter
+   * exterior = hero / og:image (the brief's hero filename); (4) empty interior = footwear section (the
+   * brief's interior filename, but not its "with shelving" alt: no shelving is fitted); (2) cargo doors
+   * with a lockbox = protection section; (3) roof from above = placement section. No image shows shoes,
+   * shoe boxes, leather goods, suitcases, trolley bags or school bags, so the brief's six use-case image
+   * slots are not used, and no alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-rt-nagar",
+    city: "RT Nagar",
+    listTitle: "Shipping & Storage Containers in RT Nagar",
+    metaTitle: "Shipping Container in RT Nagar | Footwear & Luggage Storage",
+    metaDescription:
+      "Shipping and storage containers in RT Nagar for footwear shops storing boxed shoes and luggage retailers storing suitcases, trolley bags and school bag stock.",
+    keywords:
+      "shipping container in RT Nagar, cargo container RT Nagar, storage container RT Nagar, storage container R.T. Nagar, storage container Dinnur, storage container Sultanpalya, storage container Cholanayakanahalli, storage container Matadahalli, storage container Manorayanapalya, used shipping container RT Nagar, shipping container price in RT Nagar, storage container for rent in RT Nagar, footwear shop storage container, shoe stock storage, shoe box storage container, school shoe season stock storage, luggage shop storage container, suitcase and trolley bag storage, school bag stock storage, bag shop backstock container",
+    // Approximate point in RT Nagar, north Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "RT Nagar, Bengaluru, Karnataka, India",
+      position: "13.0210;77.5950",
+      icbm: "13.0210, 77.5950",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Hebbal, Thanisandra Main Road, Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-rt-nagar/shipping-container-rt-nagar.webp",
+      alt: "Grey steel shipping container with taupe end doors, seen at an angle in a landscaped yard, suitable for retail inventory storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render: this view was not photographed in RT Nagar, and it does not show a unit delivered to a shop.",
+    },
+
+    h1: "Shipping & Storage Containers in RT Nagar",
+    tagline:
+      "Backstock space for footwear shops' boxed shoes and school-shoe season, and for luggage retailers' suitcases, trolley bags and school bags.",
+    intro: [
+      "RT Nagar, also known as Rabindranath Tagore Nagar, is an established residential and commercial neighbourhood in north Bengaluru.",
+      "Footwear shops and luggage retailers along local shopping streets may require additional space for seasonal inventory, boxed products and customer returns.",
+      "School reopening periods can increase demand for school shoes and bags, while travel and festive seasons may bring additional luggage stock.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in RT Nagar (R.T. Nagar) for these commercial storage requirements.",
+    },
+
+    areasHeading: "Areas Served Around RT Nagar",
+    areasText:
+      "We take container enquiries from RT Nagar 1st Block and 2nd Block, Dinnur, Sultanpalya, Cholanayakanahalli, Matadahalli and Manorayanapalya, including premises on RT Nagar Main Road (80 Feet Road), Dinnur Main Road and Sultanpalya Main Road. Access to each address is reviewed before a delivery date is confirmed.",
+    // Brief §5 and §6: Hebbal and Ganganagar belong to the Hebbal page; Thanisandra Main Road has its own page.
+    areasInlineLinks: [
+      {
+        before: "For Hebbal and Ganganagar, see our page on",
+        link: { label: "shipping containers in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+        after: ".",
+      },
+      {
+        before: "Premises along Thanisandra Main Road are covered on our page for",
+        link: { label: "shipping containers on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Footwear Shops",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-rt-nagar/rt-nagar-storage-container-interior.webp",
+          alt: "Empty steel container seen from its open end: pale ribbed side walls and roof, a brown plywood floor and the far pair of doors closed",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative render, shown empty. Shelving, labelled bays and lights are fitted only where the quotation for your unit includes them.",
+        },
+        paragraphs: [
+          "Footwear retailers handle products in different sizes, styles and colours, often with individual packaging.",
+          "A suitable shipping container may provide additional space for boxed inventory, subject to appropriate storage conditions and site permissions.",
+        ],
+        subsections: [
+          {
+            heading: "Shoe stock organisation",
+            paragraphs: ["Shelves may be organised according to:"],
+            bullets: [
+              { text: "Footwear category." },
+              { text: "Brand." },
+              { text: "Style." },
+              { text: "Colour." },
+              { text: "Size." },
+              { text: "Stock arrival date." },
+              { text: "Customer demand." },
+            ],
+            closing: ["Use suitable shelf labels and an inventory system to help staff locate products."],
+          },
+          {
+            heading: "Shoe box storage",
+            paragraphs: ["Boxed footwear may be arranged on appropriately rated shelves. Suitable practices include:"],
+            bullets: [
+              { text: "Stable stacking." },
+              { text: "Avoiding excessive weight on lower boxes." },
+              { text: "Keeping cartons off damp surfaces." },
+              { text: "Protecting boxes against moisture." },
+              { text: "Maintaining clear access aisles." },
+              { text: "Checking stock condition regularly." },
+            ],
+            closing: ["Do not assume that all shoe boxes can be safely stacked to the same height."],
+          },
+          {
+            heading: "School shoe season stock",
+            paragraphs: [
+              "Footwear retailers may receive additional school shoe inventory before the academic year begins. A separate storage section may be organised by:",
+            ],
+            bullets: [
+              { text: "School shoe style." },
+              { text: "Size range." },
+              { text: "Colour." },
+              { text: "Quantity." },
+              { text: "Supplier." },
+              { text: "Dispatch priority." },
+            ],
+            closing: ["Use stock records to reduce size-related picking errors."],
+          },
+          {
+            heading: "Seasonal footwear rotation",
+            paragraphs: ["Retailers may rotate inventory for:"],
+            bullets: [
+              { text: "School reopening." },
+              { text: "Monsoon footwear demand." },
+              { text: "Festival periods." },
+              { text: "Wedding seasons." },
+              { text: "Other local retail peaks." },
+            ],
+            closing: ["Place frequently requested stock in accessible positions."],
+          },
+          {
+            heading: "Returns and exchange section",
+            paragraphs: ["A separate section may be used for:"],
+            bullets: [
+              { text: "Customer returns." },
+              { text: "Size exchanges." },
+              { text: "Damaged packaging." },
+              { text: "Items awaiting supplier inspection." },
+              { text: "Products awaiting warranty decisions." },
+            ],
+            closing: ["Keep returned stock separate from new inventory."],
+          },
+          {
+            heading: "Leather and suede footwear storage",
+            paragraphs: [
+              "Leather and suede can be affected by moisture, mould and unsuitable temperatures. Suitable precautions may include:",
+            ],
+            bullets: [
+              { text: "Monitoring humidity." },
+              { text: "Using appropriate protective packaging." },
+              { text: "Maintaining suitable ventilation." },
+              { text: "Avoiding water ingress." },
+              { text: "Following manufacturer storage instructions." },
+              { text: "Inspecting stock regularly." },
+            ],
+            closing: [
+              "Desiccants and ventilation may help in some circumstances but do not guarantee suitable storage conditions. Premium or sensitive footwear may require a controlled environment.",
+            ],
+            // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers the fit-out.
+            inlineLinks: [
+              {
+                before: "Holding premium leather lines? Before choosing a unit, read about our",
+                link: { label: "temperature-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+                after: ": how an insulated, air-conditioned fit-out is specified and quoted for a stated temperature range.",
+              },
+            ],
+          },
+          {
+            heading: "Shoe polish, sprays and chemicals",
+            paragraphs: [
+              "Some footwear-care products, especially aerosols and solvent-based cleaners, may be flammable or otherwise hazardous. Store these products according to their labels, safety data sheets and applicable regulations.",
+              "Do not assume that ordinary shipping containers are suitable for hazardous footwear-care products.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Luggage & Bag Shops",
+        placement: "afterIntro",
+        paragraphs: [
+          "Luggage and bag retailers handle bulky products that can occupy substantial shop-floor and backroom space.",
+          "A suitable shipping container may provide organised storage for compatible stock.",
+        ],
+        subsections: [
+          {
+            heading: "Suitcase and trolley bag storage",
+            paragraphs: ["Inventory may include:"],
+            bullets: [
+              { text: "Hard-shell suitcases." },
+              { text: "Soft-sided luggage." },
+              { text: "Trolley bags." },
+              { text: "Travel duffel bags." },
+              { text: "Cabin-size luggage." },
+              { text: "Larger checked-baggage cases." },
+            ],
+            closing: ["Protect items against moisture, impact and crushing."],
+          },
+          {
+            heading: "Nested suitcase storage",
+            paragraphs: [
+              "Some suitcase sets are designed to nest smaller cases inside larger ones. Use nesting only where permitted by the manufacturer and where it does not damage the products, and avoid excessive compression or unsupported stacking.",
+            ],
+          },
+          {
+            heading: "Hard-shell luggage protection",
+            paragraphs: ["Suitable precautions may include:"],
+            bullets: [
+              { text: "Protective covers." },
+              { text: "Stable upright or manufacturer-approved orientation." },
+              { text: "Protection against impact." },
+              { text: "Suitable supports." },
+              { text: "Keeping wheels and handles free from damaging loads." },
+            ],
+            closing: ["Follow product-specific storage instructions."],
+          },
+          {
+            heading: "School bag stock",
+            paragraphs: ["Bag retailers may receive additional stock before school reopening. Organise school bags according to:"],
+            bullets: [
+              { text: "Size." },
+              { text: "Style." },
+              { text: "Age group." },
+              { text: "Colour." },
+              { text: "Brand." },
+              { text: "Supplier." },
+              { text: "Stock quantity." },
+            ],
+            closing: ["Label cartons clearly and maintain suitable inventory records."],
+          },
+          {
+            heading: "Backpacks, office bags and handbags",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Backpacks." },
+              { text: "Laptop bags." },
+              { text: "Office bags." },
+              { text: "Handbags." },
+              { text: "Travel organisers." },
+              { text: "Other non-hazardous accessories." },
+            ],
+            closing: ["Use suitable shelves and protective packaging to prevent crushing and deformation."],
+          },
+          {
+            heading: "Leather bag storage",
+            paragraphs: ["Leather bags may require:"],
+            bullets: [
+              { text: "Suitable humidity conditions." },
+              { text: "Protective covers." },
+              { text: "Shape-preserving supports." },
+              { text: "Protection against direct sunlight." },
+              { text: "Regular inspection." },
+              { text: "Manufacturer-approved storage methods." },
+            ],
+            closing: ["Do not assume a standard metal container will provide suitable conditions for premium leather products."],
+          },
+          {
+            heading: "Repair and warranty stock",
+            paragraphs: ["A separate section may be used for:"],
+            bullets: [
+              { text: "Returned luggage." },
+              { text: "Products awaiting supplier inspection." },
+              { text: "Warranty claims." },
+              { text: "Replacement parts." },
+              { text: "Repaired bags awaiting collection." },
+            ],
+            closing: ["Label each item with the relevant customer or supplier reference."],
+          },
+        ],
+      },
+      {
+        heading: "Protecting Retail Inventory Against Heat & Moisture",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-rt-nagar/shipping-container-doors-rt-nagar.webp",
+          alt: "Taupe container doors seen head-on: two leaves, four upright lock rods with handles, a lockbox between them and black rubber seals",
+          width: 1449,
+          height: 1086,
+          caption: "Illustrative render of the door end. Seals, locks and any lockbox are checked on the actual unit and listed in its quotation.",
+        },
+        paragraphs: [
+          "Standard metal shipping containers can become hot and may experience condensation.",
+          "Depending on the products, suitable storage may require:",
+        ],
+        bullets: [
+          { text: "Insulation." },
+          { text: "Ventilation." },
+          { text: "Humidity monitoring." },
+          { text: "Protective packaging." },
+          { text: "Appropriate pallets." },
+          { text: "Shelving." },
+          { text: "Leak inspections." },
+          { text: "Environmental controls." },
+          { text: "Secure locking arrangements." },
+        ],
+        closing: [
+          "A standard container is not moisture-proof or climate-controlled, and it is not automatically suitable for every leather product.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in RT Nagar",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-rt-nagar/shipping-container-top-view-rt-nagar.webp",
+          alt: "Bird's-eye view of a grey container's ribbed roof and corner fittings, resting on block paving between raised planters",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative overhead view. Keep space free around the unit for unloading and so both doors can open wide.",
+        },
+        paragraphs: [
+          "Shipping containers may be placed on suitable authorised private premises, such as commercial yards, approved storage plots and warehouse compounds.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "RT Nagar Main Road, Dinnur Main Road and Sultanpalya Main Road may have traffic and access constraints. A 10 ft or 20 ft container may be considered where space is limited, subject to availability and actual site access.",
+          "A delivery hour or a particular unloading method can be agreed only after the route and the site have been assessed.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Narrow lane or gated compound? The checks are explained in our guide to",
+            link: { label: "shipping container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " explain the checks involved.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Approximate volumes. Exact internal dimensions, load capacity and availability are verified for the actual unit and set out in its quotation.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Compact school shoe inventory or small bag shop backstock"],
+            ["20 ft", "33 m³", "Footwear stockroom or suitcase and school bag inventory"],
+            ["40 ft", "67 m³", "Larger retail inventory where site access and space permit"],
+          ],
+        },
+        closing: ["Count your shoe cartons and measure your largest suitcase sets before choosing a size."],
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Buying second-hand? Run through our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in RT Nagar",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving and labelled storage bays, where your quotation includes them." },
+          { text: "Pallets and stock supports." },
+          { text: "Ventilation and insulation." },
+          { text: "Moisture-control requirements." },
+          { text: "Lighting." },
+          { text: "Security features." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on the intended storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in RT Nagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful during school reopening, travel seasons or periods of increased retail inventory. Containers are offered on hire for periods from one month up to five years. Your quotation states the hire period, the unit, delivery and collection, the transport charges and any deposit.",
+        ],
+        inlineLinks: [
+          {
+            before: "For the sizes available on hire, see",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the products and stock quantities." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelves, pallets and labelled storage sections." },
+          { text: "Confirm environmental and security requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory applications. For footwear and luggage retailers in RT Nagar, that includes:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "units from 10 ft up to 40 ft, depending on what is in stock." },
+          { title: "Storage-oriented modifications", text: "each change written into your unit's quotation." },
+          { title: "Shelving and racking provisions", text: "laid out for shoe cartons by size, or for suitcases and school-bag cartons." },
+          { title: "Locking arrangements", text: "lockable cargo doors, checked on the unit you receive." },
+          { title: "Ventilation and insulation options", text: "quoted for your stock, with no promise that moisture is kept out." },
+          { title: "Quotation and delivery coordination", text: "a line-by-line quotation, then a route and site review before delivery is scheduled." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can footwear shops store boxed shoes in a shipping container?",
+        answer: "Yes, where the stock is suitably organised, protected and stored under appropriate environmental conditions.",
+      },
+      {
+        question: "How should shoe boxes be arranged?",
+        answer: "Use stable shelves, appropriate stacking heights, clear size labels and suitable access aisles.",
+      },
+      {
+        question: "Can school shoes be stored before the reopening season?",
+        answer: "Yes. Retailers may organise school shoe inventory by style, size and supplier before the season.",
+      },
+      {
+        question: "Can leather shoes and bags develop mould during the monsoon?",
+        answer:
+          "Yes. Moisture can damage leather products. Suitable humidity management, protective packaging and regular inspection may be necessary.",
+      },
+      {
+        question: "Can suitcases be nested to save storage space?",
+        answer:
+          "Some suitcase sets can be nested where permitted by the manufacturer and where the arrangement does not damage the products.",
+      },
+      {
+        question: "Can school bags and backpacks be stored in a container?",
+        answer: "Yes, where they are properly packaged, organised and protected against unsuitable environmental conditions.",
+      },
+      {
+        question: "Can shoe polish and aerosol sprays be stored in the container?",
+        answer:
+          "Storage depends on the products' hazard classifications, labels and applicable regulations. Do not assume ordinary container storage is suitable.",
+      },
+      {
+        question: "Can a container be placed behind a retail shop?",
+        answer: "Only where the landowner permits it, the site is suitable and applicable local requirements are met.",
+      },
+      {
+        question: "What is the shipping container price in RT Nagar?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in RT Nagar",
+    ctaText: `Whether you need additional space for footwear inventory or organised storage for suitcases, trolley bags and school bags, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Ring ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: RT Nagar, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for RT Nagar",
+      intro:
+        "Select a container type and quantity, give the RT Nagar shop or yard address (or drop a map pin) and say if you plan to buy or hire. Tell us whether it will hold footwear or luggage and bags, roughly how many cartons or cases, and the size of your largest suitcase set, so the quotation fits the unit and its shelving.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Containers come from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City, and it runs no yard, depot, store or branch in RT Nagar or the nearby localities. What you receive is fixed by the written quotation for that unit: its measurements inside and at the door, its grade and condition, any shelving, bays, pallets, supports, lighting, ventilation, insulation, moisture control or locks, the hire terms if it is rented, and the delivery, unloading and collection method. Stock varies, and no delivery date or time is promised. Unless an approved specification states otherwise, a container is not sold as moisture-proof or climate-controlled, carries no temperature or humidity promise, and is not offered for aerosols, solvent-based cleaners or other hazardous products. All four pictures are illustrative renders of a single container, not photographs from RT Nagar, and they show no delivered or fitted unit, footwear, luggage or bags. Volumes are approximate. Footwear shops and luggage and bag retailers appear as examples of how a container can be used, not as customers or finished jobs, and the areas and roads named indicate where we accept enquiries rather than confirmed delivery addresses. The advice on shoe and bag stock, leather, footwear-care products, placement and permissions is general information, not safety, legal or engineering advice; follow the manufacturers' and suppliers' instructions.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN BANASWADI — extra space for antique dealers and heritage furniture
