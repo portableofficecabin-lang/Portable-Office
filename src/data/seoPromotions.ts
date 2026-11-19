@@ -719,6 +719,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Vijayanagar, Bengaluru (upholstery workshops' and mattress makers' furniture, fabric and foam; agarbatti
     // units' bamboo sticks, packaging and packed stock; owner brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Vijayanagar, Bengaluru", href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru" },
+    // Chandapura (plastic granule and polymer traders' bagged resin and masterbatch; material handling
+    // equipment rental and service depots; owner brief 2026-11-19), appended so the live links keep their positions.
+    { name: "Shipping Containers in Chandapura", href: "/cities-we-serve/shipping-container-chandapura" },
   ],
 };
 
