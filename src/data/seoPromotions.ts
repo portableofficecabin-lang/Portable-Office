@@ -744,6 +744,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Malleshwaram (architectural salvage and heritage restoration material; picture framing shops'
     // mouldings, glass, mountboards and finished orders; owner brief 2026-11-19), appended so the live links keep their positions.
     { name: "Shipping Containers in Malleshwaram", href: "/cities-we-serve/shipping-container-malleshwaram" },
+    // Vidyaranyapura (seed and agri-input dealers' stock; laboratory glassware and supplies dealers' stock;
+    // owner brief 2026-11-19), appended so the live links keep their positions.
+    { name: "Shipping Containers in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
   ],
 };
 
