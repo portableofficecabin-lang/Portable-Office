@@ -345,6 +345,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers in Domlur", href: "/cities-we-serve/shipping-container-domlur" },
       // Vijayanagar, Bengaluru storage page (owner brief, 2026-11-18: a link back from the main shipping container page).
       { name: "Storage containers in Vijayanagar, Bengaluru", href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru" },
+      // Kasavanahalli storage page (owner brief, 2026-11-19: a link back from the main shipping container page).
+      { name: "Storage containers in Kasavanahalli", href: "/cities-we-serve/shipping-container-kasavanahalli" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
