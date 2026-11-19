@@ -39436,8 +39436,9 @@ export const CITY_PAGES: CityPage[] = [
    * page's "Used Container Inspection" checklist, as the sibling pages do; rental →
    * /products/shipping-container-rental; areas → "shipping containers in Rajajinagar" (the brief:
    * Rajajinagar, Subramanyanagar and Gayathri Nagar go to that page) and "shipping containers in
-   * Yeshwanthpur" (Yeshwanthpur and Goraguntepalya). Not linked: Begur Road has no live page on this base,
-   * and its draft covers cement dealers, not new wooden doors. Anchors differ from the siblings' anchors
+   * Yeshwanthpur" (Yeshwanthpur and Goraguntepalya). Not linked: Begur Road has no live page on this base;
+   * its draft (PR #293) adds a wooden door and door hardware dealers' section, so the brief's "new wooden
+   * door inventory" link can be added once that page is live. Anchors differ from the siblings' anchors
    * for the same targets. Inbound: the Rajajinagar page's
    * areas section ("architectural salvage storage containers in Malleshwaram") and the Yeshwanthpur page's
    * areas section ("picture framing material storage in Malleshwaram"), one `areasInlineLinks` item each,
