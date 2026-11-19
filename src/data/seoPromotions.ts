@@ -735,6 +735,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // rebuilding; playground and outdoor gym installers' equipment; wooden doors and door hardware;
     // owner briefs 2026-11-18 and 2026-11-19), appended so the live links keep their positions.
     { name: "Shipping Containers on Begur Road", href: "/cities-we-serve/shipping-container-begur-road" },
+    // Chandapura (plastic granule and polymer traders' bagged resin and masterbatch; material handling
+    // equipment rental and service depots; owner brief 2026-11-19), appended so the live links keep their positions.
+    { name: "Shipping Containers in Chandapura", href: "/cities-we-serve/shipping-container-chandapura" },
     // Malleshwaram (architectural salvage and heritage restoration material; picture framing shops'
     // mouldings, glass, mountboards and finished orders; owner brief 2026-11-19), appended so the live links keep their positions.
     { name: "Shipping Containers in Malleshwaram", href: "/cities-we-serve/shipping-container-malleshwaram" },
