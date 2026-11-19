@@ -19088,6 +19088,18 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "BTM Layout", href: "/cities-we-serve/shipping-container-btm-layout" },
       after: " is covered on its own page.",
     },
+    // Begur Road brief (2026-11-18): cement and bagged-material dealers' storage and shop stock during
+    // rebuilding are that page's intent; Begur lies east of Hulimavu.
+    areasInlineLinks: [
+      {
+        before: "East of Hulimavu, cement dealers and shops being rebuilt along Begur Road have their own page:",
+        link: {
+          label: "cement and building-material storage containers on Begur Road",
+          href: "/cities-we-serve/shipping-container-begur-road",
+        },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -19326,6 +19338,597 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers are supplied by Portable Office Cabin from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch on Bannerghatta Road. Units are offered subject to availability, and the quotation for each sets out its size, grade, condition and internal dimensions, any racks, bins, vents, locks or lockbox, any rental terms, and the delivery, unloading and collection arrangements; no delivery date or vehicle access is guaranteed. The five images are illustrative renders of one container, not photographs taken on Bannerghatta Road or of a delivered or fitted unit. The kennels, shelters, nurseries, landscapers and farmhouses described are examples of uses, not clients or past projects, and the places named describe where enquiries are welcome, not confirmed delivery points; Bannerghatta National Park is named only to describe the area. Guidance on feed, medicines, fertilisers and pesticides, pest control, wildlife, site access and placement is general information, not veterinary, agronomic, legal, safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS ON BEGUR ROAD — dry, orderly space for cement and building-material
+   * dealers (cement, wall putty, tile adhesive, grout and other bagged products, plus hardware backstock),
+   * and temporary storage for shopkeepers' stock, fixtures, signboards and coolers while a shop is rebuilt
+   * or relocated, including during road-widening work. South-east Bengaluru, below Bommanahalli.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers
+   * on Begur Road, Bengaluru"): meta title, meta description, H1, keywords, local areas, section order,
+   * H2 / H3 headings, sizes table and the ten FAQs are the brief's, and so is the copy, lightly edited for
+   * flow and British spelling. The brief's notes to the implementer ("Do not assume…", "Treat this only as
+   * a general reference…", "Do not claim that any particular Begur Road property…", "Conditional
+   * section…", "Highlight only verified capabilities…", "Use verified company phone numbers…") became
+   * plain statements of what the quotation does and does not include, or were left out. The route follows
+   * the site convention (/cities-we-serve/…) with the brief's slug. Bengaluru stays out of the title, as
+   * the brief asks. The tagline, captions, link lead-ins, enquiry-form intro and disclaimer were written
+   * for their slots.
+   * Checked against the catalogue: the rental section stays (Shipping Container Rental lists 10, 20, 40 ft
+   * and 40 ft High Cube units on terms from one month to five years; no deposit, rent or delivery charge is
+   * stated here); pallets, shelving, ventilation and insulation are named only as items the quotation
+   * lists. FLOOR LOADING (brief §1.8): the catalogue gives no single verified figure (the Corten storage
+   * listing deliberately states none: the owner wants payload confirmed from the unit's CSC plate or the
+   * maker's documents), so the page quotes no floor-load, payload or bag-count number. It says the rated
+   * payload and floor rating of the actual unit are confirmed before cement is quoted. The brief's "about
+   * ten bags high" and "about three months" appear only as commonly quoted rules of thumb, as it asks.
+   * The optional Kannada terms are not used: the page is in English.
+   * Mapped onto the template in the brief's order:
+   *   Intro (the brief's five paragraphs, the dealers' and shopkeepers' ones joined) + introLink (a
+   *     planning sentence and "range of cargo and storage containers" → the cargo category) + heroCta.
+   *   Cement & building-material dealers and shopkeepers during rebuilding → two afterIntro extra
+   *     sections with their H3s as `subsections` (the relocation checklist numbered).
+   *   Placement & delivery, sizes, price, rent and "How to Order a Shipping Container" (ordered) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Begur Road" → areas. "Why Choose Portable Office Cabin?" → a default extra
+   *     section (after the areas, as in the brief). FAQs: the brief's ten. CTA: the brief's closing
+   *     section (phone, WhatsApp and e-mail from COMPANY) + the cargo-category enquiry form.
+   *
+   * LINKS (brief §5): placement section → "delivery checks for narrow roads and gates" (the Bellandur
+   * page's restricted-site delivery notes); sizes section → "inspecting a used container before purchase":
+   * the brief's /shipping-container-chennai does not exist, so it points to the Chennai-area Athipattu page
+   * and its "Used Container Inspection" checklist, as the other Bengaluru container pages do; areas →
+   * "shipping containers on Bannerghatta Road" (Hulimavu, to the west) and "tile and sanitaryware storage
+   * containers in HSR Layout" (owner-builders' materials, kept apart from dealers' bagged stock); rental
+   * section → /products/shipping-container-rental; intro → the cargo category ("Existing shipping
+   * container product page"). The brief's Bommanahalli page (/shipping-container-bommanahalli) does NOT
+   * exist on the site or in any open PR, so there is no link to it and no Bommanahalli correction (the brief
+   * forbids links to unpublished routes); Bommanahalli, Hongasandra, Garvebhavi Palya, Devarachikkanahalli
+   * and Roopena Agrahara are not named here, so they stay free for that page. Anchors differ from the
+   * siblings' anchors for the same targets. Inbound: the Bannerghatta Road page's areas section
+   * (`areasInlineLinks`, "cement and building-material storage containers on Begur Road"; its nearby block
+   * then leaves this page out), the Karnataka shipping hub ("Shipping Containers on Begur Road"), the cargo
+   * category's location links ("Storage containers on Begur Road") and every Karnataka shipping page's
+   * nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating Bellandur,
+   * Athipattu, Bannerghatta Road or HSR Layout.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Begur Road, Begur, the Begur lake area,
+   * Vishwapriya Layout and Yelenahalli, for cement and bagged building-material dealers' stock, hardware
+   * dealers' backstock and temporary shop stock and fixtures storage during rebuilding or road-widening
+   * work. Not targeted: Bommanahalli, Hongasandra, Devarachikkanahalli, Roopena Agrahara and Garvebhavi
+   * Palya (kept for a Bommanahalli page); Hulimavu and Bannerghatta Road (Bannerghatta Road page); HSR
+   * Layout and owner-builders' tiles and sanitaryware (HSR Layout); tile and sanitaryware dealers
+   * (Shivamogga); electrical and plumbing contractor inventory (Kaggadasapura); scaffolding (Thanisandra
+   * Main Road); home rebuilding storage (JP Nagar); home renovation storage (Bellandur); kirana backstock
+   * (Banashankari); sign makers' finished signboards (Ramamurthy Nagar: a shop's own board taken down
+   * during a rebuild is mentioned here only as a fixture); Singasandra, Electronic City and Hosur Road
+   * (kept for possible future pages); Akshaya Nagar (not used: a similarly named locality is tied to the
+   * Ramamurthy Nagar area).
+   *
+   * Images: five owner-dropped lossy VP8 WebP renders ("public/images/Storage Containers on Begur Road
+   * city page/Storage Containers on Begur Road,/cabin (1–5).webp", 75–157 KB, no EXIF / XMP / ICC) of a
+   * dark grey steel container. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title /
+   * dc:description that labels it a render (no creator, GPS, camera or date). (2) three-quarter exterior
+   * with navy doors = hero / og:image (the brief's hero filename); (1) empty interior = dealers' section
+   * (the brief's interior filename); (4) cargo doors = shopkeepers' section; (5) roof from above =
+   * placement section; (3) long side wall = sizes section. No image shows cement bags, pallets, putty or
+   * adhesive bags, shop stock, fixtures or signboards, so the brief's six use-case image slots are not
+   * used, and no alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-begur-road",
+    city: "Begur Road",
+    listTitle: "Shipping & Storage Containers on Begur Road",
+    directoryLabel: "Shipping containers on Begur Road",
+    metaTitle: "Shipping Container on Begur Road | Cement & Shop Storage",
+    metaDescription:
+      "Shipping and storage containers on Begur Road for cement and bagged building materials, plus temporary storage of shop stock and fixtures during rebuilding.",
+    keywords:
+      "shipping container on Begur Road, cargo container Begur Road, storage container Begur Road, storage container Begur, storage container Begur lake area, storage container Vishwapriya Layout, storage container Yelenahalli, used shipping container Begur, shipping container price on Begur Road, storage container for rent on Begur Road, cement storage container, cement dealer storage, wall putty and tile adhesive storage, bagged building material storage, hardware dealer backstock container, shop stock storage during renovation, storage during road widening, temporary shop storage container, shop fixtures storage",
+    // Approximate point on Begur Road near Vishwapriya Layout, between Bommanahalli to the north and Begur
+    // to the south (for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Begur Road, Bengaluru, Karnataka, India",
+      position: "12.8880;77.6270",
+      icbm: "12.8880, 77.6270",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bellandur, Athipattu, Bannerghatta Road and HSR Layout are linked in the body, so the nearby block
+    // leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-begur-road/shipping-container-begur-road.webp",
+      alt: "Three-quarter view of a dark grey steel container whose navy-blue double cargo doors are held shut by vertical locking bars, on a gravel strip in a paved courtyard beside a planter of grasses",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a closed unit. It was not photographed on Begur Road and is not a customer's container.",
+    },
+
+    h1: "Shipping & Storage Containers on Begur Road",
+    tagline:
+      "Dry, orderly space for cement and bagged building materials, and somewhere safe for a shop's stock, shelves and signboard while the premises are rebuilt.",
+    intro: [
+      "Begur is one of Bengaluru's historically significant localities, associated with an early inscription recording the name Bengaluru.",
+      "Today, Begur Road serves a growing residential and commercial area with construction activity, shops and local businesses.",
+      "Building-material dealers may need dry, organised space for cement, wall putty, tile adhesive and other bagged products. Shopkeepers may also require temporary storage for merchandise, shelves, counters and fixtures when rebuilding or relocating their premises.",
+      "For both needs, Portable Office Cabin offers shipping and storage container solutions on Begur Road.",
+    ],
+    introLink: {
+      before:
+        "Heavy bagged stock and shop fittings moved out in a hurry both need planning first: the load on the floor, protection from damp and permission to use the site. Our",
+      link: { label: "range of cargo and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " shows the units we supply.",
+    },
+
+    areasHeading: "Areas Served Around Begur Road",
+    areasText:
+      "We take shipping and storage container enquiries along Begur Road and from Begur, the Begur lake area, Vishwapriya Layout and Yelenahalli. Begur Road carries heavy traffic, and many dealers' godowns and shops stand on narrower connecting roads, so we look at how a lorry would reach each site before agreeing a delivery date.",
+    areasInlineLinks: [
+      {
+        before: "Kennels, nurseries and landscapers around Hulimavu, to the west, are covered on our page on",
+        link: { label: "shipping containers on Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+        after: ".",
+      },
+      {
+        // Brief §7: dealers' bagged stock is kept apart from owner-builders' tiles and sanitaryware.
+        before: "Building your own home and storing tiles and sanitaryware for it? See our page on",
+        link: {
+          label: "tile and sanitaryware storage containers in HSR Layout",
+          href: "/cities-we-serve/shipping-container-hsr-layout",
+        },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Cement & Building-Material Dealers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-begur-road/begur-road-storage-container-interior.webp",
+          alt: "Inside an empty container: grey ribbed side walls and ceiling run towards the closed cargo doors over a brown plywood floor",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render: the empty floor as supplied, with nothing raised off it yet. Platforms for bagged stock are fitted only where your quotation lists them.",
+        },
+        paragraphs: [
+          "Cement and other bagged construction materials need careful protection against moisture, contamination and physical damage.",
+          "A suitable shipping container can provide additional storage space, provided its condition, its protection from the weather and its structural capacity meet the actual storage requirements.",
+        ],
+        subsections: [
+          {
+            heading: "Cement bag storage",
+            paragraphs: ["Cement bags may be stored using:"],
+            bullets: [
+              { text: "Suitable pallets or raised platforms." },
+              { text: "Stable stacking arrangements." },
+              { text: "Appropriate separation from damp surfaces." },
+              { text: "Protection against water ingress." },
+              { text: "Clear handling access." },
+              { text: "Regular stock inspections." },
+            ],
+            closing: ["Do not place cement bags directly on a damp metal floor."],
+          },
+          {
+            heading: "Cement stacking and floor-loading safety",
+            paragraphs: ["Bagged construction materials are very heavy, and the weight adds up quickly. Before storing cement, verify:"],
+            bullets: [
+              { text: "The container's floor-load rating." },
+              { text: "The total stock weight." },
+              { text: "Concentrated pallet loads." },
+              { text: "Support arrangements." },
+              { text: "Stacking height." },
+              { text: "The manufacturer's recommendations." },
+              { text: "Loading and unloading methods." },
+            ],
+            closing: [
+              "A standard 20 ft or 40 ft container cannot be assumed to hold any quantity of cement safely. The rated payload and floor rating of the unit you will receive are confirmed before a cement store is quoted.",
+              "About ten bags high is often quoted as a stacking limit for cement. Treat it as a general reference, not a universal rule, and follow the cement manufacturer's storage instructions and the safety requirements that apply.",
+            ],
+          },
+          {
+            heading: "Wall putty, tile adhesive and grout storage",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Wall putty." },
+              { text: "Tile adhesive." },
+              { text: "Grout." },
+              { text: "Plaster products." },
+              { text: "Other dry bagged construction materials." },
+            ],
+            closing: [
+              "Keep different products separated and clearly labelled, and follow each manufacturer's instructions on humidity, shelf life and stacking.",
+            ],
+          },
+          {
+            heading: "Stock rotation and expiry tracking",
+            paragraphs: ["Dealers may organise materials by:"],
+            bullets: [
+              { text: "Product type." },
+              { text: "Brand." },
+              { text: "Grade." },
+              { text: "Batch number." },
+              { text: "Manufacturing date." },
+              { text: "Arrival date." },
+              { text: "Expiry or recommended use-by date." },
+            ],
+            closing: ["Use a first-in-first-out or expiry-based rotation system that suits your stock."],
+          },
+          {
+            heading: "Why dry storage matters",
+            paragraphs: [
+              "Cement and other cementitious materials can deteriorate when exposed to moisture or unsuitable storage conditions.",
+              "About three months is often quoted as a guide for how long bagged cement should be kept. It is not a universal shelf life: always follow the manufacturer's actual shelf-life and storage guidance.",
+            ],
+          },
+          {
+            heading: "Hardware dealer backstock",
+            paragraphs: ["Suitable non-hazardous inventory may include:"],
+            bullets: [
+              { text: "Boxed fittings." },
+              { text: "Hand tools." },
+              { text: "Fasteners." },
+              { text: "Plumbing accessories." },
+              { text: "Other compatible hardware." },
+            ],
+            closing: [
+              "Store these items on appropriately rated shelves. Do not place heavy shelving loads above cement stacks without a properly designed support arrangement.",
+            ],
+          },
+          {
+            heading: "Moisture and condensation control",
+            paragraphs: ["A container used for bagged materials may need:"],
+            bullets: [
+              { text: "Inspection of the roof, walls and doors." },
+              { text: "Appropriate ventilation." },
+              { text: "Insulation where suitable." },
+              { text: "Moisture monitoring." },
+              { text: "Raised storage platforms." },
+              { text: "Suitable door seals." },
+              { text: "Regular leak inspections." },
+            ],
+            closing: ["A wind-and-watertight container does not by itself guarantee a dry interior in all conditions."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Shopkeepers During Rebuilding & Road-Widening Work",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-begur-road/shipping-container-cargo-doors-begur-road.webp",
+          alt: "Front view of a dark grey container's shut cargo doors: four vertical locking bars, lever handles at waist height and a lockbox where the two leaves meet",
+          width: 1536,
+          height: 1024,
+          caption:
+            "Illustrative render. A plain unit opens only at this end, which is why the goods a shop needs every day belong just inside these doors.",
+        },
+        paragraphs: [
+          "Rebuilding or relocating a shop, or road-related works in front of it, can create a sudden, temporary need to move stock and fixtures out.",
+          "A suitable storage container can provide additional space on premises you are authorised to use while the shop is being rebuilt.",
+        ],
+        subsections: [
+          {
+            heading: "Boxed merchandise storage",
+            paragraphs: ["Shop stock may be organised by:"],
+            bullets: [
+              { text: "Product category." },
+              { text: "Supplier." },
+              { text: "Stock quantity." },
+              { text: "Customer orders." },
+              { text: "Dispatch priority." },
+              { text: "Return status." },
+            ],
+            closing: ["Use labelled cartons and keep an inventory register."],
+          },
+          {
+            heading: "Shelving, counters and display units",
+            paragraphs: ["Shop fixtures may include:"],
+            bullets: [
+              { text: "Dismantled shelves." },
+              { text: "Counters." },
+              { text: "Display racks." },
+              { text: "Storage cabinets." },
+              { text: "Signboards." },
+              { text: "Other compatible fittings." },
+            ],
+            closing: ["Wrap and support fixtures so they are not damaged in storage."],
+          },
+          {
+            heading: "Signboard storage",
+            paragraphs: ["A shop's signboard, taken down for the rebuild, may need:"],
+            bullets: [
+              { text: "Suitable padded supports." },
+              { text: "Stable positioning." },
+              { text: "Protection against bending." },
+              { text: "Careful handling." },
+              { text: "Separation from heavy stock." },
+            ],
+            closing: ["Follow the sign maker's handling recommendations."],
+          },
+          {
+            heading: "Refrigerator and cooler storage",
+            paragraphs: ["Some shops may need to store:"],
+            bullets: [
+              { text: "Display refrigerators." },
+              { text: "Beverage coolers." },
+              { text: "Other compatible electrical equipment." },
+            ],
+            closing: [
+              "Follow the equipment manufacturer's instructions for cleaning, draining, storage orientation, door position and restarting. Not every refrigerator can be stored or restarted the same way.",
+            ],
+          },
+          {
+            heading: "Daily-access stock section",
+            paragraphs: [
+              "Where the shop keeps trading from an approved temporary location, the stock it needs every day can be placed nearest the container doors.",
+              "This is for storage and stock retrieval only. An ordinary storage container is not an approved retail shop: selling from one needs the right modifications and permissions first.",
+            ],
+          },
+          {
+            heading: "Inventory and relocation checklist",
+            paragraphs: ["Before moving shop stock:"],
+            ordered: true,
+            bullets: [
+              { text: "Photograph valuable items." },
+              { text: "Prepare a stock register." },
+              { text: "Label cartons." },
+              { text: "Separate fragile merchandise." },
+              { text: "Record dismantled fixtures." },
+              { text: "Identify frequently needed stock." },
+              { text: "Confirm the storage location." },
+              { text: "Check loading and unloading arrangements." },
+              { text: "Keep a record of stock removed and returned." },
+            ],
+          },
+          {
+            heading: "Road-widening and site permissions",
+            paragraphs: ["Road-widening plans or works may affect the land and access available. Before placing a container:"],
+            bullets: [
+              { text: "Confirm the current site boundaries." },
+              { text: "Obtain the property owner's permission." },
+              { text: "Check which municipal approvals apply." },
+              { text: "Check whether the location falls within an officially notified road-widening alignment." },
+              { text: "Keep pedestrian, vehicle and emergency access clear." },
+            ],
+            closing: [
+              "A container must not be placed on a public road, a footpath or an unauthorised setback area. Whether a particular Begur Road property is affected by widening is a matter for the current official records, not for this page.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery on Begur Road",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-begur-road/shipping-container-roof-view-begur-road.webp",
+          alt: "A dark grey container seen from directly above: ribbed roof panels, a corner casting at each corner and the door hardware at the right-hand end, on paving",
+          width: 1774,
+          height: 887,
+          caption:
+            "Illustrative render. From above, the box plus a clear swing for both door leaves is the space your plot must give, before the lorry and lifting gear are counted.",
+        },
+        paragraphs: [
+          "Containers can go on suitable private premises you are authorised to use, such as commercial yards, warehouse compounds and approved storage plots.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Site permissions." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Traffic on Begur Road and the tighter link roads off it shape how and when a lorry is routed. On a cramped plot a 10 ft or 20 ft container can be the practical choice, subject to stock and to what the site allows. We fix the delivery time and the way the unit is unloaded only once the route and the site have been assessed.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's gate-and-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Tight approach or a low gate? Our",
+            link: { label: "delivery checks for narrow roads and gates", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " on the Bellandur page explain what we look at first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-begur-road/shipping-container-side-wall-begur-road.webp",
+          alt: "Long side wall of a dark grey shipping container, ribbed steel panels between corner castings and two forklift pockets in the bottom rail, on a gravel strip",
+          width: 1774,
+          height: 887,
+          caption:
+            "Illustrative render. The side wall shows the length; the quotation gives the inside measurements, rated payload and condition of the actual unit.",
+        },
+        table: {
+          caption:
+            "Rounded volumes. Volume is not allowable payload: the exact internal dimensions, floor-loading capacity, total load limits and availability are stated in your quotation.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft, if available", "~15 m³", "Compact shop stock and fixtures during rebuilding"],
+            ["20 ft", "~33 m³", "Bagged building materials or a larger shop's temporary inventory"],
+            ["40 ft", "~67 m³", "Larger inventory where yard access, structural capacity and space permit"],
+          ],
+        },
+        closing: ["For cement, the weight of the stock decides the size as much as its volume, so give us the total weight when you ask."],
+        // Brief §5: buying and inspection guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Weighing up a second-hand unit? Start with our notes on",
+            link: { label: "inspecting a used container before purchase", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price on Begur Road",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural grade and condition." },
+          { text: "Floor condition and load requirements." },
+          { text: "Pallets and raised platforms." },
+          { text: "Shelving and storage bays." },
+          { text: "Ventilation and insulation." },
+          { text: "Locking and security features." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+          { text: "Relocation, if you need the unit moved later." },
+        ],
+        closing: ["Request an itemised quotation based on the actual storage application."],
+      },
+      {
+        heading: "Storage Container on Rent on Begur Road",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hiring may suit a shop that will be back in its premises within months, or a dealer carrying extra stock through a busy building season. Units on hire come in 10, 20 and 40 ft lengths and as a 40 ft High Cube, on terms running from one month up to five years. The hire quote spells out the term, the exact unit, transport to your site, any move during the hire and the collection at the end, and the rental agreement records any deposit.",
+        ],
+        inlineLinks: [
+          {
+            before: "Our page on",
+            link: { label: "container hire periods and sizes", href: "/products/shipping-container-rental" },
+            after: " lists what is offered today.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Tell us whether the container is for building materials or temporary shop storage." },
+          { text: "Identify the products and quantities." },
+          { text: "Give the estimated total stock weight." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss pallets, shelves, ventilation and security." },
+          { text: "Confirm the environmental and structural requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise the specification and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For a Begur Road dealer or shopkeeper, that means:",
+        ],
+        bullets: [
+          {
+            title: "Container size options",
+            text: "10, 20 and 40 ft units, new or used, matched to the weight and bulk of what you store and to what is in stock.",
+          },
+          { title: "Storage-oriented modifications", text: "each change to the standard box, such as platforms, shelves or vents, is its own line in the quote." },
+          {
+            title: "Pallets and shelving provisions",
+            text: "raised platforms for bagged stock and shelves for boxed fittings or shop cartons, laid out around what you store.",
+          },
+          { title: "Locking arrangements", text: "lockable cargo doors; ask to see the locking gear on the unit quoted to you." },
+          { title: "Ventilation and insulation options", text: "suggested for damp-sensitive bags or shop stock, and costed separately." },
+          {
+            title: "Quotation and delivery coordination",
+            text: "a single written quote covering the unit, its fittings and transport, with the route and site looked at before any delivery day is agreed.",
+          },
+        ],
+        closing: [
+          "A container is not guaranteed to stay dry inside, it cannot be placed just anywhere, and its floor has a load limit: those are checked for your stock and your site before you order.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can cement bags be stored in a shipping container?",
+        answer:
+          "Potentially, provided the container is suitable for the total load and the bags are protected against moisture and stored according to the manufacturer's instructions.",
+      },
+      {
+        question: "How high can cement bags be stacked?",
+        answer:
+          "The safe stacking height depends on the product, its packaging, the storage arrangement and the safety guidance that applies. Follow the manufacturer's recommendations.",
+      },
+      {
+        question: "How long can cement be stored?",
+        answer:
+          "Shelf life depends on the cement type, the manufacturer and the storage conditions. Check the product's manufacturing date and the supplier's instructions.",
+      },
+      {
+        question: "Can wall putty and tile adhesive be stored together?",
+        answer:
+          "Compatible bagged materials may be stored in separate labelled sections, where their environmental and handling requirements are met.",
+      },
+      {
+        question: "Can hardware dealers store tools and fittings in the same container?",
+        answer: "Yes, where the shelving and storage arrangements are suitable and do not get in the way of handling heavy materials safely.",
+      },
+      {
+        question: "Can shopkeepers store their inventory during rebuilding?",
+        answer: "Yes, subject to suitable packaging, storage conditions and permission to use the proposed location.",
+      },
+      {
+        question: "Can a container be placed on a road during widening work?",
+        answer:
+          "No. A container must not go on a public road, a footpath or unauthorised land. Obtain the permissions that apply to the actual site.",
+      },
+      {
+        question: "Can refrigerators and coolers be stored inside the container?",
+        answer: "Potentially, provided they are handled and stored according to the manufacturer's instructions.",
+      },
+      {
+        question: "What is the shipping container price on Begur Road?",
+        answer: "Pricing depends on size, condition, modifications, load requirements and delivery.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "It depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation on Begur Road",
+    ctaText: `Whether you need additional storage for cement and bagged building materials or temporary space for shop inventory during rebuilding, Portable Office Cabin can discuss suitable shipping container options based on your requirements. To talk it through, ring ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Begur Road, Begur, Vishwapriya Layout and Yelenahalli, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Ask about a container for Begur Road",
+      intro:
+        "Choose a container type and quantity and give the location of your shop, godown or yard on or near Begur Road (a shared map location works). Say whether you want to buy or hire, then describe the contents, such as cement, putty, adhesive, boxed hardware, shop cartons, shelving or a cooler, with rough quantities and the total weight of any bagged stock. That lets us suggest a size, a floor arrangement and fittings.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Every container is supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City, and there is no depot, yard, shop or branch on Begur Road. The written quotation or rental agreement for your unit is what counts: it records the size, grade, condition, inside dimensions, door opening, rated payload and floor rating; any pallets, platforms, shelving, ventilation, insulation or locks; the hire terms if you rent; and the delivery, unloading, any relocation and the collection. Availability changes, and no delivery date or time is promised ahead of the quotation. The five pictures on this page are illustrative renders: none was taken on Begur Road, and none shows a delivered or fitted unit, cement, bagged material, shop stock or fittings. Capacities are rounded, and volume is not payload. Cement and building-material dealers and shopkeepers are described to show typical uses, not named customers or completed jobs, and the localities listed are simply where enquiries come from. Nothing here says that any property on Begur Road is affected by road widening. An ordinary container is not moisture-proof or climate-controlled, its floor has a load limit, and it is not an approved retail shop. What this page says about cement and other bagged materials, stacking, shelf life, floor loading, refrigerators, moisture, permissions, road widening and site access is general guidance, not professional structural, electrical, legal or engineering advice; each manufacturer's and supplier's instructions take precedence.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
