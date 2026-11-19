@@ -672,6 +672,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Yelahanka (air freight packing and export crating stores, equestrian tack rooms; owner brief
     // 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Yelahanka", href: "/cities-we-serve/shipping-container-yelahanka" },
+    // Yelahanka New Town (beekeeping and honey-processing equipment, home appliance repair shop stock;
+    // owner brief 2026-11-19), placed next to its sibling Yelahanka.
+    { name: "Shipping Containers in Yelahanka New Town", href: "/cities-we-serve/shipping-container-yelahanka-new-town" },
     // Horamavu (AC and appliance installer stock, tent house and shamiana storage; owner brief
     // 2026-11-16), appended so the live links keep their positions.
     { name: "Shipping Containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
@@ -738,6 +741,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Chandapura (plastic granule and polymer traders' bagged resin and masterbatch; material handling
     // equipment rental and service depots; owner brief 2026-11-19), appended so the live links keep their positions.
     { name: "Shipping Containers in Chandapura", href: "/cities-we-serve/shipping-container-chandapura" },
+    // Malleshwaram (architectural salvage and heritage restoration material; picture framing shops'
+    // mouldings, glass, mountboards and finished orders; owner brief 2026-11-19), appended so the live links keep their positions.
+    { name: "Shipping Containers in Malleshwaram", href: "/cities-we-serve/shipping-container-malleshwaram" },
     // Vidyaranyapura (seed and agri-input dealers' stock; laboratory glassware and supplies dealers' stock;
     // owner brief 2026-11-19), appended so the live links keep their positions.
     { name: "Shipping Containers in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
