@@ -39420,9 +39420,12 @@ export const CITY_PAGES: CityPage[] = [
    *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
    *
    * LINKS (brief §5, only where the destination exists and supports the anchor): intro → the cargo
-   * category ("Existing shipping container product page"); "Carved wooden doors and windows" H3 → "new
-   * window and glazed-unit storage in Varthur" (that page's uPVC, aluminium and glass window installers'
-   * section; reclaimed windows stay here); picture framing section → "art and canvas storage containers in
+   * category ("Existing shipping container product page"); salvage section → "antique and heritage furniture
+   * storage in Banaswadi" (antique dealers' and heritage furniture restorers' stock and brassware are that
+   * page's intent; building components recovered from old structures stay here); "Carved wooden doors and
+   * windows" H3 → "new window and glazed-unit storage in Varthur" (that page's uPVC, aluminium and glass
+   * window installers' section; reclaimed windows stay here); picture framing section → "art and canvas
+   * storage containers in
    * Kalyan Nagar" (artists storing their own work and art-class supplies are that page's intent; framing
    * shops' stock stays here); framing "Moisture and temperature control" H3 → "insulated, air-conditioned
    * container fit-outs" (the Vellore page's "Insulated and air-conditioned storage enquiries" section, which
@@ -39433,9 +39436,9 @@ export const CITY_PAGES: CityPage[] = [
    * page's "Used Container Inspection" checklist, as the sibling pages do; rental →
    * /products/shipping-container-rental; areas → "shipping containers in Rajajinagar" (the brief:
    * Rajajinagar, Subramanyanagar and Gayathri Nagar go to that page) and "shipping containers in
-   * Yeshwanthpur" (Yeshwanthpur and Goraguntepalya). Not linked: Banaswadi (PR #290) and Begur Road (no PR
-   * yet) have no live page on this base, and the Begur Road draft covers cement dealers, not new wooden
-   * doors. Anchors differ from the siblings' anchors for the same targets. Inbound: the Rajajinagar page's
+   * Yeshwanthpur" (Yeshwanthpur and Goraguntepalya). Not linked: Begur Road has no live page on this base,
+   * and its draft covers cement dealers, not new wooden doors. Anchors differ from the siblings' anchors
+   * for the same targets. Inbound: the Rajajinagar page's
    * areas section ("architectural salvage storage containers in Malleshwaram") and the Yeshwanthpur page's
    * areas section ("picture framing material storage in Malleshwaram"), one `areasInlineLinks` item each,
    * their own targeting unchanged; the Karnataka shipping hub ("Shipping Containers in Malleshwaram"); the
@@ -39448,12 +39451,12 @@ export const CITY_PAGES: CityPage[] = [
    * framing shops' inventory. Not targeted: Rajajinagar, Subramanyanagar and Gayathri Nagar (Rajajinagar
    * page; named here only in the link to it); Yeshwanthpur and Goraguntepalya (Yeshwanthpur page; same);
    * Mathikere, Sadashivanagar and Seshadripuram (kept for possible future pages; not named). Kept apart from
-   * Gombe Habba dolls (Banashankari), antique furniture and brassware (Banaswadi brief), new wooden doors
-   * (Begur Road brief), new windows, uPVC, aluminium and glass (Varthur), owner-builders' new tiles and
-   * sanitaryware (HSR Layout), artists' own work and art-class supplies (Kalyan Nagar), trophies and plaques
-   * (Kasturi Nagar), gallery cabins (Indiranagar portable shop page) and climate-controlled units as such
-   * (Vellore). "Bengaluru" stays out of the title, as the brief asks; the geo meta and the Service
-   * JSON-LD's areaServed carry "Malleshwaram, Bengaluru, Karnataka".
+   * Gombe Habba dolls (Banashankari), antique furniture and brassware (Banaswadi; named here only in the
+   * link to it), new wooden doors (Begur Road brief), new windows, uPVC, aluminium and glass (Varthur),
+   * owner-builders' new tiles and sanitaryware (HSR Layout), artists' own work and art-class supplies
+   * (Kalyan Nagar), trophies and plaques (Kasturi Nagar), gallery cabins (Indiranagar portable shop page)
+   * and climate-controlled units as such (Vellore). "Bengaluru" stays out of the title, as the brief asks;
+   * the geo meta and the Service JSON-LD's areaServed carry "Malleshwaram, Bengaluru, Karnataka".
    *
    * Images: four owner-dropped WebP renders ("public/images/Storage Containers in Malleshwaram city
    * page/Storage Containers in Malleshwaram/cabin (1–4).webp", lossy VP8, 52–136 KB, no EXIF / XMP / ICC)
@@ -39489,7 +39492,7 @@ export const CITY_PAGES: CityPage[] = [
     serviceJsonLd: { serviceType: "Shipping Container" },
     // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Rajajinagar, Yeshwanthpur, Varthur, Kalyan Nagar, Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    // Rajajinagar, Yeshwanthpur, Banaswadi, Varthur, Kalyan Nagar, Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -39548,6 +39551,14 @@ export const CITY_PAGES: CityPage[] = [
           "Architectural salvage businesses and restoration contractors may recover reusable materials from older buildings.",
           "These materials often have irregular dimensions, significant weight or delicate finishes.",
           "A suitable shipping container may provide additional storage where its structural capacity and environmental conditions meet the requirements of the items.",
+        ],
+        // Brief §5 and §6: antique furniture and brassware belong to the Banaswadi page; building components stay here.
+        inlineLinks: [
+          {
+            before: "Dealing in antique furniture or old brass and copper pieces rather than building components? See our page on",
+            link: { label: "antique and heritage furniture storage in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+            after: ".",
+          },
         ],
         subsections: [
           {
