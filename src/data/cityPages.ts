@@ -20166,7 +20166,10 @@ export const CITY_PAGES: CityPage[] = [
    * be assumed…"). The Bommanahalli reciprocal link (brief §5) is not made: no Bommanahalli page exists.
    * B LINKS: wooden-door section → "uPVC, aluminium and glass storage containers in Varthur" (window and
    * glass installers, kept apart from wooden doors); project-wise dispatch H3 → "interior fit-out staging
-   * containers in Mahadevapura" (interior contractors' modular kitchens and wardrobes).
+   * containers in Mahadevapura" (interior contractors' modular kitchens and wardrobes). After #292
+   * (Bilekahalli) merged first: areas → "Bilekahalli container page" (Bilekahalli and Kodichikkanahalli are
+   * that page's), and Bilekahalli's areas point back ("For Begur and Yelenahalli, see our Begur Road
+   * container page"), as agreed with session 7d; the Bannerghatta Road array keeps both items.
    * B KEYWORDS (owned here): playground / play-equipment installer storage, outdoor gym equipment
    * storage, rubber safety tile, EPDM granule and artificial turf roll storage, wooden door dealer storage,
    * flush door, teak main door, door frame and door hardware and lock storage. Not targeted: sports turf
@@ -20203,8 +20206,8 @@ export const CITY_PAGES: CityPage[] = [
     serviceJsonLd: { serviceType: "Shipping Container" },
     // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Bellandur, Athipattu, Bannerghatta Road, HSR Layout, Varthur and Mahadevapura are linked in the body,
-    // so the nearby block leaves them out.
+    // Bellandur, Athipattu, Bannerghatta Road, HSR Layout, Varthur, Mahadevapura and Bilekahalli are linked
+    // in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -20248,6 +20251,13 @@ export const CITY_PAGES: CityPage[] = [
           label: "tile and sanitaryware storage containers in HSR Layout",
           href: "/cities-we-serve/shipping-container-hsr-layout",
         },
+        after: ".",
+      },
+      {
+        // Bilekahalli (#292) owns Bilekahalli and Kodichikkanahalli (CCTV, video door phone and inverter/UPS
+        // stock); pointed to once here, as agreed with session 7d.
+        before: "For Bilekahalli and Kodichikkanahalli, see our",
+        link: { label: "Bilekahalli container page", href: "/cities-we-serve/shipping-container-bilekahalli" },
         after: ".",
       },
     ],
@@ -22057,6 +22067,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "West of Bannerghatta Road, home-rebuild and school storage is covered on our page for",
         link: { label: "shipping containers in JP Nagar", href: "/cities-we-serve/shipping-container-jp-nagar" },
+        after: ".",
+      },
+      {
+        // Bilekahalli brief: "For Begur and Yelenahalli, use the Begur Road page." Added by #293 (merged
+        // after #292, as agreed with session 7d); the nearby block skips areasInlineLinks hrefs.
+        before: "For Begur and Yelenahalli, see our",
+        link: { label: "Begur Road container page", href: "/cities-we-serve/shipping-container-begur-road" },
         after: ".",
       },
     ],
