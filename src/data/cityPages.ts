@@ -19344,7 +19344,9 @@ export const CITY_PAGES: CityPage[] = [
    * SHIPPING & STORAGE CONTAINERS ON BEGUR ROAD — dry, orderly space for cement and building-material
    * dealers (cement, wall putty, tile adhesive, grout and other bagged products, plus hardware backstock),
    * and temporary storage for shopkeepers' stock, fixtures, signboards and coolers while a shop is rebuilt
-   * or relocated, including during road-widening work. South-east Bengaluru, below Bommanahalli.
+   * or relocated, including during road-widening work; since the consolidated brief (VERSION B below), also
+   * playground and outdoor gym installers' equipment and wooden door and door-hardware dealers' stock.
+   * South-east Bengaluru, below Bommanahalli.
    *
    * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers
    * on Begur Road, Bengaluru"): meta title, meta description, H1, keywords, local areas, section order,
@@ -19419,17 +19421,51 @@ export const CITY_PAGES: CityPage[] = [
    *
    * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
    * og:image dimensions.
+   *
+   * VERSION B — owner's consolidated brief of 2026-11-19 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND —
+   * Begur Road Shipping Container — Version A + Version B Integration"): one page, one URL, four uses.
+   * Everything above (Version A) is kept; the consolidated brief replaces the meta title ("… | Storage
+   * Solutions") and description, and adds: an intro paragraph on installers and door dealers; two
+   * afterIntro sections after the shopkeepers' one, "Storage Containers for Playground Equipment
+   * Installers" (10 H3s: play structure components, hardware kits, outdoor gym equipment, rubber safety
+   * tiles, artificial turf rolls, EPDM granules, warranty parts, tools, adhesives/binders/sealants as
+   * hazardous, playground safety) and "Storage Containers for Wooden Door & Door Hardware Dealers" (9 H3s:
+   * flush/panel doors, teak main doors, frames, WPC and bathroom doors, locks and hardware, digital locks,
+   * project-wise dispatch, moisture, polishes/primers/thinners as hazardous); then "Container Storage
+   * Layout Options". Version A's sizes rows, price list, rent paragraph, order steps 1, 2, 5 and 6, "Why
+   * choose" bullets, CTA, enquiry intro and disclaimer gain the B items; placement adds project sites with
+   * the landowner's or developer's permission. FAQs: Version A's ten plus the consolidated brief's nine new
+   * ones (playground, gym stations, tiles and turf, EPDM, adhesives, warping, teak with flush, locks,
+   * relocation), placed before price and delivery = 19, all in the FAQPage JSON-LD. The brief's "Do not
+   * assume…" notes became plain statements ("Not every component can be secured…", "A WPC product cannot
+   * be assumed…"). The Bommanahalli reciprocal link (brief §5) is not made: no Bommanahalli page exists.
+   * B LINKS: wooden-door section → "uPVC, aluminium and glass storage containers in Varthur" (window and
+   * glass installers, kept apart from wooden doors); project-wise dispatch H3 → "interior fit-out staging
+   * containers in Mahadevapura" (interior contractors' modular kitchens and wardrobes).
+   * B KEYWORDS (owned here): playground / play-equipment installer storage, outdoor gym equipment
+   * storage, rubber safety tile, EPDM granule and artificial turf roll storage, wooden door dealer storage,
+   * flush door, teak main door, door frame and door hardware and lock storage. Not targeted: sports turf
+   * and gym operators (Marathahalli ORR), housing societies' own gym equipment (Bellandur), children's
+   * playroom cabins (Mahadevapura portable cabins), timber and plywood, uPVC and aluminium windows and glass
+   * (Varthur), interior contractors (Mahadevapura).
+   * B IMAGES: five owner-dropped lossy VP8 WebP renders ("public/images/Begur Road Shipping Container city
+   * page/Begur Road Shipping Container/cabin (1–5).webp", 60–100 KB, no metadata) of a grey container with a
+   * taupe frame, copied the same way (VP8 byte-for-byte + XMP "illustrative render"): (3) long side =
+   * playground section; (2) door end, head-on = wooden-door section; (4) empty interior = layout options;
+   * (1) three-quarter view = price section; (5) roof from above = rent section. None shows play or gym
+   * equipment, surfacing, turf, doors for sale or hardware, so the brief's use-case filenames and alts
+   * ("playground-equipment-storage-container", "wooden-door-storage-container", …) are not used.
    * ────────────────────────────────────────────────────────────────────────────────────── */
   {
     slug: "shipping-container-begur-road",
     city: "Begur Road",
     listTitle: "Shipping & Storage Containers on Begur Road",
     directoryLabel: "Shipping containers on Begur Road",
-    metaTitle: "Shipping Container on Begur Road | Cement & Shop Storage",
+    metaTitle: "Shipping Container on Begur Road | Storage Solutions",
     metaDescription:
-      "Shipping and storage containers on Begur Road for cement and bagged building materials, plus temporary storage of shop stock and fixtures during rebuilding.",
+      "Shipping and storage containers on Begur Road for cement dealers, shop rebuilding, playground equipment installers and wooden door dealers. Request a quote.",
     keywords:
-      "shipping container on Begur Road, cargo container Begur Road, storage container Begur Road, storage container Begur, storage container Begur lake area, storage container Vishwapriya Layout, storage container Yelenahalli, used shipping container Begur, shipping container price on Begur Road, storage container for rent on Begur Road, cement storage container, cement dealer storage, wall putty and tile adhesive storage, bagged building material storage, hardware dealer backstock container, shop stock storage during renovation, storage during road widening, temporary shop storage container, shop fixtures storage",
+      "shipping container on Begur Road, cargo container Begur Road, storage container Begur Road, storage container Begur, storage container Begur lake area, storage container Vishwapriya Layout, storage container Yelenahalli, used shipping container Begur, shipping container price on Begur Road, storage container for rent on Begur Road, cement storage container, cement dealer storage, wall putty and tile adhesive storage, bagged building material storage, hardware dealer backstock container, shop stock storage during renovation, storage during road widening, temporary shop storage container, shop fixtures storage, play equipment installer storage container, playground equipment storage, outdoor gym equipment storage, rubber safety tile storage, EPDM granule storage, artificial turf roll storage, wooden door dealer storage container, flush door storage, teak main door storage, door frame storage, door hardware and lock storage",
     // Approximate point on Begur Road near Vishwapriya Layout, between Bommanahalli to the north and Begur
     // to the south (for the owner to confirm).
     geo: {
@@ -19442,8 +19478,8 @@ export const CITY_PAGES: CityPage[] = [
     serviceJsonLd: { serviceType: "Shipping Container" },
     // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Bellandur, Athipattu, Bannerghatta Road and HSR Layout are linked in the body, so the nearby block
-    // leaves them out.
+    // Bellandur, Athipattu, Bannerghatta Road, HSR Layout, Varthur and Mahadevapura are linked in the body,
+    // so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -19456,16 +19492,17 @@ export const CITY_PAGES: CityPage[] = [
 
     h1: "Shipping & Storage Containers on Begur Road",
     tagline:
-      "Dry, orderly space for cement and bagged building materials, and somewhere safe for a shop's stock, shelves and signboard while the premises are rebuilt.",
+      "Dry, orderly space for cement and bagged building materials, a shop's stock while it is rebuilt, playground and outdoor gym equipment between installations, and wooden doors, frames and locks.",
     intro: [
       "Begur is one of Bengaluru's historically significant localities, associated with an early inscription recording the name Bengaluru.",
       "Today, Begur Road serves a growing residential and commercial area with construction activity, shops and local businesses.",
       "Building-material dealers may need dry, organised space for cement, wall putty, tile adhesive and other bagged products. Shopkeepers may also require temporary storage for merchandise, shelves, counters and fixtures when rebuilding or relocating their premises.",
-      "For both needs, Portable Office Cabin offers shipping and storage container solutions on Begur Road.",
+      "Playground and outdoor gym installers also handle bulky equipment between installation projects, while wooden door dealers need organised space for doors, frames, locks and fittings.",
+      "For these commercial inventory and equipment needs, Portable Office Cabin offers shipping and storage container solutions on Begur Road.",
     ],
     introLink: {
       before:
-        "Heavy bagged stock and shop fittings moved out in a hurry both need planning first: the load on the floor, protection from damp and permission to use the site. Our",
+        "Heavy bagged stock, shop fittings moved out in a hurry, long play-equipment sections and wooden doors all need planning first: the load on the floor, protection from damp and permission to use the site. Our",
       link: { label: "range of cargo and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
       after: " shows the units we supply.",
     },
@@ -19708,6 +19745,323 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
+        // Version B (owner's consolidated brief, 2026-11-19): playground and outdoor gym installers.
+        heading: "Storage Containers for Playground Equipment Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-begur-road/shipping-container-long-side-begur-road.webp",
+          alt: "Long side of a grey corrugated steel container between taupe corner posts, with two forklift pockets in the bottom rail, standing in a concrete yard under a tree",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render. Slide sections, posts and turf rolls are long, so it is the inside length of the unit you are quoted, not its outside, that decides what lies flat.",
+        },
+        paragraphs: [
+          "Playground installation companies may handle slides, swings, climbing structures, platforms, safety surfacing and other components for apartment complexes, schools and parks.",
+          "A suitable shipping container may help organise that equipment between its arrival from the supplier and its dispatch to each installation site.",
+        ],
+        subsections: [
+          {
+            heading: "Slides, platforms and play structure components",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Slide sections." },
+              { text: "Play panels." },
+              { text: "Platforms." },
+              { text: "Structural posts." },
+              { text: "Climbing components." },
+              { text: "Spring riders." },
+              { text: "Swing seats and chains." },
+            ],
+            closing: [
+              "Label components by project, structure, dimensions and installation sequence, and keep them on suitable racks, protective supports and restraints.",
+              "Follow the equipment manufacturer's storage and handling requirements.",
+            ],
+          },
+          {
+            heading: "Project-wise hardware kits",
+            paragraphs: ["Small components can be organised into labelled kits containing:"],
+            bullets: [
+              { text: "Bolts." },
+              { text: "Nuts." },
+              { text: "Washers." },
+              { text: "Brackets." },
+              { text: "Anchors." },
+              { text: "Other approved fittings." },
+            ],
+            closing: [
+              "Label each kit by project and equipment model, and keep an inventory checklist so that fewer parts go missing on installation day.",
+            ],
+          },
+          {
+            heading: "Outdoor gym equipment storage",
+            paragraphs: ["Outdoor fitness equipment may include:"],
+            bullets: [
+              { text: "Exercise stations." },
+              { text: "Fitness frames." },
+              { text: "Pedal units." },
+              { text: "Exercise benches." },
+              { text: "Other installation components." },
+            ],
+            closing: [
+              "Heavy units need suitable lifting arrangements, stable supports and correctly rated restraints. Use the container's lashing points only within their verified rated capacity.",
+              "Not every component can be secured with ordinary straps or on ordinary pallets.",
+            ],
+          },
+          {
+            heading: "Rubber safety tile storage",
+            paragraphs: ["Rubber safety tiles may require:"],
+            bullets: [
+              { text: "Stable, level supports." },
+              { text: "Suitable stacking limits." },
+              { text: "Protection from contamination." },
+              { text: "Appropriate temperature conditions." },
+              { text: "Manufacturer-approved storage methods." },
+            ],
+            closing: ["Tile products differ, and so do their storage requirements: check each product's instructions."],
+          },
+          {
+            heading: "Artificial turf roll storage",
+            paragraphs: ["Artificial turf may be stored in rolls where the manufacturer permits it. Follow its requirements for:"],
+            bullets: [
+              { text: "Roll orientation." },
+              { text: "Maximum stacking." },
+              { text: "Support." },
+              { text: "Temperature." },
+              { text: "Moisture protection." },
+              { text: "Handling." },
+            ],
+            closing: ["Avoid folding turf unless the manufacturer specifically permits it."],
+          },
+          {
+            heading: "EPDM granule storage",
+            paragraphs: [
+              "Bagged EPDM granules may be stored where the product's packaging and environmental requirements are met.",
+              "Use suitable pallets or supports, and follow the manufacturer's guidance on stacking, moisture and temperature.",
+            ],
+          },
+          {
+            heading: "Warranty parts and replacement stock",
+            paragraphs: ["A dedicated section may hold:"],
+            bullets: [
+              { text: "Replacement components." },
+              { text: "Spare hardware." },
+              { text: "Approved fittings." },
+              { text: "Equipment awaiting inspection." },
+              { text: "Warranty-related parts." },
+            ],
+            closing: ["Keep damaged or returned items clearly identified."],
+          },
+          {
+            heading: "Installation tools",
+            paragraphs: ["Compatible tools may include:"],
+            bullets: [
+              { text: "Drills." },
+              { text: "Measuring equipment." },
+              { text: "Hand tools." },
+              { text: "Anchoring accessories." },
+              { text: "Other installation equipment." },
+            ],
+            closing: ["Use suitable toolboards, shelves and lockable storage."],
+          },
+          {
+            heading: "Surfacing adhesives, binders and sealants",
+            paragraphs: [
+              "Some surfacing binders, adhesives and sealants may be hazardous or flammable. Store them according to their safety data sheets, the manufacturer's instructions and the regulations that apply.",
+              "An ordinary storage container is not an approved store for hazardous chemicals.",
+            ],
+          },
+          {
+            heading: "Playground safety requirements",
+            paragraphs: [
+              "Equipment installation must follow the applicable safety requirements, the manufacturer's specifications and the standards required by the customer or project.",
+              "A storage container does not itself certify playground equipment as safe.",
+            ],
+          },
+        ],
+      },
+      {
+        // Version B (owner's consolidated brief, 2026-11-19): wooden door and door hardware dealers.
+        heading: "Storage Containers for Wooden Door & Door Hardware Dealers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-begur-road/shipping-container-door-end-begur-road.webp",
+          alt: "Head-on view of a grey container's closed double cargo doors in a taupe frame, with four vertical locking bars, lever handles and a central lockbox, in a factory yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render. Every door and frame goes in and comes out through this end, so check the quoted unit's door opening against your tallest packed door.",
+        },
+        paragraphs: [
+          "Door dealers and installers may need additional storage for flush doors, panel doors, teak main doors, frames and hardware.",
+          "Wood-based products can be sensitive to moisture, unsuitable temperatures and incorrect support. A suitably configured container may provide organised storage where the environmental conditions are appropriate.",
+        ],
+        // Brief §5/§7: wooden doors are kept apart from uPVC and aluminium windows and glass (Varthur).
+        inlineLinks: [
+          {
+            before: "Selling uPVC or aluminium windows and glass rather than wooden doors? See our page on",
+            link: { label: "uPVC, aluminium and glass storage containers in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Flush door and panel door storage",
+            paragraphs: ["Suitable arrangements may include:"],
+            bullets: [
+              { text: "Level supports or bearers." },
+              { text: "Manufacturer-approved storage orientation." },
+              { text: "Protection against bending." },
+              { text: "Suitable separation between stacks." },
+              { text: "Appropriate load limits." },
+              { text: "Protection against moisture." },
+            ],
+            closing: [
+              "Some doors must be stored flat; others come with different manufacturer instructions. One storage orientation does not suit every door product.",
+            ],
+          },
+          {
+            heading: "Teak main door storage",
+            paragraphs: ["Premium wooden doors may require:"],
+            bullets: [
+              { text: "Suitable protective wrapping." },
+              { text: "Corner protection." },
+              { text: "Stable supports." },
+              { text: "Appropriate humidity conditions." },
+              { text: "Careful handling." },
+              { text: "Separate storage bays." },
+            ],
+            closing: ["Avoid materials or arrangements that could damage decorative finishes."],
+          },
+          {
+            heading: "Wooden door frames",
+            paragraphs: ["Door frames may be organised by:"],
+            bullets: [
+              { text: "Material." },
+              { text: "Dimensions." },
+              { text: "Profile." },
+              { text: "Project." },
+              { text: "Customer order." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Use suitable supports and stable stacking arrangements."],
+          },
+          {
+            heading: "WPC and bathroom doors",
+            paragraphs: [
+              "Wood-plastic composite (WPC) doors and other bathroom-door products should be stored according to their manufacturer's requirements.",
+              "A WPC product cannot be assumed to store the same way as timber.",
+            ],
+          },
+          {
+            heading: "Door locks and hardware",
+            paragraphs: ["Labelled drawers or bins may be used for:"],
+            bullets: [
+              { text: "Mortise locks." },
+              { text: "Handles." },
+              { text: "Hinges." },
+              { text: "Tower bolts." },
+              { text: "Door closers." },
+              { text: "Latches." },
+              { text: "Other compatible hardware." },
+            ],
+            closing: ["Organise products by model, size, finish and customer order."],
+          },
+          {
+            heading: "Digital locks",
+            paragraphs: ["Electronic locks may require:"],
+            bullets: [
+              { text: "Protective packaging." },
+              { text: "Appropriate temperature and humidity." },
+              { text: "Manufacturer-approved battery handling." },
+              { text: "Secure shelving." },
+              { text: "Serial-number tracking." },
+            ],
+            closing: ["Batteries should not be charged inside an ordinary storage-only container."],
+          },
+          {
+            heading: "Project-wise door dispatch",
+            paragraphs: ["Dealers may organise orders by:"],
+            bullets: [
+              { text: "Apartment project." },
+              { text: "Tower." },
+              { text: "Floor." },
+              { text: "Flat number." },
+              { text: "Door dimensions." },
+              { text: "Hardware requirements." },
+              { text: "Installation date." },
+            ],
+            closing: ["This can help reduce dispatch errors."],
+            // Brief §5: interior contractor staging (modular kitchens, wardrobes) belongs to Mahadevapura.
+            inlineLinks: [
+              {
+                before: "Interior firms fitting modular kitchens and wardrobes into new flats are covered on our page on",
+                link: {
+                  label: "interior fit-out staging containers in Mahadevapura",
+                  href: "/cities-we-serve/shipping-container-mahadevapura",
+                },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Protecting wooden doors from moisture",
+            paragraphs: [
+              "A standard metal container can become hot inside and may experience condensation. Depending on the product, suitable provisions may include:",
+            ],
+            bullets: [
+              { text: "Insulation." },
+              { text: "Ventilation." },
+              { text: "Humidity monitoring." },
+              { text: "Raised supports." },
+              { text: "Suitable protective packaging." },
+              { text: "Regular leak inspections." },
+              { text: "Environmental controls." },
+            ],
+            closing: [
+              "Ventilation alone does not guarantee that wooden doors will stay free from warping or moisture damage.",
+              "Follow the door manufacturer's storage and acclimatisation instructions.",
+            ],
+          },
+          {
+            heading: "Polishes, primers and thinners",
+            paragraphs: [
+              "Some finishing products are flammable or hazardous. An ordinary container is not a place for them unless an appropriate safety assessment has been carried out and compliant facilities are in place.",
+              "Follow product labels, safety data sheets and the regulations that apply.",
+            ],
+          },
+        ],
+      },
+      {
+        // Version B (owner's consolidated brief, 2026-11-19): layout options across all four uses.
+        heading: "Container Storage Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-begur-road/storage-container-empty-interior-begur-road.webp",
+          alt: "Empty container interior seen from the open doors: pale grey corrugated walls and ceiling over a dark brown plywood floor fixed with rows of screws",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of an empty interior as supplied. Racks, bins, bearers, supports and lighting go in only where your quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Pallet bays for bagged materials." },
+          { text: "Shelving for boxed shop stock." },
+          { text: "Racks for playground components." },
+          { text: "Labelled hardware bins." },
+          { text: "Stable supports for heavy gym equipment." },
+          { text: "Level bearers for wooden doors." },
+          { text: "Lockable storage sections." },
+          { text: "Appropriate lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: [
+          "The final layout is based on the actual inventory, its dimensions and weight, and each manufacturer's requirements.",
+          "Incompatible materials and hazardous substances are not combined in one container without a suitable safety assessment.",
+        ],
+      },
+      {
         heading: "Shipping Container Placement & Delivery on Begur Road",
         placement: "afterSolutions",
         image: {
@@ -19719,7 +20073,7 @@ export const CITY_PAGES: CityPage[] = [
             "Illustrative render. From above, the box plus a clear swing for both door leaves is the space your plot must give, before the lorry and lifting gear are counted.",
         },
         paragraphs: [
-          "Containers can go on suitable private premises you are authorised to use, such as commercial yards, warehouse compounds and approved storage plots.",
+          "Containers can go on suitable private premises you are authorised to use, such as commercial yards, warehouse compounds, approved storage plots and project sites where the landowner or developer has given permission.",
           "Before delivery, confirm:",
         ],
         bullets: [
@@ -19761,12 +20115,15 @@ export const CITY_PAGES: CityPage[] = [
             "Rounded volumes. Volume is not allowable payload: the exact internal dimensions, floor-loading capacity, total load limits and availability are stated in your quotation.",
           headers: ["Container size", "Approximate capacity", "Possible application"],
           rows: [
-            ["10 ft, if available", "~15 m³", "Compact shop stock and fixtures during rebuilding"],
-            ["20 ft", "~33 m³", "Bagged building materials or a larger shop's temporary inventory"],
-            ["40 ft", "~67 m³", "Larger inventory where yard access, structural capacity and space permit"],
+            ["10 ft, if available", "~15 m³", "Compact shop stock and fixtures during rebuilding, door hardware or playground spare parts"],
+            ["20 ft", "~33 m³", "Bagged building materials, a larger shop's temporary inventory, playground components or door stock"],
+            ["40 ft", "~67 m³", "Larger installation projects, long equipment sections or bulk door stock, where yard access, structural capacity and space permit"],
           ],
         },
-        closing: ["For cement, the weight of the stock decides the size as much as its volume, so give us the total weight when you ask."],
+        closing: [
+          "For cement, the weight of the stock decides the size as much as its volume, so give us the total weight when you ask.",
+          "For slide sections, turf rolls and doors, the inside length and the door opening matter as well, so give us the longest and tallest item.",
+        ],
         // Brief §5: buying and inspection guidance → the Chennai-area Athipattu page's inspection checklist.
         inlineLinks: [
           {
@@ -19779,6 +20136,14 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Shipping Container Price on Begur Road",
         placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-begur-road/shipping-container-three-quarter-view-begur-road.webp",
+          alt: "Three-quarter view of a grey steel container with a taupe frame and closed cargo doors, on concrete paving in front of stacked beige containers, with agave and grass planters alongside",
+          width: 1200,
+          height: 896,
+          caption:
+            "Illustrative render. Two units that look alike from outside can differ in grade, floor condition and fittings, which is why the quotation is itemised.",
+        },
         paragraphs: ["Pricing depends on:"],
         bullets: [
           { text: "Container size." },
@@ -19787,6 +20152,9 @@ export const CITY_PAGES: CityPage[] = [
           { text: "Floor condition and load requirements." },
           { text: "Pallets and raised platforms." },
           { text: "Shelving and storage bays." },
+          { text: "Racks, door supports and bearers." },
+          { text: "Storage drawers and bins." },
+          { text: "Lashing and restraint provisions." },
           { text: "Ventilation and insulation." },
           { text: "Locking and security features." },
           { text: "Transportation and unloading." },
@@ -19798,8 +20166,16 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Storage Container on Rent on Begur Road",
         placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-begur-road/shipping-container-top-view-begur-road.webp",
+          alt: "Top-down view of a grey container's ribbed roof and four corner castings on concrete paving, with the door hinges along the right-hand end",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render from above. A hired unit needs the same clear ground and approach when it is delivered, when it is moved and when it is collected.",
+        },
         paragraphs: [
-          "Hiring may suit a shop that will be back in its premises within months, or a dealer carrying extra stock through a busy building season. Units on hire come in 10, 20 and 40 ft lengths and as a 40 ft High Cube, on terms running from one month up to five years. The hire quote spells out the term, the exact unit, transport to your site, any move during the hire and the collection at the end, and the rental agreement records any deposit.",
+          "Hiring may suit a shop that will be back in its premises within months, a dealer carrying extra stock through a busy building season, or an installer holding equipment for a run of projects. Units on hire come in 10, 20 and 40 ft lengths and as a 40 ft High Cube, on terms running from one month up to five years. The hire quote spells out the term, the exact unit, transport to your site, any move during the hire and the collection at the end, and the rental agreement records any deposit.",
         ],
         inlineLinks: [
           {
@@ -19814,12 +20190,14 @@ export const CITY_PAGES: CityPage[] = [
         placement: "afterSolutions",
         ordered: true,
         bullets: [
-          { text: "Tell us whether the container is for building materials or temporary shop storage." },
-          { text: "Identify the products and quantities." },
+          {
+            text: "Tell us what the container is for: building materials, temporary shop storage, playground or outdoor gym equipment, or wooden doors and hardware.",
+          },
+          { text: "Identify the items, their dimensions and quantities." },
           { text: "Give the estimated total stock weight." },
           { text: "Select a suitable container size." },
-          { text: "Discuss pallets, shelves, ventilation and security." },
-          { text: "Confirm the environmental and structural requirements." },
+          { text: "Discuss pallets, shelves, racks, bearers, ventilation and security." },
+          { text: "Confirm the environmental, structural and safety requirements." },
           { text: "Provide the proposed installation location." },
           { text: "Check permissions and site access." },
           { text: "Request an itemised quotation." },
@@ -19829,20 +20207,20 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Why Choose Portable Office Cabin?",
         paragraphs: [
-          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For a Begur Road dealer or shopkeeper, that means:",
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For a Begur Road dealer, shopkeeper or installer, that means:",
         ],
         bullets: [
           {
             title: "Container size options",
-            text: "10, 20 and 40 ft units, new or used, matched to the weight and bulk of what you store and to what is in stock.",
+            text: "10, 20 and 40 ft units, new or used, matched to the weight, bulk and length of what you store and to what is in stock.",
           },
           { title: "Storage-oriented modifications", text: "each change to the standard box, such as platforms, shelves or vents, is its own line in the quote." },
           {
-            title: "Pallets and shelving provisions",
-            text: "raised platforms for bagged stock and shelves for boxed fittings or shop cartons, laid out around what you store.",
+            title: "Pallets, shelving and racking provisions",
+            text: "raised platforms for bagged stock, shelves for boxed fittings or shop cartons, racks for play equipment and level bearers for doors, laid out around what you store.",
           },
           { title: "Locking arrangements", text: "lockable cargo doors; ask to see the locking gear on the unit quoted to you." },
-          { title: "Ventilation and insulation options", text: "suggested for damp-sensitive bags or shop stock, and costed separately." },
+          { title: "Ventilation and insulation options", text: "suggested for damp-sensitive bags, shop stock or wooden doors, and costed separately." },
           {
             title: "Quotation and delivery coordination",
             text: "a single written quote covering the unit, its fittings and transport, with the route and site looked at before any delivery day is agreed.",
@@ -19893,6 +20271,43 @@ export const CITY_PAGES: CityPage[] = [
         answer: "Potentially, provided they are handled and stored according to the manufacturer's instructions.",
       },
       {
+        question: "Can playground equipment be stored in a shipping container?",
+        answer: "Yes, where components are appropriately supported, secured and organised according to the manufacturer's requirements.",
+      },
+      {
+        question: "How should outdoor gym stations be stored?",
+        answer: "Use suitable lifting methods, stable supports and correctly rated restraints.",
+      },
+      {
+        question: "Can rubber safety tiles and artificial turf be stored together?",
+        answer: "Potentially, where their packaging, handling and environmental requirements are compatible.",
+      },
+      {
+        question: "Can EPDM granules be stored inside the container?",
+        answer: "Bagged EPDM granules may be stored where the product manufacturer's storage requirements are met.",
+      },
+      {
+        question: "Can playground adhesives and surfacing binders be stored inside the container?",
+        answer: "These products may be hazardous and require appropriate storage arrangements based on their safety data sheets.",
+      },
+      {
+        question: "How should wooden doors be stored to reduce warping?",
+        answer: "Use manufacturer-approved supports, orientation and environmental conditions. Some products require horizontal storage.",
+      },
+      {
+        question: "Can teak main doors be stored with flush doors?",
+        answer: "Potentially, with suitable separation, protection and handling arrangements.",
+      },
+      {
+        question: "Can door locks, hinges and handles be stored in the same container?",
+        answer: "Yes, where they are organised in appropriate bins, drawers or shelves.",
+      },
+      {
+        question: "Can a container be relocated between project sites?",
+        answer:
+          "Relocation depends on the container's specifications, transport arrangements and the permissions at each site. A move is quoted separately, so confirm it before committing to a project schedule.",
+      },
+      {
         question: "What is the shipping container price on Begur Road?",
         answer: "Pricing depends on size, condition, modifications, load requirements and delivery.",
       },
@@ -19904,7 +20319,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Request a Shipping Container Quotation on Begur Road",
-    ctaText: `Whether you need additional storage for cement and bagged building materials or temporary space for shop inventory during rebuilding, Portable Office Cabin can discuss suitable shipping container options based on your requirements. To talk it through, ring ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Begur Road, Begur, Vishwapriya Layout and Yelenahalli, Bengaluru, Karnataka.`,
+    ctaText: `Whether you need storage for cement and bagged building materials, temporary space for shop inventory during rebuilding, room for playground and outdoor gym equipment between installations, or organised space for wooden doors and their hardware, Portable Office Cabin can discuss suitable shipping container options based on your requirements. To talk it through, ring ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Begur Road, Begur, Vishwapriya Layout and Yelenahalli, Bengaluru, Karnataka.`,
     // Brief's closing section: the quotation request → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons;
@@ -19916,7 +20331,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "storage container",
       heading: "Ask about a container for Begur Road",
       intro:
-        "Choose a container type and quantity and give the location of your shop, godown or yard on or near Begur Road (a shared map location works). Say whether you want to buy or hire, then describe the contents, such as cement, putty, adhesive, boxed hardware, shop cartons, shelving or a cooler, with rough quantities and the total weight of any bagged stock. That lets us suggest a size, a floor arrangement and fittings.",
+        "Choose a container type and quantity and give the location of your shop, godown or yard on or near Begur Road (a shared map location works). Say whether you want to buy or hire, then describe the contents, such as cement, putty, adhesive, boxed hardware, shop cartons, shelving, a cooler, slide sections, outdoor gym stations, turf rolls, doors, frames or locks, with rough quantities, the length of the longest item and the total weight of any bagged stock. That lets us suggest a size, a floor arrangement and fittings.",
     },
     // The cargo category and the rental product are linked in the body, so they are not repeated here.
     relatedLinksHeading: "Related products",
@@ -19928,7 +20343,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
     ],
 
-    disclaimer: `Every container is supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City, and there is no depot, yard, shop or branch on Begur Road. The written quotation or rental agreement for your unit is what counts: it records the size, grade, condition, inside dimensions, door opening, rated payload and floor rating; any pallets, platforms, shelving, ventilation, insulation or locks; the hire terms if you rent; and the delivery, unloading, any relocation and the collection. Availability changes, and no delivery date or time is promised ahead of the quotation. The five pictures on this page are illustrative renders: none was taken on Begur Road, and none shows a delivered or fitted unit, cement, bagged material, shop stock or fittings. Capacities are rounded, and volume is not payload. Cement and building-material dealers and shopkeepers are described to show typical uses, not named customers or completed jobs, and the localities listed are simply where enquiries come from. Nothing here says that any property on Begur Road is affected by road widening. An ordinary container is not moisture-proof or climate-controlled, its floor has a load limit, and it is not an approved retail shop. What this page says about cement and other bagged materials, stacking, shelf life, floor loading, refrigerators, moisture, permissions, road widening and site access is general guidance, not professional structural, electrical, legal or engineering advice; each manufacturer's and supplier's instructions take precedence.`,
+    disclaimer: `Every container is supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City, and there is no depot, yard, shop or branch on Begur Road. The written quotation or rental agreement for your unit is what counts: it records the size, grade, condition, inside dimensions, door opening, rated payload and floor rating; any pallets, platforms, shelving, ventilation, insulation or locks; the hire terms if you rent; and the delivery, unloading, any relocation and the collection. Availability changes, and no delivery date or time is promised ahead of the quotation. The ten pictures on this page are illustrative renders of two containers: none was taken on Begur Road, and none shows a delivered or fitted unit, cement, bagged material, shop stock or fittings, play or gym equipment, safety surfacing, doors for sale or door hardware. Capacities are rounded, and volume is not payload. Cement and building-material dealers, shopkeepers, playground and outdoor gym installers and wooden door dealers are described to show typical uses, not named customers or completed jobs, and the localities listed are simply where enquiries come from. Nothing here says that any property on Begur Road is affected by road widening. An ordinary container is not moisture-proof or climate-controlled, its floor has a load limit, and it is not an approved retail shop or hazardous-chemical store; storing equipment in it does not make that equipment safe to install. What this page says about cement and other bagged materials, stacking, shelf life, floor loading, refrigerators, play and gym equipment, safety surfacing, adhesives, binders, polishes and thinners, wooden doors, batteries, moisture, permissions, road widening and site access is general guidance, not professional structural, electrical, chemical-safety, legal or engineering advice; each manufacturer's and supplier's instructions take precedence.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
