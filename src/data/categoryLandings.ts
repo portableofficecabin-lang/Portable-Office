@@ -313,6 +313,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Shipping containers on Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
       // Yelahanka storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
       { name: "Shipping containers in Yelahanka", href: "/cities-we-serve/shipping-container-yelahanka" },
+      // Yelahanka New Town storage page (owner brief, 2026-11-19: a link back from the main shipping container page).
+      { name: "Storage containers in Yelahanka New Town", href: "/cities-we-serve/shipping-container-yelahanka-new-town" },
       // Horamavu storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
       { name: "Shipping containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
       // Kanakapura Road storage page (owner brief, 2026-11-16: a link back from the main shipping container page).
