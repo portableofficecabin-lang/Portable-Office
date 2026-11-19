@@ -728,6 +728,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kasavanahalli (flooring and wallpaper installers' stock; running and cycling event organisers'
     // arches, barricades and race-day kit; owner brief 2026-11-19), appended so the live links keep their positions.
     { name: "Shipping Containers in Kasavanahalli", href: "/cities-we-serve/shipping-container-kasavanahalli" },
+    // Bilekahalli (CCTV and video door phone installers' stock; inverter and UPS dealers' boxed units and
+    // kits, no battery storage; owner brief 2026-11-19), appended so the live links keep their positions.
+    { name: "Shipping Containers in Bilekahalli", href: "/cities-we-serve/shipping-container-bilekahalli" },
   ],
 };
 
