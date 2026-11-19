@@ -41573,6 +41573,12 @@ export const CITY_PAGES: CityPage[] = [
         },
         after: ".",
       },
+      // Malleshwaram brief (2026-11-19, §5): architectural salvage and picture framing stock are that page's intent.
+      {
+        before: "Architectural salvage dealers and picture framers in neighbouring Malleshwaram have a page of their own:",
+        link: { label: "architectural salvage storage containers in Malleshwaram", href: "/cities-we-serve/shipping-container-malleshwaram" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -42157,6 +42163,12 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "storage containers for Peenya's industrial units", href: "/products/shipping-container-in-peenya-industrial" },
         after: ".",
       },
+      // Malleshwaram brief (2026-11-19, §5): picture framing and salvage stock are that page's intent.
+      {
+        before: "Picture framing shops and salvage dealers just to the south-east, in Malleshwaram, are covered on our page on",
+        link: { label: "picture framing material storage in Malleshwaram", href: "/cities-we-serve/shipping-container-malleshwaram" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -42611,6 +42623,744 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin builds and supplies its containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. Its Bengaluru office is in Electronic City; it has no yard, depot, godown or branch in Yeshwanthpur or at the APMC yard. The written quotation or rental agreement for each unit sets out its size, grade, condition, inside dimensions and payload, any pallets, racks, hooks, bins, lighting, ventilation, insulation or locks, the hire terms for a rented unit, and how delivery, unloading and collection are handled. Stock changes, and no delivery date or time is promised in advance. The four pictures are illustrative renders of one container: none was taken in Yeshwanthpur, and none shows a delivered or fitted unit, grain, spices, packing materials, tarpaulins or transport equipment. Capacities are approximate. Wholesale traders, lorry transporters and booking agents are named as examples of typical uses, not as clients or completed projects, and the localities show where we take enquiries. An ordinary container is not food-grade storage, is not climate-controlled, and is not rated for fuel, chemicals or battery charging. The notes on commodities, moisture, pests, fumigation, load-securing equipment, hazardous materials, permissions and site access are general guidance, not food-safety, pest-control, legal, electrical or engineering advice; always follow the applicable regulations and the supplier's or manufacturer's instructions.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN MALLESHWARAM — storage for architectural salvage and heritage
+   * restoration material (reclaimed Mangalore roof tiles, teak beams and rafters, carved doors and windows,
+   * wrought-iron grills, decorative tiles, pillars and stone) and for picture framing shops (frame
+   * mouldings, framing glass, mountboards, finished orders, hardware) in north-west Bengaluru.
+   *
+   * Owner brief of 2026-11-19 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Malleshwaram, Bengaluru"): meta title, meta description, H1, keywords, local modifiers, section order,
+   * H2 / H3 headings, sizes table, the eleven ordering steps and the thirteen FAQs are the brief's, and so
+   * is the copy, lightly edited for flow and British spelling. The "Malleswaram" spelling appears once in
+   * the visible copy (intro), as the brief asks. The brief's notes to the implementer ("Do not recommend
+   * unlicensed fumigation…", "Do not promise archival-quality protection…", "should not be presented as…",
+   * "Do not guarantee delivery…", "link to the verified Bellandur page", "Do not invent…", "Conditional
+   * section…", "Highlight only verified capabilities…", "Do not target…", "Use verified company phone
+   * numbers…") are instructions, not page copy: where one carries a fact for the reader it is reworded as a
+   * plain statement ("fumigation and pesticide treatment are for qualified pest-control operators…", "an
+   * ordinary container does not give archival-quality protection…", "a storage-only container is not a
+   * glass-cutting, moulding-cutting or finishing workshop", "a delivery hour, or unloading from a main road,
+   * can be agreed only once…"); otherwise it is left out. Each checklist stays a list. The route follows
+   * the site convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link
+   * lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; crate bays, bearers, padded supports, racks, glass
+   * racks, shelves, drawers, lighting, ventilation, insulation and environmental controls are layout
+   * options and price factors "where your quotation includes them", never stock items or guaranteed
+   * conditions. The optional Kannada search terms are not used: the page is in English. No Product JSON-LD:
+   * city pages carry no prices (file rule) and a Product block without offers earns no rich result, so the
+   * Service JSON-LD (no offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Architectural salvage, picture framing and "Storage Container Layout Options" → three afterIntro
+   *     extra sections, the first two with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, eleven steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Malleshwaram" → areas + two areasInlineLinks. "Why Choose Portable Office
+   *   Cabin?" → a default extra section (after the areas, as in the brief). FAQs: the brief's thirteen.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container product page"); salvage section → "antique and heritage furniture storage
+   * in Banaswadi" (antique dealers' and heritage furniture restorers' stock and brassware are that page's
+   * intent; building components recovered from old structures stay here); "Carved wooden doors and windows"
+   * H3 → "new wooden door inventory storage on Begur Road" (that page's wooden door and door hardware
+   * dealers' section; reclaimed heritage doors stay here) and "new window and glazed-unit storage in
+   * Varthur" (that page's uPVC, aluminium and glass window installers' section; reclaimed windows stay
+   * here); picture framing section → "art and canvas storage containers in Kalyan Nagar" (artists storing
+   * their own work and art-class supplies are that page's intent; framing shops' stock stays here); framing
+   * "Moisture and temperature control" H3 → "insulated, air-conditioned container fit-outs" (the Vellore
+   * page's "Insulated and air-conditioned storage enquiries" section, which explains how such a fit-out is
+   * specified and quoted for a stated range); placement → "restricted-site container delivery checks"
+   * (Bellandur's "Planning delivery through a society gate or narrow lane"); sizes → "inspection checklist
+   * for a used shipping container": the brief's /shipping-container-chennai is not a route (the Chennai
+   * product page gives inspection one sentence), so it points to the Athipattu page's "Used Container
+   * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
+   * "shipping containers in Rajajinagar" (the brief: Rajajinagar, Subramanyanagar and Gayathri Nagar go to
+   * that page) and "shipping containers in Yeshwanthpur" (Yeshwanthpur and Goraguntepalya). Anchors differ
+   * from the siblings' anchors for the same targets. Inbound: the Rajajinagar page's areas section
+   * ("architectural salvage storage containers in Malleshwaram") and the Yeshwanthpur page's areas section
+   * ("picture framing material storage in Malleshwaram"), one `areasInlineLinks` item each, their own
+   * targeting unchanged; the Karnataka shipping hub ("Shipping Containers in Malleshwaram"); the cargo
+   * category's location links ("Storage containers in Malleshwaram"); and every Karnataka shipping page's
+   * nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Malleshwaram (Malleswaram), Malleshwaram
+   * West, Sampige Road, Margosa Road, Kodandarampura, Palace Guttahalli, Vyalikaval, Srirampura and
+   * Swimming Pool Extension, for architectural salvage and heritage restoration material and for picture
+   * framing shops' inventory. Not targeted: Rajajinagar, Subramanyanagar and Gayathri Nagar (Rajajinagar
+   * page; named here only in the link to it); Yeshwanthpur and Goraguntepalya (Yeshwanthpur page; same);
+   * Mathikere, Sadashivanagar and Seshadripuram (kept for possible future pages; not named). Kept apart from
+   * Gombe Habba dolls (Banashankari), antique furniture and brassware (Banaswadi; named here only in the
+   * link to it), new wooden doors (Begur Road; same), new windows, uPVC, aluminium and glass (Varthur),
+   * owner-builders' new tiles and sanitaryware (HSR Layout), artists' own work and art-class supplies
+   * (Kalyan Nagar), trophies and plaques (Kasturi Nagar), gallery cabins (Indiranagar portable shop page)
+   * and climate-controlled units as such (Vellore). "Bengaluru" stays out of the title, as the brief asks;
+   * the geo meta and the Service JSON-LD's areaServed carry "Malleshwaram, Bengaluru, Karnataka".
+   *
+   * Images: four owner-dropped WebP renders ("public/images/Storage Containers in Malleshwaram city
+   * page/Storage Containers in Malleshwaram/cabin (1–4).webp", lossy VP8, 52–136 KB, no EXIF / XMP / ICC)
+   * of one navy-blue container. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title /
+   * dc:description that labels it an illustrative render (no creator, GPS, camera or date). (2)
+   * three-quarter exterior with the cargo doors = hero / og:image (the brief's hero filename); (1) side wall
+   * = salvage section (its caption is about length and floor load); (3) empty interior = layout options
+   * (the brief's interior filename, but not its "with organized racks" alt: no racks are fitted); (4) roof
+   * from above = placement section. No image shows roof tiles, beams, carved doors, grills, frame
+   * mouldings, glass, mountboards or finished frames, so the brief's seven use-case image slots are not
+   * used, and no alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-malleshwaram",
+    city: "Malleshwaram",
+    listTitle: "Shipping & Storage Containers in Malleshwaram",
+    metaTitle: "Shipping Container in Malleshwaram | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Malleshwaram for reclaimed building materials, heritage restoration stock, frame mouldings, glass and finished framing orders.",
+    keywords:
+      "shipping container in Malleshwaram, cargo container Malleshwaram, storage container Malleshwaram, storage container Malleswaram, storage container Malleshwaram West, storage container Sampige Road, storage container Margosa Road, storage container Vyalikaval, storage container Palace Guttahalli, used shipping container Malleshwaram, shipping container price in Malleshwaram, storage container for rent in Malleshwaram, architectural salvage storage container, reclaimed building material storage, Mangalore roof tile storage, reclaimed teak beam storage, heritage restoration material storage, carved door storage, wrought-iron grill storage, picture framing shop storage container, frame moulding storage, framing glass storage, mountboard storage, finished frame order storage",
+    // Approximate point in central Malleshwaram, north-west Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Malleshwaram, Bengaluru, Karnataka, India",
+      position: "13.0030;77.5700",
+      icbm: "13.0030, 77.5700",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Rajajinagar, Yeshwanthpur, Banaswadi, Begur Road, Varthur, Kalyan Nagar, Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-malleshwaram/shipping-container-malleshwaram.webp",
+      alt: "Navy-blue steel shipping container seen at an angle, its dark double cargo doors closed with four locking bars, on a paved forecourt, suitable for commercial storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a closed container; it was not photographed in Malleshwaram and does not show a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Malleshwaram",
+    tagline:
+      "Room for reclaimed roof tiles, teak beams, carved doors and grills, and for picture framers' mouldings, glass, mountboards and finished orders.",
+    intro: [
+      "Malleshwaram, also spelt Malleswaram, is one of Bengaluru's older planned neighbourhoods, known for its established residential streets, traditional homes and the commercial activity around Sampige Road and Margosa Road.",
+      "As older buildings are renovated or reconstructed, reusable architectural materials such as Mangalore roof tiles, teak beams, carved doors and decorative grills may need temporary or longer-term storage.",
+      "Picture framing businesses also handle mouldings, glass, mountboards and finished customer orders that need careful organisation and protection.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Malleshwaram for these commercial inventory and restoration-material requirements.",
+    },
+
+    areasHeading: "Areas Served Around Malleshwaram",
+    areasText:
+      "This page covers shipping and storage container enquiries from Malleshwaram and Malleshwaram West, Sampige Road and Margosa Road, Kodandarampura, Palace Guttahalli, Vyalikaval, Srirampura and Swimming Pool Extension. Many of these streets are old and closely built, so the approach, the gate and the standing spot are checked for each address before a delivery date is fixed.",
+    // Brief §5 and §6: Rajajinagar, Subramanyanagar and Gayathri Nagar belong to the Rajajinagar page;
+    // Yeshwanthpur and Goraguntepalya to the Yeshwanthpur page.
+    areasInlineLinks: [
+      {
+        before: "For Rajajinagar, Subramanyanagar and Gayathri Nagar, see our page on",
+        link: { label: "shipping containers in Rajajinagar", href: "/cities-we-serve/shipping-container-rajajinagar" },
+        after: ".",
+      },
+      {
+        before: "Yeshwanthpur and Goraguntepalya are covered on our page on",
+        link: { label: "shipping containers in Yeshwanthpur", href: "/cities-we-serve/shipping-container-yeshwanthpur" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Architectural Salvage & Heritage Restoration",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-malleshwaram/shipping-container-side-wall-malleshwaram.webp",
+          alt: "Long side of a navy-blue steel container: vertical corrugated panels, corner castings and two forklift pockets along the base, beside a warehouse",
+          width: 1624,
+          height: 969,
+          caption:
+            "Illustrative side view. Internal length, door opening and floor load limits are confirmed for the actual unit before long beams or heavy stone are planned in.",
+        },
+        paragraphs: [
+          "Architectural salvage businesses and restoration contractors may recover reusable materials from older buildings.",
+          "These materials often have irregular dimensions, significant weight or delicate finishes.",
+          "A suitable shipping container may provide additional storage where its structural capacity and environmental conditions meet the requirements of the items.",
+        ],
+        // Brief §5 and §6: antique furniture and brassware belong to the Banaswadi page; building components stay here.
+        inlineLinks: [
+          {
+            before: "Dealing in antique furniture or old brass and copper pieces rather than building components? See our page on",
+            link: { label: "antique and heritage furniture storage in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Reclaimed Mangalore roof tiles",
+            paragraphs: ["Recovered Mangalore roof tiles may require:"],
+            bullets: [
+              { text: "Suitable crates or pallets." },
+              { text: "Stable supports." },
+              { text: "Protection against impact." },
+              { text: "Separation by size and condition." },
+              { text: "Labelling by source building." },
+              { text: "Safe stacking limits." },
+            ],
+            closing: [
+              "Use a storage orientation and packing method suited to the tiles' condition and the supplier's handling recommendations. Do not assume every old tile can be safely stacked in the same way.",
+            ],
+          },
+          {
+            heading: "Reclaimed teak beams and rafters",
+            paragraphs: ["Recovered timber components may include:"],
+            bullets: [
+              { text: "Teak beams." },
+              { text: "Roof rafters." },
+              { text: "Wooden posts." },
+              { text: "Other reusable structural timber." },
+            ],
+            closing: [
+              "Organise pieces by length, cross-section, condition, source building and intended reuse, and use suitable bearers and supports to reduce bending and surface damage.",
+              "Very long beams may need a larger container, subject to its actual internal dimensions and a safe loading arrangement.",
+            ],
+          },
+          {
+            heading: "Carved wooden doors and windows",
+            paragraphs: [
+              "Heritage doors and windows may have delicate carvings, aged finishes or irregular dimensions. Suitable storage arrangements may include:",
+            ],
+            bullets: [
+              { text: "Protective padding." },
+              { text: "Stable supports." },
+              { text: "Separation between items." },
+              { text: "Corner protection." },
+              { text: "Appropriate environmental conditions." },
+              { text: "Individual identification labels." },
+            ],
+            closing: [
+              "Use the orientation recommended for the specific item and its condition. Do not assume upright storage is appropriate for every historic wooden component.",
+            ],
+            // Brief §6: reclaimed doors and windows stay here; new wooden door stock is the Begur Road page's and
+            // new uPVC, aluminium and glazed window stock is the Varthur page's.
+            inlineLinks: [
+              {
+                before: "Stocking new wooden doors rather than reclaimed ones? See our page on",
+                link: { label: "new wooden door inventory storage on Begur Road", href: "/cities-we-serve/shipping-container-begur-road" },
+                after: ".",
+              },
+              {
+                before: "Holding new uPVC or aluminium windows rather than reclaimed ones? See our notes on",
+                link: { label: "new window and glazed-unit storage in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Wrought-iron grills and railings",
+            paragraphs: ["Recovered metal components may include:"],
+            bullets: [
+              { text: "Window grills." },
+              { text: "Decorative railings." },
+              { text: "Iron gates." },
+              { text: "Balcony fittings." },
+              { text: "Other architectural metalwork." },
+            ],
+            closing: [
+              "Use suitable supports and restraints, and keep the pieces protected against water ingress and conditions that could speed up corrosion.",
+            ],
+          },
+          {
+            heading: "Reclaimed floor and wall tiles",
+            paragraphs: ["Recovered decorative tiles may be organised by:"],
+            bullets: [
+              { text: "Pattern." },
+              { text: "Colour." },
+              { text: "Size." },
+              { text: "Condition." },
+              { text: "Source room." },
+              { text: "Intended restoration project." },
+            ],
+            closing: ["Use appropriately supported crates and protective separators."],
+          },
+          {
+            heading: "Old pillars and stone components",
+            paragraphs: [
+              "Stone and other heavy architectural components can create substantial concentrated loads. Before storage, verify:",
+            ],
+            bullets: [
+              { text: "Total weight." },
+              { text: "Container floor-load limits." },
+              { text: "Support arrangements." },
+              { text: "Lifting methods." },
+              { text: "Load distribution." },
+              { text: "Safe handling access." },
+            ],
+            closing: ["Do not assume that a standard shipping container can safely hold any quantity of stone or heavy pillars."],
+          },
+          {
+            heading: "Photograph and inventory records",
+            paragraphs: ["Salvage businesses may keep records showing:"],
+            bullets: [
+              { text: "Source building." },
+              { text: "Original room or location." },
+              { text: "Item dimensions." },
+              { text: "Material type." },
+              { text: "Condition." },
+              { text: "Quantity." },
+              { text: "Photograph." },
+              { text: "Intended customer or restoration project." },
+            ],
+            closing: ["Records like these help preserve provenance information and reduce stock-identification errors."],
+          },
+          {
+            heading: "Termite and wood-borer precautions",
+            paragraphs: ["Recovered timber may contain active pests. Before placing materials into storage:"],
+            bullets: [
+              { text: "Inspect for signs of infestation." },
+              { text: "Separate affected items." },
+              { text: "Obtain qualified pest-control advice." },
+              { text: "Use appropriate approved treatment methods." },
+              { text: "Avoid introducing infested timber into clean stock." },
+            ],
+            closing: [
+              "Fumigation and pesticide treatment are for qualified pest-control operators working under the applicable rules; they should not be carried out inside an ordinary shipping container.",
+            ],
+          },
+          {
+            heading: "Moisture protection for old timber",
+            paragraphs: [
+              "A standard metal container can experience condensation and high internal temperatures. Depending on the condition and value of the timber, suitable measures may include:",
+            ],
+            bullets: [
+              { text: "Insulation." },
+              { text: "Ventilation." },
+              { text: "Humidity monitoring." },
+              { text: "Raised supports." },
+              { text: "Suitable packaging." },
+              { text: "Regular leak inspections." },
+              { text: "Environmental controls." },
+            ],
+            closing: [
+              "Ventilation alone does not guarantee suitable preservation conditions. Fine carved timber or historically significant materials may need specialist conservation storage.",
+            ],
+          },
+          {
+            heading: "Polishes, thinners and preservatives",
+            paragraphs: [
+              "Some timber treatments, polishes, thinners and preservatives may be flammable or hazardous. Store them according to their labels, safety data sheets and applicable regulations.",
+              "Do not use an ordinary storage-only container as an unapproved chemical store.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Picture Framing Shops",
+        placement: "afterIntro",
+        paragraphs: [
+          "Picture framing shops handle materials of different lengths, shapes and fragility.",
+          "A suitable shipping container may provide additional storage for compatible framing materials and completed orders where environmental conditions are appropriate.",
+        ],
+        // Brief §6: artists storing their own work and art-class supplies belong to the Kalyan Nagar page.
+        inlineLinks: [
+          {
+            before: "Storing your own paintings and class supplies rather than customers' framing orders? See our",
+            link: { label: "art and canvas storage containers in Kalyan Nagar", href: "/cities-we-serve/shipping-container-kalyan-nagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Frame moulding storage",
+            paragraphs: ["Frame mouldings may be organised by:"],
+            bullets: [
+              { text: "Profile." },
+              { text: "Material." },
+              { text: "Colour." },
+              { text: "Finish." },
+              { text: "Length." },
+              { text: "Supplier." },
+              { text: "Customer order." },
+            ],
+            closing: [
+              "Use suitably rated racks with adequate support, and protect decorative surfaces and corners against scratches and chipping.",
+            ],
+          },
+          {
+            heading: "Framing glass storage",
+            paragraphs: [
+              "Glass sheets need careful handling and appropriate support. Use purpose-designed, suitably rated glass racks or A-frames with appropriate restraints, and follow the glass supplier's instructions for:",
+            ],
+            bullets: [
+              { text: "Storage orientation." },
+              { text: "Rack angle." },
+              { text: "Edge protection." },
+              { text: "Sheet separation." },
+              { text: "Maximum load." },
+              { text: "Handling." },
+            ],
+            closing: ["Do not assume ordinary shelving is suitable for storing glass."],
+          },
+          {
+            heading: "Mountboard and backing board storage",
+            paragraphs: ["Mountboards and backing boards may need:"],
+            bullets: [
+              { text: "Flat, level supports." },
+              { text: "Protection against moisture." },
+              { text: "Clean packaging." },
+              { text: "Separation by size and colour." },
+              { text: "Appropriate temperature and humidity." },
+            ],
+            closing: ["Follow the manufacturer's recommendations to reduce bending, staining and surface damage."],
+          },
+          {
+            heading: "Finished framing orders",
+            paragraphs: ["Completed framing orders may be organised by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Order number." },
+              { text: "Frame dimensions." },
+              { text: "Completion date." },
+              { text: "Collection date." },
+              { text: "Fragility." },
+            ],
+            closing: [
+              "Use suitable protective wrapping and stable supports, and keep finished orders apart from heavy or sharp stock.",
+            ],
+          },
+          {
+            heading: "Customer photographs and artwork",
+            paragraphs: ["Customer-owned photographs and artworks may be sensitive to:"],
+            bullets: [
+              { text: "Heat." },
+              { text: "Humidity." },
+              { text: "Light." },
+              { text: "Condensation." },
+              { text: "Handling damage." },
+              { text: "Contamination." },
+            ],
+            closing: [
+              "Valuable, historic or irreplaceable items may need conservation-grade storage rather than an ordinary shipping container, which does not give archival-quality protection without verified environmental controls.",
+            ],
+          },
+          {
+            heading: "Framing hardware storage",
+            paragraphs: ["Labelled drawers or bins may hold:"],
+            bullets: [
+              { text: "Hanging hooks." },
+              { text: "Frame wire." },
+              { text: "Mounting fittings." },
+              { text: "Fasteners." },
+              { text: "Clips." },
+              { text: "Other compatible framing accessories." },
+            ],
+            closing: ["Keep products organised by specification and size."],
+          },
+          {
+            heading: "Customer order tracking",
+            paragraphs: ["Framing shops may keep a register covering:"],
+            bullets: [
+              { text: "Customer name or order ID." },
+              { text: "Frame specification." },
+              { text: "Artwork description." },
+              { text: "Completion status." },
+              { text: "Storage location." },
+              { text: "Collection date." },
+            ],
+            closing: ["Protect customer information according to the privacy requirements that apply."],
+          },
+          {
+            heading: "Moisture and temperature control",
+            paragraphs: [
+              "Paper, photographs, mountboards and certain frame finishes can be damaged by unsuitable environmental conditions. Depending on the products, suitable storage may require:",
+            ],
+            bullets: [
+              { text: "Insulation." },
+              { text: "Humidity monitoring." },
+              { text: "Temperature control." },
+              { text: "Protective packaging." },
+              { text: "Raised shelves." },
+              { text: "Regular leak inspections." },
+            ],
+            closing: ["Do not assume that vents or desiccant alone provide adequate protection for valuable artwork."],
+            // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers the fit-out.
+            inlineLinks: [
+              {
+                before: "If your stock comes with a stated temperature or humidity range, read how we specify and quote",
+                link: { label: "insulated, air-conditioned container fit-outs", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " before choosing a unit.",
+              },
+            ],
+          },
+          {
+            heading: "Adhesives and solvents",
+            paragraphs: [
+              "Some framing adhesives and solvents may be hazardous or flammable. Store them according to their safety data sheets and the requirements that apply to them.",
+            ],
+          },
+          {
+            heading: "Glass cutting and frame cutting",
+            paragraphs: [
+              "An ordinary storage-only container is not a glass-cutting, moulding-cutting or finishing workshop. Use appropriately approved workspaces for these activities.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-malleshwaram/malleshwaram-storage-container-interior.webp",
+          alt: "Inside an empty steel container: grey corrugated side walls and ceiling run towards a closed pair of doors, over a plain brown plywood floor",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of a bare interior. Tile-crate bays, timber bearers, glass racks, mountboard shelves and lighting are added only if your written quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Crate bays for reclaimed roof tiles." },
+          { text: "Bearers for timber beams." },
+          { text: "Padded supports for carved doors." },
+          { text: "Stable racks for decorative grills." },
+          { text: "Low-level supports for heavy stone components." },
+          { text: "Frame moulding racks." },
+          { text: "Purpose-designed glass racks." },
+          { text: "Flat shelves for mountboards." },
+          { text: "Protected finished-order bays." },
+          { text: "Labelled hardware drawers." },
+          { text: "Lockable storage sections." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: [
+          "The final layout must reflect the actual stock dimensions, weight, fragility and environmental requirements. Keep incompatible materials apart, and never overload the container floor.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Malleshwaram",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-malleshwaram/shipping-container-roof-view-malleshwaram.webp",
+          alt: "Navy-blue container seen from directly above: ribbed roof panels, four corner castings and the door hinges along one end, on a concrete slab",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative overhead view. Plan for more than the footprint: the lift needs clear space, and both doors must be able to swing fully open.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including commercial yards, approved storage plots and project sites with the necessary permission.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Some older streets and connecting lanes in Malleshwaram have access constraints, and no lane is taken as passable until a route survey has been carried out. A 10 ft or 20 ft container may be considered where space is limited, subject to availability and site access.",
+          "A delivery hour, or unloading from a main road, can be agreed only once a safe and permitted method has been confirmed.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Narrow lane, old gateway or tight corner plot? Our",
+            link: { label: "restricted-site container delivery checks", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " explain what is measured before a date is set.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Volumes are approximate. Internal dimensions, door openings, load limits and availability are checked on the specific unit offered to you, and an approximate volume does not establish the allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Compact framing materials or a small quantity of reclaimed doors and tiles"],
+            ["20 ft", "33 m³", "Salvage dealer inventory or framing shop stock"],
+            ["40 ft", "67 m³", "Longer timber components or larger inventories where site access permits"],
+          ],
+        },
+        closing: ["Measure your longest beam and your largest glass sheet, and estimate the total weight, before choosing a size."],
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Work through our",
+            link: { label: "inspection checklist for a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you commit.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Malleshwaram",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Timber bearers and supports." },
+          { text: "Tile crates and pallet provisions." },
+          { text: "Glass storage racks." },
+          { text: "Frame moulding racks." },
+          { text: "Mountboard shelving." },
+          { text: "Protective storage sections." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental-control requirements." },
+          { text: "Locking and security features." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Ask for an itemised quotation that reflects the actual storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Malleshwaram",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful while a heritage building is renovated, or when a framing shop's inventory grows for a while. Containers can be hired for anything from one month up to five years; the quotation names the unit and the hire period, and lists the transport charges, any deposit and how delivery and collection will work.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and hire terms are listed under",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain whether the container is for salvage materials or framing-shop inventory." },
+          { text: "Identify the items, dimensions and quantities." },
+          { text: "Provide the estimated total stock weight." },
+          { text: "Identify fragile, valuable or moisture-sensitive materials." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, bearers, crates and protective storage sections." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For salvage dealers, restoration contractors and picture framers in Malleshwaram, that includes:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "20 ft and 40 ft units, and 10 ft where one is available, offered from current stock." },
+          { title: "Storage-oriented modifications", text: "bearers, crate bays or glass racks, each itemised before any work starts." },
+          { title: "Shelving and racking provisions", text: "planned around tile crates and long timber, or around mouldings, glass and mountboards." },
+          { title: "Locking arrangements", text: "lockable cargo doors; the locking hardware on your unit is listed in its quotation." },
+          { title: "Ventilation and insulation options", text: "priced for the materials you describe, with no promise of preservation or archival conditions." },
+          { title: "Quotation and delivery coordination", text: "an itemised quotation first; the route and the standing spot are reviewed before any delivery date is fixed." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can reclaimed Mangalore roof tiles be stored in a shipping container?",
+        answer: "Potentially, using suitable crates, supports and stacking methods appropriate to the tiles' condition.",
+      },
+      {
+        question: "How should old teak beams be stored?",
+        answer: "Use stable bearers and supports, protect the timber against moisture and inspect it for signs of pests before storage.",
+      },
+      {
+        question: "Can carved wooden doors be stored with other reclaimed materials?",
+        answer: "Potentially, with suitable separation, padding, stable supports and appropriate environmental conditions.",
+      },
+      {
+        question: "Can wrought-iron grills and railings be stored inside a container?",
+        answer: "Yes, where they are securely supported and protected against water ingress and handling damage.",
+      },
+      {
+        question: "Can heavy stone pillars be stored inside a shipping container?",
+        answer: "Only where the container's structural capacity, the load distribution and the handling arrangements have been verified.",
+      },
+      {
+        question: "How should picture framing glass be stored?",
+        answer: "Use appropriately rated glass racks or A-frames and follow the glass supplier's handling and storage instructions.",
+      },
+      {
+        question: "Can mountboards and backing boards be stored in a container?",
+        answer: "Potentially, where they are kept clean, dry and supported under suitable environmental conditions.",
+      },
+      {
+        question: "Can finished picture frames be stored inside the container?",
+        answer: "Yes, where they are suitably wrapped, supported and protected against damage.",
+      },
+      {
+        question: "Can valuable customer photographs or historic artworks be stored in a shipping container?",
+        answer:
+          "They may need specialist conservation storage. Do not assume an ordinary shipping container provides suitable conditions.",
+      },
+      {
+        question: "Can glass cutting and framing work be done inside the container?",
+        answer: "An ordinary storage-only container is not a substitute for a properly designed workshop.",
+      },
+      {
+        question: "Can a shipping container be delivered through narrow Malleshwaram streets?",
+        answer:
+          "Delivery depends on the actual road width, turning space, vehicle access and unloading arrangements. A route survey is necessary.",
+      },
+      {
+        question: "What is the shipping container price in Malleshwaram?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Malleshwaram",
+    ctaText: `Whether you need storage for reclaimed architectural materials, heritage restoration stock or picture framing inventory, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Ring ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Malleshwaram, Sampige Road, Margosa Road, Vyalikaval, Palace Guttahalli and the other localities listed above, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Malleshwaram",
+      intro:
+        "Pick the container type and how many you need, then add the Malleshwaram site address or a map pin and whether you want to buy or rent. Mention if the stock is reclaimed building material or framing inventory, the longest and heaviest pieces (beams, stone, glass sheets) and an approximate total weight, so the quotation can match the unit and its fittings to the load.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Every container is supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. Our Bengaluru office is in Electronic City; we have no yard, depot, sales office or branch in Malleshwaram or the localities listed above. The written quotation for your unit is what defines it: inside and door-opening measurements, grade, condition and floor load limits; any bays, bearers, racks, shelving, drawers, lighting, ventilation, insulation, environmental controls or locks; the hire terms where it is rented; and how it will be delivered, unloaded and collected. Stock changes, so no delivery date or time is promised before it is confirmed with your quotation. Unless an approved specification says so, no unit is offered as moisture-proof, climate-controlled or conservation-grade, no temperature or humidity level is promised, and a container is not supplied for fumigation, for keeping solvents, thinners, adhesives or other hazardous products, or for use as a workshop. The four images are illustrative renders of one container, not photographs taken in Malleshwaram; none of them shows a delivered or fitted unit, reclaimed materials or framing stock. Volumes are approximate and are not a payload rating. Salvage dealers, restoration contractors and picture framing shops are named to show possible uses, not as customers or completed projects, and the localities listed mark where enquiries are accepted, not confirmed delivery addresses. Guidance on reclaimed materials, pests, timber, glass, framing stock, chemicals, placement and permissions is general information, not conservation, safety, legal or engineering advice; follow the instructions of the manufacturers, suppliers and specialists concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
