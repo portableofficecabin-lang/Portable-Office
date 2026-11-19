@@ -41892,32 +41892,30 @@ export const CITY_PAGES: CityPage[] = [
    *   Cabin?" → a default extra section (after the areas, as in the brief). FAQs: the brief's thirteen.
    *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
    *
-   * LINKS (brief §5, only where the destination exists and supports the anchor): intro → the cargo
-   * category ("Existing shipping container product page"); salvage section → "antique and heritage furniture
-   * storage in Banaswadi" (antique dealers' and heritage furniture restorers' stock and brassware are that
-   * page's intent; building components recovered from old structures stay here); "Carved wooden doors and
-   * windows" H3 → "new window and glazed-unit storage in Varthur" (that page's uPVC, aluminium and glass
-   * window installers' section; reclaimed windows stay here); picture framing section → "art and canvas
-   * storage containers in
-   * Kalyan Nagar" (artists storing their own work and art-class supplies are that page's intent; framing
-   * shops' stock stays here); framing "Moisture and temperature control" H3 → "insulated, air-conditioned
-   * container fit-outs" (the Vellore page's "Insulated and air-conditioned storage enquiries" section, which
-   * explains how such a fit-out is specified and quoted for a stated range); placement → "restricted-site
-   * container delivery checks" (Bellandur's "Planning delivery through a society gate or narrow lane");
-   * sizes → "inspection checklist for a used shipping container": the brief's /shipping-container-chennai
-   * is not a route (the Chennai product page gives inspection one sentence), so it points to the Athipattu
-   * page's "Used Container Inspection" checklist, as the sibling pages do; rental →
-   * /products/shipping-container-rental; areas → "shipping containers in Rajajinagar" (the brief:
-   * Rajajinagar, Subramanyanagar and Gayathri Nagar go to that page) and "shipping containers in
-   * Yeshwanthpur" (Yeshwanthpur and Goraguntepalya). Not linked: Begur Road has no live page on this base;
-   * its draft (PR #293) adds a wooden door and door hardware dealers' section, so the brief's "new wooden
-   * door inventory" link can be added once that page is live. Anchors differ from the siblings' anchors
-   * for the same targets. Inbound: the Rajajinagar page's
-   * areas section ("architectural salvage storage containers in Malleshwaram") and the Yeshwanthpur page's
-   * areas section ("picture framing material storage in Malleshwaram"), one `areasInlineLinks` item each,
-   * their own targeting unchanged; the Karnataka shipping hub ("Shipping Containers in Malleshwaram"); the
-   * cargo category's location links ("Storage containers in Malleshwaram"); and every Karnataka shipping
-   * page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   * LINKS (brief §5, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container product page"); salvage section → "antique and heritage furniture storage
+   * in Banaswadi" (antique dealers' and heritage furniture restorers' stock and brassware are that page's
+   * intent; building components recovered from old structures stay here); "Carved wooden doors and windows"
+   * H3 → "new wooden door inventory storage on Begur Road" (that page's wooden door and door hardware
+   * dealers' section; reclaimed heritage doors stay here) and "new window and glazed-unit storage in
+   * Varthur" (that page's uPVC, aluminium and glass window installers' section; reclaimed windows stay
+   * here); picture framing section → "art and canvas storage containers in Kalyan Nagar" (artists storing
+   * their own work and art-class supplies are that page's intent; framing shops' stock stays here); framing
+   * "Moisture and temperature control" H3 → "insulated, air-conditioned container fit-outs" (the Vellore
+   * page's "Insulated and air-conditioned storage enquiries" section, which explains how such a fit-out is
+   * specified and quoted for a stated range); placement → "restricted-site container delivery checks"
+   * (Bellandur's "Planning delivery through a society gate or narrow lane"); sizes → "inspection checklist
+   * for a used shipping container": the brief's /shipping-container-chennai is not a route (the Chennai
+   * product page gives inspection one sentence), so it points to the Athipattu page's "Used Container
+   * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
+   * "shipping containers in Rajajinagar" (the brief: Rajajinagar, Subramanyanagar and Gayathri Nagar go to
+   * that page) and "shipping containers in Yeshwanthpur" (Yeshwanthpur and Goraguntepalya). Anchors differ
+   * from the siblings' anchors for the same targets. Inbound: the Rajajinagar page's areas section
+   * ("architectural salvage storage containers in Malleshwaram") and the Yeshwanthpur page's areas section
+   * ("picture framing material storage in Malleshwaram"), one `areasInlineLinks` item each, their own
+   * targeting unchanged; the Karnataka shipping hub ("Shipping Containers in Malleshwaram"); the cargo
+   * category's location links ("Storage containers in Malleshwaram"); and every Karnataka shipping page's
+   * nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Malleshwaram (Malleswaram), Malleshwaram
    * West, Sampige Road, Margosa Road, Kodandarampura, Palace Guttahalli, Vyalikaval, Srirampura and
@@ -41926,7 +41924,7 @@ export const CITY_PAGES: CityPage[] = [
    * page; named here only in the link to it); Yeshwanthpur and Goraguntepalya (Yeshwanthpur page; same);
    * Mathikere, Sadashivanagar and Seshadripuram (kept for possible future pages; not named). Kept apart from
    * Gombe Habba dolls (Banashankari), antique furniture and brassware (Banaswadi; named here only in the
-   * link to it), new wooden doors (Begur Road brief), new windows, uPVC, aluminium and glass (Varthur),
+   * link to it), new wooden doors (Begur Road; same), new windows, uPVC, aluminium and glass (Varthur),
    * owner-builders' new tiles and sanitaryware (HSR Layout), artists' own work and art-class supplies
    * (Kalyan Nagar), trophies and plaques (Kasturi Nagar), gallery cabins (Indiranagar portable shop page)
    * and climate-controlled units as such (Vellore). "Bengaluru" stays out of the title, as the brief asks;
@@ -41966,7 +41964,7 @@ export const CITY_PAGES: CityPage[] = [
     serviceJsonLd: { serviceType: "Shipping Container" },
     // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Rajajinagar, Yeshwanthpur, Banaswadi, Varthur, Kalyan Nagar, Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    // Rajajinagar, Yeshwanthpur, Banaswadi, Begur Road, Varthur, Kalyan Nagar, Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -42080,8 +42078,14 @@ export const CITY_PAGES: CityPage[] = [
             closing: [
               "Use the orientation recommended for the specific item and its condition. Do not assume upright storage is appropriate for every historic wooden component.",
             ],
-            // Brief §6: reclaimed windows stay here; new uPVC, aluminium and glazed window stock is the Varthur page's.
+            // Brief §6: reclaimed doors and windows stay here; new wooden door stock is the Begur Road page's and
+            // new uPVC, aluminium and glazed window stock is the Varthur page's.
             inlineLinks: [
+              {
+                before: "Stocking new wooden doors rather than reclaimed ones? See our page on",
+                link: { label: "new wooden door inventory storage on Begur Road", href: "/cities-we-serve/shipping-container-begur-road" },
+                after: ".",
+              },
               {
                 before: "Holding new uPVC or aluminium windows rather than reclaimed ones? See our notes on",
                 link: { label: "new window and glazed-unit storage in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
