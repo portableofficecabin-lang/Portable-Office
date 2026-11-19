@@ -725,6 +725,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Banaswadi (antique dealers' and restorers' heritage furniture, brassware and collectibles; beverage
     // distributors' crates, bottles and spare coolers; owner brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+    // Kasavanahalli (flooring and wallpaper installers' stock; running and cycling event organisers'
+    // arches, barricades and race-day kit; owner brief 2026-11-19), appended so the live links keep their positions.
+    { name: "Shipping Containers in Kasavanahalli", href: "/cities-we-serve/shipping-container-kasavanahalli" },
   ],
 };
 

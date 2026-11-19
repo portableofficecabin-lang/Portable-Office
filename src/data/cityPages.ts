@@ -17449,8 +17449,17 @@ export const CITY_PAGES: CityPage[] = [
     customLinks: [{ label: "Shipping container rental", href: "/products/shipping-container-rental" }],
 
     areasHeading: "Areas we serve",
+    // Kasavanahalli brief (2026-11-19, §6): Kasavanahalli and Haralur Road left this list (owner's wording);
+    // Kasavanahalli has its own page, linked below. The brief also names a Harlur page, which does not
+    // exist yet, so only Kasavanahalli is linked. The nearby block skips this link (areasInlineLink hrefs
+    // are always skipped).
     areasText:
-      "We welcome shipping and storage container enquiries from Bellandur and the Bellandur Post (560103) area, including Green Glen Layout, Bellandur Gate, Ambalipura, Kasavanahalli, Haralur Road, Iblur, Kaikondrahalli and the nearby Sarjapur Road stretch. Delivery is assessed for each site.",
+      "We supply shipping and storage containers across Bellandur and the Bellandur Post (560103) area, including Green Glen Layout, Bellandur Gate and Ambalipura, and around Iblur, Kaikondrahalli and the Sarjapur Road stretch near Bellandur.",
+    areasInlineLink: {
+      before: "For neighbouring areas, see our",
+      link: { label: "Kasavanahalli container page", href: "/cities-we-serve/shipping-container-kasavanahalli" },
+      after: ".",
+    },
     // Marathahalli ORR cross-link (agreed with #226; added here as the second to go live): commercial storage on the ORR is that page's intent.
     // Panathur (owner brief 2026-11-17, §5B): stores for tanker operators and contractors who service many
     // buildings are that page's intent; this page keeps homes and single societies.
@@ -17555,6 +17564,712 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds its cabins at a factory near Hosur, Tamil Nadu, with a Bengaluru office at Electronic City Phase 1; there is no container yard, depot or office in Bellandur. Each container is offered subject to stock, and its size, condition, grade, fittings, any certification, any rental terms and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render, not a photograph of a container delivered to or placed in Bellandur. The 20 ft footprint quoted is approximate; the dimensions and ratings that apply are those of the specific unit. Bellandur Post (560103) and the localities and roads listed are named only to describe the area served, and the storage uses described are examples rather than clients, past projects or confirmed delivery areas. Guidance on packing, condensation, site access, placement and permissions is general information, not engineering or legal advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN KASAVANAHALLI — stock stores for flooring and wallpaper installers
+   * (laminate, engineered wood, vinyl and SPC boxes, underlay, skirting and profiles, wallpaper rolls by
+   * batch, job-wise staging, leftovers) and equipment stores for running and cycling event organisers
+   * (inflatable arches and blowers, crowd barricades, cones and route markers, hydration-station kit,
+   * banners, timing equipment, race kits) in south-east Bengaluru.
+   *
+   * Owner brief of 2026-11-19 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Kasavanahalli, Bengaluru"): meta title, meta description, H1, keywords, local modifiers, section order,
+   * H2 / H3 headings, sizes table and the thirteen FAQs are the brief's, and so is the copy, lightly edited
+   * for flow and British spelling. The brief's notes to the implementer ("Where relevant, link to…", "Do
+   * not present…", "Do not guarantee…", "Do not invent…", "Conditional section…", "Highlight only verified
+   * capabilities…", "Do not target…", "Use verified company phone numbers…") are instructions, not page
+   * copy: where one carries a fact for the reader it is reworded as a plain statement ("An ordinary
+   * shipping container is not an approved chemical-storage facility", "The delivery time and the unloading
+   * method are confirmed only after a route and site assessment"); otherwise it is left out. Where an H3
+   * has two lists (laminate and wooden flooring), the second becomes a sentence, because a subsection
+   * holds one list. The route follows the site convention (/cities-we-serve/…), not the brief's root slug.
+   * The tagline, captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists 10, 20, 40 ft and 40 ft High Cube units on terms from one month to five years; no deposit, price
+   * or delivery charge is stated here); the 10 ft row keeps the brief's "if available"; racks, pallet bays,
+   * shelving, supports, restraints, lighting, ventilation, insulation and environmental controls are price
+   * factors "where your quotation includes them", never stock items or guaranteed conditions. The optional
+   * Kannada search terms are not used: the page is in English. No Product JSON-LD: city pages carry no
+   * prices (file rule) and a Product block without offers earns no rich result, so the Service JSON-LD (no
+   * offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Flooring & wallpaper installers, running & cycling event organisers and "Storage Container Layout
+   *     Options" → three afterIntro extra sections, their H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered) → afterSolutions
+   *     extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Kasavanahalli" → areas + one areasInlineLink. "Why Choose Portable Office
+   *   Cabin?" → a default extra section (after the areas, as in the brief). FAQs: the brief's thirteen.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5, each target checked): intro → the cargo category ("Existing shipping container product
+   * page"); flooring section → "shipping containers in HSR Layout" (owner-builders' tiles and sanitaryware
+   * are that page's intent); "Job-wise installation staging" → "shipping containers in Mahadevapura" (its
+   * "Staging Stores for Interior Contractors": modular kitchens and wardrobes); "Moisture and condensation
+   * protection" → "temperature-controlled container options" (the Vellore page's "Insulated and
+   * air-conditioned storage enquiries" section); placement → "delivery through a society gate or narrow
+   * lane" (the Bellandur page's section of that name); sizes → "used shipping container inspection": the
+   * brief's /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used
+   * Container Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental;
+   * areas → "shipping containers in Bellandur" (the brief: Bellandur, Ambalipura, Iblur and Kaikondrahalli
+   * go to that page). The brief's /shipping-container-harlur does not exist (no page, branch or PR), so
+   * Harlur, Haralur Road and Hadosiddapura are neither linked nor named here. Inbound: the Bellandur
+   * page's areas section (the brief's §6 correction: one areasInlineLink, "Kasavanahalli container page"),
+   * the Karnataka shipping hub ("Shipping Containers in Kasavanahalli"), the cargo category's location
+   * links ("Storage containers in Kasavanahalli") and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kasavanahalli, Kasavanahalli Main Road, KPC
+   * Layout and Junnasandra, for flooring and wallpaper installers' stock and for running and cycling event
+   * organisers' equipment. Not targeted: Bellandur, Green Glen Layout, Ambalipura, Iblur and Kaikondrahalli
+   * (Bellandur page; the last four named here only in the link to it); Harlur, Haralur Road and
+   * Hadosiddapura (kept for a Harlur page); Sarjapur Road, Doddakannelli and Carmelaram (kept for a possible
+   * Sarjapur Road page; Sarjapur Road appears once, in the brief's intro sentence, as context); HSR Layout.
+   * Kept apart from owner-builders' tiles and sanitaryware (HSR Layout), interior contractors' kitchens and
+   * wardrobes (Mahadevapura), wooden doors (Begur Road), windows and glass (Varthur), painting contractors
+   * (Panathur), trophy and medal sellers (Kasturi Nagar), signage makers (Ramamurthy Nagar), tent houses
+   * (Horamavu), festival equipment (BTM Layout), church fête and music-school kit (Hennur Road), sports turf
+   * and gyms (Marathahalli ORR), bicycle stock (Koramangala) and climate-controlled containers as such
+   * (Vellore). "Bengaluru" stays out of the title, as the brief asks; the geo meta and the Service JSON-LD's
+   * areaServed carry "Kasavanahalli, Bengaluru, Karnataka".
+   *
+   * Images: five owner-supplied WebP images ("public/images/Storage Containers in Kasavanahalli city
+   * page/Storage Containers in Kasavanahalli/cabin (1–5).webp", lossy VP8, no EXIF / XMP / ICC) of one
+   * charcoal-grey container, kept byte-identical (VP8 bitstream untouched) with an XMP dc:title /
+   * dc:description added that labels each one illustrative (no creator, GPS or date). (1) three-quarter
+   * exterior = hero / og:image (the brief's hero filename); (3) full side wall = flooring section, beside
+   * the skirting-length check; (2) cargo doors with a lockbox = events section; (5) empty interior =
+   * layout section (the brief's interior filename, but not its "with shelves and racks" alt: none is
+   * fitted); (4) roof from above = placement section. No image shows flooring, wallpaper, underlay,
+   * arches, barricades, cones or timing equipment, so the brief's eight use-case image slots are not used,
+   * and no alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-kasavanahalli",
+    city: "Kasavanahalli",
+    listTitle: "Shipping & Storage Containers in Kasavanahalli",
+    metaTitle: "Shipping Container in Kasavanahalli | Equipment Storage",
+    metaDescription:
+      "Shipping and storage containers in Kasavanahalli for flooring and wallpaper installers, plus running and cycling event equipment, arches and barricades.",
+    keywords:
+      "shipping container in Kasavanahalli, cargo container Kasavanahalli, storage container Kasavanahalli, storage container Kasavanahalli Main Road, storage container KPC Layout, storage container Junnasandra, used shipping container Kasavanahalli, shipping container price in Kasavanahalli, storage container for rent in Kasavanahalli, flooring installer storage container, laminate flooring storage, wooden flooring storage, vinyl and SPC flooring storage, wallpaper roll storage, skirting and underlay storage, running event equipment storage, marathon organiser storage container, cyclothon equipment storage, race-day kit storage, inflatable arch storage, event barricade storage",
+    // Approximate point in Kasavanahalli, south-east Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Kasavanahalli, Bengaluru, Karnataka, India",
+      position: "12.9070;77.6800",
+      icbm: "12.9070, 77.6800",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // HSR Layout, Mahadevapura, Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-kasavanahalli/shipping-container-kasavanahalli.webp",
+      alt: "Charcoal-grey steel shipping container with closed double cargo doors, seen at an angle on a paved yard with planters, suitable for commercial inventory and equipment storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative image: not photographed in Kasavanahalli, and not a unit delivered to a customer.",
+    },
+
+    h1: "Shipping & Storage Containers in Kasavanahalli",
+    tagline:
+      "Organised storage for flooring and wallpaper installers' stock, and for running and cycling event organisers' arches, barricades and race-day kit.",
+    intro: [
+      "Kasavanahalli is a growing residential area in south-east Bengaluru, with apartment complexes, independent homes and commercial activity near the Sarjapur Road corridor.",
+      "Flooring and wallpaper installation businesses may require additional space for planks, underlay, trims and wallpaper rolls while working on multiple residential projects.",
+      "Running and cycling event organisers may also need storage for inflatable arches, barricades, route markers and other event equipment between events.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Kasavanahalli for these commercial inventory and equipment requirements.",
+    },
+
+    areasHeading: "Areas Served Around Kasavanahalli",
+    areasText:
+      "We take shipping and storage container enquiries from Kasavanahalli, including premises on Kasavanahalli Main Road, in KPC Layout and in Junnasandra. Each site's access is checked before a delivery date is agreed.",
+    // Brief §6 / §7: Bellandur, Ambalipura, Iblur and Kaikondrahalli belong to the Bellandur page.
+    areasInlineLinks: [
+      {
+        before: "For Bellandur, Ambalipura, Iblur and Kaikondrahalli, go to our page about",
+        link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Flooring & Wallpaper Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kasavanahalli/shipping-container-side-wall-kasavanahalli.webp",
+          alt: "Full length of a charcoal-grey shipping container's corrugated side wall, with corner castings and two forklift pockets, on a paved yard",
+          width: 2131,
+          height: 738,
+          caption: "Illustrative side view. Before choosing a size, check that your longest skirting boards and profiles fit inside the actual unit.",
+        },
+        paragraphs: [
+          "Flooring and wallpaper installers handle products that may be sensitive to moisture, temperature changes, packaging damage and incorrect handling.",
+          "A suitable shipping container may provide additional storage where the internal environment and storage arrangements meet the products' requirements.",
+        ],
+        // Brief §5 / §7: owner-builders' tiles and sanitaryware are the HSR Layout page's intent.
+        inlineLinks: [
+          {
+            before: "Building your own home and storing tiles and sanitaryware rather than installation stock? See our page on",
+            link: { label: "shipping containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Laminate and wooden flooring storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Laminate flooring planks." },
+              { text: "Engineered wood flooring." },
+              { text: "Wooden flooring boards." },
+              { text: "Flooring accessories." },
+              { text: "Packaged replacement stock." },
+            ],
+            closing: [
+              "Follow the flooring manufacturer's instructions for storage orientation, temperature, humidity, packaging, stacking height and acclimatisation before installation.",
+              "Do not assume all flooring products can be stored safely in the same conditions.",
+            ],
+          },
+          {
+            heading: "Vinyl and SPC flooring storage",
+            paragraphs: [
+              "Vinyl and stone-plastic composite (SPC) flooring products may require specific storage temperatures, stacking methods and support arrangements.",
+              "Use manufacturer-approved storage methods, and avoid excessive heat or direct sunlight where the manufacturer prohibits it.",
+            ],
+          },
+          {
+            heading: "Flooring box organisation",
+            paragraphs: ["Stock may be organised by:"],
+            bullets: [
+              { text: "Product type." },
+              { text: "Brand." },
+              { text: "Colour." },
+              { text: "Finish." },
+              { text: "Batch number." },
+              { text: "Project." },
+              { text: "Flat or villa number." },
+              { text: "Installation date." },
+            ],
+            closing: ["Keep cartons clearly labelled and accessible."],
+          },
+          {
+            heading: "Underlay roll storage",
+            paragraphs: [
+              "Underlay rolls may be stored using suitable supports or racks. Follow the manufacturer's requirements for orientation, stacking, compression and environmental conditions.",
+            ],
+          },
+          {
+            heading: "Skirting, profiles and trims",
+            paragraphs: ["Long components may include:"],
+            bullets: [
+              { text: "Skirting boards." },
+              { text: "Transition profiles." },
+              { text: "Edge trims." },
+              { text: "Finishing strips." },
+              { text: "Other flooring accessories." },
+            ],
+            closing: [
+              "Use suitably rated racks with adequate support along the product length, and protect finished surfaces against scratches and bending.",
+            ],
+          },
+          {
+            heading: "Wallpaper roll storage",
+            paragraphs: ["Wallpaper rolls may be organised by:"],
+            bullets: [
+              { text: "Design." },
+              { text: "Colour." },
+              { text: "Supplier." },
+              { text: "Batch or dye-lot number." },
+              { text: "Customer project." },
+              { text: "Room." },
+              { text: "Quantity." },
+            ],
+            closing: [
+              "Rolls from different production batches may have visible shade differences. Where required, use matching batches for the same room or wall.",
+            ],
+          },
+          {
+            heading: "Job-wise installation staging",
+            paragraphs: ["Installers may prepare stock for:"],
+            bullets: [
+              { text: "Individual flats." },
+              { text: "Villas." },
+              { text: "Apartment towers." },
+              { text: "Residential projects." },
+              { text: "Scheduled installation dates." },
+            ],
+            closing: ["A checklist can help ensure that flooring, trims, underlay and wallpaper are dispatched together."],
+            // Brief §5 / §7: general interior-contractor staging (modular kitchens, wardrobes) is the Mahadevapura page's intent.
+            inlineLinks: [
+              {
+                before: "Fitting out whole flats with modular kitchens and wardrobes? Staging stores for that kind of interior work are described on our page about",
+                link: { label: "shipping containers in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Leftover materials and future repairs",
+            paragraphs: ["Suitable storage sections may hold:"],
+            bullets: [
+              { text: "Unused flooring boxes." },
+              { text: "Replacement planks." },
+              { text: "Spare skirting." },
+              { text: "Leftover wallpaper rolls." },
+              { text: "Compatible accessories." },
+            ],
+            closing: ["Label stock by project, batch and quantity."],
+          },
+          {
+            heading: "Moisture and condensation protection",
+            paragraphs: [
+              "Ordinary metal containers can experience condensation and high internal temperatures. Depending on the materials, suitable storage may require:",
+            ],
+            bullets: [
+              { text: "Insulation." },
+              { text: "Ventilation." },
+              { text: "Humidity monitoring." },
+              { text: "Appropriate pallets." },
+              { text: "Raised supports." },
+              { text: "Leak inspections." },
+              { text: "Environmental controls." },
+              { text: "Suitable protective packaging." },
+            ],
+            closing: [
+              "Ventilation alone does not guarantee suitable conditions for moisture-sensitive flooring or wallpaper. Premium wooden flooring may require climate-controlled storage.",
+            ],
+            // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers the fit-out.
+            inlineLinks: [
+              {
+                before: "For premium wooden flooring, our",
+                link: { label: "temperature-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " page explains how an insulated, air-conditioned fit-out is specified against a stated temperature range.",
+              },
+            ],
+          },
+          {
+            heading: "Flooring acclimatisation",
+            paragraphs: [
+              "Many flooring products require acclimatisation at the installation site. Follow the manufacturer's instructions for the actual product and room conditions, and do not assume every flooring material requires the same acclimatisation period.",
+            ],
+          },
+          {
+            heading: "Adhesives, finishes and solvents",
+            paragraphs: [
+              "Some flooring adhesives, finishes and solvents may be flammable or hazardous. Store them according to their safety data sheets, the manufacturer's instructions and applicable regulations.",
+              "An ordinary shipping container is not an approved chemical-storage facility.",
+            ],
+          },
+          {
+            heading: "Cutting and sanding",
+            paragraphs: [
+              "An ordinary storage-only container is not an appropriate substitute for a properly designed cutting, sanding or finishing workspace. Carry out installation work in suitable approved conditions.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Running & Cycling Event Organisers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kasavanahalli/shipping-container-cargo-doors-kasavanahalli.webp",
+          alt: "Charcoal-grey container doors seen head-on: two leaves with four locking bars, handles, hinges and a central lockbox",
+          width: 1312,
+          height: 1199,
+          caption: "Illustrative view of the door end. Measure the actual unit's door opening against your packed arches and barricade stacks.",
+        },
+        paragraphs: [
+          "Running and cycling event organisers handle equipment that must be transported, installed, dismantled and stored between events.",
+          "A suitable shipping container may provide organised storage for compatible event equipment and accessories.",
+        ],
+        subsections: [
+          {
+            heading: "Inflatable start and finish arches",
+            paragraphs: ["Event equipment may include:"],
+            bullets: [
+              { text: "Inflatable start arches." },
+              { text: "Finish-line arches." },
+              { text: "Promotional inflatable structures." },
+              { text: "Blowers." },
+              { text: "Power cables." },
+              { text: "Repair accessories." },
+            ],
+            closing: [
+              "Clean and fully dry inflatable equipment before packing, and follow the manufacturer's instructions for folding, storage temperature and handling.",
+              "Store blowers and electrical accessories in suitable protective packaging.",
+            ],
+          },
+          {
+            heading: "Crowd barricade storage",
+            paragraphs: ["Crowd-control barricades may be heavy and bulky. Suitable storage arrangements may include:"],
+            bullets: [
+              { text: "Stable supports." },
+              { text: "Appropriate stacking limits." },
+              { text: "Rated restraints." },
+              { text: "Clear handling aisles." },
+              { text: "Safe loading and unloading access." },
+            ],
+            closing: ["Use container lashing points only within their verified rated capacity."],
+          },
+          {
+            heading: "Cones and route markers",
+            paragraphs: ["Organise compatible items such as:"],
+            bullets: [
+              { text: "Traffic cones." },
+              { text: "Route signs." },
+              { text: "Direction markers." },
+              { text: "Barricade tape." },
+              { text: "Other non-hazardous event accessories." },
+            ],
+            closing: ["Label bins by event or route section."],
+          },
+          {
+            heading: "Hydration station equipment",
+            paragraphs: ["Compatible equipment may include:"],
+            bullets: [
+              { text: "Folding tables." },
+              { text: "Reusable dispensers." },
+              { text: "Storage bins." },
+              { text: "Other hydration-station accessories." },
+            ],
+            closing: [
+              "Clean, sanitise where appropriate and thoroughly dry equipment before storage.",
+              "An ordinary storage container should not be assumed to be a suitable place for drinking water or perishable refreshments.",
+            ],
+          },
+          {
+            heading: "Banners and backdrops",
+            paragraphs: ["Event signage may include:"],
+            bullets: [
+              { text: "Banners." },
+              { text: "Backdrops." },
+              { text: "Promotional fabric." },
+              { text: "Display stands." },
+              { text: "Other reusable event materials." },
+            ],
+            closing: ["Use suitable protective rolls, tubes or packaging to prevent damage."],
+          },
+          {
+            heading: "Timing equipment and electronics",
+            paragraphs: ["Electronic equipment may include:"],
+            bullets: [
+              { text: "Timing devices." },
+              { text: "Control units." },
+              { text: "Readers." },
+              { text: "Radios." },
+              { text: "Other compatible accessories." },
+            ],
+            closing: [
+              "Store sensitive equipment in protective cases under manufacturer-approved environmental conditions.",
+              "Do not charge batteries inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Race kits and participant materials",
+            paragraphs: ["Organisers may need storage for:"],
+            bullets: [
+              { text: "Race bibs." },
+              { text: "Participant T-shirts." },
+              { text: "Registration materials." },
+              { text: "Packed medals." },
+              { text: "Non-perishable event merchandise." },
+              { text: "Other compatible race-day items." },
+            ],
+            closing: ["Use labelled cartons and stock registers, and keep items protected against moisture and damage."],
+          },
+          {
+            heading: "Event-wise packing lists",
+            paragraphs: ["Organise stock by:"],
+            bullets: [
+              { text: "Event name." },
+              { text: "Event date." },
+              { text: "Venue." },
+              { text: "Route." },
+              { text: "Equipment category." },
+              { text: "Quantity." },
+              { text: "Dispatch status." },
+              { text: "Return status." },
+            ],
+            closing: ["A checklist may help identify missing or damaged equipment after each event."],
+          },
+          {
+            heading: "Wet tents and inflatable equipment",
+            paragraphs: [
+              "Do not pack wet inflatable arches, tents or fabric equipment for long-term storage. Dry and clean items according to the manufacturer's instructions to reduce mould and material damage.",
+            ],
+          },
+          {
+            heading: "First-aid supplies",
+            paragraphs: [
+              "Medicines and temperature-sensitive first-aid products must be stored according to their labels and applicable requirements. An ordinary shipping container should not be used for medicines unless suitable storage conditions have been confirmed.",
+            ],
+          },
+          {
+            heading: "Battery charging and fuel",
+            paragraphs: [
+              "Do not use an ordinary storage-only container as a battery-charging room or fuel store. Use appropriate compliant facilities where charging or hazardous-material storage is required.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kasavanahalli/kasavanahalli-storage-container-interior.webp",
+          alt: "Empty shipping container interior with pale grey corrugated walls, a ribbed ceiling and a dark plywood floor, looking towards the closed far end",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative image of an empty unit. Pallet bays, racks, shelving and lighting are added only when your quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Pallet bays for packaged flooring." },
+          { text: "Racks for skirting and profiles." },
+          { text: "Labelled wallpaper sections." },
+          { text: "Project-wise stock bays." },
+          { text: "Shelves for event accessories." },
+          { text: "Stable supports for barricades." },
+          { text: "Storage bins for cones and route markers." },
+          { text: "Protective shelving for timing equipment." },
+          { text: "Lockable storage sections." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: ["The final layout must reflect actual equipment dimensions, weights, environmental requirements and access needs."],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Kasavanahalli",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kasavanahalli/shipping-container-roof-view-kasavanahalli.webp",
+          alt: "Top-down view of a charcoal-grey shipping container's corrugated roof and four corner castings, resting on a concrete surface",
+          width: 2132,
+          height: 738,
+          caption: "Illustrative overhead view. Plan clear space around the unit for unloading and for both cargo doors to open fully.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, such as commercial yards, approved storage plots or project sites with permission.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner or developer permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Kasavanahalli Main Road and connecting layout roads may present access constraints. A 10 ft or 20 ft container may be considered where space is limited, subject to availability and site access.",
+          "The delivery time and the unloading method are confirmed only after a route and site assessment.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's "Planning delivery through a society gate or narrow lane".
+        inlineLinks: [
+          {
+            before: "Gated layout or tight cross-road? Our notes on",
+            link: { label: "delivery through a society gate or narrow lane", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " list what to measure and photograph first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Approximate volumes only. Internal dimensions, load capacity and availability are checked on the specific unit before it is quoted.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Wallpaper rolls, flooring accessories or a small event organiser's kit"],
+            ["20 ft", "33 m³", "Flooring stock for multiple jobs or running-event equipment"],
+            ["40 ft", "67 m³", "Larger flooring inventory or equipment for multiple events, where site access permits"],
+          ],
+        },
+        closing: ["Approximate volume does not establish allowable payload: the rated payload of the actual unit is confirmed separately."],
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Considering a second-hand unit? Work through our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist before you commit.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Kasavanahalli",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving and storage racks, where your quotation includes them." },
+          { text: "Pallets and raised supports." },
+          { text: "Labelled storage bays." },
+          { text: "Barricade restraints." },
+          { text: "Lighting and security features." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental-control requirements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on the actual storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Kasavanahalli",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for flooring contractors handling multiple installations or event organisers managing seasonal equipment requirements. Hire terms run from one month up to five years. The quotation states the hire period, the unit, any deposit, the transport charges and how delivery and collection will work.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire sizes and terms are listed on our",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the products or equipment to be stored." },
+          { text: "Share dimensions, quantities and estimated weight." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss pallets, shelves, racks and storage bays." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For flooring installers and event organisers in Kasavanahalli, that includes:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "10 ft (where available), 20 ft and 40 ft units, subject to stock." },
+          { title: "Storage-oriented modifications", text: "every change itemised in the quotation for your unit." },
+          {
+            title: "Shelving and racking provisions",
+            text: "planned around flooring cartons, skirting lengths and wallpaper rolls, or around arches, barricades and event bins.",
+          },
+          { title: "Locking arrangements", text: "cargo doors with locking bars, inspected on the actual unit before delivery." },
+          {
+            title: "Ventilation and insulation options",
+            text: "quoted for the stock you plan to store, without a promise of moisture protection or climate control.",
+          },
+          { title: "Quotation and delivery coordination", text: "an itemised quotation, then a route and site check before delivery is scheduled." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can flooring materials be stored in a shipping container?",
+        answer:
+          "Potentially, where the products are suitably supported, protected and stored under manufacturer-approved environmental conditions.",
+      },
+      {
+        question: "How should wallpaper rolls be organised?",
+        answer: "Organise rolls by design, colour, batch number and project to reduce shade-matching errors.",
+      },
+      {
+        question: "Can laminate and SPC flooring be stored together?",
+        answer: "Potentially, where their storage conditions are compatible and the manufacturers' instructions are followed.",
+      },
+      {
+        question: "Does flooring need acclimatisation before installation?",
+        answer: "Some flooring products do. Follow the manufacturer's instructions for the specific product.",
+      },
+      {
+        question: "Can flooring adhesives and solvents be stored in the container?",
+        answer:
+          "These materials may be hazardous and require appropriate storage arrangements based on their safety data sheets.",
+      },
+      {
+        question: "Can inflatable running-event arches be stored in a shipping container?",
+        answer: "Yes, where they are fully dried, suitably packed and stored under manufacturer-approved conditions.",
+      },
+      {
+        question: "How should event barricades be stored?",
+        answer: "Use stable supports, suitable stacking arrangements and correctly rated restraints.",
+      },
+      {
+        question: "Can timing equipment and radios be stored inside the container?",
+        answer:
+          "Potentially, provided the equipment is suitably packaged and the environmental conditions meet the manufacturer's requirements.",
+      },
+      {
+        question: "Can batteries be charged inside the container?",
+        answer: "An ordinary storage-only container should not be used as a battery-charging room.",
+      },
+      {
+        question: "Can first-aid medicines be stored in the container?",
+        answer: "Only where their specific storage requirements can be met. An ordinary container may not be suitable.",
+      },
+      {
+        question: "Where can a shipping container be placed in Kasavanahalli?",
+        answer: "On suitable authorised private premises, subject to site conditions and applicable permissions.",
+      },
+      {
+        question: "What is the shipping container price in Kasavanahalli?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Kasavanahalli",
+    ctaText: `Whether you need organised storage for flooring and wallpaper installation materials or for running and cycling event equipment, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Kasavanahalli, Kasavanahalli Main Road, KPC Layout and Junnasandra, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Kasavanahalli",
+      intro:
+        "Pick the container type and quantity, then give the site address in Kasavanahalli or a map pin, and tell us if you are buying or hiring. Say whether the unit is for flooring and wallpaper stock or for event equipment, how long your longest skirting lengths or barricades are, and roughly how many cartons, rolls or barricades it must hold, so the quote matches the unit and its racking.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has its Bengaluru office in Electronic City; it has no yard, depot, store or branch in Kasavanahalli, KPC Layout or Junnasandra. Each container is supplied on the terms of its own written quotation, which sets out the internal and door measurements, grade, condition and rated payload, any racks, shelving, bays, pallets, supports, restraints, lighting, ventilation, insulation or environmental controls, the hire terms where it is rented, and how it will be delivered, unloaded and collected. Availability changes, and no delivery date or hour is guaranteed. Unless an approved specification says so, a container is not supplied as moisture-proof or climate-controlled and no temperature or humidity level is promised; it is not offered for storing adhesives, solvents or fuel, for charging batteries, or for medicines, drinking water or perishable food. The five pictures are illustrative images of one charcoal-grey container: none was taken in Kasavanahalli, and none shows a delivered or fitted unit, flooring, wallpaper or event equipment. Volumes are approximate. Flooring and wallpaper installers and running and cycling event organisers are described as possible uses, not as customers or completed projects, and the localities named show where enquiries are accepted, not confirmed delivery addresses. Guidance on flooring, wallpaper, event equipment, electronics, first-aid supplies, placement and permissions is general information rather than safety, legal or engineering advice; always follow the manufacturer's and supplier's instructions.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN VARTHUR — site stores for uPVC, aluminium and glass window
