@@ -357,6 +357,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers on Begur Road", href: "/cities-we-serve/shipping-container-begur-road" },
       // Chandapura storage page (owner brief, 2026-11-19: a link back from the main shipping container page).
       { name: "Storage containers in Chandapura", href: "/cities-we-serve/shipping-container-chandapura" },
+      // Vidyaranyapura storage page (owner brief, 2026-11-19: a link back from the main shipping container page).
+      { name: "Storage containers in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],

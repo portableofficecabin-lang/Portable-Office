@@ -738,6 +738,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Chandapura (plastic granule and polymer traders' bagged resin and masterbatch; material handling
     // equipment rental and service depots; owner brief 2026-11-19), appended so the live links keep their positions.
     { name: "Shipping Containers in Chandapura", href: "/cities-we-serve/shipping-container-chandapura" },
+    // Vidyaranyapura (seed and agri-input dealers' stock; laboratory glassware and supplies dealers' stock;
+    // owner brief 2026-11-19), appended so the live links keep their positions.
+    { name: "Shipping Containers in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
   ],
 };
 

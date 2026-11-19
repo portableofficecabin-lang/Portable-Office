@@ -42770,6 +42770,15 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "footwear and luggage inventory storage containers in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
       after: ".",
     },
+    // Vidyaranyapura brief (2026-11-19, §5): seed and agri-input dealers' and laboratory supply dealers'
+    // stock is that page's intent; this page's own targeting is unchanged.
+    areasInlineLinks: [
+      {
+        before: "Seed and agri-input dealers and laboratory supply businesses to the north-west, around Vidyaranyapura, have a page of their own:",
+        link: { label: "seed and laboratory equipment storage in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -43007,6 +43016,775 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN VIDYARANYAPURA — storage for seed and agri-input dealers (packaged
+   * seed, lot records, clean sprayers, drip irrigation kits, seedling trays, hand tools, seasonal stock)
+   * and for laboratory glassware and supplies dealers (glassware, plasticware, non-hazardous consumables,
+   * boxed instruments, lab stands, institution-wise order staging, returns) in north Bengaluru.
+   *
+   * Owner brief of 2026-11-19 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Vidyaranyapura, Bengaluru"): meta title, meta description, H1, keywords, local modifiers, section
+   * order, H2 / H3 headings, sizes table, the eleven ordering steps and the thirteen FAQs are the brief's,
+   * and so is the copy, lightly edited for flow and British spelling. The brief's notes to the implementer
+   * ("Do not claim that an ordinary uninsulated container can preserve seed viability", "Do not claim a
+   * container is automatically pest-proof", "Do not recommend storing pesticide inventory…", "Do not
+   * advertise an ordinary shipping container as an approved chemical or reagent storage facility", "Do not
+   * claim that ventilation alone…", "should not be presented as an approved calibration…", "Do not
+   * guarantee delivery…", "link to the verified Bellandur page", "Do not invent…", "Conditional section…",
+   * "Highlight only verified capabilities…", "Do not target…", "Use verified company phone numbers…") are
+   * instructions, not page copy: where one carries a fact for the reader it is reworded as a plain
+   * statement ("an ordinary uninsulated container cannot be relied on to keep seed viable", "no container
+   * is pest-proof on its own", "pesticide stock is not kept in an ordinary container unless…", "an
+   * ordinary storage-only container is not an approved chemical or reagent store", "ventilation on its own
+   * does not create suitable conditions", "a storage-only container is not an approved laboratory,
+   * calibration or testing facility", "no delivery hour is fixed…"); otherwise it is left out. Where an H3
+   * has two checklists, the longer or more useful one stays a list and the other becomes a sentence (the
+   * template gives an H3 one list). The route follows the site convention (/cities-we-serve/…), not the
+   * brief's root slug. The tagline, captions, link lead-ins, enquiry-form intro and disclaimer were written
+   * for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; shelves, pallet sections, racks, pipe supports,
+   * toolboards, padded shelving, staging bays, lockable sections, lighting, ventilation, insulation and
+   * environmental controls are layout options and price factors "where your quotation includes them",
+   * never stock items or guaranteed conditions. The optional Kannada search terms are not used: the page is
+   * in English. No Product JSON-LD: city pages carry no prices (file rule) and a Product block without
+   * offers earns no rich result, so the Service JSON-LD (no offers), FAQPage and BreadcrumbList stand, as on
+   * every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Seed dealers, "Agricultural Chemicals & Licensing Requirements", laboratory dealers, "Laboratory
+   *     Storage Safety" and "Storage Container Layout Options" → five afterIntro extra sections, the first
+   *     four with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, eleven steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Vidyaranyapura" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?"
+   *   → a default extra section (after the areas, as in the brief). FAQs: the brief's thirteen.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container product page"); seed section → "dairy farm storage in Varthur" (bagged
+   * cattle feed, mineral mixtures and milking equipment are that page's intent; seed held for resale stays
+   * here); "Temperature and humidity control" H3 → "specialised temperature-controlled storage" (the Vellore
+   * page's "Insulated and air-conditioned storage enquiries" section, which covers how a stated range is
+   * specified and quoted); "Seedling trays and grow bags" H3 → "landscaping and nursery stores on
+   * Bannerghatta Road" (live plants, pots and garden-contractor stock are that page's intent; a seed shop's
+   * empty trays stay here); placement → "container delivery checks for tight residential sites"
+   * (Bellandur's "Planning delivery through a society gate or narrow lane"); sizes → "what to inspect on a
+   * used shipping container": the brief's /shipping-container-chennai is not a route (the Chennai product
+   * page gives inspection one sentence), so it points to the Athipattu page's "Used Container Inspection"
+   * checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas → "shipping
+   * containers in Hebbal" (the brief: Hebbal, Kodigehalli, Byatarayanapura and Ganganagar go to that page)
+   * and "shipping containers in Yelahanka". The brief's CV Raman Nagar page does not exist, so it is not
+   * linked; the Yelahanka New Town link waits until that page is live. Anchors differ from the siblings'
+   * anchors for the same targets. Inbound: the Hebbal, Bengaluru page's areas section ("seed and laboratory
+   * supply storage in Vidyaranyapura") and the Yelahanka page's areas section ("shipping containers in
+   * Vidyaranyapura"), one `areasInlineLinks` item each, their own targeting unchanged; the Karnataka
+   * shipping hub ("Shipping Containers in Vidyaranyapura"); the cargo category's location links ("Storage
+   * containers in Vidyaranyapura"); and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks`
+   * keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Vidyaranyapura, Vidyaranyapura Main Road,
+   * Thindlu, Nanjappa Circle, Doddabettahalli and Doddabommasandra, for seed and agri-input dealers' stock
+   * and for laboratory glassware and supplies dealers' stock. Not targeted: Hebbal, Kodigehalli,
+   * Byatarayanapura and Ganganagar (Hebbal page; named here only in the link to it); Yelahanka (Yelahanka
+   * page; same); Yelahanka New Town (its own page, once live); Thanisandra and Jakkur (Thanisandra Main Road
+   * page; not named); Jalahalli, Mathikere and Sahakar Nagar (kept for possible future pages; not named);
+   * BEL Layout and HMT Layout (not named). Kept apart from agri-tech field kits (Hebbal), dairy feed
+   * (Varthur; named here only in the link to it), nursery and landscaping stock (Bannerghatta Road; same),
+   * STEM kits and science models (no page; not targeted), laboratory equipment awaiting installation and
+   * climate-controlled units as such (Vellore; named here only in the link to it), bar glassware
+   * (Indiranagar) and agri-input retail cabins (Hassan portable shop page). "Bengaluru" stays out of the
+   * title, as the brief asks; the geo meta and the Service JSON-LD's areaServed carry "Vidyaranyapura,
+   * Bengaluru, Karnataka".
+   *
+   * Images: five owner-dropped WebP renders ("public/images/Storage Containers in Vidyaranyapura city
+   * page/Storage Containers in Vidyaranyapura/cabin (1–5).webp", lossy VP8, 66–161 KB, no EXIF / XMP /
+   * ICC) of one navy-blue container with a grey frame. Each is copied with its VP8 data byte-for-byte plus
+   * an XMP dc:title / dc:description that labels it an illustrative render (no creator, GPS, camera or
+   * date). (2) three-quarter exterior = hero / og:image (the brief's hero filename and alt); (3) cargo doors
+   * = seed section (its caption is about door seals, heat and condensation); (1) empty interior = layout
+   * options (the brief's interior filename, but not its "with labelled shelves" alt: nothing is fitted);
+   * (5) roof from above = placement section; (4) blind end wall = sizes section. No image shows seed,
+   * sprayers, irrigation kits, trays, glassware, plasticware, instruments or staged orders, so the brief's
+   * nine use-case image slots are not used, and no alt text, caption or filename claims those items, a
+   * size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-vidyaranyapura",
+    city: "Vidyaranyapura",
+    listTitle: "Shipping & Storage Containers in Vidyaranyapura",
+    metaTitle: "Shipping Container in Vidyaranyapura | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Vidyaranyapura for seed dealers, agricultural tools, laboratory glassware, plasticware and equipment inventory.",
+    keywords:
+      "shipping container in Vidyaranyapura, cargo container Vidyaranyapura, storage container Vidyaranyapura, storage container Vidyaranyapura Main Road, storage container Thindlu, storage container Nanjappa Circle, storage container Doddabettahalli, storage container Doddabommasandra, used shipping container Vidyaranyapura, shipping container price in Vidyaranyapura, storage container for rent in Vidyaranyapura, seed dealer storage container, seed storage container, agri-input dealer storage, sprayer and farm tool storage, seedling tray storage, drip irrigation kit storage, seasonal seed inventory storage, laboratory glassware storage, lab supplies dealer storage container, lab plasticware storage, laboratory consumables storage, laboratory instrument stock storage, laboratory equipment inventory storage",
+    // Approximate point in central Vidyaranyapura, north Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Vidyaranyapura, Bengaluru, Karnataka, India",
+      position: "13.0780;77.5560",
+      icbm: "13.0780, 77.5560",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Hebbal, Yelahanka, Varthur, Bannerghatta Road, Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-vidyaranyapura/shipping-container-vidyaranyapura.webp",
+      alt: "Shipping container exterior suitable for commercial inventory storage: a navy-blue steel unit with a grey frame and closed double cargo doors, on a paved forecourt",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a closed storage container; not a photograph from Vidyaranyapura or of a unit delivered there.",
+    },
+
+    h1: "Shipping & Storage Containers in Vidyaranyapura",
+    tagline:
+      "Lockable extra room for seed packets, drip fittings and garden tools, and for boxed laboratory glassware, plasticware and instruments waiting to be dispatched.",
+    intro: [
+      "Vidyaranyapura is an established residential neighbourhood in north Bengaluru, with local commercial activity and access to surrounding agricultural and research-related areas.",
+      "Seed and agricultural-input dealers may need additional storage for seasonal seed stock, irrigation components, sprayers and gardening supplies.",
+      "Laboratory supply businesses also handle glassware, plasticware, instruments and consumables for educational, research and testing facilities.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Vidyaranyapura for compatible commercial inventory and equipment requirements.",
+    },
+
+    areasHeading: "Areas Served Around Vidyaranyapura",
+    areasText:
+      "We take shipping and storage container enquiries from Vidyaranyapura and Vidyaranyapura Main Road, Thindlu, Nanjappa Circle, Doddabettahalli and Doddabommasandra. Many of these are residential roads of modest width, so every address gets its own check of the approach and the standing area before any delivery date is proposed.",
+    // Brief §5 and §6: Hebbal, Kodigehalli, Byatarayanapura and Ganganagar belong to the Hebbal page;
+    // Yelahanka to the Yelahanka page.
+    areasInlineLinks: [
+      {
+        before: "For Hebbal, Kodigehalli, Byatarayanapura and Ganganagar, go to our page on",
+        link: { label: "shipping containers in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+        after: ".",
+      },
+      {
+        before: "Yelahanka, further north, has a page of its own:",
+        link: { label: "shipping containers in Yelahanka", href: "/cities-we-serve/shipping-container-yelahanka" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Seed & Agri-Input Dealers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-vidyaranyapura/shipping-container-cargo-doors-vidyaranyapura.webp",
+          alt: "Navy-blue container seen end-on with both cargo doors shut: four vertical locking rods with cam handles and a lockbox in the middle, in a yard beside an industrial shed",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render. The door seals are checked on the actual unit, yet a closed steel box still heats up in the sun and can sweat inside, so seed conditions are confirmed for each variety.",
+        },
+        paragraphs: [
+          "Seed dealers handle products that may be sensitive to temperature, humidity, pests and storage duration.",
+          "A suitable shipping container may provide additional storage where its environmental conditions meet the requirements of the actual seed varieties and packaging.",
+        ],
+        // Brief §6: dairy farm feed belongs to the Varthur page; seed held for resale stays here.
+        inlineLinks: [
+          {
+            before: "Keeping bagged cattle feed and mineral mixtures for a dairy herd, rather than seed for resale? Read our notes on",
+            link: { label: "dairy farm storage in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Seed packets and bags",
+            paragraphs: [
+              "Compatible inventory may include vegetable seeds, field crop seeds, flower seeds and other packaged agricultural seeds. Organise the stock by:",
+            ],
+            bullets: [
+              { text: "Crop." },
+              { text: "Variety." },
+              { text: "Supplier." },
+              { text: "Lot number." },
+              { text: "Packing date." },
+              { text: "Validity or recommended-use date." },
+            ],
+            closing: [
+              "Use suitable shelves or pallets to keep packages off the floor, and follow the seed manufacturer's and supplier's storage instructions.",
+            ],
+          },
+          {
+            heading: "Seed lot traceability",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Seed variety." },
+              { text: "Lot number." },
+              { text: "Supplier." },
+              { text: "Quantity." },
+              { text: "Arrival date." },
+              { text: "Validity or expiry information." },
+              { text: "Dispatch date." },
+              { text: "Customer order." },
+            ],
+            closing: ["Use a stock-rotation method that suits each product's dates and storage requirements."],
+          },
+          {
+            heading: "Temperature and humidity control",
+            paragraphs: [
+              "Seeds are living biological materials, and unsuitable heat or moisture can reduce germination and storage life. Depending on the variety, suitable storage may require:",
+            ],
+            bullets: [
+              { text: "Temperature control." },
+              { text: "Humidity control." },
+              { text: "Monitoring equipment." },
+              { text: "Insulation." },
+              { text: "Protective packaging." },
+              { text: "Suitable shelving." },
+              { text: "Regular inspections." },
+            ],
+            closing: [
+              "A standard metal shipping container can become hot and may experience condensation, and an ordinary uninsulated container cannot be relied on to keep seed viable. Where the variety calls for it, use a properly designed and verified climate-controlled storage solution.",
+            ],
+            // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers this.
+            inlineLinks: [
+              {
+                before: "If your supplier states a temperature or humidity range, see how we handle enquiries for",
+                link: { label: "specialised temperature-controlled storage", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " before a unit is chosen.",
+              },
+            ],
+          },
+          {
+            heading: "Pest protection",
+            paragraphs: ["Seed inventory may attract rodents or insects. Suitable measures may include:"],
+            bullets: [
+              { text: "Intact packaging." },
+              { text: "Appropriate door seals." },
+              { text: "Clean floors." },
+              { text: "Routine inspections." },
+              { text: "Pest monitoring." },
+              { text: "Professional pest-control services where needed." },
+            ],
+            closing: ["No container is pest-proof on its own; these measures only reduce the risk."],
+          },
+          {
+            heading: "Agricultural sprayers",
+            paragraphs: ["Compatible storage may include:"],
+            bullets: [
+              { text: "Clean, empty sprayers." },
+              { text: "Replacement nozzles." },
+              { text: "Hoses." },
+              { text: "Other non-contaminated accessories." },
+            ],
+            closing: [
+              "Sprayers previously used for pesticides or hazardous chemicals must be handled and stored according to the safety requirements that apply to them, and kept well away from clean seed stock.",
+            ],
+          },
+          {
+            heading: "Drip irrigation kits",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Drip irrigation pipes." },
+              { text: "Emitters." },
+              { text: "Connectors." },
+              { text: "Fittings." },
+              { text: "Valves." },
+              { text: "Other irrigation accessories." },
+            ],
+            closing: [
+              "Organise products by type, size and specification, and give long pipes and coiled materials suitable supports.",
+            ],
+          },
+          {
+            heading: "Seedling trays and grow bags",
+            paragraphs: ["Suitable stock may include:"],
+            bullets: [
+              { text: "Empty seedling trays." },
+              { text: "Grow bags." },
+              { text: "Pots." },
+              { text: "Other clean nursery accessories." },
+            ],
+            closing: [
+              "Stack them according to the manufacturer's guidance, and keep them clean and separated from hazardous materials.",
+            ],
+            // Brief §6: nursery and landscaping stock belongs to the Bannerghatta Road page.
+            inlineLinks: [
+              {
+                before: "Running a plant nursery or a landscaping business, with live plants and garden-contract materials to store? See our",
+                link: { label: "landscaping and nursery stores on Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Hand tools and gardening equipment",
+            paragraphs: ["Compatible tools may include:"],
+            bullets: [
+              { text: "Spades." },
+              { text: "Hand cultivators." },
+              { text: "Pruning tools." },
+              { text: "Watering accessories." },
+              { text: "Other gardening implements." },
+            ],
+            closing: ["Use suitable racks and toolboards, and store sharp tools safely."],
+          },
+          {
+            heading: "Seasonal stock organisation",
+            paragraphs: ["Dealers may organise inventory according to:"],
+            bullets: [
+              { text: "Sowing season." },
+              { text: "Crop type." },
+              { text: "Supplier." },
+              { text: "Customer demand." },
+              { text: "Lot number." },
+              { text: "Expiry or recommended-use date." },
+            ],
+            closing: ["Rotate stock appropriately, and avoid holding seed beyond its specified storage life."],
+          },
+        ],
+      },
+      {
+        heading: "Agricultural Chemicals & Licensing Requirements",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Pesticides",
+            paragraphs: [
+              "Pesticides may be hazardous and require specific licensed storage arrangements. Pesticide stock is not kept in an ordinary shipping container unless its suitability and the requirements that apply have been verified.",
+              "Keep pesticides separated from seed and other incompatible materials as required.",
+            ],
+          },
+          {
+            heading: "Fertilisers",
+            paragraphs: [
+              "Fertiliser storage requirements depend on the product's composition and hazard classification. Follow the product label, the safety data sheet and the regulations that apply.",
+              "Not every fertiliser is harmless, and not every fertiliser can be stored with seed.",
+            ],
+          },
+          {
+            heading: "Dealer licensing",
+            paragraphs: [
+              "Seed, fertiliser and pesticide dealers may require registrations or licences. A shipping container does not replace those requirements.",
+              "Check the relevant licensing conditions before using a container as a commercial storage location.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Laboratory Glassware & Supplies Dealers",
+        placement: "afterIntro",
+        paragraphs: [
+          "Laboratory suppliers handle products that vary widely in fragility, dimensions and environmental requirements.",
+          "A suitably configured shipping container may provide additional storage for compatible non-hazardous laboratory inventory.",
+        ],
+        subsections: [
+          {
+            heading: "Laboratory glassware",
+            paragraphs: [
+              "Compatible stock may include beakers, flasks, measuring cylinders, test tubes and other clean laboratory glassware. Use:",
+            ],
+            bullets: [
+              { text: "Protective cartons." },
+              { text: "Dividers." },
+              { text: "Padded shelves." },
+              { text: "Stable supports." },
+              { text: "Suitable stacking limits." },
+              { text: "Clear handling aisles." },
+            ],
+            closing: ["Keep heavy items low, and follow the supplier's packaging and handling instructions."],
+          },
+          {
+            heading: "Laboratory plasticware",
+            paragraphs: [
+              "Compatible products may include pipette tips, plastic tubes, Petri dishes, sample containers and other laboratory plasticware. Organise the stock by:",
+            ],
+            bullets: [
+              { text: "Catalogue number." },
+              { text: "Product type." },
+              { text: "Size." },
+              { text: "Supplier." },
+              { text: "Lot number." },
+              { text: "Sterility status, where applicable." },
+            ],
+            closing: ["Keep the original packaging where it is required."],
+          },
+          {
+            heading: "Laboratory consumables",
+            paragraphs: ["Compatible non-hazardous consumables may include:"],
+            bullets: [
+              { text: "Empty sample containers." },
+              { text: "Protective packaging." },
+              { text: "Non-chemical accessories." },
+              { text: "Other approved laboratory supplies." },
+            ],
+            closing: [
+              "Check each product's storage requirements: not every laboratory consumable can be kept at ambient temperature.",
+            ],
+          },
+          {
+            heading: "Laboratory instruments",
+            paragraphs: [
+              "Compatible stock may include laboratory balances, microscopes, hot plates and other boxed instruments. Before storage, verify:",
+            ],
+            bullets: [
+              { text: "Manufacturer requirements." },
+              { text: "Temperature limits." },
+              { text: "Humidity limits." },
+              { text: "Packaging." },
+              { text: "Vibration sensitivity." },
+              { text: "Handling requirements." },
+              { text: "Shelf or floor-loading capacity." },
+            ],
+            closing: ["Sensitive instruments may require controlled storage conditions."],
+          },
+          {
+            heading: "Lab furniture and stands",
+            paragraphs: ["Compatible items may include:"],
+            bullets: [
+              { text: "Laboratory stands." },
+              { text: "Racks." },
+              { text: "Supports." },
+              { text: "Other approved furniture components." },
+            ],
+            closing: ["Use stable storage arrangements and appropriate restraints."],
+          },
+          {
+            heading: "Institution-wise order staging",
+            paragraphs: ["Dealers may organise orders by:"],
+            bullets: [
+              { text: "College." },
+              { text: "Research institute." },
+              { text: "Laboratory." },
+              { text: "Customer purchase order." },
+              { text: "Product catalogue number." },
+              { text: "Quantity." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Labelled storage bays help reduce picking errors."],
+          },
+          {
+            heading: "Returns and breakage section",
+            paragraphs: [
+              "Keep returned or damaged products separate from saleable stock, and label each item by:",
+            ],
+            bullets: [
+              { text: "Customer order." },
+              { text: "Product." },
+              { text: "Reported issue." },
+              { text: "Return date." },
+              { text: "Inspection status." },
+            ],
+            closing: ["Handle broken glass with suitable protective equipment and dispose of it by approved methods."],
+          },
+          {
+            heading: "Inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product catalogue number." },
+              { text: "Supplier." },
+              { text: "Lot or batch number." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Customer order." },
+              { text: "Dispatch status." },
+            ],
+            closing: ["Use your existing inventory system where you have one."],
+          },
+        ],
+      },
+      {
+        heading: "Laboratory Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Chemicals and reagents",
+            paragraphs: [
+              "Laboratory chemicals and reagents may require specialised storage based on their hazards. An ordinary storage-only container is not an approved chemical or reagent store.",
+              "Use appropriate compliant facilities, following the safety data sheets and the requirements that apply.",
+            ],
+          },
+          {
+            heading: "Temperature-sensitive products",
+            paragraphs: [
+              "Some laboratory consumables and instruments require controlled temperature or humidity. Follow the manufacturer's instructions; ventilation on its own does not create suitable conditions.",
+            ],
+          },
+          {
+            heading: "Sterile supplies",
+            paragraphs: [
+              "Sterile consumables must remain in appropriate intact packaging under the manufacturer's storage conditions. Keep sterile inventory away from moisture, dust and contamination.",
+            ],
+          },
+          {
+            heading: "Calibration and testing",
+            paragraphs: [
+              "A storage-only container is not an approved laboratory, calibration or testing facility. Use purpose-designed facilities for that work.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-vidyaranyapura/vidyaranyapura-storage-container-interior.webp",
+          alt: "Inside an empty container seen through its open doors: blue corrugated walls and a ribbed ceiling over a brown plywood floor, with no shelves fitted",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of an unfitted interior. Seed shelving, pallet sections, padded glassware shelves, staging bays and lights go in only where the written quotation names them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Seed storage shelves." },
+          { text: "Pallet sections for packaged seed." },
+          { text: "Lot-wise labelled storage bays." },
+          { text: "Racks for clean sprayers." },
+          { text: "Drip irrigation pipe supports." },
+          { text: "Seedling tray shelving." },
+          { text: "Toolboards." },
+          { text: "Padded laboratory glassware shelves." },
+          { text: "Protective plasticware storage." },
+          { text: "Low-level instrument shelves." },
+          { text: "Institution-wise order staging bays." },
+          { text: "Lockable storage sections." },
+          { text: "Appropriate lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: [
+          "The final layout has to reflect the actual products, their weights, the environmental conditions they need and the safety requirements. Incompatible or hazardous materials are never combined in one unit.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Vidyaranyapura",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-vidyaranyapura/shipping-container-roof-view-vidyaranyapura.webp",
+          alt: "Navy-blue container seen from directly above on a concrete slab: ribbed roof panels and four grey corner castings",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative top-down render. Measure the standing spot with the doors open, and leave clear room for the crane or truck that sets the unit down.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including commercial yards, approved storage plots and business premises with permission.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Vidyaranyapura Main Road and the residential streets that connect to it may have access constraints. A 10 ft or 20 ft container may be considered for compact sites, subject to availability and actual access, and a 40 ft container where site conditions permit.",
+          "A delivery hour and the unloading method are agreed only after the route and the plot have been surveyed.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Behind a society gate or down a tight lane? Look over our",
+            link: { label: "container delivery checks for tight residential sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-vidyaranyapura/shipping-container-end-wall-vidyaranyapura.webp",
+          alt: "Blind end wall of a navy-blue container with vertical corrugations, grey corner castings and two forklift pockets, standing in a yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative end view. Internal width and height and the door opening are measured on the unit offered to you before any shelf depth is planned.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Exact dimensions, internal clearances, floor-loading limits and availability are verified on the unit offered, and an approximate volume does not establish the allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Compact seed inventory, tools or laboratory glassware"],
+            ["20 ft", "33 m³", "Seed and irrigation accessories or a larger laboratory supplies inventory"],
+            ["40 ft", "67 m³", "Larger compatible commercial inventory where site access permits"],
+          ],
+        },
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Buying second-hand? Go through",
+            link: { label: "what to inspect on a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you decide.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Vidyaranyapura",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Seed storage shelves." },
+          { text: "Pallets and racks." },
+          { text: "Glassware protection." },
+          { text: "Instrument storage supports." },
+          { text: "Insulation and ventilation." },
+          { text: "Environmental-control requirements." },
+          { text: "Lighting and security." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on the actual storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Vidyaranyapura",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful during a seasonal rise in seed inventory, or while laboratory supplies demand is higher than usual. Containers are hired for periods from one month to five years; your quotation names the unit and the hire period, and sets out the transport charges, any deposit and the delivery and collection arrangements.",
+        ],
+        inlineLinks: [
+          {
+            before: "For hire sizes and the terms on offer, open our",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " listing.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the materials and equipment." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify temperature-sensitive, fragile or hazardous items." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelves, pallets, racks and protective storage sections." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. What that means for seed dealers and laboratory suppliers around Vidyaranyapura:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "20 ft and 40 ft units, plus a 10 ft unit when one is in stock." },
+          { title: "Storage-oriented modifications", text: "seed shelving, pallet sections or padded glassware shelves, each priced line by line." },
+          { title: "Shelving and racking provisions", text: "set out around lot-wise seed stock and pipe coils, or around cartons, instruments and staged orders." },
+          { title: "Locking arrangements", text: "cargo doors that lock; the quotation names the locking hardware fitted to your unit." },
+          { title: "Ventilation and insulation options", text: "quoted for the stock you describe; seed viability and laboratory-grade conditions are not promised." },
+          { title: "Quotation and delivery coordination", text: "a written, itemised quotation comes first, and the route and standing spot are checked before a date is offered." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can seeds be stored in a shipping container?",
+        answer:
+          "Potentially, where the temperature, humidity, packaging and storage conditions meet the requirements of the seed variety.",
+      },
+      {
+        question: "Do seeds require climate-controlled storage?",
+        answer:
+          "Many seed varieties are sensitive to heat and humidity. Follow the supplier's guidance and use suitable environmental controls where they are required.",
+      },
+      {
+        question: "Can seed packets and bags be stored directly on the floor?",
+        answer: "Use suitable pallets or shelves, and follow the manufacturer's storage instructions.",
+      },
+      {
+        question: "Can sprayers be stored with seed stock?",
+        answer: "Only where the sprayers are clean, empty, non-contaminated and compatible with the storage environment.",
+      },
+      {
+        question: "Can pesticides and fertilisers be stored with seeds?",
+        answer:
+          "Hazardous agricultural products require suitable storage and segregation according to their labels and the regulations that apply.",
+      },
+      {
+        question: "Does a storage container replace dealer licence requirements?",
+        answer: "No. The dealer registrations and licensing requirements that apply to you still apply.",
+      },
+      {
+        question: "Can laboratory glassware be stored inside a shipping container?",
+        answer: "Potentially, using protective cartons, padded shelves, dividers and appropriate handling arrangements.",
+      },
+      {
+        question: "Can laboratory plasticware be stored inside the container?",
+        answer: "Potentially, where the packaging and environmental conditions meet the product's requirements.",
+      },
+      {
+        question: "Can microscopes and balances be stored inside the container?",
+        answer: "Potentially, with suitable packaging, stable supports and manufacturer-approved environmental conditions.",
+      },
+      {
+        question: "Can laboratory chemicals and reagents be stored in the container?",
+        answer:
+          "An ordinary storage-only container should not be assumed suitable for chemicals or reagents. Use appropriate compliant storage facilities.",
+      },
+      {
+        question: "Can calibration or laboratory testing be performed inside the container?",
+        answer: "An ordinary storage container should not be treated as an approved laboratory or calibration facility.",
+      },
+      {
+        question: "What is the shipping container price in Vidyaranyapura?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Vidyaranyapura",
+    ctaText: `Whether you need organised storage for seed inventory, agricultural tools, laboratory glassware or laboratory supplies, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp or e-mail ${COMPANY.email.sales}. Service area: Vidyaranyapura, Vidyaranyapura Main Road, Thindlu, Nanjappa Circle, Doddabettahalli and Doddabommasandra, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Vidyaranyapura",
+      intro:
+        "Choose the container type and quantity, give the Vidyaranyapura address or drop a map pin, and say whether you want to buy or hire. Tell us whether the stock is seed and farm supplies or laboratory goods, which items are fragile or need a set temperature, and roughly how much the heaviest shelf load weighs, so the quotation fits the unit to what it will hold.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Containers come from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and our Bengaluru office is in Electronic City; there is no yard, depot, showroom or branch in Vidyaranyapura or in the localities named on this page. A unit is defined by its written quotation: internal and door-opening sizes, grade, condition, floor-loading limits, any shelving, pallet sections, racks, supports, staging bays, lighting, ventilation, insulation, environmental controls or locks, hire terms where it is rented, and the delivery, unloading and collection method. Stock moves, so a delivery date or time is only firm once it is confirmed with that quotation. Unless an approved specification states otherwise, no unit is offered as climate-controlled, pest-proof, laboratory-grade or suitable for seed preservation, no temperature or humidity figure is promised, and a container is not supplied as a store for pesticides, fertilisers, laboratory chemicals or reagents, or as a laboratory, calibration or testing room. The five pictures are illustrative renders of one container, not photographs taken in Vidyaranyapura; none shows a delivered or fitted unit, seed or farm supplies, or laboratory stock. Volumes are approximate and are not a payload rating. Seed dealers and laboratory suppliers are named as possible uses, not as customers or finished projects, and the localities listed show where enquiries are accepted, not confirmed delivery addresses. Notes on seed, agricultural chemicals, licensing, laboratory goods, placement and permissions are general information, not agronomic, safety, legal or engineering advice; follow the manufacturers', suppliers' and authorities' own instructions.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN YELAHANKA — packing and crating stores for air freight forwarders
    * and exporters, and tack rooms for riding schools and equestrian centres (north Bengaluru: Yelahanka
    * New Town, Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu, Kattigenahalli, the Yelahanka
@@ -43125,6 +43903,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas We Serve",
     areasText:
       "Shipping and storage containers are supplied across Yelahanka New Town and Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu and Kattigenahalli, along the Yelahanka stretch of Doddaballapur Road and on the Yelahanka side of Bagalur Road. Every delivery is planned around the site's own approach and ground.",
+    // Vidyaranyapura brief (2026-11-19, §5): seed and laboratory supply dealers to the south-west have their own page.
+    areasInlineLinks: [
+      {
+        before: "Seed dealers and laboratory suppliers to the south-west, around Vidyaranyapura, are covered on our page on",
+        link: { label: "shipping containers in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
