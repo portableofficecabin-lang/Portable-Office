@@ -1117,7 +1117,8 @@ export const CITY_PAGES: CityPage[] = [
    * Suryanagar and Heelalige, for plastic granule and polymer traders' stock and for material handling
    * equipment rental and service depots. Chandapura–Anekal Road and Chandapura–Dommasandra Road appear
    * only as road names. Not targeted: Electronic City, Hosur Road, Hebbagodi and Bommasandra (kept for
-   * possible future pages; Hosur Road is named once as the corridor), Jigani (its own page, linked from
+   * possible future pages; Hosur Road is named only as the corridor, in the brief's own intro and delivery
+   * sentences; Electronic City only as the office's location in the disclaimer), Jigani (its own page, linked from
    * the areas), Anekal (road name and taluk only), Hosur, Attibele and Dommasandra (road name only).
    * Kept apart from engineering suppliers (Coimbatore), line-side buffer and kitting (Dharmapuri),
    * returnable packaging (Shoolagiri), printing and packaging units (Rajajinagar), grain and pulse bags
