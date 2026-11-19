@@ -351,6 +351,16 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
       // Banaswadi storage page (owner brief, 2026-11-18: a link back from the main shipping container page).
       { name: "Storage containers in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+      // Kasavanahalli storage page (owner brief, 2026-11-19: a link back from the main shipping container page).
+      { name: "Storage containers in Kasavanahalli", href: "/cities-we-serve/shipping-container-kasavanahalli" },
+      // Bilekahalli storage page (owner brief, 2026-11-19: a link back from the main shipping container page).
+      { name: "Storage containers in Bilekahalli", href: "/cities-we-serve/shipping-container-bilekahalli" },
+      // Begur Road storage page (owner brief, 2026-11-18: a link back from the main shipping container page).
+      { name: "Storage containers on Begur Road", href: "/cities-we-serve/shipping-container-begur-road" },
+      // Chandapura storage page (owner brief, 2026-11-19: a link back from the main shipping container page).
+      { name: "Storage containers in Chandapura", href: "/cities-we-serve/shipping-container-chandapura" },
+      // Malleshwaram storage page (owner brief, 2026-11-19: a link back from the main shipping container page).
+      { name: "Storage containers in Malleshwaram", href: "/cities-we-serve/shipping-container-malleshwaram" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
