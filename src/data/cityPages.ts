@@ -18953,7 +18953,7 @@ export const CITY_PAGES: CityPage[] = [
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS ALONG BANNERGHATTA ROAD — feed stores for kennels and animal
    * shelters, stores for landscapers and nurseries, and lock-ups for farmhouses and weekend homes,
-   * from Bilekahalli out towards Bannerghatta National Park (south Bengaluru).
+   * from the road's city end out towards Bannerghatta National Park (south Bengaluru).
    *
    * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas and image plan
    * used as given). Source copy: the owner's content reply of 2026-11-16 07:11Z ("Pasted text
@@ -18985,12 +18985,14 @@ export const CITY_PAGES: CityPage[] = [
    * repeating Bellandur or the category. Inbound: JP Nagar's areas ("Bannerghatta Road"), the Karnataka
    * shipping hub, the cargo category's location links and the Karnataka shipping nearby blocks.
    *
-   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Bannerghatta Road, Bilekahalli, Arekere,
-   * Hulimavu, Kalena Agrahara, Gottigere, Basavanapura and Bannerghatta, for kennel and shelter supplies,
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Bannerghatta Road, Arekere, Hulimavu,
+   * Kalena Agrahara, Gottigere, Basavanapura and Bannerghatta, for kennel and shelter supplies,
    * landscaping and nursery stores and farmhouse lock-ups. JP Nagar no longer lists the corridor's
    * localities. Jigani and Anekal are named only as a direction (Jigani has its own shipping page).
    * Hospitals (Vellore), pet grooming shops (Indiranagar), farm inputs (Krishnagiri) and used-container
-   * inspection (Athipattu) are not targeted.
+   * inspection (Athipattu) are not targeted. Bilekahalli brief (2026-11-19, §6): Bilekahalli,
+   * Kodichikkanahalli, Mahadeshwara Nagar and Someswara Layout belong to the Bilekahalli page; the areas
+   * text is the brief's replacement and Bilekahalli is named only in the one areas link to that page.
    *
    * Images: five owner-dropped lossy VP8 webp renders ("public/images/Bannerghatta Road city page
    * shipping container/Bannerghatta Road page/cabin (1–5).webp", no EXIF / XMP / ICC) of one container
@@ -19080,7 +19082,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas We Serve",
     areasText:
-      "We supply shipping and storage containers along Bannerghatta Road, including Bilekahalli, Arekere, Hulimavu, Kalena Agrahara, Gottigere and Basavanapura, out towards Bannerghatta and in the direction of Jigani and Anekal. Delivery to each site is confirmed once its access has been checked.",
+      "We supply shipping and storage containers along Bannerghatta Road, including Arekere, Hulimavu, Kalena Agrahara, Gottigere and Basavanapura, out towards Bannerghatta and the Jigani and Anekal direction.",
     // BTM Layout brief (2026-11-16): BTM sits by the road's city end and has its own page; with
     // `nearbySkipsBodyLinks` set, the nearby block then leaves BTM out, so it is linked once here.
     areasInlineLink: {
@@ -19088,6 +19090,15 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "BTM Layout", href: "/cities-we-serve/shipping-container-btm-layout" },
       after: " is covered on its own page.",
     },
+    // Bilekahalli brief (2026-11-19, §6): Bilekahalli has its own page; the nearby block skips this link
+    // (areasInlineLinks hrefs are always skipped).
+    areasInlineLinks: [
+      {
+        before: "For Bilekahalli, see our",
+        link: { label: "Bilekahalli container page", href: "/cities-we-serve/shipping-container-bilekahalli" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -20168,6 +20179,719 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin works from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, with an office in Electronic City, Bengaluru, and has no yard, depot or branch in BTM Layout. Every unit is subject to availability. The quotation for each one states its size, grade, condition and inside dimensions, any racks, lighting, power points, locks or lockbox, any rental term, and how delivery, unloading and collection will work; neither a delivery date nor vehicle access is guaranteed. The five pictures are renders of a single container made for illustration: none was photographed in BTM Layout, and none shows a delivered or fitted unit. The delivery hubs, festival committees and bike rental businesses mentioned illustrate how a container can be used; they are not clients or past projects. The localities listed show where we welcome enquiries and are not confirmed delivery points, and festivals are named only to describe the seasons. Advice on parcel handling, electrical work, battery charging, permissions, access and placement is general guidance, not legal, electrical, fire-safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN BILEKAHALLI — stock space for CCTV and video door phone installers
+   * (boxed cameras, DVR / NVR recorders, hard drives, door-phone monitors and stations, network and coaxial
+   * cable reels, fittings, project kits, returns, tools) and for inverter and UPS dealers (boxed inverters,
+   * UPS units, trolleys and stands, installation accessories, customer kits), with a strict battery-safety
+   * section, off Bannerghatta Road in south Bengaluru.
+   *
+   * Owner brief of 2026-11-19 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Bilekahalli, Bengaluru"): meta title, meta description, H1, keywords, local modifiers, section order,
+   * H2 / H3 headings, sizes table and the thirteen FAQs are the brief's, and so is the copy, lightly edited
+   * for flow and British spelling. The brief's notes to the implementer ("Do not guarantee…", "Do not
+   * automatically recommend…", "Do not advertise…", "Do not include battery-specific storage features in
+   * the quotation…", "Do not promise a particular delivery hour…", "link to the verified Bellandur page",
+   * "Conditional section…", "Highlight only verified capabilities…", "Use verified company phone
+   * numbers…") are instructions, not page copy: where one carries a fact for the reader it is reworded as
+   * a plain statement ("An ordinary shipping container cannot be assumed to provide suitable conditions for
+   * every electronic product", "Portable Office Cabin does not offer ordinary shipping containers as
+   * approved acid-storage facilities", "Battery-specific storage features are not quoted unless…"); the
+   * reader-facing safety advice ("Do not charge…", "Do not accumulate scrap batteries…") stays as advice.
+   * The lead-acid "where a qualified safety assessment permits storage" list becomes one sentence, because
+   * an H3 carries one list. The route follows the site convention (/cities-we-serve/…), not the brief's
+   * root slug. The tagline, captions, link lead-ins, "why" bullet texts, enquiry-form intro and disclaimer
+   * were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental,
+   * POC-SC-RENT, lists hire terms from one month to five years; no deposit, price or delivery charge is
+   * stated here); the 10 ft row keeps the brief's "if available"; shelving, racks, drawers, reel supports,
+   * anti-static areas, lighting, ventilation, insulation and locks are layout options or price factors that
+   * apply only where the quotation includes them. No battery-storage fit-out is offered: the keyword
+   * "battery dealer storage" is left out, as the brief makes it conditional on a verified compliant
+   * solution. The optional Kannada search terms are not used: the page is in English. No Product JSON-LD:
+   * city pages carry no prices (file rule) and a Product block without offers earns no rich result, so the
+   * Service JSON-LD (no offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   CCTV and video door phone installers, inverter and UPS dealers and "Battery Storage: Mandatory Safety
+   *     Requirements" → three afterIntro extra sections, their H3s as `subsections`.
+   *   Layout options, placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, 11
+   *     steps) → afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Bilekahalli" → areas + two areasInlineLinks. "Why Choose Portable Office
+   *   Cabin?" → a default extra section (after the areas, as in the brief). FAQs: the brief's thirteen.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5, each target checked on main 85ac922): intro → the cargo category ("Existing shipping
+   * container product page"); placement → "delivery planning for gated and narrow-lane sites" (Bellandur's
+   * "Planning delivery through a society gate or narrow lane"); sizes → "points to check on a used
+   * container": the brief's Chennai route is not a guide (the Chennai product page gives inspection one
+   * sentence), so it points to the Athipattu page's "Used Container Inspection" checklist, as the siblings
+   * do; rental → /products/shipping-container-rental; areas → "shipping containers along Bannerghatta Road"
+   * (Bannerghatta Road, Arekere, Hulimavu, Kalena Agrahara and Gottigere stay with that page) and "shipping
+   * containers in JP Nagar". Not linked, because no such route exists on main (the brief forbids links to
+   * unpublished pages): Bommanahalli, Begur Road (being built by a peer session; the cross-link goes in with
+   * whichever of the two pages merges second) and a Thubarahalli home-theatre / AV page (Thubarahalli
+   * belongs to the Brookefield page, whose intent is different). Inbound: the Bannerghatta Road shipping
+   * page's areas section (the brief §6 replacement text plus one `areasInlineLinks` item, "Bilekahalli
+   * container page"), the Karnataka shipping hub ("Shipping Containers in Bilekahalli"), the cargo
+   * category's location links ("Storage containers in Bilekahalli") and every Karnataka shipping page's
+   * nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Bilekahalli, Kodichikkanahalli (and
+   * Kodichikkanahalli Main Road), Mahadeshwara Nagar and Someswara Layout, for CCTV and video door phone
+   * installers' stock and for compatible inverter and UPS dealer inventory. Not targeted: Bannerghatta Road
+   * (named only as a location reference: intro, access note, link sentences), Arekere, Hulimavu, Kalena
+   * Agrahara and Gottigere (Bannerghatta Road page; named only in the link sentence); JP Nagar (named only
+   * in its link sentence), BTM Layout and BTM 4th Stage; Vijaya Bank Layout,
+   * Ranka Colony and Ramanashree Enclave; Bommanahalli and Devarachikkanahalli; Begur and Yelenahalli. Kept
+   * apart from fibre and telecom roll-out stock (KR Puram), electrical and plumbing contractors
+   * (Kaggadasapura), solar installers' panels and inverters (Kanakapura Road), electronics showrooms
+   * (Marathahalli ORR), home healthcare equipment (Ramamurthy Nagar), healthcare campuses (Vellore) and
+   * guard cabins; "access control" is not used. "Bengaluru" stays out of the title, as the brief asks; the
+   * geo meta and the Service JSON-LD's areaServed carry "Bilekahalli, Bengaluru, Karnataka".
+   *
+   * Images: the owner dropped four WebP images ("public/images/Storage Containers in Bilekahalli city
+   * page/Storage Containers in Bilekahalli/cabin (1–4).webp", lossy VP8, no EXIF / XMP / ICC). Two are
+   * used, each kept byte-identical (VP8 bitstream untouched) with an XMP dc:title / dc:description added
+   * that labels it illustrative (no creator, GPS or date): (3) a plain charcoal-grey side wall = hero /
+   * og:image (the brief's hero filename); (2) the roof from directly above = placement section. (1) and (4)
+   * are NOT used: they show a container converted with full-height glazed sliding doors and a furnished
+   * lounge or office inside, which matches no storage slot, and the brief rules out presenting glass doors
+   * on a storage unit. No image shows CCTV equipment, door phones, cable reels, inverters, UPS units or
+   * batteries, so the brief's eight use-case image slots are not used, and no alt text, caption or filename
+   * claims those items, a size or a place. Captions say "illustrative image" rather than "render": the
+   * source of the two pictures is not known.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-bilekahalli",
+    city: "Bilekahalli",
+    listTitle: "Shipping & Storage Containers in Bilekahalli",
+    metaTitle: "Shipping Container in Bilekahalli | CCTV & UPS Storage",
+    metaDescription:
+      "Shipping and storage containers in Bilekahalli for CCTV and video door phone installers, inverter and UPS equipment dealers, with storage options tailored to inventory needs.",
+    keywords:
+      "shipping container in Bilekahalli, cargo container Bilekahalli, storage container Bilekahalli, storage container Kodichikkanahalli, storage container Kodichikkanahalli Main Road, storage container Mahadeshwara Nagar, storage container Someswara Layout, used shipping container Bilekahalli, shipping container price in Bilekahalli, storage container for rent in Bilekahalli, CCTV installer storage container, CCTV camera storage, DVR and NVR equipment storage, video door phone stock storage, network cable reel storage, CCTV installation equipment storage, inverter dealer storage container, UPS equipment storage, inverter trolley and stand storage, inverter installation kit storage",
+    // Approximate point in Bilekahalli, east of Bannerghatta Road, south Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Bilekahalli, Bengaluru, Karnataka, India",
+      position: "12.8960;77.6080",
+      icbm: "12.8960, 77.6080",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1838 × 856 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bannerghatta Road, JP Nagar, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-bilekahalli/shipping-container-bilekahalli.webp",
+      alt: "Charcoal-grey steel shipping container seen side-on, with a plain corrugated wall, corner castings and forklift pockets, the kind of unit used for commercial equipment storage",
+      width: 1838,
+      height: 856,
+      caption: "Illustrative image: not taken in Bilekahalli, and not a unit fitted out for CCTV, inverter or UPS stock.",
+    },
+
+    h1: "Shipping & Storage Containers in Bilekahalli",
+    tagline:
+      "Organised stock space for CCTV and video door phone installers, and for inverter and UPS dealers' boxed units, trolleys and installation kits.",
+    intro: [
+      "Bilekahalli is an established residential and commercial neighbourhood near Bannerghatta Road in Bengaluru.",
+      "Local businesses serving homes, apartments and commercial premises may need additional storage for installation equipment, electrical products and related inventory.",
+      "CCTV and video door phone installers handle cameras, recording equipment, cables and accessories. Inverter and UPS dealers handle power-backup units, trolleys, stands and installation components.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Bilekahalli for compatible commercial inventory and equipment, subject to the actual storage requirements.",
+    },
+
+    areasHeading: "Areas Served Around Bilekahalli",
+    areasText:
+      "This page serves shipping and storage container enquiries from Bilekahalli, Kodichikkanahalli, Kodichikkanahalli Main Road, Mahadeshwara Nagar and Someswara Layout. The route to each premises and the spot where the unit will stand are looked at before a delivery date is fixed.",
+    // Brief §3 and §7: Bannerghatta Road and its localities stay with that page; JP Nagar has its own page.
+    areasInlineLinks: [
+      {
+        before: "For Bannerghatta Road itself, Arekere, Hulimavu, Kalena Agrahara and Gottigere, see our page on",
+        link: { label: "shipping containers along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+        after: ".",
+      },
+      {
+        before: "West of Bannerghatta Road, home-rebuild and school storage is covered on our page for",
+        link: { label: "shipping containers in JP Nagar", href: "/cities-we-serve/shipping-container-jp-nagar" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for CCTV & Video Door Phone Installers",
+        placement: "afterIntro",
+        paragraphs: [
+          "CCTV installers handle valuable electronic equipment and accessories that require organised storage, careful handling and suitable environmental conditions.",
+          "A properly configured shipping container may provide additional space for compatible inventory.",
+        ],
+        subsections: [
+          {
+            heading: "CCTV camera storage",
+            paragraphs: ["Compatible stock may include:"],
+            bullets: [
+              { text: "Dome cameras." },
+              { text: "Bullet cameras." },
+              { text: "IP cameras." },
+              { text: "Other boxed surveillance cameras." },
+              { text: "Mounting accessories." },
+              { text: "Protective housings." },
+            ],
+            closing: [
+              "Store equipment in suitable manufacturer-approved packaging.",
+              "Organise shelves by product type, model and customer project.",
+            ],
+          },
+          {
+            heading: "DVR and NVR equipment storage",
+            paragraphs: ["Recording equipment may include:"],
+            bullets: [
+              { text: "DVR units." },
+              { text: "NVR units." },
+              { text: "Compatible accessories." },
+              { text: "Power adapters." },
+              { text: "Network equipment." },
+            ],
+            closing: [
+              "Use stable shelving and protective packaging.",
+              "Follow manufacturer requirements for temperature, humidity and handling.",
+            ],
+          },
+          {
+            heading: "Hard drive storage",
+            paragraphs: ["Hard drives and sensitive electronic components may require:"],
+            bullets: [
+              { text: "Anti-static packaging." },
+              { text: "Suitable protective cases." },
+              { text: "Stable shelving." },
+              { text: "Protection against moisture." },
+              { text: "Protection against physical shock." },
+              { text: "Appropriate temperature conditions." },
+            ],
+            closing: ["Do not assume ventilation alone is sufficient to protect sensitive electronics."],
+          },
+          {
+            heading: "Video door phone stock storage",
+            paragraphs: ["Video door phone inventory may include:"],
+            bullets: [
+              { text: "Indoor monitors." },
+              { text: "Outdoor door stations." },
+              { text: "Power supplies." },
+              { text: "Mounting brackets." },
+              { text: "Compatible accessories." },
+            ],
+            closing: ["Organise stock by model, installation project and customer order."],
+          },
+          {
+            heading: "Network and coaxial cable reels",
+            paragraphs: ["Installers may need storage for:"],
+            bullets: [
+              { text: "Ethernet cable reels." },
+              { text: "Coaxial cable reels." },
+              { text: "Compatible signal cables." },
+              { text: "Cable conduits." },
+              { text: "Other installation accessories." },
+            ],
+            closing: [
+              "Use suitable racks or reel supports.",
+              "Avoid loading hooks beyond their rated capacity or damaging cables through tight bends.",
+            ],
+          },
+          {
+            heading: "Mounting poles, brackets and junction boxes",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Mounting brackets." },
+              { text: "Junction boxes." },
+              { text: "Conduit." },
+              { text: "Poles." },
+              { text: "Cable trays." },
+              { text: "Other installation fittings." },
+            ],
+            closing: ["Organise longer items on suitably rated racks."],
+          },
+          {
+            heading: "Small parts and connectors",
+            paragraphs: ["Labelled bins may hold:"],
+            bullets: [
+              { text: "Connectors." },
+              { text: "Cable clips." },
+              { text: "Fasteners." },
+              { text: "Adapters." },
+              { text: "Power supplies." },
+              { text: "Other compatible accessories." },
+            ],
+            closing: ["Keep products separated by specification and model."],
+          },
+          {
+            heading: "Project-wise installation kits",
+            paragraphs: ["Installers may organise equipment by:"],
+            bullets: [
+              { text: "Apartment." },
+              { text: "Flat number." },
+              { text: "Shop." },
+              { text: "Office." },
+              { text: "Installation date." },
+              { text: "Customer order." },
+            ],
+            closing: ["Prepare labelled kits containing the required cameras, cables, fittings and accessories."],
+          },
+          {
+            heading: "Returns and repair stock",
+            paragraphs: ["A separate section may be used for:"],
+            bullets: [
+              { text: "Faulty equipment." },
+              { text: "Returned products." },
+              { text: "Units awaiting inspection." },
+              { text: "Warranty-related items." },
+            ],
+            closing: ["Clearly distinguish used or faulty equipment from new inventory."],
+          },
+          {
+            heading: "Tools and ladders",
+            paragraphs: ["Suitable storage arrangements may include:"],
+            bullets: [
+              { text: "Tool shelves." },
+              { text: "Lockable cabinets." },
+              { text: "Stable ladder supports." },
+              { text: "Labelled accessory bins." },
+            ],
+            closing: ["Keep access paths clear."],
+          },
+          {
+            heading: "Protecting electronics from heat and moisture",
+            paragraphs: [
+              "Standard metal containers may experience high internal temperatures and condensation.",
+              "Depending on the equipment, suitable storage may require:",
+            ],
+            bullets: [
+              { text: "Insulation." },
+              { text: "Ventilation." },
+              { text: "Humidity monitoring." },
+              { text: "Desiccant materials where appropriate." },
+              { text: "Protective packaging." },
+              { text: "Raised shelves." },
+              { text: "Environmental controls." },
+              { text: "Regular leak inspections." },
+            ],
+            closing: [
+              "Follow the equipment manufacturer's storage specifications.",
+              "An ordinary shipping container cannot be assumed to provide suitable conditions for every electronic product.",
+            ],
+          },
+          {
+            heading: "Batteries and charging",
+            paragraphs: [
+              "Do not charge CCTV backup batteries, power banks or other batteries inside an ordinary storage-only container.",
+              "Use a properly designed and approved charging facility where charging is required.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Inverter & UPS Equipment Dealers",
+        placement: "afterIntro",
+        paragraphs: [
+          "Inverter and UPS dealers may need organised storage for power-backup equipment, accessories and installation materials.",
+          "Shipping containers may be suitable for certain non-energised equipment and compatible accessories.",
+          "Battery inventory requires a separate safety assessment. An ordinary shipping container is not automatically suitable for storing lead-acid or lithium batteries.",
+        ],
+        subsections: [
+          {
+            heading: "Inverter unit storage",
+            paragraphs: ["Compatible stock may include:"],
+            bullets: [
+              { text: "Boxed inverter units." },
+              { text: "Inverter accessories." },
+              { text: "Installation components." },
+              { text: "Manufacturer-approved spare parts." },
+            ],
+            closing: ["Use appropriately rated shelves and stable supports.", "Follow manufacturer storage conditions."],
+          },
+          {
+            heading: "UPS equipment storage",
+            paragraphs: ["UPS equipment may be heavy and may contain internal batteries.", "Before storing UPS units:"],
+            bullets: [
+              { text: "Identify the battery chemistry." },
+              { text: "Check manufacturer storage requirements." },
+              { text: "Confirm allowable temperature and humidity." },
+              { text: "Assess floor and shelf loads." },
+              { text: "Verify electrical and fire-safety requirements." },
+              { text: "Determine whether the storage facility is suitable." },
+            ],
+            closing: ["Do not assume a UPS can be treated as an ordinary boxed electronic appliance."],
+          },
+          {
+            heading: "Inverter trolleys and stands",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Inverter trolleys." },
+              { text: "Battery stands." },
+              { text: "Mounting brackets." },
+              { text: "Equipment supports." },
+            ],
+            closing: ["Stack and secure items appropriately."],
+          },
+          {
+            heading: "Installation accessories",
+            paragraphs: ["Labelled drawers may hold:"],
+            bullets: [
+              { text: "Cables." },
+              { text: "Terminals." },
+              { text: "Connectors." },
+              { text: "Fasteners." },
+              { text: "Compatible fittings." },
+            ],
+            closing: ["Protect electrical contacts against damage and contamination."],
+          },
+          {
+            heading: "Customer-wise installation kits",
+            paragraphs: ["Dealers may prepare kits by:"],
+            bullets: [
+              { text: "Customer order." },
+              { text: "Inverter model." },
+              { text: "UPS model." },
+              { text: "Installation date." },
+              { text: "Required accessories." },
+              { text: "Dispatch status." },
+            ],
+            closing: ["Keep product documentation with the relevant stock."],
+          },
+        ],
+      },
+      {
+        heading: "Battery Storage: Mandatory Safety Requirements",
+        placement: "afterIntro",
+        paragraphs: [
+          "Battery storage is a specialised activity.",
+          "Before any container is considered for battery storage, the proposed facility has to be assessed for the specific battery chemistry, quantity and condition, and against the applicable regulations.",
+        ],
+        subsections: [
+          {
+            heading: "New lead-acid batteries",
+            paragraphs: ["Lead-acid batteries may present risks including:"],
+            bullets: [
+              { text: "Electrolyte leakage." },
+              { text: "Corrosion." },
+              { text: "Electrical short circuits." },
+              { text: "Hydrogen generation under certain conditions." },
+              { text: "Fire or explosion hazards." },
+              { text: "Heavy handling loads." },
+            ],
+            closing: [
+              "Storage requirements depend on the battery type, whether it is filled, sealed or vented, and the manufacturer's instructions.",
+              "Lead-acid batteries should not be stored in an ordinary shipping container by default. Where a qualified safety assessment permits storage, appropriate measures are needed for ventilation, temperature, separation, electrical isolation, terminal protection, load capacity, spill management, emergency access, fire protection and inspections.",
+            ],
+          },
+          {
+            heading: "Dry-charged batteries",
+            paragraphs: [
+              "Dry-charged batteries require storage and commissioning according to manufacturer instructions.",
+              "Batteries should not be filled with electrolyte inside an ordinary storage container. Any required electrolyte handling belongs in an appropriately equipped and authorised location.",
+            ],
+          },
+          {
+            heading: "Battery acid and electrolyte",
+            paragraphs: [
+              "Battery acid and electrolyte can be hazardous. Store and handle these substances only in suitable compliant facilities, according to their safety data sheets and applicable requirements.",
+              "Portable Office Cabin does not offer ordinary shipping containers as approved acid-storage facilities.",
+            ],
+          },
+          {
+            heading: "Lithium-ion batteries",
+            paragraphs: [
+              "Lithium-ion batteries may require specialised fire-risk assessment and storage controls. Follow the manufacturer's requirements for:",
+            ],
+            bullets: [
+              { text: "Temperature." },
+              { text: "State of charge." },
+              { text: "Packaging." },
+              { text: "Separation." },
+              { text: "Handling." },
+              { text: "Fire protection." },
+              { text: "Emergency response." },
+            ],
+            closing: [
+              "Damaged, swollen, leaking or recalled lithium batteries require specialised handling and must not be mixed with ordinary inventory.",
+            ],
+          },
+          {
+            heading: "Battery charging",
+            paragraphs: [
+              "Do not charge lead-acid, lithium-ion or other batteries inside an ordinary storage-only container.",
+              "A purpose-designed charging facility requires a separate electrical and fire-safety assessment.",
+            ],
+          },
+          {
+            heading: "Used and scrap batteries",
+            paragraphs: [
+              "Used and waste batteries must be managed through applicable authorised collection and recycling channels.",
+              "Do not accumulate scrap batteries in an ordinary storage container without a compliant waste-storage arrangement.",
+            ],
+          },
+          {
+            heading: "Fire protection and emergency preparedness",
+            paragraphs: [
+              "Where battery storage is permitted following a qualified assessment, provide appropriate fire-safety and emergency provisions for the actual battery chemistry and inventory.",
+              "A fire extinguisher or spill kit alone does not make a shipping container compliant or safe.",
+              "Seek qualified fire-safety and hazardous-material guidance before approving the layout.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterSolutions",
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Shelves for CCTV equipment." },
+          { text: "Anti-static storage areas." },
+          { text: "Cable reel racks." },
+          { text: "Labelled small-parts drawers." },
+          { text: "Project-wise installation bays." },
+          { text: "Tool storage." },
+          { text: "Inverter trolley sections." },
+          { text: "Stable supports for boxed UPS equipment." },
+          { text: "Locking arrangements." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: [
+          "Each of these is fitted only where your quotation includes it. Battery-specific storage features are not quoted unless a compliant battery-storage solution has been assessed and approved.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Bilekahalli",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-bilekahalli/shipping-container-top-view-bilekahalli.webp",
+          alt: "Grey container photographed straight down from above, showing its corrugated roof, a corner fitting at each end and yellow painted lines on the concrete around it",
+          width: 2176,
+          height: 722,
+          caption: "Illustrative image from above. The ground under the unit and the clearance around it are checked before delivery.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including commercial yards, approved storage plots and project sites with the necessary permission.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Landowner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "The roads connecting Bilekahalli with Bannerghatta Road may present access constraints. A 10 ft or 20 ft container may be considered where space is limited, subject to availability and site access.",
+          "Heavy UPS or battery-related equipment requires special attention to floor-loading capacity and handling.",
+          "No delivery hour or unloading method is fixed until the site has been assessed.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Tight gate or narrow approach road? Read our notes on",
+            link: { label: "delivery planning for gated and narrow-lane sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Approximate internal volumes, not allowable payloads. Exact dimensions, floor-loading limits and availability are stated per unit when you are quoted.",
+          headers: ["Size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "CCTV cameras, recorders, cable reels and installation accessories"],
+            ["20 ft", "33 m³", "CCTV installation stock, inverter units and compatible UPS equipment"],
+            ["40 ft", "67 m³", "Larger compatible commercial inventory where site access permits"],
+          ],
+        },
+        closing: ["Container size alone never makes a unit suitable for battery storage."],
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Considering a second-hand unit? Go through the",
+            link: { label: "points to check on a used container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you commit.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Bilekahalli",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving and racks." },
+          { text: "Cable reel supports." },
+          { text: "Lockable storage." },
+          { text: "Anti-static packaging provisions." },
+          { text: "Insulation and ventilation." },
+          { text: "Environmental-control requirements." },
+          { text: "Security features." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Battery-storage requirements, if applicable, require a separate professional safety assessment and quotation."],
+      },
+      {
+        heading: "Storage Container on Rent in Bilekahalli",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for CCTV installation companies or inverter equipment dealers managing seasonal stock requirements.",
+          "Shipping containers are available on hire for terms from one month to five years. The hire quotation sets out the unit, the period, transport both ways, the collection conditions and any deposit.",
+        ],
+        inlineLinks: [
+          {
+            before: "Units offered for hire, and their terms, are on the",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the equipment and accessories." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify whether any equipment contains batteries." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelves, racks, drawers and storage bays." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+        closing: [
+          "Where battery storage is requested, a separate qualified safety assessment comes first, and no suitability claim is made before it.",
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For installers and dealers around Bilekahalli, that means:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "from 10 ft (where available) up to 40 ft, as stock allows." },
+          { title: "Storage-oriented modifications", text: "shelving, racks, drawers and bays, each one listed in the quotation for your unit." },
+          { title: "Shelving and racking provisions", text: "planned around camera cartons, cable reels, inverter boxes and trolleys." },
+          { title: "Locking arrangements", text: "lockable cargo doors; any extra lock or lockbox is written into the quotation." },
+          { title: "Ventilation and insulation options", text: "quoted to suit your equipment, without a promise of any fixed temperature or humidity." },
+          { title: "Quotation and delivery coordination", text: "an itemised quotation first, then a look at the route and the standing area before a delivery date is set." },
+        ],
+        closing: [
+          "No ordinary container is offered as approved for battery storage, as a guaranteed environment for electronics, or for installation without the necessary permission.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can CCTV cameras and recorders be stored in a shipping container?",
+        answer: "Potentially, where they are suitably packaged and the storage conditions meet manufacturer requirements.",
+      },
+      {
+        question: "How should network cable reels be stored?",
+        answer: "Use suitable racks or supports that prevent crushing, tangling and excessive bending.",
+      },
+      {
+        question: "Can video door phones be stored with CCTV equipment?",
+        answer: "Yes, where the products have compatible environmental and handling requirements.",
+      },
+      {
+        question: "Can hard drives be stored inside the container?",
+        answer: "Potentially, using appropriate anti-static packaging and suitable temperature, humidity and handling conditions.",
+      },
+      {
+        question: "Can inverter units be stored in a shipping container?",
+        answer: "Some non-energised inverter units may be stored where the manufacturer's environmental and handling requirements are met.",
+      },
+      {
+        question: "Can UPS equipment be stored inside a container?",
+        answer: "Potentially, but UPS units may contain batteries and require additional safety assessment.",
+      },
+      {
+        question: "Can lead-acid batteries be stored in an ordinary shipping container?",
+        answer:
+          "Do not assume so. Battery storage requires assessment of the battery type, inventory, ventilation, fire safety and applicable requirements.",
+      },
+      {
+        question: "Can lithium-ion batteries be stored in the container?",
+        answer: "Only where the facility has been assessed as suitable for the specific battery inventory and risks.",
+      },
+      {
+        question: "Can batteries be charged inside the container?",
+        answer: "An ordinary storage-only container should not be used as a battery-charging facility.",
+      },
+      {
+        question: "Can battery acid be stored inside the container?",
+        answer: "Hazardous electrolytes require suitable compliant storage facilities. Do not assume an ordinary container is appropriate.",
+      },
+      {
+        question: "What should be done with old batteries?",
+        answer: "Follow applicable collection, recycling and waste-management requirements using authorised channels.",
+      },
+      {
+        question: "What is the shipping container price in Bilekahalli?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Bilekahalli",
+    ctaText: `Whether you need organised storage for CCTV installation equipment, video door phone stock or compatible inverter and UPS inventory, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Phone ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Bilekahalli, Kodichikkanahalli, Mahadeshwara Nagar and Someswara Layout, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Get an Itemised Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Bilekahalli",
+      intro:
+        "Choose a container type and quantity, add the address or a map pin, and say whether you want to buy or hire. List the equipment it will hold (cameras, recorders, cable reels, inverters or UPS units), roughly how much there is, and whether any of it contains batteries, so the quotation matches the unit and its fit-out.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin's containers are dispatched from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu (Bengaluru office: Electronic City); the company keeps no depot, yard or branch in Bilekahalli or the localities around it. The quotation for each unit fixes what you receive: its size, grade and condition, its inside and door-opening measurements, any shelving, racks, drawers, reel supports, lighting, ventilation, insulation or locks, the hire terms where it is rented, and the way it reaches your site, is lifted off and, after a hire, taken back. Stock varies, and no delivery date or time is promised. Unless an approved specification says otherwise, a container is not offered as moisture-proof, climate-controlled or anti-static, carries no temperature or humidity promise, and is not offered for storing or charging batteries, for battery acid or electrolyte, or for scrap batteries. Both pictures are illustrative images; neither was taken in Bilekahalli, and neither shows a delivered or fitted unit, CCTV equipment, door phones, inverters, UPS units or batteries. Volumes are approximate. CCTV and video door phone installers and inverter and UPS dealers are named as examples of possible uses, not as customers or completed projects, and the localities named mark the area we accept enquiries from; they are not confirmed delivery addresses. The notes on electronics, batteries, electrolyte, charging, fire safety, placement and permissions are general information, not electrical, fire-safety, hazardous-material, legal or engineering advice; follow the manufacturers' instructions, the safety data sheets and the applicable regulations.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
