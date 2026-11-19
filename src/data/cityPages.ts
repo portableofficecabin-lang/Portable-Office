@@ -34909,8 +34909,8 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Horamavu, Horamavu Agara, Horamavu Main
    * Road, Kalkere and Rampura, for AC and appliance installer stock and tent house / shamiana rental
    * stock. Not named anywhere on the page: Ramamurthy Nagar, KR Puram and TC Palya (KR Puram page),
-   * Hennur Road (Hennur Road page), Kalyan Nagar, HRBR and HBR Layout (Kalyan Nagar page), Banaswadi (kept free for
-   * a later page). Not targeted: hotel and banquet furniture overflow (Mahadevapura), festival committee
+   * Hennur Road (Hennur Road page), Kalyan Nagar, HRBR and HBR Layout (Kalyan Nagar page), Banaswadi (Banaswadi
+   * page, linked once from the areas section). Not targeted: hotel and banquet furniture overflow (Mahadevapura), festival committee
    * equipment (BTM Layout), solar and borewell contractors (Kanakapura Road), church and party-supply
    * stock (Hennur Road). "Bengaluru" stays out of the meta title.
    *
@@ -34981,6 +34981,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas We Serve",
     areasText:
       "Our containers go to customers throughout Horamavu: Horamavu Agara, Horamavu Main Road, Kalkere, Rampura and the streets around Kalkere lake. Access to every site is looked at before we fix a delivery.",
+    // Banaswadi page (owner brief of 2026-11-18 for Banaswadi, §5: a contextual link back from Horamavu).
+    areasInlineLinks: [
+      {
+        before: "For a site in Banaswadi, see our page on",
+        link: { label: "storage containers in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -35367,8 +35375,8 @@ export const CITY_PAGES: CityPage[] = [
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kasturi Nagar (Kasthuri Nagar), Doctors
    * Layout, Bhuvanagiri and Sadananda Nagar, for aquarium-shop and aquarium-maintenance inventory and for
-   * trophy and memento sellers' stock and finished award orders. Not targeted: Banaswadi, OMBR Layout
-   * and Pai Layout (kept for possible future pages); East of NGEF Layout; Old Madras Road, Tin Factory, TC
+   * trophy and memento sellers' stock and finished award orders. Not targeted: Banaswadi, OMBR Layout and
+   * Lingarajapuram (Banaswadi page, linked once from the areas section); Pai Layout (kept for a possible future page); East of NGEF Layout; Old Madras Road, Tin Factory, TC
    * Palya and Doorvaninagar (KR Puram); Vijinapura (Ramamurthy Nagar); Baiyappanahalli and Benniganahalli;
    * Kalyan Nagar and HRBR Layout (Kalyan Nagar); décor or party supplies (Hennur Road); Horamavu and tent-house stock
    * (Horamavu); schools' sports-day props (JP Nagar); window glass (Varthur); live animals or pet supplies
@@ -35437,6 +35445,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas Served Around Kasturi Nagar",
     areasText:
       "We supply shipping and storage containers to businesses in Kasturi Nagar (also spelt Kasthuri Nagar), Doctors Layout, Bhuvanagiri and Sadananda Nagar. Shops here often stand on residential cross roads, so the approach and the exact standing spot are checked for each property before any delivery date is set.",
+    // Banaswadi page (owner brief of 2026-11-18 for Banaswadi, §5: a contextual link back from Kasturi Nagar).
+    areasInlineLinks: [
+      {
+        before: "Premises in neighbouring Banaswadi are covered by our page on",
+        link: { label: "shipping containers in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -41287,8 +41303,8 @@ export const CITY_PAGES: CityPage[] = [
    * church, parish and choir storage, instrument and music-school storage, and décor and party-supply
    * stock. Not targeted: Thanisandra, Nagawara and Jakkur (Thanisandra Main Road page), Yelahanka and
    * Bagalur Road (Yelahanka page), Horamavu, Kalkere and Rampura (Horamavu page), Kalyan Nagar, HRBR
-   * Layout, HBR Layout, Kammanahalli and Chelikere (Kalyan Nagar page, 2026-11-18) and Banaswadi (kept
-   * for a possible future page); Hindu festival committees and
+   * Layout, HBR Layout, Kammanahalli and Chelikere (Kalyan Nagar page, 2026-11-18) and Banaswadi (Banaswadi
+   * page, 2026-11-19); Hindu festival committees and
    * Rajyotsava gear (BTM Layout), showroom festive stock (Marathahalli), donation drives (Brookefield) and
    * music practice-room cabins (Hubballi–Dharwad porta cabins, a different product). "Kothanur" is the
    * north Bengaluru locality; the JP Nagar page's "Kothnur" is a different place.
@@ -41810,7 +41826,8 @@ export const CITY_PAGES: CityPage[] = [
    * Block), HBR Layout, Kammanahalli and Chelikere, for salon and spa equipment storage and for artists'
    * and art-class inventory. Not targeted: Hennur Road, Hennur Cross, Kothanur, Byrathi, Geddalahalli,
    * Hennur Bande and Babusapalya (Hennur Road page; named here only in the link to it); Horamavu, AC stock
-   * and tent-house stock (Horamavu page); Banaswadi and OMBR Layout (kept for possible future pages). Kept
+   * and tent-house stock (Horamavu page); Banaswadi and OMBR Layout (Banaswadi page, linked once from the
+   * areas section). Kept
    * apart from salon shop cabins (Sriperumbudur shop page), gallery shop cabins (Indiranagar shop page),
    * hotel artwork and furniture (Mahadevapura), linen and laundry (Kundalahalli), dance costumes and books
    * (Jayanagar) and climate-controlled containers as such (Vellore). "Bengaluru" stays out of the title,
@@ -41889,6 +41906,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Horamavu, with different storage needs, has its own page:",
         link: { label: "shipping containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+        after: ".",
+      },
+      // Banaswadi page (owner brief of 2026-11-18 for Banaswadi, §5: a contextual link back from Kalyan Nagar).
+      {
+        before: "Neighbouring Banaswadi has its own page on",
+        link: { label: "antique furniture and beverage distributor storage containers", href: "/cities-we-serve/shipping-container-banaswadi" },
         after: ".",
       },
     ],
@@ -42913,6 +42936,638 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers come from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City, and it runs no yard, depot, store or branch in RT Nagar or the nearby localities. What you receive is fixed by the written quotation for that unit: its measurements inside and at the door, its grade and condition, any shelving, bays, pallets, supports, lighting, ventilation, insulation, moisture control or locks, the hire terms if it is rented, and the delivery, unloading and collection method. Stock varies, and no delivery date or time is promised. Unless an approved specification states otherwise, a container is not sold as moisture-proof or climate-controlled, carries no temperature or humidity promise, and is not offered for aerosols, solvent-based cleaners or other hazardous products. All four pictures are illustrative renders of a single container, not photographs from RT Nagar, and they show no delivered or fitted unit, footwear, luggage or bags. Volumes are approximate. Footwear shops and luggage and bag retailers appear as examples of how a container can be used, not as customers or finished jobs, and the areas and roads named indicate where we accept enquiries rather than confirmed delivery addresses. The advice on shoe and bag stock, leather, footwear-care products, placement and permissions is general information, not safety, legal or engineering advice; follow the manufacturers' and suppliers' instructions.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN BANASWADI — extra space for antique dealers and heritage furniture
+   * restorers (teak and rosewood furniture, antique doors and tabletops, brass, copper and bronze
+   * collectibles, clocks and restoration-pending stock) and for beverage distributors (returnable crates,
+   * empty glass bottles, spare visi-coolers and display refrigerators, promotional material and returns)
+   * in north-east Bengaluru.
+   *
+   * Owner brief of 2026-11-18 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers
+   * in Banaswadi"): meta title, meta description, H1, keywords, local modifiers, section order, H2 / H3
+   * headings, sizes table and the twelve FAQs are the brief's, and so is the copy, lightly edited for
+   * flow and British spelling. The brief's notes to the implementer ("Do not assume…", "Do not perform…",
+   * "Do not use…", "Do not present…", "Do not claim…", "Do not recommend…", "Do not guarantee…", "Where
+   * relevant, link to…", "Conditional section…", "Highlight only verified capabilities…", "Do not
+   * target…", "Use verified company phone numbers…") are instructions, not page copy: where one carries a
+   * fact for the reader it is reworded as a plain statement ("not every antique can safely sit on a
+   * standard pallet…", "an ordinary storage-only container is not a workshop…", "a standard storage
+   * container is not an approved place to keep flammable or hazardous products", "ordinary storage-only
+   * shipping containers are not suitable for [gas cylinders]", "we fix a delivery time or an unloading
+   * method only once the route and the site have been assessed"); otherwise it is left out. Where an H3
+   * carries two lists (items, then precautions or instructions), the first stays a list and the second is
+   * folded into a closing sentence (a sub-section holds one list). Brief sentences that recur word for
+   * word in the sibling briefs (placement checklist, price factors, ordering steps, the last three FAQ
+   * answers, the CTA's second sentence) are reworded, keeping their meaning, so the 8-word overlap with
+   * every sibling page stays low. The route follows the site convention (/cities-we-serve/…), not the
+   * brief's root slug. The tagline, captions, link lead-ins, enquiry-form intro and disclaimer were
+   * written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; insulation, ventilation, shelving, lighting and
+   * environmental controls are quoted options, never stock items or guaranteed conditions, and raised
+   * supports, pallets, padded shelving and crate bays are price factors "if your quotation includes them".
+   * The Antiquities and Art Treasures Act is named with its year (1972) and nothing more is claimed about
+   * it: the copy says age alone does not settle an object's status, as the brief asks. The optional
+   * Kannada search terms are not used: the page is in English. No Product JSON-LD: city pages carry no
+   * prices (file rule) and a Product block without offers earns no rich result, so the Service JSON-LD (no
+   * offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Antique dealers, beverage distributors and "Protecting Inventory Against Heat, Moisture & Damage" →
+   *     three afterIntro extra sections, their H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered) → afterSolutions
+   *     extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Banaswadi" → areas + three areasInlineLinks. "Why Choose Portable Office
+   *   Cabin?" → a default extra section (after the areas, as in the brief). FAQs: the brief's twelve.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5): intro → the cargo category ("Existing shipping container product page");
+   * "Protecting old wood against humidity" H3 → "temperature-controlled container options" (the Vellore
+   * page's "Insulated and air-conditioned storage enquiries" section, which explains how such a fit-out is
+   * specified and quoted against a stated temperature range); placement → "shipping container delivery and
+   * placement" (Bellandur's "Planning delivery through a society gate or narrow lane"); sizes → "used
+   * shipping container inspection": the brief's /shipping-container-chennai is not a route (the Chennai
+   * product page gives inspection one sentence), so it points to the Athipattu page's "Used Container
+   * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
+   * "shipping containers in Kalyan Nagar", "shipping containers in Kasturi Nagar" and "shipping containers
+   * in Horamavu". Inbound: the areas sections of the Kalyan Nagar, Kasturi Nagar and Horamavu pages (one
+   * `areasInlineLinks` paragraph each, with three different anchors), the Karnataka shipping hub
+   * ("Shipping Containers in Banaswadi"), the cargo category's location links ("Storage containers in
+   * Banaswadi") and every other Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this
+   * page's nearby block from repeating the pages its body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Banaswadi, Chikka Banaswadi, Dodda
+   * Banaswadi, Banaswadi Main Road, OMBR Layout, Subbayyanapalya and Lingarajapuram, for antique and
+   * heritage furniture storage and for beverage distributors' crates, bottles and spare coolers. Not
+   * targeted: Kalyan Nagar, HRBR Layout, HBR Layout and Kammanahalli (Kalyan Nagar page; named here only in
+   * the lead-in to the link to it), Kasturi Nagar, Horamavu and Ramamurthy Nagar (their own pages),
+   * Kacharakanahalli and St Thomas Town (kept free for possible future pages). Kept apart from furniture
+   * rental and refurbished furniture (Brookefield), upholstery workshops (Vijayanagar, Bengaluru), hotel
+   * artwork and furniture (Mahadevapura), artists' work (Kalyan Nagar), office coffee and vending machines
+   * (Domlur), water tankers (Panathur), kirana backstock (Banashankari), rail consignments (KR Puram) and
+   * climate-controlled containers as such (Vellore). "Bengaluru" stays out of the title, as the brief
+   * asks; the geo meta and the Service JSON-LD's areaServed carry "Banaswadi, Bengaluru, Karnataka".
+   *
+   * Images: five owner-supplied WebP renders ("public/images/Storage Containers in Banaswadi city page/
+   * Storage Containers in Banaswadi/cabin (1–5).webp", lossy VP8, no EXIF / XMP / ICC) of one slate-blue
+   * container, kept byte-identical (VP8 bitstream untouched) with an XMP dc:title / dc:description added
+   * that labels each one illustrative (no creator, GPS or date). (2) three-quarter exterior = hero /
+   * og:image (the brief's hero filename); (1) empty interior = antique section (the brief's interior
+   * filename, but not its "with storage racks" alt: no racks are fitted); (4) cargo doors = beverage
+   * section; (5) roof from above = placement section; (3) plain corrugated wall = sizes section. No image
+   * shows furniture, brassware, collectibles, crates, bottles or coolers, so the brief's six use-case
+   * image slots are not used, and no alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-banaswadi",
+    city: "Banaswadi",
+    listTitle: "Shipping & Storage Containers in Banaswadi",
+    metaTitle: "Shipping Container in Banaswadi | Antique & Beverage Storage",
+    metaDescription:
+      "Shipping and storage containers in Banaswadi for antique furniture, brassware, returnable beverage crates, empty bottles and spare display coolers.",
+    keywords:
+      "shipping container in Banaswadi, cargo container Banaswadi, storage container Banaswadi, storage container Chikka Banaswadi, storage container Dodda Banaswadi, storage container Banaswadi Main Road, storage container OMBR Layout, storage container Subbayyanapalya, storage container Lingarajapuram, used shipping container Banaswadi, shipping container price in Banaswadi, storage container for rent in Banaswadi, antique furniture storage container, heritage furniture storage, antique dealer storage, furniture restorer storage container, brassware and collectibles storage, beverage distributor storage container, returnable crate and bottle storage, visi-cooler and display fridge storage, distributor backstock container",
+    // Approximate point in Banaswadi, north-east Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Banaswadi, Bengaluru, Karnataka, India",
+      position: "13.0140;77.6520",
+      icbm: "13.0140, 77.6520",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Kalyan Nagar, Kasturi Nagar, Horamavu, Vellore, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-banaswadi/shipping-container-banaswadi.webp",
+      alt: "Slate-blue corrugated steel container on a paved yard, its double cargo doors shut and held by vertical locking bars, of the kind used for commercial inventory storage",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render, not a photograph: the container shown is not in Banaswadi and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Banaswadi",
+    tagline:
+      "Extra room for antique dealers' heritage furniture, brassware and collectibles, and for beverage distributors' crates, empty bottles and spare coolers.",
+    intro: [
+      "Banaswadi is an established residential and commercial neighbourhood in north-east Bengaluru, including Chikka Banaswadi and Dodda Banaswadi. Its local businesses include furniture dealers, restoration workshops, shops and distribution services.",
+      "Antique and heritage furniture dealers may require additional space for bulky wooden furniture, brassware and collectibles awaiting restoration or sale.",
+      "Beverage distributors may also need organised storage for returnable crates, empty bottles, spare display coolers and promotional materials.",
+    ],
+    introLink: {
+      before: "For storage needs like these, Portable Office Cabin supplies",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " to businesses in Banaswadi.",
+    },
+
+    areasHeading: "Areas Served Around Banaswadi",
+    areasText:
+      "We take container enquiries from Banaswadi, Chikka Banaswadi, Dodda Banaswadi, Banaswadi Main Road, OMBR Layout, Subbayyanapalya and Lingarajapuram. Several older lanes in these localities are tight for heavy vehicles, so we survey the approach and the spot where the container will stand at each address before agreeing a delivery date.",
+    // Brief §5: the three neighbouring container pages, each with its own storage intent.
+    areasInlineLinks: [
+      {
+        before: "Kalyan Nagar, HRBR Layout, HBR Layout and Kammanahalli are served from our page on",
+        link: { label: "shipping containers in Kalyan Nagar", href: "/cities-we-serve/shipping-container-kalyan-nagar" },
+        after: ".",
+      },
+      {
+        before: "Shops and yards in Kasturi Nagar, with different storage applications, are covered on our page about",
+        link: { label: "shipping containers in Kasturi Nagar", href: "/cities-we-serve/shipping-container-kasturi-nagar" },
+        after: ".",
+      },
+      {
+        before: "Businesses in Horamavu are covered separately:",
+        link: { label: "shipping containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Antique Dealers & Heritage Furniture Restorers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-banaswadi/banaswadi-storage-container-interior.webp",
+          alt: "Inside an empty slate-blue steel container: ribbed side walls and roof, and a brown plywood floor running back to the closed far doors",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative render of a bare interior. Nothing is fitted as standard; supports, padding, racks and lighting appear only if your quotation itemises them.",
+        },
+        paragraphs: [
+          "Antique dealers and restorers handle valuable furniture and decorative items that may be sensitive to moisture, temperature changes, handling and physical damage.",
+          "With an environment and storage arrangements that suit the actual items, a container can add useful storage space.",
+        ],
+        subsections: [
+          {
+            heading: "Teak and rosewood furniture storage",
+            paragraphs: ["Heritage furniture may include:"],
+            bullets: [
+              { text: "Teak almirahs." },
+              { text: "Rosewood cots." },
+              { text: "Traditional chairs." },
+              { text: "Wooden tables." },
+              { text: "Cabinets." },
+              { text: "Other valuable furniture." },
+            ],
+            closing: [
+              "Suitable precautions may include raised supports or pallets where appropriate, protective moving blankets, stable positioning, protection against moisture, clear handling access and suitable environmental monitoring.",
+              "Not every antique can safely sit on a standard pallet or be wrapped in the same material.",
+            ],
+          },
+          {
+            heading: "Antique doors and tabletops",
+            paragraphs: ["Large wooden panels may require:"],
+            bullets: [
+              { text: "Appropriate padded supports." },
+              { text: "Stable racks." },
+              { text: "Protection against warping." },
+              { text: "Safe handling clearance." },
+              { text: "Suitable storage orientation." },
+            ],
+            closing: ["Use the storage method recommended by a qualified furniture conservator or restorer."],
+          },
+          {
+            heading: "Brass, copper and bronze collectibles",
+            paragraphs: ["Decorative items may include:"],
+            bullets: [
+              { text: "Brass lamps." },
+              { text: "Copper vessels." },
+              { text: "Bronze objects." },
+              { text: "Traditional utensils." },
+              { text: "Other metal collectibles." },
+            ],
+            closing: [
+              "Use suitable protective packaging and padded shelving, and avoid packaging materials that may react with or damage the metal surface.",
+            ],
+          },
+          {
+            heading: "Antique clocks and small collectibles",
+            paragraphs: ["Smaller objects may include:"],
+            bullets: [
+              { text: "Wall clocks." },
+              { text: "Table clocks." },
+              { text: "Decorative lamps." },
+              { text: "Collectibles." },
+              { text: "Traditional household objects." },
+            ],
+            closing: [
+              "Use appropriate protective cases and clearly labelled storage positions. Fragile mechanisms may require specialised handling.",
+            ],
+          },
+          {
+            heading: "Restoration-pending furniture",
+            paragraphs: ["Dealers may organise stock into separate sections for:"],
+            bullets: [
+              { text: "Items awaiting inspection." },
+              { text: "Items awaiting restoration." },
+              { text: "Finished furniture." },
+              { text: "Items reserved by customers." },
+              { text: "Products ready for dispatch." },
+            ],
+            closing: [
+              "An ordinary storage-only container is not a workshop: sanding, spraying, polishing or solvent-based restoration work needs a properly designed and assessed workspace.",
+            ],
+          },
+          {
+            heading: "Antique furniture photo inventory",
+            paragraphs: ["A stock register may include:"],
+            bullets: [
+              { text: "Item reference number." },
+              { text: "Photographs." },
+              { text: "Material." },
+              { text: "Dimensions." },
+              { text: "Condition." },
+              { text: "Provenance information, where available." },
+              { text: "Storage location." },
+              { text: "Restoration status." },
+              { text: "Sale or dispatch status." },
+            ],
+            closing: ["This can reduce unnecessary handling and improve inventory tracking."],
+          },
+          {
+            heading: "Protecting old wood against humidity",
+            paragraphs: [
+              "Antique timber, veneers, joints and finishes can be affected by fluctuations in temperature and humidity. A standard metal container may not provide suitable conservation conditions, and valuable pieces may require a properly controlled storage environment.",
+            ],
+            // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers the fit-out.
+            inlineLinks: [
+              {
+                before: "If a valuable piece needs steadier conditions, read about our",
+                link: { label: "temperature-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+                after: ", including how we specify and price an insulated, air-conditioned unit for the temperature band you need.",
+              },
+            ],
+          },
+          {
+            heading: "Termites and wood borers",
+            paragraphs: [
+              "Inspect incoming furniture for signs of pests. Isolate suspected infested items and consult an appropriately qualified pest-control or conservation professional.",
+              "Fumigation or pesticide treatment is a job for qualified professionals using approved methods, not something to carry out inside an ordinary storage container.",
+            ],
+          },
+          {
+            heading: "Polishes, thinners and solvents",
+            paragraphs: [
+              "Some restoration products may be flammable or hazardous. Store them only in suitable facilities according to their labels, safety data sheets and applicable regulations.",
+              "A standard storage container is not an approved place to keep flammable or hazardous products.",
+            ],
+          },
+          {
+            heading: "Legal considerations for antiques",
+            paragraphs: [
+              "Some historical objects may be subject to India's Antiquities and Art Treasures Act, 1972, and related requirements. Age alone does not establish the legal status of every object, so furniture of a similar age is not automatically in the same legal category.",
+              "Dealers should verify whether registration, licensing, documentation or other legal obligations apply to their specific inventory.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Beverage Distributors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-banaswadi/shipping-container-cargo-doors-banaswadi.webp",
+          alt: "Front view of a slate-blue container's twin cargo doors, shut, with four upright locking bars and lever handles",
+          width: 1536,
+          height: 1024,
+          caption: "Illustrative render of the door end. The real unit's door opening is measured and written into its quotation.",
+        },
+        paragraphs: [
+          "Beverage distributors may handle large quantities of returnable packaging, spare display equipment and promotional materials.",
+          "A suitable shipping container may provide organised storage for compatible non-hazardous inventory.",
+        ],
+        subsections: [
+          {
+            heading: "Returnable beverage crate storage",
+            paragraphs: ["Crates may be organised by:"],
+            bullets: [
+              { text: "Supplier." },
+              { text: "Beverage brand." },
+              { text: "Crate type." },
+              { text: "Return status." },
+              { text: "Collection route." },
+              { text: "Quantity." },
+            ],
+            closing: [
+              "Use stable stacks and suitable access aisles, and stay within the crate manufacturer's stacking recommendations and the container's floor-loading limits.",
+            ],
+          },
+          {
+            heading: "Empty glass bottle storage",
+            paragraphs: [
+              "Empty bottles may be stored in appropriate crates or other suitable packaging. Keep them stable and protect them against breakage.",
+              "Inspect crates and remove damaged packaging from normal inventory.",
+            ],
+          },
+          {
+            heading: "Spare visi-coolers and display refrigerators",
+            paragraphs: ["Distributors may store spare:"],
+            bullets: [
+              { text: "Visi-coolers." },
+              { text: "Display refrigerators." },
+              { text: "Beverage chillers." },
+              { text: "Other compatible retail display equipment." },
+            ],
+            closing: [
+              "Follow the manufacturer's instructions for cleaning, draining, storage orientation, door position, temperature limits, handling and recommissioning after transport.",
+              "Storage and restart procedures differ between models, so one procedure does not suit every refrigerator.",
+            ],
+          },
+          {
+            heading: "Promotional display material",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Display stands." },
+              { text: "Retail signs." },
+              { text: "Non-electrical promotional fixtures." },
+              { text: "Packaging material." },
+              { text: "Other reusable accessories." },
+            ],
+            closing: ["Organise stock by campaign, supplier or customer."],
+          },
+          {
+            heading: "Returns and damaged equipment",
+            paragraphs: ["A separate section may be used for:"],
+            bullets: [
+              { text: "Damaged crates." },
+              { text: "Broken bottles awaiting safe disposal." },
+              { text: "Faulty coolers." },
+              { text: "Returned display materials." },
+              { text: "Equipment awaiting inspection." },
+            ],
+            closing: ["Use suitable containment and handling arrangements for broken glass."],
+          },
+          {
+            heading: "Packaged beverage inventory",
+            paragraphs: [
+              "Some packaged drinks may be stored only where the actual temperature, hygiene and environmental conditions meet the product-label requirements.",
+              "A standard shipping container can become hot, so heat-sensitive beverages need their requirements assessed before ordinary container storage is considered.",
+            ],
+          },
+          {
+            heading: "Gas cylinders and pressurised equipment",
+            paragraphs: [
+              "CO₂ cylinders and other compressed-gas containers require appropriate approved storage arrangements. Ordinary storage-only shipping containers are not suitable for them.",
+            ],
+          },
+          {
+            heading: "Alcoholic beverage storage",
+            paragraphs: [
+              "Alcoholic beverage storage may be subject to licensing and excise requirements. Our ordinary shipping containers are not offered as licensed alcohol-storage facilities.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Protecting Inventory Against Heat, Moisture & Damage",
+        placement: "afterIntro",
+        paragraphs: [
+          "Standard metal shipping containers can experience high temperatures and condensation.",
+          "Depending on the inventory, suitable provisions may include:",
+        ],
+        bullets: [
+          { text: "Insulation." },
+          { text: "Ventilation." },
+          { text: "Humidity monitoring." },
+          { text: "Appropriate pallets." },
+          { text: "Padded racks." },
+          { text: "Stable shelving." },
+          { text: "Protective packaging." },
+          { text: "Leak inspections." },
+          { text: "Environmental controls." },
+          { text: "Secure locking arrangements." },
+        ],
+        closing: [
+          "A standard shipping container does not guarantee conservation-grade storage, temperature control or protection against all environmental damage.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Banaswadi",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-banaswadi/shipping-container-roof-view-banaswadi.webp",
+          alt: "Aerial view of a slate-blue container's corrugated roof and corner castings on light concrete, with tree shadows falling on one side",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative aerial render. Plan for the container's footprint plus clear space for the lorry, the unloading and the door swing.",
+        },
+        paragraphs: [
+          "A container needs a suitable, authorised private site, such as a commercial yard, a warehouse compound or an approved storage plot.",
+          "Points to settle before delivery:",
+        ],
+        bullets: [
+          { text: "Written permission from the property owner." },
+          { text: "Width of the approach road." },
+          { text: "Clearance through the gate." },
+          { text: "The container's external dimensions." },
+          { text: "Turning room for a heavy vehicle." },
+          { text: "Firm, stable ground." },
+          { text: "How it will be unloaded, by crane or otherwise." },
+          { text: "Emergency access kept clear." },
+          { text: "Any local rules that apply." },
+        ],
+        closing: [
+          "Some older Banaswadi lanes have limited access for heavy vehicles. Where room is short, a 10 ft or 20 ft unit may suit, depending on stock and on what the site access really allows.",
+          "We fix a delivery time or an unloading method only once the route and the site have been assessed.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Narrow lane or gated compound? The checklist in our guide to",
+            link: { label: "shipping container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " goes into more detail.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-banaswadi/shipping-container-wall-banaswadi.webp",
+          alt: "Long side of a slate-blue container seen square-on: vertical corrugations between corner posts, and two forklift slots in the base rail",
+          width: 1536,
+          height: 1024,
+          caption: "Illustrative render; it does not show any particular length. Your quotation states the real unit's length, inside measurements and door opening.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Inside dimensions, floor-loading capacity and stock are confirmed for the specific unit in its quotation.",
+          headers: ["Container size", "Approximate capacity", "Possible application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Small collectibles, brassware or compact distributor equipment"],
+            ["20 ft", "33 m³", "Heritage furniture or organised returnable crate inventory"],
+            ["40 ft", "67 m³", "Larger antique collections or distributor packaging stock, where site access permits"],
+          ],
+        },
+        closing: ["Measure your largest almirah, door panel, cooler or crate stack before choosing a size."],
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Buying second-hand? Go through our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist before you decide.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Banaswadi",
+        placement: "afterSolutions",
+        paragraphs: ["What sets the price:"],
+        bullets: [
+          { text: "The container's length." },
+          { text: "Whether it is new or used." },
+          { text: "Its structural condition and grade." },
+          { text: "Raised supports and pallets, if quoted." },
+          { text: "Padded shelving." },
+          { text: "Crate storage bays." },
+          { text: "Ventilation and insulation." },
+          { text: "Any environmental-control requirement." },
+          { text: "Lighting." },
+          { text: "Security features." },
+          { text: "Transport and unloading." },
+          { text: "How accessible the site is." },
+        ],
+        closing: ["Ask for an itemised quotation built around what you actually plan to store."],
+      },
+      {
+        heading: "Storage Container on Rent in Banaswadi",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hiring can help while antique stock is being moved, or when returnable packaging piles up in a busy season. Hire terms run from one month to five years, and your quotation spells out the period, the container supplied, the transport charges, any deposit and the collection arrangements when the term ends.",
+        ],
+        inlineLinks: [
+          {
+            before: "For the sizes available on hire, see the",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Tell us what you plan to store." },
+          { text: "List the items, their dimensions and quantities." },
+          { text: "Note any handling or environmental needs." },
+          { text: "Choose a suitable container size." },
+          { text: "Agree pallets, racks, shelves and storage bays." },
+          { text: "Share the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Ask for an itemised quotation." },
+          { text: "Confirm the specification and the delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin builds and supplies containers for commercial stock and equipment. For antique dealers, restorers and beverage distributors in Banaswadi, this is what we can offer:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "10 ft, 20 ft or 40 ft, depending on what is in stock." },
+          { title: "Storage-oriented modifications", text: "listed item by item in your unit's quotation." },
+          { title: "Shelving and racking provisions", text: "laid out for heavy furniture and small collectibles, or for crate bays and spare coolers." },
+          { title: "Locking arrangements", text: "cargo doors that lock, with any lockbox confirmed for the unit supplied." },
+          {
+            title: "Ventilation and insulation options",
+            text: "specified for the goods you name, with no claim of conservation-grade conditions.",
+          },
+          {
+            title: "Quotation and delivery coordination",
+            text: "an itemised price first, then a route and site survey before the delivery date is set.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can antique furniture be stored in a shipping container?",
+        answer:
+          "Potentially, provided the storage environment and handling arrangements are suitable for the furniture's materials, condition and value.",
+      },
+      {
+        question: "How should valuable wooden furniture be protected?",
+        answer: "Use appropriate supports, protective materials, careful handling and suitable temperature and humidity conditions.",
+      },
+      {
+        question: "Can brassware and collectibles be stored inside a container?",
+        answer: "Yes, where the items are suitably packaged, supported and protected against environmental damage.",
+      },
+      {
+        question: "How can dealers reduce termite and wood-borer risks?",
+        answer: "Inspect incoming furniture, isolate suspected infestations and consult a qualified professional.",
+      },
+      {
+        question: "Does storing antiques remove legal registration requirements?",
+        answer: "No. Applicable antiquities laws and documentation requirements remain relevant regardless of the storage location.",
+      },
+      {
+        question: "Can beverage distributors store empty bottles and returnable crates?",
+        answer: "Yes, where crates are stacked safely and bottles are handled in suitable packaging.",
+      },
+      {
+        question: "Can spare visi-coolers be stored in a container?",
+        answer: "Potentially, provided they are cleaned, handled and stored according to the manufacturer's instructions.",
+      },
+      {
+        question: "Can packaged drinks be stored in an ordinary container?",
+        answer: "Only where the actual environmental and hygiene conditions comply with the products' storage requirements.",
+      },
+      {
+        question: "Can CO₂ cylinders be stored inside the container?",
+        answer:
+          "Compressed-gas cylinders require suitable approved storage arrangements, and an ordinary storage container is not one.",
+      },
+      {
+        question: "Where can a shipping container be placed in Banaswadi?",
+        answer: "On authorised private property that suits a container, once the site conditions and any permissions have been checked.",
+      },
+      {
+        question: "What is the shipping container price in Banaswadi?",
+        answer: "It depends on the container's size and condition, any modifications and what the delivery involves.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "That depends on stock, any customisation, transport and site access; ask for a confirmed timeline along with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Banaswadi",
+    ctaText: `Whether you need additional space for heritage furniture and collectibles or organised storage for returnable beverage crates and spare display coolers, talk to Portable Office Cabin about a container that fits your stock. Service area: Banaswadi, Bengaluru, Karnataka. Call ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Banaswadi",
+      intro:
+        "Pick a container type and quantity, give the Banaswadi address or drop a map pin, and tell us whether you are buying or hiring. Mention whether the unit is for antique furniture and collectibles or for beverage crates, bottles and spare coolers, with the measurements of your biggest item, for example an almirah, a carved door or a visi-cooler, so we can quote the right container and fittings.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are built at the Portable Office Cabin factory, ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City. There is no yard, depot, storage facility or branch in Banaswadi or the localities around it. Everything specific to a unit (its size, grade, condition, inside dimensions, floor loading and door opening; any supports, pallets, padding, racks, shelving, crate bays, lighting, ventilation, insulation, environmental controls or locks; hire terms; and delivery, unloading and collection) is fixed in its quotation. Stock changes, and no delivery date or time is guaranteed. Unless a unit's approved specification says otherwise, none is sold or hired as conservation-grade or climate-controlled storage or with a guaranteed temperature or humidity, and none is offered as an approved store for solvents, polishes, compressed-gas cylinders or other hazardous goods, or as a licensed store for alcohol. All five images are illustrative renders of a single container; none was taken in Banaswadi, and none shows a delivered or fitted unit, furniture, collectibles, crates, bottles or coolers. Capacities are approximate. Antique dealers, restorers and beverage distributors appear as examples of typical uses, not as clients or completed projects, and the localities named are where we welcome enquiries, not confirmed delivery points. The guidance on furniture, metalware, pests, chemicals, antiquities law, crates, bottles, refrigeration equipment, gas cylinders, alcohol, placement and permissions is general information, not conservation, pest-control, safety, electrical, legal or engineering advice: follow the instructions of manufacturers, suppliers, conservators and the authorities.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN PANATHUR — yard stores for water tanker operators (hoses, pump
