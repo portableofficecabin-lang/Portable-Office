@@ -43759,8 +43759,8 @@ export const CITY_PAGES: CityPage[] = [
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN YELAHANKA — packing and crating stores for air freight forwarders
    * and exporters, and tack rooms for riding schools and equestrian centres (north Bengaluru: Yelahanka
-   * New Town, Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu, Kattigenahalli, the Yelahanka
-   * stretch of Doddaballapur Road and the Yelahanka side of Bagalur Road).
+   * Old Town, Attur Layout, Allalasandra, Kogilu, Kattigenahalli, the Yelahanka stretch of Doddaballapur
+   * Road and the Yelahanka side of Bagalur Road; Yelahanka New Town has a page of its own).
    *
    * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, links and image
    * plan used as given; the brief's root slug became /cities-we-serve/<slug>, the convention of every
@@ -43798,7 +43798,7 @@ export const CITY_PAGES: CityPage[] = [
    * nearby block from repeating Bellandur, Vellore or the category. Inbound: the Karnataka shipping hub,
    * the cargo category's location links and the Karnataka shipping nearby blocks.
    *
-   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Yelahanka, Yelahanka New Town, Yelahanka
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Yelahanka, Yelahanka
    * Old Town, Attur Layout, Allalasandra, Kogilu, Kattigenahalli, the Yelahanka stretch of Doddaballapur
    * Road and the Yelahanka side of Bagalur Road, for air freight packing and export crating material
    * stores and equestrian tack rooms. Not targeted: Thanisandra, Nagawara, Jakkur and Amruthahalli (the
@@ -43806,6 +43806,12 @@ export const CITY_PAGES: CityPage[] = [
    * and Doddaballapur as separate markets, rail and road consignment staging (KR Puram), shipper-owned
    * containers and CSC plates (Chennai), kennel and shelter feed (Bannerghatta Road) and boutique garment
    * care (Indiranagar). The container-office and porta-cabin pages that list Yelahanka sell other products.
+   * Yelahanka New Town brief (2026-11-19, §6): Yelahanka New Town, Yelahanka Satellite Town, its sectors
+   * and phases and Someshwara Nagar belong to the Yelahanka New Town page (beekeeping equipment and
+   * appliance repair stock). This page dropped the "storage container Yelahanka New Town" keyword and
+   * New Town from its areas text and CTA serving line, and links there once from the areas section
+   * (`areasInlineLink`, the brief's anchor "Yelahanka New Town container page"). Title, H1, canonical,
+   * copy, images and the other links are unchanged.
    *
    * Images: four owner-dropped lossy VP8 webp renders ("public/images/Yelahanka shipping city page/Storage
    * Containers in Yelahanka/cabin (1–4).webp", no EXIF / XMP / ICC) of one dark green container with a
@@ -43827,8 +43833,8 @@ export const CITY_PAGES: CityPage[] = [
     metaDescription:
       "Shipping and storage containers in Yelahanka for export packing materials, air freight crating supplies and riding school tack rooms. Request a container quote.",
     keywords:
-      "shipping container in Yelahanka, cargo container Yelahanka, storage container Yelahanka, storage container Yelahanka New Town, storage container Kogilu, storage container Doddaballapur Road, used shipping container Yelahanka, shipping container price in Yelahanka, storage container for rent in Yelahanka",
-    // Yelahanka New Town, north Bengaluru (approximate).
+      "shipping container in Yelahanka, cargo container Yelahanka, storage container Yelahanka, storage container Kogilu, storage container Doddaballapur Road, used shipping container Yelahanka, shipping container price in Yelahanka, storage container for rent in Yelahanka",
+    // Yelahanka, north Bengaluru (approximate).
     geo: {
       region: "IN-KA",
       placename: "Yelahanka, Bengaluru, Karnataka, India",
@@ -43874,7 +43880,14 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas We Serve",
     areasText:
-      "Shipping and storage containers are supplied across Yelahanka New Town and Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu and Kattigenahalli, along the Yelahanka stretch of Doddaballapur Road and on the Yelahanka side of Bagalur Road. Every delivery is planned around the site's own approach and ground.",
+      "We supply shipping and storage containers across Yelahanka, including Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu and Kattigenahalli, along the Yelahanka stretch of Doddaballapur Road and the Yelahanka side of Bagalur Road. Every delivery is planned around the site's own approach and ground.",
+    // Yelahanka New Town brief (2026-11-19, §6): New Town, its sectors and phases have their own page; the
+    // nearby block skips this link (areasInlineLink hrefs are always skipped).
+    areasInlineLink: {
+      before: "For Yelahanka New Town, see our",
+      link: { label: "Yelahanka New Town container page", href: "/cities-we-serve/shipping-container-yelahanka-new-town" },
+      after: ".",
+    },
 
     extraSections: [
       {
@@ -44174,7 +44187,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Storage for the Gateway to the North",
-    ctaText: `Whether you're crating shipments bound for the airport or keeping a riding school's saddles dry and secure, tell us how you work and we'll put together a container and a quotation to match. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Yelahanka New Town, Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu and Kattigenahalli.`,
+    ctaText: `Whether you're crating shipments bound for the airport or keeping a riding school's saddles dry and secure, tell us how you work and we'll put together a container and a quotation to match. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Yelahanka, Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu and Kattigenahalli.`,
     // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Shipping Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -44198,6 +44211,774 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers for Yelahanka are dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and handled through its Electronic City office in Bengaluru; the company has no yard, depot or office in Yelahanka. The uses described here, a packing and crating store and a tack room, are ways a customer can set up a container on land they own or are authorised to use; Portable Office Cabin does not run a storage, packing, freight-forwarding, wood-treatment or air cargo security service. Stock varies, so the unit offered, its size, grade, condition and dimensions, the fittings (bearers, shelves, bins, racks, hooks, a desk, lighting, vents, climate control, locks), any hire period and the delivery, unloading and collection are set out in writing in each quotation; no delivery date, site access or fit of a particular size on a plot is promised. The four images are renders of one container with a glazed side panel, included for illustration only: none was photographed in Yelahanka, and none shows a delivered unit, a packing store or a tack room. Forwarders, exporters, riding schools and equestrian centres appear as examples of who might use a container, not as customers or finished projects, and the localities named are areas where enquiries are welcome rather than confirmed delivery sites. Information on ISPM 15, air cargo security, dangerous goods, leather care, humidity, feed and veterinary medicines is general guidance, not regulatory, legal, veterinary or compliance advice; follow the requirements of your forwarder, treatment provider, vet and product manufacturers.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN YELAHANKA NEW TOWN — equipment stores for beekeepers and honey
+   * sellers (empty hive boxes and supers, frames, drawn comb, beeswax foundation, extractors, settling
+   * tanks, protective clothing, smokers, empty jars) and for home appliance repair shops (machines awaiting
+   * repair or collection, standby units, spare parts, faulty components) in north Bengaluru.
+   *
+   * Owner brief of 2026-11-19 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Yelahanka New Town, Bengaluru"): meta title, meta description, H1, keywords, local modifiers, section
+   * order, H2 / H3 headings, sizes table and the thirteen FAQs are the brief's, and so is the copy, lightly
+   * edited for flow and British spelling. The brief's notes to the implementer ("Do not recommend…", "Do
+   * not apply one universal…", "should not be advertised…", "should not automatically be described…",
+   * "Do not promise delivery…", "Do not invent…", "Conditional section…", "Highlight only verified
+   * capabilities…", "Use verified company phone numbers…") are instructions, not page copy: where one
+   * carries a fact for the reader it is reworded as a plain statement ("an ordinary shipping container is
+   * not a suitable place to keep or move live bee colonies", "door positions differ between models",
+   * "a delivery hour can be agreed only after…"); otherwise it is left out. Advice addressed to the reader
+   * ("Do not store burning or hot equipment…", "Do not vent refrigerant…", "Do not charge batteries…")
+   * stays. The route follows the site convention (/cities-we-serve/…), not the brief's root slug. The
+   * tagline, captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists 10 ft to 40 ft high cube units on hire from one month to five years; no deposit, price or
+   * delivery charge is stated here); the 10 ft row keeps the brief's "if available"; racks, shelves,
+   * rails, drawers, bays, lighting, ventilation, insulation and environmental control are price factors or
+   * quoted fit-outs, never stock items or guaranteed conditions. No food-grade, climate-control, wax-moth
+   * or workshop claim is made. The optional Kannada search terms are not used: the page is in English. No
+   * Product JSON-LD: city pages carry no prices (file rule) and a Product block without offers earns no
+   * rich result, so the Service JSON-LD (no offers, area served = the geo placename, not an address),
+   * FAQPage (the thirteen visible FAQs) and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Beekeepers & honey sellers, "Honey, Beeswax & Food Storage Requirements", home appliance repair
+   *     shops, "Appliance Storage Safety" and "Storage Container Layout Options" → five afterIntro extra
+   *     sections, their H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered) → afterSolutions
+   *     extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Yelahanka New Town" → areas + one areasInlineLink (Yelahanka). "Why Choose
+   *   Portable Office Cabin?" → a default extra section (after the areas, as in the brief). FAQs: the
+   *   brief's thirteen. CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the
+   *   cargo enquiry form.
+   *
+   * LINKS (brief §5; every target checked for a section that supports its anchor): intro → the cargo
+   * category ("Existing shipping container product page"); beekeeping section → "dairy farm storage
+   * containers in Varthur" (its "Shipping Containers for Dairy Farmers" section) and "agri-tech field
+   * equipment storage in Hebbal" (its field-trial instruments, sensors and drone cases); "Honey storage"
+   * H3 → "temperature-controlled storage options" (the Vellore page's "Insulated and air-conditioned
+   * storage enquiries" section); appliance repair section → "AC installer stock storage in Horamavu" (its
+   * AC and appliance installation stores), "appliance staging for interior contractors in Mahadevapura"
+   * (its "Staging Stores for Interior Contractors", which covers appliances arriving before fit-out) and
+   * "coffee and vending machine storage in Domlur"; placement → "shipping container delivery and
+   * placement" (Bellandur's "Planning delivery through a society gate or narrow lane"); sizes → "used
+   * shipping container inspection": the brief's /shipping-container-chennai is not a route, so it points
+   * to the Athipattu page's "Used Container Inspection" checklist, as the sibling pages do; rental →
+   * /products/shipping-container-rental; areas → "shipping containers in Yelahanka" (Yelahanka Old Town,
+   * Attur Layout, Allalasandra, Kogilu and Kattigenahalli). The brief's Marathahalli link ("electronics
+   * repair") is NOT added: the published Marathahalli ORR page covers showroom overflow, archives and
+   * sports turfs, not electronics repair. Inbound: the Yelahanka page's areas section (one
+   * `areasInlineLink`, "Yelahanka New Town container page", the brief's anchor), the Karnataka shipping hub
+   * ("Shipping Containers in Yelahanka New Town") and the cargo category's location links ("Storage
+   * containers in Yelahanka New Town"), both placed straight after Yelahanka's own line, and every
+   * Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from
+   * repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Yelahanka New Town (always in full),
+   * Yelahanka Satellite Town, Sector A, Sector B, Yelahanka New Town 4th Phase and 5th Phase and
+   * Someshwara Nagar, for beekeeping and honey-processing equipment storage and home appliance repair
+   * shop inventory. The same brief moved Yelahanka New Town off the Yelahanka page (keywords, areas, CTA
+   * serving line and header comment); that page keeps bare "Yelahanka", Yelahanka Old Town, Attur Layout,
+   * Allalasandra, Kogilu, Kattigenahalli and the Yelahanka stretches of Doddaballapur and Bagalur Roads
+   * (named here only in the link to it). Not targeted: Puttenahalli, Judicial Layout and Kenchenahalli
+   * (names shared with other localities); Hebbal, Thanisandra and Jakkur. Kept apart from dairy farm
+   * storage (Varthur), agri-tech field equipment (Hebbal), honey retail shelves and shops (the RR Nagar and
+   * Mandya portable shop pages), electronics and vehicle-service stock, AC installer stock (Horamavu),
+   * appliance staging for interior contractors (Mahadevapura), office coffee and vending machines (Domlur)
+   * and climate-controlled containers as such (Vellore). "Bengaluru" stays out of the title, as the brief
+   * asks; the geo meta and the Service JSON-LD's areaServed carry "Yelahanka New Town, Bengaluru,
+   * Karnataka".
+   *
+   * Images: four owner-supplied WebP renders ("public/images/Storage Containers yelahanka New Town city
+   * page/Storage Containers in Yelahanka New Town/cabin (1–4).webp", lossy VP8, no EXIF / XMP / ICC), kept
+   * byte-identical (VP8 bitstream untouched) with an XMP dc:title / dc:description added that labels each
+   * one illustrative (no creator, GPS or date). (2) blue-green container with grey cargo doors = hero /
+   * og:image (the brief's hero filename); (3) empty interior = layout section (the brief's interior
+   * filename, but not its "with shelves and equipment storage bays" alt: nothing is fitted); (1) teal side
+   * wall = sizes section; (4) roof from above = placement section. No image shows hive boxes, frames,
+   * extractors, settling tanks, beeswax, bee suits, washing machines, refrigerators or spare parts, so the
+   * brief's nine use-case image slots are not used, and no alt text, caption or filename claims those
+   * items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-yelahanka-new-town",
+    city: "Yelahanka New Town",
+    listTitle: "Shipping & Storage Containers in Yelahanka New Town",
+    metaTitle: "Shipping Container in Yelahanka New Town | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Yelahanka New Town for beekeepers, honey sellers and appliance repair shops storing hive equipment, spare parts and appliances.",
+    keywords:
+      "shipping container in Yelahanka New Town, cargo container Yelahanka New Town, storage container Yelahanka New Town, storage container Yelahanka Satellite Town, storage container Someshwara Nagar, storage container Yelahanka 4th Phase, storage container Yelahanka 5th Phase, used shipping container Yelahanka New Town, shipping container price in Yelahanka New Town, storage container for rent in Yelahanka New Town, beekeeping equipment storage container, empty bee hive box storage, beekeeping frame storage, honey extractor storage, honey processing equipment storage, beeswax foundation sheet storage, drawn comb storage, appliance repair shop storage container, washing machine repair stock storage, refrigerator repair stock storage, appliance spare parts storage, standby appliance storage, repaired appliance collection storage",
+    // Approximate point in Yelahanka New Town, north Bengaluru (rounded from the OpenStreetMap view of the
+    // neighbourhood; about 1.5 km west of the Yelahanka page's point; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Yelahanka New Town, Bengaluru, Karnataka, India",
+      position: "13.0970;77.5810",
+      icbm: "13.0970, 77.5810",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Yelahanka, Varthur, Hebbal, Vellore, Horamavu, Mahadevapura, Domlur, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-yelahanka-new-town/shipping-container-yelahanka-new-town.webp",
+      alt: "Shipping container exterior suitable for commercial equipment storage: blue-green corrugated steel, grey double cargo doors closed with four locking bars, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a storage container, not a photograph from Yelahanka New Town or of a container already delivered.",
+    },
+
+    h1: "Shipping & Storage Containers in Yelahanka New Town",
+    tagline:
+      "Organised, lockable storage for beekeepers' hive boxes, frames and extraction equipment, and for appliance repair shops' machines and spare parts.",
+    intro: [
+      "Yelahanka New Town is a planned residential township in north Bengaluru, also known as Yelahanka Satellite Town.",
+      "Its sectors and residential phases include established homes, local shops and businesses serving nearby households.",
+      "Home appliance repair businesses may need additional space for washing machines, refrigerators and spare parts. Beekeepers and honey sellers working in the surrounding region may also require organised storage for empty hive boxes, frames and processing equipment.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Yelahanka New Town for compatible commercial inventory and equipment requirements.",
+    },
+
+    areasHeading: "Areas Served Around Yelahanka New Town",
+    areasText:
+      "Container enquiries are welcome from across Yelahanka New Town, also called Yelahanka Satellite Town: Sector A, Sector B, Yelahanka New Town 4th Phase and 5th Phase, and Someshwara Nagar. Each address is checked for vehicle access before any delivery date is fixed.",
+    // Brief §5 and §6: Yelahanka Old Town and the localities around it belong to the Yelahanka page.
+    areasInlineLinks: [
+      {
+        before: "For Yelahanka Old Town, Attur Layout, Allalasandra, Kogilu and Kattigenahalli, see our page on",
+        link: { label: "shipping containers in Yelahanka", href: "/cities-we-serve/shipping-container-yelahanka" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Beekeepers & Honey Sellers",
+        placement: "afterIntro",
+        paragraphs: [
+          "Beekeepers handle a wide range of equipment used for hive management, honey extraction and seasonal operations.",
+          "A suitable shipping container may provide additional storage for clean, dry, non-living equipment where environmental and hygiene requirements are met.",
+        ],
+        subsections: [
+          {
+            heading: "Empty hive boxes and supers",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Empty hive boxes." },
+              { text: "Supers." },
+              { text: "Hive covers." },
+              { text: "Bottom boards." },
+              { text: "Other clean beekeeping components." },
+            ],
+            closing: [
+              "Use suitable racks or supports, and keep the equipment clean, dry and inspected for pests or contamination.",
+            ],
+          },
+          {
+            heading: "Beekeeping frames",
+            paragraphs: ["Frames may be organised by:"],
+            bullets: [
+              { text: "Frame size." },
+              { text: "Hive type." },
+              { text: "Condition." },
+              { text: "Intended use." },
+              { text: "Apiary." },
+              { text: "Storage date." },
+            ],
+            closing: ["Use stable supports to prevent damage."],
+          },
+          {
+            heading: "Drawn comb storage",
+            paragraphs: [
+              "Stored comb can be vulnerable to wax moth and other pests. Follow recognised beekeeping guidance for:",
+            ],
+            bullets: [
+              { text: "Cleaning and inspection." },
+              { text: "Suitable containment." },
+              { text: "Pest monitoring." },
+              { text: "Storage temperature." },
+              { text: "Appropriate, approved pest-management methods." },
+            ],
+            closing: ["Sealing comb in ordinary plastic bags does not, on its own, guarantee protection from wax moth."],
+          },
+          {
+            heading: "Beeswax foundation sheets",
+            paragraphs: ["Beeswax can soften or deform in high temperatures. Foundation sheets may require:"],
+            bullets: [
+              { text: "Flat, suitable supports." },
+              { text: "Manufacturer-approved packaging." },
+              { text: "Protection against heat." },
+              { text: "Protection against contamination." },
+              { text: "Appropriate environmental conditions." },
+            ],
+            closing: ["An uninsulated metal container may not be suitable for foundation sheets during hot weather."],
+          },
+          {
+            heading: "Honey extractors",
+            paragraphs: ["Compatible equipment may include honey extractors, extraction accessories and other approved processing components. Before storage:"],
+            bullets: [
+              { text: "Clean them according to food-equipment hygiene requirements." },
+              { text: "Dry them thoroughly." },
+              { text: "Protect them against dust." },
+              { text: "Use suitable covers." },
+              { text: "Inspect them again before reuse." },
+            ],
+          },
+          {
+            heading: "Honey settling tanks and strainers",
+            paragraphs: [
+              "Food-contact equipment requires appropriate cleaning, drying and protection. Store it in a clean area, separated from contaminated equipment, chemicals and pest-infested materials.",
+            ],
+          },
+          {
+            heading: "Beekeeping protective clothing",
+            paragraphs: ["Compatible items may include:"],
+            bullets: [{ text: "Bee suits." }, { text: "Veils." }, { text: "Gloves." }, { text: "Protective accessories." }],
+            closing: ["Store clean, dry clothing on suitable rails or shelves."],
+          },
+          {
+            heading: "Smokers and hand tools",
+            paragraphs: [
+              "Beekeeping smokers must be fully extinguished and cooled before storage. Do not store burning or hot equipment inside the container.",
+              "Organise compatible hive tools on suitable shelves or toolboards.",
+            ],
+          },
+          {
+            heading: "Empty honey jars and packaging",
+            paragraphs: ["Unused honey jars, lids and labels may require:"],
+            bullets: [
+              { text: "Clean packaging." },
+              { text: "Protection from dust." },
+              { text: "Protection from pests." },
+              { text: "Suitable environmental conditions." },
+              { text: "Separation from chemicals and used equipment." },
+            ],
+            closing: ["Food-contact packaging must remain suitable for its intended use."],
+          },
+          {
+            heading: "Apiary equipment register",
+            paragraphs: ["Beekeepers may keep records covering:"],
+            bullets: [
+              { text: "Hive identification." },
+              { text: "Apiary or farm." },
+              { text: "Equipment type." },
+              { text: "Equipment condition." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Cleaning status." },
+            ],
+            closing: ["A register like this helps organise seasonal equipment."],
+          },
+        ],
+        // Brief §5: other farm-related applications have pages of their own.
+        inlineLinks: [
+          {
+            before: "Storing cattle feed, milk cans and milking equipment instead? See our page on",
+            link: { label: "dairy farm storage containers in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+            after: ".",
+          },
+          {
+            before: "Field-trial instruments, sensors and drone cases are covered under",
+            link: { label: "agri-tech field equipment storage in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Honey, Beeswax & Food Storage Requirements",
+        placement: "afterIntro",
+        paragraphs: [
+          "Honey and beeswax may be sensitive to unsuitable environmental conditions. A standard metal shipping container can become hot and may experience condensation.",
+        ],
+        subsections: [
+          {
+            heading: "Honey storage",
+            paragraphs: [
+              "Honey should be stored in suitable food-grade packaging under appropriate temperature, hygiene and environmental conditions. Before storing honey inside a container, verify:",
+            ],
+            bullets: [
+              { text: "Food-storage suitability." },
+              { text: "Cleanliness." },
+              { text: "Pest protection." },
+              { text: "Temperature requirements." },
+              { text: "Packaging integrity." },
+              { text: "Applicable food-safety requirements." },
+            ],
+            closing: [
+              "Even a limited quantity of honey is not automatically safe in an ordinary shipping container. Where temperature control is required, consider a properly designed and verified solution.",
+            ],
+            // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers the fit-out.
+            inlineLinks: [
+              {
+                before: "Where a set temperature range is needed, see our",
+                link: { label: "temperature-controlled storage options", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " for how insulation and air conditioning are specified for a particular unit.",
+              },
+            ],
+          },
+          {
+            heading: "Beeswax and comb",
+            paragraphs: [
+              "Beeswax and comb may require temperature control and appropriate pest protection. Use suitable supports and follow product-specific storage recommendations.",
+            ],
+          },
+          {
+            heading: "Live bee colonies",
+            paragraphs: [
+              "An ordinary shipping container is not a suitable place to keep or transport live bee colonies, and it is not offered for that purpose. Live bee handling requires specialised equipment and appropriate beekeeping practices.",
+            ],
+          },
+          {
+            heading: "Pesticides and hive treatments",
+            paragraphs: [
+              "Some beekeeping treatments and chemicals may be hazardous. Store them separately, in suitable compliant facilities, according to their labels and applicable requirements.",
+              "Do not mix hazardous chemicals with honey, food-contact equipment or clean packaging.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Home Appliance Repair Shops",
+        placement: "afterIntro",
+        paragraphs: [
+          "Home appliance repair shops handle machines awaiting inspection, repaired equipment, standby appliances and spare parts.",
+          "A suitably configured shipping container may provide additional storage where handling, environmental and safety requirements are met.",
+        ],
+        subsections: [
+          {
+            heading: "Washing machines awaiting repair",
+            paragraphs: ["Compatible storage may include:"],
+            bullets: [
+              { text: "Washing machines awaiting inspection." },
+              { text: "Machines waiting for spare parts." },
+              { text: "Repaired machines awaiting collection." },
+              { text: "Suitable standby units." },
+            ],
+            closing: [
+              "Before storage, follow the manufacturer's guidance on draining water, cleaning, drying, securing moving components, safe handling and storage orientation.",
+            ],
+          },
+          {
+            heading: "Refrigerator storage",
+            paragraphs: [
+              "Refrigerators and freezers require appropriate handling. Follow the manufacturer's instructions for:",
+            ],
+            bullets: [
+              { text: "Upright positioning." },
+              { text: "Transport." },
+              { text: "Storage." },
+              { text: "Ventilation." },
+              { text: "Door position." },
+              { text: "Recommissioning." },
+            ],
+            closing: ["Door positions during storage differ between models, so check each appliance's instructions rather than applying one rule to all of them."],
+          },
+          {
+            heading: "Microwaves, water heaters and mixer grinders",
+            paragraphs: ["Compatible stock may include:"],
+            bullets: [
+              { text: "Microwaves." },
+              { text: "Water heaters." },
+              { text: "Mixer grinders." },
+              { text: "Other household appliances." },
+            ],
+            closing: [
+              "Store them on stable supports with appropriate protection, and make sure every appliance is disconnected from power before storage.",
+            ],
+          },
+          {
+            heading: "Appliances awaiting customer collection",
+            paragraphs: ["Create a separate section for completed repair orders, and label each unit with:"],
+            bullets: [
+              { text: "Job number." },
+              { text: "Customer reference." },
+              { text: "Appliance model." },
+              { text: "Repair status." },
+              { text: "Collection date." },
+            ],
+            closing: ["Protect customer information appropriately."],
+          },
+          {
+            heading: "Standby appliance storage",
+            paragraphs: [
+              "Repair businesses may keep a stock of loan or standby appliances. Keep inspected, ready-to-use appliances separate from faulty or untested units.",
+            ],
+          },
+          {
+            heading: "Appliance spare parts",
+            paragraphs: ["Labelled drawers or shelves may hold:"],
+            bullets: [
+              { text: "Motors." },
+              { text: "Control boards." },
+              { text: "Belts." },
+              { text: "Seals." },
+              { text: "Thermostats." },
+              { text: "Heating elements." },
+              { text: "Compatible replacement components." },
+            ],
+            closing: ["Protect sensitive electronic boards against electrostatic discharge, moisture and handling damage."],
+          },
+          {
+            heading: "Customer-wise repair inventory",
+            paragraphs: ["Keep records covering:"],
+            bullets: [
+              { text: "Customer or job ID." },
+              { text: "Appliance type." },
+              { text: "Brand." },
+              { text: "Model." },
+              { text: "Reported fault." },
+              { text: "Date received." },
+              { text: "Repair status." },
+              { text: "Storage location." },
+              { text: "Collection or dispatch date." },
+            ],
+          },
+          {
+            heading: "Returned or faulty components",
+            paragraphs: [
+              "Keep damaged or faulty components separate from new replacement stock, and follow the electronic-waste handling requirements that apply.",
+            ],
+          },
+          {
+            heading: "Appliance packaging and covers",
+            paragraphs: ["Suitable packaging may include:"],
+            bullets: [
+              { text: "Protective covers." },
+              { text: "Cartons." },
+              { text: "Foam supports." },
+              { text: "Manufacturer-approved transit protection." },
+            ],
+            closing: ["Keep packaging clean and dry."],
+          },
+        ],
+        // Brief §5: neighbouring appliance-related applications have pages of their own.
+        inlineLinks: [
+          {
+            before: "Installing air-conditioners rather than repairing appliances? See our page on",
+            link: { label: "AC installer stock storage in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+            after: ".",
+          },
+          {
+            before: "New appliances held for flat fit-outs are covered under",
+            link: { label: "appliance staging for interior contractors in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+            after: ".",
+          },
+          {
+            before: "Operators of office coffee machines can read about",
+            link: { label: "coffee and vending machine storage in Domlur", href: "/cities-we-serve/shipping-container-domlur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Appliance Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Refrigerant systems",
+            paragraphs: [
+              "Refrigerators and other cooling appliances may contain refrigerants. Intact appliances must be stored and handled according to the manufacturer's requirements and applicable safety rules.",
+              "Storing an intact appliance does not, in itself, require its refrigerant to be removed.",
+            ],
+          },
+          {
+            heading: "Refrigerant cylinders",
+            paragraphs: [
+              "Refrigerant cylinders are pressurised and may present additional hazards. They should not be kept in an ordinary storage-only container; use appropriate approved storage facilities.",
+            ],
+          },
+          {
+            heading: "Refrigerant recovery",
+            paragraphs: [
+              "Where refrigerant recovery is required during servicing or disposal, use qualified technicians and suitable equipment, according to the applicable regulations. Do not vent refrigerant as a routine storage-preparation step.",
+            ],
+          },
+          {
+            heading: "Battery-containing appliances",
+            paragraphs: [
+              "Some appliances contain batteries. Follow the manufacturer's requirements for battery isolation, temperature, handling and storage. Do not charge batteries inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Appliance testing and repair",
+            paragraphs: [
+              "An ordinary storage container is not an approved electrical repair workshop. Testing, electrical repairs, refrigerant servicing and other technical work require suitable facilities.",
+            ],
+          },
+          {
+            heading: "Old appliance disposal",
+            paragraphs: [
+              "End-of-life electrical and electronic equipment should be handed over through authorised collection and recycling channels.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-yelahanka-new-town/yelahanka-new-town-container-interior.webp",
+          alt: "Empty shipping container interior with pale corrugated steel walls and ceiling, a brown plywood floor and closed double doors at the far end",
+          width: 1671,
+          height: 941,
+          caption: "Illustrative render of a bare interior. Any racks, rails, drawers, bays or lighting are added only as itemised in your quotation.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Racks for empty hive boxes." },
+          { text: "Protected frame storage." },
+          { text: "Shelves for clean beekeeping equipment." },
+          { text: "Hanging rails for protective clothing." },
+          { text: "Labelled packaging sections." },
+          { text: "Appliance holding bays." },
+          { text: "Stable supports for washing machines and refrigerators." },
+          { text: "Separate areas for repaired and faulty units." },
+          { text: "Spare-parts drawers." },
+          { text: "Lockable tool storage." },
+          { text: "Appropriate lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: [
+          "The final layout must reflect the actual inventory's dimensions and weight, its hygiene requirements and the environmental conditions.",
+          "Do not mix food-contact beekeeping equipment with contaminated appliance parts or hazardous materials in a way that creates a contamination risk.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Yelahanka New Town",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-yelahanka-new-town/shipping-container-roof-view-yelahanka-new-town.webp",
+          alt: "Teal shipping container seen from directly above: corrugated roof panels, four corner castings and door hinges at one end, on a concrete yard",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative render from above. Leave clear ground around the container for the unloading vehicle and for swinging both cargo doors open.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable, authorised private premises, including commercial yards, approved storage plots and business premises, with permission.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Residential streets and connecting roads in Yelahanka New Town may present access constraints. A 10 ft or 20 ft container may be considered for compact sites, subject to availability and actual access; a 40 ft container only where the site's dimensions, permissions and transport arrangements allow.",
+          "No delivery hour is fixed until the route and the site conditions have been confirmed.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Delivering through a society gate or down a narrow residential lane? Read our guidance on",
+            link: { label: "shipping container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-yelahanka-new-town/shipping-container-side-wall-yelahanka-new-town.webp",
+          alt: "Long corrugated side wall of a teal shipping container with corner castings, two small vents and forklift pockets, in a paved yard beside a warehouse",
+          width: 1670,
+          height: 941,
+          caption: "Illustrative render of a side wall. It does not indicate a size; the quotation gives the measurements of the unit offered.",
+        },
+        table: {
+          caption:
+            "Approximate volumes. Exact dimensions, internal clearances, floor-loading limits and availability are verified for the actual unit and set out in its quotation.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Empty hive boxes, beekeeping tools or appliance spare parts"],
+            ["20 ft", "33 m³", "Larger beekeeping equipment inventory or appliances awaiting repair"],
+            ["40 ft", "67 m³", "Larger compatible equipment inventory where site access permits"],
+          ],
+        },
+        closing: ["Approximate volume does not establish allowable payload."],
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist covers what to look at before you accept it.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Yelahanka New Town",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving and racks." },
+          { text: "Hive equipment supports." },
+          { text: "Spare-parts drawers." },
+          { text: "Appliance storage bays." },
+          { text: "Locking arrangements." },
+          { text: "Lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental-control requirements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on the actual storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Yelahanka New Town",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for seasonal beekeeping equipment, or for an appliance repair business handling additional stock. Hire terms run from a single month to five years, and the quotation names the unit, the hire period, the delivery and collection arrangements, the transport charges and any deposit.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire sizes and what each rental covers are set out under our",
+            link: { label: "container hire options", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the equipment or appliances." },
+          { text: "Share dimensions, quantities and estimated weight." },
+          { text: "Identify food-contact equipment, sensitive materials or hazardous components." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelves, storage bays and protective supports." },
+          { text: "Confirm hygiene, environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. Here is what that means for beekeepers, honey sellers and appliance repair shops in Yelahanka New Town:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "10 ft (when in stock), 20 ft and 40 ft units, matched to the equipment and the plot." },
+          { title: "Storage-oriented modifications", text: "racks, rails, drawers and bays, each one listed in the quotation." },
+          { title: "Shelving and racking provisions", text: "spaced for hive boxes and frames, or for appliances and boxed spare parts." },
+          { title: "Locking arrangements", text: "cargo-door locking bars and padlock points, inspected on the actual container." },
+          { title: "Ventilation and insulation options", text: "specified for your equipment; no food-grade or climate-controlled conditions are promised." },
+          { title: "Quotation and delivery coordination", text: "an itemised price first, then delivery booked once the route and ground are checked." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can beekeeping equipment be stored in a shipping container?",
+        answer:
+          "Potentially, where the equipment is clean, dry, suitably supported and stored under appropriate environmental conditions.",
+      },
+      {
+        question: "Can drawn comb be stored inside the container?",
+        answer:
+          "Potentially, with suitable pest-management and temperature controls. Ordinary bags alone may not prevent wax-moth damage.",
+      },
+      {
+        question: "How should beeswax foundation sheets be stored?",
+        answer: "Use suitable flat supports and protect the sheets against excessive heat, deformation and contamination.",
+      },
+      {
+        question: "Can honey be stored in a shipping container?",
+        answer:
+          "Only where the facility meets the applicable food-storage, hygiene and environmental requirements for the product.",
+      },
+      {
+        question: "Can live bee colonies be kept inside a standard shipping container?",
+        answer: "No. An ordinary shipping container is not a suitable facility for live colonies.",
+      },
+      {
+        question: "Can washing machines be stored inside the container?",
+        answer: "Potentially, after appropriate draining, cleaning, drying and manufacturer-approved handling.",
+      },
+      {
+        question: "Can refrigerators be stored inside the container?",
+        answer: "Potentially, where they are handled and stored according to the manufacturer's requirements.",
+      },
+      {
+        question: "Must refrigerant be removed from every refrigerator before storage?",
+        answer:
+          "No. Refrigerant recovery is not a universal requirement for storing intact appliances. Follow the applicable servicing and disposal rules.",
+      },
+      {
+        question: "Can refrigerant cylinders be stored inside the container?",
+        answer: "Pressurised refrigerant cylinders require appropriate approved storage facilities, not an ordinary storage-only container.",
+      },
+      {
+        question: "Can appliance repair work be carried out inside the container?",
+        answer:
+          "An ordinary storage-only container should not be treated as an approved electrical or refrigerant-servicing workshop.",
+      },
+      {
+        question: "What is the difference between the Yelahanka and Yelahanka New Town pages?",
+        answer:
+          "This page covers Yelahanka New Town and its sectors and phases. The separate Yelahanka page covers Yelahanka Old Town and the other surrounding localities.",
+      },
+      {
+        question: "What is the shipping container price in Yelahanka New Town?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Yelahanka New Town",
+    ctaText: `Whether you need storage for beekeeping equipment, honey-processing accessories or home appliance repair inventory, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Yelahanka New Town, Yelahanka Satellite Town, Sector A, Sector B, 4th Phase, 5th Phase and Someshwara Nagar, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Get a Container Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Yelahanka New Town",
+      intro:
+        "Choose a container and how many you need, add the Yelahanka New Town address or a location pin, and tell us whether you want to buy or hire. Mention what goes inside, whether hive boxes and extraction gear or appliances and spare parts, with rough quantities and anything food-contact or hazardous, and the quotation will be sized to match.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds and dispatches containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, with a Bengaluru office in Electronic City; there is no Portable Office Cabin yard, depot or branch in Yelahanka New Town. The container you are offered, with its grade, condition, internal and door measurements, any racks, rails, drawers, bays, supports, lighting, ventilation, insulation, environmental control or locks, any hire terms, and the delivery, unloading and collection arrangements, is described only in its written quotation. Availability changes, so no delivery date or hour is guaranteed. A container is not supplied as food-grade, pest-proof, moisture-proof or climate-controlled unless an approved specification says so, and it is not offered for keeping live bee colonies or honey, for refrigerant cylinders, pesticides or hive treatments, for charging batteries, or as a workshop for appliance testing, repair or refrigerant servicing. The four images are illustrative renders: none was taken in Yelahanka New Town, and none shows a delivered or fitted container, beekeeping equipment or appliances. Capacities are approximate. Beekeepers, honey sellers and appliance repair shops are named to illustrate possible uses, not as clients or completed projects, and the localities listed are where enquiries are welcome, not confirmed delivery sites. Notes on hive equipment, comb, beeswax, honey and food-contact items, appliances, refrigerants, batteries, electronic waste, placement and permissions are general information only, not food-safety, beekeeping, safety, legal or engineering advice; follow equipment makers' instructions and the rules that apply to your business.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
