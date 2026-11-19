@@ -719,6 +719,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Vijayanagar, Bengaluru (upholstery workshops' and mattress makers' furniture, fabric and foam; agarbatti
     // units' bamboo sticks, packaging and packed stock; owner brief 2026-11-18), appended so the live links keep their positions.
     { name: "Shipping Containers in Vijayanagar, Bengaluru", href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru" },
+    // Banaswadi (antique dealers' and restorers' heritage furniture, brassware and collectibles; beverage
+    // distributors' crates, bottles and spare coolers; owner brief 2026-11-18), appended so the live links keep their positions.
+    { name: "Shipping Containers in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
   ],
 };
 
