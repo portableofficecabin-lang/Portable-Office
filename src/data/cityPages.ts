@@ -39426,76 +39426,130 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
-   * SHIPPING & STORAGE CONTAINERS ON THANISANDRA MAIN ROAD — component stores for scaffolding and
-   * formwork hire yards, and covered, lockable storage for private cars and motorbikes while their
-   * owners are away (north Bengaluru: Thanisandra, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli,
-   * Jakkur, Amruthahalli). The first shipping-container page in north Bengaluru.
+   * SHIPPING & STORAGE CONTAINERS IN THANISANDRA (Thanisandra Main Road) — four uses on one page:
+   * component stores for scaffolding and formwork hire yards, covered, lockable storage for private cars
+   * and motorbikes while their owners are away (both Version A), storage for false ceiling and gypsum
+   * contractors, and stock storage for stainless steel railing and gate fabricators (both Version B)
+   * (north Bengaluru: Thanisandra, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur,
+   * Amruthahalli). The first shipping-container page in north Bengaluru.
    *
-   * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, links and image
-   * plan used as given; the brief's root slug became /cities-we-serve/<slug>, the convention of every
-   * location page). Source copy: the owner's content reply of 2026-11-16 09:58Z ("Pasted text
-   * (20261116-095825).txt"), kept section by section with the brief's corrections: no promise that a
-   * car fits a 20 ft unit or that two cars fit a 40 ft one (fit = vehicle dimensions × the actual unit's
-   * interior and door opening × a safe loading method with driver exit); no "drive in and step out"
+   * VERSION A — owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, links
+   * and image plan used as given then; the brief's root slug became /cities-we-serve/<slug>, the
+   * convention of every location page). Source copy: the owner's content reply of 2026-11-16 09:58Z
+   * ("Pasted text (20261116-095825).txt"), kept section by section with the brief's corrections: no promise
+   * that a car fits a 20 ft unit or that two cars fit a 40 ft one (fit = vehicle dimensions × the actual
+   * unit's interior and door opening × a safe loading method with driver exit); no "drive in and step out"
    * advice; no EV charging inside a container; ventilation is not presented as making fuel or batteries
    * safe; no floor or rack load is assumed; no delivery day counts ([X] / [X–Y] removed), hours or price.
    * Vehicle storage is described as a use of a container on the customer's land, assessed per vehicle,
-   * not as a ready-to-use storage service. Mapped onto the template in the brief's order:
-   *   • H1 and intro; the second intro paragraph is `introLink` ("shipping containers" → the cargo
-   *     category, which owns the head term); heroCta row (quotation form · Call · WhatsApp).
-   *   • "Component Stores for Scaffolding & Formwork Hire Yards" → an afterIntro extra section with two
-   *     H3s ("Organizing Scaffolding Components", "Safe Storage of Heavy Steel Components") through the
-   *     new optional `subsections`; the feature band (interior render) follows it.
-   *   • "Vehicle Storage While You're Away" (three H3s: preparation steps as a numbered list, fit and
-   *     access, electric vehicles), "Placement & Delivery", "Container Sizes", "Choosing a Container
-   *     Grade", price, rental and "How It Works" (ordered) → seven afterSolutions extra sections (the
-   *     why and solutions slots are unused).
-   *   • "Areas We Serve" → areas; "Why Choose Portable Office Cabin" → an extra section without a
-   *     placement, so it renders after the steps and before the FAQs, as in the brief.
-   *   • The source's six FAQs, revised for vehicle fit, EVs and delivery timing → faqs; "Storage for a
-   *     Road on the Rise" → CTA (phone, WhatsApp and e-mail from COMPANY) + enquiry form.
-   * Rental is in the catalogue (Shipping Container Rental, monthly terms), so the rental section stays.
+   * not as a ready-to-use storage service.
    *
-   * LINKS (brief §5): "shipping containers" → the cargo category (intro); "shipping containers in
-   * Bellandur" (its society-gate and narrow-lane delivery section) in the placement section; "how to
-   * inspect a used shipping container" → Shipping Container in Athipattu, the Chennai-area page whose
-   * "Used Container Inspection" section is a checklist (the target the Bannerghatta Road and HSR Layout
-   * pages use for this anchor); "renting a shipping container" → the rental product; the CTA button
-   * "Request a Storage Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block
-   * from repeating Bellandur or the category. Inbound: the Karnataka shipping hub, the cargo category's
-   * location links and the Karnataka shipping nearby blocks. No live page names Thanisandra or its
-   * localities, so no sibling's copy changes.
+   * VERSION B — owner brief of 2026-11-20 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage
+   * Containers in Thanisandra — Version A + Version B"): keep this URL (no second Thanisandra page), keep
+   * Version A's applications, add false ceiling & gypsum contractors and stainless steel railing & gate
+   * fabricators, and update the meta title, meta description and H1 to the brief's ("in Thanisandra";
+   * "Bengaluru" stays out of the title). The brief's H2 and H3 headings, layout options, size rows, price
+   * factors, the eleven ordering steps and its Version B FAQs are used, with its copy lightly edited for
+   * flow and British spelling. Version A changes, all listed in the PR for the owner's approval:
+   *   • the two Version A application H2s take the brief's names ("Storage Containers for Scaffolding &
+   *     Formwork Hire Yards", "Shipping Containers for Car & Motorbike Storage"); their paragraphs, bullets
+   *     and H3s are unchanged, and each gains the brief's H3 ("Storage considerations", "Vehicle storage
+   *     considerations");
+   *   • the shared sections are extended, not replaced: placement (the brief's checklist added, one more
+   *     example of private premises), sizes (the brief's 10 ft row and Version B uses added to Version A's
+   *     rows), price (three Version B factors and the 10 ft size added), rental (Version B uses and the
+   *     catalogue's one-month-to-five-years terms added), why choose (two bullets added, 10 ft size) and
+   *     FAQs (Version A's six kept; the brief's ten Version B questions and its price question added; its
+   *     scaffolding, vehicle and delivery questions are covered by Version A's);
+   *   • replaced, because they named only two uses: the intro's second paragraph (now the brief's three
+   *     paragraphs, the intro link keeping Version A's closing clause), the tagline, "How It Works" (now
+   *     the brief's eleven steps, with Version A's vehicle details and additional-services step folded in),
+   *     the CTA heading and text, and the areas heading; renamed to the brief's: the placement, sizes,
+   *     price, rent and why headings.
+   * The brief's notes to the implementer ("Do not assume…", "Do not recommend…", "should not be presented
+   * as…", "Do not promise…", "Do not guarantee…", "Conditional section…", "Highlight only verified…") are
+   * instructions, not page copy: where one carries a fact for the reader it is a plain statement ("a
+   * metal container does not, on its own, protect boards from moisture", "an ordinary storage-only
+   * container is not an approved fabrication workshop", "no stock length is confirmed to fit until…").
+   * Checked against the catalogue: a 20 ft unit's internal length is about 5.90 m (products.ts, ISO 668),
+   * so the brief's 6 m pipe warning stands; no 40 ft length is stated; rental runs from one month to five
+   * years (Shipping Container Rental); the 10 ft row keeps the brief's "if available". The optional Kannada
+   * terms are not used (the page is in English). No Product JSON-LD: city pages carry no prices (file rule)
+   * and a Product block without offers earns no rich result, so Service (no offers), FAQPage and
+   * BreadcrumbList stand; the Service JSON-LD's areaServed keeps the geo placename "Thanisandra Main Road,
+   * Bengaluru, Karnataka" (unchanged, so the 43 nearby blocks that print it stay as they are).
+   * Mapped onto the template in the brief's order:
+   *   • H1, tagline, intro + `introLink` ("shipping and storage container solutions" → the cargo
+   *     category); heroCta row (quotation form · Call · WhatsApp).
+   *   • "Shipping Containers for Construction & Commercial Storage" (overview) and the scaffolding section
+   *     → afterIntro; the feature band (Version A's interior render) follows them.
+   *   • Vehicle, false ceiling, railing & gate, layout options, placement, sizes, "Choosing a Container
+   *     Grade" (Version A), price, rental and "How to Order a Shipping Container" (ordered) →
+   *     afterSolutions, so the steps stay before the areas.
+   *   • "Areas Served Around Thanisandra" → areas + four areasInlineLinks; "Why Choose Portable Office
+   *     Cabin?" → a default extra section (after the areas, as in the brief); seventeen FAQs; the brief's
+   *     closing section → CTA (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
    *
-   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Thanisandra Main Road, Thanisandra,
+   * LINKS: "shipping and storage container solutions" → the cargo category (intro); Version A's Bellandur
+   * (society-gate and narrow-lane delivery), Athipattu ("how to inspect a used shipping container": the
+   * brief's /shipping-container-chennai is not a route) and rental links kept. Version B (the brief asks
+   * for a few useful links, not every sibling): false ceiling section → Mahadevapura's "Staging Stores for
+   * Interior Contractors" ("interior fit-out staging in Mahadevapura": general interior contractors stay
+   * there); jointing compound H3 → Begur Road's cement and building-material dealer section ("cement and
+   * building-material dealer storage on Begur Road"); railing section → Malleshwaram's reclaimed grills
+   * ("reclaimed wrought-iron grills and railings in Malleshwaram") and Varthur's window installers
+   * ("uPVC, aluminium and glass window stock in Varthur"). Kasavanahalli and Ramamurthy Nagar are not
+   * linked (flooring and signage are further from these uses). Areas → Hebbal (Hebbal and Kodigehalli),
+   * Hennur Road (Hennur Road and Kothanur), Yelahanka and Yelahanka New Town. `nearbySkipsBodyLinks`
+   * keeps the nearby block from repeating them. Inbound: RT Nagar's areas link (existing), one new
+   * areasInlineLinks item each on Hebbal, Bengaluru ("storage containers on Thanisandra Main Road") and
+   * Hennur Road ("construction equipment storage in Thanisandra"), the Karnataka shipping hub, the cargo
+   * category's location links and the Karnataka shipping nearby blocks (labels unchanged: `city` and
+   * `directoryLabel` keep "Thanisandra Main Road").
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Thanisandra, Thanisandra Main Road,
    * Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli, for scaffolding-hire
-   * component stores and private car and motorbike storage. Not targeted: Hennur, Hebbal (Bengaluru) and
-   * Yelahanka (kept for possible future pages; the Hebbal shop page is Mysuru's Hebbal), owner-builder
-   * materials (HSR Layout), dealers' building materials (Shivamogga), contractor material stores
-   * (Dharmapuri), bicycles (Koramangala), bike-rental fleet gear (BTM Layout), and household moves or
-   * family storage (HSR Layout, JP Nagar).
+   * component stores, private car and motorbike storage, false ceiling and gypsum contractors' materials,
+   * and stainless steel railing and gate fabricators' stock. Not targeted (named only in pointer
+   * sentences): Hebbal and Kodigehalli (Hebbal page), Hennur Road and Kothanur (Hennur Road page),
+   * Yelahanka and Yelahanka New Town (their pages). Kept apart from general interior contractors and
+   * modular kitchens (Mahadevapura), flooring and wallpaper installers (Kasavanahalli), cement and bagged
+   * building materials and new wooden doors (Begur Road), uPVC, aluminium and glass windows (Varthur),
+   * reclaimed architectural metalwork (Malleshwaram), signage frames and ACP sheets (Ramamurthy Nagar),
+   * owner-builder materials (HSR Layout), dealers' building materials (Shivamogga), contractor material
+   * stores (Dharmapuri), bicycles (Koramangala), bike-rental fleet gear (BTM Layout), and household moves
+   * or family storage (HSR Layout, JP Nagar).
    *
-   * Images: five owner-dropped lossy VP8 webp renders ("public/images/thanisandra shipping container
-   * city page/Thanisandra Main Road/cabin (1–5).webp", no EXIF / XMP / ICC) of one dark green container
-   * with a wood-framed glazed side panel. Each is copied with its VP8 data byte-for-byte plus an XMP
-   * dc:title / dc:description that labels it a render. (2) three-quarter view with cargo doors = hero /
-   * og:image; (1) lined interior = feature band; (5) roof from above = placement section; (4) plain side
-   * wall = sizes section; (3) side elevation with the glazed panel = grade section. No image shows
-   * scaffolding parts, formwork accessories, a car or a motorbike, so those slots are not used and no
-   * alt text or caption claims them; no alt text names a size or a place.
+   * Images. Version A (unchanged, URLs kept): five owner-dropped lossy VP8 webp renders ("public/images/
+   * thanisandra shipping container city page/Thanisandra Main Road/cabin (1–5).webp") of one dark green
+   * container with a wood-framed glazed side panel, each copied with its VP8 data byte-for-byte plus an
+   * XMP dc:title / dc:description: (2) hero / og:image; (1) lined interior = feature band; (5) roof =
+   * placement; (4) side wall = sizes; (3) glazed side elevation = grade. Version B: five owner-dropped
+   * renders ("public/images/Storage Containers in Thanisandra city page/Storage Containers in
+   * Thanisandra/cabin (1–5).webp", 48–130 KB, no EXIF / XMP / ICC) of one charcoal-grey container with
+   * copper-coloured locking rods, copied the same way: (3) blind end wall = overview; (1) three-quarter
+   * exterior = false ceiling section (caption: seals checked, moisture not promised); (2) cargo doors =
+   * railing section (caption: the door opening limits long stock and gates); (4) empty interior = layout
+   * options (the brief's interior filename, not its "with racks" alt: nothing is fitted); (5) roof =
+   * ordering steps. No image shows scaffolding, formwork, a vehicle, gypsum boards, channels, tiles,
+   * pipes, railings, gates or hardware, so the brief's twelve use-case image slots are not used, and no
+   * alt text, caption or filename claims those items, a size or a place.
    *
    * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
    * ────────────────────────────────────────────────────────────────────────────────────── */
   {
     slug: "shipping-container-thanisandra-main-road",
     city: "Thanisandra Main Road",
-    listTitle: "Shipping & Storage Containers on Thanisandra Main Road",
+    listTitle: "Shipping & Storage Containers in Thanisandra",
     directoryLabel: "Shipping containers on Thanisandra Main Road",
-    metaTitle: "Shipping Container on Thanisandra Main Road | Storage Solutions",
+    metaTitle: "Shipping Container in Thanisandra | Storage Solutions",
     metaDescription:
-      "Shipping and storage containers on Thanisandra Main Road for scaffolding hire components, formwork accessories and long-term car or motorbike storage. Request a quote.",
+      "Shipping and storage containers in Thanisandra for scaffolding, vehicle storage, gypsum and false ceiling materials, stainless steel railings and gate fabricators.",
     keywords:
-      "shipping container on Thanisandra Main Road, cargo container Thanisandra, storage container Thanisandra, storage container Nagawara, storage container Hegde Nagar, storage container Jakkur, used shipping container Thanisandra, shipping container price on Thanisandra Main Road, storage container for rent in Thanisandra",
+      "shipping container in Thanisandra, shipping container on Thanisandra Main Road, cargo container Thanisandra, storage container Thanisandra, storage container Thanisandra Main Road, storage container Nagawara, storage container Hegde Nagar, storage container Rachenahalli, storage container Sampigehalli, storage container Jakkur, storage container Amruthahalli, used shipping container Thanisandra, shipping container price in Thanisandra, shipping container price on Thanisandra Main Road, storage container for rent in Thanisandra, scaffolding storage container, formwork equipment storage, scaffolding hire yard storage, car storage container, motorbike storage container, false ceiling contractor storage container, gypsum board storage, ceiling channel storage, ceiling grid storage, ceiling tile storage, railing fabricator storage container, stainless steel pipe storage, stainless steel tube storage, gate fabricator stock storage, finished railing storage, finished gate storage",
     // The road near Thanisandra, between Nagawara to the south and Hegde Nagar to the north (approximate).
+    // The placename is kept as it was: it already names Thanisandra (the Service JSON-LD's areaServed), and
+    // changing it would also change this page's card subtitle in 43 sibling pages' nearby blocks.
     geo: {
       region: "IN-KA",
       placename: "Thanisandra Main Road, Bengaluru, Karnataka, India",
@@ -39506,7 +39560,8 @@ export const CITY_PAGES: CityPage[] = [
     serviceJsonLd: { serviceType: "Shipping Container" },
     // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Bellandur and the cargo category are linked in the body, so the nearby block leaves them out.
+    // Bellandur, Athipattu, Mahadevapura, Begur Road, Malleshwaram, Varthur, Hebbal, Hennur Road, Yelahanka,
+    // Yelahanka New Town and the cargo category are linked in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -39525,27 +39580,74 @@ export const CITY_PAGES: CityPage[] = [
         "Illustrative render of a lined, glazed interior, not a component or vehicle store. Racks, bins, ramps, vents and lighting are fitted only as agreed and quoted.",
     },
 
-    h1: "Shipping & Storage Containers on Thanisandra Main Road",
+    h1: "Shipping & Storage Containers in Thanisandra",
     tagline:
-      "Component stores for scaffolding and formwork hire yards, and covered, lockable storage for cars and motorbikes while their owners are away.",
+      "Component stores for scaffolding hire yards, lockable storage for cars and motorbikes, and supported storage for gypsum boards, ceiling channels, steel pipes, railings and gates.",
     intro: [
       "Thanisandra Main Road has changed beyond recognition. Fields and old villages have given way to apartment towers, tech campuses, mixed-use developments and busy shops, with cranes on the skyline and new projects starting all the time. It is also part of north Bengaluru, on the city's side of the airport, where many residents travel or work abroad for months or years at a time.",
+      "Contractors working on apartment buildings, commercial projects and independent houses often require additional space for construction materials, equipment and finished components.",
+      "Scaffolding and formwork suppliers, vehicle owners, false ceiling contractors, and railing and gate fabricators have different storage requirements.",
     ],
     introLink: {
-      before:
-        "That mix creates two very different storage needs: scaffolding hire businesses with thousands of small parts to track, and people who need somewhere safe to keep a car or motorbike while they're away. Portable Office Cabin supplies",
-      link: { label: "shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
       after:
-        " and cargo containers along Thanisandra Main Road for both, with the fit-out, the vehicle's fit and the site's access checked before anything is confirmed.",
+        " in Thanisandra for compatible commercial inventory, equipment and storage applications, with the fit-out, any vehicle's fit and the site's access checked before anything is confirmed.",
     },
 
-    areasHeading: "Areas We Serve",
+    areasHeading: "Areas Served Around Thanisandra",
     areasText:
-      "We supply shipping and storage containers along Thanisandra Main Road, including Thanisandra, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli. Each site's access is checked before delivery is confirmed.",
+      "We supply shipping and storage containers in Thanisandra and along Thanisandra Main Road, including Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli. Each site's access is checked before delivery is confirmed.",
+    // Version B brief §3 and §6: Hebbal and Kodigehalli, Hennur Road and Kothanur, Yelahanka and Yelahanka
+    // New Town each have their own page; this page's targeting stays on the localities above.
+    areasInlineLinks: [
+      {
+        before: "Hebbal and Kodigehalli are served from our page on",
+        link: { label: "container storage in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+        after: ".",
+      },
+      {
+        before: "For sites on Hennur Road or in Kothanur, see",
+        link: { label: "shipping containers on Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
+        after: ".",
+      },
+      {
+        before: "Further north, Yelahanka has a page of its own on",
+        link: { label: "container storage in Yelahanka", href: "/cities-we-serve/shipping-container-yelahanka" },
+        after: ".",
+      },
+      {
+        before: "For the sectors and phases of Yelahanka New Town, go to",
+        link: { label: "Yelahanka New Town shipping containers", href: "/cities-we-serve/shipping-container-yelahanka-new-town" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
-        heading: "Component Stores for Scaffolding & Formwork Hire Yards",
+        heading: "Shipping Containers for Construction & Commercial Storage",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-end-wall-thanisandra.webp",
+          alt: "Blind end wall of a charcoal-grey shipping container with vertical corrugations, corner castings and two forklift pockets, on a paved yard with planters",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of a closed end wall. One unit can be set up for one of these uses; the size, fittings and load limits follow from what it will hold.",
+        },
+        paragraphs: ["A suitable shipping container may provide additional space for:"],
+        bullets: [
+          { text: "Scaffolding and formwork equipment." },
+          { text: "Compatible car and motorbike storage." },
+          { text: "False ceiling and gypsum materials." },
+          { text: "Stainless steel railing and gate fabrication stock." },
+        ],
+        closing: [
+          "The container size, modifications, environmental conditions and loading capacity have to be selected according to the actual application.",
+        ],
+      },
+      {
+        heading: "Storage Containers for Scaffolding & Formwork Hire Yards",
         placement: "afterIntro",
         paragraphs: [
           "Every tower going up in north Bengaluru stands inside a frame of scaffolding and formwork, much of it hired. Long tubes and props can sit on outdoor racks, but the small parts are another story: couplers and clamps, base jacks and U-heads, pins, wedges and ties go missing quickly when they're left in open piles.",
@@ -39589,10 +39691,24 @@ export const CITY_PAGES: CityPage[] = [
               "No standard container floor or rack is assumed to suit a particular load. The ratings that apply are those confirmed for the selected unit and its racks in the quotation.",
             ],
           },
+          {
+            heading: "Storage considerations",
+            paragraphs: ["Scaffolding and formwork materials can be heavy and irregularly shaped. Verify:"],
+            bullets: [
+              { text: "Container floor capacity." },
+              { text: "Concentrated loads." },
+              { text: "Rack load ratings." },
+              { text: "Material lengths." },
+              { text: "Loading and unloading methods." },
+              { text: "Safe stacking." },
+              { text: "Access routes." },
+            ],
+            closing: ["Use suitable restraints to prevent stored materials from shifting."],
+          },
         ],
       },
       {
-        heading: "Vehicle Storage While You're Away",
+        heading: "Shipping Containers for Car & Motorbike Storage",
         placement: "afterSolutions",
         paragraphs: [
           "North Bengaluru is close to the airport, and many residents work abroad, travel for long stretches or move between cities. A car or motorbike left in an open lot for months is exposed to dust, sun, theft and, very often in Bengaluru, rats that chew through wiring.",
@@ -39650,10 +39766,361 @@ export const CITY_PAGES: CityPage[] = [
               "If safe storage can't be confirmed for your vehicle and the proposed configuration, it won't be quoted as a vehicle store.",
             ],
           },
+          {
+            heading: "Vehicle storage considerations",
+            paragraphs: ["Before a container is recommended for a vehicle, verify:"],
+            bullets: [
+              { text: "Vehicle width and height." },
+              { text: "Door opening clearance." },
+              { text: "Loading ramp suitability." },
+              { text: "Ground conditions." },
+              { text: "Floor-loading capacity." },
+              { text: "Vehicle restraint requirements." },
+              { text: "Ventilation." },
+              { text: "Fire safety." },
+              { text: "Fuel and battery-related requirements." },
+            ],
+            closing: [
+              "Never run a combustion engine inside an enclosed storage container. Fuel cans are not kept, and vehicle batteries are not charged, inside an ordinary storage-only container.",
+            ],
+          },
         ],
       },
       {
-        heading: "Placement & Delivery",
+        heading: "Storage Containers for False Ceiling & Gypsum Contractors",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-exterior-charcoal-thanisandra.webp",
+          alt: "Charcoal-grey shipping container seen at an angle, its double cargo doors closed with four copper-coloured locking rods, on a paved yard with planters",
+          width: 1200,
+          height: 896,
+          caption:
+            "Illustrative render. The roof, walls and door seals of the actual unit are checked before boards go in, but a closed steel box is not assumed to keep gypsum dry by itself.",
+        },
+        paragraphs: [
+          "False ceiling contractors working on apartments, offices and commercial interiors handle gypsum boards, ceiling channels, grid sections, tiles and installation accessories.",
+          "These materials may be bulky, fragile or sensitive to moisture.",
+          "A suitably configured shipping container can provide additional storage where its environmental conditions and load capacity meet the requirements.",
+        ],
+        // Version B brief §6: general interior contractors (furniture, modular kitchens) belong to the Mahadevapura page.
+        inlineLinks: [
+          {
+            before: "Staging furniture, modular kitchen units and finishes for a whole fit-out rather than ceiling stock? See our",
+            link: { label: "interior fit-out staging in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Gypsum board storage",
+            paragraphs: ["Gypsum boards should be stored according to manufacturer guidance. Suitable arrangements may include:"],
+            bullets: [
+              { text: "Flat, level supports." },
+              { text: "Appropriate bearers or pallets." },
+              { text: "Protection against floor moisture." },
+              { text: "Stable stacking." },
+              { text: "Edge and corner protection." },
+              { text: "Suitable loading access." },
+              { text: "Protection against water ingress." },
+            ],
+            closing: [
+              "Avoid unsupported or uneven stacking, which can cause bowing, cracking or edge damage. A metal container does not, on its own, protect boards from moisture.",
+            ],
+          },
+          {
+            heading: "Ceiling channels and grid sections",
+            paragraphs: [
+              "Compatible materials may include ceiling channels, studs, grid sections, metal framing components and suspension accessories. Organise them by:",
+            ],
+            bullets: [
+              { text: "Length." },
+              { text: "Profile." },
+              { text: "Size." },
+              { text: "Material type." },
+              { text: "Project." },
+              { text: "Quantity." },
+            ],
+            closing: [
+              "Use appropriately rated horizontal or wall-mounted racks, and keep long components from bending or falling.",
+            ],
+          },
+          {
+            heading: "Ceiling tile storage",
+            paragraphs: ["Ceiling tiles may include:"],
+            bullets: [
+              { text: "Mineral fibre tiles." },
+              { text: "Grid ceiling tiles." },
+              { text: "Other compatible ceiling panels." },
+            ],
+            closing: [
+              "Follow the manufacturer's storage instructions, use suitable cartons and stable flat supports where required, and protect the tiles against water ingress, excessive humidity and crushing.",
+            ],
+          },
+          {
+            heading: "Jointing compound and plaster materials",
+            paragraphs: ["Compatible bagged materials may require:"],
+            bullets: [
+              { text: "Dry storage." },
+              { text: "Suitable pallets." },
+              { text: "Protection from water." },
+              { text: "Appropriate stacking." },
+              { text: "Stock rotation." },
+            ],
+            closing: [
+              "Follow the manufacturer's instructions for shelf life and storage conditions. This page covers the jointing and finishing materials ceiling contractors use, not a cement or building-material dealer's inventory.",
+            ],
+            // Version B brief §6: cement and bagged building-material dealer stock belongs to the Begur Road page.
+            inlineLinks: [
+              {
+                before: "Holding cement, putty or tile adhesive for resale? That is covered under",
+                link: { label: "cement and building-material dealer storage on Begur Road", href: "/cities-we-serve/shipping-container-begur-road" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Ceiling accessories",
+            paragraphs: ["Labelled bins may hold:"],
+            bullets: [
+              { text: "Screws." },
+              { text: "Hangers." },
+              { text: "Anchors." },
+              { text: "Connectors." },
+              { text: "Tapes." },
+              { text: "Other compatible fixing accessories." },
+            ],
+            closing: ["Organise them by specification and project."],
+          },
+          {
+            heading: "Project-wise storage",
+            paragraphs: ["Contractors may organise materials by:"],
+            bullets: [
+              { text: "Apartment tower." },
+              { text: "Floor." },
+              { text: "Flat number." },
+              { text: "Office." },
+              { text: "Project phase." },
+              { text: "Installation date." },
+            ],
+            closing: ["Labelled storage bays help prepare the materials for each installation team."],
+          },
+          {
+            heading: "Protecting gypsum against moisture",
+            paragraphs: [
+              "Gypsum boards and certain ceiling tiles can deteriorate when exposed to unsuitable moisture conditions. Depending on the material, appropriate storage may require:",
+            ],
+            bullets: [
+              { text: "Weather-resistant container construction." },
+              { text: "Regular leak inspection." },
+              { text: "Suitable ventilation." },
+              { text: "Condensation monitoring." },
+              { text: "Insulation." },
+              { text: "Environmental controls." },
+              { text: "Protective packaging." },
+            ],
+            closing: ["Follow the manufacturer's guidance. Ventilation alone does not guarantee suitable humidity conditions."],
+          },
+          {
+            heading: "Gypsum handling and safety",
+            paragraphs: [
+              "Gypsum boards can be heavy and awkward to move. Use appropriate manual-handling practices and mechanical assistance where necessary, keep aisles clear, and never overload shelves or stack materials beyond safe limits.",
+              "Cutting, sanding and other dust-generating installation work belongs in a suitable workspace, not in an ordinary storage-only container.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Stainless Steel Railing & Gate Fabricators",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-cargo-doors-thanisandra.webp",
+          alt: "Closed double cargo doors of a charcoal-grey container with copper-coloured locking rods, hinges and cam handles and a lockbox between the doors",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of the cargo doors. Their opening is smaller than the space inside, so long pipes, sheets and finished gates are measured against it first.",
+        },
+        paragraphs: [
+          "Stainless steel railing and gate fabricators handle long metal sections, sheets, hardware and finished assemblies.",
+          "These items need suitable support to prevent scratches, bending, corrosion or handling damage.",
+          "A shipping container may provide additional storage for compatible stock where the dimensions, loading arrangements and environmental conditions are appropriate.",
+        ],
+        // Version B brief §6: reclaimed architectural metalwork is the Malleshwaram page's; uPVC, aluminium and
+        // glass window stock is the Varthur page's.
+        inlineLinks: [
+          {
+            before: "Storing old grills and railings salvaged from buildings rather than new fabrication stock? See",
+            link: { label: "reclaimed wrought-iron grills and railings in Malleshwaram", href: "/cities-we-serve/shipping-container-malleshwaram" },
+            after: ".",
+          },
+          {
+            before: "Installing windows rather than railings? Our notes on",
+            link: { label: "uPVC, aluminium and glass window stock in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+            after: " cover that trade.",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Stainless steel pipes and tubes",
+            paragraphs: [
+              "Compatible materials may include stainless steel pipes, tubes and flats and other railing components. Organise them by:",
+            ],
+            bullets: [
+              { text: "Diameter." },
+              { text: "Length." },
+              { text: "Grade." },
+              { text: "Finish." },
+              { text: "Project." },
+              { text: "Quantity." },
+            ],
+            closing: ["Use suitably rated horizontal racks, and secure the materials against rolling or shifting."],
+          },
+          {
+            heading: "Mild steel pipes and sections",
+            paragraphs: ["Mild steel stock may include:"],
+            bullets: [
+              { text: "Pipes." },
+              { text: "Tubes." },
+              { text: "Flats." },
+              { text: "Other compatible fabrication materials." },
+            ],
+            closing: ["Keep these materials dry and suitably supported, with appropriate protection against corrosion."],
+          },
+          {
+            heading: "Separate stainless steel from mild steel",
+            paragraphs: [
+              "Contact with carbon steel, and contamination from carbon-steel particles, can cause surface staining or rust spots on stainless steel. Use suitable separation, clean supports and protective packaging, and keep grinding dust away from stainless stock.",
+            ],
+          },
+          {
+            heading: "Stainless steel sheets",
+            paragraphs: ["Store sheets according to the supplier's guidance. Suitable arrangements may include:"],
+            bullets: [
+              { text: "Flat supports." },
+              { text: "Protective separators." },
+              { text: "Appropriate restraints." },
+              { text: "Protection against scratches." },
+              { text: "Preservation of protective film where appropriate." },
+            ],
+            closing: ["Verify the weight and the loading requirements first."],
+          },
+          {
+            heading: "Finished railings",
+            paragraphs: ["Completed railings may include:"],
+            bullets: [
+              { text: "Balcony railings." },
+              { text: "Staircase railings." },
+              { text: "Handrails." },
+              { text: "Other fabricated assemblies." },
+            ],
+            closing: [
+              "Use suitable padded supports and restraints, organise the finished products by customer or installation site, and protect polished surfaces against scratches.",
+            ],
+          },
+          {
+            heading: "Finished gates",
+            paragraphs: ["Fabricators may need storage for:"],
+            bullets: [
+              { text: "Completed gates." },
+              { text: "Gate frames." },
+              { text: "Sliding gate components." },
+              { text: "Other fabricated assemblies." },
+            ],
+            closing: [
+              "Use stable, suitably rated supports. Large or heavy gates may need special handling and a floor-load assessment, and upright storage is not right for every finished assembly.",
+            ],
+          },
+          {
+            heading: "Gate hardware and accessories",
+            paragraphs: ["Labelled bins may hold:"],
+            bullets: [
+              { text: "Hinges." },
+              { text: "Sliding gate rollers." },
+              { text: "Locks." },
+              { text: "End caps." },
+              { text: "Brackets." },
+              { text: "Other compatible fittings." },
+            ],
+            closing: ["Keep accessories organised by specification and project."],
+          },
+          {
+            heading: "Check full-length pipes before choosing a container",
+            paragraphs: [
+              "Fabrication stock may include pipes and tubes approximately 6 metres long. A standard 20 ft shipping container typically has an internal length of approximately 5.9 metres, which may be insufficient for full 6-metre stock. A 40 ft container may be more suitable, subject to its actual dimensions, access and loading requirements. Verify:",
+            ],
+            bullets: [
+              { text: "Supplier stock length." },
+              { text: "Actual internal container length." },
+              { text: "Door opening dimensions." },
+              { text: "Loading angle." },
+              { text: "Rack clearances." },
+              { text: "Safe handling arrangements." },
+            ],
+            closing: ["No stock length is confirmed to fit until it has been checked against the actual unit."],
+          },
+          {
+            heading: "Fabrication activities that require separate facilities",
+            paragraphs: [
+              "An ordinary storage-only container is not an approved fabrication workshop. The following are not carried out inside an unmodified storage container:",
+            ],
+            bullets: [
+              { text: "Welding." },
+              { text: "Grinding." },
+              { text: "Metal cutting." },
+              { text: "Hot work." },
+              { text: "Spray painting." },
+            ],
+            closing: ["These activities require appropriate purpose-designed facilities and safety controls."],
+          },
+          {
+            heading: "Gas cylinders",
+            paragraphs: [
+              "Oxygen, acetylene, argon and other compressed-gas cylinders require suitable compliant storage arrangements, which an ordinary storage-only shipping container does not provide.",
+            ],
+          },
+          {
+            heading: "Paints, primers and thinners",
+            paragraphs: [
+              "Some paints, primers, solvents and thinners may be flammable or hazardous. Store them according to their safety data sheets and the requirements that apply; an ordinary shipping container is not an approved hazardous-material store.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-thanisandra-main-road/thanisandra-container-storage-interior.webp",
+          alt: "Inside an empty container: grey corrugated walls and a ribbed ceiling over a brown plywood floor, running towards closed cargo doors, with no racks fitted",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of a bare interior. Board bearers, pipe racks, padded supports, drawers and lighting are fitted only where the written quotation lists them.",
+        },
+        paragraphs: ["Depending on the actual application, a suitable container may include:"],
+        bullets: [
+          { text: "Scaffolding storage racks." },
+          { text: "Formwork component sections." },
+          { text: "Vehicle storage provisions where verified." },
+          { text: "Level supports for gypsum boards." },
+          { text: "Racks for ceiling channels and grid sections." },
+          { text: "Protected ceiling tile shelving." },
+          { text: "Drawers for ceiling accessories." },
+          { text: "Stainless steel pipe racks." },
+          { text: "Separate mild steel stock sections." },
+          { text: "Padded supports for finished railings." },
+          { text: "Stable storage positions for gates." },
+          { text: "Labelled hardware bins." },
+          { text: "Lockable storage." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: [
+          "Incompatible applications are not combined in one unit until safety, floor loading, contamination and access have been checked.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Thanisandra",
         placement: "afterSolutions",
         image: {
           src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-roof-overhead-thanisandra.webp",
@@ -39663,7 +40130,21 @@ export const CITY_PAGES: CityPage[] = [
           caption: "Illustrative view from above. The placement area needs a firm, level base and clear space for unloading and for opening the cargo doors.",
         },
         paragraphs: [
-          "A container belongs on private land that you own or lease, or where the landowner has given permission, such as a hire yard, a leased plot or a family property; never on a public road or footpath. Plan a firm, level base that a delivery truck can get close to, with enough clear space around it to lift the container off and set it down safely.",
+          "A container belongs on private land that you own or lease, or where the landowner has given permission, such as a hire yard, a fabrication workshop's yard, a project site, a leased plot or a family property; never on a public road or footpath. Plan a firm, level base that a delivery truck can get close to, with enough clear space around it to lift the container off and set it down safely.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Landowner or developer permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
           "Thanisandra Main Road is busy for much of the day and slow at peak hours, so each delivery gets its own route plan and time slot. Send the location pin with photos of the access road, the gate, any tight turns, low branches or overhead cables, and the exact place you want the container. From those, the transport team works out how the unit will be unloaded and whether a 20 ft or a 40 ft container is practical there; access and timing are agreed for each site rather than promised up front.",
         ],
         // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers lifting access.
@@ -39676,7 +40157,7 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
-        heading: "Container Sizes",
+        heading: "Shipping Container Sizes",
         placement: "afterSolutions",
         image: {
           src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-side-wall-thanisandra.webp",
@@ -39686,15 +40167,24 @@ export const CITY_PAGES: CityPage[] = [
           caption: "Illustrative side elevation. The image states no size; the dimensions that apply are those quoted for the actual unit.",
         },
         paragraphs: [
-          "Every size is subject to stock. For a vehicle, the deciding figures are the door opening and the internal width and height, not the volume.",
+          "Every size is subject to stock. For a vehicle, the deciding figures are the door opening and the internal width and height, not the volume; for full-length pipes, it is the internal length.",
         ],
         table: {
           caption:
-            "Approximate internal volumes. Internal dimensions, door openings and floor ratings vary by manufacturer and unit; the figures that count are those quoted for the unit you're offered. Vehicle capacity is never judged from volume alone.",
-          headers: ["Size", "Approx. capacity", "Typical use on Thanisandra Main Road"],
+            "Approximate internal volumes. Internal dimensions, door openings and floor ratings vary by manufacturer and unit; the figures that count are those quoted for the unit you're offered. Vehicle capacity is never judged from volume alone, and an approximate volume does not establish the allowable payload.",
+          headers: ["Size", "Approx. capacity", "Typical use in Thanisandra"],
           rows: [
-            ["20 ft", "~33 m³", "A hire yard's component store, or possibly one suitable vehicle after a fit check"],
-            ["40 ft", "~67 m³", "A larger component inventory, or vehicle storage subject to a fit assessment, on sites with good access"],
+            ["10 ft, if available", "~15 m³", "Ceiling accessories, boxed tiles, fabrication hardware and other compact stock"],
+            [
+              "20 ft",
+              "~33 m³",
+              "A hire yard's component store, gypsum boards, ceiling channels and cut metal stock, or possibly one suitable vehicle after a fit check",
+            ],
+            [
+              "40 ft",
+              "~67 m³",
+              "A larger component inventory, longer fabrication stock or multi-project storage, or vehicle storage subject to a fit assessment, on sites with good access",
+            ],
             ["40 ft high cube", "~76 m³", "Taller racks, or vehicles that need more internal height, subject to stock and a fit check"],
           ],
         },
@@ -39731,14 +40221,17 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
-        heading: "Shipping Container Price on Thanisandra Main Road",
+        heading: "Shipping Container Price in Thanisandra",
         placement: "afterSolutions",
         paragraphs: ["Each quotation is built from:"],
         bullets: [
-          { title: "Size", text: "20 ft, 40 ft or 40 ft high cube." },
+          { title: "Size", text: "10 ft where one is available, 20 ft, 40 ft or 40 ft high cube." },
           { title: "Grade", text: "one-trip, cargo-worthy or wind-and-watertight; a clean, dry, leak-free unit for vehicles." },
           { title: "Heavy-duty racks and storage bins", text: "for scaffolding and formwork components." },
           { title: "Vehicle fittings", text: "a ramp, wheel chocks and tie-down points." },
+          { title: "Gypsum board supports and ceiling channel racks", text: "level bearers or pallets for boards, and racks for channels and grid sections." },
+          { title: "Pipe and tube racks", text: "horizontal racks for stainless and mild steel stock, kept apart." },
+          { title: "Padded supports, shelving and labelled drawers", text: "for finished railings and gates, ceiling tiles, fixings and gate hardware." },
           { title: "Ventilation and lighting", text: "vents, and any lighting, where agreed." },
           { title: "Locking", text: "heavy-duty locks and a lockbox." },
           { title: "Delivery and unloading", text: "the route, the access and the unloading method for your site." },
@@ -39752,10 +40245,10 @@ export const CITY_PAGES: CityPage[] = [
         closing: ["Let us know what's going in, how long it will stay and where the unit will stand, and an itemised quotation follows."],
       },
       {
-        heading: "Storage Container on Rent on Thanisandra Main Road",
+        heading: "Storage Container on Rent in Thanisandra",
         placement: "afterSolutions",
         paragraphs: [
-          "Heading abroad for a year, or short of component space for a busy building season? Ask about a storage container on rent on Thanisandra Main Road. Your quotation lists the hire period, which unit you'd get and what condition it is in, and how it is delivered and later collected.",
+          "Heading abroad for a year, short of component space for a busy building season, or holding stock for a ceiling installation or a fabrication contract? Ask about a storage container on rent in Thanisandra. Hire periods run from one month to five years. Your quotation lists the hire period, which unit you'd get and what condition it is in, and how it is delivered and later collected.",
         ],
         inlineLinks: [
           {
@@ -39766,31 +40259,39 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
-        heading: "How It Works",
+        heading: "How to Order a Shipping Container",
         placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-thanisandra-main-road/shipping-container-roof-top-view-thanisandra.webp",
+          alt: "Charcoal-grey container seen from directly above: ribbed roof panels and four corner castings, with planters at its corners on a paved yard",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative top-down render. The site check covers the footprint plus room for the lift and for both doors to swing open.",
+        },
         ordered: true,
         bullets: [
-          {
-            title: "Share what you'll store and for how long",
-            text: "and where the container will stand. For a vehicle, include its make, model and dimensions.",
-          },
-          {
-            title: "Receive a recommendation and quotation",
-            text: "covering the unit, any racks, bins, ramp, chocks and tie-downs, and the delivery.",
-          },
-          { title: "Confirm placement permission", text: "from the landowner, for the exact spot." },
-          {
-            title: "Delivery after route and site checks",
-            text: "the route and site are checked first, then the delivery slot and the container's exact position are agreed with you.",
-          },
-          {
-            title: "Ask about additional services",
-            text: "extra racks, a second unit, or collection when you no longer need it, if available for your order.",
-          },
+          { text: "Explain the intended storage application." },
+          { text: "Identify the equipment or materials." },
+          { text: "Provide dimensions, quantities and estimated weight; for a vehicle, its make, model and dimensions." },
+          { text: "Identify long, heavy, fragile or moisture-sensitive stock." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss supports, racks, shelves and storage bays, and for a vehicle the ramp, chocks and tie-downs." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access, including the landowner's permission for the exact spot." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+        closing: [
+          "Extra racks, a second unit, or collection when you no longer need it can be added to the order where available.",
         ],
       },
       {
-        heading: "Why Choose Portable Office Cabin",
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. Along Thanisandra Main Road, that means:",
+        ],
         bullets: [
           { title: "Organised component stores", text: "bins and racks that stop small scaffolding parts going missing." },
           {
@@ -39802,7 +40303,15 @@ export const CITY_PAGES: CityPage[] = [
             title: "Vehicle-storage assessments",
             text: "your vehicle's dimensions, the actual unit's door opening and interior, and the loading method checked before a vehicle store is quoted.",
           },
-          { title: "Practical sizes", text: "20 ft, 40 ft and 40 ft high cube, subject to stock." },
+          {
+            title: "Supports for long and fragile stock",
+            text: "level bearers for gypsum boards, horizontal racks for channels and steel pipes, and padded supports for finished railings, each priced line by line.",
+          },
+          {
+            title: "Ventilation and insulation options",
+            text: "quoted for what you will store; no unit is promised to keep boards or steel dry on its own.",
+          },
+          { title: "Practical sizes", text: "20 ft, 40 ft and 40 ft high cube, and 10 ft where one is in stock." },
           { title: "Delivery planning", text: "route and site checks for a busy main road." },
           {
             title: "Itemised quotations",
@@ -39813,6 +40322,49 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     faqs: [
+      {
+        question: "Can gypsum boards be stored inside a shipping container?",
+        answer:
+          "Potentially, where the container is suitable and the boards are supported, protected against moisture and stored according to the manufacturer's instructions.",
+      },
+      {
+        question: "Why should gypsum boards be stored flat?",
+        answer:
+          "Flat, level support helps prevent bending and damage. Follow the board manufacturer's handling and storage requirements.",
+      },
+      {
+        question: "Can ceiling channels and grid sections be stored on racks?",
+        answer: "Yes, where the racks are appropriately rated and support the materials safely.",
+      },
+      {
+        question: "Can ceiling tiles and jointing compound be stored together?",
+        answer: "Potentially, where their environmental and handling requirements are compatible.",
+      },
+      {
+        question: "Can stainless steel and mild steel be stored in the same container?",
+        answer: "Potentially, with suitable separation and contamination controls.",
+      },
+      {
+        question: "Can 6-metre steel pipes fit inside a 20 ft container?",
+        answer:
+          "Not reliably. A standard 20 ft container generally has an internal length shorter than 6 metres. Verify the actual dimensions and consider a 40 ft unit.",
+      },
+      {
+        question: "Can finished stainless steel railings be stored inside a container?",
+        answer: "Yes, where they are protected with suitable padding and securely supported.",
+      },
+      {
+        question: "Can completed gates be stored inside a shipping container?",
+        answer: "Potentially, subject to their dimensions and weight, safe handling and stable support arrangements.",
+      },
+      {
+        question: "Can welding or grinding be performed inside the container?",
+        answer: "No. An ordinary storage-only container is not an approved welding or grinding workshop.",
+      },
+      {
+        question: "Can welding gas cylinders be stored inside the container?",
+        answer: "No. Compressed-gas cylinders require appropriate compliant storage facilities, not an ordinary storage container.",
+      },
       {
         question: "Can a scaffolding hire business use a container for small components?",
         answer:
@@ -39838,14 +40390,18 @@ export const CITY_PAGES: CityPage[] = [
         answer: "No. Never store spare fuel cans, gas cylinders or other flammables in the container with a vehicle.",
       },
       {
+        question: "What is the shipping container price in Thanisandra?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
         question: "How quickly can you deliver?",
         answer:
           "Timing depends on which units are in stock, any racks or fittings to be added, and the route and access to your site. Tell us when you need it, and the quotation will state the expected delivery schedule.",
       },
     ],
 
-    ctaHeading: "Storage for a Road on the Rise",
-    ctaText: `Whether you're keeping thousands of scaffolding parts counted and close to your next site, or keeping your car or motorbike protected while you're away, we'll quote a container set up for the job. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Thanisandra, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli.`,
+    ctaHeading: "Request a Shipping Container Quotation in Thanisandra",
+    ctaText: `Whether you need storage for scaffolding equipment, compatible vehicles, false ceiling materials, gypsum boards, stainless steel railings or gate fabrication stock, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Service area: Thanisandra, Thanisandra Main Road, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli, Bengaluru, Karnataka.`,
     // Brief §5: the final CTA's "request a storage container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Storage Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -39856,7 +40412,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Container enquiry for Thanisandra Main Road",
       intro:
-        "Choose a container and quantity, give your site's pin or address near Thanisandra Main Road, and tell us whether you'd buy or rent, what you'll store and for how long. For a vehicle, add its make, model and dimensions. The reply is an itemised quotation.",
+        "Choose a container and quantity, give your site's pin or address near Thanisandra Main Road, and tell us whether you'd buy or rent, what you'll store and for how long. For a vehicle, add its make, model and dimensions; for boards, pipes or gates, the longest piece and a rough total weight. The reply is an itemised quotation.",
     },
     // The cargo category and the rental product are linked in the body, so they are not repeated here.
     relatedLinksHeading: "Related products",
@@ -39868,7 +40424,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
     ],
 
-    disclaimer: `Portable Office Cabin supplies containers through its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its Electronic City office in Bengaluru, and has no yard, depot, garage or vehicle-storage facility on or near Thanisandra Main Road. This page describes how a container placed on the customer's own or leased land can be used; it is not an offer of a managed storage, vehicle-storage, insurance or inspection service. Each unit is subject to availability, and its quotation states its size, grade, condition, internal dimensions, door opening and floor rating, any racks, bins, ramp, chocks, tie-downs, vents, lighting or locks, any hire terms, and how the unit is delivered, unloaded and collected; delivery dates, site access and vehicle fit are not guaranteed. All five images are renders of a single container with a glazed side panel, shown for illustration; none is a photograph taken on Thanisandra Main Road or of a delivered unit, a component store or a vehicle store. Scaffolding hire yards and vehicle owners are mentioned to illustrate uses; they are not clients or completed projects, and the localities listed show where enquiries are invited, not places where a delivery is confirmed. Guidance on loads, racking, handling, batteries, fuel, electric vehicles, fire risk, pests, insurance, placement and permissions is general information, not engineering, safety, legal or insurance advice; follow the vehicle and equipment manufacturers' instructions.`,
+    disclaimer: `Portable Office Cabin supplies containers through its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its Electronic City office in Bengaluru, and has no yard, depot, garage or vehicle-storage facility in Thanisandra or on Thanisandra Main Road. This page describes how a container placed on the customer's own or leased land can be used; it is not an offer of a managed storage, vehicle-storage, insurance or inspection service. Each unit is subject to availability, and its quotation states its size, grade, condition, internal dimensions, door opening and floor rating, any racks, bins, bearers, padded supports, drawers, ramp, chocks, tie-downs, vents, insulation, lighting or locks, any hire terms, and how the unit is delivered, unloaded and collected; delivery dates, site access, vehicle fit and the fit of long stock are not guaranteed. No unit is offered as moisture-proof, fire-rated or a workshop, and none is supplied for welding, grinding, cutting or spray painting, or as a store for compressed-gas cylinders, fuel, paints or thinners. The ten images are renders shown for illustration: five of a dark green container with a glazed side panel and five of a charcoal-grey container; none is a photograph taken in Thanisandra or of a delivered unit, and none shows a component store, a vehicle store, ceiling materials or fabrication stock. Scaffolding hire yards, vehicle owners, false ceiling contractors and railing and gate fabricators are mentioned to illustrate uses; they are not clients or completed projects, and the localities listed show where enquiries are invited, not places where a delivery is confirmed. Guidance on loads, racking, handling, batteries, fuel, electric vehicles, gypsum, steel, gas cylinders, fire risk, pests, insurance, placement and permissions is general information, not engineering, safety, legal or insurance advice; follow the manufacturers' and suppliers' instructions.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -43528,6 +44084,12 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "seed and laboratory equipment storage in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
         after: ".",
       },
+      // Thanisandra Version B brief (2026-11-20, §5): Thanisandra and its localities have their own page.
+      {
+        before: "Construction, ceiling and fabrication businesses to the north-east, along Thanisandra Main Road, are covered on our page on",
+        link: { label: "storage containers on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -46171,6 +46733,14 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "Kalyan Nagar container page", href: "/cities-we-serve/shipping-container-kalyan-nagar" },
       after: ".",
     },
+    // Thanisandra Version B brief (2026-11-20, §5): the neighbouring Thanisandra page; this page's targeting is unchanged.
+    areasInlineLinks: [
+      {
+        before: "Scaffolding yards, ceiling contractors and railing fabricators just west of here, in Thanisandra, have a page on",
+        link: { label: "construction equipment storage in Thanisandra", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
