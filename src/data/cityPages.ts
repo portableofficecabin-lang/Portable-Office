@@ -9234,6 +9234,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
       // Hoskote's portable-shop sibling (2026-11-05), which links back from its nearby locations.
       { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
+      // Hoskote's shipping and storage container sibling (2026-11-21), which links back from its areas section.
+      { label: "Shipping & Storage Containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
   },
@@ -9482,6 +9484,13 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas Served Around Hoskote",
     areasText:
       "We welcome portable shop enquiries from Hoskote (also spelt Hosakote) and the places around it: Pillagumpe, Budigere Cross, Kattamnallur, Sulibele, Nandagudi, Anugondanahalli, Jadigenahalli, Old Madras Road, KR Puram, Whitefield and Malur. Share the exact site address so we can confirm the route, transport and unloading arrangements for your shop cabin.",
+    // Hoskote shipping container brief (2026-11-21, §5): the mandatory reciprocal sentence. Equipment and stock
+    // storage is that page's intent; this page's title, H1, canonical and kiosk content are unchanged.
+    areasInlineLink: {
+      before: "Need secure space for equipment or stock rather than a retail shop? Explore our",
+      link: { label: "shipping and storage containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
+      after: ".",
+    },
 
     howHeading: "How to Order a Portable Shop",
     howSteps: [
@@ -9648,6 +9657,821 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru. Delivery, unloading and placement are arranged for each order, the base or supports depend on the site, and manufacturing and delivery dates are not guaranteed. The shop types, sizes, fronts, materials, insulation, fittings, utilities, signage and finishes on this page are options; apart from the 10 ft × 10 ft catalogue cabin, the sizes shown are planning examples subject to an approved drawing and quotation, and the items supplied are confirmed in the approved specification and quotation for each order. The portable shop images are illustrative renders of one Portable Office Cabin 10 ft × 10 ft shop cabin design, and the container images are illustrative renders of a plain 20 ft container shell before conversion; none of them is a photograph of an installation in Hoskote. The industrial areas, roads, places and businesses named here describe the region, typical uses and delivery enquiry locations, not clients, completed projects or approved shop locations, and Portable Office Cabin is not affiliated with any industrial area, layout or institution named. Notes on permissions, licensing, food safety, electrical and fire safety, weather protection and relocation are general guidance, not legal, engineering or safety advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN HOSKOTE — storage for grape growers (clean harvest crates, packing
+   * cartons and liners, trellis wire, pandal poles, vineyard netting, clean sprayers, pruning tools,
+   * seasonal vineyard inventory) and for warehouse racking installers (uprights, beams, bracing, anchor
+   * bolts, mesh decks, column guards, warehouse-wise staging, quarantined returns) in and around Hoskote.
+   *
+   * Owner brief of 2026-11-21 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Hoskote, Karnataka"): meta title, meta description, H1, keywords, local modifiers, section order,
+   * H2 / H3 headings, sizes table, the eleven ordering steps and the thirteen FAQs are the brief's, and so
+   * is the copy, lightly edited for flow and British spelling. The brief's notes to the implementer ("Do
+   * not assume every plastic crate…", "should not be presented as a suitable cold-storage facility", "Do
+   * not recommend storing hazardous agricultural chemicals…", "Do not recommend storing petrol, diesel…",
+   * "Do not return damaged structural components…", "Do not guarantee fit…", "Do not assume a container
+   * can safely hold any quantity of steel", "should not be described as an approved metalworking
+   * workshop", "Do not recommend storing welding gas cylinders…", "Do not promise delivery…", "must not
+   * become primary locality keywords", "Do not invent…", "Conditional section…", "Highlight only verified
+   * capabilities…", "Do not target…", "Use verified company phone numbers…") are instructions, not page
+   * copy: where one carries a fact for the reader it is reworded as a plain statement ("every plastic
+   * crate type has its own safe stacking height", "an ordinary shipping container is not a cold store and
+   * is not offered as one", "an ordinary storage-only container is not a store for hazardous agricultural
+   * chemicals", "petrol, diesel and other fuels are not kept in an ordinary storage-only shipping
+   * container", "damaged structural components never go back into service without…", "fit is confirmed
+   * only after the actual dimensions have been checked", "no container can safely hold an unlimited
+   * quantity of steel", "an ordinary storage-only shipping container is not an approved metalworking
+   * workshop", "welding gas cylinders are not kept in an ordinary storage-only container", "a delivery
+   * time window is agreed only after the transport arrangements have been confirmed"); otherwise it is
+   * left out. Where an H3 has two checklists, the longer or more useful one stays a list and the other
+   * becomes a sentence (the template gives an H3 one list). "Hosakote" is used once, in the intro, as the
+   * brief asks. The route follows the site convention (/cities-we-serve/…), not the brief's root slug. The
+   * tagline, captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; crate bays, shelves, racks, pole and upright supports,
+   * bins, drawers, toolboards, staging areas, holding areas, lighting, ventilation and insulation are
+   * layout options and price factors "where your quotation includes them", never stock items or guaranteed
+   * conditions. The Bangalore Blue line is the brief's (a geographical indication registered in India);
+   * the disclaimer states no affiliation. The optional Kannada search terms are not used: the page is in
+   * English. No Product JSON-LD: city pages carry no prices (file rule) and a Product block without offers
+   * earns no rich result, so the Service JSON-LD (no offers), FAQPage and BreadcrumbList stand, as on every
+   * sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   Grape growers, "Grape Storage & Agricultural Safety", racking installers, "Warehouse Racking
+   *     Installation Safety" and "Storage Container Layout Options" → five afterIntro extra sections, the
+   *     first four with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, eleven steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Hoskote" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a
+   *   default extra section (after the areas, as in the brief). FAQs: the brief's thirteen.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container product page"); grape section → "dairy farm equipment storage in Varthur"
+   * (cattle feed and milking equipment are that page's intent); "Pruning and vineyard tools" H3 → "nursery
+   * and landscaping storage on Bannerghatta Road" (live plants and garden-contract stock); "Seasonal
+   * vineyard inventory" H3 → "beekeeping equipment storage in Yelahanka New Town"; "Pesticides and
+   * fungicides" H3 → "seed and agri-input dealer storage in Vidyaranyapura" (stock held for resale and its
+   * dealer licensing); racking section → "material handling equipment storage in Chandapura" (forklifts and
+   * pallet trucks kept for rental or service); "Pallet racking uprights" H3 → "scaffolding and formwork
+   * storage in Thanisandra" (hire-yard tubes and panels, not racking); layout → "planning a
+   * temperature-controlled container fit-out" (the Vellore page's "Insulated and air-conditioned storage
+   * enquiries" section, which covers how a stated range is specified; the lead-in rules out a fresh-fruit
+   * cold store, so it is not placed under "Fresh grape storage"); sizes → "inspection points for a
+   * second-hand container": the brief's /shipping-container-chennai is not a route, so it points to the
+   * Athipattu page's "Used Container Inspection" checklist, as the sibling pages do; rental →
+   * /products/shipping-container-rental; areas → "portable shop cabins in Hoskote" (the brief's mandatory
+   * reciprocal sentence, word for word), "container offices in Hoskote" (the same town's site-office
+   * page) and "shipping containers in KR Puram" (KR Puram, Tin Factory and the rail consignment intent).
+   * Not linked: the brief's Harlur page (no such route) and Coimbatore (an engineering-supplier page in
+   * another state; the brief asks to avoid excessive links and to prioritise nearby pages). Anchors differ
+   * from the siblings' anchors for the same targets. Inbound: the Hoskote portable shop page's areas
+   * section (the brief's sentence, "shipping and storage containers in Hoskote"), the KR Puram page's areas
+   * section ("storage containers in Hoskote"), the Container Office in Hoskote page's related links, the
+   * Narsapura shipping container page's service-area list (its "Hoskote" item, which pointed at the
+   * container office page before this shipping page existed), the Karnataka shipping hub ("Shipping
+   * Containers in Hoskote"), the cargo category's location links ("Storage containers in Hoskote") and
+   * every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block
+   * from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Hoskote (Hosakote), Hoskote Industrial Area,
+   * Pillagumpe, Budigere Cross, Kattamnallur, Sulibele, Nandagudi, Jadigenahalli and Anugondanahalli, for
+   * grape growers' vineyard equipment and for warehouse racking installers' stock. Old Madras Road and the
+   * Satellite Town Ring Road are named only as transport corridors. Not targeted: KR Puram and Tin Factory
+   * (KR Puram page; named here only in the link to it), Whitefield, Malur and Devanahalli (not named);
+   * portable shops and kiosks (Hoskote shop page; named only in the link to it); container offices (Hoskote
+   * container office page; same). Kept apart from dairy farm storage (Varthur), seed and agri-input dealer
+   * stock (Vidyaranyapura), nursery and landscaping stock (Bannerghatta Road), beekeeping equipment
+   * (Yelahanka New Town), bird and pigeon netting (no page; vineyard netting only, no bird-netting terms),
+   * material handling equipment rental and service (Chandapura), scaffolding and formwork hire yards
+   * (Thanisandra), engineering supplier inventory (Coimbatore; not named) and specialised
+   * temperature-controlled storage as such (Vellore; named only in the link to it). "Bengaluru" stays out
+   * of the title, as the brief asks; the geo meta and the Service JSON-LD's areaServed carry the two live
+   * Hoskote pages' point and placename ("Hoskote, Bengaluru Rural, Karnataka").
+   *
+   * Images: five owner-dropped WebP renders ("public/images/Storage Containers in Hoskot/Storage
+   * Containers in Hoskot/cabin (1–5).webp", lossy VP8, 72–141 KB, no EXIF / XMP / ICC) of one sand-beige
+   * container. Each is copied with its VP8 data byte-for-byte plus an XMP dc:title / dc:description that
+   * labels it an illustrative render (no creator, GPS, camera or date). (1) three-quarter exterior = hero /
+   * og:image (the brief's hero filename and alt); (4) cargo doors = grape grower section (its caption is
+   * about door seals, heat and condensation around clean packaging); (5) blind end wall = racking section
+   * (its caption is about floor rating and usable length); (2) empty interior = layout options (the brief's
+   * interior filename, but not its "with racks" alt: nothing is fitted); (3) roof from above = placement
+   * section. No image shows crates, cartons, wire, poles, netting, sprayers, tools, uprights, beams,
+   * fittings or a holding area, so the brief's eleven use-case image slots are not used, and no alt text,
+   * caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-hoskote",
+    city: "Hoskote",
+    listTitle: "Shipping & Storage Containers in Hoskote",
+    metaTitle: "Shipping Container in Hoskote | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Hoskote for grape growers storing harvest crates, trellis materials and vineyard tools, plus warehouse racking installers.",
+    keywords:
+      "shipping container in Hoskote, cargo container Hoskote, storage container Hoskote, storage container Hosakote, storage container Hoskote industrial area, storage container Pillagumpe, storage container Sulibele, storage container Budigere Cross, used shipping container Hoskote, 40 ft shipping container Hoskote, shipping container price in Hoskote, storage container for rent in Hoskote, grape farm storage container, vineyard equipment storage, grape harvest crate storage, trellis wire storage, pandal material storage, vineyard netting storage, grape packing material storage, racking installer storage container, pallet racking component storage, warehouse racking beam storage, warehouse racking upright storage, racking installation site storage, warehouse racking fittings storage",
+    // The same point and placename as the two live Hoskote pages (container office, portable shop).
+    geo: { region: "IN-KA", placename: "Hoskote, Bengaluru Rural, Karnataka, India", position: "13.0707;77.7980", icbm: "13.0707, 77.7980" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1408 × 1056 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // KR Puram, Varthur, Vidyaranyapura, Bannerghatta Road, Yelahanka New Town, Chandapura, Thanisandra, Vellore
+    // and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-hoskote/shipping-container-hoskote.webp",
+      alt: "Shipping container exterior suitable for agricultural and industrial equipment storage: a sand-beige steel unit with closed double cargo doors, in a paved yard beside warehouse sheds",
+      width: 1408,
+      height: 1056,
+      caption: "Illustrative render of a plain sand-beige storage container. It was not photographed in Hoskote and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Hoskote",
+    tagline:
+      "Lockable extra room for harvest crates, trellis wire, netting and vineyard tools between seasons, and for racking uprights, beams and fittings waiting for the installation bay to be ready.",
+    intro: [
+      "Hoskote, also spelt Hosakote, is an important commercial and agricultural town in the Bengaluru region, with access to industrial areas, logistics facilities and surrounding farming communities.",
+      "Warehouse and logistics developments create demand for storage and installation equipment, while grape-growing businesses need organised space for seasonal harvest materials, trellis components and vineyard tools.",
+      "The surrounding agricultural belt is associated with Bangalore Blue grape cultivation, a geographical indication registered in India.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Hoskote for compatible agricultural equipment and industrial installation inventory.",
+    },
+
+    areasHeading: "Areas Served Around Hoskote",
+    areasText:
+      "Shipping and storage container enquiries are welcome from Hoskote town, Hoskote Industrial Area, Pillagumpe, Budigere Cross, Kattamnallur, Sulibele, Nandagudi, Jadigenahalli and Anugondanahalli. Trucks come in along Old Madras Road and the Satellite Town Ring Road; after that, each vineyard track, warehouse yard or project site is looked at on its own before a delivery date is put forward.",
+    // Brief §5 (mandatory reciprocal, the brief's sentence) and §6: shops and kiosks belong to the Hoskote shop
+    // page, site offices to the Hoskote container office page, KR Puram and Tin Factory to the KR Puram page.
+    areasInlineLinks: [
+      {
+        before: "For ready-to-open retail shops and kiosks, see our",
+        link: { label: "portable shop cabins in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
+        after: ".",
+      },
+      {
+        before: "A site office for the same farm, yard or project is covered on our page on",
+        link: { label: "container offices in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
+        after: ".",
+      },
+      {
+        before: "KR Puram and Tin Factory, nearer the city on Old Madras Road, have a page of their own:",
+        link: { label: "shipping containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Grape Growers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-hoskote/shipping-container-cargo-doors-hoskote.webp",
+          alt: "Head-on view of a sand-beige container's closed cargo doors: four vertical locking bars with cam handles and a central lockbox, with a warehouse shed and pallets behind",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render. Even with sound door gaskets, a shut steel box warms in the sun and can collect condensation, so crates and cartons should go in clean and fully dry.",
+        },
+        paragraphs: [
+          "Grape growers handle equipment and materials used throughout vineyard maintenance, harvesting and packing, and many items are needed only during particular stages of the growing season.",
+          "A suitable shipping container may provide additional storage for clean, dry equipment where its environmental conditions and loading capacity are appropriate.",
+        ],
+        // Brief §6: dairy farm storage belongs to the Varthur page; vineyard equipment stays here.
+        inlineLinks: [
+          {
+            before: "Storing cattle feed and milking equipment for a dairy herd rather than vineyard gear? Read about",
+            link: { label: "dairy farm equipment storage in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Grape harvest crate storage",
+            paragraphs: [
+              "Compatible inventory may include plastic harvest crates, empty picking crates, reusable produce containers and other suitable harvest-handling equipment. Before storage:",
+            ],
+            bullets: [
+              { text: "Clean according to the intended food-contact use." },
+              { text: "Dry thoroughly." },
+              { text: "Inspect for damage." },
+              { text: "Stack or nest according to manufacturer guidance." },
+              { text: "Protect against dust and pests." },
+            ],
+            closing: ["Every plastic crate type has its own safe stacking height; one crate's limit is no guide to another's."],
+          },
+          {
+            heading: "Grape packing cartons and liners",
+            paragraphs: ["Packing materials may include:"],
+            bullets: [
+              { text: "Empty cartons." },
+              { text: "Carton liners." },
+              { text: "Protective tissue." },
+              { text: "Other compatible packing accessories." },
+            ],
+            closing: [
+              "Store them in clean, dry conditions, on suitable shelves or pallets that keep the packaging protected against moisture and contamination. Food-contact materials must remain suitable for their intended use.",
+            ],
+          },
+          {
+            heading: "Trellis wire and vineyard supports",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Trellis wire coils." },
+              { text: "Anchors." },
+              { text: "Clamps." },
+              { text: "Fasteners." },
+              { text: "Other vineyard support accessories." },
+            ],
+            closing: ["Use suitable racks and restraints, and secure wire coils to prevent uncontrolled movement."],
+          },
+          {
+            heading: "Pandal poles and supports",
+            paragraphs: [
+              "Vineyard pandal structures may require long poles and support components. Before selecting a container, verify:",
+            ],
+            bullets: [
+              { text: "Actual component length." },
+              { text: "Internal container dimensions." },
+              { text: "Door opening dimensions." },
+              { text: "Loading method." },
+              { text: "Rack capacity." },
+              { text: "Safe handling requirements." },
+            ],
+            closing: ["A 40 ft container may be more suitable for longer components, subject to site access and availability."],
+          },
+          {
+            heading: "Vineyard netting",
+            paragraphs: [
+              "Compatible stock may include vineyard protection netting, rolled vineyard netting and related supports and fittings. Organise the rolls by:",
+            ],
+            bullets: [
+              { text: "Size." },
+              { text: "Material." },
+              { text: "Intended application." },
+              { text: "Vineyard section." },
+              { text: "Quantity." },
+            ],
+            closing: ["Keep netting clean and protected against damage."],
+          },
+          {
+            heading: "Agricultural sprayers",
+            paragraphs: ["Clean, empty sprayers and compatible accessories may be stored where appropriate. Before storage:"],
+            bullets: [
+              { text: "Follow the manufacturer's cleaning instructions." },
+              { text: "Make sure the equipment is drained as required." },
+              { text: "Inspect it for contamination." },
+              { text: "Store it securely." },
+              { text: "Keep it separated from clean harvest packaging." },
+            ],
+            closing: ["Sprayers that contain pesticide residues require appropriate handling and storage controls."],
+          },
+          {
+            heading: "Pruning and vineyard tools",
+            paragraphs: ["Compatible tools may include:"],
+            bullets: [
+              { text: "Secateurs." },
+              { text: "Pruning saws." },
+              { text: "Ladders." },
+              { text: "Drip irrigation fittings." },
+              { text: "Other vineyard maintenance accessories." },
+            ],
+            closing: ["Use suitable racks and toolboards, and store sharp tools safely."],
+            // Brief §6: nursery and landscaping stock belongs to the Bannerghatta Road page.
+            inlineLinks: [
+              {
+                before: "Growing plants for sale or running a garden-contract business instead? See our notes on",
+                link: { label: "nursery and landscaping storage on Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Seasonal vineyard inventory",
+            paragraphs: ["Growers may organise equipment by:"],
+            bullets: [
+              { text: "Vineyard." },
+              { text: "Crop season." },
+              { text: "Harvest date." },
+              { text: "Equipment type." },
+              { text: "Quantity." },
+              { text: "Condition." },
+              { text: "Storage location." },
+            ],
+            closing: ["This can help prepare equipment for the next season."],
+            // Brief §6: beekeeping equipment belongs to the Yelahanka New Town page.
+            inlineLinks: [
+              {
+                before: "Keeping hives, frames and honey-extraction gear rather than vineyard equipment? That is covered under",
+                link: { label: "beekeeping equipment storage in Yelahanka New Town", href: "/cities-we-serve/shipping-container-yelahanka-new-town" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Grape Storage & Agricultural Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Fresh grape storage",
+            paragraphs: [
+              "Freshly harvested grapes are perishable and require appropriate post-harvest handling. An ordinary shipping container is not a cold store and is not offered as one. Fresh grapes may require:",
+            ],
+            bullets: [
+              { text: "Suitable temperature control." },
+              { text: "Appropriate humidity." },
+              { text: "Food hygiene." },
+              { text: "Prompt packing." },
+              { text: "Cold-chain management." },
+              { text: "Timely dispatch." },
+            ],
+            closing: ["Where fresh fruit has to be held, use an appropriate, verified cold-storage facility."],
+          },
+          {
+            heading: "Pesticides and fungicides",
+            paragraphs: [
+              "Agricultural pesticides and fungicides may be hazardous and subject to licensing and storage requirements. Store them according to the product labels, the safety data sheets and the regulations that apply.",
+              "An ordinary storage-only container is not a store for hazardous agricultural chemicals, and they are kept well away from harvest crates and clean food-contact packaging.",
+            ],
+            // Brief §6: seed and agri-input dealers' stock belongs to the Vidyaranyapura page.
+            inlineLinks: [
+              {
+                before: "Dealers who hold seed and other farm inputs for resale have their own licensing and storage questions, covered under",
+                link: { label: "seed and agri-input dealer storage in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Fuel for pumps and sprayers",
+            paragraphs: [
+              "Petrol, diesel and other fuels are not kept in an ordinary storage-only shipping container. Fuel storage requires suitable compliant facilities.",
+            ],
+          },
+          {
+            heading: "Agricultural equipment and food-contact hygiene",
+            paragraphs: [
+              "Keep clean harvest equipment and packaging separated from contaminated tools, chemical residues and incompatible materials, and follow the food-contact hygiene requirements that apply.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Warehouse Racking Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-hoskote/shipping-container-end-wall-hoskote.webp",
+          alt: "Blind end wall of a sand-beige container with vertical corrugations, corner castings and two forklift pockets in the base rail, standing in a paved yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative end view. The usable internal length and the floor rating are confirmed on the unit offered before any upright or beam bundle is loaded.",
+        },
+        paragraphs: [
+          "Warehouse racking contractors handle large quantities of steel components used to install storage systems in factories, distribution centres and logistics parks. Components may arrive before the installation area is ready.",
+          "A suitably configured shipping container may provide additional storage for compatible racking materials, fittings and tools.",
+        ],
+        // Brief §6: material handling equipment rental and service belongs to the Chandapura page.
+        inlineLinks: [
+          {
+            before: "Keeping forklifts, pallet trucks and their spares for hire or servicing rather than racking stock? See",
+            link: { label: "material handling equipment storage in Chandapura", href: "/cities-we-serve/shipping-container-chandapura" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Pallet racking uprights",
+            paragraphs: ["Racking uprights and frames may vary considerably in height and weight. Organise components by:"],
+            bullets: [
+              { text: "Length." },
+              { text: "Height." },
+              { text: "System." },
+              { text: "Manufacturer." },
+              { text: "Project." },
+              { text: "Quantity." },
+            ],
+            closing: ["Use suitably rated horizontal supports or racks, and secure long components against shifting."],
+            // Brief §6: scaffolding and formwork hire-yard stock belongs to the Thanisandra page.
+            inlineLinks: [
+              {
+                before: "Scaffolding tubes, couplers and formwork panels from a hire yard are a different stock, covered under",
+                link: { label: "scaffolding and formwork storage in Thanisandra", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Pallet racking beams",
+            paragraphs: ["Beams may be organised by:"],
+            bullets: [
+              { text: "Length." },
+              { text: "Load rating." },
+              { text: "Profile." },
+              { text: "Manufacturer." },
+              { text: "Project." },
+              { text: "Installation area." },
+            ],
+            closing: ["Keep load-rating labels and identification information intact, and never mix incompatible racking components."],
+          },
+          {
+            heading: "Bracing and structural accessories",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Bracing." },
+              { text: "Base plates." },
+              { text: "Shims." },
+              { text: "Other approved racking components." },
+            ],
+            closing: ["Use labelled storage bins or suitable supports."],
+          },
+          {
+            heading: "Anchor bolts and fasteners",
+            paragraphs: ["Labelled drawers may hold anchor bolts, nuts, washers and other installation fasteners. Organise them by:"],
+            bullets: [
+              { text: "Size." },
+              { text: "Specification." },
+              { text: "Grade." },
+              { text: "Manufacturer." },
+              { text: "Project." },
+            ],
+          },
+          {
+            heading: "Wire mesh decks and column guards",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Wire mesh decking." },
+              { text: "Column guards." },
+              { text: "Other approved protective components." },
+            ],
+            closing: ["Use suitable flat supports or stable storage arrangements that prevent bending and impact damage."],
+          },
+          {
+            heading: "Warehouse-wise installation staging",
+            paragraphs: ["Installers may organise materials by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Warehouse." },
+              { text: "Rack row." },
+              { text: "Installation bay." },
+              { text: "Project phase." },
+              { text: "Installation date." },
+            ],
+            closing: ["Labelled storage sections can help reduce picking and dispatch errors."],
+          },
+          {
+            heading: "Damaged and returned racking components",
+            paragraphs: [
+              "Keep damaged, returned or unidentified components separate from approved installation stock, and maintain records covering:",
+            ],
+            bullets: [
+              { text: "Component type." },
+              { text: "Manufacturer." },
+              { text: "Project." },
+              { text: "Reported damage." },
+              { text: "Inspection status." },
+              { text: "Disposal or return decision." },
+            ],
+            closing: ["Damaged structural components never go back into service without appropriate assessment and authorisation."],
+          },
+          {
+            heading: "Racking inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product code." },
+              { text: "Component type." },
+              { text: "Dimensions." },
+              { text: "Load rating, where applicable." },
+              { text: "Quantity." },
+              { text: "Project." },
+              { text: "Storage location." },
+              { text: "Dispatch status." },
+            ],
+            closing: ["Use existing business inventory systems where available."],
+          },
+          {
+            heading: "Long upright and beam storage",
+            paragraphs: [
+              "Some racking uprights may be longer than the usable internal length of a 20 ft container. Before selecting a container, verify:",
+            ],
+            bullets: [
+              { text: "Longest component." },
+              { text: "Actual container internal length." },
+              { text: "Door opening dimensions." },
+              { text: "Loading angle." },
+              { text: "Rack clearances." },
+              { text: "Component weight." },
+              { text: "Safe handling method." },
+            ],
+            closing: [
+              "A 40 ft container may be more suitable for long stock. Fit is confirmed only after the actual dimensions have been checked.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Warehouse Racking Installation Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Heavy steel components",
+            paragraphs: ["Racking materials may create substantial concentrated loads. Verify:"],
+            bullets: [
+              { text: "Total stock weight." },
+              { text: "Container floor capacity." },
+              { text: "Rack load ratings." },
+              { text: "Load distribution." },
+              { text: "Restraints." },
+              { text: "Safe handling access." },
+              { text: "Lifting arrangements." },
+            ],
+            closing: [
+              "No container can safely hold an unlimited quantity of steel: the load is planned against the floor and rack ratings of the actual unit.",
+            ],
+          },
+          {
+            heading: "Welding, cutting and grinding",
+            paragraphs: [
+              "An ordinary storage-only shipping container is not an approved metalworking workshop. Welding, cutting and grinding are carried out only in appropriate facilities with suitable safety controls.",
+            ],
+          },
+          {
+            heading: "Gas cylinders",
+            paragraphs: [
+              "Compressed-gas cylinders require suitable compliant storage, so welding gas cylinders are not kept in an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Racking inspection and installation",
+            paragraphs: [
+              "Storing racking components does not replace appropriate installation procedures, the manufacturer's specifications and structural safety checks. Use qualified personnel and approved designs for warehouse racking installation.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-hoskote/hoskote-storage-container-interior.webp",
+          alt: "Empty sand-beige container interior viewed from the doorway: ribbed side walls, a corrugated roof lining and a dark plywood floor, with nothing fitted",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render, unfitted. Crate bays, pole and upright supports, fastener drawers and lighting are added only when the written quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Harvest crate storage bays." },
+          { text: "Shelves for clean packing materials." },
+          { text: "Trellis wire racks." },
+          { text: "Supports for pandal poles." },
+          { text: "Vineyard netting storage." },
+          { text: "Toolboards." },
+          { text: "Racks for clean sprayers." },
+          { text: "Horizontal supports for racking uprights." },
+          { text: "Beam storage racks." },
+          { text: "Labelled bins for base plates." },
+          { text: "Fastener drawers." },
+          { text: "Wire mesh decking supports." },
+          { text: "Project-wise staging areas." },
+          { text: "Separate holding areas for damaged components." },
+          { text: "Lockable storage." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: [
+          "The final layout must reflect the actual material dimensions, weights, environmental requirements and safety considerations. Incompatible materials are never combined in one unit, and the container's loading limits are never exceeded.",
+        ],
+        // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers this.
+        inlineLinks: [
+          {
+            before: "Insulation or air conditioning is quoted against a stated temperature range for the stock, never as a fresh-fruit cold store; read about",
+            link: { label: "planning a temperature-controlled container fit-out", href: "/cities-we-serve/shipping-container-vellore" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Hoskote",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hoskote/shipping-container-roof-view-hoskote.webp",
+          alt: "Overhead view of a sand-beige container on a concrete slab, showing its ribbed roof and the corner castings at each end",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative overhead render. Leave room around the drop spot for both doors to swing fully open and for the truck or crane that unloads the container.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including farms, industrial yards, warehouse sites, approved commercial storage plots and project sites with the developer's permission.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Landowner or developer permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Highway and industrial traffic may affect delivery arrangements, and farm access roads and warehouse yards each need an individual assessment. A 40 ft container may be considered where the site dimensions and access permit.",
+          "A delivery time window is agreed only after the transport arrangements have been confirmed.",
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Volumes are rounded. Exact internal dimensions, door openings, floor-loading limits and availability must be verified for the container offered to you. Approximate volume does not establish allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Vineyard tools, netting and small accessories"],
+            ["20 ft", "33 m³", "Harvest crates, packing materials, racking fittings and shorter components"],
+            ["40 ft", "67 m³", "Longer racking uprights, pandal poles and larger equipment inventories"],
+          ],
+        },
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Go through the",
+            link: { label: "inspection points for a second-hand container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you decide.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Hoskote",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Vineyard equipment racks." },
+          { text: "Harvest crate storage provisions." },
+          { text: "Packing material shelves." },
+          { text: "Racking component supports." },
+          { text: "Fastener drawers and bins." },
+          { text: "Locking arrangements." },
+          { text: "Lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Ground preparation requirements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on the actual storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Hoskote",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for seasonal vineyard equipment or for the weeks a warehouse racking job is on site. Hire periods run from one month to five years; the quotation states the container, the period, transport charges, any deposit, and how delivery and collection will work.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire sizes and the terms on offer are listed under",
+            link: { label: "containers available on rent", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the equipment or materials." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify long, heavy, fragile or moisture-sensitive stock." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelves, bins and storage bays." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For growers and installers around Hoskote, that covers:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "20 ft and 40 ft containers, and a 10 ft unit whenever stock allows." },
+          { title: "Storage-oriented modifications", text: "crate bays, pole and upright supports or fastener drawers, itemised separately in the quotation." },
+          { title: "Shelving and racking provisions", text: "planned around crates, cartons and netting rolls for growers, or around long uprights, beams and boxed fittings for installers." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the exact locking hardware named in the quotation for your container." },
+          { title: "Ventilation and insulation options", text: "offered against the stock you list, without any promise of food-grade, cold-store or hazardous-goods conditions." },
+          { title: "Quotation and delivery coordination", text: "an itemised written quotation first; the road, the gate and the drop spot are checked before any date is given." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can grape growers store equipment in a shipping container?",
+        answer:
+          "Potentially, where the container provides suitable conditions for clean harvest crates, trellis materials, netting and vineyard tools.",
+      },
+      {
+        question: "Can harvested grapes be stored in an ordinary shipping container?",
+        answer: "An ordinary container is not a substitute for suitable fresh-fruit cold storage.",
+      },
+      {
+        question: "Can vineyard packing cartons be stored inside a container?",
+        answer: "Potentially, where the packaging remains clean, dry and protected against pests and contamination.",
+      },
+      {
+        question: "Can trellis wire and pandal supports be stored in a container?",
+        answer: "Yes, where the dimensions, supports and loading arrangements are suitable.",
+      },
+      {
+        question: "Can agricultural sprayers be stored with harvest equipment?",
+        answer: "Only where the sprayers are clean, empty, appropriately handled and do not create contamination risks.",
+      },
+      {
+        question: "Can pesticides and fungicides be stored inside the container?",
+        answer: "Hazardous agricultural chemicals require suitable compliant storage arrangements.",
+      },
+      {
+        question: "Can warehouse racking uprights fit in a 20 ft container?",
+        answer: "Shorter components may fit, but longer uprights may require a 40 ft container. Verify the actual dimensions.",
+      },
+      {
+        question: "How should racking beams be organised?",
+        answer: "Organise beams by length, system, manufacturer, load rating and project.",
+      },
+      {
+        question: "What should happen to damaged racking components?",
+        answer: "Keep them separate from approved stock until they are properly inspected and a decision is made.",
+      },
+      {
+        question: "Can welding or grinding be performed inside the container?",
+        answer: "An ordinary storage-only container should not be used as an unapproved metalworking workshop.",
+      },
+      {
+        question: "Can a 40 ft container be delivered to a farm or warehouse in Hoskote?",
+        answer: "Potentially, subject to road access, ground conditions, unloading arrangements and permissions.",
+      },
+      {
+        question: "What is the shipping container price in Hoskote?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Hoskote",
+    ctaText: `Whether you need storage for vineyard equipment, grape harvest materials or warehouse racking installation stock, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Phone ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Hoskote, Pillagumpe, Budigere Cross, Sulibele, Nandagudi and the other localities listed above, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Hoskote",
+      intro:
+        "Pick the container type and quantity, share the Hoskote site address or a map pin, and tell us whether you are buying or hiring. Mention whether the stock is vineyard gear or racking components, the length of your longest pole or upright, and an estimate of the heaviest load, so the container quoted suits what it will carry.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here. The
+    // Narsapura product page (same Old Madras Road / NH-75 belt) links its "Hoskote" service-area item here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+    ],
+
+    disclaimer: `Containers are supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, with a Bengaluru office in Electronic City. We have no yard, depot, showroom or branch in Hoskote or the other places this page names. What you receive is set by the written quotation: the container's internal size and door opening, its grade and condition, the floor-loading limit, any racks, shelves, supports, bins, drawers, staging or holding areas, lights, vents, insulation and locks, the hire terms if it is rented, and how it is delivered, unloaded and collected. Container stock changes, so a delivery date or time becomes firm only when that quotation confirms it. Unless an approved specification says so, no container here is sold or hired as food-grade, climate-controlled or a cold store, no temperature or humidity level is promised, and none is supplied to hold fresh grapes, pesticides, fungicides, fuel or gas cylinders, or to serve as a welding, cutting or grinding workshop. All five images are illustrative renders of a single container rather than photographs from Hoskote, and none of them shows a delivered or fitted unit, vineyard equipment, harvest crates or racking parts. The listed volumes are rounded figures, not payload ratings. Grape growers and racking installers are described as possible users, not as clients or completed projects, and the place names mark where enquiries are taken, not confirmed delivery sites. Bangalore Blue is named only to describe grape growing in the region; Portable Office Cabin has no connection with its geographical-indication registration or with any growers' association. Guidance here on grapes, farm chemicals, fuel, food-contact hygiene, racking, steel loads, hot work, gas cylinders, siting and permissions is general information, not agronomic, food-safety, legal or engineering advice; rely on the instructions of the manufacturers, suppliers and authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -23582,6 +24406,15 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
       after: ".",
     },
+    // Hoskote brief (2026-11-21, §5): vineyard equipment and warehouse racking storage further out along Old
+    // Madras Road is the Hoskote page's intent; this page's own targeting is unchanged.
+    areasInlineLinks: [
+      {
+        before: "Further east, grape growers' vineyard equipment and warehouse racking stock in and around Hoskote are covered on our page on",
+        link: { label: "storage containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
