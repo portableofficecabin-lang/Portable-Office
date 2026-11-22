@@ -49547,6 +49547,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "soap, candle and pottery storage in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
         after: ".",
       },
+      // Sanjaynagar brief (2026-11-22, §7): water-feature installers' and handyman services' equipment in
+      // Sanjaynagar is that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Water-feature installers and handyman teams to the south-west, in Sanjaynagar, are covered on our page on",
+        link: { label: "fountain installer and handyman tool storage in Sanjaynagar", href: "/cities-we-serve/shipping-container-sanjaynagar" },
+        after: ".",
+      },
       // Kodigehalli brief (2026-11-22, §10): the brief's areas sentence, with Kodigehalli linked to its own page.
       {
         before: "For Kodigehalli, see our dedicated",
@@ -49788,6 +49795,674 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it has no yard, depot or branch in Hebbal. Each container is offered subject to availability, and its size, condition, inside dimensions, fittings (shelves, racks, bins, vents, lights, locks), any rental terms and its delivery, unloading and collection are set out only in its written quotation; no delivery date or vehicle access is promised. The five images are illustrative renders of one container, not photographs taken in Hebbal or of a delivered or fitted unit. Car dealerships, research organisations and agri-tech teams are described as typical users, not as clients or past projects; Portable Office Cabin is not affiliated with any dealership, vehicle manufacturer, university or research institution, and the neighbourhoods named indicate where we welcome enquiries, not confirmed delivery points. A standard container is not climate-controlled and is not approved storage for fuel, gas cylinders, damaged batteries, agricultural chemicals or biological samples. Notes on batteries, drones, chemicals, samples, site access and placement are general information only; they are not legal, regulatory, safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN SANJAYNAGAR — storage for garden water-feature and fountain installers
+   * (fountain pumps, pond filters and UV units, pond liners, fountain bowls and statues, decorative stone,
+   * garden and underwater lighting, hoses and nozzles, property-wise installation kits) and for multi-trade
+   * handyman and home maintenance services (technician tool kits, plumbing, door-hardware and electrical
+   * spares, ladders, power tools, tile and repair kits, job register, kit restocking) in Sanjaynagar, also
+   * written Sanjay Nagar, north Bengaluru.
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI MASTER SEO IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Sanjaynagar (Sanjay Nagar)"): meta title, H1, keywords, local modifiers, section order, H2 / H3 headings,
+   * sizes table, the nine ordering steps and the seven FAQs are the brief's, and so is the copy, lightly
+   * edited for flow and British spelling. The brief's meta description (177 characters) is shortened to 152
+   * so it is not cut off in results, in line with the city-description lengths of the pending SEO-1 PR
+   * (#309); every keyword and both spellings stay in it. The brief's Open Graph title and description are
+   * not separate fields here: the site convention (buildPageMetadata) sends the meta title and description
+   * as og:title / og:description. The brief's notes to the implementer ("Do not recommend storing live
+   * fish…", "Do not assume an ordinary storage container is suitable for hazardous chemicals", "Do not
+   * operate electrical equipment…", "Do not recommend charging batteries…", "Do not assume all sealants…",
+   * "Do not recommend storing hazardous or flammable products…", "Do not represent the container as a
+   * certified workshop…", "Do not guarantee that a particular container size…", "Do not invent…",
+   * "Conditional section…", "Highlight only verified capabilities…", "Do not claim…", "Do not target…",
+   * "Use verified company phone numbers…") are instructions, not page copy: where one carries a fact for the
+   * reader it is reworded as a plain statement ("live fish and aquatic plants are not kept inside an ordinary
+   * shipping container", "batteries are not charged inside an ordinary storage-only container", "no
+   * container size is promised for a particular address until the site has been assessed", and so on);
+   * otherwise it is left out. FAQ 4's answer is reworded the same way. Where an H3 has two lists, the
+   * longer one stays a list and the other becomes a sentence (the template gives an H3 one list), and the
+   * placement section's list of premises becomes a sentence for the same reason. The route follows the site
+   * convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins, the
+   * areas paragraph, the "why" bullets, the enquiry-form intro and the disclaimer were written for their
+   * slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; shelving, racks, drawers, bins, supports, kit sections,
+   * lighting, ventilation, insulation and locks are layout options and price factors, never stock items or
+   * guaranteed conditions. No same-day installation, climate control, chemical-storage certification,
+   * workshop approval or unlimited floor load is claimed. The optional Kannada search terms are not used:
+   * the page is in English. No Product JSON-LD: city pages carry no prices (file rule) and a Product block
+   * without offers earns no rich result, so the Service JSON-LD (no offers), FAQPage (the seven visible
+   * questions only) and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Water-feature installers, "Water Feature Equipment Storage Safety", handyman services and "Handyman
+   *     Equipment Storage Safety" → four afterIntro extra sections, the first three with the brief's H3s as
+   *     `subsections` ("Technician Kit Restocking" numbered).
+   *   Placement, sizes, price, rent and "How to Order" (ordered, nine steps) → afterSolutions extra
+   *     sections, so the steps stay before the areas.
+   *   "Areas Served" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's seven.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §7, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container category route"); water-feature section → "landscaper and nursery storage
+   * along Bannerghatta Road" (that page's "Stores for Landscapers, Nurseries & Garden Contractors") and
+   * "aquarium tank and equipment storage in Kasturi Nagar" (its aquarium shops section); handyman section →
+   * "electrical and plumbing contractor storage in Kaggadasapura" (its "Shipping Containers for Electrical &
+   * Plumbing Contractors") and "appliance repair shop storage in Yelahanka New Town" (its "Storage Containers
+   * for Home Appliance Repair Shops"); placement → "shipping container delivery and placement" (the
+   * Bellandur page's society-gate and narrow-lane section); sizes → "used shipping container inspection":
+   * the brief's /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used
+   * Container Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental;
+   * areas → "shipping containers in RT Nagar", "storage containers in Hebbal, Bengaluru" and "storage
+   * containers along Hennur Road" (Geddalahalli is on that page's areas list). NOT linked: the Mathikere
+   * shipping page (not live; it can link here, and this page there, once it is), an Uttarahalli shipping
+   * page (no such route) and the Murugeshpalya (dewatering) and Kadubeesanahalli (rainwater harvesting)
+   * pages, which the brief lists only to keep their topics apart: the distinction is made in words, so the
+   * page does not carry every proposed link. Anchors differ from the siblings' anchors for the same
+   * targets. Inbound: the RT Nagar and Hebbal, Bengaluru shipping pages' areas sections (one
+   * `areasInlineLinks` item each, at the end of each list; their locality boundaries and targeting
+   * unchanged), the Karnataka shipping hub ("Shipping Containers in Sanjaynagar"), the cargo category's
+   * location links ("Storage containers in Sanjaynagar") and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Sanjaynagar (Sanjay Nagar), RMV 2nd Stage,
+   * Bhoopasandra and Dollars Colony, for garden water-feature and fountain installers' equipment and for
+   * multi-trade handyman and home maintenance services. Named only in the pointer sentences to their own
+   * pages: RT Nagar, Dinnur and Sultanpalya (RT Nagar page); Hebbal and Ganganagar (Hebbal, Bengaluru page);
+   * Geddalahalli (Hennur Road page). Not named at all: Mathikere and Kodigehalli (pages of their own are in
+   * preparation), Sadashivanagar (kept for a possible future page) and MSR Nagar. "Marathahalli" appears only
+   * in FAQ 5, which tells this Sanjaynagar apart from the separate Sanjay Nagar there, as the brief asks. Kept
+   * apart from landscapers and nurseries (Bannerghatta Road), aquarium equipment (Kasturi Nagar), dewatering
+   * pumps (Murugeshpalya), rainwater harvesting (Kadubeesanahalli), electrical and plumbing contractors
+   * (Kaggadasapura), tool hire (no live page) and appliance repair (Yelahanka New Town). "Bengaluru" stays
+   * out of the title, as the brief asks; the description, the geo meta and the Service JSON-LD's areaServed
+   * carry "Sanjaynagar, Bengaluru, Karnataka" (an area served, not a business address).
+   *
+   * Images: no new images were supplied; the owner asked for EXISTING images. Five catalogue images already in
+   * the repo (src/assets/products, used on the cargo, Peenya, Krishnagiri and rental product pages and on no
+   * city page), copied with their VP8 data byte-for-byte plus an XMP dc:title / dc:description that labels
+   * each one an illustrative image (no creator, GPS, camera or date); the product originals are untouched.
+   * cargo-storage-containers-20ft (a green 20 ft container at an angle) gives the hero / og:image (the brief's
+   * hero filename); cargo-storage-containers-40ft (a dark green door end) the water-feature section;
+   * shipping-container-krishnagiri-storage (an orange container with one end open, empty) the handyman
+   * section (the brief's interior filename, but not its "organized contractor equipment shelves" alt:
+   * nothing is fitted); shipping-container-rental-transport (a container on a semi-trailer) the placement
+   * section; shipping-container-peenya-storage (a blue container with closed doors) the sizes section. None
+   * shows glazing or office windows. No image shows pumps, filters, liners, bowls, stone, lights, hoses,
+   * tool kits, spare parts or power tools, so the brief's twelve use-case image slots are not used, and no
+   * alt text, caption or filename claims those items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-sanjaynagar",
+    city: "Sanjaynagar",
+    listTitle: "Shipping & Storage Containers in Sanjaynagar",
+    metaTitle: "Shipping Container in Sanjaynagar | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Sanjaynagar (Sanjay Nagar), north Bengaluru, for fountain installers' pumps and liners and handyman tools and spares.",
+    keywords:
+      "shipping container in Sanjaynagar, shipping container in Sanjay Nagar, cargo container Sanjaynagar, storage container Sanjaynagar, storage container Sanjay Nagar, storage container RMV 2nd Stage, storage container Bhoopasandra, storage container Dollars Colony, used shipping container Sanjaynagar, shipping container price in Sanjaynagar, storage container for rent in Sanjaynagar, fountain installer storage container, garden water feature equipment storage, pond pump and liner storage, fountain bowl and statue storage, handyman service storage container, home maintenance spare parts storage, handyman kit and tool storage, home repair service base",
+    // Approximate point on Sanjaynagar Main Road, north Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Sanjaynagar, Bengaluru, Karnataka, India",
+      position: "13.0350;77.5760",
+      icbm: "13.0350, 77.5760",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 800 × 800 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // RT Nagar, Hebbal, Hennur Road, Bannerghatta Road, Kasturi Nagar, Kaggadasapura, Yelahanka New Town,
+    // Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-sanjaynagar/shipping-container-sanjaynagar.webp",
+      alt: "Shipping container exterior suitable for contractor equipment storage: a green 20 ft steel unit seen at an angle on a paved yard, its double cargo doors shut",
+      width: 800,
+      height: 800,
+      caption: "Illustrative catalogue image of a 20 ft container, not a picture of a delivered unit or of a site in Sanjaynagar.",
+    },
+
+    h1: "Shipping & Storage Containers in Sanjaynagar",
+    tagline:
+      "Lockable space for fountain pumps, rolled pond liners and heavy bowls between installations, and an organised base for a handyman team's numbered tool kits, taps, hinges and switches.",
+    intro: [
+      "Sanjaynagar, also written as Sanjay Nagar, is an established residential neighbourhood in north Bengaluru, associated with areas such as RMV 2nd Stage, Bhoopasandra and Dollars Colony.",
+      "Garden maintenance contractors, fountain installers and multi-trade home repair businesses may need organised storage for equipment, tools and replacement parts.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Sanjaynagar for compatible commercial inventory and equipment storage requirements.",
+    },
+
+    areasHeading: "Areas Served Around Sanjaynagar",
+    areasText:
+      "This page covers shipping and storage container enquiries from Sanjaynagar, also written Sanjay Nagar, in north Bengaluru, together with RMV 2nd Stage, Bhoopasandra and Dollars Colony. Many of the streets here are residential, so the approach road, the gate and the spot where the container will stand are looked at for each address before a delivery date is offered.",
+    // Brief §2, §7 and §8: RT Nagar, Dinnur and Sultanpalya belong to the RT Nagar page; Hebbal and Ganganagar to
+    // the Hebbal, Bengaluru page; Geddalahalli to the Hennur Road page. Kodigehalli is not named here: a page of
+    // its own is being prepared (owner brief to another session, 2026-11-22).
+    areasInlineLinks: [
+      {
+        before: "RT Nagar, Dinnur and Sultanpalya, to the south-east, are covered on our page on",
+        link: { label: "shipping containers in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
+        after: ".",
+      },
+      {
+        before: "For Hebbal and Ganganagar, go to our page on",
+        link: { label: "storage containers in Hebbal, Bengaluru", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+        after: ".",
+      },
+      {
+        before: "Geddalahalli and the rest of the Hennur Road side have a page of their own:",
+        link: { label: "storage containers along Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Garden Water Feature & Fountain Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-sanjaynagar/shipping-container-cargo-doors-sanjaynagar.webp",
+          alt: "Dark green steel container viewed from its door end, both cargo doors shut and held by four upright locking bars with cam handles",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. The door opening, not only the floor area, decides whether a large fountain bowl or a statue on its pallet can be carried in and out safely.",
+        },
+        paragraphs: [
+          "Garden water feature installers work with fountains, ornamental ponds, water walls, birdbaths and related decorative installations.",
+          "Their equipment may include pumps, filters, pond liners, decorative stone, fountain bowls, lighting and suitable plumbing accessories.",
+          "A suitably configured shipping container may provide additional storage space for compatible equipment before installation or maintenance.",
+          "This section is about decorative water features. Pumps hired out to clear flooded basements and materials for rainwater harvesting pits are separate applications with different storage needs.",
+        ],
+        // Brief §7 and §8: landscapers and nurseries belong to the Bannerghatta Road page and aquarium equipment
+        // to the Kasturi Nagar page; water-feature installers' equipment stays here.
+        inlineLinks: [
+          {
+            before: "Storing general garden tools, plant pots and nursery stock rather than water-feature equipment? See",
+            link: { label: "landscaper and nursery storage along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+            after: ".",
+          },
+          {
+            before: "Indoor fish tanks, stands and filter media for an aquarium shop are covered under",
+            link: { label: "aquarium tank and equipment storage in Kasturi Nagar", href: "/cities-we-serve/shipping-container-kasturi-nagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Fountain Pump Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Submersible fountain pumps." },
+              { text: "Suitable circulation pumps." },
+              { text: "Replacement pump accessories." },
+              { text: "Approved water feature equipment." },
+            ],
+            closing: [
+              "Clean and dry equipment before storage where required, and follow the manufacturer's instructions for draining, cleaning and protection.",
+            ],
+          },
+          {
+            heading: "Pond Filter & UV Unit Storage",
+            paragraphs: [
+              "Store compatible filters and UV units in protective packaging, protected against impact, moisture and dust.",
+              "Follow the manufacturer's requirements for lamps and electrical components.",
+            ],
+          },
+          {
+            heading: "Pond Liner Storage",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Pond liners." },
+              { text: "Suitable waterproof lining materials." },
+              { text: "Approved liner accessories." },
+            ],
+            closing: [
+              "Store liners rolled or packaged according to the manufacturer's instructions, and keep them away from sharp edges and unsuitable heat exposure.",
+            ],
+          },
+          {
+            heading: "Fountain Bowl & Statue Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Fountain bowls." },
+              { text: "Decorative statues." },
+              { text: "Suitable stone ornaments." },
+              { text: "Water feature panels." },
+            ],
+            closing: [
+              "Use padding and stable supports, and store heavy components low. Verify the container's floor-loading and handling requirements before the pieces go in.",
+            ],
+          },
+          {
+            heading: "Decorative Pebble & Stone Storage",
+            paragraphs: [
+              "Decorative stones and pebbles may be stored in suitable bags, pallets or containers.",
+              "Avoid exceeding floor-loading limits: a container cannot be assumed to support an unlimited quantity of stone.",
+            ],
+          },
+          {
+            heading: "Underwater & Garden Lighting Storage",
+            paragraphs: [
+              "Store compatible garden and underwater lighting equipment in protective packaging, with its electrical components kept dry and protected.",
+              "Electrical equipment is not operated inside an ordinary storage-only container that has no suitable provisions for it.",
+            ],
+          },
+          {
+            heading: "Hoses, Fittings & Nozzle Storage",
+            paragraphs: ["Organise compatible materials such as:"],
+            bullets: [
+              { text: "Hoses." },
+              { text: "Fountain nozzles." },
+              { text: "Suitable connectors." },
+              { text: "Plumbing fittings." },
+              { text: "Replacement accessories." },
+            ],
+            closing: ["Use labelled bins and drawers."],
+          },
+          {
+            heading: "Property-wise Installation Kits",
+            paragraphs: ["Prepare equipment kits by:"],
+            bullets: [
+              { text: "Customer or property." },
+              { text: "Installation type." },
+              { text: "Pump model." },
+              { text: "Required accessories." },
+              { text: "Quantity." },
+              { text: "Maintenance schedule." },
+            ],
+            closing: ["Maintain a dispatch checklist."],
+          },
+        ],
+      },
+      {
+        heading: "Water Feature Equipment Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Wet Equipment",
+            paragraphs: ["Drain, clean and dry equipment according to the manufacturer's instructions before storage."],
+          },
+          {
+            heading: "Live Fish & Plants",
+            paragraphs: ["Live fish and aquatic plants are not kept inside an ordinary shipping container."],
+          },
+          {
+            heading: "Water Treatment Chemicals",
+            paragraphs: [
+              "Follow the manufacturer's labels, safety data sheets and the storage requirements that apply. An ordinary storage container is not assumed to be suitable for hazardous chemicals.",
+            ],
+          },
+          {
+            heading: "Heavy Decorative Components",
+            paragraphs: ["Use suitable lifting arrangements, stable supports and floor-loading checks."],
+          },
+          {
+            heading: "Electrical Equipment",
+            paragraphs: ["Protect pumps, lights and control components from unsuitable moisture and environmental conditions."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Handyman & Home Maintenance Services",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-sanjaynagar/sanjaynagar-container-storage-interior.webp",
+          alt: "Orange steel container with one end fully open, showing empty white corrugated walls and a plain plywood floor, with nothing fitted inside",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image of an empty container. Tool-kit shelves, spare-part drawers and ladder brackets are fitted only where the written quotation lists them.",
+        },
+        paragraphs: [
+          "Handyman and home maintenance businesses carry out repairs and maintenance involving doors, taps, fittings, fixtures and other household components.",
+          "Their equipment may include hand tools, power tools, ladders, spare parts and job-specific repair materials.",
+          "A suitably configured shipping container may serve as an organised storage base for compatible tools and spare parts. The kit is the team's own, used on its jobs, rather than tools rented out to customers.",
+        ],
+        // Brief §7 and §8: electrical and plumbing contractors belong to the Kaggadasapura page and appliance repair
+        // to the Yelahanka New Town page; multi-trade handyman services stay here.
+        inlineLinks: [
+          {
+            before: "Running a specialist electrical or plumbing contracting firm rather than multi-trade home repairs? See",
+            link: { label: "electrical and plumbing contractor storage in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+            after: ".",
+          },
+          {
+            before: "Repair shops holding customers' washing machines, refrigerators and appliance spares are covered on our page on",
+            link: { label: "appliance repair shop storage in Yelahanka New Town", href: "/cities-we-serve/shipping-container-yelahanka-new-town" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Technician Tool Kit Storage",
+            paragraphs: ["Organise suitable technician kits by:"],
+            bullets: [
+              { text: "Technician." },
+              { text: "Trade." },
+              { text: "Job type." },
+              { text: "Tool category." },
+              { text: "Assigned project." },
+            ],
+            closing: ["Use numbered kits where appropriate, and maintain issue and return records."],
+          },
+          {
+            heading: "Plumbing Spare Parts Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Taps." },
+              { text: "Washers." },
+              { text: "Cartridges." },
+              { text: "Suitable plumbing fittings." },
+              { text: "Replacement accessories." },
+            ],
+            closing: ["Use labelled drawers and bins."],
+          },
+          {
+            heading: "Door & Furniture Hardware Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Hinges." },
+              { text: "Handles." },
+              { text: "Brackets." },
+              { text: "Suitable fasteners." },
+              { text: "Replacement fittings." },
+            ],
+            closing: ["Organise by type, size and specification."],
+          },
+          {
+            heading: "Electrical Spare Parts Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Switches." },
+              { text: "Sockets." },
+              { text: "Bulbs." },
+              { text: "Suitable electrical accessories." },
+            ],
+            closing: [
+              "Store them in protective packaging. Electrical work must be performed by appropriately qualified personnel, according to the requirements that apply.",
+            ],
+          },
+          {
+            heading: "Ladder Storage",
+            paragraphs: ["Store ladders using suitable supports and restraints, without blocking access routes or exits."],
+          },
+          {
+            heading: "Power Tool Storage",
+            paragraphs: [
+              "Store power tools in protective cases, and follow the manufacturer's requirements for batteries and chargers.",
+              "Batteries are not charged inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Tile, Grout & Repair Kit Storage",
+            paragraphs: ["Organise compatible materials such as:"],
+            bullets: [
+              { text: "Tile repair accessories." },
+              { text: "Suitable grout products." },
+              { text: "Sealant application tools." },
+              { text: "Repair hardware." },
+            ],
+            closing: [
+              "Follow the manufacturer's storage requirements. Not every sealant, adhesive or chemical is suitable for ordinary container storage.",
+            ],
+          },
+          {
+            heading: "Paint & Sealant Storage",
+            paragraphs: [
+              "Paints, solvents and sealants may require specific temperature, ventilation and fire-safety controls.",
+              "Hazardous or flammable products are not stored in an ordinary storage-only container without appropriate safeguards and regulatory compliance.",
+            ],
+          },
+          {
+            heading: "Technician Job Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Customer or property." },
+              { text: "Assigned technician." },
+              { text: "Job type." },
+              { text: "Tools issued." },
+              { text: "Spare parts used." },
+              { text: "Return status." },
+              { text: "Remaining stock." },
+            ],
+          },
+          {
+            heading: "Technician Kit Restocking",
+            paragraphs: ["After each job:"],
+            ordered: true,
+            bullets: [
+              { text: "Record consumed spare parts." },
+              { text: "Return reusable tools." },
+              { text: "Inspect damaged equipment." },
+              { text: "Replenish compatible supplies." },
+              { text: "Prepare the next job kit." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Handyman Equipment Storage Safety",
+        placement: "afterIntro",
+        bullets: [
+          { text: "Keep heavy tools on stable lower shelves." },
+          { text: "Secure ladders." },
+          { text: "Keep access routes clear." },
+          { text: "Follow the manufacturer's instructions for batteries." },
+          { text: "Cordless tool batteries are not charged in an ordinary storage-only container." },
+          { text: "Store chemicals according to the requirements that apply." },
+          { text: "Use appropriate protective packaging for electrical components." },
+          { text: "A storage container is not a certified workshop unless it has a suitable design and the necessary approvals." },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in Sanjaynagar",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-sanjaynagar/shipping-container-transport-sanjaynagar.webp",
+          alt: "Grey steel shipping container carried on a multi-axle semi-trailer on a highway, seen from behind with its cargo doors closed",
+          width: 800,
+          height: 457,
+          caption:
+            "Illustrative image. A container arrives on a long trailer, so the turning space and the unloading spot at the gate matter as much as the container's own size.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including contractor yards, suitable commercial plots, approved storage compounds and other permitted private premises.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Residential roads may have limited access for heavy vehicles, so no container size is promised for a particular address until the site has been assessed.",
+        ],
+        // Brief §5 and §7: restricted-site delivery guidance → the Bellandur page's society-gate and narrow-lane notes.
+        inlineLinks: [
+          {
+            before: "Working with a tight lane, a low gate or a plot behind a compound wall? Our guide to",
+            link: { label: "shipping container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " explains what is checked.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-sanjaynagar/blue-storage-container-sanjaynagar.webp",
+          alt: "Blue steel container with closed cargo doors and wheel chocks under its corners, standing in front of stacked containers",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. For bowls, statues and bagged stone, the floor-loading limit of the actual unit matters more than its volume.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Exact dimensions, availability, floor-loading limits and payload capacity must be verified for the unit you are offered; approximate volume is not an allowable payload.",
+          headers: ["Size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Handyman tool kits and compatible spare parts"],
+            ["20 ft", "33 m³", "Fountain equipment, liners and maintenance inventory"],
+            ["40 ft", "67 m³", "Larger equipment inventories where site access allows"],
+          ],
+        },
+        closing: ["Heavy fountain bowls and decorative stone require particular attention to floor-loading and handling."],
+        // Brief §7: used-container buying guidance → the Athipattu page's inspection checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Buying a second-hand unit? Start with our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Sanjaynagar",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving." },
+          { text: "Pond liner racks." },
+          { text: "Pallets and protective supports." },
+          { text: "Spare parts drawers." },
+          { text: "Tool storage sections." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation where needed." },
+          { text: "Locking arrangements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation."],
+      },
+      {
+        heading: "Storage Container on Rent in Sanjaynagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for seasonal water feature work or a spell of increased home maintenance inventory. Hire runs from one month to five years, and the quotation states the unit, the rental period, transport charges, any deposit and the collection arrangements.",
+        ],
+        inlineLinks: [
+          {
+            before: "Rental sizes and terms are listed under",
+            link: { label: "shipping containers for hire", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Provide equipment dimensions and quantities." },
+          { text: "Identify heavy or fragile materials." },
+          { text: "Confirm estimated weight." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelving and drawers." },
+          { text: "Confirm site permissions and access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible contractor equipment and commercial inventory applications. For water-feature installers and handyman teams in Sanjaynagar, that covers:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, and a 10 ft container when one is in stock." },
+          { title: "Storage-oriented modifications", text: "liner racks, pallet supports, spare-part drawers and tool-kit sections, each priced as its own line." },
+          { title: "Shelving and rack provisions", text: "planned around bowl weights, rolled liner lengths and the number of technician kits you run." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock specified for your unit written into the quotation." },
+          { title: "Ventilation and insulation options", text: "quoted against what you intend to store, without any promise of climate control, certified chemical storage or unlimited floor load." },
+          { title: "Quotation and delivery coordination", text: "an itemised quotation first, then a look at the road, the gate and the unloading spot before a delivery date is agreed; same-day installation is not promised." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can fountain pumps and pond liners be stored inside a shipping container?",
+        answer: "Potentially, where the equipment is cleaned, dried and stored according to the manufacturer's requirements.",
+      },
+      {
+        question: "How should heavy fountain bowls and statues be stored?",
+        answer: "On suitable protective supports, with padding and safe handling arrangements, and within the container's floor-loading limit.",
+      },
+      {
+        question: "Can handyman businesses use shipping containers as equipment storage bases?",
+        answer: "Yes, where the container is suitable for storing tools, compatible spare parts and technician kits.",
+      },
+      {
+        question: "Can cordless tool batteries be charged inside an ordinary storage container?",
+        answer: "No. Batteries are not charged inside an ordinary storage-only container; follow the manufacturer's instructions for charging them.",
+      },
+      {
+        question: "Is this page for Sanjaynagar in north Bengaluru?",
+        answer:
+          "Yes. It covers Sanjaynagar, also written Sanjay Nagar, near RMV 2nd Stage and Bhoopasandra in north Bengaluru, not the separate Sanjay Nagar in the Marathahalli area.",
+      },
+      {
+        question: "What is the shipping container price in Sanjaynagar?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements. Ask for an itemised quotation.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access. The delivery date is confirmed with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Sanjaynagar",
+    ctaText: `Whether you need storage for fountain pumps, pond liners, decorative bowls, handyman tool kits, spare parts or other compatible contractor equipment, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Sanjaynagar, RMV 2nd Stage, Bhoopasandra and Dollars Colony, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Sanjaynagar",
+      intro:
+        "Pick the container type and the quantity, add the Sanjaynagar address or a map pin, and tell us whether you want to buy or hire. Mention the heaviest item, such as a fountain bowl or a pallet of stone, or how many technician kits the unit must hold, so racks and floor loading are planned before we quote.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers for Sanjaynagar are sent from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. The company's Bengaluru office is in Electronic City, and there is no yard, depot, showroom or branch in Sanjaynagar or in the neighbourhoods mentioned here. What you receive is what the written quotation specifies: the container's inside and door measurements, its grade and condition, the load its floor can take, every fitting (shelving, racks, drawers, bins, supports, lighting, vents, insulation, locks), the rental terms if you hire, and the arrangements for transport, unloading and collection. Because stock moves, a delivery date is firm only after the quotation confirms it. No container on this page is sold as climate-controlled, fire-rated, approved for chemical storage or able to carry whatever load is put on it, unless an approved specification states so, and none is supplied for battery charging, powered equipment, live fish or plants, hazardous or flammable goods, or as a certified workshop. All five images come from our catalogue and illustrate container types only: none was taken in Sanjaynagar, and none shows a delivered or fitted unit, fountain equipment or a handyman's kit. Capacity figures are rough volumes, not payload ratings. Water-feature installers and handyman services appear as examples of use, not as clients or finished projects, and the neighbourhoods named are places we take enquiries from, not delivery records. Guidance here on equipment care, chemicals, batteries, electrical work, siting and permissions is general information, not safety, legal or engineering advice; rely on manufacturers' instructions and on the authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -55518,6 +56193,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Premises along Thanisandra Main Road are covered on our page for",
         link: { label: "shipping containers on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+        after: ".",
+      },
+      // Sanjaynagar brief (2026-11-22, §7): Sanjaynagar (Sanjay Nagar), RMV 2nd Stage and Bhoopasandra belong to
+      // the Sanjaynagar page; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Fountain installers and home repair businesses a little to the north-west, around Sanjaynagar, have a page of their own:",
+        link: { label: "storage containers in Sanjay Nagar", href: "/cities-we-serve/shipping-container-sanjaynagar" },
         after: ".",
       },
     ],
@@ -65267,7 +65949,9 @@ export const CITY_PAGES: CityPage[] = [
    * storage, house moves and community equipment. Bellandur keeps renovation, society and household
    * storage; Marathahalli ORR keeps commercial storage; Koramangala keeps partitioned self-storage,
    * kitchens and bicycles; JP Nagar keeps builder-led rebuilds, downsizing and schools. No other
-   * shipping page names HSR Layout; Haralur Road is also in Bellandur's areas list (the road joins both).
+   * shipping page names HSR Layout. Since the Kudlu Gate brief (2026-11-22, §7) the areas no longer name
+   * Kudlu Gate (its own page, linked from the areas), Haralur Road (still in Bellandur's areas list) or
+   * Bommanahalli.
    *
    * Images: five owner-dropped lossy VP8 webp files ("public/images/HSR Layout shipping city page/HSR
    * LAYOUT SHIPPING CONTAINER CITY PAGE/cabin (1–5).webp", no EXIF / XMP / ICC, origin not documented)
@@ -65392,8 +66076,11 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     areasHeading: "Areas We Serve",
+    // Kudlu Gate brief (2026-11-22, §7, the consolidated HSR correction): the brief's areas sentence. Kudlu Gate
+    // (own page, linked below), Haralur Road and Bommanahalli (kept for Harlur and Bommanahalli pages, which
+    // do not exist yet) are no longer named here; this page's canonical URL and sitemap entry are unchanged.
     areasText:
-      "We welcome container enquiries from HSR Layout Sectors 1 to 7, Agara, Somasundarapalya, Parangipalya, Haralur Road, Kudlu Gate, Silk Board and Bommanahalli. Each placement site is checked before a delivery date is agreed.",
+      "We provide shipping and storage container solutions across HSR Layout Sectors 1 to 7, and nearby Agara, Somasundarapalya, Parangipalya and Silk Board.",
     // BTM Layout brief (2026-11-16), agreed with this page's session: the neighbouring BTM page owns delivery-hub,
     // festival-committee and bike-rental storage. The nearby block skips an areasInlineLink href, so BTM is linked once.
     areasInlineLink: {
@@ -65401,6 +66088,15 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "shipping containers in BTM Layout", href: "/cities-we-serve/shipping-container-btm-layout" },
       after: ".",
     },
+    // Kudlu Gate brief (2026-11-22, §7): "For neighbouring areas, explore our dedicated shipping container pages
+    // for Harlur, Bommanahalli and Kudlu Gate." Only the Kudlu Gate page exists, so only it is named and linked.
+    areasInlineLinks: [
+      {
+        before: "For the neighbouring area to the south, explore our dedicated page on",
+        link: { label: "shipping containers in Kudlu Gate", href: "/cities-we-serve/shipping-container-kudlu-gate" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -65671,6 +66367,744 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Our cabins are made at the Portable Office Cabin factory near Hosur in Tamil Nadu, and our Bengaluru office is in Electronic City; HSR Layout has no Portable Office Cabin yard, depot or office. Every container is subject to availability. Its quotation sets out the size, grade, condition, internal dimensions and fittings, any rental terms, and who arranges transport, unloading, positioning and collection; arrival dates and times are not guaranteed. All images are illustrative; none was taken in HSR Layout or shows a delivered unit. Capacities are approximate. The localities named show where we accept enquiries, and the building, moving and community uses are examples, not clients or past projects. Advice here on materials, packing, insurance, permissions and site access is general information, not legal, safety, engineering or insurance advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN KUDLU GATE — storage for acoustic panel and soundproofing installers'
+   * stock (fabric-wrapped panels, ceiling baffles and clouds, mineral wool and insulation boards, wooden
+   * diffusers, mounting hardware, door seals, floor-wise and room-wise kits) and for building window film
+   * installers' stock (film rolls by type and width, fitting tools, installation solutions, heat guns, sample
+   * books, building-wise kits) in Kudlu Gate, Kudlu and the Kudlu Lake area, south Bengaluru.
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Kudlu Gate"): meta title, meta description, H1, keywords, local targeting, section order, H2 / H3
+   * headings, sizes table, the eleven ordering steps and the ten FAQs are the brief's, and so is the copy,
+   * lightly edited for flow and British spelling. The brief's notes to the implementer ("Do not invent…",
+   * "Conditional section…", "Highlight only verified capabilities…", "Hosur Road may be used as an access
+   * reference", "link to the verified Bellandur page", "Do not target automotive window tinting…", "Use
+   * verified company phone numbers…") are instructions, not page copy: where one carries a fact for the
+   * reader it is reworded as a plain statement ("no delivery hour is promised until…", "no container is
+   * placed on a public road, service lane or footpath without…", "it does not cover automotive window
+   * tinting"); otherwise it is left out. The brief's safety advice to the reader ("Do not assume all
+   * adhesives or spray glues are suitable…", "Do not place heavy materials on film rolls", "Do not operate
+   * heat-producing tools…", "Do not operate heat guns or charge batteries…") stays as advice. Where an H3 has
+   * a lead-in, a checklist and short instructions, the instructions become its closing paragraph (the
+   * template gives an H3 one list). The route follows the site convention (/cities-we-serve/…), not the
+   * brief's root slug (/shipping-container-kudlu-gate would 404, like every city page's root slug). The
+   * tagline, captions, link lead-ins, areas sentences, "why" bullets, enquiry-form intro and disclaimer were
+   * written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; shelves, racks, roll holders, drawers, lighting,
+   * ventilation, insulation, environmental controls and locks are layout options and price factors, never
+   * stock items or guaranteed conditions. The optional Kannada search terms are not used: the page is in
+   * English, as are its siblings. No Product JSON-LD: city pages carry no prices (file rule) and a Product
+   * block without offers earns no rich result, so the Service JSON-LD (no offers), FAQPage and
+   * BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   Acoustic panel and soundproofing installers, "Acoustic Material Storage Safety", window film
+   *     installers, "Window Film Storage Safety" and "Storage Container Layout Options" → five afterIntro
+   *     extra sections, the first four with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, eleven steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Kudlu Gate" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a
+   *   default extra section (after the areas, as in the brief). FAQs: the brief's ten.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §6, only where the destination exists and supports the anchor; anchors differ from the
+   * siblings' anchors for the same targets): intro → the cargo category ("Existing shipping container
+   * product page"); acoustic section → "flooring and wallpaper installer storage in Kasavanahalli" (its
+   * "Storage Containers for Flooring & Wallpaper Installers"); baffle and cloud H3 → "false ceiling and
+   * gypsum board storage on Thanisandra Main Road" (its "Storage Containers for False Ceiling & Gypsum
+   * Contractors"); floor-wise kits H3 → "interior contractor staging stores in Mahadevapura" (its "Staging
+   * Stores for Interior Contractors"); window film section → "window frame and glass panel storage in
+   * Varthur" (its uPVC, aluminium and glass window installers section) and "façade and high-rise window
+   * cleaning equipment in Kadubeesanahalli" (its façade cleaning section); temperature H3 → "notes on
+   * insulated and air-conditioned container fit-outs" (the Vellore page's "Insulated and air-conditioned
+   * storage enquiries": it quotes fit-outs against a stated requirement and promises no climate result, so
+   * the brief's "Climate-controlled storage solutions" anchor is softened); automotive tinting H3 → "car
+   * dealership accessory storage in Hebbal" (its dealership section; vehicle accessories stay there);
+   * placement → "restricted-site container delivery guidance" (Bellandur's "Planning delivery through a
+   * society gate or narrow lane"); sizes → "checklist for inspecting a used shipping container": the brief's
+   * /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used Container
+   * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
+   * "shipping containers in HSR Layout". Not linked: the brief's Bommanahalli, Harlur and Singasandra pages
+   * (no such routes on main; Singasandra is being built in a separate PR and can be linked once it is live).
+   * Inbound: the HSR Layout page's areas (brief §7), the Karnataka shipping hub ("Shipping Containers in
+   * Kudlu Gate"), the cargo category's location links ("Storage containers in Kudlu Gate") and every
+   * Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from
+   * repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kudlu Gate, Kudlu and the Kudlu Lake area, for
+   * acoustic panel and soundproofing installers and for building window film installers. The HSR Layout page
+   * no longer names Kudlu Gate (or Haralur Road and Bommanahalli) in its areas and links here instead (brief
+   * §7). Hosur Road is named only as the access road (intro and placement), never as a service locality.
+   * Not targeted: Electronic City (named only as the company's office in the disclaimer), Hosur Road, HSR
+   * Layout (named only in the link to it), Somasundarapalya, Hosapalya, Agara, Parangipalya and Silk Board
+   * (HSR Layout page; not named), Bommanahalli, Garvebhavi Palya and Hongasandra (kept for a Bommanahalli
+   * page; not named), Harlur and Haralur Road (kept for a Harlur page; not named), Singasandra (its own page;
+   * not named). Kept apart from flooring and wallpaper (Kasavanahalli), gypsum and false ceilings
+   * (Thanisandra Main Road), whole-flat interior staging (Mahadevapura), uPVC windows and glass (Varthur),
+   * façade cleaning (Kadubeesanahalli), dealership vehicle accessories and automotive tinting (Hebbal; the
+   * page says it does not cover tinting), climate-controlled units as such (Vellore), HVAC ducting
+   * (Singasandra), music practice room cabins, restricted-site delivery (Bellandur) and used-container
+   * inspection (Athipattu); each is named only in its link sentence. "Bengaluru" stays out of the title, as
+   * the brief asks; the geo meta and the Service JSON-LD's areaServed carry "Kudlu Gate, Bengaluru,
+   * Karnataka".
+   *
+   * Images: no owner drop exists for Kudlu Gate, so, as the owner asked ("use the existing images"), five
+   * EXISTING catalogue images are reused, copied to images/cities/shipping-container-kudlu-gate/ with the VP8
+   * data byte-for-byte plus an XMP dc:title / dc:description that labels each an illustrative image (no
+   * creator, GPS, camera or date); the product originals are untouched. From the cargo shipping container
+   * product gallery (one green container): (2) three-quarter view with cargo doors = hero / og:image (the
+   * brief's hero filename and alt, with what the image shows); (3) cargo doors face-on = acoustic section
+   * (its caption is about the door opening); (1) blind end and side wall = window film section (its caption
+   * is about sun heat). The matching empty interior = layout options (the brief's interior filename, but not
+   * its "with organized racks" alt: nothing is fitted). The unused weathered container on a raised concrete
+   * plinth = placement section. No image shows acoustic panels, baffles, clouds, mineral wool, diffusers,
+   * hardware, film rolls, tools, sample books or kits, so the brief's eleven use-case image slots are not
+   * used, and no alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-kudlu-gate",
+    city: "Kudlu Gate",
+    listTitle: "Shipping & Storage Containers in Kudlu Gate",
+    metaTitle: "Shipping Container in Kudlu Gate | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Kudlu Gate and Kudlu for acoustic panel installers, soundproofing materials, window film rolls and fitting equipment.",
+    keywords:
+      "shipping container in Kudlu Gate, cargo container Kudlu Gate, storage container Kudlu Gate, storage container Kudlu, storage container Kudlu Lake area, used shipping container Kudlu Gate, shipping container price in Kudlu Gate, storage container for rent in Kudlu Gate, acoustic panel installer storage container, soundproofing material storage, acoustic baffle and ceiling cloud storage, meeting room acoustic panel storage, window film installer storage container, solar control film roll storage, glass film and privacy film storage, window film fitting kit storage",
+    // Approximate point at the Kudlu Gate junction on Hosur Road, south Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Kudlu Gate, Bengaluru, Karnataka, India",
+      position: "12.8920;77.6400",
+      icbm: "12.8920, 77.6400",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1024 × 1024 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Kasavanahalli, Thanisandra Main Road, Mahadevapura, Varthur, Kadubeesanahalli, Vellore, Hebbal, Bellandur, Athipattu and HSR Layout are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-kudlu-gate/shipping-container-kudlu-gate.webp",
+      alt: "Shipping container exterior suitable for building fit-out equipment storage: a green box seen at an angle on a paved yard, its two cargo doors shut with four galvanised locking bars",
+      width: 1024,
+      height: 1024,
+      caption: "Illustrative image of a closed container in a yard; not a photograph taken in Kudlu Gate or of a unit supplied there.",
+    },
+
+    h1: "Shipping & Storage Containers in Kudlu Gate",
+    tagline:
+      "Protected storage for acoustic panels, ceiling baffles and insulation slabs, or for window film rolls, fitting tools and sample books between building fit-out jobs.",
+    intro: [
+      "Kudlu Gate is a busy junction along Hosur Road in south Bengaluru, surrounded by residential developments, commercial premises and office buildings.",
+      "Office and building fit-out projects often involve acoustic treatments, soundproofing materials, glass window films and related installation equipment. These materials may require careful handling and suitable storage conditions before installation.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Kudlu Gate and Kudlu for compatible acoustic installation materials and building window film inventory.",
+    },
+
+    areasHeading: "Areas Served Around Kudlu Gate",
+    areasText:
+      "Kudlu Gate, Kudlu and the Kudlu Lake area are the localities this page is written for. Most sites here are reached from Hosur Road, so for each address we look at the turn off the main road, how wide the lane is and where the box will stand before a date is agreed.",
+    // Brief §4 and §7: HSR Layout goes to its own container page. The brief's Bommanahalli, Harlur and
+    // Singasandra pages are not live, so they are neither named nor linked here.
+    areasInlineLinks: [
+      {
+        before: "North of the junction, HSR Layout is handled on its own page:",
+        link: { label: "shipping containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Acoustic Panel & Soundproofing Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kudlu-gate/shipping-container-cargo-doors-kudlu-gate.webp",
+          alt: "Door end of a green steel container seen face-on: two closed cargo doors held by four locking bars, with two handles and a lockbox at the centre seam, on a paved yard",
+          width: 1024,
+          height: 1024,
+          caption:
+            "Illustrative image. Measure your largest panel crate, cloud or slab pack against the door opening of the unit you are offered; the outside size of a container says little about what passes through its doors.",
+        },
+        paragraphs: [
+          "Acoustic installation contractors work on meeting rooms, call booths, podcast rooms, studios and other spaces requiring sound treatment.",
+          "Their inventory may include fabric-wrapped panels, ceiling baffles, acoustic clouds, insulation slabs, wooden diffusers and mounting accessories. A suitably configured shipping container may provide organised storage for compatible materials at an authorised project site.",
+        ],
+        // Brief §6 and §8: flooring and wallpaper installers belong to the Kasavanahalli page.
+        inlineLinks: [
+          {
+            before: "Storing laminate planks, underlay or wallpaper rolls rather than sound treatment? See our page on",
+            link: { label: "flooring and wallpaper installer storage in Kasavanahalli", href: "/cities-we-serve/shipping-container-kasavanahalli" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Fabric-wrapped acoustic panel storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Fabric-wrapped acoustic panels." },
+              { text: "Suitable panel accessories." },
+              { text: "Other approved acoustic components." },
+            ],
+            closing: [
+              "Store panels according to the manufacturer's recommendations, on flat protective shelving where suitable. Protect fabric surfaces, edges and corners from dust, moisture and impact.",
+            ],
+          },
+          {
+            heading: "Acoustic baffle and ceiling cloud storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Acoustic ceiling baffles." },
+              { text: "Acoustic clouds." },
+              { text: "Suitable suspension accessories." },
+            ],
+            closing: ["Use appropriately sized racks, avoid compression or deformation, and organise by project, floor and room."],
+            // Brief §6 and §8: gypsum boards, ceiling channels and grid belong to the Thanisandra Main Road page.
+            inlineLinks: [
+              {
+                before: "If the ceiling is gypsum board on channels and grid rather than suspended acoustic elements, read about",
+                link: { label: "false ceiling and gypsum board storage on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Mineral wool and acoustic insulation storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Mineral wool slabs." },
+              { text: "Acoustic insulation boards." },
+              { text: "Other suitable dry insulation materials." },
+            ],
+            closing: ["Keep materials dry, use protective packaging and suitable shelving, and follow the manufacturer's handling instructions."],
+          },
+          {
+            heading: "Wooden diffuser storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Wooden acoustic diffusers." },
+              { text: "Suitable wooden acoustic components." },
+            ],
+            closing: ["Use protective boxes or padded racks, and avoid moisture exposure and impact damage."],
+          },
+          {
+            heading: "Mounting rail, clip and pin storage",
+            paragraphs: ["Organise compatible accessories such as:"],
+            bullets: [
+              { text: "Mounting rails." },
+              { text: "Clips." },
+              { text: "Impaling pins." },
+              { text: "Suitable fasteners." },
+            ],
+            closing: ["Use labelled bins, and store sharp accessories safely."],
+          },
+          {
+            heading: "Door seals and acoustic sealants",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Acoustic door seals." },
+              { text: "Suitable installation accessories." },
+              { text: "Approved sealants." },
+            ],
+            closing: [
+              "Follow the manufacturer's instructions and safety data sheets for sealants, adhesives and other chemical products.",
+              "Do not assume that every adhesive or spray glue is suitable for storage inside an ordinary container.",
+            ],
+          },
+          {
+            heading: "Floor-wise and room-wise installation kits",
+            paragraphs: ["Organise materials by:"],
+            bullets: [
+              { text: "Building." },
+              { text: "Floor." },
+              { text: "Room." },
+              { text: "Installation date." },
+              { text: "Material specification." },
+              { text: "Assigned contractor team." },
+            ],
+            closing: ["Verify each kit before dispatch."],
+            // Brief §6 and §8: whole-apartment interior staging belongs to the Mahadevapura page.
+            inlineLinks: [
+              {
+                before: "Holding kitchens, wardrobes and furniture for whole flats rather than one trade's kits? See our",
+                link: { label: "interior contractor staging stores in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Acoustic contractor inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Material name." },
+              { text: "Specification." },
+              { text: "Dimensions." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Assigned project." },
+              { text: "Dispatch and return status." },
+              { text: "Condition." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Acoustic Material Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Foam fire safety",
+            paragraphs: [
+              "Some acoustic foam materials may be combustible. Follow the manufacturer's fire-safety and storage requirements, and keep combustible materials away from ignition sources.",
+              "An ordinary shipping container is not automatically a fire-rated storage facility. Appropriate fire protection and electrical arrangements must be assessed for the actual use.",
+            ],
+          },
+          {
+            heading: "Mineral wool handling",
+            paragraphs: [
+              "Use appropriate personal protective equipment according to the product's safety instructions. This may include gloves, protective clothing, eye protection or respiratory protection.",
+            ],
+          },
+          {
+            heading: "Moisture protection",
+            paragraphs: ["Wet insulation and fabric-wrapped panels may deteriorate. Maintain suitable dry storage conditions."],
+          },
+          {
+            heading: "Adhesives and spray glues",
+            paragraphs: [
+              "Store adhesives and other chemical products according to their labels, safety data sheets and the requirements that apply, using a suitable compliant storage area where necessary.",
+            ],
+          },
+          {
+            heading: "Cutting and fabrication",
+            paragraphs: [
+              "An ordinary storage-only container is not automatically suitable for cutting, grinding, spraying adhesives or other active installation work.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Window Film Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kudlu-gate/shipping-container-side-wall-kudlu-gate.webp",
+          alt: "Green steel container seen from its blind end at an angle: corrugated side and end walls with stencilled markings, corner castings and forklift pockets, under a clear sky",
+          width: 1024,
+          height: 1024,
+          caption:
+            "Illustrative image. Bare steel walls in full sun can make the inside of a closed container very hot, which matters for film rolls that carry a storage temperature range.",
+        },
+        paragraphs: [
+          "Building window film contractors install solar control, privacy, decorative and suitable safety films on glass surfaces.",
+          "Their inventory may include film rolls, fitting tools, cleaning accessories, sample books and installation kits.",
+          "Film products may be sensitive to heat, moisture, dust and handling pressure. A suitably configured shipping container may provide additional storage only where the required environmental conditions can be maintained.",
+        ],
+        // Brief §6 and §8: uPVC windows and glass belong to the Varthur page; façade cleaning to Kadubeesanahalli.
+        inlineLinks: [
+          {
+            before: "Fitting the windows themselves, with uPVC or aluminium frames and glass panels? See our page on",
+            link: { label: "window frame and glass panel storage in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+            after: ".",
+          },
+          {
+            before: "Cleaning glass façades on tall buildings rather than filming them? Read about",
+            link: { label: "façade and high-rise window cleaning equipment in Kadubeesanahalli", href: "/cities-we-serve/shipping-container-kadubeesanahalli" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Window film roll storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Solar control film rolls." },
+              { text: "Privacy film rolls." },
+              { text: "Frosted film rolls." },
+              { text: "Decorative film rolls." },
+              { text: "Suitable safety film products." },
+            ],
+            closing: [
+              "Keep rolls in protective packaging and store them horizontally on appropriate racks or roll holders where the manufacturer recommends it. Do not place heavy materials on film rolls.",
+              "Follow the specific product's storage orientation and temperature requirements.",
+            ],
+          },
+          {
+            heading: "Film organisation by type and width",
+            paragraphs: ["Organise inventory by:"],
+            bullets: [
+              { text: "Manufacturer." },
+              { text: "Film type." },
+              { text: "Roll width." },
+              { text: "Product code." },
+              { text: "Batch number where applicable." },
+              { text: "Project allocation." },
+              { text: "Recommended storage period." },
+            ],
+          },
+          {
+            heading: "Squeegee and fitting tool storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Squeegees." },
+              { text: "Suitable scrapers." },
+              { text: "Cutting tools." },
+              { text: "Other approved fitting accessories." },
+            ],
+            closing: ["Use labelled drawers, protect sharp blades, and dispose of used blades in appropriate sharps containers."],
+          },
+          {
+            heading: "Spray bottles and installation solutions",
+            paragraphs: [
+              "Compatible inventory may include suitable installation accessories and approved solutions. Follow product labels and safety data sheets.",
+              "Do not assume that every chemical concentrate is suitable for ordinary container storage.",
+            ],
+          },
+          {
+            heading: "Heat gun storage",
+            paragraphs: [
+              "Store heat guns unplugged, cooled and protected.",
+              "Do not operate heat-producing tools inside an ordinary storage-only container without appropriate safety provisions.",
+            ],
+          },
+          {
+            heading: "Sample book storage",
+            paragraphs: ["Keep film sample books in protective packaging, and protect them against dust, heat and moisture."],
+          },
+          {
+            heading: "Building-wise installation kits",
+            paragraphs: ["Organise equipment by:"],
+            bullets: [
+              { text: "Client." },
+              { text: "Building." },
+              { text: "Floor." },
+              { text: "Window specification." },
+              { text: "Film type." },
+              { text: "Installation date." },
+              { text: "Assigned team." },
+            ],
+            closing: ["Verify each kit before dispatch."],
+          },
+          {
+            heading: "Window film inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Manufacturer." },
+              { text: "Film type." },
+              { text: "Roll width." },
+              { text: "Product code." },
+              { text: "Batch number." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Environmental requirements." },
+              { text: "Project allocation." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Window Film Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Temperature and humidity",
+            paragraphs: [
+              "Window film adhesives, liners and related materials may be sensitive to unsuitable temperatures and humidity. Follow the manufacturer's specified storage range.",
+              "An ordinary metal shipping container may become very hot in direct sunlight. Where the manufacturer's environmental requirements cannot be maintained, use an appropriately controlled storage arrangement. Ventilation and shading alone do not guarantee compliance.",
+            ],
+            // Brief §6: specialised controlled storage → the Vellore page's insulated and AC fit-out section (anchor softened).
+            inlineLinks: [
+              {
+                before: "What has to be agreed before insulation or cooling is fitted is set out in our",
+                link: { label: "notes on insulated and air-conditioned container fit-outs", href: "/cities-we-serve/shipping-container-vellore" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Cleanliness",
+            paragraphs: ["Protect film rolls from:"],
+            bullets: [
+              { text: "Dust." },
+              { text: "Dirt." },
+              { text: "Moisture." },
+              { text: "Pressure damage." },
+              { text: "Impact." },
+              { text: "Contamination." },
+            ],
+          },
+          {
+            heading: "Sharp tools",
+            paragraphs: ["Store blades and cutters safely, and keep used blades in suitable disposal containers."],
+          },
+          {
+            heading: "Electrical equipment",
+            paragraphs: [
+              "Do not operate heat guns or charge batteries inside an ordinary storage-only container without suitable electrical and fire-safety arrangements.",
+            ],
+          },
+          {
+            heading: "Automotive tinting",
+            paragraphs: [
+              "This page focuses on building and residential window film installers. It does not cover automotive window tinting or vehicle accessories.",
+            ],
+            // Brief §6 and §8: dealership vehicle accessories belong to the Hebbal page.
+            inlineLinks: [
+              {
+                before: "Storing accessories and pre-delivery supplies for a car showroom? See our page on",
+                link: { label: "car dealership accessory storage in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kudlu-gate/kudlu-gate-storage-container-interior.webp",
+          alt: "Inside an empty used container seen through its open cargo doors: corrugated walls and roof with surface rust spots and a worn timber floor, with no racks or shelves fitted",
+          width: 1024,
+          height: 1024,
+          caption:
+            "Illustrative image: bare walls and a timber floor, nothing more. Panel shelves, baffle racks, roll holders or tool drawers are part of a unit only when its quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Flat acoustic panel shelves." },
+          { text: "Acoustic baffle racks." },
+          { text: "Ceiling cloud storage supports." },
+          { text: "Mineral wool shelving." },
+          { text: "Wooden diffuser protective racks." },
+          { text: "Mounting hardware bins." },
+          { text: "Project-wise installation sections." },
+          { text: "Film roll racks." },
+          { text: "Horizontal roll holders." },
+          { text: "Film fitting tool drawers." },
+          { text: "Sample book shelves." },
+          { text: "Protective storage for suitable electrical tools." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental controls where required." },
+          { text: "Appropriate locking arrangements." },
+        ],
+        closing: [
+          "All layouts must reflect the actual dimensions, weights, product handling instructions and environmental requirements.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Kudlu Gate",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kudlu-gate/shipping-container-concrete-base-kudlu-gate.webp",
+          alt: "Weathered maroon steel container with surface rust and closed cargo doors, standing on a raised concrete plinth in front of a plain wall",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image of a container on a raised concrete base. The ground under the four corners has to be firm and level; what your site needs is agreed before delivery.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises: approved contractor yards, suitable commercial storage plots, building service areas where permission has been given, and other permitted private sites.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner or building management permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Hosur Road is the access reference for most Kudlu Gate sites; the turn off it and the lane beyond decide which vehicle can reach the set-down spot. A 10 ft or 20 ft container may be considered for compact sites, subject to actual availability and access conditions. A 40 ft container may be considered where sufficient space and unloading arrangements are available.",
+          "No delivery hour is promised until the transport arrangements have been verified, and no container is placed on a public road, service lane or footpath without the required authorisation.",
+        ],
+        // Brief §4 and §6: restricted-site delivery → the Bellandur page's society-gate and narrow-lane notes.
+        inlineLinks: [
+          {
+            before: "If the truck has to pass a building gate or a tight service road, start with our",
+            link: { label: "restricted-site container delivery guidance", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Exact internal dimensions, door openings, floor-loading limits and availability are verified on the unit you are offered. Approximate volume does not establish allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Window film rolls, fitting tools and smaller accessories"],
+            ["20 ft", "33 m³", "Acoustic panels, ceiling baffles and installation equipment"],
+            ["40 ft", "67 m³", "Larger inventories where suitable space and access are available"],
+          ],
+        },
+        // Brief §6: used-container buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Weighing up a used unit? Work through our",
+            link: { label: "checklist for inspecting a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you accept one.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Kudlu Gate",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Acoustic panel shelves." },
+          { text: "Baffle storage racks." },
+          { text: "Film roll holders." },
+          { text: "Installation tool drawers." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental control requirements." },
+          { text: "Locking arrangements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on your actual requirements."],
+      },
+      {
+        heading: "Storage Container on Rent in Kudlu Gate",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful during office fit-out and installation projects. Hire terms run from one month up to five years. Your quotation names the unit and the term, and sets out the transport charges, any deposit and the collection arrangements for when the hire ends.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and hire periods are listed on our",
+            link: { label: "container hire terms and sizes", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the materials and equipment." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify fragile, combustible or temperature-sensitive materials." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelves, racks and tool drawers." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For acoustic and window film installers around Kudlu Gate, that means:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "20 ft or 40 ft, or 10 ft subject to stock, chosen against your largest panel crate or film box." },
+          { title: "Storage-oriented modifications", text: "panel shelves, baffle racks, roll holders or tool drawers, each shown as its own line in the quotation." },
+          { title: "Shelving and racking provisions", text: "worked out from the sizes and weights you give us, so panels are not crushed and rolls are not stacked under heavy stock." },
+          { title: "Locking arrangements", text: "cargo doors that lock, with the hardware fitted to your unit named in writing before you commit." },
+          { title: "Ventilation and insulation options", text: "quoted on request; climate control, a fire rating or a set temperature is never assumed unless the specification says so." },
+          { title: "Quotation and delivery coordination", text: "an itemised price first, then a look at the approach from Hosur Road, the lane width and where the unit will stand, before any date is offered." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can acoustic panels be stored inside a shipping container?",
+        answer: "Potentially, where suitable protective supports and environmental conditions are provided.",
+      },
+      {
+        question: "Is acoustic foam a fire risk?",
+        answer: "Some acoustic foam materials may be combustible. Follow the manufacturer's storage and fire-safety requirements.",
+      },
+      {
+        question: "Can mineral wool insulation be stored inside a container?",
+        answer: "Potentially, where it is kept dry and stored according to the manufacturer's instructions.",
+      },
+      {
+        question: "How should window film rolls be stored?",
+        answer: "Use the manufacturer's recommended packaging, storage orientation and environmental conditions.",
+      },
+      {
+        question: "Do window film rolls need climate control?",
+        answer: "Some film products require controlled temperature and humidity. Follow the specific manufacturer's storage limits.",
+      },
+      {
+        question: "Can adhesives and spray glues be stored inside a standard container?",
+        answer: "Do not assume ordinary container storage is suitable. Follow the safety data sheets and the requirements that apply.",
+      },
+      {
+        question: "Does this page cover automotive window tinting?",
+        answer: "No. This page focuses on window films used for buildings and residential glass.",
+      },
+      {
+        question: "Can a standard shipping container provide climate-controlled storage?",
+        answer: "No. Appropriate environmental controls must be specified and verified separately.",
+      },
+      {
+        question: "What is the shipping container price in Kudlu Gate?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Kudlu Gate",
+    ctaText: `Whether you need storage for acoustic panels, ceiling baffles and soundproofing materials, or window film rolls and installation equipment, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp or e-mail ${COMPANY.email.sales}. Service area: Kudlu Gate, Kudlu and the Kudlu Lake area, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Kudlu Gate",
+      intro:
+        "Select a container type and how many you need, add the Kudlu Gate or Kudlu site address or a map pin, and say whether you want to buy or hire. Tell us if it will hold acoustic panels and insulation or window film stock, the size of the biggest panel crate or roll box, and any storage temperature the film maker states; we match the unit to the stock and to the site before quoting.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Every container is built or supplied through the Portable Office Cabin factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. The company's Bengaluru office is in Electronic City; there is no Portable Office Cabin yard, depot, showroom or branch in Kudlu Gate, Kudlu or near Kudlu Lake. The written quotation for each unit is what defines it: its inside measurements and door opening, grade, condition and floor rating; any shelves, racks, cloud supports, roll holders, drawers, bins, lighting, vents, lining, environmental controls and locks; the hire term if it is rented; and who handles transport, unloading and collection. Availability shifts, so a delivery date counts only once that quotation states it. Unless an approved specification says so, a container is not offered as fire-rated, climate-controlled or held at any temperature or humidity; not as a store for adhesives, spray glues, solvents or other hazardous or flammable goods; not as somewhere to cut, grind, spray, use heat guns or charge batteries; and not as able to carry unlimited weight. Manufacturer storage conditions, safety data sheets and building rules still apply to acoustic and window film stock kept inside one. The five pictures come from the company's existing catalogue and are used only to illustrate: none was taken in Kudlu Gate, and none shows a delivered or fitted unit, stored materials or a customer's equipment. Cubic-metre figures are approximate and are not payload ratings. Acoustic and window film installers are examples of how a container might be used, not clients or finished projects, and listing a locality invites enquiries from it without confirming any delivery there. The notes here on foam, mineral wool, adhesives, film rolls, blades, heat guns, electrical equipment, siting and permissions are general guidance, not fire-safety, legal, electrical or engineering advice; manufacturers, building managers and the relevant authorities are to be followed first.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN BROOKEFIELD (east Bengaluru) —
