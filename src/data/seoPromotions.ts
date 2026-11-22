@@ -747,6 +747,12 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Vidyaranyapura (seed and agri-input dealers' stock; laboratory glassware and supplies dealers' stock;
     // owner brief 2026-11-19), appended so the live links keep their positions.
     { name: "Shipping Containers in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+    // Kadubeesanahalli (façade and high-rise window cleaning contractors' stores; rainwater harvesting
+    // contractors' stores; owner brief 2026-11-21), appended so the live links keep their positions.
+    { name: "Shipping Containers in Kadubeesanahalli", href: "/cities-we-serve/shipping-container-kadubeesanahalli" },
+    // Jalahalli West (fencing contractors, baking supply stores, solar water heater installers, bangle and
+    // fashion jewellery wholesalers; owner brief 2026-11-21), appended so the live links keep their positions.
+    { name: "Shipping Containers in Jalahalli West", href: "/cities-we-serve/shipping-container-jalahalli-west" },
     // Hoskote (grape growers' vineyard equipment; warehouse racking installers' stock; owner brief 2026-11-21),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
