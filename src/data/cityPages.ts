@@ -49537,6 +49537,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "soap, candle and pottery storage in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
         after: ".",
       },
+      // Sanjaynagar brief (2026-11-22, §7): water-feature installers' and handyman services' equipment in
+      // Sanjaynagar is that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Water-feature installers and handyman teams to the south-west, in Sanjaynagar, are covered on our page on",
+        link: { label: "fountain installer and handyman tool storage in Sanjaynagar", href: "/cities-we-serve/shipping-container-sanjaynagar" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -49772,6 +49779,674 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it has no yard, depot or branch in Hebbal. Each container is offered subject to availability, and its size, condition, inside dimensions, fittings (shelves, racks, bins, vents, lights, locks), any rental terms and its delivery, unloading and collection are set out only in its written quotation; no delivery date or vehicle access is promised. The five images are illustrative renders of one container, not photographs taken in Hebbal or of a delivered or fitted unit. Car dealerships, research organisations and agri-tech teams are described as typical users, not as clients or past projects; Portable Office Cabin is not affiliated with any dealership, vehicle manufacturer, university or research institution, and the neighbourhoods named indicate where we welcome enquiries, not confirmed delivery points. A standard container is not climate-controlled and is not approved storage for fuel, gas cylinders, damaged batteries, agricultural chemicals or biological samples. Notes on batteries, drones, chemicals, samples, site access and placement are general information only; they are not legal, regulatory, safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN SANJAYNAGAR — storage for garden water-feature and fountain installers
+   * (fountain pumps, pond filters and UV units, pond liners, fountain bowls and statues, decorative stone,
+   * garden and underwater lighting, hoses and nozzles, property-wise installation kits) and for multi-trade
+   * handyman and home maintenance services (technician tool kits, plumbing, door-hardware and electrical
+   * spares, ladders, power tools, tile and repair kits, job register, kit restocking) in Sanjaynagar, also
+   * written Sanjay Nagar, north Bengaluru.
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI MASTER SEO IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Sanjaynagar (Sanjay Nagar)"): meta title, H1, keywords, local modifiers, section order, H2 / H3 headings,
+   * sizes table, the nine ordering steps and the seven FAQs are the brief's, and so is the copy, lightly
+   * edited for flow and British spelling. The brief's meta description (177 characters) is shortened to 152
+   * so it is not cut off in results, in line with the city-description lengths of the pending SEO-1 PR
+   * (#309); every keyword and both spellings stay in it. The brief's Open Graph title and description are
+   * not separate fields here: the site convention (buildPageMetadata) sends the meta title and description
+   * as og:title / og:description. The brief's notes to the implementer ("Do not recommend storing live
+   * fish…", "Do not assume an ordinary storage container is suitable for hazardous chemicals", "Do not
+   * operate electrical equipment…", "Do not recommend charging batteries…", "Do not assume all sealants…",
+   * "Do not recommend storing hazardous or flammable products…", "Do not represent the container as a
+   * certified workshop…", "Do not guarantee that a particular container size…", "Do not invent…",
+   * "Conditional section…", "Highlight only verified capabilities…", "Do not claim…", "Do not target…",
+   * "Use verified company phone numbers…") are instructions, not page copy: where one carries a fact for the
+   * reader it is reworded as a plain statement ("live fish and aquatic plants are not kept inside an ordinary
+   * shipping container", "batteries are not charged inside an ordinary storage-only container", "no
+   * container size is promised for a particular address until the site has been assessed", and so on);
+   * otherwise it is left out. FAQ 4's answer is reworded the same way. Where an H3 has two lists, the
+   * longer one stays a list and the other becomes a sentence (the template gives an H3 one list), and the
+   * placement section's list of premises becomes a sentence for the same reason. The route follows the site
+   * convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins, the
+   * areas paragraph, the "why" bullets, the enquiry-form intro and the disclaimer were written for their
+   * slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; shelving, racks, drawers, bins, supports, kit sections,
+   * lighting, ventilation, insulation and locks are layout options and price factors, never stock items or
+   * guaranteed conditions. No same-day installation, climate control, chemical-storage certification,
+   * workshop approval or unlimited floor load is claimed. The optional Kannada search terms are not used:
+   * the page is in English. No Product JSON-LD: city pages carry no prices (file rule) and a Product block
+   * without offers earns no rich result, so the Service JSON-LD (no offers), FAQPage (the seven visible
+   * questions only) and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Water-feature installers, "Water Feature Equipment Storage Safety", handyman services and "Handyman
+   *     Equipment Storage Safety" → four afterIntro extra sections, the first three with the brief's H3s as
+   *     `subsections` ("Technician Kit Restocking" numbered).
+   *   Placement, sizes, price, rent and "How to Order" (ordered, nine steps) → afterSolutions extra
+   *     sections, so the steps stay before the areas.
+   *   "Areas Served" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's seven.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §7, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container category route"); water-feature section → "landscaper and nursery storage
+   * along Bannerghatta Road" (that page's "Stores for Landscapers, Nurseries & Garden Contractors") and
+   * "aquarium tank and equipment storage in Kasturi Nagar" (its aquarium shops section); handyman section →
+   * "electrical and plumbing contractor storage in Kaggadasapura" (its "Shipping Containers for Electrical &
+   * Plumbing Contractors") and "appliance repair shop storage in Yelahanka New Town" (its "Storage Containers
+   * for Home Appliance Repair Shops"); placement → "shipping container delivery and placement" (the
+   * Bellandur page's society-gate and narrow-lane section); sizes → "used shipping container inspection":
+   * the brief's /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used
+   * Container Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental;
+   * areas → "shipping containers in RT Nagar", "storage containers in Hebbal, Bengaluru" and "storage
+   * containers along Hennur Road" (Geddalahalli is on that page's areas list). NOT linked: the Mathikere
+   * shipping page (not live; it can link here, and this page there, once it is), an Uttarahalli shipping
+   * page (no such route) and the Murugeshpalya (dewatering) and Kadubeesanahalli (rainwater harvesting)
+   * pages, which the brief lists only to keep their topics apart: the distinction is made in words, so the
+   * page does not carry every proposed link. Anchors differ from the siblings' anchors for the same
+   * targets. Inbound: the RT Nagar and Hebbal, Bengaluru shipping pages' areas sections (one
+   * `areasInlineLinks` item each, at the end of each list; their locality boundaries and targeting
+   * unchanged), the Karnataka shipping hub ("Shipping Containers in Sanjaynagar"), the cargo category's
+   * location links ("Storage containers in Sanjaynagar") and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Sanjaynagar (Sanjay Nagar), RMV 2nd Stage,
+   * Bhoopasandra and Dollars Colony, for garden water-feature and fountain installers' equipment and for
+   * multi-trade handyman and home maintenance services. Named only in the pointer sentences to their own
+   * pages: RT Nagar, Dinnur and Sultanpalya (RT Nagar page); Hebbal and Ganganagar (Hebbal, Bengaluru page);
+   * Geddalahalli (Hennur Road page). Not named at all: Mathikere and Kodigehalli (pages of their own are in
+   * preparation), Sadashivanagar (kept for a possible future page) and MSR Nagar. "Marathahalli" appears only
+   * in FAQ 5, which tells this Sanjaynagar apart from the separate Sanjay Nagar there, as the brief asks. Kept
+   * apart from landscapers and nurseries (Bannerghatta Road), aquarium equipment (Kasturi Nagar), dewatering
+   * pumps (Murugeshpalya), rainwater harvesting (Kadubeesanahalli), electrical and plumbing contractors
+   * (Kaggadasapura), tool hire (no live page) and appliance repair (Yelahanka New Town). "Bengaluru" stays
+   * out of the title, as the brief asks; the description, the geo meta and the Service JSON-LD's areaServed
+   * carry "Sanjaynagar, Bengaluru, Karnataka" (an area served, not a business address).
+   *
+   * Images: no new images were supplied; the owner asked for EXISTING images. Five catalogue images already in
+   * the repo (src/assets/products, used on the cargo, Peenya, Krishnagiri and rental product pages and on no
+   * city page), copied with their VP8 data byte-for-byte plus an XMP dc:title / dc:description that labels
+   * each one an illustrative image (no creator, GPS, camera or date); the product originals are untouched.
+   * cargo-storage-containers-20ft (a green 20 ft container at an angle) gives the hero / og:image (the brief's
+   * hero filename); cargo-storage-containers-40ft (a dark green door end) the water-feature section;
+   * shipping-container-krishnagiri-storage (an orange container with one end open, empty) the handyman
+   * section (the brief's interior filename, but not its "organized contractor equipment shelves" alt:
+   * nothing is fitted); shipping-container-rental-transport (a container on a semi-trailer) the placement
+   * section; shipping-container-peenya-storage (a blue container with closed doors) the sizes section. None
+   * shows glazing or office windows. No image shows pumps, filters, liners, bowls, stone, lights, hoses,
+   * tool kits, spare parts or power tools, so the brief's twelve use-case image slots are not used, and no
+   * alt text, caption or filename claims those items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-sanjaynagar",
+    city: "Sanjaynagar",
+    listTitle: "Shipping & Storage Containers in Sanjaynagar",
+    metaTitle: "Shipping Container in Sanjaynagar | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Sanjaynagar (Sanjay Nagar), north Bengaluru, for fountain installers' pumps and liners and handyman tools and spares.",
+    keywords:
+      "shipping container in Sanjaynagar, shipping container in Sanjay Nagar, cargo container Sanjaynagar, storage container Sanjaynagar, storage container Sanjay Nagar, storage container RMV 2nd Stage, storage container Bhoopasandra, storage container Dollars Colony, used shipping container Sanjaynagar, shipping container price in Sanjaynagar, storage container for rent in Sanjaynagar, fountain installer storage container, garden water feature equipment storage, pond pump and liner storage, fountain bowl and statue storage, handyman service storage container, home maintenance spare parts storage, handyman kit and tool storage, home repair service base",
+    // Approximate point on Sanjaynagar Main Road, north Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Sanjaynagar, Bengaluru, Karnataka, India",
+      position: "13.0350;77.5760",
+      icbm: "13.0350, 77.5760",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 800 × 800 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // RT Nagar, Hebbal, Hennur Road, Bannerghatta Road, Kasturi Nagar, Kaggadasapura, Yelahanka New Town,
+    // Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-sanjaynagar/shipping-container-sanjaynagar.webp",
+      alt: "Shipping container exterior suitable for contractor equipment storage: a green 20 ft steel unit seen at an angle on a paved yard, its double cargo doors shut",
+      width: 800,
+      height: 800,
+      caption: "Illustrative catalogue image of a 20 ft container, not a picture of a delivered unit or of a site in Sanjaynagar.",
+    },
+
+    h1: "Shipping & Storage Containers in Sanjaynagar",
+    tagline:
+      "Lockable space for fountain pumps, rolled pond liners and heavy bowls between installations, and an organised base for a handyman team's numbered tool kits, taps, hinges and switches.",
+    intro: [
+      "Sanjaynagar, also written as Sanjay Nagar, is an established residential neighbourhood in north Bengaluru, associated with areas such as RMV 2nd Stage, Bhoopasandra and Dollars Colony.",
+      "Garden maintenance contractors, fountain installers and multi-trade home repair businesses may need organised storage for equipment, tools and replacement parts.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Sanjaynagar for compatible commercial inventory and equipment storage requirements.",
+    },
+
+    areasHeading: "Areas Served Around Sanjaynagar",
+    areasText:
+      "This page covers shipping and storage container enquiries from Sanjaynagar, also written Sanjay Nagar, in north Bengaluru, together with RMV 2nd Stage, Bhoopasandra and Dollars Colony. Many of the streets here are residential, so the approach road, the gate and the spot where the container will stand are looked at for each address before a delivery date is offered.",
+    // Brief §2, §7 and §8: RT Nagar, Dinnur and Sultanpalya belong to the RT Nagar page; Hebbal and Ganganagar to
+    // the Hebbal, Bengaluru page; Geddalahalli to the Hennur Road page. Kodigehalli is not named here: a page of
+    // its own is being prepared (owner brief to another session, 2026-11-22).
+    areasInlineLinks: [
+      {
+        before: "RT Nagar, Dinnur and Sultanpalya, to the south-east, are covered on our page on",
+        link: { label: "shipping containers in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
+        after: ".",
+      },
+      {
+        before: "For Hebbal and Ganganagar, go to our page on",
+        link: { label: "storage containers in Hebbal, Bengaluru", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+        after: ".",
+      },
+      {
+        before: "Geddalahalli and the rest of the Hennur Road side have a page of their own:",
+        link: { label: "storage containers along Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Garden Water Feature & Fountain Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-sanjaynagar/shipping-container-cargo-doors-sanjaynagar.webp",
+          alt: "Dark green steel container viewed from its door end, both cargo doors shut and held by four upright locking bars with cam handles",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. The door opening, not only the floor area, decides whether a large fountain bowl or a statue on its pallet can be carried in and out safely.",
+        },
+        paragraphs: [
+          "Garden water feature installers work with fountains, ornamental ponds, water walls, birdbaths and related decorative installations.",
+          "Their equipment may include pumps, filters, pond liners, decorative stone, fountain bowls, lighting and suitable plumbing accessories.",
+          "A suitably configured shipping container may provide additional storage space for compatible equipment before installation or maintenance.",
+          "This section is about decorative water features. Pumps hired out to clear flooded basements and materials for rainwater harvesting pits are separate applications with different storage needs.",
+        ],
+        // Brief §7 and §8: landscapers and nurseries belong to the Bannerghatta Road page and aquarium equipment
+        // to the Kasturi Nagar page; water-feature installers' equipment stays here.
+        inlineLinks: [
+          {
+            before: "Storing general garden tools, plant pots and nursery stock rather than water-feature equipment? See",
+            link: { label: "landscaper and nursery storage along Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+            after: ".",
+          },
+          {
+            before: "Indoor fish tanks, stands and filter media for an aquarium shop are covered under",
+            link: { label: "aquarium tank and equipment storage in Kasturi Nagar", href: "/cities-we-serve/shipping-container-kasturi-nagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Fountain Pump Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Submersible fountain pumps." },
+              { text: "Suitable circulation pumps." },
+              { text: "Replacement pump accessories." },
+              { text: "Approved water feature equipment." },
+            ],
+            closing: [
+              "Clean and dry equipment before storage where required, and follow the manufacturer's instructions for draining, cleaning and protection.",
+            ],
+          },
+          {
+            heading: "Pond Filter & UV Unit Storage",
+            paragraphs: [
+              "Store compatible filters and UV units in protective packaging, protected against impact, moisture and dust.",
+              "Follow the manufacturer's requirements for lamps and electrical components.",
+            ],
+          },
+          {
+            heading: "Pond Liner Storage",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Pond liners." },
+              { text: "Suitable waterproof lining materials." },
+              { text: "Approved liner accessories." },
+            ],
+            closing: [
+              "Store liners rolled or packaged according to the manufacturer's instructions, and keep them away from sharp edges and unsuitable heat exposure.",
+            ],
+          },
+          {
+            heading: "Fountain Bowl & Statue Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Fountain bowls." },
+              { text: "Decorative statues." },
+              { text: "Suitable stone ornaments." },
+              { text: "Water feature panels." },
+            ],
+            closing: [
+              "Use padding and stable supports, and store heavy components low. Verify the container's floor-loading and handling requirements before the pieces go in.",
+            ],
+          },
+          {
+            heading: "Decorative Pebble & Stone Storage",
+            paragraphs: [
+              "Decorative stones and pebbles may be stored in suitable bags, pallets or containers.",
+              "Avoid exceeding floor-loading limits: a container cannot be assumed to support an unlimited quantity of stone.",
+            ],
+          },
+          {
+            heading: "Underwater & Garden Lighting Storage",
+            paragraphs: [
+              "Store compatible garden and underwater lighting equipment in protective packaging, with its electrical components kept dry and protected.",
+              "Electrical equipment is not operated inside an ordinary storage-only container that has no suitable provisions for it.",
+            ],
+          },
+          {
+            heading: "Hoses, Fittings & Nozzle Storage",
+            paragraphs: ["Organise compatible materials such as:"],
+            bullets: [
+              { text: "Hoses." },
+              { text: "Fountain nozzles." },
+              { text: "Suitable connectors." },
+              { text: "Plumbing fittings." },
+              { text: "Replacement accessories." },
+            ],
+            closing: ["Use labelled bins and drawers."],
+          },
+          {
+            heading: "Property-wise Installation Kits",
+            paragraphs: ["Prepare equipment kits by:"],
+            bullets: [
+              { text: "Customer or property." },
+              { text: "Installation type." },
+              { text: "Pump model." },
+              { text: "Required accessories." },
+              { text: "Quantity." },
+              { text: "Maintenance schedule." },
+            ],
+            closing: ["Maintain a dispatch checklist."],
+          },
+        ],
+      },
+      {
+        heading: "Water Feature Equipment Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Wet Equipment",
+            paragraphs: ["Drain, clean and dry equipment according to the manufacturer's instructions before storage."],
+          },
+          {
+            heading: "Live Fish & Plants",
+            paragraphs: ["Live fish and aquatic plants are not kept inside an ordinary shipping container."],
+          },
+          {
+            heading: "Water Treatment Chemicals",
+            paragraphs: [
+              "Follow the manufacturer's labels, safety data sheets and the storage requirements that apply. An ordinary storage container is not assumed to be suitable for hazardous chemicals.",
+            ],
+          },
+          {
+            heading: "Heavy Decorative Components",
+            paragraphs: ["Use suitable lifting arrangements, stable supports and floor-loading checks."],
+          },
+          {
+            heading: "Electrical Equipment",
+            paragraphs: ["Protect pumps, lights and control components from unsuitable moisture and environmental conditions."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Handyman & Home Maintenance Services",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-sanjaynagar/sanjaynagar-container-storage-interior.webp",
+          alt: "Orange steel container with one end fully open, showing empty white corrugated walls and a plain plywood floor, with nothing fitted inside",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image of an empty container. Tool-kit shelves, spare-part drawers and ladder brackets are fitted only where the written quotation lists them.",
+        },
+        paragraphs: [
+          "Handyman and home maintenance businesses carry out repairs and maintenance involving doors, taps, fittings, fixtures and other household components.",
+          "Their equipment may include hand tools, power tools, ladders, spare parts and job-specific repair materials.",
+          "A suitably configured shipping container may serve as an organised storage base for compatible tools and spare parts. The kit is the team's own, used on its jobs, rather than tools rented out to customers.",
+        ],
+        // Brief §7 and §8: electrical and plumbing contractors belong to the Kaggadasapura page and appliance repair
+        // to the Yelahanka New Town page; multi-trade handyman services stay here.
+        inlineLinks: [
+          {
+            before: "Running a specialist electrical or plumbing contracting firm rather than multi-trade home repairs? See",
+            link: { label: "electrical and plumbing contractor storage in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+            after: ".",
+          },
+          {
+            before: "Repair shops holding customers' washing machines, refrigerators and appliance spares are covered on our page on",
+            link: { label: "appliance repair shop storage in Yelahanka New Town", href: "/cities-we-serve/shipping-container-yelahanka-new-town" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Technician Tool Kit Storage",
+            paragraphs: ["Organise suitable technician kits by:"],
+            bullets: [
+              { text: "Technician." },
+              { text: "Trade." },
+              { text: "Job type." },
+              { text: "Tool category." },
+              { text: "Assigned project." },
+            ],
+            closing: ["Use numbered kits where appropriate, and maintain issue and return records."],
+          },
+          {
+            heading: "Plumbing Spare Parts Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Taps." },
+              { text: "Washers." },
+              { text: "Cartridges." },
+              { text: "Suitable plumbing fittings." },
+              { text: "Replacement accessories." },
+            ],
+            closing: ["Use labelled drawers and bins."],
+          },
+          {
+            heading: "Door & Furniture Hardware Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Hinges." },
+              { text: "Handles." },
+              { text: "Brackets." },
+              { text: "Suitable fasteners." },
+              { text: "Replacement fittings." },
+            ],
+            closing: ["Organise by type, size and specification."],
+          },
+          {
+            heading: "Electrical Spare Parts Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Switches." },
+              { text: "Sockets." },
+              { text: "Bulbs." },
+              { text: "Suitable electrical accessories." },
+            ],
+            closing: [
+              "Store them in protective packaging. Electrical work must be performed by appropriately qualified personnel, according to the requirements that apply.",
+            ],
+          },
+          {
+            heading: "Ladder Storage",
+            paragraphs: ["Store ladders using suitable supports and restraints, without blocking access routes or exits."],
+          },
+          {
+            heading: "Power Tool Storage",
+            paragraphs: [
+              "Store power tools in protective cases, and follow the manufacturer's requirements for batteries and chargers.",
+              "Batteries are not charged inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Tile, Grout & Repair Kit Storage",
+            paragraphs: ["Organise compatible materials such as:"],
+            bullets: [
+              { text: "Tile repair accessories." },
+              { text: "Suitable grout products." },
+              { text: "Sealant application tools." },
+              { text: "Repair hardware." },
+            ],
+            closing: [
+              "Follow the manufacturer's storage requirements. Not every sealant, adhesive or chemical is suitable for ordinary container storage.",
+            ],
+          },
+          {
+            heading: "Paint & Sealant Storage",
+            paragraphs: [
+              "Paints, solvents and sealants may require specific temperature, ventilation and fire-safety controls.",
+              "Hazardous or flammable products are not stored in an ordinary storage-only container without appropriate safeguards and regulatory compliance.",
+            ],
+          },
+          {
+            heading: "Technician Job Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Customer or property." },
+              { text: "Assigned technician." },
+              { text: "Job type." },
+              { text: "Tools issued." },
+              { text: "Spare parts used." },
+              { text: "Return status." },
+              { text: "Remaining stock." },
+            ],
+          },
+          {
+            heading: "Technician Kit Restocking",
+            paragraphs: ["After each job:"],
+            ordered: true,
+            bullets: [
+              { text: "Record consumed spare parts." },
+              { text: "Return reusable tools." },
+              { text: "Inspect damaged equipment." },
+              { text: "Replenish compatible supplies." },
+              { text: "Prepare the next job kit." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Handyman Equipment Storage Safety",
+        placement: "afterIntro",
+        bullets: [
+          { text: "Keep heavy tools on stable lower shelves." },
+          { text: "Secure ladders." },
+          { text: "Keep access routes clear." },
+          { text: "Follow the manufacturer's instructions for batteries." },
+          { text: "Cordless tool batteries are not charged in an ordinary storage-only container." },
+          { text: "Store chemicals according to the requirements that apply." },
+          { text: "Use appropriate protective packaging for electrical components." },
+          { text: "A storage container is not a certified workshop unless it has a suitable design and the necessary approvals." },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in Sanjaynagar",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-sanjaynagar/shipping-container-transport-sanjaynagar.webp",
+          alt: "Grey steel shipping container carried on a multi-axle semi-trailer on a highway, seen from behind with its cargo doors closed",
+          width: 800,
+          height: 457,
+          caption:
+            "Illustrative image. A container arrives on a long trailer, so the turning space and the unloading spot at the gate matter as much as the container's own size.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including contractor yards, suitable commercial plots, approved storage compounds and other permitted private premises.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Residential roads may have limited access for heavy vehicles, so no container size is promised for a particular address until the site has been assessed.",
+        ],
+        // Brief §5 and §7: restricted-site delivery guidance → the Bellandur page's society-gate and narrow-lane notes.
+        inlineLinks: [
+          {
+            before: "Working with a tight lane, a low gate or a plot behind a compound wall? Our guide to",
+            link: { label: "shipping container delivery and placement", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " explains what is checked.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-sanjaynagar/blue-storage-container-sanjaynagar.webp",
+          alt: "Blue steel container with closed cargo doors and wheel chocks under its corners, standing in front of stacked containers",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. For bowls, statues and bagged stone, the floor-loading limit of the actual unit matters more than its volume.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Exact dimensions, availability, floor-loading limits and payload capacity must be verified for the unit you are offered; approximate volume is not an allowable payload.",
+          headers: ["Size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Handyman tool kits and compatible spare parts"],
+            ["20 ft", "33 m³", "Fountain equipment, liners and maintenance inventory"],
+            ["40 ft", "67 m³", "Larger equipment inventories where site access allows"],
+          ],
+        },
+        closing: ["Heavy fountain bowls and decorative stone require particular attention to floor-loading and handling."],
+        // Brief §7: used-container buying guidance → the Athipattu page's inspection checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Buying a second-hand unit? Start with our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Sanjaynagar",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving." },
+          { text: "Pond liner racks." },
+          { text: "Pallets and protective supports." },
+          { text: "Spare parts drawers." },
+          { text: "Tool storage sections." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation where needed." },
+          { text: "Locking arrangements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation."],
+      },
+      {
+        heading: "Storage Container on Rent in Sanjaynagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for seasonal water feature work or a spell of increased home maintenance inventory. Hire runs from one month to five years, and the quotation states the unit, the rental period, transport charges, any deposit and the collection arrangements.",
+        ],
+        inlineLinks: [
+          {
+            before: "Rental sizes and terms are listed under",
+            link: { label: "shipping containers for hire", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Provide equipment dimensions and quantities." },
+          { text: "Identify heavy or fragile materials." },
+          { text: "Confirm estimated weight." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelving and drawers." },
+          { text: "Confirm site permissions and access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible contractor equipment and commercial inventory applications. For water-feature installers and handyman teams in Sanjaynagar, that covers:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, and a 10 ft container when one is in stock." },
+          { title: "Storage-oriented modifications", text: "liner racks, pallet supports, spare-part drawers and tool-kit sections, each priced as its own line." },
+          { title: "Shelving and rack provisions", text: "planned around bowl weights, rolled liner lengths and the number of technician kits you run." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock specified for your unit written into the quotation." },
+          { title: "Ventilation and insulation options", text: "quoted against what you intend to store, without any promise of climate control, certified chemical storage or unlimited floor load." },
+          { title: "Quotation and delivery coordination", text: "an itemised quotation first, then a look at the road, the gate and the unloading spot before a delivery date is agreed; same-day installation is not promised." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can fountain pumps and pond liners be stored inside a shipping container?",
+        answer: "Potentially, where the equipment is cleaned, dried and stored according to the manufacturer's requirements.",
+      },
+      {
+        question: "How should heavy fountain bowls and statues be stored?",
+        answer: "On suitable protective supports, with padding and safe handling arrangements, and within the container's floor-loading limit.",
+      },
+      {
+        question: "Can handyman businesses use shipping containers as equipment storage bases?",
+        answer: "Yes, where the container is suitable for storing tools, compatible spare parts and technician kits.",
+      },
+      {
+        question: "Can cordless tool batteries be charged inside an ordinary storage container?",
+        answer: "No. Batteries are not charged inside an ordinary storage-only container; follow the manufacturer's instructions for charging them.",
+      },
+      {
+        question: "Is this page for Sanjaynagar in north Bengaluru?",
+        answer:
+          "Yes. It covers Sanjaynagar, also written Sanjay Nagar, near RMV 2nd Stage and Bhoopasandra in north Bengaluru, not the separate Sanjay Nagar in the Marathahalli area.",
+      },
+      {
+        question: "What is the shipping container price in Sanjaynagar?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements. Ask for an itemised quotation.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access. The delivery date is confirmed with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Sanjaynagar",
+    ctaText: `Whether you need storage for fountain pumps, pond liners, decorative bowls, handyman tool kits, spare parts or other compatible contractor equipment, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Sanjaynagar, RMV 2nd Stage, Bhoopasandra and Dollars Colony, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Sanjaynagar",
+      intro:
+        "Pick the container type and the quantity, add the Sanjaynagar address or a map pin, and tell us whether you want to buy or hire. Mention the heaviest item, such as a fountain bowl or a pallet of stone, or how many technician kits the unit must hold, so racks and floor loading are planned before we quote.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers for Sanjaynagar are sent from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. The company's Bengaluru office is in Electronic City, and there is no yard, depot, showroom or branch in Sanjaynagar or in the neighbourhoods mentioned here. What you receive is what the written quotation specifies: the container's inside and door measurements, its grade and condition, the load its floor can take, every fitting (shelving, racks, drawers, bins, supports, lighting, vents, insulation, locks), the rental terms if you hire, and the arrangements for transport, unloading and collection. Because stock moves, a delivery date is firm only after the quotation confirms it. No container on this page is sold as climate-controlled, fire-rated, approved for chemical storage or able to carry whatever load is put on it, unless an approved specification states so, and none is supplied for battery charging, powered equipment, live fish or plants, hazardous or flammable goods, or as a certified workshop. All five images come from our catalogue and illustrate container types only: none was taken in Sanjaynagar, and none shows a delivered or fitted unit, fountain equipment or a handyman's kit. Capacity figures are rough volumes, not payload ratings. Water-feature installers and handyman services appear as examples of use, not as clients or finished projects, and the neighbourhoods named are places we take enquiries from, not delivery records. Guidance here on equipment care, chemicals, batteries, electrical work, siting and permissions is general information, not safety, legal or engineering advice; rely on manufacturers' instructions and on the authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -54865,6 +55540,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Premises along Thanisandra Main Road are covered on our page for",
         link: { label: "shipping containers on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+        after: ".",
+      },
+      // Sanjaynagar brief (2026-11-22, §7): Sanjaynagar (Sanjay Nagar), RMV 2nd Stage and Bhoopasandra belong to
+      // the Sanjaynagar page; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Fountain installers and home repair businesses a little to the north-west, around Sanjaynagar, have a page of their own:",
+        link: { label: "storage containers in Sanjay Nagar", href: "/cities-we-serve/shipping-container-sanjaynagar" },
         after: ".",
       },
     ],

@@ -780,6 +780,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kudlu Gate (acoustic panel and soundproofing installers; building window film installers; owner brief
     // 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Kudlu Gate", href: "/cities-we-serve/shipping-container-kudlu-gate" },
+    // Sanjaynagar (fountain and water-feature installers; handyman services; owner brief 2026-11-22),
+    // appended so the live links keep their positions.
+    { name: "Shipping Containers in Sanjaynagar", href: "/cities-we-serve/shipping-container-sanjaynagar" },
   ],
 };
 
