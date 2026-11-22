@@ -774,6 +774,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Nagarbhavi (PNG installation contractors' stock; shared student vacation storage; owner brief 2026-11-22),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+    // HRBR Layout (wedding and party wear rental stock; children's sports coaching academy equipment;
+    // owner brief 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
   ],
 };
 
