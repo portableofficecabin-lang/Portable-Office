@@ -774,6 +774,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Nagarbhavi (PNG installation contractors' stock; shared student vacation storage; owner brief 2026-11-22),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+    // Kodigehalli (tree care crews' saws, ropes and safety gear; roofing contractors' sheets, sections and
+    // fixings; owner brief 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
   ],
 };
 

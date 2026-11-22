@@ -42065,7 +42065,7 @@ export const CITY_PAGES: CityPage[] = [
     // New Town each have their own page; this page's targeting stays on the localities above.
     areasInlineLinks: [
       {
-        before: "Hebbal and Kodigehalli are served from our page on",
+        before: "Hebbal is served from our page on",
         link: { label: "container storage in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
         after: ".",
       },
@@ -42082,6 +42082,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "For the sectors and phases of Yelahanka New Town, go to",
         link: { label: "Yelahanka New Town shipping containers", href: "/cities-we-serve/shipping-container-yelahanka-new-town" },
+        after: ".",
+      },
+      // Kodigehalli brief (2026-11-22): Kodigehalli left the Hebbal page for its own; this page's targeting is unchanged.
+      {
+        before: "Kodigehalli, to the west near Kodigehalli Gate, has its own page on",
+        link: { label: "tree care and roofing contractor storage in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
         after: ".",
       },
     ],
@@ -48594,14 +48600,16 @@ export const CITY_PAGES: CityPage[] = [
    * the Shipping Container in Bangalore page.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Hebbal (Bengaluru), Hebbal Kempapura,
-   * Kodigehalli, Bhadrappa Layout, Byatarayanapura, Ganganagar and Bellary Road (Hebbal), for car
+   * Bhadrappa Layout, Byatarayanapura, Ganganagar and Bellary Road (Hebbal), for car
    * dealership accessories, merchandise and PDI supplies and for agri-tech and research field kits. The
    * Hebbal shop page is Mysuru's Hebbal (portable shop × Hebbal, Mysuru) and keeps its own keywords: every
    * title, H1 and description here says "Bengaluru", and FAQ 1 tells the two apart. Not targeted:
    * Thanisandra, Nagawara, Jakkur and Amruthahalli and private vehicle storage (Thanisandra Main Road page),
    * Yelahanka, Kogilu and Attur Layout (Yelahanka page), tyres and service-centre spares (Marathahalli ORR),
    * farm inputs and agricultural supplies (Krishnagiri). No live page names these localities for this
-   * product, so no sibling's copy changes.
+   * product, so no sibling's copy changes. Kodigehalli brief (2026-11-22, §10): Kodigehalli (Kodigehally),
+   * Kodigehalli Gate and Virupakshapura moved to their own page, linked once from the areas section; no
+   * image alt text named Kodigehalli, so none changes.
    *
    * Images: five owner-dropped lossy VP8 webp renders ("public/images/Storage Containers in Hebbal,
    * Bengaluru city page/Storage Containers in Hebbal, Bengaluru/cabin (1–5).webp", 60–143 KB, no EXIF /
@@ -48623,8 +48631,10 @@ export const CITY_PAGES: CityPage[] = [
     metaTitle: "Shipping Container in Hebbal, Bengaluru | Storage Solutions",
     metaDescription:
       "Shipping and storage containers in Hebbal, Bengaluru, for car dealership accessories, merchandise and agri-tech field equipment. Request a quote.",
+    // Kodigehalli brief (2026-11-22, §10): Kodigehalli has its own page, so it is out of this page's keywords,
+    // areas text and service line; the title, H1, description and sections are unchanged.
     keywords:
-      "shipping container in Hebbal Bengaluru, cargo container Hebbal Bangalore, storage container Hebbal Bengaluru, storage container Hebbal Kempapura, storage container Kodigehalli, storage container Byatarayanapura, storage container Bellary Road Hebbal, used shipping container Hebbal Bengaluru, shipping container price in Hebbal Bengaluru",
+      "shipping container in Hebbal Bengaluru, cargo container Hebbal Bangalore, storage container Hebbal Bengaluru, storage container Hebbal Kempapura, storage container Byatarayanapura, storage container Bellary Road Hebbal, used shipping container Hebbal Bengaluru, shipping container price in Hebbal Bengaluru",
     // Approximate: Hebbal Junction on Bellary Road, north Bengaluru.
     geo: {
       region: "IN-KA",
@@ -48697,7 +48707,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas Served Around Hebbal, Bengaluru",
     areasText:
-      "We welcome container enquiries from Hebbal, Bengaluru, and its neighbourhoods, including Hebbal Kempapura, Kodigehalli, Bhadrappa Layout, Byatarayanapura, Ganganagar and the Hebbal stretch of Bellary Road. Each delivery is confirmed after the site's access has been checked.",
+      "We supply shipping and storage containers across Hebbal in Bengaluru, including Hebbal Kempapura, Bhadrappa Layout, Byatarayanapura, Ganganagar and the Hebbal stretch of Bellary Road. Each delivery is confirmed after the site's access has been checked.",
     // RT Nagar brief (2026-11-18, §5): footwear and luggage retailers' stock is that page's intent; the
     // nearby block skips this link (areasInlineLink hrefs are always skipped).
     areasInlineLink: {
@@ -48724,6 +48734,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Handmade soap and candle makers and pottery studios in neighbouring Sahakara Nagar have a page of their own:",
         link: { label: "soap, candle and pottery storage in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
+        after: ".",
+      },
+      // Kodigehalli brief (2026-11-22, §10): the brief's areas sentence, with Kodigehalli linked to its own page.
+      {
+        before: "For Kodigehalli, see our dedicated",
+        link: { label: "Kodigehalli shipping container page", href: "/cities-we-serve/shipping-container-kodigehalli" },
         after: ".",
       },
     ],
@@ -48937,7 +48953,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Request a Shipping Container Quotation in Hebbal",
-    ctaText: `Whether you need organised storage for dealership inventory or a dedicated store for field equipment, we can talk through the shipping container options that suit you. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Hebbal, Bengaluru, Karnataka.`,
+    ctaText: `Whether you need organised storage for dealership inventory or a dedicated store for field equipment, we can talk through the shipping container options that suit you. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Hebbal (Bengaluru), Hebbal Kempapura, Byatarayanapura and Bellary Road, Karnataka.`,
     // The CTA box button → /contact.
     ctaButtonLabel: "Request a Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -49112,7 +49128,7 @@ export const CITY_PAGES: CityPage[] = [
     // Thanisandra Main Road page; RT Nagar to its own page.
     areasInlineLinks: [
       {
-        before: "For Hebbal, Kodigehalli, Byatarayanapura and Kempapura, see our page on",
+        before: "For Hebbal, Byatarayanapura and Kempapura, see our page on",
         link: { label: "shipping and storage containers in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
         after: ".",
       },
@@ -49129,6 +49145,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "RT Nagar, to the south, has its own page:",
         link: { label: "shipping containers in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
+        after: ".",
+      },
+      // Kodigehalli brief (2026-11-22, §11): the neighbouring Kodigehalli page; this page's targeting is unchanged.
+      {
+        before: "Kodigehalli and Virupakshapura, just next door, have a page of their own:",
+        link: { label: "storage containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
         after: ".",
       },
     ],
@@ -49808,7 +49830,7 @@ export const CITY_PAGES: CityPage[] = [
     // Yelahanka to the Yelahanka page; Yelahanka New Town to its own page.
     areasInlineLinks: [
       {
-        before: "For Hebbal, Kodigehalli, Byatarayanapura and Ganganagar, go to our page on",
+        before: "For Hebbal, Byatarayanapura and Ganganagar, go to our page on",
         link: { label: "shipping containers in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
         after: ".",
       },
@@ -49833,6 +49855,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Fencing contractors, baking supply stores, solar water heater installers and bangle wholesalers to the south-west are covered on our page on",
         link: { label: "solar water heater and bangle stock storage in Jalahalli West", href: "/cities-we-serve/shipping-container-jalahalli-west" },
+        after: ".",
+      },
+      // Kodigehalli brief (2026-11-22, §11): the Kodigehalli page; this page's targeting is unchanged.
+      {
+        before: "Tree care crews and roofing contractors around Kodigehalli, to the south-east, are covered on our page on",
+        link: { label: "shipping containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
         after: ".",
       },
     ],
@@ -50444,6 +50472,631 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers come from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and our Bengaluru office is in Electronic City; there is no yard, depot, showroom or branch in Vidyaranyapura or in the localities named on this page. A unit is defined by its written quotation: internal and door-opening sizes, grade, condition, floor-loading limits, any shelving, pallet sections, racks, supports, staging bays, lighting, ventilation, insulation, environmental controls or locks, hire terms where it is rented, and the delivery, unloading and collection method. Stock moves, so a delivery date or time is only firm once it is confirmed with that quotation. Unless an approved specification states otherwise, no unit is offered as climate-controlled, pest-proof, laboratory-grade or suitable for seed preservation, no temperature or humidity figure is promised, and a container is not supplied as a store for pesticides, fertilisers, laboratory chemicals or reagents, or as a laboratory, calibration or testing room. The five pictures are illustrative renders of one container, not photographs taken in Vidyaranyapura; none shows a delivered or fitted unit, seed or farm supplies, or laboratory stock. Volumes are approximate and are not a payload rating. Seed dealers and laboratory suppliers are named as possible uses, not as customers or finished projects, and the localities listed show where enquiries are accepted, not confirmed delivery addresses. Notes on seed, agricultural chemicals, licensing, laboratory goods, placement and permissions are general information, not agronomic, safety, legal or engineering advice; follow the manufacturers', suppliers' and authorities' own instructions.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN KODIGEHALLI — storage for tree care and tree-cutting services
+   * (climbing ropes and harnesses, chainsaws and pole saws, pruning tools, rigging, protective equipment,
+   * roadside safety kit, inspection register) and for roofing and terrace shed contractors (metal,
+   * polycarbonate and fibre sheets, purlins and steel sections, fixings, ladders and safety lines, power
+   * tools, site-wise kits) in Kodigehalli, north Bengaluru (PIN 560092).
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI — TWO-PAGE SEO IMPLEMENTATION COMMAND", Page 2): meta title,
+   * meta description, H1, keywords, section order, H2 / H3 headings, the sizes table, the nine ordering
+   * steps and the seven FAQs are the brief's, and so is the copy, lightly edited for flow and British
+   * spelling. The brief's notes to the implementer ("Do not store fuel containers…", "Do not recommend
+   * storing petrol…", "Do not recommend charging…", "Do not recommend grinding, welding…", "Do not assume
+   * all fibre roofing sheets…", "Do not assume a nominal 20 ft container accepts…", "Do not promise
+   * delivery access or timing…", "Do not invent prices or discounts", "Publish only if rental…", "Highlight
+   * only verified capabilities…", "Do not claim certified hazardous-material storage…", "Do not target…",
+   * "Use verified phone numbers…") are instructions, not page copy: where one carries a fact for the reader
+   * it is reworded as a plain statement ("fuel containers and flammable liquids are not kept in…",
+   * "batteries are not charged inside…", "hot work is not carried out inside…", "a nominal 20 ft container
+   * does not necessarily accept…", "access and a delivery time are confirmed only after a route
+   * assessment", "no container is offered as certified hazardous-material storage…"); otherwise it is left
+   * out. FAQ 4's answer is reworded the same way. "Kodigehally" is used in the keywords, the areas section
+   * and FAQ 5, as the brief asks (both spellings belong to this URL). The route follows the site convention
+   * (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins, enquiry-form
+   * intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row says "if available" (the brief's "if offered"); racks, shelves, hooks, supports, bins,
+   * restraints, lighting, ventilation and locks are layout options and price factors "where your quotation
+   * includes them", never stock items, certified stores or guaranteed load ratings. The optional Kannada
+   * search terms are not used: the page is in English. No Product JSON-LD: city pages carry no prices
+   * (file rule) and a Product block without offers earns no rich result, so the Service JSON-LD (no
+   * offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Tree care services, "Tree Care Equipment Storage Safety", roofing and terrace shed contractors and
+   *     "Roofing Material Storage Safety" → four afterIntro extra sections with the brief's H3s as
+   *     `subsections`.
+   *   Placement, sizes, price, rent and "How to Order" (ordered, nine steps) → afterSolutions extra
+   *     sections, so the steps stay before the areas.
+   *   "Areas We Serve" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's seven.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §11, only where the destination exists and supports the anchor): intro → the cargo
+   * category; tree care section → "landscaping and plant nursery storage on Bannerghatta Road" (that page's
+   * "Stores for Landscapers, Nurseries & Garden Contractors": garden contracting, not arboriculture);
+   * roofing section → "scaffolding, false ceiling and railing contractor storage in Thanisandra" (that
+   * page's scaffolding, gypsum and railing sections: other trades, not roofing); placement → "container
+   * delivery and site access checks" (the Bellandur page's society-gate and narrow-lane notes); sizes →
+   * "used shipping container inspection": the brief's Chennai route does not exist, so it points to the
+   * Athipattu page's "Used Container Inspection" checklist, as the sibling pages do; rental →
+   * /products/shipping-container-rental; areas → Hebbal (Bengaluru), Sahakara Nagar, Vidyaranyapura and
+   * Thanisandra Main Road (which covers Jakkur). NOT linked: Sanjaynagar (its page is not live yet), the
+   * brief's Jakkur and Haralur Road routes (no such pages; Jakkur is covered by the Thanisandra page) and
+   * Panathur (its live page covers water tanker operators, not painting and waterproofing). Anchors differ
+   * from the siblings' anchors for the same targets. Inbound: the Hebbal (Bengaluru), Sahakara Nagar,
+   * Vidyaranyapura and Thanisandra Main Road pages' areas sections (Kodigehalli is taken out of each one's
+   * Hebbal pointer and one `areasInlineLinks` item is added at the end of each list), the Karnataka
+   * shipping hub ("Shipping Containers in Kodigehalli"), the cargo category's location links ("Storage
+   * containers in Kodigehalli") and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks`
+   * keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kodigehalli (Kodigehally), Kodigehalli Main
+   * Road, Kodigehalli Gate and Virupakshapura, north Bengaluru (PIN 560092), for tree care and tree-cutting
+   * equipment and for roofing sheets and terrace shed materials. Kodigehalli moves here from the Hebbal
+   * (Bengaluru) page, which keeps Hebbal, Hebbal Kempapura, Bhadrappa Layout, Byatarayanapura, Ganganagar
+   * and the Hebbal stretch of Bellary Road. Named only in the pointer sentences to their own pages: those
+   * Hebbal localities, Sahakara Nagar, Vidyaranyapura, Thanisandra and Jakkur. Named only to say this page
+   * does not cover them (areas section and FAQ 5): Kodigehalli near KR Puram, Bande Kodigehalli and
+   * Kodihalli near Domlur. Not named: Tata Nagar, Canara Bank Layout and Judicial Layout. Kept apart from
+   * landscaping and nurseries (Bannerghatta Road), scaffolding, railings, gates and false ceilings
+   * (Thanisandra) and dealership and agri-tech kit (Hebbal). "Bengaluru" stays out of the title, as the
+   * brief asks; the geo meta and the Service JSON-LD's areaServed carry "Kodigehalli, Bengaluru,
+   * Karnataka".
+   *
+   * Images: no new images were supplied; the owner asked for EXISTING images. Four catalogue images already
+   * in the repo, copied with their VP8 data byte-for-byte plus an XMP dc:title / dc:description that labels
+   * each one an illustrative image (no creator, GPS, camera or date); the product originals are untouched.
+   * The teal cargo container (/images/products/cargo-shipping-container-main.webp) gives the hero /
+   * og:image (the brief's hero filename and alt); the orange container's door end
+   * (/images/products/cargo-containers-main.webp) gives the tree care section; the weathered maroon
+   * container (/images/products/cargo-storage-container-40ft.webp; its length is not visible, so none is
+   * claimed) gives the roofing section; the weathered terracotta container
+   * (/images/products/used-shipping-container-third.webp) gives the sizes section. No image shows ropes,
+   * harnesses, saws, rigging, safety gear, roofing sheets, purlins, fixings, ladders or a fitted interior,
+   * so the brief's eleven use-case image slots are not used, and no alt text, caption or filename claims
+   * those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-kodigehalli",
+    city: "Kodigehalli",
+    listTitle: "Shipping & Storage Containers in Kodigehalli",
+    metaTitle: "Shipping Container in Kodigehalli | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Kodigehalli, north Bengaluru, for tree care crews storing saws and safety gear, and roofing contractors storing sheets, sections and fixings.",
+    keywords:
+      "shipping container in Kodigehalli, shipping container in Kodigehally, cargo container Kodigehalli, storage container Kodigehalli, storage container Kodigehalli Main Road, storage container Kodigehalli Gate, storage container Virupakshapura, used shipping container Kodigehalli, shipping container price in Kodigehalli, storage container for rent in Kodigehalli, tree cutting service storage, tree care equipment storage, arborist gear storage, chainsaw and climbing gear storage, roofing contractor storage container, roofing sheet storage, terrace shed material storage, polycarbonate sheet storage",
+    // Approximate point near Kodigehalli Gate, north Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Kodigehalli, Bengaluru, Karnataka, India",
+      position: "13.0600;77.5900",
+      icbm: "13.0600, 77.5900",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 800 × 800 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Hebbal, Sahakara Nagar, Vidyaranyapura, Thanisandra, Bannerghatta Road, Bellandur and Athipattu are
+    // linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-kodigehalli/shipping-container-kodigehalli.webp",
+      alt: "Shipping container exterior suitable for contractor equipment storage: a teal steel container seen from its door-end corner, cargo doors closed with locking bars, standing on a concrete slab",
+      width: 800,
+      height: 800,
+      caption: "Illustrative image of a container from our catalogue. It was not photographed in Kodigehalli and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Kodigehalli",
+    tagline:
+      "A locked yard store where tree crews hang ropes and harnesses and rack their saws between jobs, and where roofing contractors keep sheets, purlins and fixings dry until the next site.",
+    intro: [
+      "Kodigehalli is an established locality in north Bengaluru, associated with Kodigehalli Main Road, Kodigehalli Gate and Virupakshapura.",
+      "Tree care businesses and roofing contractors often handle equipment and materials that require organised, protected storage between jobs.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Kodigehalli for compatible contractor equipment and building material storage requirements.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "This page covers Kodigehalli in north Bengaluru, PIN 560092, also spelt Kodigehally: Kodigehalli Main Road, Kodigehalli Gate and Virupakshapura. It does not cover the Kodigehalli near KR Puram, Bande Kodigehalli near Yelahanka or Kodihalli near Domlur. Roads here run from the busy main road to narrow residential lanes, so the route, the gate, overhead cables and a firm set-down spot are checked for every address before a delivery date is proposed.",
+    // Brief §7 "Areas We Serve" and §13: the Hebbal localities stay on the Hebbal (Bengaluru) page; Sahakara
+    // Nagar and Vidyaranyapura keep their own pages; Jakkur is covered by the Thanisandra Main Road page.
+    areasInlineLinks: [
+      {
+        before: "Hebbal, Hebbal Kempapura, Bhadrappa Layout, Byatarayanapura and Ganganagar are served from our page on",
+        link: { label: "shipping containers in Hebbal, Bengaluru", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+        after: ".",
+      },
+      {
+        before: "Sahakara Nagar, next door, has its own page:",
+        link: { label: "container storage in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
+        after: ".",
+      },
+      {
+        before: "For Vidyaranyapura, to the north-west, go to",
+        link: { label: "storage containers for Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+        after: ".",
+      },
+      {
+        before: "Jakkur, to the north-east, is covered together with Thanisandra on our page on",
+        link: { label: "shipping containers in Thanisandra and Jakkur", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Tree Care & Tree-Cutting Services",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kodigehalli/shipping-container-cargo-doors-kodigehalli.webp",
+          alt: "Orange steel container seen straight on from its door end: two closed cargo doors with vertical locking bars and handles, raised on a low concrete plinth",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. Rope hooks and saw racks are set out around the door opening, so a crew can check out its kit in the morning and hang it back in the same place at the end of the day.",
+        },
+        paragraphs: [
+          "Tree care businesses handle pruning, trimming, tree maintenance and other specialised work.",
+          "Their equipment may include saws, climbing ropes, harnesses, rigging equipment, protective clothing and worksite safety accessories. A suitably configured shipping container may provide organised storage for compatible tools and equipment.",
+        ],
+        // Brief §13: landscaping and nurseries belong to the Bannerghatta Road page; tree care kit stays here.
+        inlineLinks: [
+          {
+            before: "Running a landscaping firm or a plant nursery rather than a tree crew? See",
+            link: { label: "landscaping and plant nursery storage on Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Climbing rope and harness storage",
+            paragraphs: ["Store climbing ropes and harnesses according to the manufacturer's instructions, and protect them against:"],
+            bullets: [
+              { text: "Direct sunlight." },
+              { text: "Excessive heat." },
+              { text: "Moisture." },
+              { text: "Oils and chemicals." },
+              { text: "Sharp edges." },
+              { text: "Mechanical damage." },
+            ],
+            closing: [
+              "Use suitable racks, hooks or protective bags as the equipment manufacturer recommends, and maintain inspection records.",
+            ],
+          },
+          {
+            heading: "Chainsaw and pole saw storage",
+            paragraphs: ["Compatible equipment may include:"],
+            bullets: [
+              { text: "Chainsaws." },
+              { text: "Pole saws." },
+              { text: "Hedge trimmers." },
+              { text: "Suitable cutting equipment." },
+            ],
+            closing: [
+              "Follow the manufacturer's requirements for shutdown, cooling, cleaning, fuel handling and storage. Fuel containers and flammable liquids are not kept in an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Pruning tool storage",
+            paragraphs: ["Organise suitable hand tools such as:"],
+            bullets: [
+              { text: "Pruning saws." },
+              { text: "Loppers." },
+              { text: "Pruners." },
+              { text: "Other tree care accessories." },
+            ],
+            closing: ["Use labelled racks and protective guards."],
+          },
+          {
+            heading: "Rigging equipment storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Slings." },
+              { text: "Pulleys." },
+              { text: "Lowering ropes." },
+              { text: "Approved rigging accessories." },
+            ],
+            closing: [
+              "Store and inspect them according to the manufacturer's requirements, and keep damaged or retired equipment separate.",
+            ],
+          },
+          {
+            heading: "Protective equipment storage",
+            paragraphs: ["Suitable inventory may include:"],
+            bullets: [
+              { text: "Helmets." },
+              { text: "Visors." },
+              { text: "Gloves." },
+              { text: "Protective clothing." },
+              { text: "Chainsaw trousers." },
+              { text: "Other approved safety equipment." },
+            ],
+            closing: ["Keep equipment clean and dry, and inspect it before use."],
+          },
+          {
+            heading: "Roadside worksite safety equipment",
+            paragraphs: ["Store suitable cones, barricades and other worksite safety accessories."],
+          },
+          {
+            heading: "Tree care equipment inspection register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Equipment ID." },
+              { text: "Assigned crew." },
+              { text: "Inspection date." },
+              { text: "Condition." },
+              { text: "Maintenance." },
+              { text: "Retirement status." },
+              { text: "Storage location." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Tree Care Equipment Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Fuel and flammable liquids",
+            paragraphs: [
+              "Petrol, fuel mixtures and other flammable liquids are not stored inside an ordinary storage-only container. Follow the manufacturer's requirements for equipment containing fuel or oil.",
+            ],
+          },
+          {
+            heading: "Battery-powered equipment",
+            paragraphs: ["Battery-powered saws and trimmers are not charged inside an ordinary storage-only container."],
+          },
+          {
+            heading: "Rope and harness protection",
+            paragraphs: ["Protect safety-critical equipment against chemicals, heat, abrasion and mechanical damage."],
+          },
+          {
+            heading: "Hot work",
+            paragraphs: ["Grinding, welding and other spark-producing work are not carried out inside an ordinary storage-only container."],
+          },
+          {
+            heading: "Safety-critical inspection",
+            paragraphs: ["Storage does not replace the inspections required by competent personnel."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Roofing & Terrace Shed Contractors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kodigehalli/weathered-shipping-container-kodigehalli.webp",
+          alt: "Weathered maroon steel container seen from its door end, with rust along the frame and corner castings and the cargo doors closed, standing on a concrete slab",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image of a weathered unit. Before a used container takes heavy steel sections or stacked sheets, its floor, door seals and frame are checked and the result written into the quotation.",
+        },
+        paragraphs: [
+          "Roofing contractors handle roofing sheets, steel sections, purlins, fixings, flashings and installation equipment. Some materials are long, heavy or easily damaged during handling.",
+          "A suitably configured shipping container may provide additional storage space where material dimensions, weight and access permit.",
+        ],
+        // Brief §13: scaffolding, railings, gates and false ceilings belong to the Thanisandra page; roofing stays here.
+        inlineLinks: [
+          {
+            before: "Storing scaffolding, gypsum boards or railing stock instead? See",
+            link: { label: "scaffolding, false ceiling and railing contractor storage in Thanisandra", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Metal roofing sheet storage",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Metal roofing sheets." },
+              { text: "Suitable coated roofing panels." },
+              { text: "Approved sheet accessories." },
+            ],
+            closing: [
+              "Follow the manufacturer's requirements for stacking, separation and moisture protection. Use suitable supports, and avoid trapping moisture between sheets.",
+            ],
+          },
+          {
+            heading: "Polycarbonate sheet storage",
+            paragraphs: ["Store polycarbonate sheets according to the manufacturer's instructions, and protect them against:"],
+            bullets: [
+              { text: "Scratches." },
+              { text: "Excessive heat." },
+              { text: "Deformation." },
+              { text: "Unsuitable stacking." },
+              { text: "Damage to protective films." },
+            ],
+            closing: ["Check whether the specific sheet product needs flat or otherwise supported storage."],
+          },
+          {
+            heading: "Fibre sheet storage",
+            paragraphs: [
+              "Follow the manufacturer's requirements for handling and storage. Fibre roofing sheets do not all share the same properties or safety requirements.",
+            ],
+          },
+          {
+            heading: "Purlin and steel section storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Purlins." },
+              { text: "Steel tubes." },
+              { text: "Suitable structural sections." },
+              { text: "Other roofing supports." },
+            ],
+            closing: [
+              "Use appropriately designed racks and restraints, and verify the floor-loading capacity and load distribution.",
+            ],
+          },
+          {
+            heading: "Roofing fastener storage",
+            paragraphs: ["Organise:"],
+            bullets: [
+              { text: "Screws." },
+              { text: "Washers." },
+              { text: "Ridge caps." },
+              { text: "Flashings." },
+              { text: "Gutters." },
+              { text: "Suitable fixing accessories." },
+            ],
+            closing: ["Use labelled bins."],
+          },
+          {
+            heading: "Ladder and safety equipment storage",
+            paragraphs: [
+              "Store ladders, harnesses and safety lines securely, following the manufacturer's inspection and storage instructions.",
+            ],
+          },
+          {
+            heading: "Roofing power tool storage",
+            paragraphs: [
+              "Store drills, cutters and measuring tools in protective cases. Batteries are not charged inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Site-wise roofing material kits",
+            paragraphs: ["Organise materials by:"],
+            bullets: [
+              { text: "Project or site." },
+              { text: "Sheet type." },
+              { text: "Sheet length." },
+              { text: "Quantity." },
+              { text: "Steel section size." },
+              { text: "Required fixings." },
+              { text: "Dispatch date." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Roofing Material Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Cutting, welding and grinding",
+            paragraphs: ["Hot work is not carried out inside an ordinary storage-only container."],
+          },
+          {
+            heading: "Wet roofing sheets",
+            paragraphs: ["Follow the manufacturer's instructions for drying and moisture protection before stacking."],
+          },
+          {
+            heading: "Sealants and primers",
+            paragraphs: ["Follow product labels, safety data sheets and the storage requirements that apply."],
+          },
+          {
+            heading: "Long roofing sheets",
+            paragraphs: [
+              "Verify the container's actual internal dimensions and door clearances. A nominal 20 ft container does not necessarily accept every sheet below a particular length.",
+            ],
+          },
+          {
+            heading: "Heavy steel sections",
+            paragraphs: ["Verify the allowable load capacity, point loads and safe handling arrangements."],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in Kodigehalli",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including contractor yards, permitted workshop compounds, authorised commercial plots and other suitable private premises.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Tree branches and overhead cables." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Unloading requirements." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: ["Delivery access and timing are confirmed only after a route assessment."],
+        // Brief §11: delivery and placement guidance → the Bellandur page's society-gate and narrow-lane notes.
+        inlineLinks: [
+          {
+            before: "Not sure a truck can reach your yard? Our",
+            link: { label: "container delivery and site access checks", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " cover what is looked at first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes in Kodigehalli",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kodigehalli/used-shipping-container-kodigehalli.webp",
+          alt: "Weathered terracotta-red steel container seen from its door-end corner, with faded paint and rust streaks along the corrugated side, on a pale concrete floor",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image of a used unit. For long sheets and purlins, the internal length and the door opening matter more than the nominal size.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Actual internal dimensions, door openings, availability and load limits must be verified for the unit you are offered. Approximate volume does not establish allowable payload.",
+          headers: ["Size", "Approximate volume", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Tree care tools and protective equipment"],
+            ["20 ft", "33 m³", "Suitable roofing sheets, fixings and contractor equipment"],
+            ["40 ft", "67 m³", "Longer materials where dimensions and site access permit"],
+          ],
+        },
+        // Brief §11: used-container inspection → the Athipattu page's checklist (no Chennai route exists).
+        inlineLinks: [
+          {
+            before: "Buying second-hand? Work through our",
+            link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " checklist before you commit.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Kodigehalli",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition." },
+          { text: "Shelving." },
+          { text: "Rope and equipment storage racks." },
+          { text: "Heavy-duty supports." },
+          { text: "Roofing material racks." },
+          { text: "Locking arrangements." },
+          { text: "Ventilation." },
+          { text: "Transportation." },
+          { text: "Unloading." },
+          { text: "Site access." },
+        ],
+        closing: ["Request an itemised quotation."],
+      },
+      {
+        heading: "Storage Container on Rent in Kodigehalli",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for seasonal tree maintenance or roofing projects. Containers can be hired for periods from one month to five years, and the quotation spells out the unit, the hire period, any deposit, the transport charges and the delivery and collection arrangements.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire options are described on our",
+            link: { label: "container rental page", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Provide tool or material dimensions." },
+          { text: "Identify heavy or safety-critical equipment." },
+          { text: "Confirm the estimated stock weight." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelves and securing arrangements." },
+          { text: "Confirm site permissions." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible commercial equipment and material storage requirements. For tree crews and roofing contractors in Kodigehalli, that means:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, plus a 10 ft container whenever one is available." },
+          { title: "Storage-oriented modifications", text: "every change itemised separately on the quotation." },
+          { title: "Shelving and rack provisions", text: "rope hooks, saw racks, sheet supports and section racks laid out for the kit you actually hold." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock supplied for your unit named in writing." },
+          { title: "Ventilation options", text: "vents where the stored kit needs air movement, priced on the quotation." },
+          { title: "Quotation and delivery coordination", text: "a written quote, then a check of the route and the set-down spot before delivery is booked." },
+        ],
+        closing: [
+          "No container is offered as certified hazardous-material storage, no floor is rated for unlimited load, and no delivery is promised as immediate.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can tree care crews store chainsaws in shipping containers?",
+        answer:
+          "Potentially, when the equipment is prepared and stored according to the manufacturer's instructions and the applicable fire-safety requirements.",
+      },
+      {
+        question: "How should climbing ropes and harnesses be stored?",
+        answer:
+          "Follow the manufacturer's instructions, protect them against heat, sunlight, chemicals and abrasion, and maintain inspection records.",
+      },
+      {
+        question: "Can roofing sheets be stored inside shipping containers?",
+        answer:
+          "Potentially, when the sheets fit within the verified dimensions and suitable stacking, support and moisture protection are provided.",
+      },
+      {
+        question: "Can cutting or welding be performed inside a standard storage container?",
+        answer: "No. Cutting, welding and grinding are not carried out inside an ordinary storage-only container.",
+      },
+      {
+        question: "Which Kodigehalli does this page cover?",
+        answer:
+          "Kodigehalli in north Bengaluru, PIN 560092, also spelt Kodigehally, associated with Kodigehalli Gate and Virupakshapura.",
+      },
+      {
+        question: "What is the shipping container price in Kodigehalli?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Kodigehalli",
+    ctaText: `Whether you need storage for tree care tools, ropes, harnesses, roofing sheets, steel sections, fixings or other compatible contractor equipment, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Phone ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Kodigehalli, Kodigehalli Main Road, Kodigehalli Gate and Virupakshapura, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Kodigehalli",
+      intro:
+        "Pick the container type and quantity, give the Kodigehalli yard or site address (or a map pin) and tell us whether you are buying or hiring. Mention whether it is for tree care kit or roofing stock, the longest sheet or section and the heaviest load it must carry, so the racks, supports and container length are quoted correctly.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the Bengaluru office is in Electronic City, and there is no yard, depot, showroom or branch in Kodigehalli or the other localities named on this page. The written quotation is what defines each unit: internal length and door-opening sizes, grade and condition, the floor-loading limit, any racks, hooks, supports, shelves, bins, restraints, lights, vents or locks, the hire terms if it is rented, and how it is delivered, unloaded and collected. Stock changes, so neither vehicle access nor a delivery date is promised until the quotation confirms it. Unless an approved specification states otherwise, no container is offered as a certified store for fuel, flammable liquids, sealants, primers or other hazardous materials, as fire-rated or theft-proof, or with a floor rating beyond its stated limit, and none is supplied as a workshop for cutting, grinding, welding or battery charging. The four pictures are illustrative images from our existing catalogue, not photographs taken in Kodigehalli; none shows a delivered or fitted unit, tree care equipment or roofing materials. Volumes are approximate and are not payload ratings. Tree care services and roofing contractors are named as possible uses, not as customers or completed projects, and the localities listed show where enquiries are accepted, not confirmed delivery addresses. The notes on ropes, harnesses, saws, fuel, batteries, sheets, steel sections, placement and permissions are general information, not safety, legal or engineering advice; follow the equipment and material manufacturers' instructions, the safety data sheets and the rules of the authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
