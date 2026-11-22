@@ -53236,6 +53236,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas we serve",
     areasText:
       "We welcome enquiries from Goripalayam, Anna Nagar, K.K. Nagar, Mattuthavani, Avaniyapuram and sites along the Madurai Ring Road. We also consider sites in Kappalur, Thoppur, Thirumangalam, Usilampatti, Peraiyur, Melur and Vadipatti. Delivery is assessed for each location.",
+    // Added 2026-11-22 (Virudhunagar SEO pass): the neighbouring district's dedicated portable-cabin page,
+    // which links back here from its own areas. Link only: this page's areas list still names no
+    // Virudhunagar-district town (no keyword cannibalisation).
+    areasInlineLink: {
+      before: "For sites in Virudhunagar district, see our",
+      link: { label: "portable cabins in Virudhunagar", href: "/cities-we-serve/portable-cabin-virudhunagar" },
+      after: ".",
+    },
 
     howHeading: "From enquiry to placement",
     // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
@@ -56084,6 +56092,27 @@ export const CITY_PAGES: CityPage[] = [
    * No ₹ figure, stock, lead time, client, completed project, PM MITRA status or affiliation, or
    * hazardous-area / fireworks-storage suitability claim. Opts into the CSS-only motion pass
    * (`motion: true`), the Service JSON-LD (no offers) and the og:image dimension tags.
+   *
+   * SEO PASS (owner task "Google SEO Ranking Improvement", 2026-11-22). This page stays the one target
+   * for portable / porta / prefabricated cabin × Virudhunagar (no new URL, no redirect); the H1 keeps the
+   * exact query. Changed: meta title and description (manufacturer intent, Hosur factory, MS / PUF), the
+   * Service JSON-LD `alternateName` (porta / prefabricated synonyms, as on Jayanagar), sharper alt text
+   * naming what each render shows, a second intro paragraph, the sizes section's heading and lead
+   * sentence (they were shared word for word with five other portable-cabin pages), the areas heading
+   * ("… in Virudhunagar district"), two new afterSolutions sections
+   * ("How our portable cabins are built" with the build-options table and warranty periods; "Delivery
+   * from our Hosur factory to Virudhunagar district"), a price-guide link beside the rental link, the
+   * delivery FAQ's answer, two new FAQs (where the cabins are made; what a cabin costs), and an areas
+   * link to the Madurai portable-cabin page, which links back. Every new fact is copied from a live page
+   * of this site, not composed: in-house fabrication, welding, painting and quality checks, the build
+   * options and the PCC-block / ISMB base note (/products/portable-cabin, "Materials, Sizes, and
+   * Customization", "Manufacturing Capability", "Installation and Maintenance Guide"); the warranty
+   * periods (/warranty: MS 5, GI 15, PUF 25 years structural; electrical and leakage 1 year; paint and
+   * finish 6 months); the dispatch window, Zone 2 transit and the optional, separately charged unloading
+   * and installation (/shipping and src/data/shippingZones.ts: every 6xx Tamil Nadu PIN code outside
+   * 635 is zone-2, 2–4 working days transit). The page now states that published dispatch window,
+   * which the brief's version left out (owner review). Still no ₹ figure on this page: prices stay on
+   * the linked product page and guide. Section thicknesses are not quoted because they differ by model.
    * ────────────────────────────────────────────────────────────────────────────────────── */
   {
     slug: "portable-cabin-virudhunagar",
@@ -56091,11 +56120,14 @@ export const CITY_PAGES: CityPage[] = [
     listTitle: "Portable Cabins in Virudhunagar",
     // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
     directoryLabel: "Portable cabins in Virudhunagar",
-    metaTitle: "Portable Cabins in Virudhunagar for Industrial Sites",
+    // SEO pass 2026-11-22: the brief's title was "Portable Cabins in Virudhunagar for Industrial Sites"
+    // and its description "Enquire about portable cabins in Virudhunagar, Sivakasi and Rajapalayam for
+    // industrial site setup, gate security, pre-press work and mill time offices." (see the header).
+    metaTitle: "Portable Cabins in Virudhunagar | Porta Cabin Manufacturer",
     metaDescription:
-      "Enquire about portable cabins in Virudhunagar, Sivakasi and Rajapalayam for industrial site setup, gate security, pre-press work and mill time offices.",
+      "Portable cabins in Virudhunagar, Sivakasi and Rajapalayam, built at our Hosur factory: MS or PUF site offices, guard cabins and time offices. Itemised quotes.",
     keywords:
-      "Portable Cabin in Virudhunagar, Porta Cabin Virudhunagar, Prefabricated Cabin Sivakasi, Site Office Cabin Virudhunagar, Portable Cabin Rajapalayam",
+      "Portable Cabin in Virudhunagar, Porta Cabin Virudhunagar, Portable Cabin Manufacturer for Virudhunagar, Prefabricated Cabin Sivakasi, Site Office Cabin Virudhunagar, Portable Cabin Rajapalayam",
     geo: {
       region: "IN-TN",
       placename: "Virudhunagar, Tamil Nadu, India",
@@ -56103,27 +56135,31 @@ export const CITY_PAGES: CityPage[] = [
       icbm: "9.5833, 77.9500",
     },
     motion: true,
-    serviceJsonLd: { serviceType: "Portable Cabin" },
+    serviceJsonLd: {
+      serviceType: "Portable Cabin",
+      alternateName: ["Porta Cabins in Virudhunagar", "Prefabricated Cabins in Virudhunagar"],
+    },
     // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
     ogImageDimensions: true,
 
+    // Alt texts (SEO pass 2026-11-22) name what each render visibly shows; file names and URLs unchanged.
     heroImage: {
       src: "/images/cities/portable-cabin-virudhunagar/virudhunagar-industrial-portable-cabins.webp",
-      alt: "Prefabricated site cabin with a door, sliding windows and corner lifting points",
+      alt: "Dark grey portable site cabin with ribbed steel walls, a door, three black-framed sliding windows and corner lifting points",
       width: 1200,
       height: 896,
       caption: "Illustrative site cabin for an industrial plot.",
     },
     featureImage: {
       src: "/images/cities/portable-cabin-virudhunagar/virudhunagar-site-cabin-side-view.webp",
-      alt: "Side of a dark grey prefabricated cabin with two sliding windows, standing on a paved yard",
+      alt: "Side of a dark grey portable cabin with ribbed steel walls and two black-framed sliding windows, standing on a paved yard",
       width: 1451,
       height: 1084,
       caption: "Illustrative render. Leave clear space around each module for unloading, access and utility connections.",
     },
     interiorImage: {
       src: "/images/cities/portable-cabin-virudhunagar/virudhunagar-site-office-cabin-interior.webp",
-      alt: "Prefabricated cabin interior with a desk, a computer, office chairs, a low storage cabinet and sliding windows",
+      alt: "Portable site office cabin interior with panelled walls and ceiling, wood-look flooring, a desk, a computer, office chairs, a low storage cabinet and sliding windows",
       width: 1450,
       height: 1085,
       caption: "Illustrative render, shown with optional furniture. Fit-out items are included only as agreed in the quotation.",
@@ -56131,7 +56167,7 @@ export const CITY_PAGES: CityPage[] = [
     gallery: [
       {
         src: "/images/cities/portable-cabin-virudhunagar/virudhunagar-site-cabin-front-elevation.webp",
-        alt: "Front elevation of a dark grey prefabricated cabin: a central door between two sliding windows",
+        alt: "Front elevation of a dark grey portable cabin: a central steel door between two black-framed sliding windows",
         width: 1451,
         height: 1084,
         caption: "Illustrative render of the front elevation. Door and window positions are confirmed in the approved layout.",
@@ -56140,8 +56176,13 @@ export const CITY_PAGES: CityPage[] = [
 
     h1: "Portable Cabins in Virudhunagar",
     tagline: "Setting up an industrial plot, adding a time office at a mill gate or creating a separate room for pre-press work?",
+    // SEO pass 2026-11-22: the brief's first sentence ("Portable Office Cabin manufactures prefabricated
+    // cabins and welcomes enquiries across Virudhunagar district.") now names the factory and the
+    // porta / prefabricated synonyms; the second paragraph is the product page's "Manufacturing
+    // Capability" fact. The brief's last sentence is unchanged.
     intro: [
-      "Portable Office Cabin manufactures prefabricated cabins and welcomes enquiries across Virudhunagar district. Tell us how staff will use the cabin, where it will sit and when the site will be ready.",
+      "Portable Office Cabin manufactures portable cabins, also called porta cabins or prefabricated cabins, at its factory near Hosur, Tamil Nadu, and welcomes enquiries from sites across Virudhunagar district. Tell us how staff will use the cabin, where it will sit and when the site will be ready.",
+      "Fabrication, welding, painting and quality checks are done in-house, and each cabin is built to the size, layout and fittings agreed in your written quotation, whether that is one guard cabin for a mill gate or site offices, stores and toilet modules for a new industrial plot.",
     ],
 
     whyHeading: "Cabin combinations for industrial plot setup",
@@ -56176,11 +56217,21 @@ export const CITY_PAGES: CityPage[] = [
     customBullets: [],
     customOutro:
       "For temporary works, share the dates and cabin types needed so the team can confirm whether suitable units can be quoted on hire.",
-    customLinks: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+    // SEO pass 2026-11-22: the price guide (live, 200) answers "portable cabin price" without a ₹ figure here.
+    customLinks: [
+      { label: "Portable cabin rental service", href: "/rental-service" },
+      { label: "Portable cabin price and cost guide", href: "/products/portable-cabin/price-and-cost-guide" },
+    ],
 
-    areasHeading: "Areas we serve",
+    areasHeading: "Areas we serve in Virudhunagar district",
     areasText:
       "We welcome enquiries from Virudhunagar, E. Kumaralingapuram, Sivakasi, Sattur, Srivilliputhur, Rajapalayam, Aruppukottai, Kariapatti and Tiruchuli, including sites along NH 44. Delivery is assessed for each location.",
+    // SEO pass 2026-11-22: the neighbouring district's portable-cabin page, which links back from its own areas.
+    areasInlineLink: {
+      before: "For sites in Madurai district, see our",
+      link: { label: "portable cabins in Madurai", href: "/cities-we-serve/portable-cabin-madurai" },
+      after: ".",
+    },
 
     howHeading: "From enquiry to placement",
     howSteps: [
@@ -56208,9 +56259,11 @@ export const CITY_PAGES: CityPage[] = [
         placement: "afterSolutions",
       },
       {
-        heading: "Cabin sizes and fittings",
+        // SEO pass 2026-11-22: heading and lead sentence were shared word for word with five other
+        // portable-cabin city pages; both now name this page's own uses (the table is unchanged).
+        heading: "Portable cabin sizes for Virudhunagar sites",
         paragraphs: [
-          "These footprints are examples for layout discussion. Confirm dimensions, fittings and availability in the quotation.",
+          "These footprints are examples for discussing gate, mill, printing and plot-setup layouts. Confirm dimensions, fittings and availability in the quotation.",
         ],
         table: {
           caption: "Example cabin footprints and the enquiries they typically suit.",
@@ -56239,6 +56292,74 @@ export const CITY_PAGES: CityPage[] = [
         ],
         placement: "afterSolutions",
       },
+      // SEO pass 2026-11-22: build options and warranty periods, copied from /products/portable-cabin
+      // ("Materials, Sizes, and Customization", "Safety and Security Features", "Installation and
+      // Maintenance Guide") and /warranty. No thickness figures: they differ by model.
+      {
+        heading: "How our portable cabins are built",
+        paragraphs: [
+          "Every cabin is fabricated at our factory near Hosur. The table lists the build options we quote for portable cabins; the sections, sheet and panel thicknesses, fittings and finishes for your order are stated in the written quotation, because they differ by model.",
+        ],
+        table: {
+          caption: "Build options for portable cabins, as listed on our portable cabin product page.",
+          headers: ["Part of the cabin", "Options to discuss"],
+          rows: [
+            [
+              "Frame",
+              "Welded mild steel (MS) frame of square or rectangular hollow sections with anti-rust treatment and primer, or a hot-dip galvanised framework on selected models",
+            ],
+            ["Walls and insulation", "MS or GI sheet walls with insulation, or sandwich panels with a PUF, EPS or rockwool core"],
+            ["Doors and windows", "Lockable steel doors, aluminium or uPVC windows, protective grills, external canopies and AC cut-outs"],
+            ["Interior", "Vinyl flooring or marine plywood with a vinyl overlay, partition walls, false ceiling and modular furniture"],
+            ["Electrical", "Factory-fitted wiring and electrical points with earthing, LED lights and provision for AC"],
+            ["Finish and branding", "Exterior paint in your chosen colours, with logo branding if required"],
+            [
+              "Base and lifting",
+              "Lifting points for crane or hydra handling; most sites need simple PCC blocks or ISMB support beams rather than a full foundation",
+            ],
+          ],
+        },
+        closing: [
+          "Structural warranty against manufacturing defects in the frame, walls and roofing: 5 years for MS cabins, 15 years for GI cabins and 25 years for PUF panel cabins. Electrical components and leakage are covered for 1 year, and paint and finish for 6 months.",
+        ],
+        links: [
+          { label: "Warranty coverage and exclusions", href: "/warranty" },
+          { label: "MS sheet or PUF panel: choosing the wall system", href: "/products/portable-cabin/materials-ms-vs-puf" },
+        ],
+        placement: "afterSolutions",
+      },
+      // SEO pass 2026-11-22: /shipping and src/data/shippingZones.ts (DISPATCH_WORKING_DAYS 7–15; zone-2 =
+      // Tamil Nadu outside the 635 free zone, 2–4 working days transit; unloading / installation optional
+      // and separate; foundation and civil work quoted separately; custom orders and rentals by quotation).
+      {
+        heading: "Delivery from our Hosur factory to Virudhunagar district",
+        paragraphs: [
+          "Cabins travel by road from our factory near Hosur. Sites in Virudhunagar district are in Zone 2 (the rest of Tamil Nadu) on our Shipping and Delivery page.",
+        ],
+        bullets: [
+          {
+            title: "Standard cabins bought online",
+            text: "dispatched within 7–15 working days of order confirmation and payment, with an estimated 2–4 working days in transit to Zone 2. The transport charge for your PIN code is shown at checkout before you pay.",
+          },
+          {
+            title: "Custom cabins, multi-module orders and hire",
+            text: "the build timeline, transport and any relocation are set out in your written quotation.",
+          },
+          {
+            title: "Unloading and installation",
+            text: "unloading by crane or hydra and on-site installation are optional and charged separately from transport; foundation and civil work are quoted separately.",
+          },
+          {
+            title: "Site access",
+            text: "before you order, tell us about road access to the site and the space available for unloading.",
+          },
+        ],
+        links: [
+          { label: "Shipping and delivery zones", href: "/shipping" },
+          { label: "Portable cabin transport and delivery guide", href: "/products/portable-cabin/transport-and-delivery" },
+        ],
+        placement: "afterSolutions",
+      },
     ],
 
     faqs: [
@@ -56264,8 +56385,22 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         question: "Is rental available, and how soon can you deliver?",
+        // SEO pass 2026-11-22: the published dispatch window and Zone 2 transit (/shipping) added before
+        // the brief's answer, which follows unchanged.
         answer:
-          "Share the module list, site and target dates. Availability, hire terms and delivery schedules depend on the selected configuration and site readiness.",
+          "Standard cabins bought online are dispatched within 7–15 working days of order confirmation and payment, and transit to Virudhunagar district adds an estimated 2–4 working days. For custom cabins and hire, share the module list, site and target dates. Availability, hire terms and delivery schedules depend on the selected configuration and site readiness.",
+      },
+      // SEO pass 2026-11-22: two new questions answered only from /shipping, /products/portable-cabin and
+      // the disclaimer's premises statement.
+      {
+        question: "Are the cabins made in Virudhunagar?",
+        answer:
+          "No. They are made at the Portable Office Cabin factory near Hosur, Tamil Nadu, where fabrication, welding, painting and quality checks are done in-house. We have no factory, yard or office in Virudhunagar district; cabins are delivered by road and unloaded by crane or hydra.",
+      },
+      {
+        question: "What does a portable cabin cost in Virudhunagar?",
+        answer:
+          "Standard models have fixed GST-inclusive prices on our portable cabin product page, and the transport charge for your PIN code is added at checkout. Custom sizes, multi-module orders and fit-outs are quoted itemised by module, with transport, unloading and installation shown separately.",
       },
     ],
 
