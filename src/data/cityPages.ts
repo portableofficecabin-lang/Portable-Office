@@ -25532,8 +25532,10 @@ export const CITY_PAGES: CityPage[] = [
    * the product originals are untouched: cargo-container-for-sale-main (green container on a slab → hero /
    * og:image, with the brief's hero filename and alt), cargo-storage-containers-main (pale blue container →
    * toy section), cargo-containers-main (orange container, door end → crockery section),
-   * cargo-storage-container-40ft (maroon container on a plinth → placement), shipping-container-stacked (long
-   * navy container → sizes) and used-shipping-container-third (weathered red container → price). No image
+   * shipping-container-sipcot-yard (dark green container on a plinth → placement), shipping-container-stacked
+   * (long navy container → sizes) and shipping-container-rental-yard (plain grey container → price). The
+   * maroon-on-plinth and weathered red used renders were dropped when #315 published them on the TC Palya
+   * Road page next door. No image
    * shows toys, cartons, crockery, shelving or an interior, so the brief's twelve use-case image slots are
    * not used, and no alt text, caption or filename claims those items or a place.
    *
@@ -25900,7 +25902,7 @@ export const CITY_PAGES: CityPage[] = [
         placement: "afterSolutions",
         image: {
           src: "/images/cities/shipping-container-shigehalli/shipping-container-on-concrete-base-shigehalli.webp",
-          alt: "Weathered maroon steel container with rust patches and closed cargo doors, standing on a raised concrete plinth",
+          alt: "Dark green steel container with a hinged door in its long side, standing on a raised concrete plinth",
           width: 800,
           height: 800,
           caption:
@@ -25967,11 +25969,11 @@ export const CITY_PAGES: CityPage[] = [
         heading: "Shipping Container Price in Shigehalli",
         placement: "afterSolutions",
         image: {
-          src: "/images/cities/shipping-container-shigehalli/used-shipping-container-shigehalli.webp",
-          alt: "Weathered red steel container with faded paint and rust streaks, its double cargo doors closed, on a concrete yard",
+          src: "/images/cities/shipping-container-shigehalli/steel-shipping-container-shigehalli.webp",
+          alt: "Plain grey steel container with closed double cargo doors and corrugated side walls, standing on a weathered concrete yard",
           width: 800,
           height: 800,
-          caption: "Illustrative image of a used container. Its condition and grade are priced alongside the size, the fittings and the delivery.",
+          caption: "Illustrative image. Whether a unit is new or used, and its grade, are priced alongside the size, the fittings and the delivery.",
         },
         paragraphs: ["Container pricing depends on:"],
         bullets: [
