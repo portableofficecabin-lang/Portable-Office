@@ -52,7 +52,9 @@ export function HeroBreadcrumbs({
               {crumb.href && !isLast ? (
                 <Link
                   href={crumb.href}
-                  className={`${link} underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 motion-reduce:transition-none`}
+                  // min-h-6 (24 px): the tap target meets WCAG 2.2 "target size (minimum)" without
+                  // changing the text size; the headless check counted the 20 px link as too small.
+                  className={`${link} inline-flex min-h-6 items-center underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 motion-reduce:transition-none`}
                 >
                   {crumb.name}
                 </Link>
