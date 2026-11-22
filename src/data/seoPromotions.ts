@@ -750,6 +750,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kadubeesanahalli (façade and high-rise window cleaning contractors' stores; rainwater harvesting
     // contractors' stores; owner brief 2026-11-21), appended so the live links keep their positions.
     { name: "Shipping Containers in Kadubeesanahalli", href: "/cities-we-serve/shipping-container-kadubeesanahalli" },
+    // Jalahalli West (fencing contractors, baking supply stores, solar water heater installers, bangle and
+    // fashion jewellery wholesalers; owner brief 2026-11-21), appended so the live links keep their positions.
+    { name: "Shipping Containers in Jalahalli West", href: "/cities-we-serve/shipping-container-jalahalli-west" },
     // Murugeshpalya (monsoon-season storage for ground-floor homes and shops, water-damage restoration and
     // dewatering equipment storage; owner brief 2026-11-21), appended so the live links keep their positions.
     { name: "Shipping Containers in Murugeshpalya", href: "/cities-we-serve/shipping-container-murugeshpalya" },
