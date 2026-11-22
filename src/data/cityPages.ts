@@ -58507,6 +58507,15 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "dedicated Domlur container page", href: "/cities-we-serve/shipping-container-domlur" },
       after: ".",
     },
+    // Murugeshpalya brief (2026-11-21, §5): restoration and dewatering equipment storage is that page's intent;
+    // this page's own targeting is unchanged. Rendered after the Domlur sentence above.
+    areasInlineLinks: [
+      {
+        before: "Restoration firms to the south-east, storing pumps, hoses and drying equipment between jobs, can read about",
+        link: { label: "dewatering equipment storage in Murugeshpalya", href: "/cities-we-serve/shipping-container-murugeshpalya" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
@@ -59073,6 +59082,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "shipping containers in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
         after: ".",
       },
+      // Murugeshpalya brief (2026-11-21, §5): monsoon-season storage and dewatering equipment storage are that
+      // page's intent; this page's own targeting (Domlur, Kodihalli, Amarjyoti Layout) is unchanged.
+      {
+        before: "To the east, Murugeshpalya has its own page for flood-season storage and restoration equipment:",
+        link: { label: "monsoon-season storage containers in Murugeshpalya", href: "/cities-we-serve/shipping-container-murugeshpalya" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -59537,6 +59553,708 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin makes its containers at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, with its Bengaluru office in Electronic City. There is no yard, depot, branch or shop in Domlur. Size, grade, condition, internal dimensions, door opening and every fitting (shelves, drawers, racks, restraints, insulation, lights, vents and locks), together with hire terms and the delivery, unloading and collection arrangements, are fixed in the written quotation for each unit. Stock moves quickly, so delivery dates and times are never guaranteed. All four photos are illustrative pictures of a single container: they were not taken in Domlur and do not show a delivered or fitted unit, coffee or vending machines, or event games. Volumes are approximate. Coffee and vending operators and event games rental firms are examples of the uses we are asked about, not named customers or finished projects, and the listed localities show where enquiries are accepted. Notes on machines, consumables, chemicals, batteries, game equipment, permits and site access are general pointers only, not safety, electrical, food-safety, legal or engineering advice; follow the manufacturer's and supplier's instructions.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN MURUGESHPALYA — one page, two uses: raised, flood-season storage for
+   * ground-floor homes and shops (shop stock, furniture, appliances, routine records), and storage for
+   * water-damage restoration and dewatering rental businesses (electric dewatering pumps, hoses and lay-flat
+   * pipes, dehumidifiers, air movers, wet vacuums, moisture meters, electrical accessories), off Old Airport
+   * Road in east Bengaluru.
+   *
+   * Owner brief of 2026-11-21 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Murugeshpalya"). No Murugeshpalya page existed, and no page named Murugeshpalya, Murugesh Palya,
+   * Vimanapura, Konena Agrahara, Rustam Bagh, Challaghatta or Wind Tunnel Road before this one. Meta title,
+   * meta description, H1, keywords, local modifiers, section order, H2 / H3 headings, checklists, sizes
+   * table, the twelve ordering steps and the ten FAQs are the brief's, lightly edited for flow and British
+   * spelling. The brief's notes to the implementer ("Do not market ordinary containers as certified flood
+   * shelters…", "Do not recommend storing petrol, diesel…", "Old Airport Road may be used as a
+   * transport-route reference…", "Do not guarantee a site visit…", "Conditional section…", "Highlight only
+   * verified capabilities…", "Do not target…", "Use verified company phone numbers…") are instructions, not
+   * page copy: where one carries a fact for the reader it is reworded as a plain statement ("an ordinary
+   * shipping container is not a certified flood shelter, a flood barrier or completely floodproof
+   * storage", "petrol, diesel and other fuel-powered pumps are not stored inside an ordinary storage-only
+   * container", "a delivery slot, site visit or unloading method counts only once the quotation confirms
+   * it"); otherwise it is left out. Where an H3 has two short checklists, the more useful one stays a list
+   * and the other becomes a sentence. The route follows the site convention (/cities-we-serve/…), not the
+   * brief's root slug. The tagline, captions, link lead-ins, enquiry-form intro and disclaimer were written
+   * for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms "from 1 month to 5 years"; no deposit, price or delivery charge is stated here, and the
+   * monsoon-hire FAQ says only that a hire of that length can be quoted); the grades named (one-trip,
+   * cargo-worthy, wind and watertight) are catalogue grades; the 10 ft row keeps "if available"; raised
+   * foundations are something to design for the actual site, never a product offered here; shelves, racks,
+   * reels, hooks, bays, cases, lighting, ventilation and insulation are layout options and price factors,
+   * never stock items or guaranteed conditions. Nothing on the page calls a container floodproof,
+   * waterlogging-safe, submersible, climate-controlled, approved for fuel or a charging facility. The
+   * optional Kannada search terms are not used: the page is in English. No Product JSON-LD: city pages carry
+   * no prices (file rule) and a Product block without offers earns no rich result, so the Service JSON-LD
+   * (no offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink (→ the cargo category) + heroCta.
+   *   "Raised, Flood-Season Storage for Ground-Floor Homes & Shops", "Important Flood-Protection
+   *     Limitations", "Storage Containers for Water-Damage Restoration & Dewatering Rental Businesses",
+   *     "Dewatering Equipment Storage Safety" and "Storage Container Layout Options" → five afterIntro extra
+   *     sections, with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, twelve steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Murugeshpalya" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" →
+   *   a default extra section (after the areas, as in the brief). FAQs: the brief's ten.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5, only where the destination exists and supports the anchor; kept to a few): intro → the
+   * cargo category; "Raised foundations and plinths" H3 → the Varthur page's placement section (raised
+   * foundations on low-lying dairy-farm land); "Furniture storage" H3 → Koramangala's partitioned
+   * self-storage containers (year-round self-storage, not monsoon storage); "Electric dewatering pump
+   * storage" H3 → Kanakapura Road's borewell contractor stores; "Hoses and lay-flat pipes" H3 → Panathur's
+   * water tanker hose and pump spares (the brief's Panathur anchor, "waterproofing and housekeeping
+   * equipment", is not used: that Panathur version was never published, so the live page does not support
+   * it); layout section → the Vellore page's "Insulated and air-conditioned storage enquiries"; placement
+   * → Bellandur's "Planning delivery through a society gate or narrow lane"; sizes → the Athipattu page's
+   * used-container inspection checklist (the brief's /shipping-container-chennai is not a route; the
+   * siblings link Athipattu for this); rental → /products/shipping-container-rental; areas → Domlur (with
+   * Kodihalli), Indiranagar and Doddanekundi. Anchors differ from the siblings' anchors for the same
+   * targets. Inbound: the Domlur and Indiranagar pages' areas sections, one `areasInlineLinks` item each,
+   * their own targeting unchanged; the Karnataka shipping hub ("Shipping Containers in Murugeshpalya");
+   * the cargo category's location links ("Storage containers in Murugeshpalya"); and every Karnataka
+   * shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating body
+   * links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Murugeshpalya (Murugesh Palya written once as
+   * the alternative spelling), Vimanapura, Konena Agrahara, Rustam Bagh and Challaghatta, for monsoon-season
+   * storage for ground-floor homes and shops and for water-damage restoration and dewatering equipment
+   * storage. Old Airport Road and Wind Tunnel Road are named only as roads, never as places served. Not
+   * targeted: Domlur, Kodihalli and Amarjyoti Layout (Domlur page), Indiranagar, HAL 2nd / 3rd Stage and
+   * Jeevan Bima Nagar (Indiranagar page), Doddanekundi and the HAL airport side (Doddanekundi page), and LB
+   * Shastri Nagar and Annasandrapalya (kept free for possible future pages; not named). Kept apart from
+   * general household self-storage (Koramangala), renovation storage (Bellandur), raised plinths on farm
+   * land (Varthur), water tankers and STPs (Panathur), borewell pumps (Kanakapura Road) and climate-controlled
+   * units as such (Vellore), each named only in the link to it. "Bengaluru" stays out of the title, as the
+   * brief asks; the geo meta and the Service JSON-LD's areaServed carry "Murugeshpalya, Bengaluru,
+   * Karnataka".
+   *
+   * Images: five owner-dropped PNG renders ("public/images/Storage Containers in Murugeshpalya city
+   * page/Storage Containers in Murugeshpalya/cabin (1–5).png", 1.6–2.5 MB, RGB, no EXIF) of one beige
+   * container, converted to lossy WebP (quality 80) at their own size, 58–228 KB, each with an XMP dc:title /
+   * dc:description that labels it an illustrative render (no creator, GPS, camera or date). (2)
+   * three-quarter exterior = hero / og:image (the brief's hero filename; not its "elevated storage site"
+   * alt: the unit stands at ground level on gravel); (4) cargo doors = the flood-season section (its
+   * caption is about checking the door seals before the monsoon); (3) blind end wall standing on gravel =
+   * "Important Flood-Protection Limitations"; (1) empty interior = layout options (the brief's interior
+   * filename, but not its "organized storage" alt: nothing is fitted); (5) roof from above = placement. No
+   * image shows a raised foundation, waterlogging, stock, furniture, appliances or restoration equipment,
+   * so the brief's other nine image slots are not used, and no alt text, caption or filename claims those
+   * items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-murugeshpalya",
+    city: "Murugeshpalya",
+    listTitle: "Shipping & Storage Containers in Murugeshpalya",
+    metaTitle: "Shipping Container in Murugeshpalya | Monsoon Storage",
+    metaDescription:
+      "Shipping and storage containers in Murugeshpalya for raised monsoon-season storage and dewatering equipment, pumps, dehumidifiers and air movers.",
+    keywords:
+      "shipping container in Murugeshpalya, cargo container Murugeshpalya, storage container Murugeshpalya, storage container Murugesh Palya, storage container Vimanapura, storage container Konena Agrahara, storage container Rustam Bagh, storage container Challaghatta, used shipping container Murugeshpalya, shipping container price in Murugeshpalya, storage container for rent in Murugeshpalya, monsoon storage container, flood-season storage for ground-floor homes, raised storage container for shops, storage container for waterlogging-prone properties, dewatering pump rental storage, water damage restoration equipment storage, dehumidifier and air mover storage, wet vacuum and moisture meter storage",
+    // Approximate point in Murugeshpalya on Old Airport Road, east of the Domlur page's point (12.9610,
+    // 77.6387); rounded; for the owner to confirm.
+    geo: {
+      region: "IN-KA",
+      placename: "Murugeshpalya, Bengaluru, Karnataka, India",
+      position: "12.9570;77.6560",
+      icbm: "12.9570, 77.6560",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1408 × 1056 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Domlur, Indiranagar, Doddanekundi, Varthur, Koramangala, Kanakapura Road, Panathur, Vellore, Bellandur
+    // and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-murugeshpalya/shipping-container-murugeshpalya.webp",
+      alt: "Beige steel shipping container with its double cargo doors closed, standing at ground level on a gravel yard beside a dark warehouse shed",
+      width: 1408,
+      height: 1056,
+      caption:
+        "Illustrative render of a closed storage container at ground level. It was not photographed in Murugeshpalya and shows neither a delivered unit nor a raised base.",
+    },
+
+    h1: "Shipping & Storage Containers in Murugeshpalya",
+    tagline:
+      "Lockable room on a suitably raised, well-drained spot for shop stock and furniture through the monsoon, and organised stores for dewatering pumps, hoses, dehumidifiers and air movers between jobs.",
+    intro: [
+      "Murugeshpalya is a mixed residential and commercial locality along Old Airport Road in Bengaluru.",
+      "The area includes homes, shops, offices and service businesses. During periods of heavy monsoon rainfall, some low-lying properties may experience waterlogging.",
+      "This creates two practical storage requirements: temporary storage for belongings and commercial stock during the rainy season, and organised storage for water-damage restoration and dewatering equipment.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers in Murugeshpalya", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " for these applications, subject to suitable site conditions, permissions and equipment requirements.",
+    },
+
+    areasHeading: "Areas Served Around Murugeshpalya",
+    areasText:
+      "We accept shipping and storage container enquiries from Murugeshpalya (also written Murugesh Palya), Vimanapura, Konena Agrahara, Rustam Bagh and Challaghatta, including addresses off Wind Tunnel Road. Lane widths vary from street to street, so each address gets its own check of the approach and the standing spot before any delivery date is proposed.",
+    // Brief §5 and §6: Domlur (with Kodihalli), Indiranagar and Doddanekundi keep their own pages.
+    areasInlineLinks: [
+      {
+        before: "Domlur and Kodihalli, to the west, have a page of their own:",
+        link: { label: "shipping and storage containers in Domlur", href: "/cities-we-serve/shipping-container-domlur" },
+        after: ".",
+      },
+      {
+        before: "For Indiranagar, to the north, see our page on",
+        link: { label: "storage containers in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+        after: ".",
+      },
+      {
+        before: "Further east, the Doddanekundi industrial area has its own page:",
+        link: { label: "shipping containers in Doddanekundi", href: "/cities-we-serve/shipping-container-doddanekundi" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Raised, Flood-Season Storage for Ground-Floor Homes & Shops",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-murugeshpalya/shipping-container-cargo-doors-murugeshpalya.webp",
+          alt: "Beige container seen end-on with both cargo doors shut: four galvanised locking bars, cam handles and a central lockbox, on a gravel yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render. Before the rains, check that the door gaskets are whole and the doors close tight, because worn seals are a common way for water to get in.",
+        },
+        paragraphs: [
+          "Ground-floor homes and shops may require temporary storage when heavy rainfall creates a risk of water entering the premises.",
+          "A shipping container installed on a suitable elevated, stable site may help reduce exposure to some waterlogging conditions. However, a standard shipping container is not automatically floodproof or suitable for every flood-risk location.",
+        ],
+        subsections: [
+          {
+            heading: "Choosing the right location",
+            paragraphs: ["Before placing a container:"],
+            bullets: [
+              { text: "Assess the site's flood and drainage history." },
+              { text: "Choose higher ground where available." },
+              { text: "Avoid low-lying areas where water collects." },
+              { text: "Confirm ground-bearing capacity." },
+              { text: "Verify access for delivery and unloading." },
+              { text: "Maintain drainage around the container." },
+              { text: "Check applicable property and installation permissions." },
+            ],
+          },
+          {
+            heading: "Raised foundations and plinths",
+            paragraphs: [
+              "Where required, an appropriately engineered raised foundation may reduce exposure to shallow surface water. The foundation design must account for:",
+            ],
+            bullets: [
+              { text: "Container weight." },
+              { text: "Stored contents." },
+              { text: "Ground conditions." },
+              { text: "Support points." },
+              { text: "Drainage." },
+              { text: "Potential water levels." },
+              { text: "Stability and anchoring requirements." },
+            ],
+            closing: [
+              "Do not use makeshift supports, and do not assume that a particular plinth height guarantees flood protection.",
+            ],
+            // Brief §6: raised plinths on agricultural land belong to the Varthur page.
+            inlineLinks: [
+              {
+                before: "Setting a container on low-lying farm land rather than beside a home or shop? Read about",
+                link: { label: "container placement on dairy farms in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Door seals and container condition",
+            paragraphs: ["Before the monsoon, inspect:"],
+            bullets: [
+              { text: "Cargo doors." },
+              { text: "Door seals." },
+              { text: "Roof condition." },
+              { text: "Wall panels." },
+              { text: "Floor condition." },
+              { text: "Corrosion." },
+              { text: "Drainage around the site." },
+            ],
+            closing: [
+              "A wind-and-watertight grade does not mean the container is certified for submersion or floodwater pressure.",
+            ],
+          },
+          {
+            heading: "Shop stock storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Labelled stock cartons." },
+              { text: "Packaged retail goods." },
+              { text: "Seasonal inventory." },
+              { text: "Other suitable commercial materials." },
+            ],
+            closing: [
+              "Use stable shelves and appropriate protective packaging, and place sensitive goods above floor level where practical.",
+            ],
+          },
+          {
+            heading: "Furniture storage",
+            paragraphs: [
+              "Compatible items may include tables, chairs and other suitable furniture. Use protective covers and suitable supports, and avoid storing damp or contaminated furniture in a closed container.",
+            ],
+            // Brief §6: general household self-storage belongs to the Koramangala page.
+            inlineLinks: [
+              {
+                before: "Need somewhere to keep household goods all year, not just through the rains? See our",
+                link: { label: "partitioned self-storage containers in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Appliance storage",
+            paragraphs: [
+              "Appliances may require specific preparation and environmental conditions. Follow the manufacturer's instructions, use stable supports and protect them against moisture. Do not switch on or operate appliances inside a storage-only container.",
+            ],
+          },
+          {
+            heading: "Important business records",
+            paragraphs: [
+              "Routine non-sensitive inventory records may be stored in suitable protective packaging. Keep irreplaceable documents, essential records and high-value personal belongings in a more secure and appropriately protected location.",
+            ],
+          },
+          {
+            heading: "Inventory register",
+            paragraphs: ["Maintain a list covering:"],
+            bullets: [
+              { text: "Item name." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Condition." },
+              { text: "Packing date." },
+              { text: "Retrieval priority." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Important Flood-Protection Limitations",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-murugeshpalya/shipping-container-end-wall-murugeshpalya.webp",
+          alt: "Doorless end wall of a beige container with vertical corrugations, a casting at each corner and two forklift pockets at the base, resting directly on gravel",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of a container resting straight on the ground. Set down like this, the floor is raised only by the depth of the bottom rails, so how the spot drains in heavy rain matters more than the steel walls.",
+        },
+        paragraphs: [
+          "A raised container may reduce exposure to some shallow waterlogging conditions, but it cannot guarantee protection against flooding.",
+          "Floodwater may enter through openings, seals or other vulnerable areas, and strong water movement can also affect foundations and container stability.",
+          "Before use, assess the site and the value and sensitivity of the stored items. An ordinary shipping container is not a certified flood shelter, a flood barrier or completely floodproof storage.",
+        ],
+      },
+      {
+        heading: "Storage Containers for Water-Damage Restoration & Dewatering Rental Businesses",
+        placement: "afterIntro",
+        paragraphs: [
+          "Water-damage restoration and dewatering service businesses manage equipment used to remove water, dry affected premises and assess moisture conditions. Their inventory may include pumps, hoses, dehumidifiers, air movers, wet vacuums and moisture meters.",
+          "A suitably configured shipping container may provide organised storage for compatible equipment between assignments.",
+        ],
+        subsections: [
+          {
+            heading: "Electric dewatering pump storage",
+            paragraphs: [
+              "Compatible inventory may include electric dewatering pumps, suitable pump accessories and other approved equipment. Before storage:",
+            ],
+            bullets: [
+              { text: "Clean according to the manufacturer's instructions." },
+              { text: "Remove contamination where required." },
+              { text: "Drain and dry as appropriate." },
+              { text: "Inspect for damage." },
+              { text: "Record service status." },
+              { text: "Use stable storage supports." },
+            ],
+            // Brief §6: borewell pumps belong to the Kanakapura Road page.
+            inlineLinks: [
+              {
+                before: "Stocking submersible borewell pumps for drilling and water contractors instead? That is the subject of our",
+                link: { label: "borewell contractor stores on Kanakapura Road", href: "/cities-we-serve/shipping-container-kanakapura-road" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Hoses and lay-flat pipes",
+            paragraphs: [
+              "Compatible inventory may include pump hoses, lay-flat discharge hoses and suitable connectors. Drain and clean them according to the manufacturer's guidance, and use suitable reels, hooks or storage racks.",
+            ],
+            closing: ["Avoid storing contaminated wet hoses with clean electrical equipment."],
+            // Brief §6: water tankers and STPs belong to the Panathur page.
+            inlineLinks: [
+              {
+                before: "Hoses that deliver water by tanker, rather than pump it out of flooded rooms, are covered on our page on",
+                link: { label: "tanker hose and pump spares storage in Panathur", href: "/cities-we-serve/shipping-container-panathur" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Dehumidifier storage",
+            paragraphs: [
+              "Dehumidifiers may require specific handling and transport positions. Follow the manufacturer's instructions for:",
+            ],
+            bullets: [
+              { text: "Drainage." },
+              { text: "Cleaning." },
+              { text: "Storage." },
+              { text: "Transport." },
+              { text: "Refrigerant-system protection where relevant." },
+            ],
+            closing: ["Use stable supports and appropriate environmental conditions."],
+          },
+          {
+            heading: "Air mover storage",
+            paragraphs: [
+              "Compatible inventory may include air movers, drying fans and other approved drying equipment. Clean, inspect and dry them before storage, and protect power cables and housings against damage.",
+            ],
+          },
+          {
+            heading: "Wet vacuum storage",
+            paragraphs: [
+              "Wet vacuums should be emptied, cleaned and dried according to the manufacturer's instructions before storage. Use suitable shelving or low-level supports.",
+            ],
+          },
+          {
+            heading: "Moisture meter storage",
+            paragraphs: [
+              "Compatible inventory may include moisture meters, inspection accessories and other suitable measurement tools. Store them in protective cases, and follow the calibration and battery storage instructions.",
+            ],
+          },
+          {
+            heading: "Electrical accessories",
+            paragraphs: [
+              "Compatible inventory may include extension leads, RCD-protected equipment and approved electrical accessories. Inspect and test them according to applicable requirements, and do not use damaged cables or electrical accessories.",
+            ],
+          },
+          {
+            heading: "Equipment rental register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Equipment identification." },
+              { text: "Manufacturer and model." },
+              { text: "Service status." },
+              { text: "Inspection date." },
+              { text: "Rental customer." },
+              { text: "Assigned site." },
+              { text: "Dispatch date." },
+              { text: "Expected return date." },
+              { text: "Return condition." },
+            ],
+          },
+          {
+            heading: "Ready-to-dispatch equipment sections",
+            paragraphs: ["Organise compatible equipment by:"],
+            bullets: [
+              { text: "Equipment type." },
+              { text: "Capacity." },
+              { text: "Rental assignment." },
+              { text: "Inspection status." },
+              { text: "Availability." },
+            ],
+            closing: ["Keep equipment requiring maintenance separate from ready-to-use inventory."],
+          },
+        ],
+      },
+      {
+        heading: "Dewatering Equipment Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Petrol and diesel equipment",
+            paragraphs: [
+              "Petrol, diesel and other fuel-powered pumps are not stored inside an ordinary storage-only container. Fuel-powered equipment and its fuel need appropriate storage arrangements of their own.",
+            ],
+          },
+          {
+            heading: "Wet and contaminated equipment",
+            paragraphs: [
+              "Equipment used in floodwater may be contaminated. Follow appropriate cleaning, decontamination and drying procedures before returning it to clean storage.",
+            ],
+          },
+          {
+            heading: "Electrical safety",
+            paragraphs: [
+              "Any installed electrical system must be appropriately designed, protected and installed by qualified personnel, with suitable residual-current protection where required. Do not operate damaged or wet electrical equipment.",
+            ],
+          },
+          {
+            heading: "Equipment charging and testing",
+            paragraphs: [
+              "An ordinary storage-only container is not automatically an approved charging or electrical testing facility. Specialised operations require suitable facilities and safety controls.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-murugeshpalya/murugeshpalya-storage-container-interior.webp",
+          alt: "View through the open doors into an empty container: ribbed cream walls and ceiling, a brown plywood floor fixed with rows of rivets, and no fittings",
+          width: 1672,
+          height: 940,
+          caption:
+            "Illustrative render of an unfitted interior. Raised shelves, pump racks, hose reels and equipment bays are added only where the written quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Raised internal shelves." },
+          { text: "Stock carton racks." },
+          { text: "Furniture protection sections." },
+          { text: "Appliance supports." },
+          { text: "Protective storage bins." },
+          { text: "Inventory identification." },
+          { text: "Pump storage racks." },
+          { text: "Hose reels and hooks." },
+          { text: "Dehumidifier storage bays." },
+          { text: "Air mover storage sections." },
+          { text: "Wet vacuum shelves." },
+          { text: "Moisture meter cases." },
+          { text: "Electrical accessory storage." },
+          { text: "Rental dispatch sections." },
+          { text: "Lockable storage." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: ["Any raised foundation, anchoring or specialised storage arrangement must be designed for the actual site and loads."],
+        // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers this.
+        inlineLinks: [
+          {
+            before: "Where an appliance or a piece of equipment comes with a temperature or humidity limit, start with our notes on",
+            link: { label: "specialised insulated and air-conditioned storage", href: "/cities-we-serve/shipping-container-vellore" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Murugeshpalya",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-murugeshpalya/shipping-container-roof-view-murugeshpalya.webp",
+          alt: "Overhead view of a beige container on a concrete yard: ribbed roof panels, corner castings and a yellow painted line beside it",
+          width: 1672,
+          height: 940,
+          caption:
+            "Illustrative top-down render. Mark out the footprint with the door swing included, and keep the ground around it sloping away so rainwater does not pool against the doors.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises: approved commercial storage plots, suitable business compounds, contractor yards and other permitted private sites.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Land-use requirements." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Flood exposure." },
+          { text: "Drainage." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "The turn from Old Airport Road or Wind Tunnel Road into a residential lane can be tight, so the route to the gate is checked before a size is recommended. A 10 ft or 20 ft container, subject to availability, usually suits compact sites; a 40 ft unit is considered only where there is room and a workable unloading arrangement.",
+          "A delivery slot, site visit or unloading method counts only once the quotation confirms it.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "For more on",
+            link: { label: "delivering through narrow lanes and society gates", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ", see the Bellandur page.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Capacities are rounded. The internal measurements, door opening, floor-loading limit and availability of the unit offered are confirmed in its quotation, and an approximate volume does not establish the allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Compact household items or shop stock, or a small set of pumps, meters and accessories"],
+            ["20 ft", "33 m³", "A shop's larger inventory, or a restoration firm's pumps, hoses, dehumidifiers and air movers"],
+            ["40 ft", "67 m³", "Larger commercial inventory, where site access and loading permit"],
+          ],
+        },
+        closing: ["Pumps and stacked stock cartons get heavy quickly, so list the heaviest items and we'll check them against the floor rating of the unit offered."],
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Our",
+            link: { label: "checklist for inspecting a second-hand container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " covers what to look at first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Murugeshpalya",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade: one-trip, cargo-worthy, or wind and watertight." },
+          { text: "Raised foundation requirements." },
+          { text: "Shelving and racks." },
+          { text: "Pump storage provisions." },
+          { text: "Hose hooks and reels." },
+          { text: "Dehumidifier storage bays." },
+          { text: "Locking arrangements." },
+          { text: "Lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+          { text: "Whether you buy or rent." },
+        ],
+        closing: [
+          "Ask for an itemised quotation based on your actual requirements. Prices, any discount and the delivery timeline are stated in that quotation and nowhere else.",
+        ],
+      },
+      {
+        heading: "Storage Container on Rent in Murugeshpalya",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage can suit the monsoon months, or a restoration business whose equipment stock grows and shrinks with demand. Hire periods run from one month to five years. The quotation sets out the unit, the hire period, the transport charges, any deposit, and the delivery and collection arrangements.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire sizes and terms are on our",
+            link: { label: "shipping container rental page", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the items or equipment." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Explain the site's drainage and waterlogging history." },
+          { text: "Identify any sensitive or hazardous items." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelving, supports and storage arrangements." },
+          { text: "Confirm whether an engineered raised foundation is required." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment. For customers around Murugeshpalya, that means:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "20 ft and 40 ft units, and a 10 ft unit when one is in stock, matched to what has to leave the ground floor or wait between restoration jobs." },
+          { title: "Storage-oriented modifications", text: "raised shelves, pump racks, hose reels and hooks, and bays for dehumidifiers and air movers, each costed as a separate line." },
+          { title: "Shelving and racking provisions", text: "laid out so cartons, furniture and appliances sit off the floor, and clean, ready-to-dispatch equipment stays apart from kit awaiting service." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the locking hardware for your unit named in the quotation." },
+          { title: "Ventilation and insulation options", text: "quoted against what you plan to store, with no promise of flood protection, climate control or a dry interior in every condition." },
+          { title: "Quotation and delivery coordination", text: "an itemised written quotation first, then a check of the route in from the main road and of the standing spot before any date is offered." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Will a shipping container keep belongings dry if a lane floods?",
+        answer:
+          "A container on suitable elevated ground may reduce exposure to some waterlogging conditions, but no ordinary shipping container is completely floodproof: water can still find its way in through the doors, seals or other openings.",
+      },
+      {
+        question: "Where should a container be placed during the monsoon?",
+        answer: "On suitable authorised land, after checking elevation, drainage, stability, access and the permissions that apply.",
+      },
+      {
+        question: "Can a container be installed on raised plinths?",
+        answer: "Potentially, where an appropriately designed foundation supports the container and its contents safely.",
+      },
+      {
+        question: "Can household furniture and shop stock be stored inside a container?",
+        answer: "Potentially, where suitable packing, environmental conditions and storage arrangements are provided.",
+      },
+      {
+        question: "Can a restoration company store electric dewatering pumps inside a container?",
+        answer: "Potentially, where the equipment is appropriately cleaned, dried, inspected and stored.",
+      },
+      {
+        question: "Can dehumidifiers and air movers be stored inside a container?",
+        answer: "Potentially, subject to the manufacturer's storage requirements and suitable environmental conditions.",
+      },
+      {
+        question: "Can petrol or diesel pumps be stored inside an ordinary container?",
+        answer:
+          "No. Fuel-powered equipment and fuels need appropriate specialised storage arrangements, not an ordinary storage-only container.",
+      },
+      {
+        question: "Can a container be rented only for the monsoon?",
+        answer:
+          "Hire periods run from one month to five years, so a hire covering the monsoon months can be quoted. The unit's availability, any deposit, and the transport and collection terms are confirmed in the quotation.",
+      },
+      {
+        question: "What is the shipping container price in Murugeshpalya?",
+        answer: "Pricing depends on size, condition, modifications, foundation requirements and delivery arrangements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Murugeshpalya",
+    ctaText: `Whether you need temporary monsoon-season storage for suitable household or commercial items, or organised storage for dewatering pumps and restoration equipment, Portable Office Cabin can discuss shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp or e-mail ${COMPANY.email.sales}. Service area: Murugeshpalya, Vimanapura, Konena Agrahara, Rustam Bagh and Challaghatta, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Murugeshpalya",
+      intro:
+        "Choose the container type and quantity, add the address or a map pin, and say whether you want to buy or hire. Tell us what will go inside (shop stock, furniture and appliances, or dewatering pumps, hoses, dehumidifiers and drying equipment), how the spot has drained in past monsoons, whether a raised, level base is already there, and the weight of the heaviest item.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Portable Office Cabin supplies these containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its Bengaluru office is in Electronic City; it keeps no stock, yard or branch in Murugeshpalya, Vimanapura, Konena Agrahara, Rustam Bagh or Challaghatta. A unit's grade, condition, internal measurements, door opening and floor rating, any shelves, racks, reels, bays, lights, vents, insulation or locks, any hire terms, and how it is delivered, unloaded and collected are fixed only in its written quotation, and no date or slot counts until that quotation confirms it. No container on this page is certified as a flood shelter, a flood barrier or a submersible store, and none is sold as climate-controlled, as approved for fuel, fuel-powered equipment or other hazardous materials, or as a charging or electrical testing facility. A raised foundation is something to design for the actual site and loads, not a product offered here. All five images are illustrative renders of one beige container rather than photographs from Murugeshpalya; none of them shows a delivered unit, a raised base, waterlogging, or any stock, furniture or restoration equipment. Listed volumes are rough guides, not payload ratings. Ground-floor homes, shops and restoration firms are examples of how a container can be used, not past customers or completed installations, and the localities listed are where enquiries are accepted, not confirmed delivery addresses. The guidance on flood-season storage, foundations, equipment cleaning and electrical safety is general information rather than engineering, electrical, insurance or legal advice, so always follow the instructions of manufacturers and the relevant authorities.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
