@@ -65665,8 +65665,8 @@ export const CITY_PAGES: CityPage[] = [
     // Mahadevapura Version B brief (2026-11-22, §6): Mahadevapura and the Whitefield Road corridor have their own page; this page's targeting is unchanged.
     areasInlineLinks: [
       {
-        before: "Mahadevapura, Hoodi, Garudacharpalya and the Whitefield Road corridor are served from our page on",
-        link: { label: "shipping containers on Whitefield Road", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        before: "Hoodi, Garudacharpalya and the Whitefield Road corridor through Mahadevapura are served from our",
+        link: { label: "Whitefield Road container page", href: "/cities-we-serve/shipping-container-mahadevapura" },
         after: ".",
       },
     ],
