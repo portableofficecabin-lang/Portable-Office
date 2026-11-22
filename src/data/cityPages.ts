@@ -23612,6 +23612,17 @@ export const CITY_PAGES: CityPage[] = [
    * batteries, so the brief's eight use-case image slots are not used, and no alt text, caption or filename
    * claims those items, a size or a place. Captions say "illustrative image" rather than "render": the
    * source of the two pictures is not known.
+   * Image update (owner, 2026-11-22: "Use the navy set for Bilekahalli"): the page now uses the owner's five
+   * navy-blue WebP images (dropped as "public/images/Storage Containers in Basaveshwara Nagar city
+   * page/Storage Containers in Basaveshwara Nagar/cabin (1–5).webp", lossy VP8, no EXIF / XMP / ICC), each
+   * kept byte-identical with the same kind of XMP title / description: (1) the unit from a front corner =
+   * hero / og:image; (3) the closed cargo doors with locking bars and a lockbox = CCTV section; (5) the empty
+   * interior = layout options; (4) the roof from directly above = placement; (2) the plain end wall = sizes.
+   * New filenames, because /_next/image caches each source URL for a year (minimumCacheTTL). Both earlier
+   * images are retired: the charcoal hero, so the page shows one unit in one colour, and the old top view,
+   * whose lower edge shows the glazed side panels of a converted unit. None of the five shows glazing,
+   * CCTV equipment, door phones, inverters, UPS units or batteries; no alt text, caption or filename claims
+   * those items, a size or a place, and the battery section carries no image.
    *
    * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
    * og:image dimensions.
@@ -23634,16 +23645,16 @@ export const CITY_PAGES: CityPage[] = [
     },
     motion: true,
     serviceJsonLd: { serviceType: "Shipping Container" },
-    // The hero is 1838 × 856 px (read from its VP8 header); og:image carries that size.
+    // The hero is 1408 × 1056 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
     // Bannerghatta Road, JP Nagar, Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
-      src: "/images/cities/shipping-container-bilekahalli/shipping-container-bilekahalli.webp",
-      alt: "Charcoal-grey steel shipping container seen side-on, with a plain corrugated wall, corner castings and forklift pockets, the kind of unit used for commercial equipment storage",
-      width: 1838,
-      height: 856,
+      src: "/images/cities/shipping-container-bilekahalli/shipping-container-bilekahalli-exterior.webp",
+      alt: "Navy-blue steel shipping container seen from a front corner, with closed cargo doors, locking bars and a corrugated side wall, standing on a concrete yard: the kind of unit used for commercial equipment storage",
+      width: 1408,
+      height: 1056,
       caption: "Illustrative image: not taken in Bilekahalli, and not a unit fitted out for CCTV, inverter or UPS stock.",
     },
 
@@ -23689,6 +23700,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Storage Containers for CCTV & Video Door Phone Installers",
         placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-bilekahalli/shipping-container-cargo-doors-bilekahalli.webp",
+          alt: "Closed double cargo doors of a navy-blue shipping container, with four vertical locking bars, lever handles and a lockbox between the doors",
+          width: 1448,
+          height: 1086,
+          caption: "Illustrative image of lockable cargo doors. No CCTV or door-phone stock is shown; any extra lock is listed in the quotation.",
+        },
         paragraphs: [
           "CCTV installers handle valuable electronic equipment and accessories that require organised storage, careful handling and suitable environmental conditions.",
           "A properly configured shipping container may provide additional space for compatible inventory.",
@@ -24010,6 +24028,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Storage Container Layout Options",
         placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-bilekahalli/bilekahalli-storage-container-interior.webp",
+          alt: "Empty interior of a blue shipping container seen from its open doors, with corrugated steel walls and roof and a bare plywood floor",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative image of a bare interior. Shelves, racks, drawers and lighting are fitted only where the quotation includes them.",
+        },
         paragraphs: ["Depending on the application, a suitable container may include:"],
         bullets: [
           { text: "Shelves for CCTV equipment." },
@@ -24032,10 +24057,10 @@ export const CITY_PAGES: CityPage[] = [
         heading: "Shipping Container Placement & Delivery in Bilekahalli",
         placement: "afterSolutions",
         image: {
-          src: "/images/cities/shipping-container-bilekahalli/shipping-container-top-view-bilekahalli.webp",
-          alt: "Grey container photographed straight down from above, showing its corrugated roof, a corner fitting at each end and yellow painted lines on the concrete around it",
-          width: 2176,
-          height: 722,
+          src: "/images/cities/shipping-container-bilekahalli/shipping-container-roof-view-bilekahalli.webp",
+          alt: "Navy-blue shipping container photographed straight down from above, showing its corrugated roof, a corner casting at each corner and a yellow painted line on the concrete beside it",
+          width: 1672,
+          height: 940,
           caption: "Illustrative image from above. The ground under the unit and the clearance around it are checked before delivery.",
         },
         paragraphs: [
@@ -24070,6 +24095,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Shipping Container Sizes",
         placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-bilekahalli/shipping-container-end-wall-bilekahalli.webp",
+          alt: "Plain corrugated end wall of a navy-blue shipping container, with a corner casting at each corner and two forklift pockets along the base",
+          width: 1448,
+          height: 1086,
+          caption: "Illustrative image of a container's end wall. Each unit's exact dimensions and door opening are stated when you are quoted.",
+        },
         table: {
           caption:
             "Approximate internal volumes, not allowable payloads. Exact dimensions, floor-loading limits and availability are stated per unit when you are quoted.",
@@ -24247,7 +24279,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
     ],
 
-    disclaimer: `Portable Office Cabin's containers are dispatched from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu (Bengaluru office: Electronic City); the company keeps no depot, yard or branch in Bilekahalli or the localities around it. The quotation for each unit fixes what you receive: its size, grade and condition, its inside and door-opening measurements, any shelving, racks, drawers, reel supports, lighting, ventilation, insulation or locks, the hire terms where it is rented, and the way it reaches your site, is lifted off and, after a hire, taken back. Stock varies, and no delivery date or time is promised. Unless an approved specification says otherwise, a container is not offered as moisture-proof, climate-controlled or anti-static, carries no temperature or humidity promise, and is not offered for storing or charging batteries, for battery acid or electrolyte, or for scrap batteries. Both pictures are illustrative images; neither was taken in Bilekahalli, and neither shows a delivered or fitted unit, CCTV equipment, door phones, inverters, UPS units or batteries. Volumes are approximate. CCTV and video door phone installers and inverter and UPS dealers are named as examples of possible uses, not as customers or completed projects, and the localities named mark the area we accept enquiries from; they are not confirmed delivery addresses. The notes on electronics, batteries, electrolyte, charging, fire safety, placement and permissions are general information, not electrical, fire-safety, hazardous-material, legal or engineering advice; follow the manufacturers' instructions, the safety data sheets and the applicable regulations.`,
+    disclaimer: `Portable Office Cabin's containers are dispatched from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu (Bengaluru office: Electronic City); the company keeps no depot, yard or branch in Bilekahalli or the localities around it. The quotation for each unit fixes what you receive: its size, grade and condition, its inside and door-opening measurements, any shelving, racks, drawers, reel supports, lighting, ventilation, insulation or locks, the hire terms where it is rented, and the way it reaches your site, is lifted off and, after a hire, taken back. Stock varies, and no delivery date or time is promised. Unless an approved specification says otherwise, a container is not offered as moisture-proof, climate-controlled or anti-static, carries no temperature or humidity promise, and is not offered for storing or charging batteries, for battery acid or electrolyte, or for scrap batteries. All five pictures are illustrative images; none was taken in Bilekahalli, and none shows a delivered or fitted unit, CCTV equipment, door phones, inverters, UPS units or batteries. Volumes are approximate. CCTV and video door phone installers and inverter and UPS dealers are named as examples of possible uses, not as customers or completed projects, and the localities named mark the area we accept enquiries from; they are not confirmed delivery addresses. The notes on electronics, batteries, electrolyte, charging, fire safety, placement and permissions are general information, not electrical, fire-safety, hazardous-material, legal or engineering advice; follow the manufacturers' instructions, the safety data sheets and the applicable regulations.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
