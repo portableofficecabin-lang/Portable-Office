@@ -18235,9 +18235,12 @@ export const CITY_PAGES: CityPage[] = [
     // Marathahalli ORR cross-link (agreed with #226; added here as the second to go live): commercial storage on the ORR is that page's intent.
     // Panathur (owner brief 2026-11-17, §5B): stores for tanker operators and contractors who service many
     // buildings are that page's intent; this page keeps homes and single societies.
+    // Kadubeesanahalli (owner brief 2026-11-21, §5): façade and window cleaning contractors' and rainwater
+    // harvesting contractors' storage is that page's intent.
     areasLinks: [
       { label: "Commercial storage containers on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
       { label: "Contractor storage containers in Panathur", href: "/cities-we-serve/shipping-container-panathur" },
+      { label: "Façade cleaning equipment storage in Kadubeesanahalli", href: "/cities-we-serve/shipping-container-kadubeesanahalli" },
     ],
 
     howHeading: "From enquiry to delivery",
@@ -19086,8 +19089,8 @@ export const CITY_PAGES: CityPage[] = [
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Varthur, Varthur Kodi, Gunjur, Sorahunase,
    * Muthsandra and the Varthur lake area, for uPVC, aluminium and glass window installers and for dairy
-   * farms' feed and equipment. Not targeted: Varthur Road, Varthur Main Road and Kadubeesanahalli
-   * (Marathahalli ORR page), Balagere and Panathur (Panathur), Thubarahalli and Brookefield
+   * farms' feed and equipment. Not targeted: Varthur Road and Varthur Main Road (Marathahalli ORR page),
+   * Kadubeesanahalli (its own page), Balagere and Panathur (Panathur), Thubarahalli and Brookefield
    * (Brookefield), signage makers' ACP sheets (Ramamurthy Nagar), electrical and plumbing contractors
    * (Kaggadasapura), owner-builder tiles and sanitaryware (HSR Layout), scaffolding (Thanisandra Main
    * Road), farmhouses and landscapers (Bannerghatta Road), agri-tech field kits (Hebbal, Bengaluru) and
@@ -25460,6 +25463,16 @@ export const CITY_PAGES: CityPage[] = [
    * the anchor "Doddanekundi" (`whyInlineLink`); `nearbySkipsBodyLinks` keeps the nearby block from
    * repeating it. The Marathahalli office-cabin page keeps Doddanekundi (a different product).
    *
+   * Kadubeesanahalli brief (2026-11-21, §6): Kadubeesanahalli left the areas list (façade and window cleaning
+   * contractors' and rainwater harvesting contractors' storage is the Kadubeesanahalli page's intent). The
+   * areas text is the owner's "Version A" wording (local modifiers: Marathahalli, Outer Ring Road, ORR,
+   * Marathahalli bridge, Munnekollal, AECS Layout, Varthur Road, Old Airport Road), and its last sentence
+   * links the new page (`areasInlineLinks`, anchor "Kadubeesanahalli container page"). Title, description,
+   * keywords, H1, images, JSON-LD and the other links are unchanged. The owner's "Version B" (tyre and spares
+   * storage, vendor lock-ups, electronics repair stock, PG and hostel furniture; drafted in the owner's content
+   * session on 2026-11-16) has never been published on this page or anywhere else on the site; if it is
+   * merged in later, its areas follow this wording (no Kadubeesanahalli).
+   *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
    * ────────────────────────────────────────────────────────────────────────────────────── */
   {
@@ -25570,14 +25583,25 @@ export const CITY_PAGES: CityPage[] = [
     customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
 
     areasHeading: "Areas we serve",
+    // Kadubeesanahalli brief (2026-11-21, §6, Version A): the owner's areas wording. Kadubeesanahalli moved to
+    // its own page (linked below); Kundalahalli is dropped too, as the owner's wording has it (its own page is
+    // #274), and Doddanekundi and Mahadevapura stay out of the list (their 2026-11-16 corrections are kept).
     areasText:
-      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout and Kadubeesanahalli. We also consider sites along Varthur Road and Old Airport Road. Delivery access is assessed for each location.",
+      "We supply shipping and storage containers across Marathahalli and the Outer Ring Road corridor, including the area around Marathahalli bridge, Munnekollal and AECS Layout. We also cover Varthur Road and Old Airport Road.",
     // Mahadevapura brief (2026-11-16): hotel, mall and interior-staging storage there is that page's intent.
     areasInlineLink: {
       before: "For hotel, mall and apartment-interior storage around",
       link: { label: "Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
       after: ", see our page for that locality.",
     },
+    // Kadubeesanahalli brief (2026-11-21, §6): the last sentence of the owner's areas wording, with its link.
+    areasInlineLinks: [
+      {
+        before: "For Kadubeesanahalli, see our",
+        link: { label: "Kadubeesanahalli container page", href: "/cities-we-serve/shipping-container-kadubeesanahalli" },
+        after: ".",
+      },
+    ],
     // Bellandur cross-link (agreed with the Bellandur page, added by #227 as the second to go live): residential storage is that page's intent.
     areasLinks: [{ label: "Storage containers for homes and societies in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" }],
 
@@ -25703,6 +25727,783 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and its Karnataka office is in Electronic City Phase 1, Bengaluru. It has no yard, depot or office in Marathahalli or on the Outer Ring Road. Supply depends on stock: the size, grade, condition and fittings of a unit, any rental term, and how it is delivered, unloaded, moved or collected are set out in its quotation, and no delivery date is guaranteed. The pictures here are renders of a typical 20 ft container, not photographs taken in Marathahalli or on the ORR. Marathahalli Bridge, the Outer Ring Road and the other localities are named only to show where enquiries are welcome; Portable Office Cabin has no connection with any road, metro or civic authority, and none of the uses or places mentioned is a client, a finished project or a confirmed delivery location. Guidance here on placement, lifting, permits, traffic management, archives and storage conditions is general, not engineering, fire-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN KADUBEESANAHALLI — storage for façade and high-rise window cleaning
+   * contractors (rope access equipment, inspection records, retired gear, water-fed poles, hoses, pure-water
+   * filter units, cleaning tools, electric pressure washers, building-wise staging) and for rainwater
+   * harvesting contractors (rooftop filters, first-flush diverters, pipes and fittings, bagged recharge-pit
+   * media, mesh and covers, installation tools, site-wise kits) on the Outer Ring Road in east Bengaluru.
+   *
+   * Owner brief of 2026-11-21 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Kadubeesanahalli, Bengaluru"): meta title, meta description, H1, keywords, local modifiers, section
+   * order, H2 / H3 headings, sizes table, the eleven ordering steps and the thirteen FAQs are the brief's,
+   * and so is the copy, lightly edited for flow and British spelling. The brief's notes to the implementer
+   * ("Do not recommend storing fuel…", "Do not present an ordinary storage container as an approved
+   * flammable-chemical storage facility", "Do not guarantee a specific delivery time…", "Do not place
+   * containers on public roads…", "link to the verified Bellandur page", "Do not invent…", "Conditional
+   * section…", "Highlight only verified capabilities…", "Do not target…", "Use verified company phone
+   * numbers…") are instructions, not page copy: where one carries a fact for the reader it is reworded as a
+   * plain statement ("fuel is not stored … inside an ordinary storage-only container", "an ordinary storage
+   * container is not an approved store for flammable chemicals", "a delivery time is given only after the
+   * actual route has been checked", "containers are not placed on public roads or service lanes without the
+   * required authorisation"); otherwise it is left out. The brief's safety advice to the reader ("Do not
+   * return equipment to service…", "Do not operate electric pressure washers…", "Do not combine
+   * incompatible chemicals…") stays as advice. Where an H3 has two checklists (rope access storage, recharge
+   * pit media) and in the placement section, the more useful checklist stays a list and the other becomes a
+   * sentence (the template gives a section or H3 one list). The route follows the site convention
+   * (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins, areas sentence,
+   * "why" bullets, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; rope bays, harness and helmet supports, quarantine
+   * sections, pole and pipe racks, hose reels, shelves, low-level supports, toolboards, staging bays, locks,
+   * lighting, ventilation and insulation are layout options and price factors "where your quotation
+   * includes them", never stock items or guaranteed conditions. The optional Kannada search terms are not
+   * used: the page is in English. No Product JSON-LD: city pages carry no prices (file rule) and a Product
+   * block without offers earns no rich result, so the Service JSON-LD (no offers), FAQPage and
+   * BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container solutions" → the cargo category) + heroCta.
+   *   Façade cleaning contractors, "Rope Access & Cleaning Chemical Safety", rainwater harvesting
+   *     contractors, "Rainwater Harvesting Material Safety" and "Storage Container Layout Options" → five
+   *     afterIntro extra sections, the first four with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, eleven steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Kadubeesanahalli" → areas + areasInlineLinks. "Why Choose Portable Office
+   *   Cabin?" → a default extra section (after the areas, as in the brief). FAQs: the brief's thirteen.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container product page"); "Building-wise equipment staging" H3 → "building and mall
+   * maintenance spares in Mahadevapura" (that page's "Maintenance Spares for Malls & Hotels"; a building's
+   * own spares stay there, a cleaning contractor's kit stays here); "Pipes and fittings" H3 → "plumbing
+   * contractor inventory in Kaggadasapura" (its "Plumbing contractor storage" H3; general plumbing stock
+   * stays there); "Installation tools" H3 → "borewell contractor storage on Kanakapura Road" (its "Stores
+   * for Borewell & Water Contractors"; drilling and pump stock stays there); placement → "delivery planning
+   * for gated and narrow-lane sites" (Bellandur's "Planning delivery through a society gate or narrow
+   * lane"); sizes → "used shipping container inspection checklist": the brief's /shipping-container-chennai
+   * is not a route, so it points to the Athipattu page's "Used Container Inspection" checklist, as the
+   * sibling pages do; rental → /products/shipping-container-rental; areas → "shipping containers in
+   * Marathahalli", "shipping containers in Bellandur" and "shipping containers in Panathur" (the brief:
+   * direct those localities to their own pages). The brief's Harlur and Haralur Road pages do not exist,
+   * and the Kundalahalli page (#274) is not live, so none of them is linked; Begur Road is left out (not a
+   * neighbour; the brief asks for a few useful links, not every page). Anchors differ from the siblings'
+   * anchors for the same targets. Inbound: the Marathahalli ORR page's areas ("Kadubeesanahalli container
+   * page", the brief's §6 wording), the Bellandur page's areasLinks ("Façade cleaning equipment storage in
+   * Kadubeesanahalli"), the Panathur page's areasInlineLinks ("rainwater harvesting contractor storage in
+   * Kadubeesanahalli"), the Karnataka shipping hub ("Shipping Containers in Kadubeesanahalli"), the cargo
+   * category's location links ("Storage containers in Kadubeesanahalli") and every Karnataka shipping
+   * page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kadubeesanahalli, Kadubeesanahalli Main Road
+   * and the Outer Ring Road at Kadubeesanahalli, for façade and high-rise window cleaning contractors' stores
+   * (rope access equipment, water-fed poles) and for rainwater harvesting contractors' stores. The
+   * Marathahalli ORR page no longer names Kadubeesanahalli in its areas and links here instead (brief §6).
+   * Not targeted: Marathahalli, the Marathahalli bridge area, Munnekollal, AECS Layout and Varthur Road
+   * (Marathahalli ORR page; Marathahalli is named here only in the link to it); Bellandur, Green Glen Layout,
+   * Ambalipura and Kaikondrahalli (Bellandur page; Bellandur named only in its links); Panathur and Balagere
+   * (Panathur page; Panathur named only in its link); Kariyammana Agrahara (Devarabisanahalli office cabin
+   * page; not named); Begur and Begur Road (Begur Road page; not named); Kundalahalli (its own page, once
+   * live; not named). Kept apart from general housekeeping, water tankers and STP servicing (Panathur),
+   * single-society storage (Bellandur), building and mall maintenance spares (Mahadevapura; named only in
+   * the link to it), borewell drilling (Kanakapura Road; same), general plumbing stock (Kaggadasapura; same)
+   * and used-container inspection (Athipattu; same); car-care pressure washing and installers' harnesses and
+   * bird netting have no page and are not targeted. "Bengaluru" stays out of the title, as the brief asks;
+   * the geo meta and the Service JSON-LD's areaServed carry "Kadubeesanahalli, Bengaluru, Karnataka".
+   *
+   * Images: five owner-dropped WebP renders ("public/images/Storage Containers in Kadubeesanahalli/Storage
+   * Containers in Kadubeesanahalli/cabin (1–5).webp", lossy VP8, 96–192 KB, no EXIF / XMP / ICC) of one
+   * blue container with silver locking bars, three of them on a port quay. Each is copied with its VP8 data
+   * byte-for-byte plus an XMP dc:title / dc:description that labels it an illustrative render (no creator,
+   * GPS, camera or date). (1) three-quarter exterior = hero / og:image (the brief's hero filename and alt,
+   * with what the render shows); (3) cargo doors = façade cleaning section (its caption is about heat inside
+   * a closed box and the rope and harness makers' storage limits); (2) blind end wall with forklift pockets
+   * = rainwater harvesting section (its caption is about floor loading for bagged media); (5) empty interior
+   * = layout options (the brief's interior filename, but not its "with racks and shelves" alt: nothing is
+   * fitted); (4) roof from above = placement section. No image shows ropes, harnesses, helmets, poles,
+   * hoses, filter units, cleaning tools, rainwater filters, diverters, pipes or filter media, so the brief's
+   * eleven use-case image slots are not used, and no alt text, caption or filename claims those items, a
+   * size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-kadubeesanahalli",
+    city: "Kadubeesanahalli",
+    listTitle: "Shipping & Storage Containers in Kadubeesanahalli",
+    metaTitle: "Shipping Container in Kadubeesanahalli | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Kadubeesanahalli for façade cleaning contractors, rope access equipment, water-fed poles and rainwater harvesting materials.",
+    keywords:
+      "shipping container in Kadubeesanahalli, cargo container Kadubeesanahalli, storage container Kadubeesanahalli, storage container Kadubeesanahalli Main Road, storage container Outer Ring Road Kadubeesanahalli, used shipping container Kadubeesanahalli, shipping container price in Kadubeesanahalli, storage container for rent in Kadubeesanahalli, façade cleaning contractor storage container, high-rise window cleaning equipment storage, rope access equipment storage, water-fed pole system storage, façade cleaning equipment storage, commercial window cleaning contractor storage, rainwater harvesting contractor storage, rainwater filter storage, first-flush diverter storage, recharge pit material storage, rainwater harvesting kit storage container",
+    // Approximate point in Kadubeesanahalli on the Outer Ring Road, east Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Kadubeesanahalli, Bengaluru, Karnataka, India",
+      position: "12.9390;77.6960",
+      icbm: "12.9390, 77.6960",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1408 × 1056 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Marathahalli, Bellandur, Panathur, Mahadevapura, Kaggadasapura, Kanakapura Road and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-kadubeesanahalli/shipping-container-kadubeesanahalli.webp",
+      alt: "Shipping container exterior suitable for contractor equipment storage: a blue steel unit with closed double cargo doors and silver locking bars, on a paved port quay",
+      width: 1408,
+      height: 1056,
+      caption: "Illustrative render of a closed container on a port quay; not a photograph taken in Kadubeesanahalli or of a unit supplied there.",
+    },
+
+    h1: "Shipping & Storage Containers in Kadubeesanahalli",
+    tagline:
+      "Lockable storage close to your Outer Ring Road jobs for rope access kits, water-fed poles and hose reels, or for rainwater filters, diverters and pipe fittings between installations.",
+    intro: [
+      "Kadubeesanahalli is an established commercial and residential locality along Bengaluru's Outer Ring Road corridor.",
+      "Office towers, commercial buildings, apartment developments and older residential areas create demand for specialist building-maintenance services.",
+      "Façade and high-rise window cleaning contractors manage ropes, harnesses, water-fed poles and cleaning equipment. Rainwater harvesting contractors handle filter units, diverters, pipes, fittings and recharge materials.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Kadubeesanahalli for compatible contractor equipment and installation inventory.",
+    },
+
+    areasHeading: "Areas Served Around Kadubeesanahalli",
+    areasText:
+      "This page covers shipping and storage container requirements in Kadubeesanahalli, along Kadubeesanahalli Main Road and on the Outer Ring Road at Kadubeesanahalli. Service entrances to office and apartment buildings vary a great deal, so the approach and the standing area at each site are checked before a delivery date is put forward.",
+    // Brief §3 and §7: Marathahalli, Bellandur and Panathur go to their own container pages.
+    areasInlineLinks: [
+      {
+        before: "For Marathahalli and the area around the Marathahalli bridge, see our page on",
+        link: { label: "shipping containers in Marathahalli", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
+        after: ".",
+      },
+      {
+        before: "Bellandur, further south-west along the Outer Ring Road, has a page of its own:",
+        link: { label: "shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+        after: ".",
+      },
+      {
+        before: "To the east, enquiries from Panathur are handled on our page on",
+        link: { label: "shipping containers in Panathur", href: "/cities-we-serve/shipping-container-panathur" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Façade & High-Rise Window Cleaning Contractors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kadubeesanahalli/shipping-container-cargo-doors-kadubeesanahalli.webp",
+          alt: "Blue container seen end-on with both cargo doors closed: four silver locking rods with cam handles and a central lockbox, with a crane and stacked containers behind",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render. A shut steel container can get hot inside in strong sun, so the rope and harness makers' storage limits are compared with the actual unit before any life-safety kit goes in.",
+        },
+        paragraphs: [
+          "High-rise cleaning teams use specialised equipment to maintain glass façades and elevated building surfaces.",
+          "Some equipment is safety-critical and requires careful storage, inspection and traceability.",
+          "A suitable shipping container may provide additional storage where environmental conditions and equipment manufacturer requirements are met.",
+        ],
+        subsections: [
+          {
+            heading: "Rope access equipment storage",
+            paragraphs: [
+              "Compatible inventory may include rope access ropes, rope bags, harnesses, descenders, ascenders, helmets and other approved access equipment.",
+              "Store equipment according to the manufacturer's instructions. Appropriate storage may require:",
+            ],
+            bullets: [
+              { text: "Clean, dry conditions." },
+              { text: "Protection from direct sunlight." },
+              { text: "Protection from chemicals." },
+              { text: "Suitable ventilation." },
+              { text: "Controlled temperature and humidity where specified." },
+              { text: "Appropriate supports." },
+              { text: "Clear identification." },
+            ],
+            closing: [
+              "Hanging is not the correct storage method for every rope or harness: follow what each product's manufacturer specifies.",
+            ],
+          },
+          {
+            heading: "Rope and harness inspection records",
+            paragraphs: ["Maintain equipment records covering:"],
+            bullets: [
+              { text: "Equipment identification number." },
+              { text: "Manufacturer." },
+              { text: "Model." },
+              { text: "Date of manufacture, where applicable." },
+              { text: "Inspection date." },
+              { text: "Inspection findings." },
+              { text: "Service status." },
+              { text: "Retirement or disposal decision." },
+            ],
+            closing: ["Follow the work-at-height requirements that apply and the manufacturer's inspection instructions."],
+          },
+          {
+            heading: "Damaged and retired equipment",
+            paragraphs: [
+              "Keep damaged, failed or retired safety equipment separate from approved equipment, with clear labels and secure segregation.",
+              "Do not return equipment to service without the appropriate inspection and authorisation.",
+            ],
+          },
+          {
+            heading: "Water-fed pole systems",
+            paragraphs: ["Compatible stock may include:"],
+            bullets: [
+              { text: "Water-fed poles." },
+              { text: "Carbon-fibre pole sections." },
+              { text: "Pole brushes." },
+              { text: "Pole connectors." },
+              { text: "Other compatible accessories." },
+            ],
+            closing: ["Use suitable horizontal racks or supports, and prevent bending, impact damage and crushing."],
+          },
+          {
+            heading: "Hoses and reels",
+            paragraphs: ["Organise compatible hoses and reels by:"],
+            bullets: [
+              { text: "Length." },
+              { text: "Diameter." },
+              { text: "System." },
+              { text: "Project." },
+              { text: "Condition." },
+            ],
+            closing: ["Drain and store them according to the manufacturer's guidance."],
+          },
+          {
+            heading: "Pure-water filter units",
+            paragraphs: [
+              "Window cleaning systems may use filtration equipment. Store filter units according to the manufacturer's requirements, and protect them against:",
+            ],
+            bullets: [
+              { text: "Impact." },
+              { text: "Freezing, where relevant." },
+              { text: "Excessive heat." },
+              { text: "Contamination." },
+              { text: "Unsuitable moisture conditions." },
+            ],
+            closing: ["Not every filtration system can be stored dry or without special preparation, so check before it goes into storage."],
+          },
+          {
+            heading: "Window cleaning tools",
+            paragraphs: ["Labelled storage bins may hold:"],
+            bullets: [
+              { text: "Squeegees." },
+              { text: "Applicators." },
+              { text: "Scrapers." },
+              { text: "Buckets." },
+              { text: "Other compatible cleaning accessories." },
+            ],
+            closing: ["Store sharp tools safely."],
+          },
+          {
+            heading: "Electric pressure washers",
+            paragraphs: ["Electric pressure washers may be stored where suitable. Before storage:"],
+            bullets: [
+              { text: "Disconnect the power." },
+              { text: "Follow the manufacturer's drainage instructions." },
+              { text: "Clean and dry the machine as appropriate." },
+              { text: "Protect the electrical components." },
+              { text: "Place it on stable supports." },
+            ],
+            closing: ["Do not operate electric pressure washers inside an ordinary storage-only container."],
+          },
+          {
+            heading: "Building-wise equipment staging",
+            paragraphs: ["Contractors may organise equipment by:"],
+            bullets: [
+              { text: "Building." },
+              { text: "Client." },
+              { text: "Crew." },
+              { text: "Work order." },
+              { text: "Equipment identification." },
+              { text: "Inspection status." },
+              { text: "Scheduled service date." },
+            ],
+            closing: ["This can help prepare the right equipment for each job."],
+            // Brief §5 and §7: a building's own maintenance spares belong to the Mahadevapura page.
+            inlineLinks: [
+              {
+                before: "Holding a mall's or hotel's own lamps, filters and fan belts, rather than a contractor's cleaning kit? See our notes on",
+                link: { label: "building and mall maintenance spares in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Rope Access & Cleaning Chemical Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Life-safety equipment",
+            paragraphs: [
+              "Ropes, harnesses and related fall-protection equipment are life-safety products. Their storage must follow the manufacturer's instructions and the safety requirements that apply.",
+              "A shipping container does not replace:",
+            ],
+            bullets: [
+              { text: "Competent inspection." },
+              { text: "Equipment certification, where required." },
+              { text: "Work-at-height procedures." },
+              { text: "Rescue planning." },
+              { text: "Crew training." },
+              { text: "Suitable equipment maintenance." },
+            ],
+          },
+          {
+            heading: "Cleaning chemicals",
+            paragraphs: [
+              "Some cleaning chemicals may damage ropes, harnesses or other equipment, so keep incompatible chemicals away from life-safety equipment.",
+              "Cleaning chemicals must be stored according to their labels, safety data sheets and the regulations that apply. A separate shelf inside the same ordinary container is not, on its own, enough separation; where chemicals require specialised storage, use appropriate compliant facilities.",
+            ],
+          },
+          {
+            heading: "Fuel and petrol-powered equipment",
+            paragraphs: [
+              "Fuel is not stored, and petrol-powered equipment is not operated, inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Equipment contamination",
+            paragraphs: [
+              "Keep dirty or chemically contaminated equipment separated from clean, approved safety gear, and follow appropriate cleaning and inspection procedures before returning equipment to service.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Rainwater Harvesting Contractors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kadubeesanahalli/shipping-container-end-wall-kadubeesanahalli.webp",
+          alt: "Blind end wall of a blue container: vertical corrugations, four corner castings and two forklift pockets along the base, on a port quay",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative end view. Forklift pockets are for moving the empty container; how much bagged gravel and sand the floor can carry is confirmed for the actual unit.",
+        },
+        paragraphs: [
+          "Rainwater harvesting contractors install systems that collect, filter, divert and recharge rainwater at residential and commercial properties.",
+          "These projects need a variety of filters, pipes, fittings and construction accessories, and a suitable shipping container may provide additional storage for compatible installation materials.",
+        ],
+        subsections: [
+          {
+            heading: "Rooftop filter units",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Rainwater filter units." },
+              { text: "Filter housings." },
+              { text: "Replacement filter components." },
+              { text: "Other approved filtration accessories." },
+            ],
+            closing: ["Store them according to the manufacturer's guidance, and protect them against impact and contamination."],
+          },
+          {
+            heading: "First-flush diverters",
+            paragraphs: ["First-flush diverters and compatible components may be organised by:"],
+            bullets: [
+              { text: "Model." },
+              { text: "Pipe size." },
+              { text: "Manufacturer." },
+              { text: "Project." },
+              { text: "Quantity." },
+            ],
+            closing: ["Use suitable shelves and protective packaging."],
+          },
+          {
+            heading: "Pipes and fittings",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Pipes." },
+              { text: "Elbows." },
+              { text: "Tees." },
+              { text: "Couplings." },
+              { text: "Valves." },
+              { text: "Other rainwater harvesting fittings." },
+            ],
+            closing: ["Use suitable racks and labelled bins, and check the lengths of the pipes before choosing a container."],
+            // Brief §5 and §7: general plumbing inventory belongs to the Kaggadasapura page.
+            inlineLinks: [
+              {
+                before: "Stocking general plumbing materials for everyday repair and installation work instead? Read about",
+                link: { label: "plumbing contractor inventory in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Recharge pit filter media",
+            paragraphs: [
+              "Recharge pit materials may include pebbles, gravel, sand and other suitable filter media; some systems use charcoal or other media according to their approved design.",
+              "Store bagged media on suitable pallets or low-level supports. These materials can be heavy, so verify:",
+            ],
+            bullets: [
+              { text: "Total weight." },
+              { text: "Container floor capacity." },
+              { text: "Concentrated loads." },
+              { text: "Pallet ratings." },
+              { text: "Handling methods." },
+              { text: "Suitable access." },
+            ],
+            closing: ["Not every bagged material can be stored in unlimited quantities."],
+          },
+          {
+            heading: "Mesh and covers",
+            paragraphs: ["Compatible stock may include:"],
+            bullets: [
+              { text: "Filter mesh." },
+              { text: "Protective covers." },
+              { text: "Overflow fittings." },
+              { text: "Other approved components." },
+            ],
+            closing: ["Organise them by size and project."],
+          },
+          {
+            heading: "Installation tools",
+            paragraphs: ["Compatible equipment may include:"],
+            bullets: [
+              { text: "Digging tools." },
+              { text: "Augers." },
+              { text: "Measuring equipment." },
+              { text: "Hand tools." },
+              { text: "Other approved installation accessories." },
+            ],
+            closing: ["Use suitable racks and toolboards, and store sharp or heavy tools safely."],
+            // Brief §5 and §7: borewell drilling and pump stock belongs to the Kanakapura Road page.
+            inlineLinks: [
+              {
+                before: "Drilling borewells and fitting pumps, rather than building recharge pits? See our",
+                link: { label: "borewell contractor storage on Kanakapura Road", href: "/cities-we-serve/shipping-container-kanakapura-road" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Site-wise installation kits",
+            paragraphs: ["Contractors may organise materials by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Building." },
+              { text: "Site." },
+              { text: "Installation type." },
+              { text: "Project phase." },
+              { text: "Scheduled installation date." },
+            ],
+            closing: ["Labelled sections can help reduce missing components during dispatch."],
+          },
+          {
+            heading: "Contractor inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product type." },
+              { text: "Manufacturer." },
+              { text: "Model." },
+              { text: "Size." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Project." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Rainwater Harvesting Material Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Concrete recharge rings",
+            paragraphs: [
+              "Concrete recharge rings and other heavy precast components may need dedicated open-yard storage and mechanical handling. They cannot be assumed safe to store inside an ordinary shipping container.",
+            ],
+          },
+          {
+            heading: "Large water tanks",
+            paragraphs: [
+              "Large tanks may be unsuitable for container storage because of their dimensions and handling requirements. Check the actual dimensions and the storage method first.",
+            ],
+          },
+          {
+            heading: "Solvent cements and adhesives",
+            paragraphs: [
+              "Some pipe adhesives and solvent cements may be flammable or hazardous. Follow the manufacturer's instructions, the safety data sheets and the storage regulations that apply; an ordinary storage container is not an approved store for flammable chemicals.",
+            ],
+          },
+          {
+            heading: "Rainwater harvesting regulations",
+            paragraphs: [
+              "Rainwater harvesting requirements may apply to certain properties in Bengaluru. Contractors must verify the applicable rules, permissions, approved designs and technical requirements.",
+              "A shipping container is only a potential equipment storage solution; it does not establish compliance with rainwater harvesting regulations.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kadubeesanahalli/kadubeesanahalli-storage-container-interior.webp",
+          alt: "Inside an empty container: blue corrugated walls, a ribbed ceiling and a brown plywood floor, with no racks or shelves fitted",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of a bare interior. Rope bays, pole racks, hose reels, filter shelves and pipe racks are fitted only where your written quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Clean rope storage sections." },
+          { text: "Suitable harness and helmet supports." },
+          { text: "Secure quarantine areas for retired equipment." },
+          { text: "Water-fed pole racks." },
+          { text: "Hose reel storage." },
+          { text: "Pure-water filter unit shelves." },
+          { text: "Labelled cleaning accessory bins." },
+          { text: "Rainwater filter shelves." },
+          { text: "First-flush diverter storage." },
+          { text: "Pipe racks." },
+          { text: "Fitting drawers." },
+          { text: "Low-level supports for bagged filter media." },
+          { text: "Toolboards." },
+          { text: "Project-wise staging bays." },
+          { text: "Lockable storage." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+        ],
+        closing: [
+          "The final layout must reflect the actual equipment dimensions, weights, environmental requirements and safety considerations. Do not combine incompatible chemicals with life-safety equipment.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Kadubeesanahalli",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kadubeesanahalli/shipping-container-roof-view-kadubeesanahalli.webp",
+          alt: "Blue container seen from directly above on a concrete slab: ribbed roof panels and four corner castings",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative view from above. The footprint, the swing of the doors and the standing room for the lifting vehicle all have to fit on the plot.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, such as contractor yards, approved commercial storage plots, building service areas with permission and project sites with the developer's authorisation.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner or developer permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Outer Ring Road traffic and local access conditions may affect transport arrangements. A 10 ft or 20 ft container may be considered for compact sites, subject to actual access and availability; a 40 ft container only where there is enough space and a suitable unloading arrangement.",
+          "A delivery time is given only after the actual route has been checked, and containers are not placed on public roads or service lanes without the required authorisation.",
+        ],
+        // Brief §3 and §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane notes.
+        inlineLinks: [
+          {
+            before: "Unloading behind a society gate or down a narrow service lane? Read our",
+            link: { label: "delivery planning for gated and narrow-lane sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " before you book.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Exact internal dimensions, door openings, floor-loading limits and availability are verified on the unit you are offered. Approximate volume does not establish allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Compact rope access equipment or rainwater harvesting fittings"],
+            ["20 ft", "33 m³", "Larger façade cleaning equipment or filter and pipe inventory"],
+            ["40 ft", "67 m³", "Larger compatible contractor inventory where site access permits"],
+          ],
+        },
+        // Brief §5: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Considering a second-hand unit? Work through our",
+            link: { label: "used shipping container inspection checklist", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Kadubeesanahalli",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Rope equipment storage provisions." },
+          { text: "Water-fed pole racks." },
+          { text: "Hose reels." },
+          { text: "Filter unit shelves." },
+          { text: "Pipe racks." },
+          { text: "Pallet supports." },
+          { text: "Locking arrangements." },
+          { text: "Lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on your actual storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Kadubeesanahalli",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for periodic façade maintenance contracts or for a run of rainwater harvesting installations. Containers can be hired for anything from one month to five years; the quotation states the unit and the hire period, along with the transport charges, any deposit and how delivery and collection will work.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and hire terms are set out under our",
+            link: { label: "shipping container hire options", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the equipment and materials." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify life-safety equipment, hazardous chemicals or heavy materials." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelves, reels and storage bays." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For façade cleaning and rainwater harvesting contractors around Kadubeesanahalli, that covers:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "20 ft and 40 ft units, and a 10 ft unit whenever one is in stock." },
+          { title: "Storage-oriented modifications", text: "rope bays, pole racks or pipe racks, each listed and priced separately on the quotation." },
+          { title: "Shelving and racking provisions", text: "laid out around long poles and hose reels, or around filter boxes, fittings and bagged media." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the locking hardware for your unit named in writing." },
+          { title: "Ventilation and insulation options", text: "quoted against the storage limits you give us; no storage condition for ropes, harnesses or filters is guaranteed." },
+          { title: "Quotation and delivery coordination", text: "an itemised quotation first, then a check of the route and the standing spot before any date is offered." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can rope access equipment be stored in a shipping container?",
+        answer:
+          "Potentially, where the container provides appropriate environmental conditions and the equipment is stored according to the manufacturer's instructions.",
+      },
+      {
+        question: "How should ropes and harnesses be protected?",
+        answer:
+          "Protect them against unsuitable moisture, heat, sunlight, chemicals and physical damage, following the manufacturer's requirements.",
+      },
+      {
+        question: "What should happen to damaged rope access equipment?",
+        answer:
+          "Keep it securely separated from approved equipment and follow appropriate inspection, retirement and disposal procedures.",
+      },
+      {
+        question: "Can water-fed poles be stored inside a container?",
+        answer: "Potentially, using suitable supports that protect the poles against bending and impact damage.",
+      },
+      {
+        question: "Can cleaning chemicals be stored alongside rope access equipment?",
+        answer:
+          "Incompatible chemicals must be kept away from life-safety equipment. Some chemicals require separate compliant storage facilities.",
+      },
+      {
+        question: "Can rainwater filter units be stored inside a container?",
+        answer:
+          "Potentially, where the equipment is protected against impact, contamination and unsuitable environmental conditions.",
+      },
+      {
+        question: "Can first-flush diverters and pipes be stored inside the container?",
+        answer: "Yes, where the dimensions, supports and handling arrangements are suitable.",
+      },
+      {
+        question: "Can gravel and sand for recharge pits be stored inside a container?",
+        answer: "Potentially, subject to floor capacity, total weight, pallet ratings and safe handling arrangements.",
+      },
+      {
+        question: "Can concrete recharge rings be stored inside a container?",
+        answer:
+          "Heavy precast components may be better suited to appropriate open-yard storage with suitable handling equipment.",
+      },
+      {
+        question: "Can solvent cements be stored inside the container?",
+        answer:
+          "Some adhesives and solvent cements require specialised storage. Follow their safety data sheets and the requirements that apply.",
+      },
+      {
+        question: "Can a container be delivered near Outer Ring Road in Kadubeesanahalli?",
+        answer: "Potentially, subject to road access, permissions, unloading arrangements and site conditions.",
+      },
+      {
+        question: "What is the shipping container price in Kadubeesanahalli?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Kadubeesanahalli",
+    ctaText: `Whether you need storage for façade cleaning equipment, rope access gear, rainwater harvesting filters or installation materials, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp or e-mail ${COMPANY.email.sales}. Service area: Kadubeesanahalli, Kadubeesanahalli Main Road and Outer Ring Road at Kadubeesanahalli, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Kadubeesanahalli",
+      intro:
+        "Pick the container type and how many you need, enter the Kadubeesanahalli site address or drop a pin, and say whether you plan to buy or hire. Let us know if the kit is rope access and façade cleaning gear or rainwater harvesting stock, the length of the longest pole or pipe, and the weight of any bagged gravel or sand, so the quotation matches the unit to the load.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds and supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its Bengaluru office is in Electronic City; it has no yard, depot, showroom or branch in Kadubeesanahalli, on Kadubeesanahalli Main Road or on the Outer Ring Road. What you receive is what the written quotation describes: internal and door-opening dimensions, grade and condition, floor-loading limits, any rope bays, harness supports, pole or pipe racks, hose reels, shelves, low-level pallet supports, staging bays, lighting, ventilation, insulation or locks, hire terms for a rented unit, and how the unit is delivered, unloaded and collected. Stock changes, so a delivery date is firm only once that quotation confirms it. Unless an approved specification says otherwise, no container is offered as certified or approved storage for rope access or other fall-protection equipment, as a store for cleaning chemicals, fuel, solvent cements or other flammable or hazardous products, as a place to run pressure washers or petrol-powered machines, or as able to carry unlimited weight, and no temperature or humidity figure is promised. Keeping equipment in a container does not replace competent inspection, certification where required, work-at-height procedures, rescue planning or crew training, and it does not show that a rainwater harvesting system meets the rules for a property. The five pictures are illustrative renders of one container, not photographs from Kadubeesanahalli; none shows a delivered or fitted unit or any contractor's equipment. Volumes are approximate and are not a payload rating. Façade cleaning and rainwater harvesting contractors are named as possible uses, not as customers or finished projects, and the localities named show where enquiries are accepted, not confirmed delivery sites. The notes on rope access equipment, cleaning chemicals, filter media, precast components, placement and permissions are general information, not safety, legal or engineering advice; follow the manufacturers', suppliers' and authorities' own instructions.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -49847,7 +50648,7 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Panathur, Panathur Main Road, Panathur Road,
    * Balagere, Balagere Road and the Panathur railway underpass area, for water tanker operators and for
    * contractors who service many apartment buildings (STP, water treatment and RO, lifts). Not targeted
-   * here: Kadubeesanahalli and Varthur Road (Marathahalli ORR page), Kariyammana Agrahara
+   * here: Varthur Road (Marathahalli ORR page), Kadubeesanahalli (its own page), Kariyammana Agrahara
    * (Devarabisanahalli page), Varthur as a place, Bellandur and its localities and single-society
    * maintenance storage (Bellandur page), borewell drilling (Kanakapura Road page), tyres and
    * service-centre spares (Marathahalli ORR page). Varthur brief (2026-11-18): neighbouring Varthur has
@@ -49976,6 +50777,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Keeping uPVC profiles and glass, or cattle feed and milk cans, in neighbouring Varthur? See our page on",
         link: { label: "storage containers for window installers in Varthur", href: "/cities-we-serve/shipping-container-varthur" },
+        after: ".",
+      },
+      // Kadubeesanahalli brief (2026-11-21, §5 and §7): rainwater harvesting contractors' stock is that page's
+      // intent; water tankers and STP servicing stay here.
+      {
+        before: "Installing rainwater harvesting systems, rather than running water tankers or servicing STPs? See our page on",
+        link: { label: "rainwater harvesting contractor storage in Kadubeesanahalli", href: "/cities-we-serve/shipping-container-kadubeesanahalli" },
         after: ".",
       },
     ],
