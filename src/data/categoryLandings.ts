@@ -373,6 +373,10 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers on Mysore Road", href: "/cities-we-serve/shipping-container-mysore-road" },
       // Murugeshpalya storage page (owner brief, 2026-11-21: a link back from the main shipping container page).
       { name: "Storage containers in Murugeshpalya", href: "/cities-we-serve/shipping-container-murugeshpalya" },
+      // Munnekollal storage page (owner brief, 2026-11-22: a link back from the main shipping container page).
+      { name: "Storage containers in Munnekollal", href: "/cities-we-serve/shipping-container-munnekollal" },
+      // Basaveshwara Nagar storage page (owner brief, 2026-11-21: a link back from the main shipping container page).
+      { name: "Storage containers in Basaveshwara Nagar", href: "/cities-we-serve/shipping-container-basaveshwara-nagar" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
