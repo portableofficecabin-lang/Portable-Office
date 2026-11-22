@@ -783,6 +783,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Sanjaynagar (fountain and water-feature installers; handyman services; owner brief 2026-11-22),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Sanjaynagar", href: "/cities-we-serve/shipping-container-sanjaynagar" },
+    // New Thippasandra (retail stationery and kitchenware stock; owner brief 2026-11-22), appended so the
+    // live links keep their positions.
+    { name: "Shipping Containers in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
   ],
 };
 
