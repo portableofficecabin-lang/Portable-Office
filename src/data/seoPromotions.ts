@@ -771,6 +771,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Sahakara Nagar (handmade soap and candle makers' stock; pottery and ceramics studios' stock;
     // owner brief 2026-11-21), appended so the live links keep their positions.
     { name: "Shipping Containers in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
+    // Nagarbhavi (PNG installation contractors' stock; shared student vacation storage; owner brief 2026-11-22),
+    // appended so the live links keep their positions.
+    { name: "Shipping Containers in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
     // Singasandra (HVAC ducting contractors' stock; fire sprinkler and firefighting contractors' stock;
     // owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Singasandra", href: "/cities-we-serve/shipping-container-singasandra" },

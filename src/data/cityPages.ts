@@ -20815,6 +20815,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "shipping containers on Mysore Road", href: "/cities-we-serve/shipping-container-mysore-road" },
         after: ".",
       },
+      // Nagarbhavi brief (2026-11-22, §6): PNG installation contractors' stock and shared student vacation
+      // storage in Nagarbhavi are that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Hostels and PG operators arranging shared storage for students over the break, a little to the north in Nagarbhavi, are covered on our page on",
+        link: { label: "student vacation storage containers in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -22759,7 +22766,9 @@ export const CITY_PAGES: CityPage[] = [
    * & Appliance Installation Businesses"; split units and copper pipe stay there); "HVAC contractor
    * inventory register" H3 → "maintenance spares for malls and hotels in Mahadevapura" (its "Maintenance
    * Spares for Malls & Hotels", which names AHU parts; a building's own spares after handover stay there);
-   * "Firefighting pipe storage" H3 → "stainless steel railing and gate fabricators on Thanisandra Main Road"
+   * fire-protection section → "piped natural gas installation contractor storage in Nagarbhavi" (its
+   * "Storage Containers for Piped Natural Gas (PNG) Installation Contractors", live since #311; gas
+   * pipework, meters and regulators stay there); "Firefighting pipe storage" H3 → "stainless steel railing and gate fabricators on Thanisandra Main Road"
    * (its "Storage Containers for Stainless Steel Railing & Gate Fabricators"; railing tube stays there);
    * "Fire sprinkler head storage" H3 → "insulated and air-conditioned storage planning in Vellore" (its
    * "Insulated and air-conditioned storage enquiries"; the brief's "Climate-controlled storage solutions"
@@ -22769,8 +22778,8 @@ export const CITY_PAGES: CityPage[] = [
    * /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used Container
    * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
    * "shipping containers on Begur Road" and "shipping containers in HSR Layout". NOT linked: the brief's
-   * /shipping-container-bommanahalli and /shipping-container-nagarbhavi (no such pages; Bommanahalli is not
-   * named here, so it stays free for a page of its own); Murugeshpalya (the live page covers monsoon
+   * /shipping-container-bommanahalli (no such page; Bommanahalli is not named here, so it stays free for a
+   * page of its own); Murugeshpalya (the live page covers monsoon
    * storage and dewatering-equipment hire, not the brief's kitchen exhaust cleaning). Anchors differ from the
    * siblings' anchors for the same targets. Inbound: the Begur Road page's areas ("HVAC ducting and fire
    * sprinkler contractor storage in Singasandra"), the HSR Layout page's areas ("storage containers in
@@ -22789,7 +22798,7 @@ export const CITY_PAGES: CityPage[] = [
    * Begur (Begur Road page); Kaikondrahalli (Bellandur page). Kept apart from general electrical and
    * plumbing contractors (Kaggadasapura; named only in the link to it), split AC installers (Horamavu;
    * same), building maintenance spares including AHU parts (Mahadevapura; same), kitchen exhaust cleaning
-   * (not covered here), piped gas contractors (not covered here), steel railing fabrication (Thanisandra
+   * (not covered here), piped gas contractors (Nagarbhavi; named only in the link to it), steel railing fabrication (Thanisandra
    * Main Road; same), specialised climate-controlled storage (Vellore; same), restricted-site delivery
    * (Bellandur) and used-container inspection (Athipattu). "Bengaluru" stays out of the title, as the brief
    * asks; the geo meta and the Service JSON-LD's areaServed carry "Singasandra, Bengaluru, Karnataka".
@@ -22832,7 +22841,7 @@ export const CITY_PAGES: CityPage[] = [
     serviceJsonLd: { serviceType: "Shipping Container" },
     // The hero is 1408 × 1056 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Kaggadasapura, Horamavu, Mahadevapura, Thanisandra Main Road, Vellore, Bellandur, Athipattu, Begur Road and HSR Layout are linked in the body, so the nearby block leaves them out.
+    // Kaggadasapura, Horamavu, Mahadevapura, Nagarbhavi, Thanisandra Main Road, Vellore, Bellandur, Athipattu, Begur Road and HSR Layout are linked in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -23064,6 +23073,15 @@ export const CITY_PAGES: CityPage[] = [
         paragraphs: [
           "Fire-protection contractors install sprinkler systems, hydrants, hose reels and related components in suitable residential, commercial and industrial buildings.",
           "Their inventory may include pipes, couplings, valves, sprinkler heads, hoses, gauges and installation accessories. A suitably configured shipping container may provide organised storage for compatible materials before installation.",
+        ],
+        // Brief §6 and §7: piped gas installation contractors' pipes, meters and regulators belong to the
+        // Nagarbhavi page (live since #311).
+        inlineLinks: [
+          {
+            before: "Storing gas pipework, meters and regulators for household gas connections instead of fire-protection stock? See our page on",
+            link: { label: "piped natural gas installation contractor storage in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+            after: ".",
+          },
         ],
         subsections: [
           {
@@ -44774,6 +44792,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "storage containers for yoga studios and bag makers in Basaveshwara Nagar", href: "/cities-we-serve/shipping-container-basaveshwara-nagar" },
         after: ".",
       },
+      // Nagarbhavi brief (2026-11-22, §6): Nagarbhavi and its layouts belong to the Nagarbhavi page; this
+      // page's own boundaries and targeting are unchanged.
+      {
+        before: "Nagarbhavi, Chandra Layout and Teachers Layout, a little to the south-west, are covered on our page on",
+        link: { label: "shipping containers in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -45405,6 +45430,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "shipping containers in Mysore city", href: "/cities-we-serve/shipping-container-in-mysore" },
         after: ".",
       },
+      // Nagarbhavi brief (2026-11-22, §6): Nagarbhavi, Chandra Layout and Moodalapalya belong to the Nagarbhavi
+      // page; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Gas installation contractors and student storage in Nagarbhavi, Chandra Layout and Moodalapalya have a page of their own:",
+        link: { label: "PNG contractor equipment storage in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -45970,6 +46002,734 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Every container is supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and our Bengaluru office is in Electronic City. We have no yard, depot or branch on Mysore Road, in Nayandahalli, Deepanjali Nagar or Bapuji Nagar. What you buy or hire is exactly what the written quotation describes: the grade and condition of the unit, its internal and door-opening measurements, its floor rating, every agreed rack, support, bay, drawer, bin, drip tray, light, vent or lock, the hire period if it is rented, and how it is delivered, unloaded and later collected. Because stock changes, a delivery date is fixed only when that quotation confirms it. No unit carries a heavy-duty or concentrated-load rating unless an approved specification gives one, and we do not supply containers for keeping fuel, used oil, batteries, airbag modules, seatbelt pretensioners or refrigerant, for charging batteries, or for lifting and repairing vehicles. All five images on this page are illustrative renders of a single container: none was taken on Mysore Road, and none shows a delivered or fitted unit, recovery gear or used parts. Capacities in the table are rough volumes, never payload ratings. Towing operators and used-parts dealers are described as possible users, not as clients or completed jobs, and the localities named are places we accept enquiries from, not confirmed delivery sites. What this page says about recovery gear, batteries, vehicle fluids, hazardous components, placement and permissions is general guidance rather than safety, legal or engineering advice; the manufacturers' and authorities' own instructions take precedence.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN NAGARBHAVI — storage for piped natural gas (PNG) installation
+   * contractors (GI, copper and PE gas pipe, meters, regulators and isolation valves, clamps and fixings,
+   * pressure-testing gauges, tower-wise and flat-wise kits, inventory register) and shared vacation storage
+   * that a hostel, PG operator or student group arranges for students (bays, suitcases, bedding, books,
+   * inventory records, access and collection) in west Bengaluru.
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Nagarbhavi"): meta title, meta description, H1, keywords, local modifiers, section order, H2 / H3
+   * headings, sizes table, the eleven ordering steps and the ten FAQs are the brief's, and so is the copy,
+   * lightly edited for flow and British spelling. The brief's notes to the implementer ("Do not recommend
+   * storing gas cylinders…", "Do not store fuel, flammable primers…", "Verify the actual security
+   * arrangements before advertising them", "Do not display students' phone numbers…", "Do not claim that
+   * Portable Office Cabin operates or manages the student storage service unless verified", "Do not
+   * recommend leaving…", "Do not store food…", "Do not guarantee delivery…", "Do not place containers on
+   * public roads…", "link to the verified Bellandur…", "Do not invent…", "Conditional section…", "Highlight
+   * only verified capabilities…", "Do not target…", "Use verified company phone numbers…") are instructions,
+   * not page copy: where one carries a fact for the reader it is reworded as a plain statement ("gas
+   * cylinders … are not stored inside an ordinary storage-only shipping container", "fuel, flammable
+   * primers, paints and solvents are not kept in an ordinary equipment container unless…", "each of these
+   * is a customisation agreed in the quotation", "students' phone numbers and other private details are
+   * never displayed on storage boxes", "Portable Office Cabin supplies the container and any agreed
+   * fittings; it does not operate or manage a student storage service", "these are not left in a shared
+   * storage container", "food, drinks and perishables are not stored…", "a delivery time is agreed only
+   * after…", "no container is placed on a public road or footpath without the required authorisation");
+   * otherwise it is left out. FAQ 2's answer is reworded the same way. Where an H3 has two checklists, the
+   * longer or more useful one stays a list and the other becomes a sentence (the template gives an H3 one
+   * list). "Nagarabhavi" is used once, in the areas section, as the brief asks. The route follows the site
+   * convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins,
+   * enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; racks, shelves, drawers, bins, cases, kit sections,
+   * bays, cages, compartments, lighting, ventilation, insulation, environmental controls and locks are
+   * layout options and price factors "where your quotation includes them", never stock items or
+   * guaranteed conditions. Student storage is described as an arrangement the hostel, PG operator or
+   * student group organises; the site offers no managed storage service, so none is claimed. The optional
+   * Kannada search terms are not used: the page is in English. No Product JSON-LD: city pages carry no
+   * prices (file rule) and a Product block without offers earns no rich result, so the Service JSON-LD (no
+   * offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("storage-ready shipping containers" → the cargo category) + heroCta.
+   *   PNG contractors, "PNG Contractor Storage Safety", "Shared Vacation Storage for Students", "Student
+   *     Storage Safety" and "Storage Container Layout Options" → five afterIntro extra sections, the first
+   *     four with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, eleven steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Nagarbhavi" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a
+   *   default extra section (after the areas, as in the brief). FAQs: the brief's ten.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §6, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container product page"); PNG section → "water-pipe and sanitary-fitting storage in
+   * Kaggadasapura" (that page's "Plumbing contractor storage" H3: general plumbing, not gas installation);
+   * student section → "household self-storage containers in Koramangala" (that page's "Partitioned
+   * self-storage containers" section) and "storage between home moves in HSR Layout" (its "Moving House or
+   * Moving Cities" section); placement → "container delivery and placement on restricted sites" (the
+   * Bellandur page's narrow-lane and society-gate delivery notes); sizes → "used container buying checks":
+   * the brief's /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used
+   * Container Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental;
+   * areas → "storage containers in RR Nagar", "storage containers along Mysore Road" and "storage
+   * containers in Vijayanagar". NOT linked: the brief's Marathahalli "PG furniture" page (the Marathahalli
+   * page has no PG furniture content: its Version B was never published), so the PG-furniture distinction is
+   * made in words only. Anchors differ from the siblings' anchors for the same targets. Inbound: the RR
+   * Nagar, Mysore Road and Vijayanagar, Bengaluru pages' areas sections (one `areasInlineLinks` item each,
+   * at the end of each list; their locality boundaries and targeting unchanged), the Karnataka shipping hub
+   * ("Shipping Containers in Nagarbhavi"), the cargo category's location links ("Storage containers in
+   * Nagarbhavi") and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's
+   * nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Nagarbhavi (Nagarabhavi), Nagarbhavi 1st and
+   * 2nd Stage, Nagarbhavi Circle, Chandra Layout, Teachers Layout and Moodalapalya, for PNG installation
+   * contractors' equipment and for student vacation storage. Named only in the pointer sentences to their
+   * own pages: RR Nagar, Kenchenahalli and Pattanagere (RR Nagar page); Mysore Road and Nayandahalli (Mysore
+   * Road page); Vijayanagar, Attiguppe and Hosahalli (Vijayanagar, Bengaluru page). Not named at all:
+   * Kengeri, Ullal, Mallathahalli and Papareddypalya (kept for possible future pages) and Sir MV Layout
+   * (ambiguous). Kept apart from general plumbing contractors (Kaggadasapura), household self-storage
+   * (Koramangala), home moves (HSR Layout), PG furniture (no live page), shoot-house and college motorsport
+   * storage (RR Nagar) and film props and camera equipment (Kundalahalli, not live). "Bengaluru" stays out
+   * of the title, as the brief asks; the geo meta and the Service JSON-LD's areaServed carry "Nagarbhavi,
+   * Bengaluru, Karnataka".
+   *
+   * Images: no new images were supplied; the owner asked for EXISTING images. Five catalogue images already
+   * in the repo, copied with their VP8 data (and ICC profile, where present) byte-for-byte plus an XMP
+   * dc:title / dc:description that labels each one an illustrative image (no creator, GPS, camera or date);
+   * the product originals are untouched. The 20 ft storage-container product set
+   * (/images/products/storage-container-corten-steel/: a grey 20 ft container in a depot yard; the
+   * three-quarter view is the catalogue's primary storage-container image, described in productImages.ts as
+   * a render) gives the hero / og:image (three-quarter, the brief's hero filename and alt), the PNG section
+   * (cargo doors) and the student section (blind side wall); the empty used-container interior
+   * (/images/products/cargo-shipping-container-interior.webp, also on the Mysore page) gives the layout
+   * section (the brief's interior filename, but not its "with organized racks" alt: nothing is fitted); the
+   * 40 ft view (/images/products/storage-container-corten-steel/40ft-storage-container-three-quarter.webp)
+   * gives the sizes section. No image shows pipes, meters, regulators, gauges, kits, student bays,
+   * suitcases, bedding or books, so the brief's eleven use-case image slots are not used, and no alt text,
+   * caption or filename claims those items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-nagarbhavi",
+    city: "Nagarbhavi",
+    listTitle: "Shipping & Storage Containers in Nagarbhavi",
+    metaTitle: "Shipping Container in Nagarbhavi | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Nagarbhavi for PNG contractors storing pipes, meters and fittings, and hostels arranging secure student vacation storage.",
+    keywords:
+      "shipping container in Nagarbhavi, cargo container Nagarbhavi, storage container Nagarbhavi, storage container Nagarabhavi, storage container Nagarbhavi 2nd Stage, storage container Chandra Layout, storage container Moodalapalya, used shipping container Nagarbhavi, shipping container price in Nagarbhavi, storage container for rent in Nagarbhavi, PNG installation contractor storage container, piped gas pipe and fitting storage, gas meter and regulator stock storage, PNG site store for apartments, student storage container, student vacation storage, hostel move-out storage, shared storage for students",
+    // Approximate point near Nagarbhavi Circle, west Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Nagarbhavi, Bengaluru, Karnataka, India",
+      position: "12.9610;77.5100",
+      icbm: "12.9610, 77.5100",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // RR Nagar, Mysore Road, Vijayanagar, Kaggadasapura, Koramangala, HSR Layout, Bellandur and Athipattu are
+    // linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-nagarbhavi/shipping-container-nagarbhavi.webp",
+      alt: "Shipping container exterior suitable for commercial and personal belongings storage: a grey 20 ft steel container with closed double cargo doors, standing in a paved container yard",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative image of a 20 ft storage container from our catalogue. It was not photographed in Nagarbhavi and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Nagarbhavi",
+    tagline:
+      "Lockable room near the job for PNG pipes, meters and regulators while towers are piped, and shared, bay-by-bay space for students' bags, bedding and books over the academic break.",
+    intro: [
+      "Nagarbhavi is an established residential area in west Bengaluru, with apartment communities, independent houses, educational institutions and commercial activity.",
+      "Construction projects and residential developments may require temporary storage for installation equipment and materials. Students living in hostels and paying guest accommodation may also need short-term space for belongings during academic breaks.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "storage-ready shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Nagarbhavi for compatible piped natural gas installation equipment and student vacation storage arrangements.",
+    },
+
+    areasHeading: "Areas Served Around Nagarbhavi",
+    areasText:
+      "This page covers shipping and storage container requirements in Nagarbhavi, also spelt Nagarabhavi: Nagarbhavi 1st Stage and 2nd Stage, Nagarbhavi Circle, Chandra Layout, Teachers Layout and Moodalapalya. Most addresses here sit on residential streets, so the road width, the gate and a safe spot to set the container down are checked for each site before a delivery date is suggested.",
+    // Brief §2, §6 and §7: RR Nagar, Kenchenahalli and Pattanagere belong to the RR Nagar page; Mysore Road and
+    // Nayandahalli to the Mysore Road page; Vijayanagar, Attiguppe and Hosahalli to the Vijayanagar page.
+    areasInlineLinks: [
+      {
+        before: "Rajarajeshwari Nagar, Kenchenahalli and Pattanagere are covered on our page on",
+        link: { label: "storage containers in RR Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
+        after: ".",
+      },
+      {
+        before: "Nayandahalli and the stretch of Mysore Road nearby have a page of their own:",
+        link: { label: "storage containers along Mysore Road", href: "/cities-we-serve/shipping-container-mysore-road" },
+        after: ".",
+      },
+      {
+        before: "For Vijayanagar, Attiguppe and Hosahalli, go to our page on",
+        link: { label: "storage containers in Vijayanagar", href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Piped Natural Gas (PNG) Installation Contractors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-nagarbhavi/shipping-container-cargo-doors-nagarbhavi.webp",
+          alt: "Grey container seen straight on from its door end: two closed cargo doors with four vertical locking bars, cam handles and a central lockbox",
+          width: 1200,
+          height: 896,
+          caption:
+            "Illustrative image. Pipe racks are planned around the door opening as well as the internal length, so long GI and copper lengths can go in and come out without bending or forcing.",
+        },
+        paragraphs: [
+          "Piped natural gas installation contractors handle pipes, fittings, meters, regulators and testing equipment for residential and commercial gas distribution systems.",
+          "A suitably configured shipping container may provide organised storage for compatible installation materials at an authorised project site.",
+        ],
+        // Brief §7: general plumbing contractors belong to the Kaggadasapura page; gas installation stock stays here.
+        inlineLinks: [
+          {
+            before: "Storing water pipes, sanitary fittings and fixtures for general plumbing work rather than gas installation stock? See",
+            link: { label: "water-pipe and sanitary-fitting storage in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "GI and copper gas pipe storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "GI pipe lengths." },
+              { text: "Copper pipe lengths." },
+              { text: "Approved pipe accessories." },
+            ],
+            closing: [
+              "Use suitable horizontal racks, and organise the stock by diameter, specification and length. Verify the container's internal length before selecting it: long pipe lengths may require a larger container or an alternative storage arrangement.",
+            ],
+          },
+          {
+            heading: "PE pipe coil storage",
+            paragraphs: [
+              "Compatible inventory may include approved polyethylene gas pipe coils. Store them according to the manufacturer's and the gas utility's specifications, on suitable supports or pallets where appropriate.",
+              "Protect the coils against damage, deformation and unsuitable environmental exposure.",
+            ],
+          },
+          {
+            heading: "Gas meter storage",
+            paragraphs: ["Gas meters may be stored in their protective packaging. Organise them by:"],
+            bullets: [
+              { text: "Manufacturer." },
+              { text: "Model." },
+              { text: "Serial number." },
+              { text: "Project." },
+              { text: "Tower." },
+              { text: "Flat or installation reference." },
+            ],
+            closing: ["Follow the supplier's handling instructions."],
+          },
+          {
+            heading: "Regulator and isolation valve storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Regulators." },
+              { text: "Isolation valves." },
+              { text: "Other approved fittings." },
+            ],
+            closing: ["Use labelled drawers or bins, and protect precision components against impact and contamination."],
+          },
+          {
+            heading: "Clamps, sleeves and fixings",
+            paragraphs: ["Organise small components by:"],
+            bullets: [
+              { text: "Type." },
+              { text: "Diameter." },
+              { text: "Specification." },
+              { text: "Quantity." },
+              { text: "Project." },
+            ],
+            closing: ["Use labelled bins and suitable shelving."],
+          },
+          {
+            heading: "Pressure-testing gauges and tools",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Pressure gauges." },
+              { text: "Approved testing accessories." },
+              { text: "Suitable hand tools." },
+            ],
+            closing: ["Store gauges in protective cases, and maintain calibration and inspection records as required."],
+          },
+          {
+            heading: "Tower-wise and flat-wise installation kits",
+            paragraphs: ["Organise compatible materials by:"],
+            bullets: [
+              { text: "Project." },
+              { text: "Tower." },
+              { text: "Floor." },
+              { text: "Flat." },
+              { text: "Installation date." },
+              { text: "Assigned team." },
+            ],
+            closing: ["Check material lists before dispatch."],
+          },
+          {
+            heading: "PNG contractor inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Item name." },
+              { text: "Specification." },
+              { text: "Quantity." },
+              { text: "Serial number, where applicable." },
+              { text: "Storage location." },
+              { text: "Assigned project." },
+              { text: "Dispatch and return status." },
+              { text: "Inspection or calibration status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "PNG Contractor Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Gas cylinders",
+            paragraphs: [
+              "Gas cylinders, including brazing and welding gas cylinders, are not stored inside an ordinary storage-only shipping container. Use appropriate approved storage arrangements.",
+            ],
+          },
+          {
+            heading: "Fuel and flammable materials",
+            paragraphs: [
+              "Fuel, flammable primers, paints and solvents are not kept in an ordinary equipment container unless a specifically compliant arrangement has been designed and approved. Follow the safety data sheets and the requirements that apply.",
+            ],
+          },
+          {
+            heading: "Gas distribution standards",
+            paragraphs: [
+              "All PNG installation work must follow the specifications and safety requirements of the relevant gas distribution company and the regulations that apply.",
+            ],
+          },
+          {
+            heading: "Pipe handling",
+            paragraphs: ["Verify:"],
+            bullets: [
+              { text: "Pipe length." },
+              { text: "Rack capacity." },
+              { text: "Floor-loading limits." },
+              { text: "Safe lifting arrangements." },
+              { text: "Suitable restraints." },
+            ],
+          },
+          {
+            heading: "Installation operations",
+            paragraphs: [
+              "An ordinary shipping container configured for storage is not automatically suitable for pipe cutting, welding, brazing, pressure testing or other active installation work.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shared Vacation Storage for Students",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-nagarbhavi/shipping-container-side-wall-nagarbhavi.webp",
+          alt: "Long side of a grey 20 ft container: unbroken corrugated steel panels with forklift pockets in the base rail and no doors or windows",
+          width: 1200,
+          height: 896,
+          caption:
+            "Illustrative image. Solid steel walls keep belongings out of sight, but an ordinary container is not fire-rated or theft-proof: access rules and storage terms come from whoever organises the arrangement.",
+        },
+        paragraphs: [
+          "Students living in hostels and PG accommodation may need temporary storage for personal belongings during academic breaks, internships or accommodation changes.",
+          "A hostel, PG operator or student group may arrange a suitable shipping container as a shared storage facility on authorised premises.",
+          "This application is different from general household self-storage or home relocation services, and from storing a PG's own furniture.",
+        ],
+        // Brief §7: household self-storage belongs to the Koramangala page and home moves to the HSR Layout page.
+        inlineLinks: [
+          {
+            before: "Need partitioned space for a household's furniture and boxes instead? See",
+            link: { label: "household self-storage containers in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+            after: ".",
+          },
+          {
+            before: "Moving house and need somewhere to keep things in between? Read about",
+            link: { label: "storage between home moves in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Individual student storage bays",
+            paragraphs: ["Where suitable and offered, a container layout may include:"],
+            bullets: [
+              { text: "Separate storage bays." },
+              { text: "Lockable cages." },
+              { text: "Numbered compartments." },
+              { text: "Inventory identification." },
+              { text: "Controlled access." },
+            ],
+            closing: [
+              "Each of these is a customisation agreed in the quotation, and the actual security arrangements are confirmed before they are offered to students.",
+            ],
+          },
+          {
+            heading: "Suitcase and backpack storage",
+            paragraphs: ["Compatible belongings may include:"],
+            bullets: [
+              { text: "Suitcases." },
+              { text: "Backpacks." },
+              { text: "Travel bags." },
+              { text: "Other suitable personal items." },
+            ],
+            closing: ["Store them clean and dry, and avoid unsafe stacking."],
+          },
+          {
+            heading: "Bedding and clothing storage",
+            paragraphs: ["Compatible belongings may include:"],
+            bullets: [
+              { text: "Bedding." },
+              { text: "Clothes." },
+              { text: "Blankets." },
+              { text: "Other suitable textiles." },
+            ],
+            closing: [
+              "Clean and dry them before packing, and use appropriate protective bags or containers. Vacuum packing should be used only where it suits the material.",
+            ],
+          },
+          {
+            heading: "Book and notebook storage",
+            paragraphs: ["Compatible belongings may include:"],
+            bullets: [
+              { text: "Textbooks." },
+              { text: "Notebooks." },
+              { text: "Study materials." },
+              { text: "Other paper items." },
+            ],
+            closing: [
+              "Use sealed or protective boxes, keep them off potentially damp surfaces, and provide appropriate moisture protection.",
+            ],
+          },
+          {
+            heading: "Student inventory records",
+            paragraphs: ["Maintain a record for each storage bay covering:"],
+            bullets: [
+              { text: "Bay identification." },
+              { text: "Student or authorised user." },
+              { text: "Item count." },
+              { text: "Storage date." },
+              { text: "Collection date." },
+              { text: "Condition notes." },
+              { text: "Authorised access." },
+            ],
+            closing: [
+              "Protect personal information: students' phone numbers and other private details are never displayed on storage boxes.",
+            ],
+          },
+          {
+            heading: "Access and collection arrangements",
+            paragraphs: ["The organising hostel, PG operator or student group should establish:"],
+            bullets: [
+              { text: "Authorised access procedures." },
+              { text: "Collection dates." },
+              { text: "Identification requirements." },
+              { text: "Inventory verification." },
+              { text: "Security responsibilities." },
+              { text: "Applicable storage terms." },
+            ],
+            closing: [
+              "Portable Office Cabin supplies the container and any agreed fittings; it does not operate or manage a student storage service.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Student Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Electronics and lithium batteries",
+            paragraphs: [
+              "Students should keep laptops, phones, power banks and other valuable battery-powered devices with them rather than leave them in an ordinary container without suitable environmental, security and battery-safety arrangements.",
+            ],
+          },
+          {
+            heading: "Important documents and valuables",
+            paragraphs: ["These are not left in a shared storage container:"],
+            bullets: [
+              { text: "Passports." },
+              { text: "Original certificates." },
+              { text: "Cash." },
+              { text: "Jewellery." },
+              { text: "Other high-value personal items." },
+            ],
+          },
+          {
+            heading: "Food and perishables",
+            paragraphs: ["Food, drinks and perishables are not stored in student storage compartments."],
+          },
+          {
+            heading: "Moisture protection",
+            paragraphs: [
+              "Clothes, bedding, books and bags may deteriorate under unsuitable heat or humidity. Use suitable packaging, insulation, ventilation or environmental controls where they are required.",
+            ],
+          },
+          {
+            heading: "Fire safety and security",
+            paragraphs: [
+              "A shared student storage arrangement needs appropriate fire-safety measures, access controls and emergency procedures. An ordinary metal container is not automatically fire-rated or theft-proof.",
+            ],
+          },
+          {
+            heading: "Personal belongings and liability",
+            paragraphs: ["Storage terms should clearly identify:"],
+            bullets: [
+              { text: "Responsible operator." },
+              { text: "Access arrangements." },
+              { text: "Security measures." },
+              { text: "Storage duration." },
+              { text: "Insurance and liability terms, where applicable." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-nagarbhavi/nagarbhavi-storage-container-interior.webp",
+          alt: "Inside an empty used container seen through its open doors: corrugated walls and roof with surface rust spots over a worn plywood floor, with nothing fitted",
+          width: 1024,
+          height: 1024,
+          caption:
+            "Illustrative image of an unfitted used container. Pipe racks, meter shelves, drawers, lockable bays and lighting are added only where the written quotation names them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "GI and copper pipe racks." },
+          { text: "PE pipe coil supports." },
+          { text: "Gas meter shelving." },
+          { text: "Regulator and valve drawers." },
+          { text: "Fittings and clamp bins." },
+          { text: "Protective testing equipment cases." },
+          { text: "Tower-wise installation kit sections." },
+          { text: "Individual student storage bays." },
+          { text: "Lockable cages." },
+          { text: "Suitcase shelves." },
+          { text: "Bedding and clothing storage." },
+          { text: "Book storage." },
+          { text: "Numbered compartments." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+          { text: "Environmental controls where required." },
+          { text: "Appropriate locking arrangements." },
+        ],
+        closing: ["All layouts must reflect actual equipment dimensions, weight, storage conditions and safety requirements."],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Nagarbhavi",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including approved construction project sites, contractor yards, hostel or PG compounds with permission, suitable commercial storage plots and other permitted private sites.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner or developer permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Some roads around established residential areas may have restricted access. A 10 ft or 20 ft container may be considered for compact sites, subject to availability and actual access conditions, and a 40 ft container where sufficient space and unloading arrangements are available.",
+          "A delivery time is agreed only after the transport arrangements have been verified, and no container is placed on a public road or footpath without the required authorisation.",
+        ],
+        // Brief §6: restricted-site delivery guidance → the Bellandur page's narrow-lane and society-gate notes.
+        inlineLinks: [
+          {
+            before: "Squeezing a container into a narrow lane or behind a society gate? Read our notes on",
+            link: { label: "container delivery and placement on restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-nagarbhavi/40ft-shipping-container-nagarbhavi.webp",
+          alt: "Navy-blue 40 ft steel container seen at an angle, showing its long corrugated side and closed cargo doors on a paved yard",
+          width: 1152,
+          height: 864,
+          caption:
+            "Illustrative image of a 40 ft container. Whether a unit this long can reach a site depends on the road, the gate and the space to unload it.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Exact internal dimensions, door openings, floor-loading limits and availability must be verified for the unit you are offered. Approximate volume does not establish allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "PNG fittings and meters or belongings for a small student group"],
+            ["20 ft", "33 m³", "PNG contractor site inventory or shared hostel storage bays"],
+            ["40 ft", "67 m³", "Larger inventories or long pipes, subject to actual internal dimensions"],
+          ],
+        },
+        // Brief §6: used-container buying guidance → the Athipattu page's inspection checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Thinking of a second-hand unit? Go through our",
+            link: { label: "used container buying checks", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before deciding.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Nagarbhavi",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Pipe racks." },
+          { text: "Meter shelves." },
+          { text: "Fittings drawers." },
+          { text: "Lockable student bays." },
+          { text: "Security arrangements." },
+          { text: "Lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental control requirements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on actual requirements."],
+      },
+      {
+        heading: "Storage Container on Rent in Nagarbhavi",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful during construction projects or academic vacation periods. Hire terms run from a single month up to five years, and your quotation sets out the unit, the hire period, transport charges, any deposit, and the arrangements for delivery and collection.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and terms for hire are listed under",
+            link: { label: "containers on hire", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify equipment, materials or belongings." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify fragile, heavy or temperature-sensitive items." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelves, drawers or lockable bays." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For gas contractors and student housing in Nagarbhavi, that means:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "20 ft and 40 ft units, with a 10 ft container offered when one is available." },
+          { title: "Storage-oriented modifications", text: "pipe racks, meter shelves, valve drawers or lockable bays, each listed separately in your quotation." },
+          { title: "Shelving and racking provisions", text: "arranged for pipe lengths, coils and boxed meters, or for numbered bays of bags and bedding." },
+          { title: "Locking arrangements", text: "lockable cargo doors, and the exact lock fitted to your unit stated in the quotation." },
+          { title: "Ventilation and insulation options", text: "priced for what you plan to store, with no promise of gas-industry certification, a set climate or managed student storage." },
+          { title: "Quotation and delivery coordination", text: "a written quotation first, then a check of the street, the gate and the drop spot before any date is fixed." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can PNG contractors store pipes and meters inside a shipping container?",
+        answer: "Potentially, using suitable racks, protective packaging and appropriate handling procedures.",
+      },
+      {
+        question: "Can gas cylinders be stored inside an ordinary shipping container?",
+        answer: "No. Gas cylinders are not stored inside an ordinary storage-only container; use appropriate approved storage arrangements.",
+      },
+      {
+        question: "Can gas regulators and pressure-testing gauges be stored inside a container?",
+        answer:
+          "Potentially, where they are protected and stored according to the manufacturer's and the applicable industry requirements.",
+      },
+      {
+        question: "Can students share a shipping container for vacation storage?",
+        answer:
+          "A hostel, PG operator or student group may organise a suitable shared storage arrangement with appropriate permissions, security and environmental controls.",
+      },
+      {
+        question: "Can each student have a separate lockable compartment?",
+        answer: "Lockable bays may be possible as a customisation, subject to actual availability and design.",
+      },
+      {
+        question: "Can students store books, bedding and suitcases?",
+        answer: "Potentially, where belongings are clean, dry and appropriately protected.",
+      },
+      {
+        question: "Should students leave laptops, passports or cash inside a container?",
+        answer: "No. Students should keep valuable electronics, important documents and cash with them.",
+      },
+      {
+        question: "Is student vacation storage the same as household self-storage?",
+        answer: "No. This page focuses on temporary storage organised for students during academic breaks.",
+      },
+      {
+        question: "What is the shipping container price in Nagarbhavi?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Ask for a confirmed timeline with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Nagarbhavi",
+    ctaText: `Whether you need storage for PNG installation pipes, meters and fittings, or a container with suitable compartments for student vacation belongings, Portable Office Cabin can discuss shipping container options based on your requirements. Ring ${COMPANY.phones[0].display}, WhatsApp us on ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Nagarbhavi 1st and 2nd Stage, Nagarbhavi Circle, Chandra Layout, Teachers Layout and Moodalapalya, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Nagarbhavi",
+      intro:
+        "Select the type of container and the number of units, give the Nagarbhavi site address or a map pin, and say whether you are buying or hiring. Tell us if it will hold PNG installation stock or students' belongings, the longest pipe length or the number of student bays, and who will run access to it, so the quotation matches the use.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `All containers are dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; there is no yard, depot, showroom or branch in Nagarbhavi or the localities this page names. The written quotation defines each unit: its internal and door-opening sizes, grade and condition, floor-loading limit, any racks, shelves, drawers, bins, cases, bays, cages, compartments, lights, vents, insulation, environmental controls or locks, the hire terms where it is rented, and how it is delivered, unloaded and collected. Container stock changes, so a delivery date or time holds only after the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as gas-industry certified, fire-rated, theft-proof or climate-controlled, no temperature or humidity level is promised, and a container is not supplied to hold gas cylinders, fuel, flammable primers, paints, solvents or food, or as a workshop for cutting, welding, brazing or pressure testing. Portable Office Cabin supplies containers and agreed fittings only; it does not run student storage, hold anyone's belongings, insure them or manage access. The five pictures are illustrative images from our existing catalogue imagery, not photographs taken in Nagarbhavi; none shows a delivered or fitted unit, gas installation stock or students' belongings. Volumes are approximate and are not payload ratings. PNG contractors, hostels, PG operators and student groups are named as possible uses, not as customers or completed projects, and the localities listed show where enquiries are accepted, not confirmed delivery addresses. Notes on gas installation, cylinders, fuel, students' belongings, batteries, valuables, fire safety, placement and permissions are general information, not safety, legal, insurance or engineering advice; follow the instructions of the gas distribution company, the manufacturers and the authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
