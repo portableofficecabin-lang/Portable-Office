@@ -42320,6 +42320,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "portable shop cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
         after: ".",
       },
+      // Basaveshwara Nagar brief (2026-11-21, §5): that page has its own yoga studio and cloth and jute bag
+      // maker intent; this page's own targeting is unchanged.
+      {
+        before: "Yoga studios and cloth and jute bag makers a little to the north have a page of their own:",
+        link: { label: "storage containers for yoga studios and bag makers in Basaveshwara Nagar", href: "/cities-we-serve/shipping-container-basaveshwara-nagar" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -42936,6 +42943,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "architectural salvage storage containers in Malleshwaram", href: "/cities-we-serve/shipping-container-malleshwaram" },
         after: ".",
       },
+      // Basaveshwara Nagar brief (2026-11-21, §5): yoga and wellness studio equipment and cloth and jute bag
+      // makers' stock are that page's intent; this page's own targeting is unchanged.
+      {
+        before: "Yoga and wellness studios and cloth and jute bag makers just to the west are covered on our page on",
+        link: { label: "yoga studio and jute bag maker storage in Basaveshwara Nagar", href: "/cities-we-serve/shipping-container-basaveshwara-nagar" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -43382,6 +43396,674 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Every container is supplied through Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu. We also have a Bengaluru office in Electronic City, but no yard, depot or branch in Rajajinagar. What you receive (size, grade, condition, inside measurements and payload; any racks, shelving, bins, partitions, vents, lights or locks; any hire terms; and the delivery, unloading and collection) is fixed only by your written quotation or rental agreement. Stock moves, and we promise no delivery date in advance. The three images on this page are renders of one container made for illustration; they were not photographed in Rajajinagar and do not show a unit we have delivered or fitted out. Capacities are rounded estimates. Printing presses and packaging units appear here as examples of how containers are used, not as named customers or finished projects, and the localities listed simply show where we take enquiries from. An ordinary container is not climate-controlled, is not rated storage for flammable inks or solvents, and carries no certification for regulated pharmaceutical packaging. Everything here about paper, reels, moisture, tooling, fire precautions, hazardous materials, permissions and site access is general guidance and not professional fire-safety, electrical, legal, quality or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN BASAVESHWARA NAGAR — one page, two uses: equipment storage for yoga
+   * and wellness studios (mats, blocks, straps, bolsters, blankets, chairs, mirrors, sound bowls, retreat
+   * and workshop kits) and stockroom space for cloth and jute bag makers (jute and cotton fabric rolls,
+   * handles, trims, labels, printing screens, finished bags and packed customer orders) in west Bengaluru.
+   *
+   * Owner brief of 2026-11-21 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Basaveshwara Nagar"). No Basaveshwara Nagar page existed before this one; the locality was named only
+   * in the Rajajinagar and Vijayanagar, Bengaluru header notes, as kept for a possible future page. Meta
+   * title, meta description, H1, keywords, local modifiers, section order, H2 / H3 headings, sizes table,
+   * the eleven ordering steps and the ten FAQs are the brief's, lightly edited for flow and British
+   * spelling. Where an H3 has two short lists, the more useful one stays a list and the other becomes a
+   * sentence. The brief's notes to the implementer ("Do not assume that every yoga mat material…", "Do
+   * not leave large mirrors unsecured", "Do not recommend charging batteries…", "Do not assume that simply
+   * placing a fire extinguisher…", "Do not recommend storing hazardous chemicals…", "should not be
+   * presented as a ready-to-use sewing or printing workshop", "Do not guarantee delivery…", "Do not place
+   * containers on public roads…", "Conditional section…", "Highlight only verified capabilities…", "Do not
+   * target…", "Use verified company phone numbers…") are instructions, not page copy: where one carries a
+   * fact for the reader it is reworded as a plain statement; otherwise it is left out. The route follows
+   * the site convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link
+   * lead-ins, enquiry-form intro, why-us lines and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the grades named (one-trip, cargo-worthy, wind and watertight) are catalogue grades; the 10 ft row keeps
+   * "if available"; racks, bins, shelving, roll supports, padded mirror supports, dispatch bays, lighting,
+   * ventilation, insulation and environmental controls are layout options and price factors, never stock
+   * items or guaranteed conditions. The optional Kannada search terms are not used: the page is in English.
+   * No Product JSON-LD: city pages carry no prices (file rule) and a Product block without offers earns no
+   * rich result, so the Service JSON-LD (no offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink (→ the cargo category) + heroCta.
+   *   Yoga and wellness studios, "Wellness Equipment Storage Safety", cloth and jute bag makers, "Cloth &
+   *     Jute Bag Storage Safety" and "Storage Container Layout Options" → five afterIntro extra sections,
+   *     the first four with H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, eleven steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Basaveshwara Nagar" → areas + areasInlineLinks. "Why Choose Portable Office
+   *   Cabin?" → a default extra section (after the areas, as in the brief). FAQs: the brief's ten.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5, only where the destination exists and supports the anchor; kept to a few): intro →
+   * the cargo category; yoga section → the Marathahalli ORR page's "Storage for sports turfs and gyms"
+   * (gym and fitness equipment is that page's; yoga props stay here); "Moisture protection" H3 → the Vellore
+   * page's "Insulated and air-conditioned storage enquiries"; bag section → the RT Nagar page's "Storage
+   * Containers for Luggage & Bag Shops" (luggage and school bags are that page's; cloth and jute bag making
+   * stays here); placement → Bellandur's "Planning delivery through a society gate or narrow lane"; sizes →
+   * the Athipattu page's "Used Container Inspection" checklist (the brief's /shipping-container-chennai is
+   * not a route; the siblings link Athipattu for this); rental → /products/shipping-container-rental; areas
+   * → Rajajinagar (printing presses: kept apart from bag printing) and Vijayanagar, Bengaluru (upholstery
+   * fabric and foam: kept apart from bag fabric). Not linked, because no such page exists: Jayanagar
+   * shipping containers (dance costumes), Bommanahalli shipping containers (garment fabric) and an Uttara
+   * Kannada yoga-hall cabin; the Hennur Road page covers church, choir, music-school and décor stock, not
+   * curtain fabric, so the brief's curtain-fabric anchor is unsupported. Anchors differ from the siblings'
+   * anchors for the same targets. Inbound: the Rajajinagar page's areas section and the Vijayanagar,
+   * Bengaluru page's areas section, one `areasInlineLinks` item each, their own targeting unchanged; the
+   * Karnataka shipping hub ("Shipping Containers in Basaveshwara Nagar"); the cargo category's location
+   * links ("Storage containers in Basaveshwara Nagar"); and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps this page's nearby block from repeating body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Basaveshwara Nagar (the primary spelling),
+   * Basaveshwaranagar (once, in the areas section, as the alternative spelling), Kamalanagar and Asthagrama
+   * Layout, for yoga and wellness studio equipment and cloth and jute bag maker inventory. Not targeted and
+   * not named: Govindarajanagar, MC Layout (Vijayanagar, Bengaluru), West of Chord Road, Prakash Nagar
+   * (Rajajinagar), Mahalakshmi Layout, Kamakshipalya, Nandini Layout, Kurubarahalli, Kirloskar Colony, KHBS
+   * Layout, Shankar Mutt and Bovi Colony (kept for possible future pages). Rajajinagar and Vijayanagar are
+   * named only in the links to their pages. Kept apart from gym, turf and fitness equipment (Marathahalli
+   * ORR), luggage and school bags (RT Nagar), printing presses (Rajajinagar), upholstery fabric (Vijayanagar,
+   * Bengaluru), garment fabric wholesalers and curtain or upholstery fabric dealers (named only as what
+   * this page is not about), a cabin fitted out as a yoga hall (named only as what this page is not about)
+   * and climate-controlled units as such (Vellore; named only in the link to it). "Bengaluru" stays out of
+   * the title, as the brief asks; the geo meta and the Service JSON-LD's areaServed carry "Basaveshwara
+   * Nagar, Bengaluru, Karnataka".
+   *
+   * Images: five owner-dropped WebP renders ("public/images/Storage Containers in Basaveshwara Nagar city
+   * page/Storage Containers in Basaveshwara Nagar/cabin (1–5).webp", lossy VP8, 95–129 KB, no EXIF / XMP /
+   * ICC) of one navy-blue container on a dry concrete yard beside a warehouse. Each is copied with its VP8
+   * data byte-for-byte plus an XMP dc:title / dc:description that labels it an illustrative render (no
+   * creator, GPS, camera or date). (1) three-quarter exterior = hero / og:image (the brief's hero filename
+   * and the first half of its alt); (3) cargo doors = yoga section (its caption is about the door opening
+   * and mat racks or mirror supports); (2) blind end wall = "Cloth & Jute Bag Storage Safety" (its caption
+   * is about heat and condensation in a bare steel box); (5) empty interior = layout options (the brief's
+   * interior filename, but not its "with racks" alt: nothing is fitted); (4) roof from above = placement
+   * section. No image shows yoga mats, props, bolsters, blankets, mirrors, fabric rolls, bag accessories,
+   * printing screens or bags, so the brief's eleven use-case image slots are not used, and no alt text,
+   * caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-basaveshwara-nagar",
+    city: "Basaveshwara Nagar",
+    listTitle: "Shipping & Storage Containers in Basaveshwara Nagar",
+    metaTitle: "Shipping Container in Basaveshwara Nagar | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Basaveshwara Nagar for yoga studios, wellness equipment, cloth and jute bag makers, fabric rolls and finished bag stock.",
+    keywords:
+      "shipping container in Basaveshwara Nagar, shipping container in Basaveshwaranagar, cargo container Basaveshwara Nagar, storage container Basaveshwara Nagar, storage container Basaveshwaranagar, storage container Kamalanagar, storage container Asthagrama Layout, used shipping container Basaveshwara Nagar, shipping container price in Basaveshwara Nagar, storage container for rent in Basaveshwara Nagar, yoga studio storage container, yoga mat and prop storage, wellness studio equipment storage, retreat and workshop kit storage, jute bag maker storage container, cloth bag stock storage, eco bag business storage, jute and cotton fabric roll storage",
+    // Approximate point in central Basaveshwara Nagar, west of Rajajinagar and north of Vijayanagar;
+    // rounded; for the owner to confirm.
+    geo: {
+      region: "IN-KA",
+      placename: "Basaveshwara Nagar, Bengaluru, Karnataka, India",
+      position: "12.9880;77.5370",
+      icbm: "12.9880, 77.5370",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1408 × 1056 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Rajajinagar, Vijayanagar (Bengaluru), Marathahalli ORR, RT Nagar, Vellore, Bellandur and Athipattu are
+    // linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-basaveshwara-nagar/shipping-container-basaveshwara-nagar.webp",
+      alt: "Shipping container exterior suitable for commercial inventory storage, painted navy blue, cargo doors shut, standing on dry concrete next to a warehouse",
+      width: 1408,
+      height: 1056,
+      caption: "Illustrative render of a closed storage container, not a photograph from Basaveshwara Nagar or of a unit we have delivered.",
+    },
+
+    h1: "Shipping & Storage Containers in Basaveshwara Nagar",
+    tagline:
+      "Lockable extra room for clean, dry yoga mats, bolsters and retreat kits, and for jute and cotton fabric rolls, bag handles and packed customer orders.",
+    intro: [
+      "Basaveshwara Nagar is an established residential locality in west Bengaluru, known for its neighbourhood parks and residential communities.",
+      "The area includes wellness-oriented businesses and small commercial operations that may require additional storage for equipment, materials and finished stock.",
+      "Yoga and wellness studios handle mats, blocks, bolsters, blankets and workshop equipment. Cloth and jute bag makers manage fabric rolls, handles, printing accessories and completed customer orders.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container solutions", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Basaveshwara Nagar for compatible wellness equipment and cloth or jute bag inventory.",
+    },
+
+    areasHeading: "Areas Served Around Basaveshwara Nagar",
+    areasText:
+      "We take enquiries from all of Basaveshwara Nagar, Kamalanagar and Asthagrama Layout included. Basaveshwaranagar is an alternative spelling of Basaveshwara Nagar, and both names lead here. Most streets in the locality are residential, so we look at the road in, the gate and where the container will stand at every address before suggesting a delivery date.",
+    // Brief §5 and §6: Rajajinagar and Vijayanagar, Bengaluru keep their own pages.
+    areasInlineLinks: [
+      {
+        before: "Offset printers and packaging units to the east are covered on our page on",
+        link: { label: "printing press stock storage in Rajajinagar", href: "/cities-we-serve/shipping-container-rajajinagar" },
+        after: ".",
+      },
+      {
+        before: "Upholstery workshops and mattress makers a little to the south have their own page:",
+        link: {
+          label: "upholstery foam and fabric storage in Vijayanagar, Bengaluru",
+          href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru",
+        },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Yoga & Wellness Studios",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-basaveshwara-nagar/shipping-container-cargo-doors-basaveshwara-nagar.webp",
+          alt: "End-on view of a navy-blue container's shut double cargo doors, with four locking bars, cam handles and a central lockbox, on a concrete yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render. Measure the door opening on the unit offered before planning upright mat racks, stacked yoga chairs or padded mirror supports.",
+        },
+        paragraphs: [
+          "Yoga and wellness studios use a variety of equipment for daily classes, workshops, retreats and special events. Their inventory may increase when a studio expands, renovates or prepares for an off-site programme.",
+          "A suitably configured shipping container may provide additional equipment storage where suitable environmental conditions are maintained. The container described here holds a studio's equipment; it is not fitted out as a hall for classes.",
+        ],
+        // Brief §6: gym, turf and fitness equipment belongs to the Marathahalli ORR page; yoga props stay here.
+        inlineLinks: [
+          {
+            before: "Storing gym machines, weights or artificial turf rolls rather than yoga props? See our page on",
+            link: { label: "sports turf and gym equipment storage in Marathahalli", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Yoga mat storage",
+            paragraphs: ["Compatible inventory may include yoga mats, exercise mats and other suitable floor mats. Before storage:"],
+            bullets: [
+              { text: "Clean them according to the manufacturer's instructions." },
+              { text: "Dry them completely." },
+              { text: "Roll or fold them as recommended." },
+              { text: "Use suitable racks." },
+              { text: "Protect them against moisture and heat." },
+            ],
+            closing: ["Mat materials differ, so their storage requirements are not all the same."],
+          },
+          {
+            heading: "Yoga blocks, bricks and straps",
+            paragraphs: [
+              "Compatible inventory may include yoga blocks, yoga bricks, yoga straps and other approved practice accessories. Organise them by type and quantity, in labelled bins or on shelves.",
+            ],
+          },
+          {
+            heading: "Bolsters and meditation cushions",
+            paragraphs: [
+              "Bolsters and meditation cushions may contain fabric, foam or other filling materials. Clean and dry them according to the manufacturer's instructions and use suitable protective packaging, without compressing them where that could cause permanent deformation.",
+            ],
+          },
+          {
+            heading: "Blankets and soft props",
+            paragraphs: [
+              "Compatible inventory may include yoga blankets, protective covers and other washable studio textiles. Store them only when clean and fully dry, in appropriate protective packaging.",
+            ],
+          },
+          {
+            heading: "Yoga chairs and props",
+            paragraphs: [
+              "Compatible inventory may include yoga chairs, approved support props and other suitable studio equipment. Use stable racks or appropriately arranged storage areas, and avoid unsafe stacking.",
+            ],
+          },
+          {
+            heading: "Mirrors and fragile accessories",
+            paragraphs: [
+              "Mirrors and other fragile studio equipment need suitable protective supports: padded racks, corner protection and restraints where appropriate. Large mirrors are never left unsecured.",
+            ],
+          },
+          {
+            heading: "Sound bowls and delicate instruments",
+            paragraphs: [
+              "Compatible inventory may include singing bowls, other suitable sound instruments and meditation accessories, kept in padded cases on protective shelves.",
+            ],
+          },
+          {
+            heading: "Retreat and workshop kits",
+            paragraphs: ["Organise equipment by:"],
+            bullets: [
+              { text: "Event." },
+              { text: "Venue." },
+              { text: "Date." },
+              { text: "Instructor." },
+              { text: "Equipment requirements." },
+              { text: "Dispatch status." },
+            ],
+            closing: ["Labelled storage bins keep compatible items together for each event."],
+          },
+          {
+            heading: "Wellness studio inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Item name." },
+              { text: "Manufacturer or specification." },
+              { text: "Quantity." },
+              { text: "Condition." },
+              { text: "Storage location." },
+              { text: "Assigned event." },
+              { text: "Dispatch and return status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Wellness Equipment Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Moisture protection",
+            paragraphs: [
+              "Fabric, foam and natural materials may deteriorate in unsuitable humidity. Depending on the stored items, suitable arrangements may require:",
+            ],
+            bullets: [
+              { text: "Protective packaging." },
+              { text: "Moisture monitoring." },
+              { text: "Appropriate ventilation." },
+              { text: "Insulation." },
+              { text: "Dehumidification where necessary." },
+            ],
+            closing: ["Ventilation alone does not guarantee moisture protection, and an ordinary shipping container is not climate-controlled."],
+            // Brief §5: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers this.
+            inlineLinks: [
+              {
+                before: "Where a manufacturer states a humidity or temperature range, read our notes on",
+                link: { label: "insulated or air-conditioned fit-out enquiries", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " first.",
+              },
+            ],
+          },
+          {
+            heading: "Heat-sensitive materials",
+            paragraphs: [
+              "Some mats, foams and adhesives may deteriorate under excessive heat, so check the manufacturer's recommended storage conditions before they go into a metal container.",
+            ],
+          },
+          {
+            heading: "Electrical equipment",
+            paragraphs: [
+              "Speakers, projectors and other electronic devices may need protection against excessive heat and moisture. Batteries are not charged inside an ordinary storage-only container unless an appropriately designed and approved charging arrangement is in place.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Cloth & Jute Bag Makers",
+        placement: "afterIntro",
+        paragraphs: [
+          "Cloth and jute bag makers handle fabric rolls, handles, trims, printing accessories, packaging materials and completed orders.",
+          "A suitable shipping container may provide additional stockroom space for compatible materials where environmental and fire-safety requirements are met. This section is about a bag-making business's stock, not the bulk inventory of a garment fabric wholesaler or a curtain or upholstery fabric dealer.",
+        ],
+        // Brief §6: luggage and school bags belong to the RT Nagar page; cloth and jute bag making stays here.
+        inlineLinks: [
+          {
+            before: "Selling suitcases, trolley bags and school bags rather than making cloth or jute bags? That stock is covered by our page on",
+            link: { label: "luggage and school bag storage in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Jute fabric roll storage",
+            paragraphs: ["Jute fabric may be vulnerable to moisture, mould and deterioration. Appropriate storage may include:"],
+            bullets: [
+              { text: "Horizontal racks where suitable." },
+              { text: "Protective wrapping." },
+              { text: "Stable supports." },
+              { text: "Separation from the floor." },
+              { text: "Moisture monitoring." },
+            ],
+            closing: ["Follow the supplier's instructions for storage and stacking."],
+          },
+          {
+            heading: "Cotton fabric roll storage",
+            paragraphs: ["Cotton fabric rolls may be organised by:"],
+            bullets: [
+              { text: "Material." },
+              { text: "Colour." },
+              { text: "Width." },
+              { text: "Quantity." },
+              { text: "Order." },
+            ],
+            closing: ["Use suitable racks, and protect the rolls against moisture, dust and contamination."],
+          },
+          {
+            heading: "Handles, trims and labels",
+            paragraphs: [
+              "Compatible inventory may include bag handles, trims, labels and other suitable accessories, kept in labelled bins and on shelves.",
+            ],
+          },
+          {
+            heading: "Printing screens",
+            paragraphs: [
+              "Printing screens may be fragile or susceptible to damage. Store them on appropriate supports, protected against bending, impact and contamination.",
+            ],
+          },
+          {
+            heading: "Finished cloth and jute bags",
+            paragraphs: [
+              "Compatible stock may include finished jute bags, cotton bags, printed promotional bags and other suitable reusable bags. Organise it by:",
+            ],
+            bullets: [
+              { text: "Customer." },
+              { text: "Design." },
+              { text: "Size." },
+              { text: "Colour." },
+              { text: "Quantity." },
+              { text: "Order number." },
+            ],
+            closing: ["Use labelled cartons or appropriate protective packaging."],
+          },
+          {
+            heading: "Corporate and event orders",
+            paragraphs: [
+              "Bag makers may prepare orders for retail businesses, corporate gifting, events and other customers. Keep packed stock grouped by customer and dispatch date.",
+            ],
+          },
+          {
+            heading: "Stock and dispatch register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Fabric type." },
+              { text: "Roll identification." },
+              { text: "Finished product." },
+              { text: "Order number." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Cloth & Jute Bag Storage Safety",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-basaveshwara-nagar/shipping-container-end-wall-basaveshwara-nagar.webp",
+          alt: "Doorless end of a navy-blue container showing corrugated steel panels, four corner castings and a pair of forklift pockets at the base, timber pallets stacked in the yard behind",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of a plain steel container. Sun on bare steel warms the inside and cool nights can leave condensation, so jute, cotton and finished bags need moisture control agreed in the quotation.",
+        },
+        subsections: [
+          {
+            heading: "Moisture and mould",
+            paragraphs: [
+              "Jute and cotton may develop mould or odours when stored under unsuitable conditions. Use appropriate moisture-control measures, and never store damp fabric.",
+            ],
+          },
+          {
+            heading: "Fire safety",
+            paragraphs: [
+              "Jute, cotton and packaging materials are combustible. Follow the applicable fire-safety requirements, keep safe access and appropriate electrical installations, and use suitable fire-protection measures based on a proper assessment.",
+            ],
+            closing: ["A fire extinguisher at the door does not, on its own, make a storage container fire-safe."],
+          },
+          {
+            heading: "Printing inks and cleaners",
+            paragraphs: [
+              "Some inks, solvents and cleaners may be hazardous or flammable. Follow their safety data sheets and the requirements that apply; hazardous chemicals are not kept inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Sewing and printing operations",
+            paragraphs: [
+              "A shipping container configured only for storage is not a ready-to-use sewing or printing workshop. Any conversion for active manufacturing needs appropriate ventilation, electrical design, fire safety and the applicable permissions.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-basaveshwara-nagar/basaveshwara-nagar-storage-container-interior.webp",
+          alt: "Bare container interior from the doorway: ribbed blue steel walls and roof beams above a brown plywood deck, nothing installed yet",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render, nothing fitted. Mat racks, prop bins, roll supports, bag shelving and dispatch bays are added only where the written quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Upright yoga mat racks." },
+          { text: "Yoga block and strap bins." },
+          { text: "Protective bolster storage." },
+          { text: "Blanket and cushion shelving." },
+          { text: "Secured chair storage." },
+          { text: "Padded mirror supports." },
+          { text: "Sound instrument cases." },
+          { text: "Retreat equipment bays." },
+          { text: "Jute fabric roll racks." },
+          { text: "Cotton fabric roll supports." },
+          { text: "Handles and trim bins." },
+          { text: "Printing screen storage." },
+          { text: "Finished bag shelving." },
+          { text: "Order-wise dispatch bays." },
+          { text: "Lockable storage." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+          { text: "Environmental controls where required." },
+        ],
+        closing: [
+          "The final layout must reflect the actual material dimensions, weights, environmental requirements and safety considerations, so studio equipment and fabric stock share a unit only after their storage needs have been compared.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Basaveshwara Nagar",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-basaveshwara-nagar/shipping-container-roof-view-basaveshwara-nagar.webp",
+          alt: "Top-down view of a navy-blue container's ribbed roof and four corner castings, on a concrete floor beside a yellow painted line",
+          width: 1672,
+          height: 940,
+          caption:
+            "Illustrative top-down render. Allow for the footprint and the door swing, and make sure the lorry or crane can reach the spot over private ground.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including approved commercial storage plots, suitable business properties, contractor yards and other permitted private sites.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Residential roads may have access restrictions. A 10 ft or 20 ft container may be considered for compact sites, subject to availability and the actual access conditions; a 40 ft container is considered only where there is enough space and a workable unloading arrangement.",
+          "A delivery time is given only after the transport arrangements have been checked, and no container goes on a public road or footpath without the required authorisation.",
+        ],
+        // Brief §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "For",
+            link: { label: "delivery planning on a narrow residential road", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ", see the notes on our Bellandur page.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Volumes are approximate. Exact internal dimensions, door openings, floor-loading limits and availability are verified on the unit offered, and an approximate volume does not establish the allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Yoga props, retreat kits or compact bag-making inventory"],
+            ["20 ft", "33 m³", "Larger studio equipment, or fabric rolls and finished orders"],
+            ["40 ft", "67 m³", "Larger commercial inventory, where access and loading permit"],
+          ],
+        },
+        closing: ["Rolled jute is heavy for its size, so give us roll counts and weights and we will check the floor rating of the unit offered."],
+        // Brief §5: used-container buying guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Thinking of a used unit? Go through",
+            link: { label: "a used-container condition checklist", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you decide.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Basaveshwara Nagar",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade: one-trip, cargo-worthy, or wind and watertight." },
+          { text: "Yoga mat racks." },
+          { text: "Bolster and cushion shelving." },
+          { text: "Fabric roll supports." },
+          { text: "Printing screen storage." },
+          { text: "Finished bag shelving." },
+          { text: "Locking arrangements." },
+          { text: "Lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental control requirements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+          { text: "Whether you buy or rent." },
+        ],
+        closing: [
+          "Ask for an itemised quotation based on your actual requirements: what will be stored, the fit-out it needs and where the container will stand.",
+        ],
+      },
+      {
+        heading: "Storage Container on Rent in Basaveshwara Nagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage can help while a studio is renovated, before a retreat season, or through a run of seasonal bag orders. Hire periods run from one month to five years, and the quotation sets out the unit, the hire period, the transport charges, any deposit and the collection conditions.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and terms for hire are listed under",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the equipment or materials." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify fragile, heavy or temperature-sensitive stock." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelves, bins and supports." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment. For studios and bag makers in Basaveshwara Nagar, that covers:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "standard 20 ft and 40 ft containers, plus a 10 ft unit whenever stock has one." },
+          { title: "Storage-oriented modifications", text: "upright mat racks, prop bins, roll supports or finished-bag shelving, each listed and priced on its own line." },
+          { title: "Shelving and racking provisions", text: "planned around rolled mats, bolsters and mirrors, or jute and cotton rolls, printing screens and packed orders." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the hardware for your unit named in the quotation." },
+          { title: "Ventilation and insulation options", text: "priced for the stock you describe, with no promise of mould prevention, fire certification or climate control." },
+          { title: "Quotation and delivery coordination", text: "an itemised written quotation first, then a check of the route and the standing spot before a delivery date is offered." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can yoga mats be stored in a shipping container?",
+        answer: "Potentially, where the mats are clean and dry and the required environmental conditions can be maintained.",
+      },
+      {
+        question: "How should bolsters and blankets be stored?",
+        answer: "Follow the manufacturer's cleaning and storage instructions, and keep them dry and suitably protected.",
+      },
+      {
+        question: "Can retreat equipment be stored inside a container?",
+        answer: "Potentially, using labelled bins, appropriate shelving and suitable environmental conditions.",
+      },
+      {
+        question: "Can mirrors and delicate instruments be stored inside a container?",
+        answer: "Potentially, where appropriate protective supports and packaging are provided.",
+      },
+      {
+        question: "Can jute and cotton fabric rolls be stored inside a container?",
+        answer: "Potentially, using suitable racks and moisture-control arrangements.",
+      },
+      {
+        question: "Can finished cloth and jute bags be stored inside a container?",
+        answer: "Yes, where the stock can be kept dry, clean and protected.",
+      },
+      {
+        question: "Can printing inks and solvents be stored inside an ordinary container?",
+        answer: "Some of these products need specialised storage. Follow their safety data sheets and the requirements that apply.",
+      },
+      {
+        question: "Can sewing and printing operations take place inside a storage container?",
+        answer:
+          "An ordinary storage-only container is not automatically suitable for manufacturing. A purpose-designed conversion may need additional safety controls and permissions.",
+      },
+      {
+        question: "What is the shipping container price in Basaveshwara Nagar?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access. Request a confirmed timeline with the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Basaveshwara Nagar",
+    ctaText: `Whether you need storage for yoga mats, wellness props, retreat equipment, jute fabric rolls, cotton bags or finished customer orders, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Phone ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Basaveshwara Nagar, Kamalanagar and Asthagrama Layout, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Basaveshwara Nagar",
+      intro:
+        "Select the container type and how many units you need, share the Basaveshwara Nagar address or a map pin, and note whether the unit is to be bought or hired. Describe the stock (yoga mats and props, bolsters and blankets, mirrors or sound bowls, jute and cotton rolls, bag accessories or packed orders), mention anything fragile or heat-sensitive, and add a rough weight for the heaviest item, so the quotation matches the unit to what goes inside.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds and supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs its Bengaluru office from Electronic City. It has no branch, yard or display unit in Basaveshwara Nagar, Kamalanagar or Asthagrama Layout. The written quotation for each unit is the reference for its grade, condition, inside measurements, door opening and floor rating; for any mat racks, bins, shelving, roll supports, padded mirror supports, dispatch bays, lighting, vents, insulation, environmental controls or locks; for hire terms if you rent; and for delivery, unloading and collection. A date or time holds only once that quotation confirms it. Unless an approved specification says otherwise, no unit is offered as climate-controlled, mould-proof or fire-rated, none carries a temperature or humidity figure, and none is meant for hazardous inks, solvents or cleaners, for battery charging or for use as a sewing or printing workshop. All five pictures on this page are renders made for illustration, showing a single container, and none was photographed in Basaveshwara Nagar; none shows a delivered or fitted unit, or any yoga props, wellness equipment, fabric rolls or bags. Volumes in the table are rough guides rather than payload ratings. Yoga and wellness studios and cloth and jute bag makers are described as possible uses, not as existing customers or finished projects, and the localities named are where enquiries are welcome, not confirmed delivery points. The notes on mats and props, textiles, moisture, fire safety, electrical equipment, placement and permissions are general information, not safety, legal or engineering advice: follow the instructions of the manufacturer, the supplier and the relevant authorities.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

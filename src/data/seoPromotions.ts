@@ -753,6 +753,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Jalahalli West (fencing contractors, baking supply stores, solar water heater installers, bangle and
     // fashion jewellery wholesalers; owner brief 2026-11-21), appended so the live links keep their positions.
     { name: "Shipping Containers in Jalahalli West", href: "/cities-we-serve/shipping-container-jalahalli-west" },
+    // Basaveshwara Nagar (yoga and wellness studios, cloth and jute bag makers; owner brief 2026-11-21),
+    // appended so the live links keep their positions.
+    { name: "Shipping Containers in Basaveshwara Nagar", href: "/cities-we-serve/shipping-container-basaveshwara-nagar" },
   ],
 };
 
