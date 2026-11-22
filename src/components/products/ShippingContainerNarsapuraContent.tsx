@@ -18,7 +18,7 @@ const serviceAreas: { area: string; href?: string }[] = [
   { area: "Narsapura Industrial Area" },
   { area: "Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
   { area: "Malur" },
-  { area: "Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
+  { area: "Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
   { area: "Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
   { area: "KIADB Narsapura" },
   { area: "Bengaluru East" },
