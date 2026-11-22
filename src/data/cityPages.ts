@@ -1146,8 +1146,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Chandapura",
     listTitle: "Shipping & Storage Containers in Chandapura",
     metaTitle: "Shipping Container in Chandapura | Industrial Storage",
+    // SEO-1 (2026-11-22): description shortened to 148 chars; was "Shipping and storage containers in Chandapura for plastic granule and polymer traders, plus pallet truck, stacker and material handling equipment rental companies." (163).
     metaDescription:
-      "Shipping and storage containers in Chandapura for plastic granule and polymer traders, plus pallet truck, stacker and material handling equipment rental companies.",
+      "Shipping and storage containers in Chandapura for plastic granule and polymer traders and pallet truck, stacker and handling equipment rental firms.",
     keywords:
       "shipping container in Chandapura, cargo container Chandapura, storage container Chandapura, storage container Chandapura Circle, storage container Surya City, storage container Suryanagar, storage container Heelalige, used shipping container Chandapura, 40 ft container Chandapura, shipping container price in Chandapura, storage container for rent in Chandapura, plastic granule storage container, polymer trader storage container, resin bag storage, masterbatch storage, moulding raw material storage, plastic granule inventory storage, material handling equipment storage container, pallet truck storage, manual stacker storage, forklift spares storage, equipment rental depot container, material handling service equipment storage",
     // Approximate point near Chandapura Circle, Anekal taluk (rounded; for the owner to confirm).
@@ -4834,7 +4835,8 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-sandur-ballari",
     city: "Sandur",
     listTitle: "Container Office in Sandur, Ballari",
-    metaTitle: "Container Office in Sandur, Ballari | Mine & Site Cabins | Portable Office Cabin",
+    // SEO-1 (2026-11-22): shortened to 56 chars; was "Container Office in Sandur, Ballari | Mine & Site Cabins | Portable Office Cabin" (80).
+    metaTitle: "Container Office in Sandur, Ballari | Mine & Site Cabins",
     metaDescription:
       "Insulated container offices in Sandur, Ballari with dust-sealing options for mines, steel plant contractors, transporters and site teams. Buy or rent.",
     keywords:
@@ -5271,7 +5273,8 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-devanahalli-airport",
     city: "Devanahalli",
     listTitle: "Container Offices near Devanahalli Airport",
-    metaTitle: "Container Offices in Devanahalli | Near Bengaluru Airport | Portable Office Cabin",
+    // SEO-1 (2026-11-22): shortened to 57 chars; was "Container Offices in Devanahalli | Near Bengaluru Airport | Portable Office Cabin" (81).
+    metaTitle: "Container Offices in Devanahalli | Near Bengaluru Airport",
     metaDescription:
       "Ready-to-use container offices for Devanahalli and the airport belt: insulated, wired and fitted out at our factory, then placed on your prepared base.",
     keywords:
@@ -5983,7 +5986,8 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-kudankulam-tirunelveli",
     city: "Kudankulam",
     listTitle: "Container Office in Kudankulam, Tirunelveli",
-    metaTitle: "Container Office in Kudankulam, Tirunelveli | Portable Office Cabin",
+    // SEO-1 (2026-11-22): shortened to 59 chars; was "Container Office in Kudankulam, Tirunelveli | Portable Office Cabin" (67).
+    metaTitle: "Container Office in Kudankulam, Tirunelveli | Coastal Sites",
     metaDescription:
       "Container offices in Kudankulam, Tirunelveli for project sites, wind farms, crews and shops. Coastal coating and insulation options; delivery quoted per site.",
     keywords:
@@ -6252,8 +6256,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Thoothukudi",
     listTitle: "Portable Container Office in Thoothukudi",
     metaTitle: "Portable Container Office in Thoothukudi | Portable Office Cabin",
+    // SEO-1 (2026-11-22): description shortened to 143 chars; was "Portable container offices in Thoothukudi for port yards, SIPCOT factories, salt pans and construction sites. Custom sizes, purchase, rental and delivery options." (162).
     metaDescription:
-      "Portable container offices in Thoothukudi for port yards, SIPCOT factories, salt pans and construction sites. Custom sizes, purchase, rental and delivery options.",
+      "Portable container offices in Thoothukudi for port yards, SIPCOT factories, salt pans and construction sites. Custom sizes, purchase or rental.",
     keywords:
       "portable container office in Thoothukudi, portable office container Tuticorin, container site office Thoothukudi, portable cabin Thoothukudi port, container office on rent Thoothukudi",
     geo: { region: "IN-TN", placename: "Thoothukudi, Tamil Nadu, India", position: "8.7642;78.1348", icbm: "8.7642, 78.1348" },
@@ -6726,8 +6731,9 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-sipcot-shoolagiri",
     city: "SIPCOT Shoolagiri",
     metaTitle: "Container Office in SIPCOT Shoolagiri",
+    // SEO-1 (2026-11-22): description shortened to 150 chars; was "Container office in SIPCOT Shoolagiri — insulated, AC-ready portable offices delivered finished to your plot on NH-44. Site offices, gate cabins and admin blocks, for sale or rent." (180).
     metaDescription:
-      "Container office in SIPCOT Shoolagiri — insulated, AC-ready portable offices delivered finished to your plot on NH-44. Site offices, gate cabins and admin blocks, for sale or rent.",
+      "Container office in SIPCOT Shoolagiri: insulated portable offices delivered finished to your plot on NH-44. Site offices and gate cabins, buy or rent.",
     keywords:
       "container office SIPCOT Shoolagiri, portable office cabin Shoolagiri, site office container Shoolagiri, prefab office Shoolagiri NH-44, container office on rent Shoolagiri, office container Krishnagiri district",
     geo: { region: "IN-TN", placename: "SIPCOT Shoolagiri, Krishnagiri district, Tamil Nadu, India", position: "12.6740;77.9694", icbm: "12.6740, 77.9694" },
@@ -6942,8 +6948,9 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-sipcot-krishnagiri",
     city: "SIPCOT Krishnagiri",
     metaTitle: "Container Office in SIPCOT Krishnagiri",
+    // SEO-1 (2026-11-22): description shortened to 146 chars; was "Container office in SIPCOT Krishnagiri — insulated, AC-ready portable offices delivered finished across Krishnagiri district on NH-44. Site offices, gate cabins and admin blocks, for sale or rent." (196).
     metaDescription:
-      "Container office in SIPCOT Krishnagiri — insulated, AC-ready portable offices delivered finished across Krishnagiri district on NH-44. Site offices, gate cabins and admin blocks, for sale or rent.",
+      "Container office in SIPCOT Krishnagiri: AC-ready portable offices for site offices, gate cabins and admin blocks, delivered finished. Buy or rent.",
     keywords:
       "container office SIPCOT Krishnagiri, portable office cabin Krishnagiri, site office container Krishnagiri, prefab office Krishnagiri NH-44, container office on rent Krishnagiri, quarry site office Krishnagiri district",
     geo: { region: "IN-TN", placename: "SIPCOT Krishnagiri, Krishnagiri, Tamil Nadu, India", position: "12.5186;78.2137", icbm: "12.5186, 78.2137" },
@@ -7158,8 +7165,9 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-near-tata-electronics-hosur",
     city: "Near Tata Electronics, Hosur",
     metaTitle: "Container Office Near Tata Electronics, Hosur",
+    // SEO-1 (2026-11-22): description shortened to 146 chars; was "Container offices for vendor and supplier units near the Tata Electronics plant in Hosur — insulated, audit-ready portable offices delivered finished, for sale or rent. Independent supplier." (190).
     metaDescription:
-      "Container offices for vendor and supplier units near the Tata Electronics plant in Hosur — insulated, audit-ready portable offices delivered finished, for sale or rent. Independent supplier.",
+      "Container offices for supplier units near Tata Electronics, Hosur: insulated, audit-ready portable offices for sale or rent. Independent supplier.",
     keywords:
       "container office near Tata Electronics Hosur, vendor site office Hosur, portable office cabin Hosur industrial belt, supplier office container Hosur, container office on rent Hosur, audit ready site office Hosur",
     geo: { region: "IN-TN", placename: "Hosur industrial belt, Krishnagiri district, Tamil Nadu, India", position: "12.7409;77.8253", icbm: "12.7409, 77.8253" },
@@ -7383,8 +7391,9 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-sipcot-coimbatore",
     city: "SIPCOT Coimbatore",
     metaTitle: "Container Office in SIPCOT Coimbatore",
+    // SEO-1 (2026-11-22): description shortened to 151 chars; was "Container office in SIPCOT Coimbatore — insulated portable offices craned into full compounds across the Kongu belt. QC rooms, supervisor cabins and admin blocks, for sale or rent." (180).
     metaDescription:
-      "Container office in SIPCOT Coimbatore — insulated portable offices craned into full compounds across the Kongu belt. QC rooms, supervisor cabins and admin blocks, for sale or rent.",
+      "Container office in SIPCOT Coimbatore: insulated portable offices craned into place for QC rooms, supervisor cabins and admin blocks. For sale or rent.",
     keywords:
       "container office SIPCOT Coimbatore, portable office cabin Coimbatore, site office container Coimbatore, QC room cabin Coimbatore, container office on rent Coimbatore, supervisor cabin Kongu belt",
     geo: { region: "IN-TN", placename: "SIPCOT Coimbatore, Coimbatore, Tamil Nadu, India", position: "11.0168;76.9558", icbm: "11.0168, 76.9558" },
@@ -8646,7 +8655,8 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-kalpakkam",
     city: "Kalpakkam",
     listTitle: "Container Office in Kalpakkam",
-    metaTitle: "Container Office in Kalpakkam, Chengalpattu | Portable Office Cabin",
+    // SEO-1 (2026-11-22): shortened to 57 chars; was "Container Office in Kalpakkam, Chengalpattu | Portable Office Cabin" (67).
+    metaTitle: "Container Office in Kalpakkam, Chengalpattu | Buy or Rent",
     metaDescription:
       "Container offices in Kalpakkam for industrial contractors, ECR construction sites and coastal projects. Custom sizes, purchase and rental options, and delivery.",
     keywords:
@@ -8960,8 +8970,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Hoskote",
     listTitle: "Container Office in Hoskote",
     metaTitle: "Container Office in Hoskote – Portable Site Office Manufacturer",
+    // SEO-1 (2026-11-22): description shortened to 151 chars; was "Container office in Hoskote — insulated, wired, customizable portable site offices in 10 to 40 ft sizes for construction sites, factories and warehouses. Buy or rent." (166).
     metaDescription:
-      "Container office in Hoskote — insulated, wired, customizable portable site offices in 10 to 40 ft sizes for construction sites, factories and warehouses. Buy or rent.",
+      "Container office in Hoskote: insulated, wired portable site offices in 10 to 40 ft sizes for construction sites, factories and warehouses. Buy or rent.",
     keywords:
       "Container Office in Hoskote, portable site office Hoskote, site office container Hoskote, container office manufacturer Hoskote, container office on rent Hoskote, portable office cabin Hoskote, prefab office container Hoskote",
     geo: { region: "IN-KA", placename: "Hoskote, Bengaluru Rural, Karnataka, India", position: "13.0707;77.7980", icbm: "13.0707, 77.7980" },
@@ -12958,7 +12969,8 @@ export const CITY_PAGES: CityPage[] = [
     slug: "portable-cabin-manufacturer-devanahalli-airport",
     city: "Devanahalli",
     listTitle: "Portable Cabins near Devanahalli Airport",
-    metaTitle: "Portable Cabin Manufacturer Devanahalli Airport | Portable Office Cabin",
+    // SEO-1 (2026-11-22): shortened to 47 chars; was "Portable Cabin Manufacturer Devanahalli Airport | Portable Office Cabin" (71).
+    metaTitle: "Portable Cabin Manufacturer Devanahalli Airport",
     metaDescription:
       "Ready-to-install portable cabins for Devanahalli Airport sites: site offices, security cabins, bunkhouses & more. Delivery quoted per site in North Bengaluru.",
     keywords:
@@ -14092,9 +14104,11 @@ export const CITY_PAGES: CityPage[] = [
     slug: "portable-cabin-tindivanam",
     city: "Tindivanam",
     listTitle: "Portable Cabins in Tindivanam",
-    metaTitle: "Portable Cabin Manufacturers in Tindivanam SIPCOT | Portable Office Cabin",
+    // SEO-1 (2026-11-22): shortened to 49 chars; was "Portable Cabin Manufacturers in Tindivanam SIPCOT | Portable Office Cabin" (73).
+    metaTitle: "Portable Cabin Manufacturers in Tindivanam SIPCOT",
+    // SEO-1 (2026-11-22): description shortened to 155 chars; was "Portable cabin manufacturers supplying office cabins, security cabins, site offices, container offices and PUF cabins in Tindivanam SIPCOT and Viluppuram. Request a quote." (171).
     metaDescription:
-      "Portable cabin manufacturers supplying office cabins, security cabins, site offices, container offices and PUF cabins in Tindivanam SIPCOT and Viluppuram. Request a quote.",
+      "Portable cabin manufacturer supplying office, security and PUF cabins, site offices and container offices to Tindivanam SIPCOT and Viluppuram. Get a quote.",
     keywords:
       "Portable Cabin in Tindivanam, Portable Cabin Manufacturers in Tindivanam, Portable Cabin Suppliers in Tindivanam, SIPCOT Tindivanam Portable Cabins, Portable Office Cabin Tindivanam, Prefabricated Cabin Viluppuram, Porta Cabin Tindivanam",
     geo: { region: "IN-TN", placename: "Tindivanam, Viluppuram, Tamil Nadu, India", position: "12.2369;79.6499", icbm: "12.2369, 79.6499" },
@@ -20758,8 +20772,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Rajarajeshwari Nagar",
     listTitle: "Shipping & Storage Containers in Rajarajeshwari Nagar (RR Nagar)",
     metaTitle: "Shipping Container in RR Nagar | Shoot House & Motorsport Storage",
+    // SEO-1 (2026-11-22): description shortened to 154 chars; was "Shipping and storage containers in RR Nagar for homeowners storing furniture during film shoots and college motorsport teams storing race cars, tools and spares." (161).
     metaDescription:
-      "Shipping and storage containers in RR Nagar for homeowners storing furniture during film shoots and college motorsport teams storing race cars, tools and spares.",
+      "Shipping and storage containers in RR Nagar for homeowners storing furniture during film shoots and college motorsport teams' race cars, tools and spares.",
     keywords:
       "shipping container in Rajarajeshwari Nagar, shipping container in RR Nagar, cargo container RR Nagar, storage container Rajarajeshwari Nagar, storage container RR Nagar, storage container Ideal Homes Township, storage container Kenchenahalli, storage container Pattanagere, storage container Halagevaderahalli, storage container Channasandra, storage container Gattigere, used shipping container RR Nagar, shipping container price in RR Nagar, storage container for rent in RR Nagar, furniture storage during film shoots, college motorsport team storage container",
     // Approximate point in Rajarajeshwari Nagar, west Bengaluru (rounded; for the owner to confirm).
@@ -23632,8 +23647,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Bilekahalli",
     listTitle: "Shipping & Storage Containers in Bilekahalli",
     metaTitle: "Shipping Container in Bilekahalli | CCTV & UPS Storage",
+    // SEO-1 (2026-11-22): description shortened to 142 chars; was "Shipping and storage containers in Bilekahalli for CCTV and video door phone installers, inverter and UPS equipment dealers, with storage options tailored to inventory needs." (174).
     metaDescription:
-      "Shipping and storage containers in Bilekahalli for CCTV and video door phone installers, inverter and UPS equipment dealers, with storage options tailored to inventory needs.",
+      "Shipping and storage containers in Bilekahalli for CCTV and video door phone installers and inverter and UPS dealers, sized to your inventory.",
     keywords:
       "shipping container in Bilekahalli, cargo container Bilekahalli, storage container Bilekahalli, storage container Kodichikkanahalli, storage container Kodichikkanahalli Main Road, storage container Mahadeshwara Nagar, storage container Someswara Layout, used shipping container Bilekahalli, shipping container price in Bilekahalli, storage container for rent in Bilekahalli, CCTV installer storage container, CCTV camera storage, DVR and NVR equipment storage, video door phone stock storage, network cable reel storage, CCTV installation equipment storage, inverter dealer storage container, UPS equipment storage, inverter trolley and stand storage, inverter installation kit storage",
     // Approximate point in Bilekahalli, east of Bannerghatta Road, south Bengaluru (rounded; for the owner to confirm).
@@ -24346,8 +24362,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "KR Puram",
     listTitle: "Shipping & Storage Containers in KR Puram",
     metaTitle: "Shipping Container in KR Puram | Cargo & Telecom Storage",
+    // SEO-1 (2026-11-22): description shortened to 155 chars; was "Shipping and storage containers in KR Puram for consignment staging near Old Madras Road and secure storage of fibre cables, splicing tools and telecom equipment." (162).
     metaDescription:
-      "Shipping and storage containers in KR Puram for consignment staging near Old Madras Road and secure storage of fibre cables, splicing tools and telecom equipment.",
+      "Shipping and storage containers in KR Puram for consignment staging near Old Madras Road and storage of fibre cables, splicing tools and telecom equipment.",
     keywords:
       "shipping container in KR Puram, cargo container KR Puram, storage container KR Puram, storage container Old Madras Road, used shipping container KR Puram, shipping container price in KR Puram, storage container for rent in KR Puram",
     // Approximate: between KR Puram railway station and the Old Madras Road junction.
@@ -25943,8 +25960,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Doddanekundi",
     listTitle: "Shipping & Storage Containers in Doddanekundi",
     metaTitle: "Shipping Container in Doddanekundi | Aerospace & IT Storage",
+    // SEO-1 (2026-11-22): description shortened to 148 chars; was "Shipping and storage containers in Doddanekundi for precision parts, controlled quarantine stores and secure staging of retired laptops and servers. Get a quote." (161).
     metaDescription:
-      "Shipping and storage containers in Doddanekundi for precision parts, controlled quarantine stores and secure staging of retired laptops and servers. Get a quote.",
+      "Shipping and storage containers in Doddanekundi for precision parts, controlled quarantine stores and secure staging of retired laptops and servers.",
     keywords:
       "shipping container in Doddanekundi, cargo container Doddanekundi, storage container Doddanekundi Industrial Area, storage container Karthik Nagar, used shipping container Doddanekundi, shipping container price in Doddanekundi, storage container rent Doddanekundi",
     // Approximate centre of the Doddanekundi locality, on the Outer Ring Road between Marathahalli and Mahadevapura.
@@ -30980,7 +30998,8 @@ export const CITY_PAGES: CityPage[] = [
     slug: "house-construction-contractor-services-in-electronic-city-bangalore",
     city: "Bangalore",
     listTitle: "House Construction in Electronic City",
-    metaTitle: "House Construction Services & Contractor in Electronic City, Bangalore",
+    // SEO-1 (2026-11-22): shortened to 59 chars; was "House Construction Services & Contractor in Electronic City, Bangalore" (70).
+    metaTitle: "House Construction Contractor in Electronic City, Bangalore",
     metaDescription:
       "House construction contractor in Electronic City, Bangalore — individual houses, duplexes and G+1 and G+2 homes on your plot, quoted after a site visit.",
     keywords:
@@ -34981,9 +35000,11 @@ export const CITY_PAGES: CityPage[] = [
     listTitle: "Portable Cabins in Kanchipuram Town",
     // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
     directoryLabel: "Portable cabins in Kanchipuram town",
-    metaTitle: "Portable Cabin & Porta Cabin in Kanchipuram Town | Weaving Sheds, Temples & Services",
+    // SEO-1 (2026-11-22): shortened to 59 chars; was "Portable Cabin & Porta Cabin in Kanchipuram Town | Weaving Sheds, Temples & Services" (84).
+    metaTitle: "Portable & Porta Cabins in Kanchipuram Town | Weaving Sheds",
+    // SEO-1 (2026-11-22): description shortened to 148 chars; was "Portable cabins and porta cabins in Kanchipuram town for weaving work-sheds, temple works, festival control rooms, service counters and footwear deposit counters, with heritage-friendly placement." (196).
     metaDescription:
-      "Portable cabins and porta cabins in Kanchipuram town for weaving work-sheds, temple works, festival control rooms, service counters and footwear deposit counters, with heritage-friendly placement.",
+      "Portable cabins and porta cabins in Kanchipuram town for weaving work-sheds, temple works, festival control rooms and service and footwear counters.",
     keywords:
       "Portable Cabin in Kanchipuram Town, Porta Cabin Kanchipuram, Handloom Work-Shed Cabin, Citizen Service Counter Cabin, Footwear Deposit Counter Cabin",
     geo: {
@@ -35685,7 +35706,8 @@ export const CITY_PAGES: CityPage[] = [
     slug: "portable-cabin-sakkarakottai-pattinamkathan",
     city: "Sakkarakottai and Pattinamkathan, Ramanathapuram",
     listTitle: "Portable Cabins in Sakkarakottai & Pattinamkathan",
-    metaTitle: "Portable Cabins in Sakkarakottai & Pattinamkathan | Ramanathapuram",
+    // SEO-1 (2026-11-22): shortened to 63 chars; was "Portable Cabins in Sakkarakottai & Pattinamkathan | Ramanathapuram" (66).
+    metaTitle: "Portable Cabins, Sakkarakottai & Pattinamkathan, Ramanathapuram",
     metaDescription:
       "Portable offices, security cabins, toilet units and labour cabins for Sakkarakottai, Pattinamkathan and Ramanathapuram project sites. Request a quote.",
     keywords:
@@ -41999,8 +42021,9 @@ export const CITY_PAGES: CityPage[] = [
     listTitle: "Shipping & Storage Containers in Thanisandra",
     directoryLabel: "Shipping containers on Thanisandra Main Road",
     metaTitle: "Shipping Container in Thanisandra | Storage Solutions",
+    // SEO-1 (2026-11-22): description shortened to 150 chars; was "Shipping and storage containers in Thanisandra for scaffolding, vehicle storage, gypsum and false ceiling materials, stainless steel railings and gate fabricators." (163).
     metaDescription:
-      "Shipping and storage containers in Thanisandra for scaffolding, vehicle storage, gypsum and false ceiling materials, stainless steel railings and gate fabricators.",
+      "Shipping and storage containers in Thanisandra for scaffolding, vehicles, gypsum and ceiling materials, stainless steel railings and gate fabricators.",
     keywords:
       "shipping container in Thanisandra, shipping container on Thanisandra Main Road, cargo container Thanisandra, storage container Thanisandra, storage container Thanisandra Main Road, storage container Nagawara, storage container Hegde Nagar, storage container Rachenahalli, storage container Sampigehalli, storage container Jakkur, storage container Amruthahalli, used shipping container Thanisandra, shipping container price in Thanisandra, shipping container price on Thanisandra Main Road, storage container for rent in Thanisandra, scaffolding storage container, formwork equipment storage, scaffolding hire yard storage, car storage container, motorbike storage container, false ceiling contractor storage container, gypsum board storage, ceiling channel storage, ceiling grid storage, ceiling tile storage, railing fabricator storage container, stainless steel pipe storage, stainless steel tube storage, gate fabricator stock storage, finished railing storage, finished gate storage",
     // The road near Thanisandra, between Nagawara to the south and Hegde Nagar to the north (approximate).
@@ -43496,7 +43519,8 @@ export const CITY_PAGES: CityPage[] = [
     slug: "shipping-container-ramamurthy-nagar",
     city: "Ramamurthy Nagar",
     listTitle: "Shipping & Storage Containers in Ramamurthy Nagar",
-    metaTitle: "Shipping Container in Ramamurthy Nagar | Signage & Medical Storage",
+    // SEO-1 (2026-11-22): shortened to 58 chars; was "Shipping Container in Ramamurthy Nagar | Signage & Medical Storage" (66).
+    metaTitle: "Shipping Container in Ramamurthy Nagar | Signage & Medical",
     metaDescription:
       "Shipping and storage containers in Ramamurthy Nagar for flex printing materials, signboards and home healthcare equipment rental depots. Request a quote.",
     keywords:
@@ -45268,8 +45292,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Rajajinagar",
     listTitle: "Shipping & Storage Containers in Rajajinagar",
     metaTitle: "Shipping Container in Rajajinagar | Print & Packaging Storage",
+    // SEO-1 (2026-11-22): description shortened to 151 chars; was "Shipping and storage containers in Rajajinagar for printing presses and packaging units storing paper, board, finished cartons, labels, cutting dies and press spares." (166).
     metaDescription:
-      "Shipping and storage containers in Rajajinagar for printing presses and packaging units storing paper, board, finished cartons, labels, cutting dies and press spares.",
+      "Shipping and storage containers in Rajajinagar for printing presses and packaging units storing paper, board, cartons, labels, cutting dies and spares.",
     keywords:
       "shipping container in Rajajinagar, shipping container in Rajaji Nagar, cargo container Rajajinagar, storage container Rajajinagar, storage container Rajajinagar Industrial Estate, storage container Rajajinagar Industrial Town, storage container Dr Rajkumar Road, storage container West of Chord Road, storage container Navarang, storage container Prakash Nagar, used shipping container Rajajinagar, shipping container price in Rajajinagar, storage container for rent in Rajajinagar, printing press storage container, paper and board storage container",
     // Approximate point near Dr Rajkumar Road, central Rajajinagar (for the owner to confirm).
@@ -47157,8 +47182,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Malleshwaram",
     listTitle: "Shipping & Storage Containers in Malleshwaram",
     metaTitle: "Shipping Container in Malleshwaram | Storage Solutions",
+    // SEO-1 (2026-11-22): description shortened to 152 chars; was "Shipping and storage containers in Malleshwaram for reclaimed building materials, heritage restoration stock, frame mouldings, glass and finished framing orders." (161).
     metaDescription:
-      "Shipping and storage containers in Malleshwaram for reclaimed building materials, heritage restoration stock, frame mouldings, glass and finished framing orders.",
+      "Shipping and storage containers in Malleshwaram for reclaimed building materials, heritage restoration stock, frame mouldings, glass and framing orders.",
     keywords:
       "shipping container in Malleshwaram, cargo container Malleshwaram, storage container Malleshwaram, storage container Malleswaram, storage container Malleshwaram West, storage container Sampige Road, storage container Margosa Road, storage container Vyalikaval, storage container Palace Guttahalli, used shipping container Malleshwaram, shipping container price in Malleshwaram, storage container for rent in Malleshwaram, architectural salvage storage container, reclaimed building material storage, Mangalore roof tile storage, reclaimed teak beam storage, heritage restoration material storage, carved door storage, wrought-iron grill storage, picture framing shop storage container, frame moulding storage, framing glass storage, mountboard storage, finished frame order storage",
     // Approximate point in central Malleshwaram, north-west Bengaluru (rounded; for the owner to confirm).
@@ -51116,8 +51142,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Yelahanka New Town",
     listTitle: "Shipping & Storage Containers in Yelahanka New Town",
     metaTitle: "Shipping Container in Yelahanka New Town | Storage Solutions",
+    // SEO-1 (2026-11-22): description shortened to 154 chars; was "Shipping and storage containers in Yelahanka New Town for beekeepers, honey sellers and appliance repair shops storing hive equipment, spare parts and appliances." (162).
     metaDescription:
-      "Shipping and storage containers in Yelahanka New Town for beekeepers, honey sellers and appliance repair shops storing hive equipment, spare parts and appliances.",
+      "Shipping and storage containers in Yelahanka New Town for beekeepers, honey sellers and appliance repairers storing hive equipment, spares and appliances.",
     keywords:
       "shipping container in Yelahanka New Town, cargo container Yelahanka New Town, storage container Yelahanka New Town, storage container Yelahanka Satellite Town, storage container Someshwara Nagar, storage container Yelahanka 4th Phase, storage container Yelahanka 5th Phase, used shipping container Yelahanka New Town, shipping container price in Yelahanka New Town, storage container for rent in Yelahanka New Town, beekeeping equipment storage container, empty bee hive box storage, beekeeping frame storage, honey extractor storage, honey processing equipment storage, beeswax foundation sheet storage, drawn comb storage, appliance repair shop storage container, washing machine repair stock storage, refrigerator repair stock storage, appliance spare parts storage, standby appliance storage, repaired appliance collection storage",
     // Approximate point in Yelahanka New Town, north Bengaluru (rounded from the OpenStreetMap view of the
@@ -54453,8 +54480,9 @@ export const CITY_PAGES: CityPage[] = [
     city: "Panathur",
     listTitle: "Shipping & Storage Containers in Panathur",
     metaTitle: "Shipping Container in Panathur | Tanker, STP & Lift Storage",
+    // SEO-1 (2026-11-22): description shortened to 145 chars; was "Shipping and storage containers in Panathur for water tanker hoses, pump spares, STP maintenance equipment, RO filters and lift contractor parts. Request a quote." (162).
     metaDescription:
-      "Shipping and storage containers in Panathur for water tanker hoses, pump spares, STP maintenance equipment, RO filters and lift contractor parts. Request a quote.",
+      "Shipping and storage containers in Panathur for water tanker hoses, pump spares, STP maintenance equipment, RO filters and lift contractor parts.",
     keywords:
       "shipping container in Panathur, cargo container Panathur, storage container Panathur, storage container Panathur Main Road, storage container Balagere, used shipping container Panathur, shipping container price in Panathur, storage container for rent in Panathur, storage container rent Panathur, water tanker operator storage container, STP maintenance contractor storage container, lift maintenance spares container",
     // Approximate: Panathur Main Road near the village centre (owner to review).
@@ -54869,9 +54897,11 @@ export const CITY_PAGES: CityPage[] = [
     slug: "shipping-container-kaggadasapura",
     city: "Kaggadasapura",
     listTitle: "Shipping & Storage Containers in Kaggadasapura",
-    metaTitle: "Shipping Container in Kaggadasapura | Contractor & Recycling Storage",
+    // SEO-1 (2026-11-22): shortened to 56 chars; was "Shipping Container in Kaggadasapura | Contractor & Recycling Storage" (68).
+    metaTitle: "Shipping Container in Kaggadasapura | Contractor Storage",
+    // SEO-1 (2026-11-22): description shortened to 154 chars; was "Shipping and storage containers in Kaggadasapura for electrical and plumbing contractors storing cables, pipes and fittings, and recyclers handling sorted dry materials." (169).
     metaDescription:
-      "Shipping and storage containers in Kaggadasapura for electrical and plumbing contractors storing cables, pipes and fittings, and recyclers handling sorted dry materials.",
+      "Shipping and storage containers in Kaggadasapura for electrical and plumbing contractors' cables, pipes and fittings, and recyclers' sorted dry materials.",
     keywords:
       "shipping container in Kaggadasapura, cargo container Kaggadasapura, storage container Kaggadasapura, storage container Kaggadasapura Main Road, storage container Malleshpalya, storage container Vignana Nagar, storage container Nagavarapalya, used shipping container Kaggadasapura, shipping container price in Kaggadasapura, storage container for rent in Kaggadasapura",
     // Approximate point on Kaggadasapura Main Road, east Bengaluru (for the owner to confirm).
@@ -55351,7 +55381,8 @@ export const CITY_PAGES: CityPage[] = [
     listTitle: "Portable Cabins in Madurai",
     // The brief's anchor for the Cities We Serve hub (Tamil Nadu group).
     directoryLabel: "Portable cabins in Madurai",
-    metaTitle: "Portable Cabin & Porta Cabin in Madurai | Hospitals, Jasmine Packing & Godowns",
+    // SEO-1 (2026-11-22): shortened to 56 chars; was "Portable Cabin & Porta Cabin in Madurai | Hospitals, Jasmine Packing & Godowns" (78).
+    metaTitle: "Portable & Porta Cabins in Madurai | Hospitals & Godowns",
     metaDescription:
       "Portable cabins and porta cabins in Madurai for hospital waiting areas and help desks, jasmine packing rooms, Ring Road godown offices and Kappalur units.",
     keywords:
@@ -56656,7 +56687,8 @@ export const CITY_PAGES: CityPage[] = [
     slug: "portable-toilet-cabin-shoolagiri",
     city: "Shoolagiri",
     listTitle: "Portable Toilet Cabins in Shoolagiri",
-    metaTitle: "Portable Toilet Cabin in Shoolagiri | Site & Industrial Toilet Blocks",
+    // SEO-1 (2026-11-22): shortened to 59 chars; was "Portable Toilet Cabin in Shoolagiri | Site & Industrial Toilet Blocks" (69).
+    metaTitle: "Portable Toilet Cabin in Shoolagiri | Site & Industrial Use",
     metaDescription:
       "Portable toilet cabins in Shoolagiri for industrial sites, construction projects and labour camps. Explore single, multi-seat, ladies and bathing cabin options.",
     keywords:
@@ -57922,9 +57954,11 @@ export const CITY_PAGES: CityPage[] = [
     slug: "portable-cabin-jayanagar",
     city: "Jayanagar",
     listTitle: "Portable Cabins in Jayanagar",
-    metaTitle: "Portable Cabin in Jayanagar | Elder Rooms, Clinics & Dance Studios",
+    // SEO-1 (2026-11-22): shortened to 57 chars; was "Portable Cabin in Jayanagar | Elder Rooms, Clinics & Dance Studios" (66).
+    metaTitle: "Portable Cabin in Jayanagar | Elder, Clinic & Dance Rooms",
+    // SEO-1 (2026-11-22): description shortened to 154 chars; was "Portable cabins in Jayanagar for senior-friendly rooms, private doctor and physiotherapy consultations, counselling rooms and dance practice studios. Get a quote." (162).
     metaDescription:
-      "Portable cabins in Jayanagar for senior-friendly rooms, private doctor and physiotherapy consultations, counselling rooms and dance practice studios. Get a quote.",
+      "Portable cabins in Jayanagar for senior-friendly rooms, doctor and physiotherapy consultations, counselling rooms and dance practice studios. Get a quote.",
     keywords:
       "Portable Cabin in Jayanagar, Porta Cabin Jayanagar, Prefabricated Cabin Jayanagar, Readymade Cabin Jayanagar, Portable Cabin Jayanagar 4th Block, Portable Cabin Tilak Nagar, Portable Cabin Byrasandra, Portable Cabin Manufacturers Jayanagar, Portable Cabin Price in Jayanagar, Porta Cabin Cost Jayanagar, Portable Cabin on Rent in Jayanagar, Elder Room Cabin, Granny Annex Cabin, Accessible Portable Room, Senior-Friendly Cabin with Attached Bathroom, Home Clinic Cabin, Consultation Room Cabin, Physiotherapy Room Cabin, Counselling Room Cabin, Dance Practice Studio Cabin",
     geo: { region: "IN-KA", placename: "Jayanagar, Bengaluru, Karnataka, India", position: "12.9293;77.5826", icbm: "12.9293, 77.5826" },
