@@ -47970,6 +47970,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "storage containers on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
         after: ".",
       },
+      // Sahakara Nagar brief (2026-11-21, §4): handmade soap and candle makers' and pottery studios' stock in
+      // Sahakara Nagar is that page's intent; this page's own targeting is unchanged.
+      {
+        before: "Handmade soap and candle makers and pottery studios in neighbouring Sahakara Nagar have a page of their own:",
+        link: { label: "soap, candle and pottery storage in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -48208,6 +48215,701 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN SAHAKARA NAGAR — storage for handmade soap and candle makers (cured
+   * soap, moulds, empty jars and tins, wicks, packaging, gift sets) and for pottery and ceramics studios
+   * (sealed clay, bisqueware, finished pieces, dry glaze materials, kiln furniture, tools, exhibition
+   * packaging) in Sahakara Nagar, also written Sahakar Nagar, north Bengaluru.
+   *
+   * Owner brief of 2026-11-21 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Two New Shipping Container City
+   * Pages — Mysore Road & Sahakara Nagar", Page 2): meta title, meta description, H1, keywords, local
+   * modifiers, section order, H2 / H3 headings, sizes table, the eleven ordering steps and the ten FAQs are
+   * the brief's, and so is the copy, lightly edited for flow and British spelling. The brief's notes to the
+   * implementer ("Do not assume every soap formulation has the same curing period", "Do not claim that
+   * ordinary ventilation alone provides adequate protection", "Do not present an ordinary storage-only
+   * container as an approved hazardous-chemical storage facility", "Do not recommend: soap manufacturing…
+   * inside an ordinary storage-only container", "Do not assume every glaze material…", "Do not assume an
+   * ordinary container is suitable for fragile greenware", "Do not operate a pottery kiln inside…", "Do not
+   * guarantee placement on a residential property…", "link to the verified Bellandur page", "Do not
+   * invent…", "Conditional section…", "Highlight only verified capabilities…", "Do not target…", "Use
+   * verified company phone numbers…") are instructions, not page copy: where one carries a fact for the
+   * reader it is reworded as a plain statement ("not every soap formulation has the same curing period",
+   * "ventilation on its own does not provide adequate protection", "an ordinary storage-only container is
+   * not an approved hazardous-chemical store", "soap making, wax melting, candle pouring and chemical
+   * mixing do not take place inside an ordinary storage-only container", "not every glaze material is
+   * suitable for ordinary container storage", "an ordinary container is not automatically suitable for
+   * fragile greenware", "a pottery kiln is not operated inside an ordinary storage-only shipping
+   * container", "placement on a residential property is never guaranteed before the permissions have been
+   * checked"); otherwise it is left out. Where the brief gives a section two checklists, the longer one
+   * stays a list and the other becomes a sentence (the template gives a section one list). The route
+   * follows the site convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions,
+   * link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; shelves, racks, supports, bins, bays, locks, lighting,
+   * ventilation, insulation and environmental controls are layout options and price factors "where your
+   * quotation includes them", never stock items or guaranteed conditions. The optional Kannada search terms
+   * are not used: the page is in English. No Product JSON-LD: city pages carry no prices (file rule) and a
+   * Product block without offers earns no rich result, so the Service JSON-LD (no offers), FAQPage and
+   * BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("storage and shipping containers" → the cargo category) + heroCta.
+   *   Soap and candle makers, "Heat & Chemical Safety for Soap and Candle Stock", pottery and ceramics
+   *     studios, "Pottery & Ceramics Storage Safety" and "Storage Container Layout Options" → five
+   *     afterIntro extra sections, the first four with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, eleven steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around Sahakara Nagar" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?"
+   *   → a default extra section (after the areas, as in the brief). FAQs: the brief's ten.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §4, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container product page"); soap and candle section → "party-supply and décor stock
+   * storage on Hennur Road" (that page's "Seasonal Stock for Décor & Party-Supply Sellers" section: candles
+   * bought in as party stock are its intent; handmade candle-making stock stays here); "Candles and wax"
+   * H3 → "how insulated or air-conditioned containers are specified" (the Vellore page's "Insulated and
+   * air-conditioned storage enquiries" section); pottery section → "art-class supply storage in Kalyan
+   * Nagar" (artwork, easels and art-class supplies are that page's intent; pottery studios stay here);
+   * placement → "delivery checks for gated and narrow residential plots" (Bellandur's restricted-site
+   * delivery notes, as the brief asks); sizes → "inspecting a second-hand container before you buy": the
+   * brief's /shipping-container-chennai is not a route (the Chennai product page gives inspection one
+   * sentence), so it points to the Athipattu page's "Used Container Inspection" checklist, as the sibling
+   * pages do; rental → /products/shipping-container-rental; areas → Hebbal (Hebbal, Kodigehalli,
+   * Byatarayanapura and Kempapura), Vidyaranyapura (Vidyaranyapura and Thindlu), Thanisandra Main Road
+   * (Thanisandra, Jakkur and Amruthahalli) and RT Nagar. Not linked: Koramangala (its page has no D2C
+   * finished-goods section, so it does not support the brief's anchor) and Jalahalli West (no page on this
+   * main). Anchors differ from the siblings' anchors for the same targets. Inbound: the Hebbal, Bengaluru
+   * and Vidyaranyapura shipping pages' areas sections (one `areasInlineLinks` item each, their own
+   * targeting unchanged); the Karnataka shipping hub ("Shipping Containers in Sahakara Nagar"); the cargo
+   * category's location links ("Storage containers in Sahakara Nagar"); and every Karnataka shipping page's
+   * nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Sahakara Nagar and Sahakar Nagar (one page for
+   * both spellings), for handmade soap and candle makers' stock and for pottery and ceramics studios' stock.
+   * Not targeted: Hebbal, Kodigehalli, Byatarayanapura and Kempapura (Hebbal page; named here only in the
+   * link to it); Vidyaranyapura and Thindlu (Vidyaranyapura page; same); Thanisandra, Jakkur and
+   * Amruthahalli (Thanisandra Main Road page; same); RT Nagar (its own page; same); Tata Nagar (not named).
+   * Kept apart from party-supply retail stock (Hennur Road; named here only in the link to it), general art
+   * classes (Kalyan Nagar; same), climate-controlled units as such (Vellore; same), general D2C goods
+   * (Koramangala; not targeted), baking supplies (Jalahalli West; not targeted) and gallery cabins
+   * (Indiranagar portable shop page; not named). "Bengaluru" stays out of the title, as the brief asks; the
+   * geo meta and the Service JSON-LD's areaServed carry "Sahakara Nagar, Bengaluru, Karnataka".
+   *
+   * Images: no Sahakara Nagar images were supplied, and the owner chose (2026-11-22) to reuse the five
+   * Mysore Road renders: copies of the owner's "public/images/shipping-container-mysore-road city
+   * page/shipping-container-mysore-road/cabin (1–5).webp" (lossy VP8, 105–174 KB) of one olive-green
+   * container, each with its VP8 data byte-for-byte plus an XMP dc:title / dc:description that labels it an
+   * illustrative render shared with the Mysore Road page (no creator, GPS, camera or date). (1)
+   * three-quarter exterior = hero / og:image (the brief's hero filename and alt, followed by what the picture
+   * shows); (2) cargo doors = soap and candle section (its caption is about heat in a closed steel box); (5)
+   * empty interior = layout options (the brief's interior filename, but not its "with shelving" alt: nothing
+   * is fitted); (4) roof from above = placement section; (3) blind end wall = sizes section. No image shows
+   * soap, candles, wax, moulds, packaging, clay, ceramics, kiln furniture or tools, so the brief's eight
+   * use-case image slots are not used, and no alt text, caption or filename claims those items, a size or a
+   * place. The hero caption says the render is shared with the Mysore Road page.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-sahakara-nagar",
+    city: "Sahakara Nagar",
+    listTitle: "Shipping & Storage Containers in Sahakara Nagar",
+    metaTitle: "Shipping Container in Sahakara Nagar | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Sahakara Nagar for handmade soap and candle makers, pottery studios, clay, ceramics, moulds and craft packaging.",
+    keywords:
+      "shipping container in Sahakara Nagar, shipping container in Sahakar Nagar, cargo container Sahakara Nagar, storage container Sahakara Nagar, storage container Sahakar Nagar, used shipping container Sahakara Nagar, shipping container price in Sahakara Nagar, storage container for rent in Sahakara Nagar, handmade soap maker storage container, candle maker storage, soap and candle packaging storage, craft business stock storage, pottery studio storage container, clay and glaze storage, ceramics stock storage, kiln furniture storage",
+    // Approximate point in central Sahakara Nagar, north Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Sahakara Nagar, Bengaluru, Karnataka, India",
+      position: "13.0620;77.5870",
+      icbm: "13.0620, 77.5870",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1408 × 1056 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Hennur Road, Vellore, Kalyan Nagar, Bellandur, Athipattu, Hebbal, Vidyaranyapura, Thanisandra Main Road and RT Nagar are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-sahakara-nagar/shipping-container-sahakara-nagar.webp",
+      alt: "Shipping container exterior suitable for craft business inventory storage: an olive-green container with both cargo doors closed, on a paved yard under a blue sky with port cranes in the distance",
+      width: 1408,
+      height: 1056,
+      caption: "Illustrative render, shared with our Mysore Road page: it was not photographed in Sahakara Nagar and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Sahakara Nagar",
+    tagline:
+      "Clean, lockable stockroom space for cured soap, moulds, candle jars and gift packaging, and for sealed clay, bisqueware, finished ceramics and kiln shelves.",
+    intro: [
+      "Sahakara Nagar, also known as Sahakar Nagar, is an established residential locality in north Bengaluru.",
+      "Small craft businesses may require additional space for packaging, finished products, tools and materials.",
+      "Handmade soap and candle makers handle moulds, containers, packaging and seasonal inventory. Pottery and ceramics studios manage clay, fragile pieces, tools and kiln accessories.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "storage and shipping containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Sahakara Nagar for compatible craft materials and finished stock.",
+    },
+
+    areasHeading: "Areas Served Around Sahakara Nagar",
+    areasText:
+      "This page covers shipping and storage container requirements in Sahakara Nagar, also written Sahakar Nagar, and its residential blocks. Most streets here are residential and of modest width, so the approach, the gate, the standing spot and the land use are checked for each address before any delivery date is proposed.",
+    // Brief §2 and §5: Hebbal, Kodigehalli, Byatarayanapura and Kempapura belong to the Hebbal page;
+    // Vidyaranyapura and Thindlu to the Vidyaranyapura page; Thanisandra, Jakkur and Amruthahalli to the
+    // Thanisandra Main Road page; RT Nagar to its own page.
+    areasInlineLinks: [
+      {
+        before: "For Hebbal, Kodigehalli, Byatarayanapura and Kempapura, see our page on",
+        link: { label: "shipping and storage containers in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+        after: ".",
+      },
+      {
+        before: "Vidyaranyapura and Thindlu, to the north-west, have a page of their own:",
+        link: { label: "storage containers in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+        after: ".",
+      },
+      {
+        before: "Thanisandra, Jakkur and Amruthahalli, to the east, are covered under",
+        link: { label: "container storage on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+        after: ".",
+      },
+      {
+        before: "RT Nagar, to the south, has its own page:",
+        link: { label: "shipping containers in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Handmade Soap & Candle Makers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-sahakara-nagar/shipping-container-cargo-doors-sahakara-nagar.webp",
+          alt: "Olive-green container doors seen straight on: four silver locking bars, door handles and a central lock box, standing on concrete beside stacked containers",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render. A closed steel box heats up in the sun, so wax, candles and oils go in only where the temperature they need has been confirmed and, if required, insulation or air-conditioning is quoted.",
+        },
+        paragraphs: [
+          "Handmade soap and candle businesses manage different types of materials throughout production, packaging and dispatch. Some products are temperature-sensitive, while others require clean and dry storage.",
+          "A suitable shipping container may provide additional stockroom space where the required environmental conditions can be maintained.",
+        ],
+        // Brief §5: candles bought in and sold as party stock belong to the Hennur Road page; handmade
+        // candle-making stock stays here.
+        inlineLinks: [
+          {
+            before: "Buying in candles and décor to sell as seasonal party stock, rather than making them? See our notes on",
+            link: { label: "party-supply and décor stock storage on Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Finished handmade soap storage",
+            paragraphs: [
+              "Compatible stock may include fully cured soap bars, wrapped soap products, labelled soap cartons and finished gift sets. Organise it by:",
+            ],
+            bullets: [
+              { text: "Product." },
+              { text: "Fragrance." },
+              { text: "Batch." },
+              { text: "Production date." },
+              { text: "Quantity." },
+              { text: "Dispatch status." },
+            ],
+            closing: [
+              "Follow each product's actual curing and storage requirements: not every soap formulation has the same curing period.",
+            ],
+          },
+          {
+            heading: "Soap mould storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Silicone moulds." },
+              { text: "Other suitable soap moulds." },
+              { text: "Trays." },
+              { text: "Approved production accessories." },
+            ],
+            closing: ["Store them clean and dry, and protect them against deformation, dust and contamination."],
+          },
+          {
+            heading: "Candle jars and tins",
+            paragraphs: ["Compatible stock may include:"],
+            bullets: [
+              { text: "Empty candle jars." },
+              { text: "Metal tins." },
+              { text: "Suitable containers." },
+              { text: "Protective packaging." },
+            ],
+            closing: ["Use padded shelving for glass jars, and avoid unstable stacking."],
+          },
+          {
+            heading: "Wicks and packaging materials",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Wicks." },
+              { text: "Labels." },
+              { text: "Boxes." },
+              { text: "Wrapping materials." },
+              { text: "Gift packaging." },
+              { text: "Display accessories." },
+            ],
+            closing: ["Keep packaging clean, dry and protected against crushing."],
+          },
+          {
+            heading: "Finished gift sets",
+            paragraphs: ["Organise completed orders by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Product." },
+              { text: "Batch." },
+              { text: "Quantity." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Use suitable shelves and labelled storage bays."],
+          },
+          {
+            heading: "Batch inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Batch number." },
+              { text: "Production date." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Heat & Chemical Safety for Soap and Candle Stock",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Candles and wax",
+            paragraphs: [
+              "Candles and wax products may soften or deform in high temperatures, so they are stored only where suitable temperature conditions can be maintained. A standard uninsulated metal container may become too hot for them.",
+              "Climate control may be necessary, depending on the formulation and local conditions; ventilation on its own does not provide adequate protection.",
+            ],
+            // Brief §4: the Vellore page's "Insulated and air-conditioned storage enquiries" section covers this.
+            inlineLinks: [
+              {
+                before: "If your wax or candles need a stated temperature, see",
+                link: { label: "how insulated or air-conditioned containers are specified", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " before a unit is chosen.",
+              },
+            ],
+          },
+          {
+            heading: "Oils and butters",
+            paragraphs: [
+              "Some oils and butters can deteriorate in unsuitable heat, light or storage conditions. Follow the manufacturer's or supplier's storage instructions, and use appropriate temperature-controlled storage where it is required.",
+            ],
+          },
+          {
+            heading: "Caustic soda and other chemicals",
+            paragraphs: [
+              "Lye, fragrance oils, essential oils and other production chemicals may require specialised storage. Follow their safety data sheets and the requirements that apply.",
+              "An ordinary storage-only container is not an approved hazardous-chemical store.",
+            ],
+          },
+          {
+            heading: "Production activities",
+            paragraphs: [
+              "Soap making, wax melting, candle pouring and chemical mixing do not take place inside an ordinary storage-only container. Production needs appropriately designed premises and suitable safety controls.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Pottery & Ceramics Studios",
+        placement: "afterIntro",
+        paragraphs: [
+          "Pottery studios and ceramics businesses handle heavy clay, fragile ceramic pieces, tools, moulds and kiln accessories.",
+          "A suitable shipping container may provide additional storage where environmental conditions and floor-loading limits are appropriate.",
+        ],
+        // Brief §5: general art classes and artists' stock belong to the Kalyan Nagar page; pottery studios stay here.
+        inlineLinks: [
+          {
+            before: "Teaching painting and drawing, with canvases and easels to store rather than clay and kiln shelves? See our page on",
+            link: { label: "art-class supply storage in Kalyan Nagar", href: "/cities-we-serve/shipping-container-kalyan-nagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Clay storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Sealed clay bags." },
+              { text: "Packaged clay." },
+              { text: "Other suitable pottery materials." },
+            ],
+            closing: [
+              "Store them on stable low-level supports, protect clay against unsuitable drying or temperature conditions, and verify the total weight and the concentrated floor loads.",
+            ],
+          },
+          {
+            heading: "Bisqueware storage",
+            paragraphs: [
+              "Bisqueware is fragile and may chip or break during handling. Use padded shelves, suitable separators, stable supports and clear labels, and organise it by:",
+            ],
+            bullets: [
+              { text: "Student." },
+              { text: "Order." },
+              { text: "Project." },
+              { text: "Exhibition." },
+              { text: "Collection date." },
+            ],
+          },
+          {
+            heading: "Finished ceramic pieces",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Bowls." },
+              { text: "Mugs." },
+              { text: "Plates." },
+              { text: "Decorative ceramics." },
+              { text: "Other finished pieces." },
+            ],
+            closing: ["Use suitable protective packaging and shelving, and avoid excessive stacking."],
+          },
+          {
+            heading: "Dry glaze materials",
+            paragraphs: [
+              "Some glaze materials may require specialised handling because of their chemical composition. Store them only where the manufacturer's instructions, the safety data sheets and the requirements that apply can be met: not every glaze material is suitable for ordinary container storage.",
+            ],
+          },
+          {
+            heading: "Kiln furniture",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Kiln shelves." },
+              { text: "Kiln posts." },
+              { text: "Other suitable kiln accessories." },
+            ],
+            closing: ["Use sturdy, appropriately rated racks, and protect fragile shelves against impact."],
+          },
+          {
+            heading: "Pottery tools and moulds",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Banding wheels." },
+              { text: "Hand tools." },
+              { text: "Moulds." },
+              { text: "Other approved accessories." },
+            ],
+            closing: ["Use labelled shelves, drawers and toolboards."],
+          },
+          {
+            heading: "Exhibition and dispatch materials",
+            paragraphs: ["Compatible stock may include:"],
+            bullets: [
+              { text: "Protective wrapping." },
+              { text: "Cartons." },
+              { text: "Labels." },
+              { text: "Display accessories." },
+              { text: "Other suitable packaging materials." },
+            ],
+            closing: ["Organise them by event, customer or order."],
+          },
+        ],
+      },
+      {
+        heading: "Pottery & Ceramics Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Heavy clay inventory",
+            paragraphs: ["Clay can be heavy. Verify:"],
+            bullets: [
+              { text: "Total material weight." },
+              { text: "Floor-loading capacity." },
+              { text: "Pallet ratings." },
+              { text: "Rack ratings." },
+              { text: "Handling methods." },
+              { text: "Access requirements." },
+            ],
+            closing: ["The container's verified load limits are never exceeded."],
+          },
+          {
+            heading: "Greenware",
+            paragraphs: [
+              "Unfired pottery may need careful environmental control and handling; an ordinary container is not automatically suitable for fragile greenware.",
+            ],
+          },
+          {
+            heading: "Glazes and oxides",
+            paragraphs: [
+              "Certain glaze materials and oxides may present health or environmental hazards. Follow their safety data sheets and the storage requirements that apply.",
+            ],
+          },
+          {
+            heading: "Kiln firing",
+            paragraphs: [
+              "A pottery kiln is not operated inside an ordinary storage-only shipping container. Kiln installation and firing need appropriately designed facilities and fire-safety controls.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-sahakara-nagar/sahakara-nagar-storage-container-interior.webp",
+          alt: "Empty container interior: glossy olive-green corrugated walls running to the far end, a ribbed roof and a plywood floor, with no shelves fitted",
+          width: 1672,
+          height: 940,
+          caption:
+            "Illustrative render of an empty interior. Soap and candle shelving, padded ceramics racks, clay supports and packaging bins are fitted only when your quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Finished soap shelves." },
+          { text: "Soap mould storage." },
+          { text: "Candle jar shelving." },
+          { text: "Wick and packaging bins." },
+          { text: "Gift-set dispatch bays." },
+          { text: "Padded glass storage." },
+          { text: "Low-level clay supports." },
+          { text: "Bisqueware shelves." },
+          { text: "Finished ceramics racks." },
+          { text: "Kiln furniture storage." },
+          { text: "Pottery toolboards." },
+          { text: "Exhibition packaging sections." },
+          { text: "Lockable storage." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+          { text: "Environmental controls where required." },
+        ],
+        closing: [
+          "The final layout reflects the actual product dimensions, weights, temperature requirements and safety considerations.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Sahakara Nagar",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-sahakara-nagar/shipping-container-roof-view-sahakara-nagar.webp",
+          alt: "Overhead view of an olive-green container showing its corrugated roof and corner castings on a grey concrete surface",
+          width: 1672,
+          height: 940,
+          caption:
+            "Illustrative top-down render. On a residential street the gate width, overhead wires and the room for the delivery vehicle are checked before a unit size is suggested.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, such as approved commercial storage plots, suitable business premises, permitted private compounds and other authorised sites.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Land-use restrictions." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Residential roads may have limited access. A 10 ft or 20 ft container may be considered for compact sites, subject to actual access and availability, and a 40 ft container only where there is enough space and a workable unloading arrangement.",
+          "Placement on a residential property is never guaranteed before the permissions have been checked.",
+        ],
+        // Brief §2: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
+        inlineLinks: [
+          {
+            before: "Behind a society gate or down a narrow lane? Read our",
+            link: { label: "delivery checks for gated and narrow residential plots", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-sahakara-nagar/shipping-container-end-wall-sahakara-nagar.webp",
+          alt: "End wall of an olive-green container with vertical ribs, corner castings and forklift pockets at the base, in an open yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative end view. Shelf depths and clay pallet positions are worked out only after the offered unit's inside width, height and door opening have been measured.",
+        },
+        table: {
+          caption:
+            "Volumes are rough guides. Internal dimensions, door openings, floor-loading limits and availability are checked against the actual unit, and an approximate volume does not establish the allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Packaging, soap moulds and small pottery inventory"],
+            ["20 ft", "33 m³", "Larger craft stockrooms and compatible ceramics materials"],
+            ["40 ft", "67 m³", "Larger inventories where site access and loading permit"],
+          ],
+        },
+        // Brief §4: used-container buying guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Weighing up a used unit? Go through",
+            link: { label: "inspecting a second-hand container before you buy", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Sahakara Nagar",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Soap stock shelving." },
+          { text: "Candle jar storage." },
+          { text: "Padded ceramics racks." },
+          { text: "Clay supports." },
+          { text: "Kiln furniture racks." },
+          { text: "Packaging bins." },
+          { text: "Locking arrangements." },
+          { text: "Lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental control requirements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on the actual storage application."],
+      },
+      {
+        heading: "Storage Container on Rent in Sahakara Nagar",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for seasonal gift stock or for pottery exhibition inventory. Containers can be hired for anything from one month to five years; the quotation sets out which unit you get, for how long, what transport costs, whether a deposit applies, and how the container is dropped off and later picked up.",
+        ],
+        inlineLinks: [
+          {
+            before: "The hire sizes and terms on offer are listed under",
+            link: { label: "container hire periods and sizes", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the products and materials." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify fragile, heavy or temperature-sensitive stock." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelving, supports, racks and bins." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For soap and candle makers and pottery studios in Sahakara Nagar, that means:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "a choice of 20 ft or 40 ft, and 10 ft where a unit of that size can be sourced." },
+          { title: "Storage-oriented modifications", text: "soap and candle shelving, padded ceramics racks or low clay supports, each itemised in the quotation." },
+          { title: "Shelving and racking provisions", text: "arranged by batch and fragrance, or by student, order and exhibition." },
+          { title: "Locking arrangements", text: "doors secured with the locking hardware your quotation specifies." },
+          { title: "Ventilation and insulation options", text: "quoted against the stock you describe; no temperature is promised and no chemical-storage approval is implied." },
+          { title: "Quotation and delivery coordination", text: "the quotation comes first; the route, the gate and the standing spot are checked before a date is offered." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can handmade soap be stored in a shipping container?",
+        answer:
+          "Potentially, where the soap is ready for storage and the required temperature, hygiene and moisture conditions can be maintained.",
+      },
+      {
+        question: "Can candles be stored inside a standard shipping container?",
+        answer: "Candles may soften in high temperatures, so suitable temperature control may be required.",
+      },
+      {
+        question: "Can soap moulds and packaging be stored inside a container?",
+        answer: "Potentially, where the materials can be kept clean, dry and protected.",
+      },
+      {
+        question: "Can caustic soda and fragrance oils be stored inside a container?",
+        answer:
+          "These materials may require specialised storage. Follow their safety data sheets and the requirements that apply.",
+      },
+      {
+        question: "Can clay be stored inside a shipping container?",
+        answer:
+          "Potentially, using suitable low-level supports and appropriate environmental conditions, subject to load limits.",
+      },
+      {
+        question: "Can finished ceramic products be stored inside a container?",
+        answer: "Yes, where suitable protective packaging and stable shelving are provided.",
+      },
+      {
+        question: "Can a pottery kiln be operated inside an ordinary container?",
+        answer: "No. An ordinary storage-only container is not a suitable kiln-firing facility.",
+      },
+      {
+        question: "Can glaze materials be stored inside a container?",
+        answer: "Only where their specific chemical and environmental storage requirements can be met.",
+      },
+      {
+        question: "What is the shipping container price in Sahakara Nagar?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer:
+          "Delivery depends on availability, customisation, transport and site access; the timeline is confirmed with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Sahakara Nagar",
+    ctaText: `Whether you need storage for soap packaging, candle accessories, pottery materials, finished ceramics or exhibition stock, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp or e-mail ${COMPANY.email.sales}. Service area: Sahakara Nagar (Sahakar Nagar), Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Sahakara Nagar",
+      intro:
+        "Select the container type and quantity, add your Sahakara Nagar address or a map pin, and let us know whether you plan to buy or hire. Say whether you'll be storing soap and candle goods or pottery and ceramics, which items are fragile or heat-sensitive, and roughly what the clay or the heaviest shelf weighs, so the quotation fits the unit to its contents.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer: `Containers are supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and handled from our Bengaluru office in Electronic City; nothing is stocked or displayed in Sahakara Nagar. Each container's details are set by its written quotation, covering condition and grade, inside and door-opening sizes, how much the floor can carry, any shelves, racks, supports, bins, bays, lights, vents, insulation, climate equipment or locks that have been agreed, the hire period for a rental, and the arrangements for delivery, unloading and collection. Since stock changes, a delivery date becomes firm only once that quotation confirms it. Without an approved specification saying so, no container is sold or hired as climate-controlled or held at a stated temperature, none is loaded beyond its verified limit, and none is provided for storing lye, fragrance oils or hazardous glaze materials, or for making soap, melting wax, pouring candles or firing a kiln. All five images are illustrative renders of one container, also shown on our Mysore Road page: none was taken in Sahakara Nagar, and none shows a delivered or fitted unit, craft stock or pottery. The volumes in the sizes table are estimates, not payload ratings. Soap and candle makers and pottery studios appear here as examples of possible users, not as customers or completed projects, and naming Sahakara Nagar shows where we take enquiries, not a confirmed delivery address. Guidance on soap, candles, chemicals, clay, glazes, kilns, placement and permissions is general in nature and is not safety, legal or engineering advice; always follow the manufacturers', suppliers' and authorities' instructions.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN VIDYARANYAPURA — storage for seed and agri-input dealers (packaged
    * seed, lot records, clean sprayers, drip irrigation kits, seedling trays, hand tools, seasonal stock)
    * and for laboratory glassware and supplies dealers (glassware, plasticware, non-hazardous consumables,
@@ -48280,7 +48982,8 @@ export const CITY_PAGES: CityPage[] = [
    * and for laboratory glassware and supplies dealers' stock. Not targeted: Hebbal, Kodigehalli,
    * Byatarayanapura and Ganganagar (Hebbal page; named here only in the link to it); Yelahanka (Yelahanka
    * page; same); Yelahanka New Town (its own page; same); Thanisandra and Jakkur (Thanisandra Main Road
-   * page; not named); Jalahalli, Mathikere and Sahakar Nagar (kept for possible future pages; not named);
+   * page; not named); Jalahalli and Mathikere (kept for possible future pages; not named); Sahakara
+   * Nagar (its own page, linked from the areas);
    * BEL Layout and HMT Layout (not named). Kept apart from agri-tech field kits (Hebbal), dairy feed
    * (Varthur; named here only in the link to it), nursery and landscaping stock (Bannerghatta Road; same),
    * STEM kits and science models (no page; not targeted), laboratory equipment awaiting installation and
@@ -48358,6 +49061,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "For Hebbal, Kodigehalli, Byatarayanapura and Ganganagar, go to our page on",
         link: { label: "shipping containers in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+        after: ".",
+      },
+      // Sahakara Nagar brief (2026-11-21, §4): craft makers and pottery studios in Sahakara Nagar have their own page.
+      {
+        before: "Soap and candle makers and pottery studios in Sahakara Nagar, to the south-east, are covered on our page on",
+        link: { label: "shipping containers in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
         after: ".",
       },
       {
