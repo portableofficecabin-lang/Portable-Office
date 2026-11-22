@@ -9830,6 +9830,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "shipping containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
         after: ".",
       },
+      // Shigehalli brief (2026-11-22, §7): crockery and toy wholesalers in Shigehalli (Seegehalli) belong to
+      // that page; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Closer to the city, dinnerware and toy wholesalers in Shigehalli are covered on our page on",
+        link: { label: "crockery wholesaler storage containers in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -24464,6 +24471,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "storage containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
         after: ".",
       },
+      // Shigehalli brief (2026-11-22, §7): toy and crockery wholesalers' stock in Shigehalli (Seegehalli) is
+      // that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Toy distributors and crockery wholesalers a little to the east, in Shigehalli (Seegehalli), can read about",
+        link: { label: "toy wholesale storage containers in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -24650,6 +24664,649 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin operates from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and an office in Electronic City, Bengaluru. It does not run a yard, depot or branch in KR Puram. Every container depends on stock at the time of order; its dimensions, grade, condition, fittings (zones, shelves, drum supports, lights, power points, locks), any hire terms and the transport, unloading and collection are fixed only by its written quotation, and neither a delivery date nor vehicle access is promised. All five pictures are illustrative renders of a single container; none was photographed in KR Puram or shows a delivered or fitted unit. Portable Office Cabin has no connection with Indian Railways or with any telecom operator or internet provider, and KR Puram railway station is mentioned only to locate the area. Parcel consolidators, transporters and network contractors are described as typical users, not as customers or past jobs, and the localities listed show where enquiries are welcome rather than confirmed delivery points. Notes on consignments, restricted cargo, cable drums, equipment, batteries, site access and placement are general guidance, not legal, regulatory, safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN SHIGEHALLI (SEEGEHALLI) — storage for toy wholesalers and distributors
+   * (toy cartons, soft toys, educational toys and games, ride-on toys, seasonal stock, returns, inventory
+   * register) and for crockery and tableware wholesalers (dinner sets, plates and bowls, mugs and cups,
+   * cutlery and serveware, display samples, customer-wise order staging, breakages and returns, inventory
+   * register) in east Bengaluru.
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI MASTER SEO IMPLEMENTATION COMMAND — Shipping & Storage Containers
+   * in Shigehalli (Seegehalli)"): meta title, meta description, H1, keywords, section order, H2 / H3
+   * headings, sizes table, the nine ordering steps and the seven FAQs are the brief's, and so is the copy,
+   * lightly edited for flow and British spelling. One page serves both spellings: "Shigehalli" in the
+   * title, H1 and URL, "Seegehalli" in the description, the intro, the areas text and the FAQ. The brief's
+   * notes to the implementer ("Do not recommend charging batteries…", "Do not instruct businesses to remove
+   * built-in batteries…", "Do not claim that an ordinary shipping container is automatically fire-rated",
+   * "Do not mix damaged goods…", "Do not place containers on public roads…", "Do not guarantee that every
+   * Shigehalli road is suitable…", "Do not invent prices…", "Conditional section…", "Highlight only verified
+   * capabilities…", "Use verified company phone numbers…") are instructions, not page copy: where one
+   * carries a fact for the reader it is reworded as a plain statement ("batteries are not charged inside an
+   * ordinary storage-only container", "built-in batteries stay in place unless the manufacturer
+   * specifically permits removal", "an ordinary shipping container is not automatically fire-rated",
+   * "damaged goods are kept apart from approved sale stock", "no container is placed on a public road or
+   * footpath without the required authorisation", "not every road in Shigehalli suits a large container
+   * vehicle"); otherwise it is left out. FAQ 2's answer is reworded the same way. Where an H2 has two
+   * checklists (placement), the shorter one becomes a sentence (the template gives a section one list). The
+   * route follows the site convention (/cities-we-serve/…), not the brief's root slug. The tagline,
+   * captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no rent, deposit or delivery charge is stated here); the
+   * 10 ft row keeps the brief's "if available"; shelving, racks, pallets, bins, lighting, ventilation,
+   * insulation and locks are price factors and options "where your quotation includes them", never stock
+   * items or guaranteed conditions. The optional Kannada search terms are not used: the page is in English.
+   * No Product JSON-LD: city pages carry no prices (file rule) and a Product block without offers earns no
+   * rich result, so the Service JSON-LD (no offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   Toy wholesalers, "Toy Stock Storage Safety", crockery and tableware wholesalers and "Crockery Storage
+   *     Safety" → four afterIntro extra sections with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order" (ordered, nine steps) → afterSolutions extra
+   *     sections, so the steps stay before the areas.
+   *   "Areas Served" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's seven.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §7, only where the destination exists and supports the anchor): intro → the cargo category;
+   * toy section → "Gombe Habba doll storage in Banashankari" (that page's doll-collection sections); crockery
+   * section → "catering vessel storage in Horamavu" (its "Catering Vessels, Lighting and Electrical
+   * Accessories" H3) and "restaurant equipment storage in Koramangala" (its "Restaurant equipment storage
+   * between moves" solutions); crockery safety, "Fragile Goods" H3 → "bar glassware and keg storage in Indiranagar" (its bar
+   * section: kegs, glassware crates, furniture) and "laboratory glassware storage in Vidyaranyapura" (its
+   * "Laboratory glassware" H3); placement → "notes on delivering to restricted sites" (the Bellandur page's
+   * society-gate and narrow-lane section); sizes → "inspection checks for a used container": the brief's
+   * /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used Container
+   * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
+   * "shipping containers in KR Puram", "shipping containers on Whitefield Road" (the Mahadevapura page,
+   * which owns Whitefield Road and Hoodi) and "shipping containers in Hoskote". NOT linked: the brief's
+   * Haralur Road page (no such route), so toy rental and toy libraries are kept apart in words only.
+   * Anchors differ from the siblings' anchors for the same targets. Inbound: the KR Puram, Mahadevapura and
+   * Hoskote pages' areas sections (one `areasInlineLinks` item each, at the end; their locality boundaries
+   * and targeting unchanged), the Karnataka shipping hub ("Shipping Containers in Shigehalli"), the cargo
+   * category's location links ("Storage containers in Shigehalli") and every Karnataka shipping page's nearby
+   * block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Shigehalli and Seegehalli, for toy wholesalers'
+   * and distributors' stock and for crockery and tableware wholesalers' stock. Named only in the pointer
+   * sentences to their own pages: KR Puram and the Old Madras Road corridor (KR Puram page); Mahadevapura,
+   * Hoodi and Whitefield Road (Mahadevapura page); Hoskote (Hoskote page). Not named at all: Medahalli,
+   * Battarahalli, Whitefield, Kadugodi, Belathur and Hope Farm (KR Puram's or a possible future Whitefield
+   * page's), and Channasandra (the name is already used for an RR Nagar locality on the site). Kept apart
+   * from toy rental and toy libraries (no live page), Gombe Habba dolls and kirana backstock (Banashankari),
+   * tent house catering vessels (Horamavu), restaurant kitchen equipment (Koramangala), bar glassware
+   * (Indiranagar) and laboratory glassware (Vidyaranyapura). "Bengaluru" stays out of the title, as the
+   * brief asks; the geo meta and the Service JSON-LD's areaServed carry "Shigehalli, Bengaluru, Karnataka".
+   *
+   * Images: no new images were supplied; the owner asked for EXISTING images. Six catalogue renders already
+   * in the repo and not used on any other city page, copied with their VP8 data byte-for-byte plus an XMP
+   * dc:title / dc:description that labels each one an illustrative image (no creator, GPS, camera or date);
+   * the product originals are untouched: cargo-container-for-sale-main (green container on a slab → hero /
+   * og:image, with the brief's hero filename and alt), cargo-storage-containers-main (pale blue container →
+   * toy section), cargo-containers-main (orange container, door end → crockery section),
+   * cargo-storage-container-40ft (maroon container on a plinth → placement), shipping-container-stacked (long
+   * navy container → sizes) and used-shipping-container-third (weathered red container → price). No image
+   * shows toys, cartons, crockery, shelving or an interior, so the brief's twelve use-case image slots are
+   * not used, and no alt text, caption or filename claims those items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-shigehalli",
+    city: "Shigehalli",
+    listTitle: "Shipping & Storage Containers in Shigehalli",
+    metaTitle: "Shipping Container in Shigehalli | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Shigehalli (Seegehalli) for toy wholesalers, seasonal toy stock, crockery distributors, dinnerware and tableware storage.",
+    keywords:
+      "shipping container in Shigehalli, shipping container in Seegehalli, cargo container Shigehalli, storage container Shigehalli, storage container Seegehalli, used shipping container Shigehalli, shipping container price in Shigehalli, storage container for rent in Shigehalli, toy wholesaler storage container, toy distributor stock storage, seasonal toy stock storage, toy carton storage, crockery wholesaler storage container, tableware stock storage, dinnerware and mug carton storage, cutlery and serveware storage",
+    // Approximate point for Seegehalli (KR Puram sub-locality, about 2 km from the Whitefield (Kadugodi) metro
+    // station), rounded to two decimals; for the owner to confirm.
+    geo: {
+      region: "IN-KA",
+      placename: "Shigehalli, Bengaluru, Karnataka, India",
+      position: "13.0100;77.7600",
+      icbm: "13.0100, 77.7600",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 800 × 800 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // KR Puram, Mahadevapura, Hoskote, Banashankari, Horamavu, Koramangala, Indiranagar, Vidyaranyapura,
+    // Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-shigehalli/shipping-container-shigehalli.webp",
+      alt: "Shipping container exterior suitable for wholesale inventory storage: a green steel container with its double cargo doors closed by four locking bars, standing on a concrete slab",
+      width: 800,
+      height: 800,
+      caption: "Illustrative image of a shipping container from our catalogue. It was not photographed in Shigehalli and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Shigehalli",
+    tagline:
+      "Lockable floor space for a toy distributor's carton runs and festive stock, and sturdy shelving for boxed dinner sets, mugs and cutlery on their way to shops, hotels and restaurants.",
+    intro: [
+      "Shigehalli, also known as Seegehalli, is an area in east Bengaluru where businesses may require additional space for commercial inventory, wholesale goods and equipment.",
+      "Toy distributors and crockery wholesalers handle products with different storage requirements. Toy inventory may include large volumes of cartons and seasonal stock, while crockery and tableware need careful handling because many products are fragile and heavy.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Shigehalli for compatible wholesale inventory and commercial storage requirements.",
+    },
+
+    areasHeading: "Areas Served",
+    areasText:
+      "This page targets Shigehalli and Seegehalli: both spellings refer to the same east Bengaluru locality here. Other villages around Bengaluru share the Seegehalli name, so a map pin with your enquiry helps. The road in, the gate and the spot where the container will sit are looked at for each site before a delivery date is offered.",
+    // Brief §5, §7 and §8: KR Puram and the Old Madras Road corridor belong to the KR Puram page; Mahadevapura,
+    // Hoodi and Whitefield Road to the Mahadevapura page; Hoskote to the Hoskote page.
+    areasInlineLinks: [
+      {
+        before: "KR Puram and the Old Madras Road corridor are covered on our page on",
+        link: { label: "shipping containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
+        after: ".",
+      },
+      {
+        before: "Sites in Mahadevapura, Hoodi and along the Whitefield Road corridor have a page of their own:",
+        link: { label: "shipping containers on Whitefield Road", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: ".",
+      },
+      {
+        before: "Further east, Hoskote town and its industrial area are served from our page on",
+        link: { label: "shipping containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Toy Wholesalers & Distributors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/storage-container-exterior-shigehalli.webp",
+          alt: "Pale blue steel container seen from the door end at an angle, with closed cargo doors and corrugated side walls, resting on a flat concrete slab",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. Fast-selling lines are best kept near the doors, with slow movers, bulky play sets and the returns section towards the far end.",
+        },
+        paragraphs: [
+          "Toy wholesalers supply products to retailers, gift shops, online sellers and other commercial customers.",
+          "Their inventory may include soft toys, educational toys, games, play sets, ride-on toys and seasonal merchandise.",
+          "A suitably configured shipping container may provide organised storage for compatible toy inventory. This is boxed wholesale stock on its way to shops, which is different from a toy rental or toy library collection, or a family's festival doll display.",
+        ],
+        // Brief §8: Gombe Habba dolls belong to the Banashankari page; toy rental has no live page (words only).
+        inlineLinks: [
+          {
+            before: "Putting away dolls and display steps after Navaratri rather than cartons for resale? See",
+            link: { label: "Gombe Habba doll storage in Banashankari", href: "/cities-we-serve/shipping-container-banashankari" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Toy Carton Storage",
+            paragraphs: ["Organise cartons by:"],
+            bullets: [
+              { text: "Product category." },
+              { text: "Manufacturer or brand." },
+              { text: "Age group." },
+              { text: "Model or product code." },
+              { text: "Quantity." },
+              { text: "Customer order." },
+            ],
+            closing: ["Use suitable shelving, avoid unstable stacking, and keep lighter cartons from being crushed."],
+          },
+          {
+            heading: "Soft Toy Storage",
+            paragraphs: [
+              "Keep soft toys in protective packaging, protected against dust, moisture, pests and contamination, and follow the manufacturer's storage requirements.",
+            ],
+          },
+          {
+            heading: "Educational Toy & Game Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Educational toys." },
+              { text: "Board games." },
+              { text: "Puzzle sets." },
+              { text: "Suitable learning materials." },
+            ],
+            closing: ["Organise them by product type and stock code, and protect the packaging against moisture and damage."],
+          },
+          {
+            heading: "Ride-on Toy Storage",
+            paragraphs: [
+              "Ride-on toys and larger play sets may require additional space. Store the heavier cartons on lower shelves or suitable pallets, and follow the manufacturer's requirements for products containing batteries.",
+            ],
+          },
+          {
+            heading: "Seasonal Toy Stock Storage",
+            paragraphs: [
+              "Toy wholesalers may need additional inventory space before school holidays and festive sales periods. Organise suitable stock by:",
+            ],
+            bullets: [
+              { text: "Season." },
+              { text: "Product category." },
+              { text: "Customer order." },
+              { text: "Dispatch priority." },
+            ],
+            closing: ["Keep frequently required stock accessible."],
+          },
+          {
+            heading: "Returns & Damaged Stock",
+            paragraphs: ["Provide a separate section for:"],
+            bullets: [
+              { text: "Returned cartons." },
+              { text: "Damaged packaging." },
+              { text: "Products awaiting inspection." },
+              { text: "Suitable replacement inventory." },
+            ],
+            closing: ["Damaged goods are kept apart from approved sale stock."],
+          },
+          {
+            heading: "Toy Wholesale Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Stock code." },
+              { text: "Category." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Batch or lot information, where applicable." },
+              { text: "Condition." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Toy Stock Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Battery-powered Toys",
+            paragraphs: [
+              "Follow the manufacturer's instructions for toys containing batteries. Batteries are not charged inside an ordinary storage-only container, and built-in batteries stay in place unless the manufacturer specifically permits their removal.",
+              "Damaged or defective batteries require appropriate handling and storage, separate from sale stock.",
+            ],
+          },
+          {
+            heading: "Moisture Protection",
+            paragraphs: [
+              "Protect cartons, packaging and soft toys against moisture and condensation. A standard shipping container is not automatically humidity-controlled.",
+            ],
+          },
+          {
+            heading: "Carton Stacking",
+            paragraphs: ["Use appropriate racks and supports, keep heavy cartons low, and do not overload the shelving or the container floor."],
+          },
+          {
+            heading: "Fire Safety",
+            paragraphs: [
+              "Keep access routes clear and follow the fire-safety requirements that apply. An ordinary shipping container is not automatically fire-rated.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Crockery & Tableware Wholesalers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/shipping-container-cargo-doors-shigehalli.webp",
+          alt: "Orange steel container seen straight on from its door end: two closed cargo doors with vertical locking bars and lever handles, on a concrete plinth",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. Every carton passes through the door opening, so leave a clear aisle behind it and lift heavy dinner-set boxes onto the lowest shelves.",
+        },
+        paragraphs: [
+          "Crockery and tableware wholesalers handle dinner sets, plates, bowls, mugs, serveware, cutlery and other products supplied to shops, hotels, restaurants and commercial customers.",
+          "Many of these products are fragile and require stable, protective storage. A suitably configured shipping container may provide additional space for compatible wholesale stock.",
+          "Boxed tableware held for resale is a different job from storing a caterer's vessels or a restaurant's kitchen equipment between uses.",
+        ],
+        // Brief §8: tent house catering vessels belong to the Horamavu page, restaurant kitchen equipment to Koramangala.
+        inlineLinks: [
+          {
+            before: "Keeping a tent house's cooking and serving vessels between functions? Read about",
+            link: { label: "catering vessel storage in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+            after: ".",
+          },
+          {
+            before: "Ranges, fridges and counters waiting between restaurant leases are covered under",
+            link: { label: "restaurant equipment storage in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Dinner Set Storage",
+            paragraphs: [
+              "Store dinner sets in protective cartons on sturdy shelves with appropriate supports, keeping the heavier cartons on the lower levels.",
+            ],
+          },
+          {
+            heading: "Plate & Bowl Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Ceramic plates." },
+              { text: "Serving plates." },
+              { text: "Bowls." },
+              { text: "Suitable dinnerware." },
+            ],
+            closing: ["Use protective packaging and stable stacking arrangements, and avoid placing heavy cartons above fragile products."],
+          },
+          {
+            heading: "Mug & Cup Storage",
+            paragraphs: ["Organise mugs and cups by:"],
+            bullets: [
+              { text: "Design." },
+              { text: "Pattern." },
+              { text: "Size." },
+              { text: "Product code." },
+              { text: "Quantity." },
+            ],
+            closing: ["Use protective packaging and mark fragile cartons clearly."],
+          },
+          {
+            heading: "Cutlery & Serveware Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Cutlery sets." },
+              { text: "Serving trays." },
+              { text: "Suitable serving accessories." },
+              { text: "Other approved tableware products." },
+            ],
+            closing: ["Use labelled bins or protective cartons."],
+          },
+          {
+            heading: "Display Sample Storage",
+            paragraphs: ["Keep suitable samples in protective packaging, separate from bulk stock."],
+          },
+          {
+            heading: "Customer-wise Order Staging",
+            paragraphs: ["Organise dispatch inventory by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Product design." },
+              { text: "Quantity." },
+              { text: "Delivery destination." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Inspect the packaging before loading."],
+          },
+          {
+            heading: "Breakage & Returns Section",
+            paragraphs: ["Provide a separate area for:"],
+            bullets: [
+              { text: "Broken items." },
+              { text: "Damaged cartons." },
+              { text: "Customer returns." },
+              { text: "Products awaiting inspection." },
+            ],
+            closing: ["Record any damage before goods return to available inventory."],
+          },
+          {
+            heading: "Crockery Wholesale Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product type." },
+              { text: "Design or pattern." },
+              { text: "Stock code." },
+              { text: "Quantity." },
+              { text: "Carton weight." },
+              { text: "Storage location." },
+              { text: "Condition." },
+              { text: "Customer order." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Crockery Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Heavy Cartons",
+            paragraphs: ["Use suitable shelving and pallets, and verify rack capacities and the container's floor-loading limits."],
+          },
+          {
+            heading: "Fragile Goods",
+            paragraphs: [
+              "Use protective packaging and suitable handling arrangements, and do not stack heavy cartons on lighter or fragile cartons.",
+            ],
+            // Brief §8: bar glassware belongs to the Indiranagar page, laboratory glassware to Vidyaranyapura.
+            inlineLinks: [
+              {
+                before: "Spare glassware crates, kegs and stools from a bar rather than tableware for resale? See",
+                link: { label: "bar glassware and keg storage in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+                after: ".",
+              },
+              {
+                before: "Beakers, flasks and test tubes held by a laboratory supplies dealer are covered under",
+                link: { label: "laboratory glassware storage in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Clear Access Routes",
+            paragraphs: ["Keep aisles accessible for safe movement and stock handling."],
+          },
+          {
+            heading: "Receiving Inspection",
+            paragraphs: ["Check cartons on arrival, and record visible damage and breakages."],
+          },
+          {
+            heading: "Environmental Protection",
+            paragraphs: ["Protect cartons and tableware against moisture, contamination and unsuitable storage conditions."],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in Shigehalli",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/shipping-container-on-concrete-base-shigehalli.webp",
+          alt: "Weathered maroon steel container with rust patches and closed cargo doors, standing on a raised concrete plinth",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. Firm, level ground matters as much as the road in: a full load of crockery cartons is heavy, so the base is agreed before anything is set down.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, such as commercial storage yards, suitable wholesale premises, authorised godown compounds and other permitted private plots.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Unloading arrangements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "No container is placed on a public road or footpath without the required authorisation. Not every road in Shigehalli suits a large container vehicle, so access is checked for each site.",
+        ],
+        // Brief §7: restricted-site delivery guidance → the Bellandur page's society-gate and narrow-lane section.
+        inlineLinks: [
+          {
+            before: "If the truck has to come through a tight gate or a narrow lane, start with our",
+            link: { label: "notes on delivering to restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/long-shipping-container-shigehalli.webp",
+          alt: "Long navy-blue steel container seen at an angle, showing its corrugated side wall and closed cargo doors on a grey concrete yard",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. A longer unit only helps if it can reach the site and be unloaded, and its floor rating, not its volume, decides how much heavy stock it can take.",
+        },
+        table: {
+          caption:
+            "Exact dimensions, availability, floor-loading limits and payload capacity must be verified. Approximate volume does not establish allowable weight.",
+          headers: ["Size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Smaller toy wholesale inventory"],
+            ["20 ft", "33 m³", "Toy cartons or suitable crockery inventory"],
+            ["40 ft", "67 m³", "Larger wholesale stock where space allows"],
+          ],
+        },
+        // Brief §7: used-container buying guidance → the Athipattu page's inspection checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Weighing up a second-hand unit? Go through our",
+            link: { label: "inspection checks for a used container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Shigehalli",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/used-shipping-container-shigehalli.webp",
+          alt: "Weathered red steel container with faded paint and rust streaks, its double cargo doors closed, on a concrete yard",
+          width: 800,
+          height: 800,
+          caption: "Illustrative image of a used container. Its condition and grade are priced alongside the size, the fittings and the delivery.",
+        },
+        paragraphs: ["Container pricing depends on:"],
+        bullets: [
+          { text: "Size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving and storage racks." },
+          { text: "Protective packaging arrangements." },
+          { text: "Bins and pallets." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation where required." },
+          { text: "Locking arrangements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation: prices are not published on this page, and each figure is set out in the quotation."],
+      },
+      {
+        heading: "Storage Container on Rent in Shigehalli",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for seasonal toy inventory or a build-up of tableware stock. Containers can be hired for as little as one month or for as long as five years; the quotation names the unit, the hire period, the transport charges, any deposit, and how the container is delivered and later collected.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire sizes and terms are set out on our",
+            link: { label: "shipping container rental page", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Provide product dimensions and quantities." },
+          { text: "Identify fragile or heavy inventory." },
+          { text: "Confirm the estimated weight." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelving, pallets and protective storage arrangements." },
+          { text: "Confirm site permissions and access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible commercial inventory applications. For toy and tableware wholesalers in Shigehalli, that covers:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, and a 10 ft container when one is in stock." },
+          { title: "Storage-oriented modifications", text: "shelving, pallet areas, bins or a separate returns bay, each itemised in the quotation." },
+          { title: "Shelving and racking provisions", text: "planned around your carton sizes and weights, with the heaviest crockery kept low." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock supplied for your unit named in the quotation." },
+          { title: "Ventilation and insulation options", text: "quoted only where your stock needs them; no unit is sold as climate-controlled or fire-rated." },
+          { title: "Quotation and delivery coordination", text: "an itemised quote first, then a look at the road, gate and set-down spot before a date is agreed." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can toy wholesalers store stock inside shipping containers?",
+        answer: "Potentially, using suitable shelving, protective packaging and environmental controls where required.",
+      },
+      {
+        question: "Can battery-powered toys be stored inside containers?",
+        answer:
+          "Follow the toy and battery manufacturers' storage instructions. Batteries are not charged inside an ordinary storage-only container.",
+      },
+      {
+        question: "Can crockery be stored inside a shipping container?",
+        answer: "Potentially, using sturdy shelving, protective packaging and safe handling arrangements.",
+      },
+      {
+        question: "How can breakages be reduced?",
+        answer: "Use suitable padding, stable shelving, careful stacking and inspection procedures.",
+      },
+      {
+        question: "Is Shigehalli the same as Seegehalli?",
+        answer: "Both spellings are used for the locality targeted by this page.",
+      },
+      {
+        question: "What is the shipping container price in Shigehalli?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Shigehalli",
+    ctaText: `Whether you need storage for seasonal toy cartons, wholesale toys, dinner sets, mugs, cutlery or other compatible tableware inventory, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Shigehalli (Seegehalli), Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Shigehalli",
+      intro:
+        "Choose the container type and how many units you need, add the Shigehalli address or a map pin, and say whether you want to buy or hire. Mention whether the stock is toys or tableware, roughly how many cartons there are and the weight of the heaviest, so shelving and floor loading can be planned.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; it has no yard, depot, showroom or branch in Shigehalli or Seegehalli. Each unit's internal and door-opening sizes, grade and condition, floor-loading limit, fittings (shelves, racks, pallets, bins, lights, vents, insulation or locks), hire terms where it is rented, and its delivery, unloading and collection are set by the written quotation. Stock changes, so a delivery date holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as climate-controlled, humidity-controlled, fire-rated or theft-proof, none is supplied as a place to charge batteries, and no promise is made that fragile stock will arrive or stay unbroken. The six pictures are illustrative images from our existing catalogue imagery, not photographs taken in Shigehalli; none shows a delivered or fitted unit, toys or tableware. Volumes are approximate and are not payload ratings. Toy and crockery wholesalers are named as possible uses, not as customers or completed projects, and the locality named shows where enquiries are accepted, not a confirmed delivery address. Notes on batteries, fragile goods, stacking, fire safety, placement and permissions are general information, not safety, legal or engineering advice; follow the manufacturers' instructions and the requirements of the authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -28494,6 +29151,15 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
       after: ".",
     },
+    // Shigehalli brief (2026-11-22, §7): wholesale toy and tableware stock in Shigehalli (Seegehalli) is that
+    // page's intent; this page's own targeting is unchanged. Rendered after the KR Puram sentence above.
+    areasInlineLinks: [
+      {
+        before: "Wholesale toy and tableware stock in Shigehalli, also spelt Seegehalli, has a page of its own:",
+        link: { label: "storage containers in Seegehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
+    ],
 
     faqs: [
       {
