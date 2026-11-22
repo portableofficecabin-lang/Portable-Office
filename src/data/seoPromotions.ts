@@ -756,6 +756,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Hoskote (grape growers' vineyard equipment; warehouse racking installers' stock; owner brief 2026-11-21),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
+    // Munnekollal (tiffin and home-meal delivery services' non-food equipment; exhibition and trade-show
+    // booth builders' inventory; owner brief 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers in Munnekollal", href: "/cities-we-serve/shipping-container-munnekollal" },
   ],
 };
 
