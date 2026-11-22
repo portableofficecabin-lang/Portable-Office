@@ -753,6 +753,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Jalahalli West (fencing contractors, baking supply stores, solar water heater installers, bangle and
     // fashion jewellery wholesalers; owner brief 2026-11-21), appended so the live links keep their positions.
     { name: "Shipping Containers in Jalahalli West", href: "/cities-we-serve/shipping-container-jalahalli-west" },
+    // Hoskote (grape growers' vineyard equipment; warehouse racking installers' stock; owner brief 2026-11-21),
+    // appended so the live links keep their positions.
+    { name: "Shipping Containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
     // Mysore Road (towing and roadside assistance equipment; used auto parts dealers' stock;
     // owner brief 2026-11-21), appended so the live links keep their positions.
     { name: "Shipping Containers on Mysore Road", href: "/cities-we-serve/shipping-container-mysore-road" },
