@@ -774,6 +774,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Nagarbhavi (PNG installation contractors' stock; shared student vacation storage; owner brief 2026-11-22),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+    // TC Palya Road (new steel furniture manufacturers' finished stock; weighing scale dealers' and service
+    // centres' inventory; owner brief 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers on TC Palya Road", href: "/cities-we-serve/shipping-container-tc-palya-road" },
     // Kodigehalli (tree care crews' saws, ropes and safety gear; roofing contractors' sheets, sections and
     // fixings; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
