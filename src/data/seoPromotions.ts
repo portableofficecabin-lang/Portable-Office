@@ -750,6 +750,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kadubeesanahalli (façade and high-rise window cleaning contractors' stores; rainwater harvesting
     // contractors' stores; owner brief 2026-11-21), appended so the live links keep their positions.
     { name: "Shipping Containers in Kadubeesanahalli", href: "/cities-we-serve/shipping-container-kadubeesanahalli" },
+    // Sahakara Nagar (handmade soap and candle makers' stock; pottery and ceramics studios' stock;
+    // owner brief 2026-11-21), appended so the live links keep their positions.
+    { name: "Shipping Containers in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
   ],
 };
 
