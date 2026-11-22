@@ -46182,7 +46182,7 @@ export const CITY_PAGES: CityPage[] = [
           width: 1448,
           height: 1086,
           caption:
-            "Illustrative render of a plain steel container. Sun on bare steel warms the inside and cool nights can leave condensation, so jute, cotton and finished bags need moisture control agreed in the quotation.",
+            "Illustrative render, plain steel shell. Direct sun heats an unlined box and cool nights can leave condensation inside, so jute, cotton and finished bags need moisture control agreed in the quotation.",
         },
         subsections: [
           {
@@ -46221,7 +46221,7 @@ export const CITY_PAGES: CityPage[] = [
           width: 1672,
           height: 941,
           caption:
-            "Illustrative render, nothing fitted. Mat racks, prop bins, roll supports, bag shelving and dispatch bays are added only where the written quotation lists them.",
+            "Illustrative render, nothing fitted. Mat racks, prop bins, roll supports, bag shelving and dispatch bays go in only if the quotation names them.",
         },
         paragraphs: ["Depending on the application, a suitable container may include:"],
         bullets: [
@@ -46257,7 +46257,7 @@ export const CITY_PAGES: CityPage[] = [
           width: 1672,
           height: 940,
           caption:
-            "Illustrative top-down render. Allow for the footprint and the door swing, and make sure the lorry or crane can reach the spot over private ground.",
+            "Illustrative top-down render. Leave room for the container's footprint and the swing of its doors, and confirm that a lorry or crane can get to the spot without crossing public land.",
         },
         paragraphs: [
           "Containers may be placed on suitable authorised private premises, including approved commercial storage plots, suitable business properties, contractor yards and other permitted private sites.",
@@ -46275,7 +46275,7 @@ export const CITY_PAGES: CityPage[] = [
           { text: "Applicable local regulations." },
         ],
         closing: [
-          "Residential roads may have access restrictions. A 10 ft or 20 ft container may be considered for compact sites, subject to availability and the actual access conditions; a 40 ft container is considered only where there is enough space and a workable unloading arrangement.",
+          "Residential roads may have access restrictions. A 10 ft or 20 ft container may be considered for compact sites, subject to availability and the actual access conditions; a 40 ft container is considered only if the plot has the room for it and unloading can be arranged safely.",
           "A delivery time is given only after the transport arrangements have been checked, and no container goes on a public road or footpath without the required authorisation.",
         ],
         // Brief §5: restricted-site delivery → the Bellandur page's society-gate and narrow-lane delivery notes.
@@ -46300,7 +46300,7 @@ export const CITY_PAGES: CityPage[] = [
             ["40 ft", "67 m³", "Larger commercial inventory, where access and loading permit"],
           ],
         },
-        closing: ["Rolled jute is heavy for its size, so give us roll counts and weights and we will check the floor rating of the unit offered."],
+        closing: ["Rolled jute is heavy for its size, so share roll counts and weights and we will confirm the floor loading of the unit offered."],
         // Brief §5: used-container buying guidance → the Chennai-area Athipattu page's checklist.
         inlineLinks: [
           {
@@ -46339,7 +46339,7 @@ export const CITY_PAGES: CityPage[] = [
         heading: "Storage Container on Rent in Basaveshwara Nagar",
         placement: "afterSolutions",
         paragraphs: [
-          "Temporary storage can help while a studio is renovated, before a retreat season, or through a run of seasonal bag orders. Hire periods run from one month to five years, and the quotation sets out the unit, the hire period, the transport charges, any deposit and the collection conditions.",
+          "Temporary storage can help while a studio is renovated, before a retreat season, or through a run of seasonal bag orders. Hire periods run from one month to five years, and the quotation lists which unit you get, how long the hire runs, what transport costs, whether a deposit applies and how collection works.",
         ],
         inlineLinks: [
           {
@@ -46374,11 +46374,11 @@ export const CITY_PAGES: CityPage[] = [
         ],
         bullets: [
           { title: "Container size options", text: "standard 20 ft and 40 ft containers, plus a 10 ft unit whenever stock has one." },
-          { title: "Storage-oriented modifications", text: "upright mat racks, prop bins, roll supports or finished-bag shelving, each listed and priced on its own line." },
-          { title: "Shelving and racking provisions", text: "planned around rolled mats, bolsters and mirrors, or jute and cotton rolls, printing screens and packed orders." },
+          { title: "Storage-oriented modifications", text: "upright mat racks, prop bins, roll supports or finished-bag shelving, each shown and priced separately." },
+          { title: "Shelving and racking provisions", text: "designed around rolled mats, bolsters and mirrors, or jute and cotton rolls, printing screens and packed orders." },
           { title: "Locking arrangements", text: "lockable cargo doors, with the hardware for your unit named in the quotation." },
           { title: "Ventilation and insulation options", text: "priced for the stock you describe, with no promise of mould prevention, fire certification or climate control." },
-          { title: "Quotation and delivery coordination", text: "an itemised written quotation first, then a check of the route and the standing spot before a delivery date is offered." },
+          { title: "Quotation and delivery coordination", text: "an itemised written quotation first, then a look at the access road and where the unit will sit before any delivery date is offered." },
         ],
       },
     ],
@@ -46453,7 +46453,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
     ],
 
-    disclaimer: `Portable Office Cabin builds and supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs its Bengaluru office from Electronic City. It has no branch, yard or display unit in Basaveshwara Nagar, Kamalanagar or Asthagrama Layout. The written quotation for each unit is the reference for its grade, condition, inside measurements, door opening and floor rating; for any mat racks, bins, shelving, roll supports, padded mirror supports, dispatch bays, lighting, vents, insulation, environmental controls or locks; for hire terms if you rent; and for delivery, unloading and collection. A date or time holds only once that quotation confirms it. Unless an approved specification says otherwise, no unit is offered as climate-controlled, mould-proof or fire-rated, none carries a temperature or humidity figure, and none is meant for hazardous inks, solvents or cleaners, for battery charging or for use as a sewing or printing workshop. All five pictures on this page are renders made for illustration, showing a single container, and none was photographed in Basaveshwara Nagar; none shows a delivered or fitted unit, or any yoga props, wellness equipment, fabric rolls or bags. Volumes in the table are rough guides rather than payload ratings. Yoga and wellness studios and cloth and jute bag makers are described as possible uses, not as existing customers or finished projects, and the localities named are where enquiries are welcome, not confirmed delivery points. The notes on mats and props, textiles, moisture, fire safety, electrical equipment, placement and permissions are general information, not safety, legal or engineering advice: follow the instructions of the manufacturer, the supplier and the relevant authorities.`,
+    disclaimer: `Portable Office Cabin builds and supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs its Bengaluru office from Electronic City. It has no branch, yard or display unit in Basaveshwara Nagar, Kamalanagar or Asthagrama Layout. The written quotation for each unit is the reference for its grade and condition, internal size, door aperture and floor loading; for any mat racks, bins, shelving, roll supports, padded mirror supports, dispatch bays, lighting, vents, insulation, environmental controls or locks; for hire terms if you rent; and for delivery, unloading and collection. A date or time holds only once that quotation confirms it. Unless an approved specification says otherwise, no unit is offered as climate-controlled, mould-proof or fire-rated, none carries a temperature or humidity figure, and none is meant for hazardous inks, solvents or cleaners, for battery charging or for use as a sewing or printing workshop. All five pictures on this page are renders made for illustration, showing a single container, and none was photographed in Basaveshwara Nagar; none depicts a delivered or fitted-out unit, or any yoga props, wellness equipment, fabric rolls or bags. Volumes in the table are rough guides rather than payload ratings. Yoga and wellness studios and cloth and jute bag makers are described as possible uses, not as existing customers or finished projects, and the localities named are where enquiries are welcome, not confirmed delivery points. The notes on mats and props, textiles, moisture, fire safety, electrical equipment, placement and permissions are general information, not safety, legal or engineering advice: follow the instructions of the manufacturer, the supplier and the relevant authorities.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
