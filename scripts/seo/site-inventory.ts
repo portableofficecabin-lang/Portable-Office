@@ -228,6 +228,10 @@ function parsePage(url: string, path: string, status: number, html: string, loca
   const faqVisible = Array.from(
     new Set(
       allMatches(main, /<(?:h3|h4|summary|button|dt)\b[^>]*>([\s\S]*?)<\/(?:h3|h4|summary|button|dt)>/gi)
+        // Decorative glyphs marked aria-hidden (e.g. the "+" toggle inside a <summary>) are not part of
+        // the question; without this, "How do I place an order?+" failed the "?" test and the 9 visible
+        // FAQs on /products/portable-shop-cabin were reported as missing (SEO-6, 2026-11-22).
+        .map((html) => html.replace(/<(\w+)\b[^>]*\baria-hidden="true"[^>]*>[\s\S]*?<\/\1>/gi, ""))
         .map(textOf)
         .map(stripNumbering)
         .filter((q) => q.endsWith("?") && q.length > 8),

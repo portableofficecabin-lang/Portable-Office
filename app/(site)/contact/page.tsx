@@ -18,7 +18,8 @@ export default function Page() {
       <JsonLd
         data={generateBreadcrumbSchema([
           { name: "Home", url: "https://portableofficecabin.com" },
-          { name: "Contact Us", url: "https://portableofficecabin.com/contact" },
+          // SEO-6 (2026-11-22): "Contact", the visible breadcrumb's wording (was "Contact Us").
+          { name: "Contact", url: "https://portableofficecabin.com/contact" },
         ])}
       />
       <ContactPage />

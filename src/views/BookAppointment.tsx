@@ -4,6 +4,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2, Send, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { HeroBreadcrumbs } from "@/components/layout/HeroBreadcrumbs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -257,6 +258,8 @@ export default function BookAppointment() {
     <Layout>
       <div className="container-custom py-12">
         <div className="max-w-2xl mx-auto">
+          {/* SEO-6 (2026-11-22): visible trail matching this page's BreadcrumbList JSON-LD (app/(site)/book-appointment/page.tsx). */}
+          <HeroBreadcrumbs items={[{ name: "Home", href: "/" }, { name: "Book Appointment" }]} tone="light" align="center" className="mb-6" />
           <div className="text-center mb-8">
             <h1 className="font-display text-3xl font-bold text-foreground mb-4">
               Book an Appointment

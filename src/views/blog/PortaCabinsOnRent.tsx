@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, ChevronRight, CheckCircle, Clock, Shield, IndianRupee, Wrench, Building2, Users, Factory, Truck, HardHat, MapPin, Star, Zap, Recycle, FileText } from "lucide-react";
 import portaCabinRentImage from "@/assets/blog/porta-cabins-on-rent.webp";
@@ -94,7 +95,18 @@ const articleStructuredData = {
 export default function PortaCabinsOnRent() {
   return (
     <Layout>
-      <JsonLd data={[faqStructuredData, articleStructuredData]} />
+      <JsonLd
+        data={[
+          faqStructuredData,
+          articleStructuredData,
+          /* SEO-6 (2026-11-22): BreadcrumbList for the visible Home › Blog › Porta Cabins on Rent trail below. */
+          generateBreadcrumbSchema([
+            { name: "Home", url: "https://portableofficecabin.com" },
+            { name: "Blog", url: "https://portableofficecabin.com/blog" },
+            { name: "Porta Cabins on Rent", url: "https://portableofficecabin.com/blog/porta-cabins-on-rent" },
+          ]),
+        ]}
+      />
 
       {/* Breadcrumb */}
       <div className="bg-secondary py-3">

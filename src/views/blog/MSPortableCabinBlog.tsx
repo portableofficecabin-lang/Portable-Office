@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, MessageCircle, ChevronRight, CheckCircle, Shield, Wrench, Building2, Factory, Zap, Recycle } from "lucide-react";
 import { COMPANY } from "@/lib/company";
@@ -45,7 +46,17 @@ const articleStructuredData = {
 export default function MSPortableCabinBlog() {
   return (
     <Layout>
-      <JsonLd data={articleStructuredData} />
+      <JsonLd
+        data={[
+          articleStructuredData,
+          /* SEO-6 (2026-11-22): BreadcrumbList for the visible Home › Blog › MS Portable Cabin trail below. */
+          generateBreadcrumbSchema([
+            { name: "Home", url: "https://portableofficecabin.com" },
+            { name: "Blog", url: "https://portableofficecabin.com/blog" },
+            { name: "MS Portable Cabin", url: "https://portableofficecabin.com/blog/ms-portable-cabin-durable-mild-steel-modular-building" },
+          ]),
+        ]}
+      />
 
       {/* Breadcrumb */}
       <div className="bg-secondary py-3">

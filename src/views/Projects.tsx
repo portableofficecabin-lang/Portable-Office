@@ -3,6 +3,7 @@
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
+import { HeroBreadcrumbs } from "@/components/layout/HeroBreadcrumbs";
 import { Button } from "@/components/ui/button";
 import { motion } from "@/components/ui/static-motion";
 import {
@@ -119,6 +120,8 @@ export default function Projects() {
         />
 
         <div className="container-custom relative z-10 py-24">
+          {/* SEO-6 (2026-11-22): visible trail matching this page's BreadcrumbList JSON-LD (app/(site)/gallery/page.tsx). */}
+          <HeroBreadcrumbs items={[{ name: "Home", href: "/" }, { name: "Gallery" }]} className="mb-6" />
           <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-3xl">
             <motion.span variants={fadeUp} custom={0} className="inline-block text-accent font-semibold tracking-widest uppercase text-sm mb-4">
               Portfolio

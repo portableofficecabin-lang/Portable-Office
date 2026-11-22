@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
+import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, MessageCircle, ChevronRight, CheckCircle, Building2, Factory, Zap, MapPin, Users, Shield, Wrench, Thermometer, Home, Layers, Truck, HardHat, IndianRupee, Clock, Star, Hammer, Leaf } from "lucide-react";
 import { COMPANY } from "@/lib/company";
@@ -43,42 +44,33 @@ const articleStructuredData = {
   mainEntityOfPage: "https://portableofficecabin.com/blog/portable-cabin-manufacturers-in-bangalore"
 };
 
-const faqStructuredData = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "How long does a portable cabin last?",
-      acceptedAnswer: { "@type": "Answer", text: "With proper maintenance including bi-annual repainting and roof silicone seals, expect 10–15 years in Bangalore weather conditions." }
-    },
-    {
-      "@type": "Question",
-      name: "Do I need BBMP approvals for portable cabins?",
-      acceptedAnswer: { "@type": "Answer", text: "Permanent installations exceeding 100 sq.ft. may require NOC per BBMP Act 2020. Consult your zonal office based on company nature and location." }
-    },
-    {
-      "@type": "Question",
-      name: "Can portable cabins be relocated?",
-      acceptedAnswer: { "@type": "Answer", text: "Yes—4–6 relocations are safe with proper lifting hooks and structural checks. Budget ₹10,000+ per move for engineering inspection." }
-    },
-    {
-      "@type": "Question",
-      name: "What foundation is needed for portable cabins?",
-      acceptedAnswer: { "@type": "Answer", text: "Standard practice uses 4–6 PCC blocks (300x300x600mm, M20 grade) suitable for Bangalore's laterite and black soil conditions." }
-    },
-    {
-      "@type": "Question",
-      name: "Are portable toilets allowed in Bangalore city limits?",
-      acceptedAnswer: { "@type": "Answer", text: "FRP tanks (500–1,000L) work for events; permanent installations require STP connections per KSPCB norms—standalone septic is banned in core city." }
-    }
-  ]
-};
+/* SEO-6 (2026-11-22): ONE list feeds both the visible accordion and the FAQPage JSON-LD. The JSON-LD
+   used longer question wording than the page ("Do I need BBMP approvals for portable cabins?" vs the
+   visible "Do I need BBMP approvals?"), so 4 of its 5 questions did not match visible text. The visible
+   wording is kept, so readers see no change; the answers were already identical. */
+const FAQS = [
+  { question: "How long does a portable cabin last?", answer: "With proper maintenance including bi-annual repainting and roof silicone seals, expect 10–15 years in Bangalore weather conditions." },
+  { question: "Do I need BBMP approvals?", answer: "Permanent installations exceeding 100 sq.ft. may require NOC per BBMP Act 2020. Consult your zonal office based on company nature and location." },
+  { question: "Can cabins be relocated?", answer: "Yes—4–6 relocations are safe with proper lifting hooks and structural checks. Budget ₹10,000+ per move for engineering inspection." },
+  { question: "What foundation is needed?", answer: "Standard practice uses 4–6 PCC blocks (300x300x600mm, M20 grade) suitable for Bangalore's laterite and black soil conditions." },
+  { question: "Are portable toilets allowed in city limits?", answer: "FRP tanks (500–1,000L) work for events; permanent installations require STP connections per KSPCB norms—standalone septic is banned in core city." },
+];
 
 export default function PortableCabinManufacturersBangalore() {
   return (
     <Layout>
-      <JsonLd data={[articleStructuredData, faqStructuredData]} />
+      <JsonLd
+        data={[
+          articleStructuredData,
+          generateFAQSchema(FAQS),
+          /* SEO-6: BreadcrumbList for the visible Home › Blog › Portable Cabin Manufacturers in Bangalore trail below. */
+          generateBreadcrumbSchema([
+            { name: "Home", url: "https://portableofficecabin.com" },
+            { name: "Blog", url: "https://portableofficecabin.com/blog" },
+            { name: "Portable Cabin Manufacturers in Bangalore", url: "https://portableofficecabin.com/blog/portable-cabin-manufacturers-in-bangalore" },
+          ]),
+        ]}
+      />
 
       {/* Breadcrumb */}
       <div className="bg-muted/30 border-b border-border/40">
@@ -394,16 +386,10 @@ export default function PortableCabinManufacturersBangalore() {
           Common questions buyers in Bengaluru ask before placing an order:
         </p>
         <Accordion type="single" collapsible className="w-full space-y-3">
-          {[
-            { q: "How long does a portable cabin last?", a: "With proper maintenance including bi-annual repainting and roof silicone seals, expect 10–15 years in Bangalore weather conditions." },
-            { q: "Do I need BBMP approvals?", a: "Permanent installations exceeding 100 sq.ft. may require NOC per BBMP Act 2020. Consult your zonal office based on company nature and location." },
-            { q: "Can cabins be relocated?", a: "Yes—4–6 relocations are safe with proper lifting hooks and structural checks. Budget ₹10,000+ per move for engineering inspection." },
-            { q: "What foundation is needed?", a: "Standard practice uses 4–6 PCC blocks (300x300x600mm, M20 grade) suitable for Bangalore's laterite and black soil conditions." },
-            { q: "Are portable toilets allowed in city limits?", a: "FRP tanks (500–1,000L) work for events; permanent installations require STP connections per KSPCB norms—standalone septic is banned in core city." },
-          ].map((faq, idx) => (
+          {FAQS.map((faq, idx) => (
             <AccordionItem key={idx} value={`faq-${idx}`} className="border border-border/40 rounded-xl px-4 bg-card">
-              <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">{faq.q}</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground leading-relaxed">{faq.a}</AccordionContent>
+              <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">{faq.question}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground leading-relaxed">{faq.answer}</AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
