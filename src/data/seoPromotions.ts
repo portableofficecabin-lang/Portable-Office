@@ -765,6 +765,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Munnekollal (tiffin and home-meal delivery services' non-food equipment; exhibition and trade-show
     // booth builders' inventory; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Munnekollal", href: "/cities-we-serve/shipping-container-munnekollal" },
+    // Basaveshwara Nagar (yoga and wellness studios, cloth and jute bag makers; owner brief 2026-11-21),
+    // appended so the live links keep their positions.
+    { name: "Shipping Containers in Basaveshwara Nagar", href: "/cities-we-serve/shipping-container-basaveshwara-nagar" },
   ],
 };
 
