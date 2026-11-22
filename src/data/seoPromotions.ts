@@ -777,6 +777,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // TC Palya Road (new steel furniture manufacturers' finished stock; weighing scale dealers' and service
     // centres' inventory; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers on TC Palya Road", href: "/cities-we-serve/shipping-container-tc-palya-road" },
+    // Kudlu Gate (acoustic panel and soundproofing installers; building window film installers; owner brief
+    // 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers in Kudlu Gate", href: "/cities-we-serve/shipping-container-kudlu-gate" },
     // Mathikere (convocation gown and academic regalia rental storage; stage truss and LED screen rental
     // equipment storage; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Mathikere", href: "/cities-we-serve/shipping-container-mathikere" },
