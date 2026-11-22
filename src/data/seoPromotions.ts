@@ -756,6 +756,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Hoskote (grape growers' vineyard equipment; warehouse racking installers' stock; owner brief 2026-11-21),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
+    // Mysore Road (towing and roadside assistance equipment; used auto parts dealers' stock;
+    // owner brief 2026-11-21), appended so the live links keep their positions.
+    { name: "Shipping Containers on Mysore Road", href: "/cities-we-serve/shipping-container-mysore-road" },
     // Murugeshpalya (monsoon-season storage for ground-floor homes and shops, water-damage restoration and
     // dewatering equipment storage; owner brief 2026-11-21), appended so the live links keep their positions.
     { name: "Shipping Containers in Murugeshpalya", href: "/cities-we-serve/shipping-container-murugeshpalya" },
