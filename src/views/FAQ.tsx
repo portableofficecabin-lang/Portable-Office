@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "@/components/ui/static-motion";
 import { Layout } from "@/components/layout/Layout";
+import { HeroBreadcrumbs } from "@/components/layout/HeroBreadcrumbs";
 import { faqCategories } from "@/data/faqs";
 import { Button } from "@/components/ui/button";
 import {
@@ -60,6 +61,8 @@ export default function FAQPage() {
         }} />
 
         <div className="container-custom relative z-10">
+          {/* SEO-6 (2026-11-22): visible trail matching this page's BreadcrumbList JSON-LD (app/(site)/faq/page.tsx). */}
+          <HeroBreadcrumbs items={[{ name: "Home", href: "/" }, { name: "FAQ" }]} align="center" className="mb-6" />
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

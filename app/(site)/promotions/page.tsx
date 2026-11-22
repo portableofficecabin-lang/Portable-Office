@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
+import { HeroBreadcrumbs } from "@/components/layout/HeroBreadcrumbs";
+import { JsonLd } from "@/components/JsonLd";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { seoPromotions } from "@/data/seoPromotions";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { ArrowRight, MapPin } from "lucide-react";
@@ -19,7 +22,15 @@ export default function PromotionsIndexPage() {
 
   return (
     <Layout>
+      {/* SEO-6 (2026-11-22): this index had neither a breadcrumb trail nor BreadcrumbList JSON-LD. */}
+      <JsonLd
+        data={generateBreadcrumbSchema([
+          { name: "Home", url: "https://portableofficecabin.com" },
+          { name: "Promotions", url: "https://portableofficecabin.com/promotions" },
+        ])}
+      />
       <div className="container-custom section-padding">
+        <HeroBreadcrumbs items={[{ name: "Home", href: "/" }, { name: "Promotions" }]} tone="light" align="center" className="mb-6" />
         <div className="text-center mb-16">
           <h1 className="font-display font-extrabold text-4xl md:text-5xl mb-4 text-foreground">
             Our <span className="text-primary">Location-Specific Promotions</span>

@@ -502,6 +502,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Jigani, prefab office container Jigani, site office container Jigani, container office manufacturer Jigani, office container on rent Jigani",
     geo: { region: "IN-KA", placename: "Jigani, Bengaluru, Karnataka, India", position: "12.7861;77.6386", icbm: "12.7861, 77.6386" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
 
     heroImage: {
       src: "/images/cities/container-office-in-jigani.webp",
@@ -708,6 +710,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "shipping container in Jigani, shipping container Jigani, used shipping container Jigani, 20 ft container Jigani, 40 ft container Jigani, high cube container Jigani, storage container Jigani, cargo container Jigani, container for sale Jigani, container rental Jigani, KIADB Jigani",
     geo: { region: "IN-KA", placename: "Jigani, Bengaluru, Karnataka, India", position: "12.7861;77.6386", icbm: "12.7861, 77.6386" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Shipping Container" },
     motion: true,
 
     heroImage: {
@@ -2452,6 +2456,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Bommasandra, portable office cabin Bommasandra, prefab office container Bommasandra, site office cabin Bommasandra, container office manufacturer Bommasandra, office container on rent Bommasandra Industrial Area",
     geo: { region: "IN-KA", placename: "Bommasandra, Bengaluru, Karnataka, India", position: "12.8090;77.7030", icbm: "12.8090, 77.7030" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
 
     heroImage: {
       src: "/images/cities/container-office-in-bommasandra.webp",
@@ -3049,6 +3055,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Mysore, container office Mysore, container office in Mysuru, portable cabin Mysore, portable office cabin Mysore, site office cabin Mysore, prefabricated office cabin Mysore, container office manufacturer in Mysore, portable marketing office Mysore",
     geo: { region: "IN-KA", placename: "Mysuru (Mysore), Karnataka, India", position: "12.2958;76.6394", icbm: "12.2958, 76.6394" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -3434,6 +3442,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "shipping container in Mysore, shipping container Mysore, shipping container Mysuru, used shipping container Mysore, 20 ft container Mysore, 40 ft container Mysore, high cube container, reefer container, container for sale Mysore, container rental Mysore",
     geo: { region: "IN-KA", placename: "Mysuru (Mysore), Karnataka, India", position: "12.2958;76.6394", icbm: "12.2958, 76.6394" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Shipping Container" },
     motion: true,
 
     heroImage: {
@@ -4225,6 +4235,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Bagalkot, Container Office Bagalkot, Container Office Bagalkote, Portable Office Cabin Bagalkot, Site Office Container Bagalkot, Container Office for Rent Bagalkot, Container Office Navanagar, Container Office Mudhol, Container Office Jamkhandi",
     geo: { region: "IN-KA", placename: "Bagalkot (Bagalkote), Karnataka, India", position: "16.1850;75.6960", icbm: "16.1850, 75.6960" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -5069,6 +5081,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Doddaballapura, portable office cabin Doddaballapura, prefab office container Doddaballapura, site office cabin Doddaballapura, container office manufacturer Doddaballapura, office container on rent Doddaballapura Industrial Area",
     geo: { region: "IN-KA", placename: "Doddaballapura, Bengaluru, Karnataka, India", position: "13.2919;77.5388", icbm: "13.2919, 77.5388" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
 
     heroImage: {
       src: "/images/cities/container-office-in-doddaballapura.webp",
@@ -5551,6 +5565,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Tirunelveli, portable cabin Tirunelveli, porta cabin Tirunelveli, site office container Tirunelveli, container office Gangaikondan SIPCOT, portable office for solar and wind project sites Tamil Nadu, container office price in Tirunelveli, container office on rent Tirunelveli, container office Palayamkottai, container office Nanguneri, Nellai container office",
     geo: { region: "IN-TN", placename: "Tirunelveli, Tamil Nadu, India", position: "8.7139;77.7567", icbm: "8.7139, 77.7567" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -6257,6 +6273,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "portable container office in Thoothukudi, portable office container Tuticorin, container site office Thoothukudi, portable cabin Thoothukudi port, container office on rent Thoothukudi",
     geo: { region: "IN-TN", placename: "Thoothukudi, Tamil Nadu, India", position: "8.7642;78.1348", icbm: "8.7642, 78.1348" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -6557,6 +6575,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "container office SIPCOT Hosur, portable office cabin Hosur, office container Hosur, prefab site office SIPCOT, container office on rent Hosur, site office cabin Hosur Industrial Area",
     geo: { region: "IN-TN", placename: "SIPCOT Industrial Complex, Hosur, Tamil Nadu, India", position: "12.7409;77.8253", icbm: "12.7409, 77.8253" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
 
     // Owner-supplied set for this page (4 images, dropped 2026-08-16). All four are unique to
     // this page — hash-checked against every other image in public/images before wiring, so
@@ -6731,6 +6751,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "container office SIPCOT Shoolagiri, portable office cabin Shoolagiri, site office container Shoolagiri, prefab office Shoolagiri NH-44, container office on rent Shoolagiri, office container Krishnagiri district",
     geo: { region: "IN-TN", placename: "SIPCOT Shoolagiri, Krishnagiri district, Tamil Nadu, India", position: "12.6740;77.9694", icbm: "12.6740, 77.9694" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
 
     /* Owner-supplied set for this page (4 photos, dropped 2026-08-16): front gable exterior
      * (hero), fitted interior hall, container side elevation with canopy (feature band) and
@@ -6947,6 +6969,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "container office SIPCOT Krishnagiri, portable office cabin Krishnagiri, site office container Krishnagiri, prefab office Krishnagiri NH-44, container office on rent Krishnagiri, quarry site office Krishnagiri district",
     geo: { region: "IN-TN", placename: "SIPCOT Krishnagiri, Krishnagiri, Tamil Nadu, India", position: "12.5186;78.2137", icbm: "12.5186, 78.2137" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
 
     /* Owner-supplied set for this page (3 photos, dropped 2026-08-16 in "city serve page
      * krishnagiri"): twin grey container units with rooftop solar (hero), the open double-door
@@ -7163,6 +7187,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "container office near Tata Electronics Hosur, vendor site office Hosur, portable office cabin Hosur industrial belt, supplier office container Hosur, container office on rent Hosur, audit ready site office Hosur",
     geo: { region: "IN-TN", placename: "Hosur industrial belt, Krishnagiri district, Tamil Nadu, India", position: "12.7409;77.8253", icbm: "12.7409, 77.8253" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
 
     /* Owner-supplied set for this page (4 photos, dropped 2026-08-16 in "container office in
      * tata electronic"): straight-on front elevation of a glass-front unit (hero), drone
@@ -7388,6 +7414,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "container office SIPCOT Coimbatore, portable office cabin Coimbatore, site office container Coimbatore, QC room cabin Coimbatore, container office on rent Coimbatore, supervisor cabin Kongu belt",
     geo: { region: "IN-TN", placename: "SIPCOT Coimbatore, Coimbatore, Tamil Nadu, India", position: "11.0168;76.9558", icbm: "11.0168, 76.9558" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
 
     /* Owner-supplied set for this page (4 photos, dropped 2026-08-16 in "city serve page
      * sipcot coimbatore"): a blue 20 ft "Site Office 01" unit set down inside a brick-walled
@@ -7921,6 +7949,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Mettur, Container Office in Salem, Container Office Mettur Salem, Portable Site Office Salem, Shutdown Contractor Office Mettur, Industrial Container Cabin Salem, Portable Office Cabin Salem, Container Office on Rent Salem",
     geo: { region: "IN-TN", placename: "Mettur, Salem, Tamil Nadu, India", position: "11.7863;77.8008", icbm: "11.7863, 77.8008" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -8278,6 +8308,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "shipping container in Mettur, shipping container in Salem, shipping container Mettur Salem, used shipping container Salem, 20 ft container Mettur, 40 ft container Salem, container for sale Salem, container rental Salem, high cube container Salem, storage container Attur",
     geo: { region: "IN-TN", placename: "Mettur, Salem, Tamil Nadu, India", position: "11.7863;77.8008", icbm: "11.7863, 77.8008" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Shipping Container" },
     motion: true,
 
     heroImage: {
@@ -8652,6 +8684,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "container office in Kalpakkam, portable office container Kalpakkam, site office cabin Kalpakkam, container office ECR Chengalpattu, container office on rent Kalpakkam",
     geo: { region: "IN-TN", placename: "Kalpakkam, Chengalpattu, Tamil Nadu, India", position: "12.5500;80.1700", icbm: "12.5500, 80.1700" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -8965,6 +8999,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Hoskote, portable site office Hoskote, site office container Hoskote, container office manufacturer Hoskote, container office on rent Hoskote, portable office cabin Hoskote, prefab office container Hoskote",
     geo: { region: "IN-KA", placename: "Hoskote, Bengaluru Rural, Karnataka, India", position: "13.0707;77.7980", icbm: "13.0707, 77.7980" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
 
     heroImage: {
       src: "/images/cities/container-office-in-hoskote/container-office-in-hoskote-exterior.webp",
@@ -10512,6 +10548,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Tumkur, Container Office Tumkur, Portable Office Cabin Tumkur, Portable Site Office Tumkur, Prefabricated Office Cabin Tumkur, Container Office Manufacturer Tumkur, container office Tumakuru",
     geo: { region: "IN-KA", placename: "Tumakuru (Tumkur), Karnataka, India", position: "13.3392;77.1139", icbm: "13.3392, 77.1139" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -11526,6 +11564,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "shipping container in Tumkur, shipping container Tumakuru, used shipping container Tumkur, 20 ft container Tumkur, 40 ft container Tumkur, container for sale Tumkur, container rental Tumkur, container for copra storage Tiptur, storage container Vasanthanarasapura, shipping container Pavagada",
     geo: { region: "IN-KA", placename: "Tumakuru (Tumkur), Karnataka, India", position: "13.3392;77.1139", icbm: "13.3392, 77.1139" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Shipping Container" },
     motion: true,
 
     heroImage: {
@@ -15934,6 +15974,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Belagavi, Container Office Belagavi, Container Office Belgaum, Portable Office Cabin Belagavi, Site Office Container Belagavi, Container Office for Rent Belagavi, Container Office for Sale Belagavi, Portable Cabin Udyambag, Container Office Supplier Belagavi",
     geo: { region: "IN-KA", placename: "Belagavi (Belgaum), Karnataka, India", position: "15.8497;74.4977", icbm: "15.8497, 74.4977" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -16981,6 +17023,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Sarjapur, Container Office Sarjapur Road, Portable Cabin Sarjapur, Portable Office Cabin Sarjapur, Site Office Sarjapur Road, Container Office Manufacturer Sarjapur, Prefabricated Office Cabin Sarjapur, Portable Marketing Office Sarjapur, Construction Site Office Sarjapur",
     geo: { region: "IN-KA", placename: "Sarjapur, Bengaluru, Karnataka, India", position: "12.8606;77.7865", icbm: "12.8606, 77.7865" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -18222,6 +18266,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "container office in Athipattu, portable office container Athipattu, container office Tiruvallur, prefab site office near Ennore, container office on rent Athipattu",
     geo: { region: "IN-TN", placename: "Athipattu, Tiruvallur, Tamil Nadu, India", position: "13.2292;80.3014", icbm: "13.2292, 80.3014" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -18541,6 +18587,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "shipping container in Athipattu, shipping container Athipattu Tiruvallur, shipping container Ennore, used shipping container Ennore, shipping container Kattupalli, 20 ft container Athipattu, 40 ft container Ennore, container for sale Tiruvallur, container rental North Chennai, reefer container Ennore",
     geo: { region: "IN-TN", placename: "Athipattu, Tiruvallur, Tamil Nadu, India", position: "13.2292;80.3014", icbm: "13.2292, 80.3014" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Shipping Container" },
     motion: true,
 
     heroImage: {
@@ -28589,6 +28637,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Chennai, Container Office Chennai, Portable Office Cabin Chennai, Portable Site Office Chennai, Site Office Container Chennai, Project Office Cabin Chennai, Container Office Sriperumbudur, Container Office Oragadam, Multi-Cabin Office Chennai, Container Office on Rent Chennai",
     geo: { region: "IN-TN", placename: "Chennai, Tamil Nadu, India", position: "13.0827;80.2707", icbm: "13.0827, 80.2707" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -28957,6 +29007,8 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Offices in Bidar, Container Office in Bidar, Container Office Bidar, Portable Office Cabin Bidar, Portable Site Office Bidar, Prefabricated Office Cabin Bidar, Container Office on Rent Bidar, Container Office Humnabad, Container Office Kolhar",
     geo: { region: "IN-KA", placename: "Bidar, Karnataka, India", position: "17.9104;77.5199", icbm: "17.9104, 77.5199" },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Container Office" },
     motion: true,
 
     heroImage: {
@@ -30249,6 +30301,8 @@ export const CITY_PAGES: CityPage[] = [
       position: "12.9716;77.5946",
       icbm: "12.9716, 77.5946",
     },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Villa Construction" },
 
     /* OWNER-SUPPLIED SET, 2026-08-22 — five views of one villa, so the page reads as a single
      * coherent project rather than five unrelated houses. Each is placed in the slot the
@@ -30602,6 +30656,8 @@ export const CITY_PAGES: CityPage[] = [
       position: "12.9716;77.5946",
       icbm: "12.9716, 77.5946",
     },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Labour Camp Setup" },
 
     heroImage: {
       src: "/images/cities/labour-camp-setup-bangalore/labour-camp-setup-bangalore-camp-overview.webp",
@@ -30991,6 +31047,8 @@ export const CITY_PAGES: CityPage[] = [
       position: "12.8452;77.6602",
       icbm: "12.8452, 77.6602",
     },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "House Construction" },
 
     /* OWNER-SUPPLIED SET, dropped 2026-09-06 as "House Construction Services (1-5).webp" and copied
        to clean names in /images/cities/house-construction-contractor-services-in-electronic-city-bangalore/.
@@ -31328,6 +31386,8 @@ export const CITY_PAGES: CityPage[] = [
       position: "12.8496;77.6640",
       icbm: "12.8496, 77.6640",
     },
+    // SEO-6 (2026-11-22): Service JSON-LD (no offers), as on the other 130 city pages.
+    serviceJsonLd: { serviceType: "Building Construction" },
 
     heroImage: {
       src: "/images/cities/building-contractor-neeladri-road-neeladri-nagar/building-contractor-neeladri-road-front-elevation.webp",

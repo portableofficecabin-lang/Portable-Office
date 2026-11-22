@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
+import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, MessageCircle, ChevronRight, CheckCircle, Clock, Shield, IndianRupee, Wrench, Building2, Users, Factory, Truck, HardHat } from "lucide-react";
@@ -10,52 +11,32 @@ import prefabLabourColonyAerial from "@/assets/blog/prefab-labour-colony-aerial-
 import modularLabourCamp from "@/assets/blog/modular-labour-accommodation-camp.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
-const faqStructuredData = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "How many workers can be accommodated in a typical prefabricated labour shed?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Capacity scales modularly based on project requirements. Individual dormitory rooms commonly house 8–12 workers depending on layout and bed configuration. These standardized rooms combine to create colonies accommodating 50, 100, 300, or even 1,000+ workers through repeated dormitory blocks."
-      }
-    },
-    {
-      "@type": "Question",
-      name: "What is the usual lifespan of a prefab labour shed structure?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Steel-frame prefabricated labour sheds with quality panels can serve 8–15 years or more with proper maintenance. Regular painting protects exterior surfaces. Sealant checks prevent water infiltration. Minor repairs address wear from daily use."
-      }
-    },
-    {
-      "@type": "Question",
-      name: "Do prefabricated labour sheds require building approvals or permissions?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Approval requirements vary by jurisdiction. Many municipalities and industrial townships require layout drawings, fire-safety clearances, and documentation demonstrating compliance with basic welfare provisions—even for temporary camps."
-      }
-    },
-    {
-      "@type": "Question",
-      name: "Can prefab labour sheds include amenities like kitchens, canteens, and first‑aid rooms?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. Labour colonies readily integrate specialized prefab units for comprehensive site facilities including kitchen blocks, dining halls, first-aid rooms, store rooms, and office cabins—all as prefabricated units."
-      }
-    },
-    {
-      "@type": "Question",
-      name: "What information is needed to get a quotation for a labour shed project?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Accurate quotations require worker headcount, usage period, site details, specification level, required facilities, and target timeline. Once shared, Portable Office Cabin develops a concept layout with per-square-foot rates and delivery schedules."
-      }
-    }
-  ]
-};
+/* SEO-6 (2026-11-22): ONE list feeds both the visible FAQ section and the FAQPage JSON-LD. The JSON-LD
+   carried shorter, differently worded answers and a different fifth question ("…for a labour shed
+   project?"), so markup and page disagreed. The visible text is kept unchanged and is now also the
+   markup, as Google's FAQ guidelines require. */
+const FAQS = [
+  {
+    question: "How many workers can be accommodated in a typical prefabricated labour shed?",
+    answer: "Capacity scales modularly based on project requirements. Individual dormitory rooms commonly house 8–12 workers depending on layout and bed configuration. These standardized rooms combine to create colonies accommodating 50, 100, 300, or even 1,000+ workers through repeated dormitory blocks. Portable Office Cabin designs colonies based on detailed headcount briefs from clients."
+  },
+  {
+    question: "What is the usual lifespan of a prefab labour shed structure?",
+    answer: "Steel-frame prefabricated labour sheds with quality panels can serve 8–15 years or more with proper maintenance. Regular painting protects exterior surfaces. Sealant checks prevent water infiltration. Actual service life varies depending on environment—coastal areas accelerate corrosion, while projects typically use structures for 2–5 years before relocating."
+  },
+  {
+    question: "Do prefabricated labour sheds require building approvals or permissions?",
+    answer: "Approval requirements vary by jurisdiction. Many municipalities require layout drawings, fire-safety clearances, and documentation demonstrating compliance with basic welfare provisions. Portable Office Cabin supplies standard drawings and technical details to support clients in obtaining necessary permissions."
+  },
+  {
+    question: "Can prefab labour sheds include amenities like kitchens, canteens, and first‑aid rooms?",
+    answer: "Absolutely. Labour colonies readily integrate specialized prefab units for comprehensive site facilities. Kitchen blocks include cooking equipment provisions, exhaust ventilation, and fire suppression. Dining halls provide covered space with proper seating. First-aid rooms feature wash basins, examination areas, and power points for medical equipment."
+  },
+  {
+    question: "What information is needed to get a quotation?",
+    answer: "Accurate quotations require: worker headcount and breakdown by category, usage period in months/years, site details (location, access, plot size), specification level (basic/standard/premium), required facilities (dormitories, toilets, kitchen, dining, offices, first-aid), and target timeline. Portable Office Cabin then develops a concept layout with per-square-foot rates."
+  }
+];
 
 const articleStructuredData = {
   "@context": "https://schema.org",
@@ -92,7 +73,18 @@ const articleStructuredData = {
 export default function LabourShedPrefabricatedStructures() {
   return (
     <Layout>
-      <JsonLd data={[faqStructuredData, articleStructuredData]} />
+      <JsonLd
+        data={[
+          generateFAQSchema(FAQS),
+          articleStructuredData,
+          /* SEO-6: BreadcrumbList for the visible Home › Blog › Labour Shed Prefabricated Structures trail below. */
+          generateBreadcrumbSchema([
+            { name: "Home", url: "https://portableofficecabin.com" },
+            { name: "Blog", url: "https://portableofficecabin.com/blog" },
+            { name: "Labour Shed Prefabricated Structures", url: "https://portableofficecabin.com/blog/labour-shed-prefabricated-structures" },
+          ]),
+        ]}
+      />
 
       {/* Breadcrumb */}
       <div className="bg-secondary py-3">
@@ -465,31 +457,10 @@ export default function LabourShedPrefabricatedStructures() {
             <section className="mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
               <div className="space-y-6">
-                {[
-                  {
-                    q: "How many workers can be accommodated in a typical prefabricated labour shed?",
-                    a: "Capacity scales modularly based on project requirements. Individual dormitory rooms commonly house 8–12 workers depending on layout and bed configuration. These standardized rooms combine to create colonies accommodating 50, 100, 300, or even 1,000+ workers through repeated dormitory blocks. Portable Office Cabin designs colonies based on detailed headcount briefs from clients."
-                  },
-                  {
-                    q: "What is the usual lifespan of a prefab labour shed structure?",
-                    a: "Steel-frame prefabricated labour sheds with quality panels can serve 8–15 years or more with proper maintenance. Regular painting protects exterior surfaces. Sealant checks prevent water infiltration. Actual service life varies depending on environment—coastal areas accelerate corrosion, while projects typically use structures for 2–5 years before relocating."
-                  },
-                  {
-                    q: "Do prefabricated labour sheds require building approvals or permissions?",
-                    a: "Approval requirements vary by jurisdiction. Many municipalities require layout drawings, fire-safety clearances, and documentation demonstrating compliance with basic welfare provisions. Portable Office Cabin supplies standard drawings and technical details to support clients in obtaining necessary permissions."
-                  },
-                  {
-                    q: "Can prefab labour sheds include amenities like kitchens, canteens, and first‑aid rooms?",
-                    a: "Absolutely. Labour colonies readily integrate specialized prefab units for comprehensive site facilities. Kitchen blocks include cooking equipment provisions, exhaust ventilation, and fire suppression. Dining halls provide covered space with proper seating. First-aid rooms feature wash basins, examination areas, and power points for medical equipment."
-                  },
-                  {
-                    q: "What information is needed to get a quotation?",
-                    a: "Accurate quotations require: worker headcount and breakdown by category, usage period in months/years, site details (location, access, plot size), specification level (basic/standard/premium), required facilities (dormitories, toilets, kitchen, dining, offices, first-aid), and target timeline. Portable Office Cabin then develops a concept layout with per-square-foot rates."
-                  }
-                ].map((faq, i) => (
+                {FAQS.map((faq, i) => (
                   <div key={i} className="border rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-3">{faq.q}</h3>
-                    <p className="text-muted-foreground">{faq.a}</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-3">{faq.question}</h3>
+                    <p className="text-muted-foreground">{faq.answer}</p>
                   </div>
                 ))}
               </div>

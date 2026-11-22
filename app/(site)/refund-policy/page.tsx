@@ -18,7 +18,8 @@ export default function Page() {
       <JsonLd
         data={generateBreadcrumbSchema([
           { name: "Home", url: "https://portableofficecabin.com" },
-          { name: "Refund Policy", url: "https://portableofficecabin.com/refund-policy" },
+          // SEO-6 (2026-11-22): the visible breadcrumb's wording (was "Refund Policy").
+          { name: "Refund & Cancellation Policy", url: "https://portableofficecabin.com/refund-policy" },
         ])}
       />
       <RefundPolicyPage />

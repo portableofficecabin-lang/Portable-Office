@@ -104,7 +104,9 @@ export default function CareersPage() {
   return (
     <Layout>
       {/* Hero */}
+      {/* SEO-6 (2026-11-22): breadcrumbs = the BreadcrumbList JSON-LD in app/(site)/careers/page.tsx. */}
       <PageHero
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "Careers" }]}
         eyebrow="We're Hiring"
         title="Build Your Career With Us"
         description="Join a team that's shaping the future of modular construction in India. At Portable Office Cabin, you'll find meaningful work, real growth, and the chance to make a lasting impact."

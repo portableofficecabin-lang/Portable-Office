@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, MessageCircle, ChevronRight, CheckCircle, Building2, Factory, Zap, MapPin, Users, Shield, Wrench, Recycle, Home, Layers, Droplets, HardHat, LayoutGrid, Truck } from "lucide-react";
 import { COMPANY } from "@/lib/company";
@@ -48,7 +49,17 @@ const articleStructuredData = {
 export default function PrefabLabourColonyBengaluru() {
   return (
     <Layout>
-      <JsonLd data={articleStructuredData} />
+      <JsonLd
+        data={[
+          articleStructuredData,
+          /* SEO-6 (2026-11-22): BreadcrumbList for the visible Home › Blog › Prefabricated Labor Colony in Bengaluru trail below. */
+          generateBreadcrumbSchema([
+            { name: "Home", url: "https://portableofficecabin.com" },
+            { name: "Blog", url: "https://portableofficecabin.com/blog" },
+            { name: "Prefabricated Labor Colony in Bengaluru", url: "https://portableofficecabin.com/blog/prefabricated-labor-colony-bengaluru" },
+          ]),
+        ]}
+      />
 
       {/* Breadcrumb */}
       <div className="bg-secondary py-3">

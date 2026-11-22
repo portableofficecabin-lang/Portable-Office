@@ -96,7 +96,8 @@ export default function Page() {
             { name: "Home", url: SITE },
             { name: "Products", url: `${SITE}/products` },
             { name: "Home Construction", url: `${SITE}/products/category/home-construction` },
-            { name: H1, url: `${SITE}${PATH}` },
+            /* SEO-6 (2026-11-22): the visible breadcrumb's last crumb (was the H1, "… in Bangalore"). */
+            { name: "Building Construction Contractor", url: `${SITE}${PATH}` },
           ]),
           /* Service, NOT Product. There is no fixed price and nothing here is purchasable online,
              so an Offer would be a price claim this business does not make until after a site
