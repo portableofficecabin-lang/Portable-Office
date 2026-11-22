@@ -24323,7 +24323,7 @@ export const CITY_PAGES: CityPage[] = [
    * "KR Puram") is added by whichever of this page and Mahadevapura (#257) merges second.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × KR Puram, Tin Factory, Old Madras Road,
-   * TC Palya, Battarahalli, Kithaganur, Doorvaninagar and Medahalli, for rail and road
+   * Battarahalli, Kithaganur, Doorvaninagar and Medahalli, for rail and road
    * consignment staging before dispatch and for active fibre and telecom roll-out stock (cable drums,
    * splicing and test kit, boxed CPE, installation tools). Mahadevapura (#257) drops KR Puram from its
    * keywords, areas and CTA. Hoskote is named only as a direction. Not targeted here: last-mile parcel
@@ -24338,6 +24338,17 @@ export const CITY_PAGES: CityPage[] = [
    * with locking bars and a lockbox = grade section (security and locking). No image shows parcels,
    * cable drums, telecom equipment or tools, so the brief's consignment, parcel, fibre-drum, telecom and
    * tools image slots are not used and no alt text claims those items.
+   *
+   * TC Palya Road brief (2026-11-22, §7, consolidated KR Puram correction): TC Palya left this page's
+   * targets (storage for new steel furniture manufacturers and weighing scale dealers on TC Palya Road,
+   * TC Palya Main Road, Anandapura, NRI Layout and Chikkabasavanapura is the TC Palya Road page's intent).
+   * The areas text is the owner's wording (local modifiers: KR Puram, Tin Factory, Old Madras Road,
+   * Battarahalli, Kithaganur, Doorvaninagar, Medahalli) with the existing delivery sentence kept; a first
+   * `areasInlineLinks` sentence links the new page; the CTA's serving line is the owner's "KR Puram,
+   * Battarahalli and Old Madras Road". Ramamurthy Nagar was already removed by #268. The brief's alt-text
+   * change ("cable drums … TC Palya" → Battarahalli) has nothing to apply to: no image on this page shows
+   * cable drums and no alt text names a place. Title, description, keywords, H1, images, JSON-LD and the
+   * other links are unchanged; TC Palya appears nowhere else on the page.
    *
    * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -24440,8 +24451,10 @@ export const CITY_PAGES: CityPage[] = [
       "Battery safety: store UPS and backup batteries as their manufacturers require. Damaged or swollen batteries need specialist handling. A standard container provides neither climate control nor safe battery storage on its own, so discuss ventilation, insulation or cooling before such items go inside.",
 
     areasHeading: "Areas We Serve",
+    // TC Palya Road brief (2026-11-22, §7 change 4): the owner's areas wording; TC Palya has its own page now
+    // (linked below). The delivery sentence that followed the old list is kept.
     areasText:
-      "Enquiries are welcome from KR Puram, Tin Factory, TC Palya, Battarahalli, Kithaganur, Doorvaninagar, Medahalli and sites along the Old Madras Road corridor in the direction of Hoskote. Each delivery is confirmed after we have reviewed how the site can be reached.",
+      "We supply shipping and storage containers across KR Puram, including the Tin Factory area, Battarahalli, Kithaganur, Doorvaninagar and Medahalli, and along Old Madras Road towards Hoskote. Each delivery is confirmed after we have reviewed how the site can be reached.",
     // Ramamurthy Nagar brief (2026-11-16, §5): Ramamurthy Nagar has its own shipping page, so the areas section
     // links to it (anchor "Ramamurthy Nagar") instead of listing it. nearbySkipsBodyLinks keeps it single.
     areasInlineLink: {
@@ -24452,6 +24465,13 @@ export const CITY_PAGES: CityPage[] = [
     // Hoskote brief (2026-11-21, §5): vineyard equipment and warehouse racking storage further out along Old
     // Madras Road is the Hoskote page's intent; this page's own targeting is unchanged.
     areasInlineLinks: [
+      // TC Palya Road brief (2026-11-22, §7 change 4): the second sentence of the owner's areas wording, first
+      // in the list so it sits with the areas text.
+      {
+        before: "For TC Palya Road, explore our dedicated page:",
+        link: { label: "shipping containers on TC Palya Road", href: "/cities-we-serve/shipping-container-tc-palya-road" },
+        after: ".",
+      },
       {
         before: "Further east, grape growers' vineyard equipment and warehouse racking stock in and around Hoskote are covered on our page on",
         link: { label: "storage containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
@@ -24619,7 +24639,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Storage for a Neighbourhood Built on Connections",
-    ctaText: `Whether you consolidate parcels for the next train out, run part loads down Old Madras Road or keep a fibre crew stocked for the next connection, we'll quote a container set up to keep your goods organised and secure. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving KR Puram, Tin Factory and the Old Madras Road corridor.`,
+    ctaText: `Whether you consolidate parcels for the next train out, run part loads down Old Madras Road or keep a fibre crew stocked for the next connection, we'll quote a container set up to keep your goods organised and secure. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving KR Puram, Battarahalli and Old Madras Road.`,
     // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Shipping Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -24643,6 +24663,773 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin operates from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and an office in Electronic City, Bengaluru. It does not run a yard, depot or branch in KR Puram. Every container depends on stock at the time of order; its dimensions, grade, condition, fittings (zones, shelves, drum supports, lights, power points, locks), any hire terms and the transport, unloading and collection are fixed only by its written quotation, and neither a delivery date nor vehicle access is promised. All five pictures are illustrative renders of a single container; none was photographed in KR Puram or shows a delivered or fitted unit. Portable Office Cabin has no connection with Indian Railways or with any telecom operator or internet provider, and KR Puram railway station is mentioned only to locate the area. Parcel consolidators, transporters and network contractors are described as typical users, not as customers or past jobs, and the localities listed show where enquiries are welcome rather than confirmed delivery points. Notes on consignments, restricted cargo, cable drums, equipment, batteries, site access and placement are general guidance, not legal, regulatory, safety or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS ON TC PALYA ROAD — storage for new steel furniture manufacturers'
+   * finished stock (almirahs, wardrobes, office cupboards, racks, cots and bed frames, fittings,
+   * customer-wise dispatch staging, returns awaiting inspection) and for weighing scale dealers' and
+   * service centres' inventory (table-top and electronic scales, platform scales, test weights, load
+   * cells, display units, repair intake, service spares) on TC Palya Road, east Bengaluru.
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers on
+   * TC Palya Road"): meta title, H1, keywords, local modifiers, section order, H2 / H3 headings, sizes
+   * table, the eleven ordering steps and the ten FAQs are the brief's, and so is the copy, lightly edited
+   * for flow and British spelling. The brief's meta description (177 characters) is shortened to 155 by
+   * dropping words only ("…for steel furniture makers storing almirahs, racks and cots, and weighing scale
+   * dealers storing scales, spares and test weights." → "…for steel furniture makers' almirahs, racks
+   * and cots, and weighing scale dealers' spares and test weights."), in line with the site's 160-character
+   * description limit. The brief's notes to the implementer ("Do not recommend keeping welding gas
+   * cylinders…", "Do not recommend charging scale batteries…", "Do not guarantee delivery…", "Do not place
+   * containers on public roads…", "link to the verified Bellandur page", "Do not invent…", "Conditional
+   * section…", "Highlight only verified capabilities…", "Do not target…", "Use verified company phone
+   * numbers…") are instructions, not page copy: where one carries a fact for the reader it is reworded as a
+   * plain statement ("this page does not recommend keeping welding gas cylinders…", "this page does not
+   * recommend charging scale batteries…", "no delivery time is fixed until the transport has been
+   * verified", "no container is placed on a public road or footpath without the required authorisation");
+   * otherwise it is left out. The brief's safety advice to the reader ("Do not carry out welding…", "Do not
+   * assume an ordinary storage container is suitable for hazardous chemicals", "Do not assume that all test
+   * weights may be stored on open shelves", "Avoid unstable stacking") stays as advice. Where an H3 has a
+   * lead-in, a checklist and short instructions, the instructions become its closing paragraph (the
+   * template gives an H3 one list). The route follows the site convention (/cities-we-serve/…), not the
+   * brief's root slug. The tagline, captions, link lead-ins, areas sentences, "why" bullets, enquiry-form
+   * intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; padded almirah bays, wardrobe supports, racks, cot
+   * pallets, fitting drawers, staging and returns sections, scale shelving, platform-scale pallets, test
+   * weight cases, load-cell drawers, spares sections, repair intake bays, locks, lighting, ventilation,
+   * insulation and environmental controls are layout options and price factors "where your quotation
+   * includes them", never stock items or guaranteed conditions. "Thambu Chetty Palya" is used once in the
+   * visible copy (areas) as the expanded name, as the brief asks. The optional Kannada search terms are not
+   * used: the page is in English. No Product JSON-LD: city pages carry no prices (file rule) and a Product
+   * block without offers earns no rich result, so the Service JSON-LD (no offers), FAQPage and
+   * BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   Steel furniture manufacturers, "Steel Furniture Storage Safety", weighing scale dealers and service
+   *     centres, "Weighing Scale Storage Safety" and "Storage Container Layout Options" → five afterIntro
+   *     extra sections, the first four with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, eleven steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas Served Around TC Palya Road" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" →
+   *   a default extra section (after the areas, as in the brief). FAQs: the brief's ten.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §6, only where the destination exists and its content supports the anchor): intro → the
+   * cargo category ("Existing shipping container product page"); steel furniture section → "antique and
+   * heritage furniture storage in Banaswadi" (its "Storage Containers for Antique Dealers & Heritage
+   * Furniture Restorers"); "Steel cot and bed frame storage" H3 → "upholstery and mattress workshop storage
+   * in Vijayanagar" (its "Storage Containers for Upholstery & Mattress Workshops"); "Returns and inspection
+   * section" H3 → "furniture and appliance rental hubs in Brookefield" (its "Mini-Hubs for Furniture &
+   * Appliance Rental Businesses"); "Welding and cutting" H3 → "railing and gate fabrication stock on
+   * Thanisandra Main Road" (its "Storage Containers for Stainless Steel Railing & Gate Fabricators");
+   * weighing scale section → "laboratory glassware and instrument storage in Vidyaranyapura" (its "Storage
+   * Containers for Laboratory Glassware & Supplies Dealers"); "Platform weighing scale storage" H3 → "grain,
+   * pulse and spice traders' storage in Yeshwanthpur" (its grain-trader section lists platform weighing
+   * scales); placement → "shipping container delivery and placement on restricted sites" (Bellandur's
+   * "Planning delivery through a society gate or narrow lane"); sizes → "how to inspect a used container
+   * before buying": the brief's /shipping-container-chennai is not a route, so it points to the Athipattu
+   * page's "Used Container Inspection" checklist, as the sibling pages do; rental →
+   * /products/shipping-container-rental; areas → "shipping containers in KR Puram" (its consignment
+   * staging includes space for a weighing scale, the brief's "consignment weighing" boundary),
+   * "shipping containers in Ramamurthy Nagar", "shipping containers in Horamavu" and "shipping containers
+   * in Kasturi Nagar". Anchors differ from the siblings' anchors for the same targets. Inbound: the KR Puram
+   * page's areas (brief §7), the Ramamurthy Nagar, Horamavu and Kasturi Nagar pages' areas (one
+   * areasInlineLinks item each), the Karnataka shipping hub ("Shipping Containers on TC Palya Road"), the
+   * cargo category's location links ("Storage containers on TC Palya Road") and every Karnataka shipping
+   * page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × TC Palya Road, TC Palya, TC Palya Main Road,
+   * Thambu Chetty Palya, Anandapura, NRI Layout and Chikkabasavanapura, for new steel furniture
+   * manufacturers' finished stock and for weighing scale dealers' and service centres' inventory. The KR
+   * Puram page no longer names TC Palya in its areas and links here instead (brief §7). Not targeted:
+   * KR Puram, Tin Factory, Old Madras Road, Battarahalli, Kithaganur, Doorvaninagar and Medahalli (KR Puram
+   * page; KR Puram named here only in the link sentence to it); Ramamurthy Nagar, Hoysala Nagar, Kowdenahalli
+   * and Vijinapura (Ramamurthy Nagar page; same); Horamavu and Kasturi Nagar (their own pages; same);
+   * Venkateshwara Layout (excluded: the name is shared by several places). Kept apart from antique and
+   * heritage furniture (Banaswadi), upholstery and mattress workshops (Vijayanagar), furniture rental
+   * (Brookefield), railing and gate fabrication (Thanisandra Main Road), grain traders' platform scales
+   * (Yeshwanthpur), consignment weighing (KR Puram), laboratory glassware and instruments (Vidyaranyapura),
+   * restricted-site delivery (Bellandur) and used-container inspection (Athipattu); each is named only in the
+   * link to it. "Bengaluru" stays out of the title, as the brief asks; the geo meta and the Service
+   * JSON-LD's areaServed carry "TC Palya, Bengaluru, Karnataka".
+   *
+   * Images: the brief says to use the existing images, and no owner drop exists for TC Palya Road, so the
+   * page reuses five EXISTING catalogue images, copied to /images/cities/shipping-container-tc-palya-road/
+   * with descriptive names; the VP8 bitstream of each is byte-identical to its catalogue original, plus an
+   * XMP dc:title / dc:description that labels it an illustrative catalogue image (no creator, GPS, camera or
+   * date). The originals are untouched. Sources: products/cargo-shipping-container-gallery-2 (green
+   * container, three-quarter view with its cargo doors) = hero / og:image (the brief's hero filename and alt,
+   * with what the image shows); gallery-3 (the same container's door end) = steel furniture section (its
+   * caption is about the door opening, which limits upright almirahs); gallery-1 (its long side and blind
+   * end) = weighing scale section (its caption is about the floor rating for platform scales and test
+   * weights); cargo-storage-container-40ft (a weathered maroon container on a raised concrete plinth; not
+   * otherwise shown on the site) = placement section; used-shipping-container-third (a weathered red used
+   * container) = sizes section (its caption is about checking a used unit). The Corten-steel set and the
+   * empty-interior image are left to the Nagarbhavi and Mysore pages. No image shows almirahs, wardrobes,
+   * racks, cots, fittings, scales, test weights, load cells or a fitted interior, so the brief's
+   * use-case and interior image slots are not used, and no alt text, caption or filename claims those items,
+   * a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-tc-palya-road",
+    city: "TC Palya Road",
+    listTitle: "Shipping & Storage Containers on TC Palya Road",
+    // The place is a road, so the directory card says "on" rather than the default "in".
+    directoryLabel: "Shipping containers on TC Palya Road",
+    metaTitle: "Shipping Container on TC Palya Road | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers on TC Palya Road for steel furniture makers' almirahs, racks and cots, and weighing scale dealers' spares and test weights.",
+    keywords:
+      "shipping container on TC Palya Road, cargo container TC Palya Road, storage container TC Palya, storage container TC Palya Main Road, storage container Thambu Chetty Palya, storage container Anandapura, storage container NRI Layout, storage container Chikkabasavanapura, used shipping container TC Palya Road, shipping container price on TC Palya Road, storage container for rent on TC Palya Road, steel furniture maker storage container, steel almirah storage, steel rack and cot stock storage, finished furniture dispatch storage, weighing scale dealer storage container, electronic scale stock storage, scale service centre storage, test weight storage",
+    // Approximate point on TC Palya Main Road, east Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "TC Palya, Bengaluru, Karnataka, India",
+      position: "13.0180;77.7000",
+      icbm: "13.0180, 77.7000",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1024 × 1024 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Banaswadi, Vijayanagar, Brookefield, Thanisandra Main Road, Vidyaranyapura, Yeshwanthpur, Bellandur, Athipattu, KR Puram, Ramamurthy Nagar, Horamavu and Kasturi Nagar are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-tc-palya-road/shipping-container-tc-palya-road.webp",
+      alt: "Shipping container exterior suitable for commercial equipment and furniture storage: a green steel container with closed double cargo doors and four locking bars, on a paved yard",
+      width: 1024,
+      height: 1024,
+      caption: "Illustrative catalogue image of a closed container; not a photograph taken on TC Palya Road or of a unit supplied there.",
+    },
+
+    h1: "Shipping & Storage Containers on TC Palya Road",
+    tagline:
+      "Lockable storage for finished steel almirahs, racks and cots awaiting dispatch, or for electronic scales, platform scales, test weights and service spares.",
+    intro: [
+      "TC Palya Road is a developing residential and commercial corridor in east Bengaluru, with homes, small workshops, trading businesses and local service providers.",
+      "Steel furniture manufacturers and weighing scale dealers handle inventory that may be bulky, heavy, delicate or sensitive to improper handling. These businesses may need additional storage space for finished products, spare parts and equipment awaiting dispatch.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin supplies",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " on TC Palya Road for compatible steel furniture inventory and weighing scale equipment.",
+    },
+
+    areasHeading: "Areas Served Around TC Palya Road",
+    areasText:
+      "This page covers shipping and storage container enquiries from TC Palya, TC Palya Main Road, Anandapura, NRI Layout and Chikkabasavanapura. TC Palya is also known as Thambu Chetty Palya. Several of the layout roads off the main road are narrow, so the route and the set-down spot for each address are checked before a date is offered.",
+    // Brief §3 and §8: KR Puram, Ramamurthy Nagar, Horamavu and Kasturi Nagar keep their own pages.
+    areasInlineLinks: [
+      {
+        before: "KR Puram, including consignment staging with room for a parcel scale near the station, has its own page:",
+        link: { label: "shipping containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
+        after: ".",
+      },
+      {
+        before: "Enquiries from Ramamurthy Nagar are answered on our page about",
+        link: { label: "shipping containers in Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
+        after: ".",
+      },
+      {
+        before: "If your site is in Horamavu, see our page on",
+        link: { label: "shipping containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+        after: ".",
+      },
+      {
+        before: "Premises in Kasturi Nagar are looked after by our page on",
+        link: { label: "shipping containers in Kasturi Nagar", href: "/cities-we-serve/shipping-container-kasturi-nagar" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Steel Furniture Manufacturers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-tc-palya-road/shipping-container-cargo-doors-tc-palya-road.webp",
+          alt: "Door end of a green steel container: two closed cargo doors with four vertical locking bars, cam handles and rubber door seals, on a paved yard",
+          width: 1024,
+          height: 1024,
+          caption:
+            "Illustrative catalogue image. The clear height and width of the door opening, not the length of the box, decide whether a tall almirah can be carried in upright; both are measured on the unit you are offered.",
+        },
+        paragraphs: [
+          "Steel furniture manufacturers produce almirahs, wardrobes, storage racks, cots, office cupboards and other metal furniture.",
+          "Finished furniture may require temporary storage before delivery to homes, apartments, shops and offices. A suitably configured shipping container may provide additional storage at an authorised workshop or commercial premises.",
+        ],
+        // Brief §6 and §8: antique and heritage furniture restoration belongs to the Banaswadi page.
+        inlineLinks: [
+          {
+            before: "Restoring old teak, rosewood or heritage pieces rather than making new steel furniture? See our notes on",
+            link: { label: "antique and heritage furniture storage in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Steel almirah and wardrobe storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Steel almirahs." },
+              { text: "Metal wardrobes." },
+              { text: "Office cupboards." },
+              { text: "Other suitable finished furniture." },
+            ],
+            closing: [
+              "Store units upright where the manufacturer recommends it, use protective wrapping and padding, and secure each unit against tipping. Protect painted surfaces, corners and handles from impact.",
+            ],
+          },
+          {
+            heading: "Steel rack and shelving unit storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Steel racks." },
+              { text: "Storage shelving." },
+              { text: "Flat-packed metal furniture." },
+              { text: "Suitable structural accessories." },
+            ],
+            closing: [
+              "Organise them by size, model and customer order, use stable supports, and avoid stacking arrangements that may deform components.",
+            ],
+          },
+          {
+            heading: "Steel cot and bed frame storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Steel cots." },
+              { text: "Metal bed frames." },
+              { text: "Suitable bed frame accessories." },
+            ],
+            closing: [
+              "Store them on appropriate pallets or racks, protect finished surfaces against scratching and use safe handling arrangements for large frames.",
+            ],
+            // Brief §6 and §8: upholstery and mattress workshops belong to the Vijayanagar, Bengaluru page.
+            inlineLinks: [
+              {
+                before: "Making mattresses, cushions or upholstered sofas to go with the frames? That stock is covered under",
+                link: { label: "upholstery and mattress workshop storage in Vijayanagar", href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Locks, handles and furniture fittings",
+            paragraphs: ["Organise compatible accessories such as:"],
+            bullets: [
+              { text: "Locks." },
+              { text: "Handles." },
+              { text: "Hinges." },
+              { text: "Suitable fasteners." },
+              { text: "Approved furniture fittings." },
+            ],
+            closing: ["Use labelled drawers or bins, and keep separate stock records for different models."],
+          },
+          {
+            heading: "Customer-wise finished goods staging",
+            paragraphs: ["Organise completed furniture by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Order number." },
+              { text: "Product type." },
+              { text: "Dimensions." },
+              { text: "Quantity." },
+              { text: "Delivery location." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Verify each order before loading."],
+          },
+          {
+            heading: "Returns and inspection section",
+            paragraphs: ["Provide a designated section for returned items awaiting:"],
+            bullets: [
+              { text: "Inspection." },
+              { text: "Repacking." },
+              { text: "Minor adjustment." },
+              { text: "Return to the workshop for repair." },
+            ],
+            closing: ["Do not carry out welding, cutting, grinding or painting inside an ordinary storage-only container."],
+            // Brief §6 and §8: furniture hired out and taken back between tenancies belongs to the Brookefield page.
+            inlineLinks: [
+              {
+                before: "Renting furniture out and taking it back at the end of each lease, instead of selling it? Read about",
+                link: { label: "furniture and appliance rental hubs in Brookefield", href: "/cities-we-serve/shipping-container-brookefield" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Steel furniture inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Model." },
+              { text: "Dimensions." },
+              { text: "Quantity." },
+              { text: "Weight." },
+              { text: "Storage location." },
+              { text: "Customer order." },
+              { text: "Condition." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Steel Furniture Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Heavy furniture handling",
+            paragraphs: ["Verify:"],
+            bullets: [
+              { text: "Container floor-loading limits." },
+              { text: "Rack and pallet capacity." },
+              { text: "Safe lifting arrangements." },
+              { text: "Suitable restraints." },
+              { text: "Clear access paths." },
+            ],
+          },
+          {
+            heading: "Welding and cutting",
+            paragraphs: [
+              "An ordinary storage-only shipping container is not automatically suitable for welding, cutting, grinding or metal fabrication. Use an appropriately designed and authorised workshop.",
+            ],
+            // Brief §6 and §8: stainless steel railing and gate fabrication belongs to the Thanisandra Main Road page.
+            inlineLinks: [
+              {
+                before: "Fabricating stainless steel railings and gates rather than furniture? Their pipes, sheets and finished assemblies are covered under",
+                link: { label: "railing and gate fabrication stock on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Paints and thinners",
+            paragraphs: [
+              "Paints, solvents, thinners and similar chemicals must be stored according to their product labels, safety data sheets and the requirements that apply. Do not assume an ordinary storage container is suitable for hazardous chemicals.",
+            ],
+          },
+          {
+            heading: "Welding gas cylinders",
+            paragraphs: [
+              "Use appropriate approved cylinder storage arrangements. This page does not recommend keeping welding gas cylinders inside an ordinary storage-only container without a specific compliant assessment.",
+            ],
+          },
+          {
+            heading: "Surface protection",
+            paragraphs: ["Protect painted furniture against:"],
+            bullets: [
+              { text: "Scratches." },
+              { text: "Dents." },
+              { text: "Moisture." },
+              { text: "Impact." },
+              { text: "Unstable stacking." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Weighing Scale Dealers & Service Centres",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-tc-palya-road/shipping-container-side-wall-tc-palya-road.webp",
+          alt: "Long corrugated side and blind end wall of a green steel container, with corner castings and forklift pockets in the base rail, on a paved yard",
+          width: 1024,
+          height: 1024,
+          caption:
+            "Illustrative catalogue image. Platform scales and boxes of test weights put a lot of weight on a small patch of floor, so the floor rating of the unit offered is checked against your heaviest items.",
+        },
+        paragraphs: [
+          "Weighing scale dealers and service centres supply, maintain and repair equipment used by shops, traders, warehouses and other commercial businesses.",
+          "Their inventory may include table-top scales, electronic scales, platform scales, display units, load cells, adapters and test weights. A suitably configured shipping container may provide organised storage for compatible equipment and spare parts.",
+        ],
+        // Brief §6 and §8: laboratory glassware and instrument suppliers belong to the Vidyaranyapura page.
+        inlineLinks: [
+          {
+            before: "Supplying laboratory glassware and instruments rather than trade and retail scales? See",
+            link: { label: "laboratory glassware and instrument storage in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Table-top and electronic weighing scale storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Table-top weighing scales." },
+              { text: "Electronic retail scales." },
+              { text: "Suitable digital weighing equipment." },
+            ],
+            closing: [
+              "Keep equipment in its protective packaging, organise it by manufacturer, model and capacity, and follow the manufacturer's storage requirements.",
+            ],
+          },
+          {
+            heading: "Platform weighing scale storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Platform scales." },
+              { text: "Suitable scale platforms." },
+              { text: "Other approved heavy equipment." },
+            ],
+            closing: [
+              "Use low, stable pallets where appropriate, verify the actual weight against the container's floor-loading limits and protect weighing components from impact.",
+            ],
+            // Brief §6 and §8: grain traders who use platform scales in their own stores belong to the Yeshwanthpur page.
+            inlineLinks: [
+              {
+                before: "Trading grain and pulses, with a platform scale as part of the store rather than as stock for sale? See",
+                link: { label: "grain, pulse and spice traders' storage in Yeshwanthpur", href: "/cities-we-serve/shipping-container-yeshwanthpur" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Test weight storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Calibration and verification weights." },
+              { text: "Suitable test weight accessories." },
+            ],
+            closing: [
+              "Store them in clean, dry and protected conditions, in appropriate cases or on suitable supports. Follow the handling, traceability and calibration requirements that apply to the specific weights, and do not assume that all test weights may be stored on open shelves.",
+            ],
+          },
+          {
+            heading: "Load cell and display unit storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Load cells." },
+              { text: "Digital indicators." },
+              { text: "Display units." },
+              { text: "Adapters." },
+              { text: "Approved electronic spare parts." },
+            ],
+            closing: [
+              "Use protective packaging and labelled drawers, and protect items against moisture, electrostatic damage and impact where applicable.",
+            ],
+          },
+          {
+            heading: "Customer repair intake storage",
+            paragraphs: ["Organise incoming equipment by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Model." },
+              { text: "Serial number." },
+              { text: "Reported fault." },
+              { text: "Date received." },
+              { text: "Service status." },
+              { text: "Return date." },
+            ],
+            closing: ["Keep customer equipment separate from new sale inventory."],
+          },
+          {
+            heading: "Service spare parts storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Suitable connectors." },
+              { text: "Display modules." },
+              { text: "Approved replacement parts." },
+              { text: "Other manufacturer-compatible accessories." },
+            ],
+            closing: ["Organise them by model and specification."],
+          },
+          {
+            heading: "Weighing scale service register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Equipment model." },
+              { text: "Serial number." },
+              { text: "Date received." },
+              { text: "Reported fault." },
+              { text: "Work performed." },
+              { text: "Parts replaced." },
+              { text: "Calibration or verification status, where applicable." },
+              { text: "Return status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Weighing Scale Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Accuracy and calibration",
+            paragraphs: [
+              "Protect weighing instruments and test weights against impact, contamination, corrosion and unsuitable environmental conditions, and follow the legal metrology, verification and calibration requirements that apply. Storage arrangements do not establish calibration accuracy or legal compliance.",
+            ],
+          },
+          {
+            heading: "Battery safety",
+            paragraphs: [
+              "This page does not recommend charging scale batteries inside an ordinary storage-only container without appropriate electrical and fire-safety arrangements. Follow the battery manufacturer's instructions.",
+            ],
+          },
+          {
+            heading: "Electronic equipment",
+            paragraphs: [
+              "Some electronic components may require controlled temperature, humidity or electrostatic protection. Follow the manufacturer's requirements.",
+            ],
+          },
+          {
+            heading: "Repair work",
+            paragraphs: [
+              "An ordinary storage-only container is not automatically suitable as an active electronics repair or calibration workshop. Use a suitable workspace for repairs, testing and verification.",
+            ],
+          },
+          {
+            heading: "Heavy platform scales",
+            paragraphs: ["Use appropriate handling equipment and rated supports, and avoid unstable stacking."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Upright padded almirah storage." },
+          { text: "Metal wardrobe supports." },
+          { text: "Steel rack storage." },
+          { text: "Cot and bed frame pallets." },
+          { text: "Furniture fitting drawers." },
+          { text: "Customer-wise order staging sections." },
+          { text: "Separate returns inspection areas." },
+          { text: "Electronic scale shelving." },
+          { text: "Platform scale pallets." },
+          { text: "Test weight protective storage." },
+          { text: "Load cell and display unit drawers." },
+          { text: "Service spare parts sections." },
+          { text: "Customer repair intake bays." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+          { text: "Environmental controls where required." },
+          { text: "Appropriate locking arrangements." },
+        ],
+        closing: [
+          "Every layout must reflect the actual dimensions, equipment weights, manufacturer instructions and safety requirements.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery on TC Palya Road",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-tc-palya-road/shipping-container-concrete-base-tc-palya-road.webp",
+          alt: "Weathered maroon steel container with closed cargo doors standing on a raised, level concrete plinth against a plain wall",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative catalogue image of a container on a level concrete base. Whatever the ground, it has to be firm and even under all four corners, with room in front for the doors to swing fully open.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including approved workshop yards, suitable commercial storage plots, authorised business premises and other permitted private sites.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Some roads along TC Palya Main Road and in the surrounding residential layouts may have limited access for large vehicles. A 10 ft or 20 ft container may be considered for compact sites, subject to availability and actual access conditions. A 40 ft container may be considered where sufficient space and unloading arrangements are available.",
+          "No delivery time is fixed until the transport arrangements have been verified, and no container is placed on a public road or footpath without the required authorisation.",
+        ],
+        // Brief §3 and §6: restricted-site delivery → the Bellandur page's society-gate and narrow-lane notes.
+        inlineLinks: [
+          {
+            before: "Reaching the site through a narrow lane or a society gate? The checks are set out under",
+            link: { label: "shipping container delivery and placement on restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-tc-palya-road/used-shipping-container-tc-palya-road.webp",
+          alt: "Weathered red used steel container with rust on its corner posts and door frame, closed cargo doors with four locking bars, on a concrete yard",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative catalogue image of a used unit. Rust on the frame, the state of the door seals and the floor are worth checking before a used container is accepted for heavy furniture or scales.",
+        },
+        table: {
+          caption:
+            "Exact internal dimensions, door openings, floor-loading limits and availability are verified on the unit you are offered. Approximate volume does not establish allowable payload, and no number of almirahs, platform scales or test weights is promised to fit until the actual dimensions and weights have been checked.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Weighing scale inventory, spare parts and suitable test weights"],
+            ["20 ft", "33 m³", "Finished steel almirahs, racks and cots"],
+            ["40 ft", "67 m³", "Larger furniture orders where suitable space and access are available"],
+          ],
+        },
+        // Brief §6: used-container buying guidance → the Chennai-area Athipattu page's inspection checklist.
+        inlineLinks: [
+          {
+            before: "Thinking of a second-hand unit? Work through our guide on",
+            link: { label: "how to inspect a used container before buying", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price on TC Palya Road",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Furniture storage supports." },
+          { text: "Protective padding." },
+          { text: "Pallets and racks." },
+          { text: "Test weight storage arrangements." },
+          { text: "Electronic spare parts drawers." },
+          { text: "Locking arrangements." },
+          { text: "Lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental control requirements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on your actual requirements."],
+      },
+      {
+        heading: "Storage Container on Rent on TC Palya Road",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for a large furniture order or for seasonal weighing scale inventory. Containers can be hired for anything from one month to five years, and the quotation spells out the unit, the hire period, the transport charges, any deposit and how the container is delivered and collected.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and hire periods are listed with our",
+            link: { label: "container hire terms", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the products and equipment." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify heavy, fragile or sensitive inventory." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, pallets, padding and drawers." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For furniture makers and scale dealers on TC Palya Road, that means:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "20 ft and 40 ft units, and a 10 ft unit when one is in stock, chosen to suit your stock and your plot." },
+          { title: "Storage-oriented modifications", text: "padded almirah bays, cot pallets or scale shelving, each shown as its own item on the quotation." },
+          { title: "Shelving and racking provisions", text: "laid out around your heaviest almirah, your longest frame or your platform scales, within the floor rating." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock fitted to your unit named in writing." },
+          { title: "Ventilation and insulation options", text: "quoted against what your stock needs; no temperature, humidity or calibration result is promised." },
+          { title: "Quotation and delivery coordination", text: "a line-by-line price first, then the route and the set-down spot are checked before a truck is booked." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can steel almirahs be stored inside a shipping container?",
+        answer: "Potentially, using suitable protective padding, stable supports and restraints.",
+      },
+      {
+        question: "Can welding and painting be done inside a shipping container?",
+        answer:
+          "An ordinary storage-only container is not automatically suitable for welding, cutting or painting. Use an appropriately designed workspace.",
+      },
+      {
+        question: "Can weighing scale dealers store equipment inside a container?",
+        answer: "Potentially, using suitable protective packaging and storage arrangements.",
+      },
+      {
+        question: "How should test weights be stored?",
+        answer:
+          "Follow the handling and calibration requirements that apply, and protect the weights against contamination, corrosion and impact.",
+      },
+      {
+        question: "Can platform scales be stored inside a container?",
+        answer: "Potentially, subject to their actual weight, the container's floor-loading limits and safe handling arrangements.",
+      },
+      {
+        question: "Can scale batteries be charged inside an ordinary storage container?",
+        answer:
+          "This page does not recommend charging batteries inside an ordinary storage container without appropriate electrical and fire-safety arrangements.",
+      },
+      {
+        question: "Can scales be calibrated inside a storage container?",
+        answer: "An ordinary storage-only container is not automatically suitable as a calibration or verification facility.",
+      },
+      {
+        question: "Is a standard shipping container climate-controlled?",
+        answer: "No. Environmental controls must be specified and verified separately.",
+      },
+      {
+        question: "What is the shipping container price on TC Palya Road?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation on TC Palya Road",
+    ctaText: `Whether you need storage for finished steel almirahs, racks and cots, or for electronic weighing scales, platform scales, test weights and spare parts, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: TC Palya, TC Palya Main Road, Anandapura, NRI Layout and Chikkabasavanapura, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for TC Palya Road",
+      intro:
+        "Pick a container and how many you need, add the address or a map pin near TC Palya Road and say whether you want to buy or hire. Tell us if it is for finished steel furniture or for scales and test weights, give the tallest almirah or heaviest platform scale, and describe the road to the gate; the size and the floor rating are matched to both before we quote.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds and dispatches its containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has its Bengaluru office in Electronic City; it has no yard, depot, showroom or branch on TC Palya Road or in Anandapura, NRI Layout or Chikkabasavanapura. What a container includes is set by its written quotation alone: inside and door-opening measurements, grade and condition, floor rating, every pad, support, rack, pallet, drawer, case, bay, light, vent, lining, control or lock, any hire period, and the delivery, unloading and collection arrangements. Stock changes, so a date is firm only once that quotation confirms it. Unless an approved specification says so, no container is sold or hired as a workshop for welding, cutting, grinding or painting, as a store for paints, thinners, solvents, gas cylinders or other hazardous products, as a place to charge batteries or to repair, test, verify or calibrate scales, as climate-controlled, humidity-controlled or static-safe, or as rated for any load without limit. Keeping scales or test weights in a container does not establish their accuracy, calibration or legal metrology compliance. The five pictures are illustrative images from Portable Office Cabin's existing catalogue; none was taken on TC Palya Road or shows a delivered or fitted unit or anyone's furniture or equipment. Capacities in cubic metres are rough guides, not payload ratings. Steel furniture manufacturers, weighing scale dealers and service centres are named as possible users, not as customers or completed jobs, and a locality listed here is one we take enquiries from, not a confirmed delivery point. Notes on heavy furniture, paints, cylinders, batteries, electronics, test weights, placement and permits are general guidance, not legal, metrology, electrical, fire-safety or engineering advice; manufacturers' instructions and the requirements of the relevant authorities come first.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -40609,7 +41396,8 @@ export const CITY_PAGES: CityPage[] = [
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Horamavu, Horamavu Agara, Horamavu Main
    * Road, Kalkere and Rampura, for AC and appliance installer stock and tent house / shamiana rental
-   * stock. Not named anywhere on the page: Ramamurthy Nagar, KR Puram and TC Palya (KR Puram page),
+   * stock. Not named anywhere on the page: Ramamurthy Nagar and KR Puram (KR Puram page); TC Palya Road (its
+   * own page since the owner's brief of 2026-11-22; named only in the areas link to it),
    * Hennur Road (Hennur Road page), Kalyan Nagar, HRBR and HBR Layout (Kalyan Nagar page), Banaswadi (Banaswadi
    * page, linked once from the areas section). Not targeted: hotel and banquet furniture overflow (Mahadevapura), festival committee
    * equipment (BTM Layout), solar and borewell contractors (Kanakapura Road), church and party-supply
@@ -40687,6 +41475,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "For a site in Banaswadi, see our page on",
         link: { label: "storage containers in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+        after: ".",
+      },
+      // TC Palya Road brief (2026-11-22, §6): steel furniture makers' finished stock is that page's intent.
+      {
+        before: "Finished steel almirahs, racks and cots waiting for dispatch near TC Palya Road are the subject of our page on",
+        link: { label: "steel furniture manufacturer storage on TC Palya Road", href: "/cities-we-serve/shipping-container-tc-palya-road" },
         after: ".",
       },
     ],
@@ -41077,8 +41871,9 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kasturi Nagar (Kasthuri Nagar), Doctors
    * Layout, Bhuvanagiri and Sadananda Nagar, for aquarium-shop and aquarium-maintenance inventory and for
    * trophy and memento sellers' stock and finished award orders. Not targeted: Banaswadi, OMBR Layout and
-   * Lingarajapuram (Banaswadi page, linked once from the areas section); Pai Layout (kept for a possible future page); East of NGEF Layout; Old Madras Road, Tin Factory, TC
-   * Palya and Doorvaninagar (KR Puram); Vijinapura (Ramamurthy Nagar); Baiyappanahalli and Benniganahalli;
+   * Lingarajapuram (Banaswadi page, linked once from the areas section); Pai Layout (kept for a possible future page); East of NGEF Layout; Old Madras Road, Tin Factory
+   * and Doorvaninagar (KR Puram); TC Palya (TC Palya Road page since 2026-11-22, named only in the areas link to it);
+   * Vijinapura (Ramamurthy Nagar); Baiyappanahalli and Benniganahalli;
    * Kalyan Nagar and HRBR Layout (Kalyan Nagar); décor or party supplies (Hennur Road); Horamavu and tent-house stock
    * (Horamavu); schools' sports-day props (JP Nagar); window glass (Varthur); live animals or pet supplies
    * (Bannerghatta Road; live fish and plants are named only as items NOT to keep in a container).
@@ -41151,6 +41946,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Premises in neighbouring Banaswadi are covered by our page on",
         link: { label: "shipping containers in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+        after: ".",
+      },
+      // TC Palya Road brief (2026-11-22, §6): weighing scale dealers' and service centres' stock is that page's intent.
+      {
+        before: "Scale dealers and service centres keeping electronic scales, test weights and spares are covered by our page on",
+        link: { label: "weighing scale dealer storage on TC Palya Road", href: "/cities-we-serve/shipping-container-tc-palya-road" },
         after: ".",
       },
     ],
@@ -43477,7 +44278,8 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Ramamurthy Nagar, RM Nagar, Ramamurthy
    * Nagar Main Road, Hoysala Nagar, Akshaya Nagar (RM Nagar), Kowdenahalli and Vijinapura, for signage
    * and flex printing stock and for home healthcare equipment rental depots. Not targeted here: KR Puram,
-   * Tin Factory, TC Palya, Battarahalli and Doorvaninagar (KR Puram page); Horamavu and Kalkere (Horamavu
+   * Tin Factory, Battarahalli and Doorvaninagar (KR Puram page); TC Palya and TC Palya Main Road (TC Palya
+   * Road page since the owner's brief of 2026-11-22; named only in the areas link to it); Horamavu and Kalkere (Horamavu
    * page); furniture and appliance rental mini-hubs (Brookefield); healthcare campus storage (Vellore).
    *
    * Images: four owner-dropped lossy VP8 webp renders ("public/images/Storage Containers in Ramamurthy
@@ -43574,6 +44376,15 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas We Serve",
     areasText:
       "Containers are supplied throughout Ramamurthy Nagar, including Ramamurthy Nagar Main Road, Hoysala Nagar, Akshaya Nagar (RM Nagar), Kowdenahalli and Vijinapura. Every delivery is confirmed once we have checked how the site can be reached.",
+    // TC Palya Road brief (2026-11-22, §6): storage for steel furniture makers and weighing scale dealers on
+    // TC Palya Road is that page's intent; this page's own areas are unchanged.
+    areasInlineLinks: [
+      {
+        before: "Steel furniture makers and weighing scale dealers along TC Palya Main Road are covered on our page on",
+        link: { label: "storage containers in TC Palya", href: "/cities-we-serve/shipping-container-tc-palya-road" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {

@@ -771,6 +771,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Sahakara Nagar (handmade soap and candle makers' stock; pottery and ceramics studios' stock;
     // owner brief 2026-11-21), appended so the live links keep their positions.
     { name: "Shipping Containers in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
+    // TC Palya Road (new steel furniture manufacturers' finished stock; weighing scale dealers' and service
+    // centres' inventory; owner brief 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers on TC Palya Road", href: "/cities-we-serve/shipping-container-tc-palya-road" },
   ],
 };
 
