@@ -59956,6 +59956,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "portable cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
         after: ".",
       },
+      // New Thippasandra brief (2026-11-22, §7): New Thippasandra, Puttappa Layout and Geethanjali Layout belong
+      // to the New Thippasandra page; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Shops on New Thippasandra Main Road keeping cookers, steel vessels or other utensil stock are covered on our page on",
+        link: { label: "kitchenware shop storage containers in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -65724,6 +65731,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "dewatering equipment storage in Murugeshpalya", href: "/cities-we-serve/shipping-container-murugeshpalya" },
         after: ".",
       },
+      // New Thippasandra brief (2026-11-22, §7): retail stationery and kitchenware stock in New Thippasandra
+      // (New Tippasandra) is that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Stationery and kitchenware shops next door in New Thippasandra can read about",
+        link: { label: "stationery and kitchenware stock storage in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -66154,6 +66168,692 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a shop, office or yard in Indiranagar. Delivery, unloading and placement are assessed and arranged for each site, and delivery dates are not guaranteed. Hire of a shop cabin is subject to availability and the quotation. The footprints, layouts, fitting rooms, display fittings, lighting, joined modules, wet-area and grooming fit-outs, utility provisions, branding, installation, collection and removal described on this page are options to discuss; what is supplied is confirmed in the approved drawing, specification and quotation for each order. The images on this page are illustrative renders of one portable shop cabin design, not photographs of installations in Indiranagar, and they do not show the apparel, gallery or grooming layouts described. The roads, localities and venues named here are used only to describe locations; they are not clients, completed projects or confirmed sites. HAL 2nd Stage and HAL 3rd Stage are locality names, and Portable Office Cabin is not affiliated with Hindustan Aeronautics Limited. Business activity, site use and outdoor signage are subject to the site owner and the relevant local authority; the notes on this page are general planning guidance, not legal, licensing, electrical or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN NEW THIPPASANDRA (New Tippasandra, east Bengaluru) — back-room stock
+   * storage for retail stationery and office-supply shops (paper reams, notebooks and long books, school
+   * season stock, files and folders, pens and small accessories, school craft supplies, inventory register)
+   * and for retail kitchenware and utensil shops (pressure cookers and cookware, steel utensils, non-stick
+   * pans, new boxed gas stoves, mixer grinders, copper and brass, iron tawas and kadais, festive and wedding
+   * gift sets, spare parts, inventory register).
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — New Thippasandra Shipping
+   * Container Page" + "use the existing images for the city page … show animation in the page"): meta title,
+   * H1, keywords, section order, H2 / H3 headings, sizes table, the nine ordering steps and the eight FAQs are
+   * the brief's, and so is the copy, lightly edited for flow and British spelling. The brief's meta description
+   * ("Shipping and storage containers in New Thippasandra, east Bengaluru, for stationery shops storing
+   * notebooks and paper, and kitchenware stores stocking utensils and cookware.", 173 characters) is over the
+   * site's 160-character limit, so "storing" and "stocking" became possessives (158 characters, every term
+   * kept). The template has no separate Open Graph title or description: og:title / og:description use the
+   * meta title and description, as on every city page. The brief's notes to the implementer ("Do not assume
+   * adhesives…", "Do not recommend storing thinners…", "Do not store gas cylinders, fuel or connected gas
+   * equipment…", "Do not recommend storing gas cylinders, kerosene…", "Do not promise early-morning
+   * delivery…", "add a contextual link to the verified Bellandur…", "Do not invent prices…", "Conditional
+   * section…", "direct customers to…", "Do not use these neighbouring areas…", "Highlight only verified
+   * capabilities…", "Do not claim guaranteed moisture-free storage…", "Use verified company phone numbers…")
+   * are instructions, not page copy: where one carries a fact for the reader it is reworded as a plain
+   * statement ("adhesives, paints, solvents and aerosol products are not assumed to be suitable…", "thinners,
+   * aerosol paints and other hazardous products are not stored … unless…", "gas cylinders, fuel and connected
+   * gas equipment are not stored…", "early-morning delivery … is offered only after the transport
+   * arrangements are confirmed"); otherwise it is left out. FAQ 4's answer is reworded the same way. "New
+   * Tippasandra" is used in the intro and the areas text, as the brief asks. The route follows the site
+   * convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins,
+   * enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental lists
+   * hire terms from one month to five years; no deposit, price or delivery charge is stated here); the 10 ft
+   * row keeps the brief's "if available"; shelving, pallets, drawers, bins, lighting, ventilation, insulation
+   * and locks are layout options and price factors, never stock items or guaranteed conditions. The optional
+   * Kannada search terms are not used: the page is in English. No Product JSON-LD: city pages carry no prices
+   * (file rule) and a Product block without offers earns no rich result, so the Service JSON-LD (no offers;
+   * areaServed "New Thippasandra, Bengaluru, Karnataka", not an address), FAQPage and BreadcrumbList stand, as
+   * on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers for shop stock" → the cargo category) +
+   *     heroCta.
+   *   Stationery stores, "Stationery Storage Safety", kitchenware shops and "Kitchenware Storage Safety" →
+   *     four afterIntro extra sections with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order" (ordered, nine steps) → afterSolutions extra sections,
+   *     so the steps stay before the areas.
+   *   "Areas Served" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's eight.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §7, only where the destination exists and supports the anchor; a small number, not every
+   * candidate): intro → the cargo category; stationery section → "print-shop paper and packaging storage in
+   * Rajajinagar" (its printing-press and packaging sections: printing and paper board, not retail
+   * stationery); school-season H3 → "school storage through the academic year in JP Nagar" (that page's
+   * section of the same name: a school's own furniture, textbooks, notebooks and uniforms); craft-supply H3 →
+   * "storage for artists' canvases and easels in Kalyan Nagar" (its "Storage Containers for Artists & Art
+   * Classes" section); kitchenware section → "restaurant equipment storage between leases in Koramangala" (its
+   * "Restaurant equipment storage between moves" section) and "tent-house catering vessel storage in Horamavu"
+   * (its "Catering Vessels, Lighting and Electrical Accessories" H3) and "wholesale crockery and tableware storage
+   * in Shigehalli" (its "Storage Containers for Crockery & Tableware Wholesalers" section; added at this PR's
+   * refresh once #316 was live, as the owner approved with #319); placement → "container delivery notes
+   * for tight-access sites" (the Bellandur page's society-gate and narrow-lane section); sizes → "a
+   * second-hand container inspection list": the brief's /shipping-container-chennai is not a route, so it
+   * points to the Athipattu page's "Used Container Inspection" checklist, as the sibling pages do; rental →
+   * /products/shipping-container-rental; areas → "container storage in Indiranagar" (HAL 2nd and 3rd Stage,
+   * Jeevan Bima Nagar) and "storage containers for Kaggadasapura and Malleshpalya" (Malleshpalya, Vignana
+   * Nagar). NOT linked, because no such page exists: CV Raman Nagar, Jayanagar (books and library stock),
+   * Kammanahalli (export-surplus clothing) and /shipping-container-chennai; the books and library
+   * distinction is made in words only, and CV Raman Nagar is not named. Not linked by choice (the brief asks
+   * for a few useful links): RT Nagar, Banashankari and
+   * Marathahalli ORR. Anchors differ from the siblings' anchors for the same targets. Inbound: the Indiranagar
+   * and Kaggadasapura pages' areas sections (one `areasInlineLinks` item each, at the end of each list; their
+   * boundaries and targeting unchanged), the Karnataka shipping hub ("Shipping Containers in New
+   * Thippasandra"), the cargo category's location links ("Storage containers in New Thippasandra") and every
+   * Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from
+   * repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × New Thippasandra (New Tippasandra), New
+   * Thippasandra Main Road, Thippasandra (Old Thippasandra), Puttappa Layout and Geethanjali Layout, for retail
+   * stationery and office-supply stock (school-season stock included) and retail kitchenware, household
+   * cookware and utensil stock. Named only in the pointer sentences to their own pages: HAL 2nd and 3rd Stage
+   * and Jeevan Bima Nagar (Indiranagar page); Malleshpalya and Vignana Nagar (Kaggadasapura page). Not named at
+   * all: CV Raman Nagar (no page yet, kept separate), Domlur, Murugeshpalya and the Thippasandra village near
+   * Magadi. Kept apart from books and library stock, printing and paper board (Rajajinagar), a school's own
+   * stock (JP Nagar), school shoes and bags (RT Nagar), art supplies for artists (Kalyan Nagar), wholesale
+   * crockery (Shigehalli), catering vessels (Horamavu), kirana backstock and plasticware (Banashankari),
+   * commercial kitchen equipment (Koramangala) and furniture showroom stock (Marathahalli ORR). "Bengaluru"
+   * stays out of the
+   * title, as the brief asks; the description and body say "east Bengaluru", and the geo meta and the Service
+   * JSON-LD's areaServed carry "New Thippasandra, Bengaluru, Karnataka".
+   *
+   * Images: no New Thippasandra images were supplied; the owner asked for EXISTING images. The five
+   * owner-supplied Bellandur shipping-container renders (one charcoal-grey container with bronze-painted cargo
+   * doors; used only on the Bellandur page until now) are copied with their VP8 data byte-for-byte and a fresh
+   * XMP dc:title / dc:description that labels each one an illustrative render shared with the Bellandur page
+   * (no creator, GPS, camera or date); the Bellandur files are untouched. Three-quarter exterior = hero /
+   * og:image (the brief's hero filename and alt, followed by what the picture shows); lined interior with
+   * steel shelving, cartons, lidded bins and bubble-wrapped items = stationery section (the brief's interior
+   * filename; the alt says "stock shelves", not "retail stock", because nothing identifies the goods); door
+   * end = kitchenware section; overhead view = placement section; side wall with two small vents = sizes
+   * section. No image shows paper, notebooks, stationery, utensils, cookware, stoves or gift sets, so the
+   * brief's thirteen use-case image slots are not used, and no alt text, caption or filename claims those
+   * items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-new-thippasandra",
+    city: "New Thippasandra",
+    listTitle: "Shipping & Storage Containers in New Thippasandra",
+    metaTitle: "Shipping Container in New Thippasandra | Shop Storage",
+    // Brief: "…for stationery shops storing notebooks and paper, and kitchenware stores stocking utensils and
+    // cookware." (173 chars); possessives keep it at 158 with every term.
+    metaDescription:
+      "Shipping and storage containers in New Thippasandra, east Bengaluru, for stationery shops' notebooks and paper, and kitchenware stores' utensils and cookware.",
+    keywords:
+      "shipping container in New Thippasandra, shipping container in New Tippasandra, cargo container New Thippasandra, storage container New Thippasandra, storage container New Thippasandra Main Road, storage container Old Thippasandra, storage container Puttappa Layout, storage container Geethanjali Layout, used shipping container New Thippasandra, shipping container price in New Thippasandra, storage container for rent in New Thippasandra, stationery shop storage container, stationery stock storage, school season stock storage, paper and notebook storage, office supplies storage, kitchenware shop storage container, utensil stock storage, steel utensils storage, cookware and pressure cooker storage",
+    // Approximate point near New Thippasandra Main Road, east Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "New Thippasandra, Bengaluru, Karnataka, India",
+      position: "12.9730;77.6510",
+      icbm: "12.9730, 77.6510",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Rajajinagar, JP Nagar, Kalyan Nagar, Koramangala, Horamavu, Shigehalli, Bellandur, Athipattu, Indiranagar
+    // and Kaggadasapura are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-new-thippasandra/shipping-container-new-thippasandra.webp",
+      alt: "Shipping container exterior suitable for retail inventory storage: a charcoal-grey corrugated steel container with closed bronze-painted cargo doors, locking bars and handles, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a storage container, also shown on our Bellandur page. It was not photographed in New Thippasandra and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in New Thippasandra",
+    tagline:
+      "Back-room space for a stationery shop's paper, notebooks and school-season stock, and for a kitchenware store's cookers, steel vessels and festive gift sets.",
+    intro: [
+      "New Thippasandra, also spelt New Tippasandra, is an established shopping and residential area in east Bengaluru. Its market streets include retailers selling stationery, office supplies, household utensils, cookware and other everyday products.",
+      "Retail shops often need additional inventory space during school reopening periods, festivals and wedding seasons.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers for shop stock", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in New Thippasandra for compatible commercial inventory, stationery stock and kitchenware storage requirements.",
+    },
+
+    areasHeading: "Areas Served",
+    areasText:
+      "This page covers New Thippasandra, also written New Tippasandra, including New Thippasandra Main Road, Thippasandra (Old Thippasandra), Puttappa Layout and Geethanjali Layout. Shops here sit on busy market streets and narrow cross roads, so the approach, the gate and the spot where the container will stand are checked for each address before a delivery date is put forward.",
+    // Brief §5 and §8: HAL 2nd and 3rd Stage and Jeevan Bima Nagar belong to the Indiranagar page; Malleshpalya
+    // and Vignana Nagar to the Kaggadasapura page. CV Raman Nagar has no page yet, so it is not named.
+    areasInlineLinks: [
+      {
+        before: "For HAL 2nd Stage, HAL 3rd Stage and Jeevan Bima Nagar, see our page on",
+        link: { label: "container storage in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+        after: ".",
+      },
+      {
+        before: "Malleshpalya and Vignana Nagar are covered on our page on",
+        link: { label: "storage containers for Kaggadasapura and Malleshpalya", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Stationery & Office Supply Stores",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-new-thippasandra/new-thippasandra-container-storage-interior.webp",
+          alt: "Shipping container interior with organised stock shelves: grey steel shelving either side of a central aisle holding cardboard cartons, lidded plastic bins and bubble-wrapped items, under ceiling lights",
+          width: 1451,
+          height: 1084,
+          caption:
+            "Illustrative render of a fitted-out interior. Steel shelving, wall lining and lights are added only where your quotation lists them, and heavy paper cartons belong on the lowest shelves.",
+        },
+        paragraphs: [
+          "Stationery shops handle notebooks, copier paper, registers, pens, files, school supplies and office accessories. Inventory requirements may increase before school reopening periods and during seasonal retail demand.",
+          "A suitably configured shipping container may provide additional storage space for compatible stationery stock.",
+          "This section is about a shop's stock for sale. Book and library collections, and the textbooks and uniforms a school keeps for its own pupils, are different applications.",
+        ],
+        // Brief §7 and §8: printing and paper board belong to the Rajajinagar page.
+        inlineLinks: [
+          {
+            before: "Running a printing press or packaging unit, with paper reels and board rather than retail stationery? See",
+            link: { label: "print-shop paper and packaging storage in Rajajinagar", href: "/cities-we-serve/shipping-container-rajajinagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Paper Ream & Copier Paper Storage",
+            paragraphs: [
+              "Store compatible paper reams and copier paper cartons on suitable pallets or shelving, and protect the paper from moisture, condensation and excessive heat.",
+              "Distribute heavy loads according to the container's floor-loading capacity.",
+            ],
+          },
+          {
+            heading: "Notebook & Long Book Storage",
+            paragraphs: ["Organise notebooks and long books by:"],
+            bullets: [
+              { text: "Size." },
+              { text: "Ruling." },
+              { text: "Product code." },
+              { text: "Brand." },
+              { text: "Class or intended use." },
+              { text: "Quantity." },
+            ],
+            closing: ["Use clearly labelled cartons, and avoid stacking heavy cartons on lighter stock."],
+          },
+          {
+            heading: "School Season Stationery Storage",
+            paragraphs: ["Suitable stock may include:"],
+            bullets: [
+              { text: "Notebooks." },
+              { text: "Geometry boxes." },
+              { text: "Pens and pencils." },
+              { text: "Erasers and sharpeners." },
+              { text: "School stationery kits." },
+              { text: "Other compatible school supplies." },
+            ],
+            closing: ["Prepare stock according to seasonal demand and customer orders."],
+            // Brief §8: a school's own stock belongs to the JP Nagar page.
+            inlineLinks: [
+              {
+                before: "A school keeping its own furniture, textbooks and uniforms between terms, rather than a shop's stock for sale? Read about",
+                link: { label: "school storage through the academic year in JP Nagar", href: "/cities-we-serve/shipping-container-jp-nagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Office File & Folder Storage",
+            paragraphs: ["Keep these on labelled shelves or in labelled bins:"],
+            bullets: [
+              { text: "Office files." },
+              { text: "Folders." },
+              { text: "Registers." },
+              { text: "Envelopes." },
+              { text: "Suitable office stationery." },
+            ],
+          },
+          {
+            heading: "Pen & Small Accessory Storage",
+            paragraphs: ["Use suitable drawers and bins for:"],
+            bullets: [
+              { text: "Pens." },
+              { text: "Pencils." },
+              { text: "Geometry accessories." },
+              { text: "Small stationery items." },
+              { text: "Compatible office accessories." },
+            ],
+            closing: ["Maintain stock counts."],
+          },
+          {
+            heading: "School Craft Supply Storage",
+            paragraphs: ["Compatible supplies may include:"],
+            bullets: [
+              { text: "Chart paper." },
+              { text: "Craft paper." },
+              { text: "Suitable school project materials." },
+              { text: "Approved water-based craft products." },
+            ],
+            closing: [
+              "Follow the manufacturer's storage instructions. Adhesives, paints, solvents and aerosol products are not assumed to be suitable for ordinary container storage; each is checked against its label first.",
+            ],
+            // Brief §8: art supplies for artists belong to the Kalyan Nagar page.
+            inlineLinks: [
+              {
+                before: "Storing an artist's canvases, easels and paints rather than a shop's school craft stock? See",
+                link: { label: "storage for artists' canvases and easels in Kalyan Nagar", href: "/cities-we-serve/shipping-container-kalyan-nagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Stationery Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product category." },
+              { text: "Brand." },
+              { text: "Product code." },
+              { text: "Quantity." },
+              { text: "Carton location." },
+              { text: "Stock condition." },
+              { text: "Customer order." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Stationery Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Moisture & Condensation",
+            paragraphs: [
+              "Paper absorbs moisture. Use suitable packaging, pallets, ventilation and environmental controls where they are required: a standard shipping container is not automatically humidity-controlled.",
+            ],
+          },
+          {
+            heading: "Heat-sensitive Products",
+            paragraphs: [
+              "Follow the manufacturer's temperature requirements for adhesives, wax crayons, tapes and other heat-sensitive products.",
+            ],
+          },
+          {
+            heading: "Solvents & Flammable Materials",
+            paragraphs: [
+              "Thinners, aerosol paints and other hazardous products are not stored inside an ordinary storage-only container unless appropriate safeguards are in place and the applicable regulations are met.",
+            ],
+          },
+          {
+            heading: "Pest Protection",
+            paragraphs: ["Keep cartons sealed where appropriate, and maintain suitable housekeeping and pest-control procedures."],
+          },
+          {
+            heading: "Floor Loading",
+            paragraphs: ["Paper inventory can be heavy. Verify the total stock weight and how the load is distributed."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Kitchenware & Utensil Shops",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-new-thippasandra/shipping-container-cargo-doors-new-thippasandra.webp",
+          alt: "Door end of a charcoal-grey container seen straight on, its two bronze-painted cargo doors closed with four vertical locking bars and handles",
+          width: 1451,
+          height: 1084,
+          caption:
+            "Illustrative render. Measure your largest carton, whether a cooker set, a boxed stove or a gift-set crate, against the clear door opening as well as the floor area.",
+        },
+        paragraphs: [
+          "Kitchenware shops sell household utensils, cookware, pressure cookers, steel vessels, pans, tawas and other kitchen accessories. Bulky cartons and seasonal inventory may require additional storage space.",
+          "A suitably configured shipping container can provide storage for compatible kitchenware products.",
+          "This section covers a retail shop's stock for household customers, not wholesale crockery and tableware, catering vessels or commercial kitchen equipment.",
+        ],
+        // Brief §8: commercial kitchen equipment belongs to the Koramangala page, catering vessels to Horamavu and
+        // wholesale crockery and tableware to Shigehalli (linked once #316 was live, as the owner approved with #319).
+        inlineLinks: [
+          {
+            before: "A restaurant keeping its commercial kitchen equipment somewhere between leases? See",
+            link: { label: "restaurant equipment storage between leases in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+            after: ".",
+          },
+          {
+            before: "Hiring out large catering vessels with shamianas for weddings and functions? Read about",
+            link: { label: "tent-house catering vessel storage in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+            after: ".",
+          },
+          {
+            before: "Buying dinner sets, plates and mugs by the carton to supply shops, hotels and restaurants, rather than selling kitchenware to households? See",
+            link: { label: "wholesale crockery and tableware storage in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Pressure Cooker & Cookware Storage",
+            paragraphs: [
+              "Store boxed pressure cookers and cookware sets on suitable shelving, with heavier cartons kept low. Follow the manufacturer's stacking and handling instructions.",
+            ],
+          },
+          {
+            heading: "Steel Utensil Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Stainless steel vessels." },
+              { text: "Pots." },
+              { text: "Plates." },
+              { text: "Bowls." },
+              { text: "Suitable household utensils." },
+            ],
+            closing: ["Organise them by size and product type, and use protective packaging to prevent scratches and deformation."],
+          },
+          {
+            heading: "Non-stick Pan Storage",
+            paragraphs: [
+              "Store non-stick pans in protective packaging and avoid contact that could damage the coating. Follow the manufacturer's storage instructions.",
+            ],
+          },
+          {
+            heading: "New Boxed Gas Stove Storage",
+            paragraphs: [
+              "New, unused and disconnected gas stoves may be suitable for storage when the manufacturer's requirements are met.",
+              "Gas cylinders, fuel and connected gas equipment are not stored in an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Mixer Grinder Storage",
+            paragraphs: [
+              "Store compatible mixer grinders in their protective cartons, following the package's orientation and stacking instructions.",
+            ],
+          },
+          {
+            heading: "Copper & Brass Vessel Storage",
+            paragraphs: [
+              "Use suitable wrapping and dry storage conditions, and protect the vessels against moisture and unsuitable environmental exposure.",
+            ],
+          },
+          {
+            heading: "Iron Tawa & Kadai Storage",
+            paragraphs: [
+              "Protect iron cookware against rust as the manufacturer instructs, with suitable protective wrapping or an approved surface treatment.",
+            ],
+          },
+          {
+            heading: "Festive & Wedding Gift Set Storage",
+            paragraphs: ["Organise compatible kitchenware gift sets by:"],
+            bullets: [
+              { text: "Product type." },
+              { text: "Design." },
+              { text: "Quantity." },
+              { text: "Customer order." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Keep fragile and heavy items appropriately separated."],
+          },
+          {
+            heading: "Kitchenware Spare Parts Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Pressure cooker gaskets." },
+              { text: "Replacement handles." },
+              { text: "Suitable cooker accessories." },
+              { text: "Other kitchenware fittings." },
+            ],
+            closing: ["Use labelled drawers or bins."],
+          },
+          {
+            heading: "Kitchenware Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Brand." },
+              { text: "Model." },
+              { text: "Size." },
+              { text: "Quantity." },
+              { text: "Carton location." },
+              { text: "Condition." },
+              { text: "Customer order." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Kitchenware Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Heavy Cartons",
+            paragraphs: ["Keep heavy cartons low, use stable shelving and verify the floor-loading limits."],
+          },
+          {
+            heading: "Gas Cylinders & Fuel",
+            paragraphs: ["Gas cylinders, kerosene and other fuel are not kept inside an ordinary storage-only container."],
+          },
+          {
+            heading: "Cleaning Products",
+            paragraphs: [
+              "Follow the manufacturer's labels and the applicable safety requirements for polishes, cleaners and chemicals.",
+            ],
+          },
+          {
+            heading: "Surface Protection",
+            paragraphs: ["Use suitable wrapping for copper, brass, non-stick cookware and finished metal products."],
+          },
+          {
+            heading: "Safe Handling",
+            paragraphs: ["Keep access routes clear and avoid unstable stacking."],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in New Thippasandra",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-new-thippasandra/shipping-container-roof-view-new-thippasandra.webp",
+          alt: "Charcoal-grey container seen from directly above on pale paving between hedges, showing its corrugated roof and long rectangular footprint",
+          width: 1451,
+          height: 1084,
+          caption:
+            "Illustrative overhead view. Behind a market street, the plot has to leave room for the lorry to set the unit down and for both cargo doors to swing fully open.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including approved commercial yards, suitable storage compounds, permitted shop service areas and other authorised private plots.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Unloading requirements." },
+          { text: "Container dimensions." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Market streets and cross roads may have restricted vehicle access. Early-morning delivery, or access through a particular street, is offered only after the transport arrangements have been confirmed.",
+        ],
+        // Brief §5: restricted-site delivery guidance → the Bellandur page's society-gate and narrow-lane section.
+        inlineLinks: [
+          {
+            before: "Is the only way in through a narrow cross road or a shared gate? Go through our",
+            link: { label: "container delivery notes for tight-access sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " before choosing a spot.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-new-thippasandra/shipping-container-side-wall-new-thippasandra.webp",
+          alt: "Long corrugated side wall of a charcoal-grey storage container with a small vent near each top corner, standing on a paved pad",
+          width: 2051,
+          height: 767,
+          caption:
+            "Illustrative side view with a small vent near each top corner. Vents help air move but do not control humidity, so paper still needs pallets and dry packing.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Exact dimensions, door openings, availability and payload limits must be verified for the unit you are offered.",
+          headers: ["Size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Smaller stationery or kitchenware inventory"],
+            ["20 ft", "33 m³", "School-season stationery or kitchenware backstock"],
+            ["40 ft", "67 m³", "Larger retail inventory where site access permits"],
+          ],
+        },
+        closing: ["Paper and steel utensils can be heavy, so usable weight capacity may matter more than volume."],
+        // Brief §7: used-container buying guidance → the Athipattu page's inspection checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Weighing up a used unit? Work through",
+            link: { label: "a second-hand container inspection list", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in New Thippasandra",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving." },
+          { text: "Pallets." },
+          { text: "Storage drawers and bins." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation where required." },
+          { text: "Locking arrangements." },
+          { text: "Transportation." },
+          { text: "Unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation."],
+      },
+      {
+        heading: "Storage Container on Rent in New Thippasandra",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful during school reopening periods or seasonal kitchenware demand. Containers are hired for periods from one month to five years, and the rental quotation states the unit, the hire period, any deposit, the transport charges and how the container is collected at the end.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes available for hire are listed under",
+            link: { label: "short-term container hire", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Provide inventory dimensions and quantities." },
+          { text: "Identify heavy or fragile products." },
+          { text: "Confirm estimated stock weight." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelves, pallets and storage drawers." },
+          { text: "Confirm site permissions and access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible commercial inventory requirements. For stationery and kitchenware retailers in New Thippasandra, that covers:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft containers, with a 10 ft unit when one is in stock." },
+          { title: "Storage-oriented modifications", text: "shelves, drawers and bins planned around reams, notebook cartons and boxed cookware, each priced as its own line." },
+          { title: "Shelving and pallet provisions", text: "heavy paper and steel stock kept low, with shelf loads matched to the container floor." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock fitted to your unit named in the quotation." },
+          { title: "Ventilation and insulation options", text: "chosen for paper and metal stock, with no promise of moisture-free storage, hazardous-material certification or unlimited floor loading." },
+          { title: "Quotation and delivery coordination", text: "an itemised quotation first, then a check of the road, the gate and the drop spot before a date is agreed." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can stationery shops store paper inside shipping containers?",
+        answer: "Potentially, when suitable packaging, pallets and moisture-control measures are provided.",
+      },
+      {
+        question: "How much paper can a shipping container hold?",
+        answer:
+          "The allowable quantity depends on carton weight, load distribution and the container's verified floor-loading and payload limits.",
+      },
+      {
+        question: "Can school craft supplies be stored inside containers?",
+        answer:
+          "Compatible supplies may be stored according to the manufacturer's requirements. Hazardous or flammable materials may need specialised storage.",
+      },
+      {
+        question: "Can kitchenware shops store new boxed gas stoves?",
+        answer:
+          "Unused and disconnected stoves may be suitable for storage when the manufacturer's requirements are met. Gas cylinders and fuel are not stored inside an ordinary storage-only container.",
+      },
+      {
+        question: "How can copper and brass utensils be protected?",
+        answer: "Use suitable protective wrapping and environmental conditions according to the manufacturer's guidance.",
+      },
+      {
+        question: "Where can a shipping container be placed?",
+        answer: "At a suitable authorised site with the required permissions and access arrangements.",
+      },
+      {
+        question: "What is the shipping container price in New Thippasandra?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in New Thippasandra",
+    ctaText: `Whether you need additional storage for paper cartons, notebooks, school stationery, steel utensils, cookware or compatible kitchenware inventory, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Phone ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: New Thippasandra, Old Thippasandra, Puttappa Layout and Geethanjali Layout, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for New Thippasandra",
+      intro:
+        "Choose the container type and how many units you need, add the New Thippasandra address or a map pin, and say whether you want to buy or hire. Tell us whether the stock is stationery or kitchenware, roughly how many cartons there are and how heavy the heaviest ones are, so the shelving and floor load can be planned.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Every container is dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; there is no yard, depot, showroom or branch in New Thippasandra or the layouts this page names. Each unit is defined by its written quotation: internal and door-opening sizes, grade and condition, floor-loading and payload limits, any shelving, pallets, drawers, bins, lights, vents, insulation or locks, the hire terms where it is rented, and how it is delivered, unloaded and collected. Stock changes, so a delivery date or an early-morning slot holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as moisture-free, humidity-controlled, fire-rated or certified for hazardous materials, and a container is not supplied to hold gas cylinders, kerosene or other fuel, connected gas equipment, thinners, aerosol paints or solvents. The five pictures are illustrative renders from our existing imagery, also shown on our Bellandur page, not photographs taken in New Thippasandra; none shows a delivered or fitted unit, stationery or kitchenware stock. Volumes are approximate and are not payload ratings. Stationery, office-supply and kitchenware shops are named as possible uses, not as customers or completed projects, and the localities listed show where enquiries are accepted, not confirmed delivery addresses. Notes on paper, craft supplies, gas stoves, cylinders, fuel, cleaning products, floor loading, placement and permissions are general information, not safety, legal, insurance or engineering advice; follow the manufacturers' instructions and the requirements of the authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

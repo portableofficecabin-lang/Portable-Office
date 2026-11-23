@@ -792,6 +792,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Shigehalli / Seegehalli (toy wholesalers' and crockery wholesalers' stock; owner brief 2026-11-22),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+    // New Thippasandra (retail stationery and kitchenware stock; owner brief 2026-11-22), appended so the
+    // live links keep their positions.
+    { name: "Shipping Containers in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
   ],
 };
 
