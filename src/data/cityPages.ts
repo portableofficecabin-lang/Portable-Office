@@ -25293,6 +25293,12 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "toy wholesale storage containers in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
         after: ".",
       },
+      // Mahadevapura Version B brief (2026-11-22, §6): shopfitters' fixtures for Whitefield Road stores are the Mahadevapura page's application.
+      {
+        before: "Shopfitting contractors holding display racks, counters and mannequins for stores on Whitefield Road can read about",
+        link: { label: "storage containers for retail shopfitters", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: " in Mahadevapura.",
+      },
     ],
 
     extraSections: [
@@ -28285,6 +28291,12 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "storage containers for contractors in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
         after: ".",
       },
+      // Mahadevapura Version B brief (2026-11-22, §6): EV charger installers' equipment is the Mahadevapura page's application.
+      {
+        before: "Installing EV chargers in offices, hotels or apartment car parks? Chargers, pedestals and cable drums are covered on our page on",
+        link: { label: "storage containers for EV charger installers", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: " in Mahadevapura.",
+      },
     ],
 
     extraSections: [
@@ -30410,61 +30422,117 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
-   * SHIPPING & STORAGE CONTAINERS IN MAHADEVAPURA — hotel FF&E during refurbishments, banquet
-   * furniture overflow, mall and hotel maintenance spares, and staging stores for interior contractors
-   * fitting out new apartments (the Mahadevapura locality on Whitefield Road, east Bengaluru).
+   * SHIPPING & STORAGE CONTAINERS IN MAHADEVAPURA AND ON WHITEFIELD ROAD — Version A (hotel FF&E during
+   * refurbishments, banquet furniture overflow, mall and hotel maintenance spares, staging stores for
+   * interior contractors fitting out new apartments) merged with Version B (retail shopfitters and fixture
+   * installers; EV charger installation companies), for the Mahadevapura locality and the Whitefield Road
+   * corridor through it, east Bengaluru. ONE URL for both keywords ("shipping container in Mahadevapura",
+   * "shipping container on Whitefield Road"): this page. No Whitefield Road page exists or is created.
    *
-   * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, link plan and
-   * image plan used as given). Source copy: the owner's content reply of 2026-11-16 07:13Z ("Pasted
-   * text(20261116-090320).txt"), kept section by section with the brief's corrections: no fixed delivery
-   * hours ("quiet-hour delivery" became delivery timing planned after a route check), no day counts, no
-   * price, no "no hidden costs", and paints and chemicals kept to their labels and the building's
-   * safety team. The tagline, the grade-explanation and condensation sentences, the image captions, the
-   * size-table caption, the link lead-ins, the enquiry-form intro and the disclaimer were written for
-   * their slots.
+   * VERSION A — owner brief of 2026-11-16 (#257, live since c201b0e). Source copy: the owner's content reply
+   * of 2026-11-16 07:13Z, kept section by section with that brief's corrections (no fixed delivery hours, no
+   * day counts, no price, no "no hidden costs", paints and chemicals kept to their labels and the building's
+   * safety team). Kept verbatim here: the intro's two paragraphs, the three hospitality H3s with their
+   * checklists, the interior-contractor paragraphs, checklist, closing and portable-cabin link, the
+   * placement paragraphs and Bellandur link, the sizes rows' A wording and caption, the grade section, the
+   * price lead-in, closing and four of its bullets, the rental paragraph and link, the why bullets, the six
+   * FAQs, the KR Puram areas link, the hero, the CTA button and the related links.
+   *
+   * VERSION B — owner brief of 2026-11-22 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Mahadevapura Shipping
+   * Container Page — Version B Integration"): meta title, H1, keywords, the shopfitting, shopfitting-safety,
+   * EV charger and EV-safety H2s with their H3s, the layout options, the sizes rows for 10 ft and the B
+   * applications, the price factors, the ordering steps, the areas, nine FAQs and the CTA heading are the
+   * brief's, lightly edited for flow and British spelling. The brief's notes to the implementer ("Do not
+   * recommend…", "Do not assume…", "Do not guarantee delivery at a particular hour…", "Do not place containers
+   * on public roads…", "Do not promise theft prevention…", "Conditional section…", "Highlight only verified
+   * capabilities…", "Do not target…") are instructions, not copy: where one carries a fact for the reader it
+   * is reworded as a plain statement; otherwise it is left out. Where an H3 has a lead-in, a checklist and
+   * short instructions, the instructions become its closing paragraph (the template gives an H3 one list).
+   * The meta description is the brief's less the word "retail" (163 → 156 characters; the inventory audit
+   * caps descriptions at 160). The route follows the site convention (/cities-we-serve/…).
+   * Version A changes, listed for the owner's approval (the brief: no A rewrite without approval):
+   *   • meta title, meta description, H1 and tagline (the brief's targets; A's applications stay in the
+   *     tagline); keywords = the brief's list plus A's two Mahadevapura price/rent terms.
+   *   • intro: a third paragraph (the brief's intro, condensed) after A's two.
+   *   • H2 renames to the brief's: "Storage for Hotels, Malls & Hospitality" → "Storage Containers for Hotels,
+   *     Malls and Hospitality Businesses"; "Staging Stores for Interior Contractors" → "Storage Containers for
+   *     Interior Contractors"; "Placement & Delivery" → "Shipping Container Placement & Delivery in
+   *     Mahadevapura"; "Container Sizes" → "Shipping Container Sizes"; "Storage Container on Rent in
+   *     Mahadevapura" → "Storage Container on Rent on Whitefield Road"; "How It Works" → "How to Order a
+   *     Shipping Container" (A's five steps folded into the brief's eleven, A's last step kept as the closing);
+   *     "Areas We Serve" → "Areas Served Around Mahadevapura and Whitefield Road"; the sizes table's first
+   *     header "Container" → "Container size".
+   *   • additions inside A sections: one closing sentence in the interior section (shop fixtures are covered
+   *     below), one placement sentence + the brief's pre-delivery checklist + the public-road sentence, the
+   *     10 ft row and B applications in the sizes table, a payload sentence in its caption, B price factors
+   *     folded into A's size / grade / fit-out / duration / delivery bullets, a hire-terms paragraph in the
+   *     rental section, two why bullets, the Mahadevapura metro area in the areas text, and B's application
+   *     list in the CTA text, enquiry intro and disclaimer.
+   *   • images: the cargo-door render moves from the price section to the EV section and the end-wall render
+   *     from the grade section to the shopfitting section (captions rewritten for their new slots; alt text
+   *     unchanged), so each of the two new H2s has a picture and every render is still used once.
+   *   • CTA heading → the brief's "Request a Shipping Container Quotation in Mahadevapura".
+   * Kept from A instead of the brief: the "Why Mahadevapura Businesses Choose Us" heading (the brief's "Why
+   * Choose Portable Office Cabin?" is shared by several sibling pages), the "Choosing a Container Grade"
+   * section (not in the brief, approved in A) and A's delivery FAQ (the brief's Q10 asks the same).
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental:
+   * 10, 20, 40 ft and 40 ft high cube; terms from one month to five years; monthly rental, long-term lease or
+   * rent-plus-buy; no deposit or charge is stated here); the 10 ft row keeps the brief's "if available";
+   * racks, bays, supports, shelving, bins, lighting, ventilation, insulation and locks are layout options and
+   * price factors, never stock items or guaranteed conditions. No Product JSON-LD: city pages carry no prices
+   * (file rule) and a Product block without offers earns no rich result; the Service JSON-LD gains the
+   * corridor as an alternateName, and the FAQPage and BreadcrumbList are generated from the visible FAQs and
+   * trail as on every sibling.
    * Mapped onto the template in the brief's order:
-   *   • H1, tagline, intro (the source's two paragraphs) and the heroCta row (quotation · Call · WhatsApp).
-   *   • "Storage for Hotels, Malls & Hospitality" → solutions: its three H3s are the three solutions
-   *     items, each with its lead-in as `text` and its checklist as the item's `bullets` (opt-in field,
-   *     first used here).
-   *   • Interior contractors, placement and delivery, sizes, grade, price, rental and "How It Works"
-   *     (ordered) → seven afterSolutions extra sections (no why / features / custom / how slots).
-   *   • "Areas We Serve" → areas; "Why Mahadevapura Businesses Choose Us" → an extra section without a
-   *     placement, so it renders after the areas and before the FAQs, as in the brief.
-   *   • FAQs: the source's six (the delivery answer gives no day count); "Space to Work While the Work
-   *     Gets Done" → CTA (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
-   * Rental is in the catalogue (Shipping Container Rental: 10, 20, 40 ft and 40 ft High Cube, monthly
-   * terms), so the rental section and the 40 ft high-cube row stay.
+   *   Intro (A's two paragraphs + B) + heroCta → hotels / malls / hospitality = solutions (A's three H3s with
+   *   their checklists as `bullets`) → afterSolutions extra sections: interior contractors (A), shopfitters
+   *   (9 H3s), shopfitting safety (5 H3s), EV charger installers (8 H3s), EV safety (5 H3s), layout options,
+   *   placement, sizes, grade (A), price, rent, How to Order (ordered) → areas + KR Puram areasInlineLink (A)
+   *   + areasInlineLinks → why (default extra section: after the areas) → 15 FAQs (A's six + the brief's
+   *   Q1–Q9) → CTA (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
    *
-   * LINKS (brief §5): "shipping containers" → the cargo category (sizes section); "shipping containers in
-   * Bellandur" (its tight-site delivery guidance) closes the delivery section; "how to inspect a used
-   * shipping container" → Shipping Container in Athipattu, the Chennai-area page whose "Used Container
-   * Inspection" section is a seven-point checklist (the Chennai product page has one sentence on
-   * inspection); the rental product from the rental section; the CTA button "Request a Shipping
-   * Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block from repeating
-   * Bellandur. Inbound: the Marathahalli ORR page's areas ("Mahadevapura"), the Karnataka shipping hub,
-   * the cargo category's location links and the Karnataka shipping nearby blocks.
+   * LINKS (brief §6, only where the destination exists and supports the anchor; anchors differ from the
+   * siblings' anchors for the same targets). Kept from A: portable cabins in Mahadevapura (interior section,
+   * clubhouse rooms), Bellandur (placement: tight-site delivery), the cargo category (sizes), Athipattu (grade:
+   * used-container inspection; the brief's /shipping-container-chennai is not a route), the rental product,
+   * KR Puram (areas). Added: shopfitting intro → "exhibition booth storage in Munnekollal" (its "Storage
+   * Containers for Exhibition & Trade-Show Booth Builders"); signage H3 → "storage for sign makers and flex
+   * printers in Ramamurthy Nagar" (its "Storage for Signage & Flex Printing Businesses"); EV intro → "portable
+   * cabins for EV charging waiting lounges" (the Mahadevapura portable cabin page's EV lounge H2); cable H3 →
+   * "cable and switchgear storage in Kaggadasapura" (its "Electrical contractor storage": copper cable,
+   * switchgear, distribution boards); battery H3 → "inverter and UPS stock storage in Bilekahalli" (its inverter,
+   * UPS and battery-safety H2s); areas → "Brookefield's container page" and "Doddanekundi storage containers".
+   * Not linked: Indiranagar (boutique stock and pop-up shop cabins are told apart in the text; the brief asks
+   * for a few useful links, not the whole list). Inbound added: Brookefield areas ("shipping containers on
+   * Whitefield Road"), KR Puram areas ("storage containers for retail shopfitters"), Doddanekundi areas
+   * ("storage containers for EV charger installers"). Existing inbound links (Marathahalli ORR, Kasavanahalli,
+   * Begur Road, Kadubeesanahalli, Thanisandra Main Road, Yelahanka New Town, the Mahadevapura portable cabin
+   * page, the Karnataka shipping hub, the cargo category) are unchanged. `nearbySkipsBodyLinks` keeps the
+   * nearby block from repeating the body links.
    *
-   * KEYWORD OWNERSHIP: shipping / cargo / storage container × the Mahadevapura locality, Whitefield
-   * Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach, for hotel FF&E, banquet
-   * furniture overflow, mall and hotel maintenance spares and residential interior staging. KR Puram
-   * is left to its own shipping page (the owner's KR Puram content reply of 2026-11-16, Part 4): it is
-   * not a keyword, area, delivery or CTA term here; the second of the two pages to merge adds the
-   * Mahadevapura → KR Puram link (anchor "KR Puram").
-   * Not the civic zone: Whitefield, Marathahalli and Bellandur are not targeted, and Marathahalli ORR no
-   * longer names Mahadevapura in its areas. Housing-society spares (Bellandur), office fit-out staging
-   * (Shivamogga), event equipment (Marathahalli ORR) and used-container inspection (Athipattu) are not
-   * targeted. The Marathahalli office-cabin page keeps Mahadevapura: it is a different product.
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × the Mahadevapura locality, Whitefield Road (the
+   * road corridor), Hoodi, Garudacharpalya, Basavanagar, the ITPL Road approach and the area around Mahadevapura
+   * metro, for hotel FF&E, banquet furniture overflow, mall and hotel maintenance spares, residential interior
+   * staging, shopfitters' and retail fixture installers' stock, and EV charger installers' equipment. Not
+   * targeted: the Whitefield locality (named only in the FAQ that says it is separate; its neighbourhoods are
+   * not named), KR Puram and Tin Factory, Brookefield and its ITPL Main Road stretch, Doddanekundi (each named
+   * only in its link sentence), boutique stock (Indiranagar), pop-up shop cabins (Indiranagar shop cabin),
+   * exhibition booth kits (Munnekollal), sign and flex printing (Ramamurthy Nagar), general electrical
+   * contractors' cable and switchgear (Kaggadasapura), inverter, UPS and battery stock (Bilekahalli), EV
+   * charging waiting lounges (Mahadevapura portable cabins), electric vehicle storage (Thanisandra Main Road),
+   * restricted-site delivery (Bellandur) and used-container inspection (Athipattu). "Bengaluru" stays out of
+   * the title, as the brief asks.
    *
-   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Mahadevapura shipping container
-   * city page/Storage Containers in Mahadevapura/cabin (1–5).webp", no EXIF / XMP / ICC) of a red-brown
-   * container (the overhead and interior views render it orange-red). Each is copied with its VP8 data
-   * byte-for-byte plus an XMP dc:title / dc:description that labels it a render. (1) three-quarter
-   * exterior = hero / og:image (the brief's "shipping-container-mahadevapura-front"); (5) empty interior
-   * = interior-contractor section; (4) roof from above = delivery section; (3) end wall = grade section;
-   * (2) cargo doors with a lockbox = price section (security fittings). No image shows hotel furniture,
-   * banquet stock, maintenance racks, kitchen panels or appliances, so those five slots of the brief are
-   * not used and no alt text or caption claims them. No alt text or caption names a size.
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Mahadevapura shipping container city
+   * page/Storage Containers in Mahadevapura/cabin (1–5).webp") of a red-brown container, each published with
+   * its VP8 data byte-for-byte plus an XMP dc:title / dc:description that labels it a render (A, unchanged
+   * files). The owner asked for the existing images to be used: no new drop exists and no catalogue image shows
+   * retail fixtures, EV charging equipment or racked interiors. (1) three-quarter exterior = hero / og:image;
+   * (5) empty interior = interior contractors; (3) end wall = shopfitting section; (2) cargo doors with a
+   * lockbox = EV section; (4) roof from above = placement. The brief's eleven use-case slots (gondolas, racks,
+   * glass counters, mannequins, hardware, signage frames, chargers, pedestals, cable drums, distribution gear,
+   * mounting hardware) and its "organized racks" interior alt are not used, and no alt text, caption or
+   * filename claims those items, a size or a place.
    *
    * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -30472,11 +30540,11 @@ export const CITY_PAGES: CityPage[] = [
     slug: "shipping-container-mahadevapura",
     city: "Mahadevapura",
     listTitle: "Shipping & Storage Containers in Mahadevapura",
-    metaTitle: "Shipping Container in Mahadevapura | Storage & Cargo",
+    metaTitle: "Shipping Container in Mahadevapura | Whitefield Road",
     metaDescription:
-      "Shipping and storage containers in Mahadevapura for hotel furniture, banquet equipment, mall maintenance spares and apartment interior contractors. Get a quote.",
+      "Shipping and storage containers in Mahadevapura and along Whitefield Road for shopfitters, display fixtures, EV charger installers and commercial equipment.",
     keywords:
-      "shipping container in Mahadevapura, cargo container Mahadevapura, storage container Mahadevapura, used shipping container Mahadevapura, storage container Hoodi, storage container Garudacharpalya, shipping container price in Mahadevapura, storage container for rent in Mahadevapura",
+      "shipping container in Mahadevapura, shipping container on Whitefield Road, cargo container Mahadevapura, storage container Mahadevapura, storage container Whitefield Road, storage container Hoodi, storage container Garudacharpalya, storage container Basavanagar, used shipping container Mahadevapura, shipping container price in Mahadevapura, shipping container price on Whitefield Road, storage container for rent in Mahadevapura, storage container for rent on Whitefield Road, shopfitter storage container, retail fixture storage, display rack and gondola storage, mannequin and visual merchandising storage, EV charger installer storage container, EV charging equipment storage, charger pedestal and cable storage, EV charger installation site store",
     // The Mahadevapura locality on Whitefield Road (not the civic zone).
     geo: {
       region: "IN-KA",
@@ -30485,10 +30553,11 @@ export const CITY_PAGES: CityPage[] = [
       icbm: "12.9913, 77.6874",
     },
     motion: true,
-    serviceJsonLd: { serviceType: "Shipping Container" },
+    // Version B brief §2: "shipping container on Whitefield Road" targets this same URL.
+    serviceJsonLd: { serviceType: "Shipping Container", alternateName: ["Shipping Container on Whitefield Road"] },
     // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Bellandur is linked in the body, so the nearby block leaves it out.
+    // Bellandur, KR Puram, Brookefield, Doddanekundi, Munnekollal, Ramamurthy Nagar, Kaggadasapura, Bilekahalli and Athipattu are linked in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -30499,16 +30568,17 @@ export const CITY_PAGES: CityPage[] = [
       caption: "Illustrative storage container arrangement for commercial applications.",
     },
 
-    h1: "Shipping & Storage Containers in Mahadevapura",
+    h1: "Shipping & Storage Containers in Mahadevapura and on Whitefield Road",
     tagline:
-      "Storage for hotel refurbishments, banquet furniture, mall and hotel maintenance spares, and interior contractors fitting out new apartments.",
+      "Storage for hotel refurbishments, banquet furniture, maintenance spares and interior contractors, and for shopfitters and EV charger installers on Whitefield Road.",
     intro: [
       "Mahadevapura sits on one of east Bengaluru's busiest corridors. Shoppers head to its large malls, business travellers fill the hotels along Whitefield Road, and the metro now runs right through. Behind the main road, new apartment towers keep handing over keys, and interior teams follow close behind to fit kitchens and wardrobes in hundreds of new homes.",
       "Busy places like these have a quieter problem: where to put things while work happens. Hotels need somewhere to keep furniture during a refurbishment. Malls need space for maintenance spares. Interior contractors need somewhere to stage kitchens and wardrobes until each flat is ready. Portable Office Cabin supplies shipping containers in Mahadevapura for exactly these jobs.",
+      "Retail fit-outs and electrical installation projects along Whitefield Road run into the same problem: shop fixtures and charging equipment often arrive before a store or a parking bay is ready for them. So alongside hospitality and building maintenance inventory and interior contractor staging, our containers may be considered for retail shopfitting materials and EV charging installation equipment.",
     ],
     heroCta: true,
 
-    solutionsHeading: "Storage for Hotels, Malls & Hospitality",
+    solutionsHeading: "Storage Containers for Hotels, Malls and Hospitality Businesses",
     solutions: [
       {
         title: "Furniture During Refurbishment",
@@ -30548,7 +30618,7 @@ export const CITY_PAGES: CityPage[] = [
 
     extraSections: [
       {
-        heading: "Staging Stores for Interior Contractors",
+        heading: "Storage Containers for Interior Contractors",
         placement: "afterSolutions",
         image: {
           src: "/images/cities/shipping-container-mahadevapura/storage-container-empty-interior-mahadevapura.webp",
@@ -30575,6 +30645,7 @@ export const CITY_PAGES: CityPage[] = [
         ],
         closing: [
           "Working with the builder or association: many complexes have rules for where contractors can keep material, when deliveries can happen and how lifts are used. Agree on a container spot and schedule before you start.",
+          "Kitchens and wardrobes for homes are a different kind of stock from a shop's display fixtures; gondola shelving, counters and mannequins are covered in the shopfitting section below.",
         ],
         // Portable cabin brief (2026-11-17, §5C): the reciprocal link to the Mahadevapura portable cabin page, for
         // the clubhouse amenity rooms a complex may need while its flats are being fitted out.
@@ -30587,7 +30658,390 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
-        heading: "Placement & Delivery",
+        heading: "Storage Containers for Shopfitters & Retail Fixture Installers",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-mahadevapura/shipping-container-end-wall-mahadevapura.webp",
+          alt: "Corrugated steel end wall of a red-brown shipping container with corner castings and forklift pockets on a paved yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of the blind end, which has no doors: gondola runs, counters and glass go in through the cargo doors at the other end, and the floor rating of the unit you are offered decides how much fixture weight it takes.",
+        },
+        paragraphs: [
+          "Shopfitting contractors install the fixtures used by retail stores, showrooms and commercial outlets, including the shops in and around the malls on Whitefield Road. Their inventory may include gondola shelving, display racks, glass counters, mannequins, cash counters, signage frames and the hardware that holds them together.",
+          "These materials often arrive before a store is ready for installation. A suitably configured shipping container may provide additional storage at an authorised project site or the contractor's yard, keeping each store's fixtures together until the fitting team calls for them.",
+          "This section is about the fixtures a store is built with, not the clothes or goods a shop sells, and not a container fitted out as a shop.",
+        ],
+        // Version B brief §6 and §7 rule 10: exhibition booth equipment is the Munnekollal page's application.
+        inlineLinks: [
+          {
+            before: "Building stands for expos and trade shows rather than fitting out stores? Booth frames, panels and counters are covered on our page on",
+            link: { label: "exhibition booth storage in Munnekollal", href: "/cities-we-serve/shipping-container-munnekollal" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Gondola shelving and wall system storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Gondola shelving." },
+              { text: "Wall display systems." },
+              { text: "Suitable retail shelving accessories." },
+              { text: "Approved mounting components." },
+            ],
+            closing: [
+              "Use appropriate racks, keep the components organised by store project and fixture specification, and protect them against deformation, impact and corrosion.",
+            ],
+          },
+          {
+            heading: "Display table and counter storage",
+            paragraphs: ["Items in this group may include:"],
+            bullets: [
+              { text: "Retail display tables." },
+              { text: "Cash counters." },
+              { text: "Suitable display cabinets." },
+              { text: "Other finished shop fixtures." },
+            ],
+            closing: ["Wrap finished surfaces in protective covers and padding, and stand heavy pieces on stable supports instead of stacking them."],
+          },
+          {
+            heading: "Glass display counter storage",
+            paragraphs: ["Glass components need protecting against:"],
+            bullets: [
+              { text: "Impact." },
+              { text: "Scratching." },
+              { text: "Unstable stacking." },
+              { text: "Edge damage." },
+            ],
+            closing: [
+              "Use suitable glass transport and storage supports. Not every glass panel should be stored upright, so follow the manufacturer's handling instructions for each one.",
+            ],
+          },
+          {
+            heading: "Mannequin storage",
+            paragraphs: ["Visual merchandising stock may include:"],
+            bullets: [
+              { text: "Retail mannequins." },
+              { text: "Display stands." },
+              { text: "Suitable visual merchandising accessories." },
+            ],
+            closing: ["Keep them in protective packaging, store detachable parts separately where appropriate, and organise everything by store or customer."],
+          },
+          {
+            heading: "Shelf bracket, hook and fitting storage",
+            paragraphs: ["Organise compatible accessories such as:"],
+            bullets: [
+              { text: "Shelf brackets." },
+              { text: "Hooks." },
+              { text: "Hangers." },
+              { text: "Suitable fasteners." },
+              { text: "Approved retail fixture fittings." },
+            ],
+            closing: ["Labelled bins and drawers keep them sorted by fixture system, so a store's fittings leave with its racks."],
+          },
+          {
+            heading: "Signage frame and lightbox storage",
+            paragraphs: ["Store signage stock may include:"],
+            bullets: [
+              { text: "Signage frames." },
+              { text: "Suitable lightboxes." },
+              { text: "Approved display accessories." },
+            ],
+            closing: [
+              "Protect fragile faces and the electrical components inside lightboxes. Lighting parts are stored only as their manufacturer's instructions allow; hazardous lighting components do not belong in an ordinary storage container.",
+            ],
+            // Version B brief §6 and §7 rule 11: sign making and flex printing are the Ramamurthy Nagar page's application.
+            inlineLinks: [
+              {
+                before: "Printing flex banners or making signboards, rather than installing a store's signage frames? See our page on",
+                link: { label: "storage for sign makers and flex printers in Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Removed fixture storage",
+            paragraphs: ["During a retail refit, suitable fixtures taken out of a store may be stored for a while before:"],
+            bullets: [
+              { text: "Reuse." },
+              { text: "Inspection." },
+              { text: "Return." },
+              { text: "Recycling." },
+              { text: "Disposal." },
+            ],
+            closing: ["Keep damaged items apart from reusable stock."],
+          },
+          {
+            heading: "Store-wise installation staging",
+            paragraphs: ["Organise fixtures by:"],
+            bullets: [
+              { text: "Store." },
+              { text: "Floor." },
+              { text: "Project." },
+              { text: "Installation date." },
+              { text: "Fixture type." },
+              { text: "Quantity." },
+              { text: "Delivery sequence." },
+            ],
+            closing: ["Keep a packing list with each store's consignment."],
+          },
+          {
+            heading: "Shopfitting inventory register",
+            paragraphs: ["Keep records of:"],
+            bullets: [
+              { text: "Fixture name." },
+              { text: "Model or specification." },
+              { text: "Dimensions." },
+              { text: "Quantity." },
+              { text: "Weight." },
+              { text: "Storage location." },
+              { text: "Assigned project." },
+              { text: "Condition." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shopfitting Material Storage Safety",
+        placement: "afterSolutions",
+        subsections: [
+          {
+            heading: "Heavy fixtures",
+            paragraphs: ["Before loading gondola runs, counters or cabinets, verify rack capacities, the container's floor-loading limit and safe handling arrangements."],
+          },
+          {
+            heading: "Glass components",
+            paragraphs: ["Use suitable protective supports and restraints so that no panel can slide, tip over or rest against another."],
+          },
+          {
+            heading: "Cutting and fabrication",
+            paragraphs: [
+              "A storage-only shipping container is not automatically a place for cutting, welding, grinding, painting or active fabrication. Do that work in a proper workshop or an authorised work area.",
+            ],
+          },
+          {
+            heading: "Paints and adhesives",
+            paragraphs: [
+              "Store paints, solvents, adhesives and other chemical products as their manufacturers' instructions, safety data sheets and the applicable regulations require. An ordinary storage container should not be assumed suitable for hazardous materials.",
+            ],
+          },
+          {
+            heading: "Electrical lightboxes",
+            paragraphs: [
+              "Store electrical equipment as its manufacturer requires. Don't switch on or charge lightboxes or any other equipment inside an ordinary storage-only container unless proper electrical and fire-safety provisions are in place.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for EV Charger Installation Companies",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-mahadevapura/shipping-container-cargo-doors-mahadevapura.webp",
+          alt: "Closed double cargo doors of a red-brown shipping container with four vertical locking bars, cam handles and a central lockbox",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative cargo-door view with a central lockbox. A lock slows down casual access to boxed chargers and copper cable; it is not a promise that nothing will be taken, and locks are quoted for the selected unit.",
+        },
+        paragraphs: [
+          "EV charger installation contractors put in charging points at offices, hotels, shopping centres, apartment complexes and commercial car parks. Their equipment may include wall-mounted chargers, charging pedestals, cable drums, electrical protection devices, mounting hardware and bay accessories.",
+          "A suitably configured shipping container may provide additional storage for compatible, unenergised equipment before installation. This section covers the installer's equipment only: it is not about storing electric vehicles or their batteries, and a storage container is not a charging station.",
+        ],
+        // Version B brief §6 and §7 rule 14: EV charging waiting lounges are the Mahadevapura portable cabin page's application.
+        inlineLinks: [
+          {
+            before: "Need somewhere for drivers to wait while their cars charge, rather than a store for the chargers? See our",
+            link: { label: "portable cabins for EV charging waiting lounges", href: "/cities-we-serve/portable-cabin-mahadevapura" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Wall-mounted EV charger storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Wall-mounted charging units." },
+              { text: "Suitable charger accessories." },
+              { text: "Other approved installation equipment." },
+            ],
+            closing: [
+              "Keep units in the manufacturer's protective packaging, organise them by model, power rating and installation project, and record serial numbers where appropriate.",
+            ],
+          },
+          {
+            heading: "EV charger pedestal storage",
+            paragraphs: ["Free-standing hardware may include:"],
+            bullets: [
+              { text: "Charging pedestals." },
+              { text: "Mounting posts." },
+              { text: "Suitable support structures." },
+            ],
+            closing: ["Use stable supports and restraints, and protect pedestals against impact and deformation."],
+          },
+          {
+            heading: "Charging cable and electrical cable storage",
+            paragraphs: ["Cable stock may include:"],
+            bullets: [
+              { text: "Approved cable drums." },
+              { text: "Charging cables." },
+              { text: "Suitable installation cable accessories." },
+            ],
+            closing: [
+              "Sit cable drums on appropriate supports or restraints so they cannot roll, and protect them against moisture, crushing and unauthorised access. Copper cable and electrical equipment may need extra inventory security.",
+            ],
+            // Version B brief §6 and §7 rule 12: general electrical contractors' cable and switchgear are the Kaggadasapura page's application.
+            inlineLinks: [
+              {
+                before: "Wiring homes, shops and offices rather than installing chargers? General electrical contractors' stock is covered on our page on",
+                link: { label: "cable and switchgear storage in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Electrical distribution equipment storage",
+            paragraphs: ["Protection and distribution gear may include:"],
+            bullets: [
+              { text: "Distribution boards." },
+              { text: "Isolators." },
+              { text: "Suitable protection devices." },
+              { text: "Approved electrical accessories." },
+            ],
+            closing: ["Keep this equipment in its protective packaging and follow the manufacturer's storage requirements."],
+          },
+          {
+            heading: "Mounting hardware and cable gland storage",
+            paragraphs: ["Small parts to organise include:"],
+            bullets: [
+              { text: "Mounting brackets." },
+              { text: "Cable glands." },
+              { text: "Suitable fasteners." },
+              { text: "Approved electrical fittings." },
+            ],
+            closing: ["Labelled bins and drawers keep each charger model's fixings together."],
+          },
+          {
+            heading: "Charging bay signage and accessories",
+            paragraphs: ["Bay accessories may include:"],
+            bullets: [
+              { text: "Charging bay signs." },
+              { text: "Suitable wheel stops." },
+              { text: "Approved parking accessories." },
+            ],
+            closing: ["Store heavy items such as wheel stops on suitable supports."],
+          },
+          {
+            heading: "Site-wise installation kits",
+            paragraphs: ["Group equipment by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Installation site." },
+              { text: "Charger model." },
+              { text: "Quantity." },
+              { text: "Serial number." },
+              { text: "Required accessories." },
+              { text: "Installation date." },
+              { text: "Assigned team." },
+            ],
+            closing: ["Check each kit against its list before it is dispatched."],
+          },
+          {
+            heading: "EV charger installation inventory register",
+            paragraphs: ["Record for each item:"],
+            bullets: [
+              { text: "Equipment type." },
+              { text: "Manufacturer." },
+              { text: "Model." },
+              { text: "Serial number." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Assigned project." },
+              { text: "Condition." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "EV Charger Equipment Storage Safety",
+        placement: "afterSolutions",
+        subsections: [
+          {
+            heading: "Battery storage and charging",
+            paragraphs: [
+              "This page covers EV charger installation equipment, not EV batteries. We don't recommend storing or charging EV batteries inside an ordinary storage-only container.",
+            ],
+            // Version B brief §6 and §7 rule 13: inverter, UPS and battery inventory is the Bilekahalli page's application.
+            inlineLinks: [
+              {
+                before: "Dealing in inverters, UPS units and their batteries? Battery storage precautions are set out on our page on",
+                link: { label: "inverter and UPS stock storage in Bilekahalli", href: "/cities-we-serve/shipping-container-bilekahalli" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Electrical installation",
+            paragraphs: [
+              "Installation, testing and commissioning must be carried out by appropriately qualified or licensed personnel, as the applicable requirements demand. A shipping container used for storage is not an electrical installation certification.",
+            ],
+          },
+          {
+            heading: "Charger protection",
+            paragraphs: ["Follow the manufacturer's storage requirements for:"],
+            bullets: [
+              { text: "Temperature." },
+              { text: "Humidity." },
+              { text: "Dust." },
+              { text: "Packaging." },
+              { text: "Handling." },
+            ],
+          },
+          {
+            heading: "Cable drums",
+            paragraphs: ["Use appropriate supports and restraints, and keep the total load within the container's floor-loading limit."],
+          },
+          {
+            heading: "Security",
+            paragraphs: [
+              "Protect valuable electrical equipment against unauthorised access. A lock helps, but a locked container on its own is not a guarantee against theft.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterSolutions",
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Hospitality equipment storage sections." },
+          { text: "Building maintenance spare parts shelves." },
+          { text: "Interior contractor material staging." },
+          { text: "Gondola shelving racks." },
+          { text: "Retail fixture protective bays." },
+          { text: "Glass counter supports." },
+          { text: "Mannequin storage sections." },
+          { text: "Signage frame racks." },
+          { text: "Shopfitting hardware bins." },
+          { text: "EV charger shelving." },
+          { text: "Pedestal storage supports." },
+          { text: "Cable drum sections." },
+          { text: "Electrical accessory drawers." },
+          { text: "Site-wise equipment staging." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Appropriate locking arrangements." },
+        ],
+        closing: [
+          "Every layout has to reflect the actual dimensions and weights of what you store, the manufacturers' storage requirements and the safety considerations, and the quotation lists exactly what is fitted.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Mahadevapura",
         placement: "afterSolutions",
         image: {
           src: "/images/cities/shipping-container-mahadevapura/shipping-container-roof-overhead-mahadevapura.webp",
@@ -30598,7 +31052,22 @@ export const CITY_PAGES: CityPage[] = [
         },
         paragraphs: [
           "Containers must sit on private land, such as a hotel's service yard, a mall's back-of-house area, a contractor's agreed spot inside an apartment project or a vacant plot, always with the permission of the property owner, builder or association.",
+          "For shopfitters and EV charger installers, that usually means their own yard, an approved commercial storage plot or an authorised project site.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Permission from the property owner, builder, association or building management." },
+          { text: "The road width and the gate clearance." },
+          { text: "The container's dimensions against the space available." },
+          { text: "Turning room for the heavy vehicle." },
+          { text: "Whether the ground is firm and stable." },
+          { text: "How the unit will be lifted or unloaded." },
+          { text: "That emergency access stays clear." },
+          { text: "The local rules that apply." },
+        ],
+        closing: [
           "Whitefield Road and the ITPL Road approach are heavily congested, so delivery timing is planned around the traffic after a route check. Send the site pin with photos of the approach road, the gate, any tight turns, overhead cables and the spot where the container will stand. The transport team confirms the vehicle, the unloading method and the delivery window once it has checked the access; no delivery time is fixed before then.",
+          "No container is set down on a public road or footpath without the required authorisation.",
         ],
         // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers tight-site delivery.
         inlineLinks: [
@@ -30610,16 +31079,25 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
-        heading: "Container Sizes",
+        heading: "Shipping Container Sizes",
         placement: "afterSolutions",
         table: {
           caption:
-            "Capacities are approximate. Exact dimensions vary slightly by manufacturer, and the quotation confirms availability and the measurements of the actual unit.",
-          headers: ["Container", "Approximate capacity", "Typical application in Mahadevapura"],
+            "Capacities are approximate. Exact dimensions vary slightly by manufacturer, and the quotation confirms availability and the measurements of the actual unit. Volume is not a payload rating: whether a given number of chargers, cable drums or fixtures fits depends on their real dimensions and weight, the door opening and the floor rating.",
+          headers: ["Container size", "Approximate capacity", "Typical application in Mahadevapura"],
           // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a 320 px phone.
           rows: [
-            ["20\u00a0ft", "~33 m³", "Hotel furniture a floor at a time, maintenance spares, or interior materials for several flats"],
-            ["40\u00a0ft", "~67 m³", "Banquet furniture overflow, larger hotel refurbishments, or interior materials for a whole tower"],
+            ["10\u00a0ft, if available", "~15 m³", "Smaller EV charger installation inventories and accessories"],
+            [
+              "20\u00a0ft",
+              "~33 m³",
+              "Hotel furniture a floor at a time, maintenance spares, interior materials for several flats, retail fixtures, or charger equipment and suitable cable drums",
+            ],
+            [
+              "40\u00a0ft",
+              "~67 m³",
+              "Banquet furniture overflow, larger hotel refurbishments, interior materials for a whole tower, or larger shopfitting inventories where space and access allow",
+            ],
             ["40\u00a0ft high cube", "~76 m³", "Taller panel racks and stacked chair trolleys"],
           ],
         },
@@ -30635,13 +31113,6 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Choosing a Container Grade",
         placement: "afterSolutions",
-        image: {
-          src: "/images/cities/shipping-container-mahadevapura/shipping-container-end-wall-mahadevapura.webp",
-          alt: "Corrugated steel end wall of a red-brown shipping container with corner castings and forklift pockets on a paved yard",
-          width: 1448,
-          height: 1086,
-          caption: "Illustrative render of the blind end. The grade and condition of the unit you are offered are stated in its quotation.",
-        },
         paragraphs: [
           "The grade describes a container's condition. A one-trip unit has made a single loaded voyage. A cargo-worthy unit is used but still sound enough to carry cargo. A wind-and-watertight (WWT) unit has left shipping service but is graded to keep out wind and rain.",
           "For hotel furniture and interior panels, choose a clean, dry one-trip or excellent cargo-worthy container. Marks and damp can ruin finished surfaces. For maintenance spares, a sound cargo-worthy unit offers good value.",
@@ -30659,21 +31130,17 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Shipping Container Price in Mahadevapura",
         placement: "afterSolutions",
-        image: {
-          src: "/images/cities/shipping-container-mahadevapura/shipping-container-cargo-doors-mahadevapura.webp",
-          alt: "Closed double cargo doors of a red-brown shipping container with four vertical locking bars, cam handles and a central lockbox",
-          width: 1448,
-          height: 1086,
-          caption: "Illustrative cargo-door view. Locks and a lockbox are quoted for the selected unit.",
-        },
         paragraphs: ["The container price depends on:"],
         bullets: [
-          { title: "Size", text: "20 ft, 40 ft or 40 ft high cube." },
-          { title: "Grade and condition", text: "one-trip, cargo-worthy, or wind and watertight." },
-          { title: "Fit-out", text: "padded racks, panel racks, shelving, bins, lighting and vents." },
+          { title: "Size", text: "10 ft where available, 20 ft, 40 ft or 40 ft high cube." },
+          { title: "Grade and condition", text: "new or used (one-trip, cargo-worthy, or wind and watertight) and the unit's structural condition." },
+          {
+            title: "Fit-out",
+            text: "padded racks, panel racks, shelving, bins, protective fixture bays, cable drum supports, electrical equipment shelving, lighting, vents and insulation.",
+          },
           { title: "Security", text: "a lockbox and heavy-duty locks." },
-          { title: "Duration", text: "the length of a refurbishment or interiors project, if you rent." },
-          { title: "Delivery", text: "timing and site access." },
+          { title: "Duration", text: "the length of a refurbishment, interiors project, store fit-out or charger roll-out, if you rent." },
+          { title: "Delivery", text: "transport, unloading, timing and site access." },
           { title: "Buy or rent", text: "an outright purchase or a rental period." },
           {
             title: "Market rates",
@@ -30683,10 +31150,11 @@ export const CITY_PAGES: CityPage[] = [
         closing: ["Tell us what you'll store, for how long and where, and we'll send an itemised quote."],
       },
       {
-        heading: "Storage Container on Rent in Mahadevapura",
+        heading: "Storage Container on Rent on Whitefield Road",
         placement: "afterSolutions",
         paragraphs: [
           "Running a three-month hotel refurbishment or an interiors project across several towers? Ask us about storage containers on rent in Mahadevapura. Your quotation states the rental period, the unit offered and how delivery and collection will work.",
+          "Temporary storage can also suit a retail fit-out or an EV charger installation roll-out. Hire terms run from one month to five years, as a monthly rental, a long-term lease or rent-plus-buy; any deposit, the transport charges and the collection arrangements are set out in your quotation.",
         ],
         inlineLinks: [
           {
@@ -30697,22 +31165,31 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
-        heading: "How It Works",
+        heading: "How to Order a Shipping Container",
         placement: "afterSolutions",
         ordered: true,
         bullets: [
-          { text: "Tell us what you'll store, for how long and where." },
-          { text: "Get a recommendation and an itemised quote, including racks and labelling." },
-          { text: "Confirm the spot and schedule with the property owner, builder or association." },
-          { text: "We deliver and place the container once the site access has been checked, at a time agreed with you." },
-          { text: "Ask for extra units, layout changes or collection when you're done, where available for your order." },
+          { text: "Tell us what you intend to store and for how long." },
+          { text: "List the materials and equipment involved." },
+          { text: "Give their dimensions, quantities and estimated weight." },
+          { text: "Flag anything heavy, fragile or sensitive to heat, damp or dust." },
+          { text: "Choose a suitable container size with us." },
+          { text: "Discuss racks, shelves, labelling and protective storage bays." },
+          { text: "Confirm the environmental and safety requirements." },
+          { text: "Share the proposed location, with the site pin and photos of the approach." },
+          { text: "Check permissions and site access with the property owner, builder, association or building management." },
+          { text: "Get an itemised quotation." },
+          { text: "Finalise the specification and delivery arrangements; we deliver once site access has been checked, at a time agreed with you." },
         ],
+        closing: ["Ask for extra units, layout changes or collection when you're done, where available for your order."],
       },
       {
         heading: "Why Mahadevapura Businesses Choose Us",
         bullets: [
           { title: "Hospitality storage", text: "planned for refurbishments, banquet overflow and maintenance spares." },
           { title: "Interior project staging", text: "sorted by tower and flat." },
+          { title: "Shopfitting storage", text: "racks, padded bays and labelled bins planned around fixtures, glass and mannequins, staged store by store." },
+          { title: "EV charger equipment storage", text: "shelving for boxed chargers, supports for pedestals and cable drums, and kits grouped site by site." },
           {
             title: "The right grade",
             text: "one-trip or cargo-worthy units for finished furniture and panels, with the condition stated in the quotation.",
@@ -30725,9 +31202,9 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
 
-    areasHeading: "Areas We Serve",
+    areasHeading: "Areas Served Around Mahadevapura and Whitefield Road",
     areasText:
-      "We supply shipping and storage containers in the Mahadevapura locality and nearby, including Whitefield Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach. Delivery access is checked for each site.",
+      "We supply shipping and storage containers in the Mahadevapura locality and along Whitefield Road, including Hoodi, Garudacharpalya, Basavanagar, the ITPL Road approach and the area around Mahadevapura metro station. Delivery access is checked for each site.",
     // KR Puram brief (2026-11-16, agreed with #257's owner): KR Puram has its own shipping page, so the areas
     // section links to it (anchor "KR Puram") instead of listing it. nearbySkipsBodyLinks keeps it single.
     areasInlineLink: {
@@ -30735,9 +31212,20 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
       after: ".",
     },
-    // Shigehalli brief (2026-11-22, §7): wholesale toy and tableware stock in Shigehalli (Seegehalli) is that
-    // page's intent; this page's own targeting is unchanged. Rendered after the KR Puram sentence above.
+    // Version B brief §3 and §7: Brookefield (with its ITPL Main Road stretch) and Doddanekundi keep their own pages.
     areasInlineLinks: [
+      {
+        before: "Brookefield, further along towards ITPL, is served from",
+        link: { label: "Brookefield's container page", href: "/cities-we-serve/shipping-container-brookefield" },
+        after: ".",
+      },
+      {
+        before: "South of Mahadevapura on the Outer Ring Road, precision-parts and IT-disposal storage is handled on our page on",
+        link: { label: "Doddanekundi storage containers", href: "/cities-we-serve/shipping-container-doddanekundi" },
+        after: ".",
+      },
+      // Shigehalli brief (2026-11-22, §7): wholesale toy and tableware stock in Shigehalli (Seegehalli) is that
+      // page's intent; this page's own targeting is unchanged. Rendered after the KR Puram sentence above.
       {
         before: "Wholesale toy and tableware stock in Shigehalli, also spelt Seegehalli, has a page of its own:",
         link: { label: "storage containers in Seegehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
@@ -30761,12 +31249,56 @@ export const CITY_PAGES: CityPage[] = [
           "Sort material by tower and flat number, store panels on padded racks, keep hardware in labelled bins, leave appliances boxed until installation, and keep a delivery and issue log.",
       },
       {
+        question: "Can shopfitters store retail fixtures inside a shipping container?",
+        answer:
+          "Potentially, yes, using suitable protective racks, supports and packaging, with each store's fixtures kept together. The quotation lists any racks or bays that are fitted.",
+      },
+      {
+        question: "How should mannequins be stored?",
+        answer: "In protective packaging, with detachable parts stored separately where appropriate and everything labelled by store or customer.",
+      },
+      {
+        question: "Can glass display counters be stored inside a container?",
+        answer:
+          "Potentially, using suitable supports, padding and restraints and following the manufacturer's handling instructions; not every glass panel should be stored upright.",
+      },
+      {
+        question: "Can EV charger installation companies store equipment inside a container?",
+        answer:
+          "Potentially, where chargers, cables and accessories are kept unenergised, in their packaging and as the manufacturers' storage requirements state.",
+      },
+      {
+        question: "Can EV charger cable drums be stored inside a container?",
+        answer:
+          "Potentially, depending on the drums' actual weight, safe handling arrangements and the container's floor-loading limit. Supports or restraints stop them rolling.",
+      },
+      {
+        question: "Can EV batteries be stored or charged inside an ordinary storage container?",
+        answer:
+          "We don't recommend it. This page covers charger installation equipment, not EV batteries, and an ordinary storage-only container is not designed for storing or charging them.",
+      },
+      {
+        question: "Can a standard shipping container be used as an EV charging station?",
+        answer:
+          "Not automatically. EV charging infrastructure needs a suitable design, suitable equipment and a compliant electrical installation by qualified personnel. The containers on this page are for storage.",
+      },
+      {
         question: "Where can a container go inside an apartment complex?",
         answer: "Only where the builder or association agrees. Settle the spot, delivery times and lift usage before you start.",
       },
       {
+        question: "Is this page for Whitefield or Whitefield Road?",
+        answer:
+          "Whitefield Road. It covers Mahadevapura and the Whitefield Road corridor through it, including Hoodi, Garudacharpalya and Basavanagar. The Whitefield locality itself is a separate area.",
+      },
+      {
         question: "Which container grade is best for finished furniture and panels?",
         answer: "A clean, dry one-trip or excellent cargo-worthy container, because damp and marks can damage finished surfaces.",
+      },
+      {
+        question: "What is the shipping container price in Mahadevapura?",
+        answer:
+          "It depends on the size, the condition and grade, any racks or other fittings, and the delivery requirements. Tell us what you'll store and where, and we'll send an itemised quotation.",
       },
       {
         question: "How quickly can you deliver?",
@@ -30775,8 +31307,8 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
 
-    ctaHeading: "Space to Work While the Work Gets Done",
-    ctaText: `Whether you're refreshing hotel rooms, juggling banquet furniture between events, keeping a mall's spares in order or fitting kitchens across a new tower, we'll quote a container set up to keep everything organised and ready when you need it. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Mahadevapura, Whitefield Road, Hoodi and Garudacharpalya.`,
+    ctaHeading: "Request a Shipping Container Quotation in Mahadevapura",
+    ctaText: `Whether you're refreshing hotel rooms, juggling banquet furniture between events, keeping a mall's spares in order, fitting kitchens across a new tower, staging gondola shelving, counters and mannequins for a store opening, or holding chargers and cable drums for the next installation, we'll quote a container set up to keep everything organised and ready when you need it. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Mahadevapura, Whitefield Road, Hoodi, Garudacharpalya and Basavanagar.`,
     // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Shipping Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -30786,7 +31318,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Container enquiry for Mahadevapura",
       intro:
-        "Choose the container and how many you need, then tell us what you'll store, for how long and where in Mahadevapura it will stand. Mention any racks, bins or locks and whether you'd like to buy or rent; we'll reply with an itemised quotation.",
+        "Choose the container and how many you need, then tell us what you'll store, for how long and where in Mahadevapura or along Whitefield Road it will stand. Mention any racks, fixture bays, cable drum supports, bins or locks and whether you'd like to buy or rent; we'll reply with an itemised quotation.",
     },
     // The cargo category and the rental product are linked in the body, so they are not repeated here.
     relatedLinksHeading: "Related products",
@@ -30798,7 +31330,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
     ],
 
-    disclaimer: `Portable Office Cabin supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch in Mahadevapura. Every unit is subject to availability. Its quotation states the size, grade, condition and internal dimensions, any racks, bins, vents, lighting, locks or lockbox, any rental term, and how delivery, unloading and collection are arranged; no delivery date, time window or vehicle access is guaranteed. All five images are illustrative renders, not photographs taken in Mahadevapura or of a delivered or fitted unit, and none shows hotel, banquet, maintenance or interior stock. The hotels, malls, banquet halls, apartment projects and contractors described are examples of uses, not clients or completed projects, and the localities and roads named show where enquiries are welcome, not confirmed delivery points. Guidance on storing furniture, appliances, paints and chemicals, on placement and on permissions is general information, not safety, legal or engineering advice.`,
+    disclaimer: `Portable Office Cabin supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch in Mahadevapura or on Whitefield Road. Every unit is subject to availability. Its quotation states the size, grade, condition and internal dimensions, the floor-loading limit, any racks, fixture bays, glass supports, cable drum supports, shelves, bins, vents, lighting, insulation, locks or lockbox, any rental term, and how delivery, unloading and collection are arranged; no delivery date, time window or vehicle access is guaranteed. All five images are illustrative renders, not photographs taken in Mahadevapura or on Whitefield Road or of a delivered or fitted unit, and none shows hotel, banquet, maintenance, interior, shop-fixture or EV charging stock. The hotels, malls, banquet halls, apartment projects, contractors, shopfitters and EV charger installers described are examples of uses, not clients or completed projects, and the localities and roads named show where enquiries are welcome, not confirmed delivery points. No container on this page is offered as an EV charging station, as a store for EV batteries or for hazardous or flammable products, as a place to cut, weld, paint or fabricate, or as rated for unlimited load; storing equipment in one is not an electrical installation certification, and a lock is not a guarantee against theft. Guidance on storing furniture, fixtures, glass, appliances, electrical equipment, paints and chemicals, on placement and on permissions is general information, not safety, legal, electrical or engineering advice; manufacturers' instructions and the relevant authorities' requirements come first.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -69531,6 +70063,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas We Serve",
     areasText:
       "Our storage containers go to businesses, campuses and NGOs across Brookefield, including the Brookefield stretch of ITPL Main Road, Thubarahalli and the residential lanes around them. Each address is confirmed after its access is checked.",
+    // Mahadevapura Version B brief (2026-11-22, §6): Mahadevapura and the Whitefield Road corridor have their own page; this page's targeting is unchanged.
+    areasInlineLinks: [
+      {
+        before: "Hoodi, Garudacharpalya and the Whitefield Road corridor through Mahadevapura are served from our",
+        link: { label: "Whitefield Road container page", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
