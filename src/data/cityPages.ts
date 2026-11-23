@@ -69265,8 +69265,8 @@ export const CITY_PAGES: CityPage[] = [
    * product page"); acoustic section → "flooring and wallpaper installer storage in Kasavanahalli" (its
    * "Storage Containers for Flooring & Wallpaper Installers"); baffle and cloud H3 → "false ceiling and
    * gypsum board storage on Thanisandra Main Road" (its "Storage Containers for False Ceiling & Gypsum
-   * Contractors"); floor-wise kits H3 → "interior contractor staging stores in Mahadevapura" (its "Staging
-   * Stores for Interior Contractors"); window film section → "window frame and glass panel storage in
+   * Contractors"); floor-wise kits H3 → "interior contractor staging stores in Mahadevapura" (its "Storage
+   * Containers for Interior Contractors"); window film section → "window frame and glass panel storage in
    * Varthur" (its uPVC, aluminium and glass window installers section) and "façade and high-rise window
    * cleaning equipment in Kadubeesanahalli" (its façade cleaning section); temperature H3 → "notes on
    * insulated and air-conditioned container fit-outs" (the Vellore page's "Insulated and air-conditioned
