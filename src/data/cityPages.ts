@@ -67377,8 +67377,9 @@ export const CITY_PAGES: CityPage[] = [
    * society gate or narrow lane"); sizes → "checklist for inspecting a used shipping container": the brief's
    * /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used Container
    * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
-   * "shipping containers in HSR Layout". Not linked: the brief's Bommanahalli, Harlur and Singasandra pages
-   * (no such routes on main; Singasandra is being built in a separate PR and can be linked once it is live).
+   * "shipping containers in HSR Layout" and, since Singasandra went live (follow-up PR, 2026-11-23), "HVAC
+   * ducting and fire sprinkler storage in Singasandra". Not linked: the brief's Bommanahalli and Harlur pages
+   * (no such routes on main).
    * Inbound: the HSR Layout page's areas (brief §7), the Karnataka shipping hub ("Shipping Containers in
    * Kudlu Gate"), the cargo category's location links ("Storage containers in Kudlu Gate") and every
    * Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from
@@ -67392,7 +67393,7 @@ export const CITY_PAGES: CityPage[] = [
    * Layout (named only in the link to it), Somasundarapalya, Hosapalya, Agara, Parangipalya and Silk Board
    * (HSR Layout page; not named), Bommanahalli, Garvebhavi Palya and Hongasandra (kept for a Bommanahalli
    * page; not named), Harlur and Haralur Road (kept for a Harlur page; not named), Singasandra (its own page;
-   * not named). Kept apart from flooring and wallpaper (Kasavanahalli), gypsum and false ceilings
+   * named only in its link sentence). Kept apart from flooring and wallpaper (Kasavanahalli), gypsum and false ceilings
    * (Thanisandra Main Road), whole-flat interior staging (Mahadevapura), uPVC windows and glass (Varthur),
    * façade cleaning (Kadubeesanahalli), dealership vehicle accessories and automotive tinting (Hebbal; the
    * page says it does not cover tinting), climate-controlled units as such (Vellore), HVAC ducting
@@ -67437,7 +67438,7 @@ export const CITY_PAGES: CityPage[] = [
     serviceJsonLd: { serviceType: "Shipping Container" },
     // The hero is 1024 × 1024 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Kasavanahalli, Thanisandra Main Road, Mahadevapura, Varthur, Kadubeesanahalli, Vellore, Hebbal, Bellandur, Athipattu and HSR Layout are linked in the body, so the nearby block leaves them out.
+    // Kasavanahalli, Thanisandra Main Road, Mahadevapura, Varthur, Kadubeesanahalli, Vellore, Hebbal, Bellandur, Athipattu, HSR Layout and Singasandra are linked in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -67464,12 +67465,18 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas Served Around Kudlu Gate",
     areasText:
       "Kudlu Gate, Kudlu and the Kudlu Lake area are the localities this page is written for. Most sites here are reached from Hosur Road, so for each address we look at the turn off the main road, how wide the lane is and where the box will stand before a date is agreed.",
-    // Brief §4 and §7: HSR Layout goes to its own container page. The brief's Bommanahalli, Harlur and
-    // Singasandra pages are not live, so they are neither named nor linked here.
+    // Brief §4 and §7: HSR Layout and Singasandra go to their own container pages (Singasandra linked in a
+    // follow-up once its page was live). The brief's Bommanahalli and Harlur pages are not live, so they are
+    // neither named nor linked here.
     areasInlineLinks: [
       {
         before: "North of the junction, HSR Layout is handled on its own page:",
         link: { label: "shipping containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+        after: ".",
+      },
+      {
+        before: "Contractors fitting ducts and sprinkler lines rather than acoustic panels or film will find their page a little to the south:",
+        link: { label: "HVAC ducting and fire sprinkler storage in Singasandra", href: "/cities-we-serve/shipping-container-singasandra" },
         after: ".",
       },
     ],
