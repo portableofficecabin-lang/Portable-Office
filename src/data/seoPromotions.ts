@@ -786,6 +786,15 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Mathikere (convocation gown and academic regalia rental storage; stage truss and LED screen rental
     // equipment storage; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Mathikere", href: "/cities-we-serve/shipping-container-mathikere" },
+    // Singasandra (HVAC ducting contractors' stock; fire sprinkler and firefighting contractors' stock;
+    // owner brief 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers in Singasandra", href: "/cities-we-serve/shipping-container-singasandra" },
+    // Shigehalli / Seegehalli (toy wholesalers' and crockery wholesalers' stock; owner brief 2026-11-22),
+    // appended so the live links keep their positions.
+    { name: "Shipping Containers in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+    // New Thippasandra (retail stationery and kitchenware stock; owner brief 2026-11-22), appended so the
+    // live links keep their positions.
+    { name: "Shipping Containers in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
     // Kodigehalli (tree care crews' saws, ropes and safety gear; roofing contractors' sheets, sections and
     // fixings; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
