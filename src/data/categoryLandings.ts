@@ -389,6 +389,12 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers in Sanjaynagar", href: "/cities-we-serve/shipping-container-sanjaynagar" },
       // Mathikere storage page (owner brief, 2026-11-22: a link back from the main shipping container page).
       { name: "Storage containers in Mathikere", href: "/cities-we-serve/shipping-container-mathikere" },
+      // Singasandra storage page (owner brief, 2026-11-22: a link back from the main shipping container page).
+      { name: "Storage containers in Singasandra", href: "/cities-we-serve/shipping-container-singasandra" },
+      // Shigehalli storage page (owner brief, 2026-11-22: a link back from the main shipping container page).
+      { name: "Storage containers in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+      // New Thippasandra storage page (owner brief, 2026-11-22: a link back from the main shipping container page).
+      { name: "Storage containers in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
       // HRBR Layout storage page (owner brief, 2026-11-22: a link back from the main shipping container page).
       { name: "Storage containers in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
     ],
