@@ -783,6 +783,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Sanjaynagar (fountain and water-feature installers; handyman services; owner brief 2026-11-22),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Sanjaynagar", href: "/cities-we-serve/shipping-container-sanjaynagar" },
+    // Mathikere (convocation gown and academic regalia rental storage; stage truss and LED screen rental
+    // equipment storage; owner brief 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers in Mathikere", href: "/cities-we-serve/shipping-container-mathikere" },
     // Kodigehalli (tree care crews' saws, ropes and safety gear; roofing contractors' sheets, sections and
     // fixings; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
