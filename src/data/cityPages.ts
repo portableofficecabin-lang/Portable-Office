@@ -21744,7 +21744,8 @@ export const CITY_PAGES: CityPage[] = [
    * (Shivamogga); electrical and plumbing contractor inventory (Kaggadasapura); scaffolding (Thanisandra
    * Main Road); home rebuilding storage (JP Nagar); home renovation storage (Bellandur); kirana backstock
    * (Banashankari); sign makers' finished signboards (Ramamurthy Nagar: a shop's own board taken down
-   * during a rebuild is mentioned here only as a fixture); Singasandra, Electronic City and Hosur Road
+   * during a rebuild is mentioned here only as a fixture); Singasandra (its own page since the owner's
+   * brief of 2026-11-22; named only in the areas link sentence to it); Electronic City and Hosur Road
    * (kept for possible future pages); Akshaya Nagar (not used: a similarly named locality is tied to the
    * Ramamurthy Nagar area).
    *
@@ -21872,6 +21873,13 @@ export const CITY_PAGES: CityPage[] = [
         // stock); pointed to once here, as agreed with session 7d.
         before: "For Bilekahalli and Kodichikkanahalli, see our",
         link: { label: "Bilekahalli container page", href: "/cities-we-serve/shipping-container-bilekahalli" },
+        after: ".",
+      },
+      // Singasandra brief (2026-11-22, §6): storage for HVAC ducting and fire sprinkler contractors is that
+      // page's intent; Singasandra is named here only in this sentence.
+      {
+        before: "East of Begur Road, ductwork and fire-protection contractors' stock is covered on our page on",
+        link: { label: "HVAC ducting and fire sprinkler contractor storage in Singasandra", href: "/cities-we-serve/shipping-container-singasandra" },
         after: ".",
       },
     ],
@@ -22693,6 +22701,793 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Every container is supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City, and there is no depot, yard, shop or branch on Begur Road. The written quotation or rental agreement for your unit is what counts: it records the size, grade, condition, inside dimensions, door opening, rated payload and floor rating; any pallets, platforms, shelving, ventilation, insulation or locks; the hire terms if you rent; and the delivery, unloading, any relocation and the collection. Availability changes, and no delivery date or time is promised ahead of the quotation. The ten pictures on this page are illustrative renders of two containers: none was taken on Begur Road, and none shows a delivered or fitted unit, cement, bagged material, shop stock or fittings, play or gym equipment, safety surfacing, doors for sale or door hardware. Capacities are rounded, and volume is not payload. Cement and building-material dealers, shopkeepers, playground and outdoor gym installers and wooden door dealers are described to show typical uses, not named customers or completed jobs, and the localities listed are simply where enquiries come from. Nothing here says that any property on Begur Road is affected by road widening. An ordinary container is not moisture-proof or climate-controlled, its floor has a load limit, and it is not an approved retail shop or hazardous-chemical store; storing equipment in it does not make that equipment safe to install. What this page says about cement and other bagged materials, stacking, shelf life, floor loading, refrigerators, play and gym equipment, safety surfacing, adhesives, binders, polishes and thinners, wooden doors, batteries, moisture, permissions, road widening and site access is general guidance, not professional structural, electrical, chemical-safety, legal or engineering advice; each manufacturer's and supplier's instructions take precedence.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN SINGASANDRA — storage for HVAC ducting contractors' stock
+   * (rectangular GI duct sections, spiral and flexible ducts, insulation rolls, grilles, diffusers and
+   * dampers, hangers, rods and anchors, aluminium tape, floor-wise installation kits) and for fire sprinkler
+   * and firefighting contractors' stock (pipe lengths, couplings, fittings and flanges, gate, check and alarm
+   * valves, hoses, hose reels and landing valves, pressure gauges and signage, sprinkler heads within the
+   * maker's storage limits, building-wise kits) in Singasandra, south Bengaluru.
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Shipping & Storage Containers in
+   * Singasandra"): meta title, H1, keywords, local modifiers, section order, H2 / H3
+   * headings, sizes table, the eleven ordering steps and the ten FAQs are the brief's, and so is the copy,
+   * lightly edited for flow and British spelling. The brief's meta description is 180 characters, so it is
+   * trimmed to 158 ("HVAC contractors' ducts, insulation and diffusers, and fire contractors' pipes, valves and
+   * sprinkler heads") to fit a search snippet; the meaning and terms are the brief's. The brief's notes to
+   * the implementer ("Do not advertise a
+   * standard container as suitable for all sprinkler heads…", "Do not recommend storing fire
+   * extinguishers…", "Do not recommend hazardous materials…", "Do not claim that all 6 m pipes require a
+   * 40 ft container", "Do not guarantee delivery at a particular time…", "Do not place containers on public
+   * roads…", "Hosa Road may be mentioned…", "link to the verified Bellandur page", "Do not invent…",
+   * "Conditional section…", "Highlight only verified capabilities…", "Do not target…", "Use verified company
+   * phone numbers…") are instructions, not page copy: where one carries a fact for the reader it is reworded
+   * as a plain statement ("no standard container is offered as suitable for every sprinkler head", "this
+   * page does not recommend keeping fire extinguishers, gas cylinders or other pressurised equipment…",
+   * "this page does not recommend ordinary container storage for hazardous materials", "not every nominal
+   * 6 m pipe needs a 40 ft container", "a delivery time is given only after the transport arrangements
+   * have been verified", "a unit is never left on a public road or footpath unless the required
+   * authorisation is in hand"); otherwise it is left out. The brief's
+   * safety advice to the reader ("Do not place heavy materials on lightweight duct sections", "Do not assume
+   * all sealants are suitable…", "Do not assume that ordinary ventilation or shading alone provides adequate
+   * temperature control") stays as advice. Where an H3 has a lead-in, a checklist and short instructions,
+   * the instructions become its closing paragraph (the template gives an H3 one list). The route follows the
+   * site convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins,
+   * areas sentences, "why" bullets, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row keeps the brief's "if available"; duct supports, spiral duct racks, insulation shelves,
+   * grille and damper storage, fastener bins, pipe racks, coupling bins, valve shelves, hose supports, gauge
+   * storage, sprinkler-head shelving, kit sections, locks, lighting, ventilation, insulation and
+   * environmental controls are layout options and price factors "where your quotation includes them",
+   * never stock items or guaranteed conditions. Hosa Road appears once, as a road reference in the
+   * placement section, and Hosur Road once, in the brief's intro sentence; neither is a keyword, an area or
+   * a modifier. The optional Kannada search terms are not used: the page is in English. "MEP" is not used.
+   * No Product JSON-LD: city pages carry no prices (file rule) and a Product block without offers earns no
+   * rich result, so the Service JSON-LD (no offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   HVAC ducting contractors, "HVAC Ducting Storage Safety", fire sprinkler and firefighting contractors,
+   *     "Fire Protection Equipment Storage Safety" and "Storage Container Layout Options" → five afterIntro
+   *     extra sections, the first four with the brief's H3s as `subsections`.
+   *   Placement, sizes (with the brief's 6 m pipe note as a closing paragraph), price, rent and "How to
+   *     Order a Shipping Container" (ordered, eleven steps) → afterSolutions extra sections, so the steps
+   *     stay before the areas.
+   *   "Areas Served Around Singasandra" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" →
+   *   a default extra section (after the areas, as in the brief). FAQs: the brief's ten.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §6, only where the destination exists and supports the anchor): intro → the cargo category
+   * ("Existing shipping container product page"); HVAC section → "electrical and plumbing contractor stock
+   * in Kaggadasapura" (its "Shipping Containers for Electrical & Plumbing Contractors"; wiring, conduit and
+   * plumbing stock stays there) and "split AC installers' stock stores in Horamavu" (its "Stock Stores for AC
+   * & Appliance Installation Businesses"; split units and copper pipe stay there); "HVAC contractor
+   * inventory register" H3 → "maintenance spares for malls and hotels in Mahadevapura" (its "Maintenance
+   * Spares for Malls & Hotels", which names AHU parts; a building's own spares after handover stay there);
+   * fire-protection section → "piped natural gas installation contractor storage in Nagarbhavi" (its
+   * "Storage Containers for Piped Natural Gas (PNG) Installation Contractors", live since #311; gas
+   * pipework, meters and regulators stay there); "Firefighting pipe storage" H3 → "stainless steel railing and gate fabricators on Thanisandra Main Road"
+   * (its "Storage Containers for Stainless Steel Railing & Gate Fabricators"; railing tube stays there);
+   * "Fire sprinkler head storage" H3 → "insulated and air-conditioned storage planning in Vellore" (its
+   * "Insulated and air-conditioned storage enquiries"; the brief's "Climate-controlled storage solutions"
+   * anchor is not used because that page sets out points to settle, not a climate-controlled product);
+   * placement → "delivery and placement notes for restricted sites" (Bellandur's "Planning delivery through
+   * a society gate or narrow lane"); sizes → "what to inspect on a used container": the brief's
+   * /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used Container
+   * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
+   * "shipping containers on Begur Road" and "shipping containers in HSR Layout". NOT linked: the brief's
+   * /shipping-container-bommanahalli (no such page; Bommanahalli is not named here, so it stays free for a
+   * page of its own); Murugeshpalya (the live page covers monsoon
+   * storage and dewatering-equipment hire, not the brief's kitchen exhaust cleaning). Anchors differ from the
+   * siblings' anchors for the same targets. Inbound: the Begur Road page's areas ("HVAC ducting and fire
+   * sprinkler contractor storage in Singasandra"), the HSR Layout page's areas ("storage containers in
+   * Singasandra"), the Karnataka shipping hub ("Shipping Containers in Singasandra"), the cargo category's
+   * location links ("Storage containers in Singasandra") and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Singasandra, the Singasandra Lake area and the
+   * Singasandra Metro Station area, for HVAC ducting contractors' equipment and for fire sprinkler and
+   * firefighting contractors' equipment. Not targeted: Hosa Road (road reference only), Electronic City,
+   * Hosur Road, Hebbagodi and Bommasandra (kept for possible future pages; Electronic City is named only as
+   * the company's office address in the disclaimer); Bommanahalli, Hongasandra and Garvebhavi Palya (kept
+   * for a Bommanahalli page); Kudlu Gate and Kudlu (not named: the owner's later brief of 2026-11-22 gives
+   * Kudlu Gate a page of its own, being built by a peer session, so the HSR pointer sentence leaves it
+   * out); AECS Layout and ITI Layout (excluded);
+   * Begur (Begur Road page); Kaikondrahalli (Bellandur page). Kept apart from general electrical and
+   * plumbing contractors (Kaggadasapura; named only in the link to it), split AC installers (Horamavu;
+   * same), building maintenance spares including AHU parts (Mahadevapura; same), kitchen exhaust cleaning
+   * (not covered here), piped gas contractors (Nagarbhavi; named only in the link to it), steel railing fabrication (Thanisandra
+   * Main Road; same), specialised climate-controlled storage (Vellore; same), restricted-site delivery
+   * (Bellandur) and used-container inspection (Athipattu). "Bengaluru" stays out of the title, as the brief
+   * asks; the geo meta and the Service JSON-LD's areaServed carry "Singasandra, Bengaluru, Karnataka".
+   *
+   * Images: no Singasandra images were supplied; the owner asked (2026-11-22) for existing images to be
+   * used, so the page reuses the five Hoskote renders: copies of the owner's "public/images/Storage
+   * Containers in Hoskot/Storage Containers in Hoskot/cabin (1–5).webp" (lossy VP8, 72–141 KB) of one
+   * sand-beige container, each with its VP8 data byte-for-byte plus an XMP dc:title / dc:description that
+   * labels it an illustrative render shared with the Hoskote page (no creator, GPS, camera or date). (1)
+   * three-quarter exterior = hero / og:image (the brief's hero filename and alt, followed by what the picture
+   * shows); (4) cargo doors = HVAC section (its caption is about measuring duct lengths against the door
+   * opening); (5) blind end wall = fire-protection section (its caption is about heat in a closed steel box
+   * and sprinkler heads); (2) empty interior = layout options (the brief's interior filename, but not its
+   * "with organized racks" alt: nothing is fitted); (3) roof from above = placement section. No image shows
+   * ducts, insulation, grilles, diffusers, dampers, pipes, valves, hoses, gauges or sprinkler heads, so the
+   * brief's twelve use-case image slots are not used, and no alt text, caption or filename claims those
+   * items, a size or a place. The hero caption says the render is shared with the Hoskote page.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-singasandra",
+    city: "Singasandra",
+    listTitle: "Shipping & Storage Containers in Singasandra",
+    metaTitle: "Shipping Container in Singasandra | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Singasandra for HVAC contractors' ducts, insulation and diffusers, and fire contractors' pipes, valves and sprinkler heads.",
+    keywords:
+      "shipping container in Singasandra, cargo container Singasandra, storage container Singasandra, storage container near Singasandra Metro Station, storage container Singasandra Lake area, used shipping container Singasandra, shipping container price in Singasandra, storage container for rent in Singasandra, HVAC ducting contractor storage container, duct section and insulation storage, grilles and diffusers storage, ducting site store, fire sprinkler contractor storage container, sprinkler head storage, firefighting pipe and valve storage, hydrant hose and reel storage",
+    // Approximate point in Singasandra, south Bengaluru, between the lake and the metro station (rounded;
+    // for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Singasandra, Bengaluru, Karnataka, India",
+      position: "12.8810;77.6380",
+      icbm: "12.8810, 77.6380",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1408 × 1056 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Kaggadasapura, Horamavu, Mahadevapura, Nagarbhavi, Thanisandra Main Road, Vellore, Bellandur, Athipattu, Begur Road and HSR Layout are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-singasandra/shipping-container-singasandra.webp",
+      alt: "Shipping container exterior suitable for construction equipment storage: a sand-beige steel unit with closed double cargo doors and vertical locking bars, on a concrete yard beside warehouse sheds and stacked pallets",
+      width: 1408,
+      height: 1056,
+      caption: "Illustrative render, shared with our Hoskote page. It was not photographed in Singasandra and does not show a customer's unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Singasandra",
+    tagline:
+      "A lockable site store for duct sections, insulation rolls and diffusers, or for fire mains, valves, hose reels and boxed sprinkler heads, sized to what you actually need to keep.",
+    intro: [
+      "Singasandra is a residential and commercial locality in south Bengaluru, with apartment communities, business premises and construction activity near the Hosur Road corridor.",
+      "Commercial buildings and residential developments require ventilation, air-conditioning and fire-protection systems. Contractors installing these systems handle materials that need organised storage before installation.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Singasandra for compatible HVAC ducting equipment, fire sprinkler components and firefighting system materials.",
+    },
+
+    areasHeading: "Areas Served Around Singasandra",
+    areasText:
+      "This page covers shipping and storage container enquiries from Singasandra, the Singasandra Lake area and the blocks around Singasandra Metro Station. Apartment complexes and project sites here are often reached through society gates or short internal roads, so the way in is looked at for every address before a date is offered.",
+    // Brief §4 and §7: Begur Road and HSR Layout go to their own container pages. The brief's Bommanahalli
+    // page does not exist, so Bommanahalli is not named here.
+    areasInlineLinks: [
+      {
+        before: "To the west, Begur and the length of Begur Road have their own page:",
+        link: { label: "shipping containers on Begur Road", href: "/cities-we-serve/shipping-container-begur-road" },
+        after: ".",
+      },
+      {
+        before: "North of here, the HSR sectors are covered on our page about",
+        link: { label: "shipping containers in HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for HVAC Ducting Contractors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-singasandra/shipping-container-cargo-doors-singasandra.webp",
+          alt: "Sand-beige container seen head-on with both cargo doors shut: four vertical locking bars with cam handles and a central lockbox, on a concrete yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render. The door frame is narrower and lower than the box itself, so the widest duct section and the longest spiral run are measured against the opening of the unit you are offered.",
+        },
+        paragraphs: [
+          "HVAC ducting contractors fabricate and install ductwork for offices, commercial buildings, residential developments and other suitable projects.",
+          "Their inventory may include rectangular ducts, spiral ducts, flexible ducts, insulation rolls, grilles, diffusers and installation accessories. A suitably configured shipping container may provide additional storage at an authorised project site.",
+        ],
+        // Brief §6 and §7: general electrical and plumbing stock and split-AC installers' stock belong to
+        // the Kaggadasapura and Horamavu pages.
+        inlineLinks: [
+          {
+            before: "Holding cable drums, conduit or plumbing fittings rather than ductwork? See our page on",
+            link: { label: "electrical and plumbing contractor stock in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+            after: ".",
+          },
+          {
+            before: "Fitting split units with copper pipe instead of ducted systems? Read about",
+            link: { label: "split AC installers' stock stores in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Rectangular GI duct section storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Rectangular GI duct sections." },
+              { text: "Suitable duct accessories." },
+              { text: "Other approved fabricated components." },
+            ],
+            closing: [
+              "Use stable supports and protect duct edges and corners against impact. Do not place heavy materials on lightweight duct sections.",
+            ],
+          },
+          {
+            heading: "Spiral and flexible duct storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Spiral ducts." },
+              { text: "Flexible ducts." },
+              { text: "Suitable connectors." },
+            ],
+            closing: [
+              "Use racks or shelves appropriate to the material, organise them by size and specification, and follow the manufacturer's storage instructions to avoid deformation.",
+            ],
+          },
+          {
+            heading: "Duct insulation roll storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Insulation rolls." },
+              { text: "Suitable insulation accessories." },
+              { text: "Other approved dry materials." },
+            ],
+            closing: [
+              "Keep insulation dry and protected, use suitable shelving or pallets, and follow the manufacturer's handling and storage instructions.",
+            ],
+          },
+          {
+            heading: "Grille, diffuser and damper storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Air grilles." },
+              { text: "Diffusers." },
+              { text: "Dampers." },
+              { text: "Suitable installation accessories." },
+            ],
+            closing: [
+              "Use protective packaging, organise items by floor, zone or project, and avoid stacking arrangements that could damage finished surfaces.",
+            ],
+          },
+          {
+            heading: "Hangers, rods and anchors",
+            paragraphs: ["Organise compatible accessories such as:"],
+            bullets: [
+              { text: "Hangers." },
+              { text: "Threaded rods." },
+              { text: "Anchors." },
+              { text: "Approved fasteners." },
+            ],
+            closing: ["Use labelled bins and suitable supports, and verify shelf and rack loading capacity."],
+          },
+          {
+            heading: "Aluminium tape and sealant storage",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Aluminium tape." },
+              { text: "Suitable sealing accessories." },
+              { text: "Approved non-hazardous consumables." },
+            ],
+            closing: [
+              "Sealants, adhesives and other chemical products must be stored according to their labels, safety data sheets and applicable requirements. Do not assume all sealants are suitable for ordinary container storage.",
+            ],
+          },
+          {
+            heading: "Floor-wise ducting installation kits",
+            paragraphs: ["Organise materials by:"],
+            bullets: [
+              { text: "Project." },
+              { text: "Building." },
+              { text: "Floor." },
+              { text: "Zone." },
+              { text: "Installation date." },
+              { text: "Assigned contractor team." },
+            ],
+            closing: ["Verify each kit before dispatch."],
+          },
+          {
+            heading: "HVAC contractor inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Item name." },
+              { text: "Dimensions." },
+              { text: "Specification." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Project allocation." },
+              { text: "Dispatch and return status." },
+              { text: "Condition." },
+            ],
+            // Brief §6 and §7: a building's own maintenance spares (AHU parts included) belong to the
+            // Mahadevapura page.
+            inlineLinks: [
+              {
+                before: "Running a finished building's stock of filters, belts and AHU parts after handover? See our notes on",
+                link: { label: "maintenance spares for malls and hotels in Mahadevapura", href: "/cities-we-serve/shipping-container-mahadevapura" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "HVAC Ducting Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Moisture protection",
+            paragraphs: [
+              "Wet insulation may lose performance and develop contamination or mould problems. Keep insulation dry and protected.",
+            ],
+          },
+          {
+            heading: "Handling glass wool insulation",
+            paragraphs: [
+              "Use appropriate protective equipment, including suitable gloves, eye protection and respiratory protection where required. Follow the manufacturer's instructions and applicable occupational safety requirements.",
+            ],
+          },
+          {
+            heading: "Heavy and fragile ductwork",
+            paragraphs: ["Verify:"],
+            bullets: [
+              { text: "Rack load capacity." },
+              { text: "Floor-loading limits." },
+              { text: "Safe lifting arrangements." },
+              { text: "Equipment dimensions." },
+              { text: "Suitable restraints." },
+            ],
+          },
+          {
+            heading: "Cutting and fabrication",
+            paragraphs: [
+              "An ordinary storage-only shipping container is not automatically suitable for cutting, welding, grinding or active duct fabrication. Such work requires an appropriately designed and authorised workspace.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Fire Sprinkler & Firefighting Contractors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-singasandra/shipping-container-end-wall-singasandra.webp",
+          alt: "Blind end wall of a sand-beige container: vertical corrugations, four corner castings and two forklift pockets along the base, on a concrete yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of the closed end. Bare steel left in strong sun can run much hotter inside than the air outside, which is why boxed sprinkler heads go in only where the maker's storage limits can be held.",
+        },
+        paragraphs: [
+          "Fire-protection contractors install sprinkler systems, hydrants, hose reels and related components in suitable residential, commercial and industrial buildings.",
+          "Their inventory may include pipes, couplings, valves, sprinkler heads, hoses, gauges and installation accessories. A suitably configured shipping container may provide organised storage for compatible materials before installation.",
+        ],
+        // Brief §6 and §7: piped gas installation contractors' pipes, meters and regulators belong to the
+        // Nagarbhavi page (live since #311).
+        inlineLinks: [
+          {
+            before: "Storing gas pipework, meters and regulators for household gas connections instead of fire-protection stock? See our page on",
+            link: { label: "piped natural gas installation contractor storage in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Firefighting pipe storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Firefighting pipe lengths." },
+              { text: "Approved pipe accessories." },
+              { text: "Other suitable components." },
+            ],
+            closing: [
+              "Use horizontal racks where appropriate, organise pipes by size and specification, and check the actual pipe length against the container's internal dimensions.",
+            ],
+            // Brief §6 and §7: stainless and mild steel tube for railings and gates belongs to the Thanisandra
+            // Main Road page.
+            inlineLinks: [
+              {
+                before: "Keeping stainless or mild steel tube for balustrades and gates rather than fire mains? Read about",
+                link: {
+                  label: "stainless steel railing and gate fabricators on Thanisandra Main Road",
+                  href: "/cities-we-serve/shipping-container-thanisandra-main-road",
+                },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Coupling, fitting and flange storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Grooved couplings." },
+              { text: "Pipe fittings." },
+              { text: "Flanges." },
+              { text: "Approved installation accessories." },
+            ],
+            closing: ["Use labelled bins or shelves, and protect components against impact and contamination."],
+          },
+          {
+            heading: "Gate, check and alarm valve storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Gate valves." },
+              { text: "Check valves." },
+              { text: "Alarm valves." },
+              { text: "Other approved components." },
+            ],
+            closing: [
+              "Use stable, appropriately rated shelving, keep heavy components at suitable handling heights and follow the manufacturer's storage instructions.",
+            ],
+          },
+          {
+            heading: "Hydrant hose and reel storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Hose reels." },
+              { text: "Fire hoses." },
+              { text: "Landing valves." },
+              { text: "Nozzles." },
+              { text: "Suitable accessories." },
+            ],
+            closing: [
+              "Store them clean and dry where required, and follow the manufacturer's recommendations for coiling, support and environmental conditions.",
+            ],
+          },
+          {
+            heading: "Pressure gauge and signage storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Pressure gauges." },
+              { text: "Approved safety signage." },
+              { text: "Other suitable installation accessories." },
+            ],
+            closing: ["Store gauges in protective cases, and keep inspection or calibration records where required."],
+          },
+          {
+            heading: "Fire sprinkler head storage",
+            paragraphs: ["Sprinkler heads are safety-critical components. Store them:"],
+            bullets: [
+              { text: "In original protective packaging where required." },
+              { text: "Under manufacturer-approved environmental conditions." },
+              { text: "Protected against impact." },
+              { text: "Protected against contamination." },
+              { text: "Away from unsuitable heat exposure." },
+            ],
+            closing: [
+              "Do not assume that ordinary ventilation or shading alone provides adequate temperature control: a standard uninsulated metal container may become excessively hot in direct sunlight. Where the manufacturer's storage limits cannot be maintained, use a suitable controlled-storage arrangement.",
+            ],
+            // Brief §6: specialised insulated or air-conditioned storage → the Vellore page's planning notes.
+            inlineLinks: [
+              {
+                before: "If the heads need a held temperature range, the points to settle first are set out under",
+                link: { label: "insulated and air-conditioned storage planning in Vellore", href: "/cities-we-serve/shipping-container-vellore" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Building-wise and floor-wise fire system kits",
+            paragraphs: ["Organise compatible materials by:"],
+            bullets: [
+              { text: "Project." },
+              { text: "Building." },
+              { text: "Floor." },
+              { text: "Zone." },
+              { text: "Installation stage." },
+              { text: "Assigned team." },
+            ],
+            closing: ["Verify component specifications before dispatch."],
+          },
+          {
+            heading: "Fire contractor inventory register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Item name." },
+              { text: "Manufacturer." },
+              { text: "Model." },
+              { text: "Specification." },
+              { text: "Quantity." },
+              { text: "Batch or serial number where applicable." },
+              { text: "Storage location." },
+              { text: "Project allocation." },
+              { text: "Inspection status." },
+              { text: "Dispatch and return status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Fire Protection Equipment Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Sprinkler temperature requirements",
+            paragraphs: [
+              "Sprinkler heads have specified operating temperature ratings, but those ratings are not substitutes for the manufacturer's storage requirements. Follow the actual manufacturer's storage limits; no standard container is offered as suitable for every sprinkler head without that check.",
+            ],
+          },
+          {
+            heading: "Fire extinguishers and pressurised cylinders",
+            paragraphs: [
+              "This page does not recommend keeping fire extinguishers, gas cylinders or other pressurised equipment inside an ordinary storage-only container without a specific compliant storage assessment. Use suitable approved storage arrangements.",
+            ],
+          },
+          {
+            heading: "Paints, primers and hazardous materials",
+            paragraphs: [
+              "Follow labels, safety data sheets and applicable requirements. This page does not recommend ordinary container storage for hazardous materials.",
+            ],
+          },
+          {
+            heading: "Welding and cutting",
+            paragraphs: [
+              "An ordinary storage-only container is not automatically suitable for welding, cutting, grinding or other hot work.",
+            ],
+          },
+          {
+            heading: "Fire safety compliance",
+            paragraphs: [
+              "All firefighting and sprinkler systems must be installed, tested and commissioned according to applicable codes, approvals and project requirements. Storage arrangements do not establish fire-system compliance.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-singasandra/singasandra-storage-container-interior.webp",
+          alt: "Empty sand-beige container interior seen from the open doors: corrugated steel walls, a ribbed ceiling and a dark plywood floor, with no racks or shelves fitted",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of a bare box. Duct supports, pipe racks, valve shelves or padded shelving for sprinkler heads are fitted only when your quotation lists them.",
+        },
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Rectangular duct storage supports." },
+          { text: "Spiral duct racks." },
+          { text: "Flexible duct shelving." },
+          { text: "Insulation roll shelves." },
+          { text: "Grille and diffuser storage." },
+          { text: "Damper storage." },
+          { text: "Hanger and fastener bins." },
+          { text: "Floor-wise HVAC material sections." },
+          { text: "Firefighting pipe racks." },
+          { text: "Coupling and flange bins." },
+          { text: "Valve shelves." },
+          { text: "Hydrant hose and reel supports." },
+          { text: "Pressure gauge storage." },
+          { text: "Sprinkler head protective shelving." },
+          { text: "Building-wise fire system kit sections." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation provisions." },
+          { text: "Environmental controls where required." },
+          { text: "Appropriate locking arrangements." },
+        ],
+        closing: [
+          "All layouts must reflect the actual equipment dimensions, weights, manufacturer storage instructions and safety requirements.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Singasandra",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-singasandra/shipping-container-roof-view-singasandra.webp",
+          alt: "Sand-beige container seen from directly above on a concrete floor: ribbed roof panels and four corner castings",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative top-down render. Mark out more than the footprint: both doors need room to swing fully open, and the truck or crane needs its own space to lower the box.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including approved construction project sites, contractor yards, suitable commercial storage plots and other permitted private sites.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner or developer permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Crane or unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Some roads near Singasandra, including the approaches from Hosa Road, may have restricted access during busy periods. A 10 ft or 20 ft container may be considered for compact sites, subject to availability and actual access conditions; a 40 ft container where there is enough space and a workable unloading arrangement.",
+          "A delivery time is given only after the transport arrangements have been verified, and a unit is never left on a public road or footpath unless the required authorisation is in hand.",
+        ],
+        // Brief §4 and §6: restricted-site delivery → the Bellandur page's society-gate and narrow-lane notes.
+        inlineLinks: [
+          {
+            before: "Going in past a security gate or along a tight internal road? Start with our",
+            link: { label: "delivery and placement notes for restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Inside measurements, door clearances, floor-loading limits and stock are confirmed for each unit before it is offered. Approximate volume does not establish allowable payload.",
+          headers: ["Container size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Grilles, diffusers, sprinkler heads and smaller fittings"],
+            ["20 ft", "33 m³", "HVAC ducting materials or fire system inventory"],
+            ["40 ft", "67 m³", "Larger duct sections and pipe inventory, subject to actual dimensions"],
+          ],
+        },
+        closing: [
+          "A standard 20 ft container may take some nominal 6 m pipes, depending on their exact length, packaging and the internal clearance, so not every 6 m pipe needs a 40 ft container. The actual materials and the actual container are measured before a size is recommended.",
+        ],
+        // Brief §6: container buying and inspection guidance → the Chennai-area Athipattu page's checklist.
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Our checklist of",
+            link: { label: "what to inspect on a used container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " covers the walls, floor, doors and seals.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Singasandra",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Duct storage racks." },
+          { text: "Insulation shelving." },
+          { text: "Grille and diffuser storage." },
+          { text: "Pipe racks." },
+          { text: "Valve shelves." },
+          { text: "Sprinkler component protection." },
+          { text: "Locking arrangements." },
+          { text: "Lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Environmental control requirements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation based on your actual requirements."],
+      },
+      {
+        heading: "Storage Container on Rent in Singasandra",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful while the HVAC and firefighting installation phases of a project run. Hire terms run from one month to five years, and the quotation states the unit, the period, the transport charge, any deposit and how the container is collected at the end.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and hire periods are listed under",
+            link: { label: "container hire terms and sizes", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Identify the equipment and materials." },
+          { text: "Provide dimensions, quantities and estimated weight." },
+          { text: "Identify fragile, heavy or temperature-sensitive items." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss racks, shelves and storage bays." },
+          { text: "Confirm environmental and safety requirements." },
+          { text: "Provide the proposed installation location." },
+          { text: "Check permissions and site access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin provides shipping and storage container solutions for commercial inventory and equipment applications. For ducting and fire-protection contractors working around Singasandra, that means:",
+        ],
+        bullets: [
+          { title: "Container size options", text: "20 ft and 40 ft units, and a 10 ft one when there is one in stock." },
+          { title: "Storage-oriented modifications", text: "supports for duct sections, racks for pipe lengths and shelves for valves, each shown as a separate line on the quote." },
+          { title: "Shelving and racking provisions", text: "laid out around your longest duct run, your pipe diameters and the boxes your sprinkler heads arrive in." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock fitted to your unit named in writing before payment." },
+          { title: "Ventilation and insulation options", text: "matched to the storage limits your suppliers set, without a promised temperature or humidity figure." },
+          { title: "Quotation and delivery coordination", text: "a line-by-line price comes first; the site entrance and the set-down area are checked before any lorry is booked." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can HVAC duct sections be stored inside a shipping container?",
+        answer: "Potentially, using suitable supports and protective handling to prevent dents and deformation.",
+      },
+      {
+        question: "Can duct insulation rolls be stored inside a container?",
+        answer: "Potentially, where they are kept dry and stored according to the manufacturer's instructions.",
+      },
+      {
+        question: "Can fire sprinkler heads be stored inside a shipping container?",
+        answer: "Only where the actual manufacturer's storage requirements, including temperature limits, can be maintained.",
+      },
+      {
+        question: "Can firefighting pipes and valves be stored inside a container?",
+        answer: "Potentially, using appropriately rated racks and shelves.",
+      },
+      {
+        question: "Can fire extinguishers be stored inside an ordinary shipping container?",
+        answer:
+          "Do not assume an ordinary storage-only container is suitable for pressurised equipment. A specific compliant storage assessment may be necessary.",
+      },
+      {
+        question: "Can full-length pipes fit inside a 20 ft container?",
+        answer:
+          "It depends on the exact pipe length, packaging, container dimensions and loading clearance. Verify the measurements before selecting a container.",
+      },
+      {
+        question: "Can HVAC ducts be fabricated or firefighting pipes welded inside a container?",
+        answer: "An ordinary storage-only container is not automatically suitable for cutting, fabrication or welding.",
+      },
+      {
+        question: "Is a standard container climate-controlled?",
+        answer: "No. Insulation, ventilation or active environmental controls may need to be specified separately.",
+      },
+      {
+        question: "What is the shipping container price in Singasandra?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Singasandra",
+    ctaText: `Whether you need storage for HVAC duct sections, insulation, grilles and diffusers, or firefighting pipes, valves and sprinkler components, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp or e-mail ${COMPANY.email.sales}. Service area: Singasandra, the Singasandra Lake area and the Singasandra Metro Station area, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Singasandra",
+      intro:
+        "Pick a container type and quantity, share the Singasandra site address or a map pin, and say whether you want to buy or hire. Tell us if the stock is ductwork and insulation or fire-protection material, give the longest duct section or pipe length, and mention anything with a storage temperature limit, such as sprinkler heads; we match the unit to the load and the site entrance before we quote.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds and ships its containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur in Tamil Nadu, and runs its Bengaluru office from Electronic City; it has no depot, yard, showroom or branch office in Singasandra, by Singasandra Lake or near the metro station. Your written quotation is the specification. It states the inside measurements and door clearances, the grade, condition and floor rating, every support, rack, shelf, bin, kit section, light, vent, lining, control and lock being supplied, the hire period for a rented unit, and how delivery, unloading and collection will work. Units come and go from stock, so a date holds only once the quotation fixes it. Unless an approved specification states otherwise, no container is sold or hired as climate-controlled, insulated to a stated temperature, fire-rated, approved for fire extinguishers, gas cylinders or other pressurised equipment, a store for sealants, adhesives, paints, primers or other hazardous materials, a place for cutting, welding, grinding or duct fabrication, or able to carry unlimited loads, and no particular temperature or humidity is promised. Keeping sprinkler heads, valves or gauges in a container does not make them compliant: installation, testing and commissioning still follow the applicable codes, approvals and project requirements. All five pictures are renders of one container made for illustration and shared with our Hoskote page; none was taken in Singasandra, and none shows a delivered or fitted unit or a contractor's stock. Cubic-metre figures describe space, not how much weight a floor can take. HVAC ducting and fire-protection contractors are mentioned as possible users, not as customers or finished projects, and a locality named here is one we accept enquiries from, not a confirmed delivery point. Everything this page says about ducts, insulation, pipes, valves, sprinkler heads, pressurised equipment, chemicals, heavy loads, placement and permits is general guidance and not fire-safety, legal, electrical or engineering advice; where they differ, follow the manufacturer, the supplier and the relevant authority.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -66240,6 +67035,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "For the neighbouring area to the south, explore our dedicated page on",
         link: { label: "shipping containers in Kudlu Gate", href: "/cities-we-serve/shipping-container-kudlu-gate" },
+        after: ".",
+      },
+      // Singasandra brief (2026-11-22, §6): storage for HVAC ducting and fire sprinkler contractors further
+      // south is the Singasandra page's intent. Counted as a body link, so the nearby block skips it.
+      {
+        before: "Further south, storage for HVAC ducting and fire sprinkler contractors is covered on our page on",
+        link: { label: "storage containers in Singasandra", href: "/cities-we-serve/shipping-container-singasandra" },
         after: ".",
       },
     ],
