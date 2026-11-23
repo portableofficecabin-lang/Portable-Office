@@ -9830,6 +9830,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "shipping containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
         after: ".",
       },
+      // Shigehalli brief (2026-11-22, §7): crockery and toy wholesalers in Shigehalli (Seegehalli) belong to
+      // that page; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Closer to the city, dinnerware and toy wholesalers in Shigehalli are covered on our page on",
+        link: { label: "crockery wholesaler storage containers in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -25279,6 +25286,19 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "storage containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
         after: ".",
       },
+      // Shigehalli brief (2026-11-22, §7): toy and crockery wholesalers' stock in Shigehalli (Seegehalli) is
+      // that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Toy distributors and crockery wholesalers a little to the east, in Shigehalli (Seegehalli), can read about",
+        link: { label: "toy wholesale storage containers in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
+      // Mahadevapura Version B brief (2026-11-22, §6): shopfitters' fixtures for Whitefield Road stores are the Mahadevapura page's application.
+      {
+        before: "Shopfitting contractors holding display racks, counters and mannequins for stores on Whitefield Road can read about",
+        link: { label: "storage containers for retail shopfitters", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: " in Mahadevapura.",
+      },
     ],
 
     extraSections: [
@@ -26232,6 +26252,651 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin builds and dispatches its containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and has its Bengaluru office in Electronic City; it has no yard, depot, showroom or branch on TC Palya Road or in Anandapura, NRI Layout or Chikkabasavanapura. What a container includes is set by its written quotation alone: inside and door-opening measurements, grade and condition, floor rating, every pad, support, rack, pallet, drawer, case, bay, light, vent, lining, control or lock, any hire period, and the delivery, unloading and collection arrangements. Stock changes, so a date is firm only once that quotation confirms it. Unless an approved specification says so, no container is sold or hired as a workshop for welding, cutting, grinding or painting, as a store for paints, thinners, solvents, gas cylinders or other hazardous products, as a place to charge batteries or to repair, test, verify or calibrate scales, as climate-controlled, humidity-controlled or static-safe, or as rated for any load without limit. Keeping scales or test weights in a container does not establish their accuracy, calibration or legal metrology compliance. The five pictures are illustrative images from Portable Office Cabin's existing catalogue; none was taken on TC Palya Road or shows a delivered or fitted unit or anyone's furniture or equipment. Capacities in cubic metres are rough guides, not payload ratings. Steel furniture manufacturers, weighing scale dealers and service centres are named as possible users, not as customers or completed jobs, and a locality listed here is one we take enquiries from, not a confirmed delivery point. Notes on heavy furniture, paints, cylinders, batteries, electronics, test weights, placement and permits are general guidance, not legal, metrology, electrical, fire-safety or engineering advice; manufacturers' instructions and the requirements of the relevant authorities come first.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN SHIGEHALLI (SEEGEHALLI) — storage for toy wholesalers and distributors
+   * (toy cartons, soft toys, educational toys and games, ride-on toys, seasonal stock, returns, inventory
+   * register) and for crockery and tableware wholesalers (dinner sets, plates and bowls, mugs and cups,
+   * cutlery and serveware, display samples, customer-wise order staging, breakages and returns, inventory
+   * register) in east Bengaluru.
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI MASTER SEO IMPLEMENTATION COMMAND — Shipping & Storage Containers
+   * in Shigehalli (Seegehalli)"): meta title, meta description, H1, keywords, section order, H2 / H3
+   * headings, sizes table, the nine ordering steps and the seven FAQs are the brief's, and so is the copy,
+   * lightly edited for flow and British spelling. One page serves both spellings: "Shigehalli" in the
+   * title, H1 and URL, "Seegehalli" in the description, the intro, the areas text and the FAQ. The brief's
+   * notes to the implementer ("Do not recommend charging batteries…", "Do not instruct businesses to remove
+   * built-in batteries…", "Do not claim that an ordinary shipping container is automatically fire-rated",
+   * "Do not mix damaged goods…", "Do not place containers on public roads…", "Do not guarantee that every
+   * Shigehalli road is suitable…", "Do not invent prices…", "Conditional section…", "Highlight only verified
+   * capabilities…", "Use verified company phone numbers…") are instructions, not page copy: where one
+   * carries a fact for the reader it is reworded as a plain statement ("batteries are not charged inside an
+   * ordinary storage-only container", "built-in batteries stay in place unless the manufacturer
+   * specifically permits removal", "an ordinary shipping container is not automatically fire-rated",
+   * "damaged goods are kept apart from approved sale stock", "no container is placed on a public road or
+   * footpath without the required authorisation", "not every road in Shigehalli suits a large container
+   * vehicle"); otherwise it is left out. FAQ 2's answer is reworded the same way. Where an H2 has two
+   * checklists (placement), the shorter one becomes a sentence (the template gives a section one list). The
+   * route follows the site convention (/cities-we-serve/…), not the brief's root slug. The tagline,
+   * captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no rent, deposit or delivery charge is stated here); the
+   * 10 ft row keeps the brief's "if available"; shelving, racks, pallets, bins, lighting, ventilation,
+   * insulation and locks are price factors and options "where your quotation includes them", never stock
+   * items or guaranteed conditions. The optional Kannada search terms are not used: the page is in English.
+   * No Product JSON-LD: city pages carry no prices (file rule) and a Product block without offers earns no
+   * rich result, so the Service JSON-LD (no offers), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   Toy wholesalers, "Toy Stock Storage Safety", crockery and tableware wholesalers and "Crockery Storage
+   *     Safety" → four afterIntro extra sections with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order" (ordered, nine steps) → afterSolutions extra
+   *     sections, so the steps stay before the areas.
+   *   "Areas Served" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's seven.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §7, only where the destination exists and supports the anchor): intro → the cargo category;
+   * toy section → "Gombe Habba doll storage in Banashankari" (that page's doll-collection sections); crockery
+   * section → "catering vessel storage in Horamavu" (its "Catering Vessels, Lighting and Electrical
+   * Accessories" H3) and "restaurant equipment storage in Koramangala" (its "Restaurant equipment storage
+   * between moves" solutions); crockery safety, "Fragile Goods" H3 → "bar glassware and keg storage in Indiranagar" (its bar
+   * section: kegs, glassware crates, furniture) and "laboratory glassware storage in Vidyaranyapura" (its
+   * "Laboratory glassware" H3); placement → "notes on delivering to restricted sites" (the Bellandur page's
+   * society-gate and narrow-lane section); sizes → "inspection checks for a used container": the brief's
+   * /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used Container
+   * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
+   * "shipping containers in KR Puram", "shipping containers on Whitefield Road" (the Mahadevapura page,
+   * which owns Whitefield Road and Hoodi) and "shipping containers in Hoskote". NOT linked: the brief's
+   * Haralur Road page (no such route), so toy rental and toy libraries are kept apart in words only.
+   * Anchors differ from the siblings' anchors for the same targets. Inbound: the KR Puram, Mahadevapura and
+   * Hoskote pages' areas sections (one `areasInlineLinks` item each, at the end; their locality boundaries
+   * and targeting unchanged), the Karnataka shipping hub ("Shipping Containers in Shigehalli"), the cargo
+   * category's location links ("Storage containers in Shigehalli") and every Karnataka shipping page's nearby
+   * block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Shigehalli and Seegehalli, for toy wholesalers'
+   * and distributors' stock and for crockery and tableware wholesalers' stock. Named only in the pointer
+   * sentences to their own pages: KR Puram and the Old Madras Road corridor (KR Puram page); Mahadevapura,
+   * Hoodi and Whitefield Road (Mahadevapura page); Hoskote (Hoskote page). Not named at all: Medahalli,
+   * Battarahalli, Whitefield, Kadugodi, Belathur and Hope Farm (KR Puram's or a possible future Whitefield
+   * page's), and Channasandra (the name is already used for an RR Nagar locality on the site). Kept apart
+   * from toy rental and toy libraries (no live page), Gombe Habba dolls and kirana backstock (Banashankari),
+   * tent house catering vessels (Horamavu), restaurant kitchen equipment (Koramangala), bar glassware
+   * (Indiranagar) and laboratory glassware (Vidyaranyapura). "Bengaluru" stays out of the title, as the
+   * brief asks; the geo meta and the Service JSON-LD's areaServed carry "Shigehalli, Bengaluru, Karnataka".
+   *
+   * Images: no new images were supplied; the owner asked for EXISTING images. Six catalogue renders already
+   * in the repo and not used on any other city page, copied with their VP8 data byte-for-byte plus an XMP
+   * dc:title / dc:description that labels each one an illustrative image (no creator, GPS, camera or date);
+   * the product originals are untouched: cargo-container-for-sale-main (green container on a slab → hero /
+   * og:image, with the brief's hero filename and alt), cargo-storage-containers-main (pale blue container →
+   * toy section), cargo-containers-main (orange container, door end → crockery section),
+   * shipping-container-sipcot-yard (dark green container on a plinth → placement), shipping-container-stacked
+   * (long navy container → sizes) and shipping-container-rental-yard (plain grey container → price). The
+   * maroon-on-plinth and weathered red used renders were dropped when #315 published them on the TC Palya
+   * Road page next door. No image
+   * shows toys, cartons, crockery, shelving or an interior, so the brief's twelve use-case image slots are
+   * not used, and no alt text, caption or filename claims those items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-shigehalli",
+    city: "Shigehalli",
+    listTitle: "Shipping & Storage Containers in Shigehalli",
+    metaTitle: "Shipping Container in Shigehalli | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Shigehalli (Seegehalli) for toy wholesalers, seasonal toy stock, crockery distributors, dinnerware and tableware storage.",
+    keywords:
+      "shipping container in Shigehalli, shipping container in Seegehalli, cargo container Shigehalli, storage container Shigehalli, storage container Seegehalli, used shipping container Shigehalli, shipping container price in Shigehalli, storage container for rent in Shigehalli, toy wholesaler storage container, toy distributor stock storage, seasonal toy stock storage, toy carton storage, crockery wholesaler storage container, tableware stock storage, dinnerware and mug carton storage, cutlery and serveware storage",
+    // Approximate point for Seegehalli (KR Puram sub-locality, about 2 km from the Whitefield (Kadugodi) metro
+    // station), rounded to two decimals; for the owner to confirm.
+    geo: {
+      region: "IN-KA",
+      placename: "Shigehalli, Bengaluru, Karnataka, India",
+      position: "13.0100;77.7600",
+      icbm: "13.0100, 77.7600",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 800 × 800 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // KR Puram, Mahadevapura, Hoskote, Banashankari, Horamavu, Koramangala, Indiranagar, Vidyaranyapura,
+    // Bellandur and Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-shigehalli/shipping-container-shigehalli.webp",
+      alt: "Shipping container exterior suitable for wholesale inventory storage: a green steel container with its double cargo doors closed by four locking bars, standing on a concrete slab",
+      width: 800,
+      height: 800,
+      caption: "Illustrative image of a shipping container from our catalogue. It was not photographed in Shigehalli and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in Shigehalli",
+    tagline:
+      "Lockable floor space for a toy distributor's carton runs and festive stock, and sturdy shelving for boxed dinner sets, mugs and cutlery on their way to shops, hotels and restaurants.",
+    intro: [
+      "Shigehalli, also known as Seegehalli, is an area in east Bengaluru where businesses may require additional space for commercial inventory, wholesale goods and equipment.",
+      "Toy distributors and crockery wholesalers handle products with different storage requirements. Toy inventory may include large volumes of cartons and seasonal stock, while crockery and tableware need careful handling because many products are fragile and heavy.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Shigehalli for compatible wholesale inventory and commercial storage requirements.",
+    },
+
+    areasHeading: "Areas Served",
+    areasText:
+      "This page targets Shigehalli and Seegehalli: both spellings refer to the same east Bengaluru locality here. Other villages around Bengaluru share the Seegehalli name, so a map pin with your enquiry helps. The road in, the gate and the spot where the container will sit are looked at for each site before a delivery date is offered.",
+    // Brief §5, §7 and §8: KR Puram and the Old Madras Road corridor belong to the KR Puram page; Mahadevapura,
+    // Hoodi and Whitefield Road to the Mahadevapura page; Hoskote to the Hoskote page.
+    areasInlineLinks: [
+      {
+        before: "KR Puram and the Old Madras Road corridor are covered on our page on",
+        link: { label: "shipping containers in KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
+        after: ".",
+      },
+      {
+        before: "Sites in Mahadevapura, Hoodi and along the Whitefield Road corridor have a page of their own:",
+        link: { label: "shipping containers on Whitefield Road", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: ".",
+      },
+      {
+        before: "Further east, Hoskote town and its industrial area are served from our page on",
+        link: { label: "shipping containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Toy Wholesalers & Distributors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/storage-container-exterior-shigehalli.webp",
+          alt: "Pale blue steel container seen from the door end at an angle, with closed cargo doors and corrugated side walls, resting on a flat concrete slab",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. Fast-selling lines are best kept near the doors, with slow movers, bulky play sets and the returns section towards the far end.",
+        },
+        paragraphs: [
+          "Toy wholesalers supply products to retailers, gift shops, online sellers and other commercial customers.",
+          "Their inventory may include soft toys, educational toys, games, play sets, ride-on toys and seasonal merchandise.",
+          "A suitably configured shipping container may provide organised storage for compatible toy inventory. This is boxed wholesale stock on its way to shops, which is different from a toy rental or toy library collection, or a family's festival doll display.",
+        ],
+        // Brief §8: Gombe Habba dolls belong to the Banashankari page; toy rental has no live page (words only).
+        inlineLinks: [
+          {
+            before: "Putting away dolls and display steps after Navaratri rather than cartons for resale? See",
+            link: { label: "Gombe Habba doll storage in Banashankari", href: "/cities-we-serve/shipping-container-banashankari" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Toy Carton Storage",
+            paragraphs: ["Organise cartons by:"],
+            bullets: [
+              { text: "Product category." },
+              { text: "Manufacturer or brand." },
+              { text: "Age group." },
+              { text: "Model or product code." },
+              { text: "Quantity." },
+              { text: "Customer order." },
+            ],
+            closing: ["Use suitable shelving, avoid unstable stacking, and keep lighter cartons from being crushed."],
+          },
+          {
+            heading: "Soft Toy Storage",
+            paragraphs: [
+              "Keep soft toys in protective packaging, protected against dust, moisture, pests and contamination, and follow the manufacturer's storage requirements.",
+            ],
+          },
+          {
+            heading: "Educational Toy & Game Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Educational toys." },
+              { text: "Board games." },
+              { text: "Puzzle sets." },
+              { text: "Suitable learning materials." },
+            ],
+            closing: ["Organise them by product type and stock code, and protect the packaging against moisture and damage."],
+          },
+          {
+            heading: "Ride-on Toy Storage",
+            paragraphs: [
+              "Ride-on toys and larger play sets may require additional space. Store the heavier cartons on lower shelves or suitable pallets, and follow the manufacturer's requirements for products containing batteries.",
+            ],
+          },
+          {
+            heading: "Seasonal Toy Stock Storage",
+            paragraphs: [
+              "Toy wholesalers may need additional inventory space before school holidays and festive sales periods. Organise suitable stock by:",
+            ],
+            bullets: [
+              { text: "Season." },
+              { text: "Product category." },
+              { text: "Customer order." },
+              { text: "Dispatch priority." },
+            ],
+            closing: ["Keep frequently required stock accessible."],
+          },
+          {
+            heading: "Returns & Damaged Stock",
+            paragraphs: ["Provide a separate section for:"],
+            bullets: [
+              { text: "Returned cartons." },
+              { text: "Damaged packaging." },
+              { text: "Products awaiting inspection." },
+              { text: "Suitable replacement inventory." },
+            ],
+            closing: ["Damaged goods are kept apart from approved sale stock."],
+          },
+          {
+            heading: "Toy Wholesale Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Stock code." },
+              { text: "Category." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Batch or lot information, where applicable." },
+              { text: "Condition." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Toy Stock Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Battery-powered Toys",
+            paragraphs: [
+              "Follow the manufacturer's instructions for toys containing batteries. Batteries are not charged inside an ordinary storage-only container, and built-in batteries stay in place unless the manufacturer specifically permits their removal.",
+              "Damaged or defective batteries require appropriate handling and storage, separate from sale stock.",
+            ],
+          },
+          {
+            heading: "Moisture Protection",
+            paragraphs: [
+              "Protect cartons, packaging and soft toys against moisture and condensation. A standard shipping container is not automatically humidity-controlled.",
+            ],
+          },
+          {
+            heading: "Carton Stacking",
+            paragraphs: ["Use appropriate racks and supports, keep heavy cartons low, and do not overload the shelving or the container floor."],
+          },
+          {
+            heading: "Fire Safety",
+            paragraphs: [
+              "Keep access routes clear and follow the fire-safety requirements that apply. An ordinary shipping container is not automatically fire-rated.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Crockery & Tableware Wholesalers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/shipping-container-cargo-doors-shigehalli.webp",
+          alt: "Orange steel container seen straight on from its door end: two closed cargo doors with vertical locking bars and lever handles, on a concrete plinth",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. Every carton passes through the door opening, so leave a clear aisle behind it and lift heavy dinner-set boxes onto the lowest shelves.",
+        },
+        paragraphs: [
+          "Crockery and tableware wholesalers handle dinner sets, plates, bowls, mugs, serveware, cutlery and other products supplied to shops, hotels, restaurants and commercial customers.",
+          "Many of these products are fragile and require stable, protective storage. A suitably configured shipping container may provide additional space for compatible wholesale stock.",
+          "Boxed tableware held for resale is a different job from storing a caterer's vessels or a restaurant's kitchen equipment between uses.",
+        ],
+        // Brief §8: tent house catering vessels belong to the Horamavu page, restaurant kitchen equipment to Koramangala.
+        inlineLinks: [
+          {
+            before: "Keeping a tent house's cooking and serving vessels between functions? Read about",
+            link: { label: "catering vessel storage in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+            after: ".",
+          },
+          {
+            before: "Ranges, fridges and counters waiting between restaurant leases are covered under",
+            link: { label: "restaurant equipment storage in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Dinner Set Storage",
+            paragraphs: [
+              "Store dinner sets in protective cartons on sturdy shelves with appropriate supports, keeping the heavier cartons on the lower levels.",
+            ],
+          },
+          {
+            heading: "Plate & Bowl Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Ceramic plates." },
+              { text: "Serving plates." },
+              { text: "Bowls." },
+              { text: "Suitable dinnerware." },
+            ],
+            closing: ["Use protective packaging and stable stacking arrangements, and avoid placing heavy cartons above fragile products."],
+          },
+          {
+            heading: "Mug & Cup Storage",
+            paragraphs: ["Organise mugs and cups by:"],
+            bullets: [
+              { text: "Design." },
+              { text: "Pattern." },
+              { text: "Size." },
+              { text: "Product code." },
+              { text: "Quantity." },
+            ],
+            closing: ["Use protective packaging and mark fragile cartons clearly."],
+          },
+          {
+            heading: "Cutlery & Serveware Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Cutlery sets." },
+              { text: "Serving trays." },
+              { text: "Suitable serving accessories." },
+              { text: "Other approved tableware products." },
+            ],
+            closing: ["Use labelled bins or protective cartons."],
+          },
+          {
+            heading: "Display Sample Storage",
+            paragraphs: ["Keep suitable samples in protective packaging, separate from bulk stock."],
+          },
+          {
+            heading: "Customer-wise Order Staging",
+            paragraphs: ["Organise dispatch inventory by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Product design." },
+              { text: "Quantity." },
+              { text: "Delivery destination." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Inspect the packaging before loading."],
+          },
+          {
+            heading: "Breakage & Returns Section",
+            paragraphs: ["Provide a separate area for:"],
+            bullets: [
+              { text: "Broken items." },
+              { text: "Damaged cartons." },
+              { text: "Customer returns." },
+              { text: "Products awaiting inspection." },
+            ],
+            closing: ["Record any damage before goods return to available inventory."],
+          },
+          {
+            heading: "Crockery Wholesale Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product type." },
+              { text: "Design or pattern." },
+              { text: "Stock code." },
+              { text: "Quantity." },
+              { text: "Carton weight." },
+              { text: "Storage location." },
+              { text: "Condition." },
+              { text: "Customer order." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Crockery Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Heavy Cartons",
+            paragraphs: ["Use suitable shelving and pallets, and verify rack capacities and the container's floor-loading limits."],
+          },
+          {
+            heading: "Fragile Goods",
+            paragraphs: [
+              "Use protective packaging and suitable handling arrangements, and do not stack heavy cartons on lighter or fragile cartons.",
+            ],
+            // Brief §8: bar glassware belongs to the Indiranagar page, laboratory glassware to Vidyaranyapura.
+            inlineLinks: [
+              {
+                before: "Spare glassware crates, kegs and stools from a bar rather than tableware for resale? See",
+                link: { label: "bar glassware and keg storage in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+                after: ".",
+              },
+              {
+                before: "Beakers, flasks and test tubes held by a laboratory supplies dealer are covered under",
+                link: { label: "laboratory glassware storage in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Clear Access Routes",
+            paragraphs: ["Keep aisles accessible for safe movement and stock handling."],
+          },
+          {
+            heading: "Receiving Inspection",
+            paragraphs: ["Check cartons on arrival, and record visible damage and breakages."],
+          },
+          {
+            heading: "Environmental Protection",
+            paragraphs: ["Protect cartons and tableware against moisture, contamination and unsuitable storage conditions."],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in Shigehalli",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/shipping-container-on-concrete-base-shigehalli.webp",
+          alt: "Dark green steel container with a hinged door in its long side, standing on a raised concrete plinth",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. Firm, level ground matters as much as the road in: a full load of crockery cartons is heavy, so the base is agreed before anything is set down.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, such as commercial storage yards, suitable wholesale premises, authorised godown compounds and other permitted private plots.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Container dimensions." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Unloading arrangements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "No container is placed on a public road or footpath without the required authorisation. Not every road in Shigehalli suits a large container vehicle, so access is checked for each site.",
+        ],
+        // Brief §7: restricted-site delivery guidance → the Bellandur page's society-gate and narrow-lane section.
+        inlineLinks: [
+          {
+            before: "If the truck has to come through a tight gate or a narrow lane, start with our",
+            link: { label: "notes on delivering to restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/long-shipping-container-shigehalli.webp",
+          alt: "Long navy-blue steel container seen at an angle, showing its corrugated side wall and closed cargo doors on a grey concrete yard",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. A longer unit only helps if it can reach the site and be unloaded, and its floor rating, not its volume, decides how much heavy stock it can take.",
+        },
+        table: {
+          caption:
+            "Exact dimensions, availability, floor-loading limits and payload capacity must be verified. Approximate volume does not establish allowable weight.",
+          headers: ["Size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Smaller toy wholesale inventory"],
+            ["20 ft", "33 m³", "Toy cartons or suitable crockery inventory"],
+            ["40 ft", "67 m³", "Larger wholesale stock where space allows"],
+          ],
+        },
+        // Brief §7: used-container buying guidance → the Athipattu page's inspection checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Weighing up a second-hand unit? Go through our",
+            link: { label: "inspection checks for a used container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Shigehalli",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-shigehalli/steel-shipping-container-shigehalli.webp",
+          alt: "Plain grey steel container with closed double cargo doors and corrugated side walls, standing on a weathered concrete yard",
+          width: 800,
+          height: 800,
+          caption: "Illustrative image. Whether a unit is new or used, and its grade, are priced alongside the size, the fittings and the delivery.",
+        },
+        paragraphs: ["Container pricing depends on:"],
+        bullets: [
+          { text: "Size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving and storage racks." },
+          { text: "Protective packaging arrangements." },
+          { text: "Bins and pallets." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation where required." },
+          { text: "Locking arrangements." },
+          { text: "Transportation and unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation: prices are not published on this page, and each figure is set out in the quotation."],
+      },
+      {
+        heading: "Storage Container on Rent in Shigehalli",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for seasonal toy inventory or a build-up of tableware stock. Containers can be hired for as little as one month or for as long as five years; the quotation names the unit, the hire period, the transport charges, any deposit, and how the container is delivered and later collected.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire sizes and terms are set out on our",
+            link: { label: "shipping container rental page", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Provide product dimensions and quantities." },
+          { text: "Identify fragile or heavy inventory." },
+          { text: "Confirm the estimated weight." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelving, pallets and protective storage arrangements." },
+          { text: "Confirm site permissions and access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible commercial inventory applications. For toy and tableware wholesalers in Shigehalli, that covers:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, and a 10 ft container when one is in stock." },
+          { title: "Storage-oriented modifications", text: "shelving, pallet areas, bins or a separate returns bay, each itemised in the quotation." },
+          { title: "Shelving and racking provisions", text: "planned around your carton sizes and weights, with the heaviest crockery kept low." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock supplied for your unit named in the quotation." },
+          { title: "Ventilation and insulation options", text: "quoted only where your stock needs them; no unit is sold as climate-controlled or fire-rated." },
+          { title: "Quotation and delivery coordination", text: "an itemised quote first, then a look at the road, gate and set-down spot before a date is agreed." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can toy wholesalers store stock inside shipping containers?",
+        answer: "Potentially, using suitable shelving, protective packaging and environmental controls where required.",
+      },
+      {
+        question: "Can battery-powered toys be stored inside containers?",
+        answer:
+          "Follow the toy and battery manufacturers' storage instructions. Batteries are not charged inside an ordinary storage-only container.",
+      },
+      {
+        question: "Can crockery be stored inside a shipping container?",
+        answer: "Potentially, using sturdy shelving, protective packaging and safe handling arrangements.",
+      },
+      {
+        question: "How can breakages be reduced?",
+        answer: "Use suitable padding, stable shelving, careful stacking and inspection procedures.",
+      },
+      {
+        question: "Is Shigehalli the same as Seegehalli?",
+        answer: "Both spellings are used for the locality targeted by this page.",
+      },
+      {
+        question: "What is the shipping container price in Shigehalli?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Shigehalli",
+    ctaText: `Whether you need storage for seasonal toy cartons, wholesale toys, dinner sets, mugs, cutlery or other compatible tableware inventory, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: Shigehalli (Seegehalli), Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Shigehalli",
+      intro:
+        "Choose the container type and how many units you need, add the Shigehalli address or a map pin, and say whether you want to buy or hire. Mention whether the stock is toys or tableware, roughly how many cartons there are and the weight of the heaviest, so shelving and floor loading can be planned.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers are supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; it has no yard, depot, showroom or branch in Shigehalli or Seegehalli. Each unit's internal and door-opening sizes, grade and condition, floor-loading limit, fittings (shelves, racks, pallets, bins, lights, vents, insulation or locks), hire terms where it is rented, and its delivery, unloading and collection are set by the written quotation. Stock changes, so a delivery date holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as climate-controlled, humidity-controlled, fire-rated or theft-proof, none is supplied as a place to charge batteries, and no promise is made that fragile stock will arrive or stay unbroken. The six pictures are illustrative images from our existing catalogue imagery, not photographs taken in Shigehalli; none shows a delivered or fitted unit, toys or tableware. Volumes are approximate and are not payload ratings. Toy and crockery wholesalers are named as possible uses, not as customers or completed projects, and the locality named shows where enquiries are accepted, not a confirmed delivery address. Notes on batteries, fragile goods, stacking, fire safety, placement and permissions are general information, not safety, legal or engineering advice; follow the manufacturers' instructions and the requirements of the authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -27625,6 +28290,12 @@ export const CITY_PAGES: CityPage[] = [
         before: "Storing cable, pipes and fittings, or sorted dry recyclables, in neighbouring Kaggadasapura? See our page on",
         link: { label: "storage containers for contractors in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
         after: ".",
+      },
+      // Mahadevapura Version B brief (2026-11-22, §6): EV charger installers' equipment is the Mahadevapura page's application.
+      {
+        before: "Installing EV chargers in offices, hotels or apartment car parks? Chargers, pedestals and cable drums are covered on our page on",
+        link: { label: "storage containers for EV charger installers", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: " in Mahadevapura.",
       },
     ],
 
@@ -29751,61 +30422,117 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
-   * SHIPPING & STORAGE CONTAINERS IN MAHADEVAPURA — hotel FF&E during refurbishments, banquet
-   * furniture overflow, mall and hotel maintenance spares, and staging stores for interior contractors
-   * fitting out new apartments (the Mahadevapura locality on Whitefield Road, east Bengaluru).
+   * SHIPPING & STORAGE CONTAINERS IN MAHADEVAPURA AND ON WHITEFIELD ROAD — Version A (hotel FF&E during
+   * refurbishments, banquet furniture overflow, mall and hotel maintenance spares, staging stores for
+   * interior contractors fitting out new apartments) merged with Version B (retail shopfitters and fixture
+   * installers; EV charger installation companies), for the Mahadevapura locality and the Whitefield Road
+   * corridor through it, east Bengaluru. ONE URL for both keywords ("shipping container in Mahadevapura",
+   * "shipping container on Whitefield Road"): this page. No Whitefield Road page exists or is created.
    *
-   * Owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, link plan and
-   * image plan used as given). Source copy: the owner's content reply of 2026-11-16 07:13Z ("Pasted
-   * text(20261116-090320).txt"), kept section by section with the brief's corrections: no fixed delivery
-   * hours ("quiet-hour delivery" became delivery timing planned after a route check), no day counts, no
-   * price, no "no hidden costs", and paints and chemicals kept to their labels and the building's
-   * safety team. The tagline, the grade-explanation and condensation sentences, the image captions, the
-   * size-table caption, the link lead-ins, the enquiry-form intro and the disclaimer were written for
-   * their slots.
+   * VERSION A — owner brief of 2026-11-16 (#257, live since c201b0e). Source copy: the owner's content reply
+   * of 2026-11-16 07:13Z, kept section by section with that brief's corrections (no fixed delivery hours, no
+   * day counts, no price, no "no hidden costs", paints and chemicals kept to their labels and the building's
+   * safety team). Kept verbatim here: the intro's two paragraphs, the three hospitality H3s with their
+   * checklists, the interior-contractor paragraphs, checklist, closing and portable-cabin link, the
+   * placement paragraphs and Bellandur link, the sizes rows' A wording and caption, the grade section, the
+   * price lead-in, closing and four of its bullets, the rental paragraph and link, the why bullets, the six
+   * FAQs, the KR Puram areas link, the hero, the CTA button and the related links.
+   *
+   * VERSION B — owner brief of 2026-11-22 ("CLAUDE AI MASTER IMPLEMENTATION COMMAND — Mahadevapura Shipping
+   * Container Page — Version B Integration"): meta title, H1, keywords, the shopfitting, shopfitting-safety,
+   * EV charger and EV-safety H2s with their H3s, the layout options, the sizes rows for 10 ft and the B
+   * applications, the price factors, the ordering steps, the areas, nine FAQs and the CTA heading are the
+   * brief's, lightly edited for flow and British spelling. The brief's notes to the implementer ("Do not
+   * recommend…", "Do not assume…", "Do not guarantee delivery at a particular hour…", "Do not place containers
+   * on public roads…", "Do not promise theft prevention…", "Conditional section…", "Highlight only verified
+   * capabilities…", "Do not target…") are instructions, not copy: where one carries a fact for the reader it
+   * is reworded as a plain statement; otherwise it is left out. Where an H3 has a lead-in, a checklist and
+   * short instructions, the instructions become its closing paragraph (the template gives an H3 one list).
+   * The meta description is the brief's less the word "retail" (163 → 156 characters; the inventory audit
+   * caps descriptions at 160). The route follows the site convention (/cities-we-serve/…).
+   * Version A changes, listed for the owner's approval (the brief: no A rewrite without approval):
+   *   • meta title, meta description, H1 and tagline (the brief's targets; A's applications stay in the
+   *     tagline); keywords = the brief's list plus A's two Mahadevapura price/rent terms.
+   *   • intro: a third paragraph (the brief's intro, condensed) after A's two.
+   *   • H2 renames to the brief's: "Storage for Hotels, Malls & Hospitality" → "Storage Containers for Hotels,
+   *     Malls and Hospitality Businesses"; "Staging Stores for Interior Contractors" → "Storage Containers for
+   *     Interior Contractors"; "Placement & Delivery" → "Shipping Container Placement & Delivery in
+   *     Mahadevapura"; "Container Sizes" → "Shipping Container Sizes"; "Storage Container on Rent in
+   *     Mahadevapura" → "Storage Container on Rent on Whitefield Road"; "How It Works" → "How to Order a
+   *     Shipping Container" (A's five steps folded into the brief's eleven, A's last step kept as the closing);
+   *     "Areas We Serve" → "Areas Served Around Mahadevapura and Whitefield Road"; the sizes table's first
+   *     header "Container" → "Container size".
+   *   • additions inside A sections: one closing sentence in the interior section (shop fixtures are covered
+   *     below), one placement sentence + the brief's pre-delivery checklist + the public-road sentence, the
+   *     10 ft row and B applications in the sizes table, a payload sentence in its caption, B price factors
+   *     folded into A's size / grade / fit-out / duration / delivery bullets, a hire-terms paragraph in the
+   *     rental section, two why bullets, the Mahadevapura metro area in the areas text, and B's application
+   *     list in the CTA text, enquiry intro and disclaimer.
+   *   • images: the cargo-door render moves from the price section to the EV section and the end-wall render
+   *     from the grade section to the shopfitting section (captions rewritten for their new slots; alt text
+   *     unchanged), so each of the two new H2s has a picture and every render is still used once.
+   *   • CTA heading → the brief's "Request a Shipping Container Quotation in Mahadevapura".
+   * Kept from A instead of the brief: the "Why Mahadevapura Businesses Choose Us" heading (the brief's "Why
+   * Choose Portable Office Cabin?" is shared by several sibling pages), the "Choosing a Container Grade"
+   * section (not in the brief, approved in A) and A's delivery FAQ (the brief's Q10 asks the same).
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental:
+   * 10, 20, 40 ft and 40 ft high cube; terms from one month to five years; monthly rental, long-term lease or
+   * rent-plus-buy; no deposit or charge is stated here); the 10 ft row keeps the brief's "if available";
+   * racks, bays, supports, shelving, bins, lighting, ventilation, insulation and locks are layout options and
+   * price factors, never stock items or guaranteed conditions. No Product JSON-LD: city pages carry no prices
+   * (file rule) and a Product block without offers earns no rich result; the Service JSON-LD gains the
+   * corridor as an alternateName, and the FAQPage and BreadcrumbList are generated from the visible FAQs and
+   * trail as on every sibling.
    * Mapped onto the template in the brief's order:
-   *   • H1, tagline, intro (the source's two paragraphs) and the heroCta row (quotation · Call · WhatsApp).
-   *   • "Storage for Hotels, Malls & Hospitality" → solutions: its three H3s are the three solutions
-   *     items, each with its lead-in as `text` and its checklist as the item's `bullets` (opt-in field,
-   *     first used here).
-   *   • Interior contractors, placement and delivery, sizes, grade, price, rental and "How It Works"
-   *     (ordered) → seven afterSolutions extra sections (no why / features / custom / how slots).
-   *   • "Areas We Serve" → areas; "Why Mahadevapura Businesses Choose Us" → an extra section without a
-   *     placement, so it renders after the areas and before the FAQs, as in the brief.
-   *   • FAQs: the source's six (the delivery answer gives no day count); "Space to Work While the Work
-   *     Gets Done" → CTA (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
-   * Rental is in the catalogue (Shipping Container Rental: 10, 20, 40 ft and 40 ft High Cube, monthly
-   * terms), so the rental section and the 40 ft high-cube row stay.
+   *   Intro (A's two paragraphs + B) + heroCta → hotels / malls / hospitality = solutions (A's three H3s with
+   *   their checklists as `bullets`) → afterSolutions extra sections: interior contractors (A), shopfitters
+   *   (9 H3s), shopfitting safety (5 H3s), EV charger installers (8 H3s), EV safety (5 H3s), layout options,
+   *   placement, sizes, grade (A), price, rent, How to Order (ordered) → areas + KR Puram areasInlineLink (A)
+   *   + areasInlineLinks → why (default extra section: after the areas) → 15 FAQs (A's six + the brief's
+   *   Q1–Q9) → CTA (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
    *
-   * LINKS (brief §5): "shipping containers" → the cargo category (sizes section); "shipping containers in
-   * Bellandur" (its tight-site delivery guidance) closes the delivery section; "how to inspect a used
-   * shipping container" → Shipping Container in Athipattu, the Chennai-area page whose "Used Container
-   * Inspection" section is a seven-point checklist (the Chennai product page has one sentence on
-   * inspection); the rental product from the rental section; the CTA button "Request a Shipping
-   * Container Quotation" → /contact. `nearbySkipsBodyLinks` keeps the nearby block from repeating
-   * Bellandur. Inbound: the Marathahalli ORR page's areas ("Mahadevapura"), the Karnataka shipping hub,
-   * the cargo category's location links and the Karnataka shipping nearby blocks.
+   * LINKS (brief §6, only where the destination exists and supports the anchor; anchors differ from the
+   * siblings' anchors for the same targets). Kept from A: portable cabins in Mahadevapura (interior section,
+   * clubhouse rooms), Bellandur (placement: tight-site delivery), the cargo category (sizes), Athipattu (grade:
+   * used-container inspection; the brief's /shipping-container-chennai is not a route), the rental product,
+   * KR Puram (areas). Added: shopfitting intro → "exhibition booth storage in Munnekollal" (its "Storage
+   * Containers for Exhibition & Trade-Show Booth Builders"); signage H3 → "storage for sign makers and flex
+   * printers in Ramamurthy Nagar" (its "Storage for Signage & Flex Printing Businesses"); EV intro → "portable
+   * cabins for EV charging waiting lounges" (the Mahadevapura portable cabin page's EV lounge H2); cable H3 →
+   * "cable and switchgear storage in Kaggadasapura" (its "Electrical contractor storage": copper cable,
+   * switchgear, distribution boards); battery H3 → "inverter and UPS stock storage in Bilekahalli" (its inverter,
+   * UPS and battery-safety H2s); areas → "Brookefield's container page" and "Doddanekundi storage containers".
+   * Not linked: Indiranagar (boutique stock and pop-up shop cabins are told apart in the text; the brief asks
+   * for a few useful links, not the whole list). Inbound added: Brookefield areas ("shipping containers on
+   * Whitefield Road"), KR Puram areas ("storage containers for retail shopfitters"), Doddanekundi areas
+   * ("storage containers for EV charger installers"). Existing inbound links (Marathahalli ORR, Kasavanahalli,
+   * Begur Road, Kadubeesanahalli, Thanisandra Main Road, Yelahanka New Town, the Mahadevapura portable cabin
+   * page, the Karnataka shipping hub, the cargo category) are unchanged. `nearbySkipsBodyLinks` keeps the
+   * nearby block from repeating the body links.
    *
-   * KEYWORD OWNERSHIP: shipping / cargo / storage container × the Mahadevapura locality, Whitefield
-   * Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach, for hotel FF&E, banquet
-   * furniture overflow, mall and hotel maintenance spares and residential interior staging. KR Puram
-   * is left to its own shipping page (the owner's KR Puram content reply of 2026-11-16, Part 4): it is
-   * not a keyword, area, delivery or CTA term here; the second of the two pages to merge adds the
-   * Mahadevapura → KR Puram link (anchor "KR Puram").
-   * Not the civic zone: Whitefield, Marathahalli and Bellandur are not targeted, and Marathahalli ORR no
-   * longer names Mahadevapura in its areas. Housing-society spares (Bellandur), office fit-out staging
-   * (Shivamogga), event equipment (Marathahalli ORR) and used-container inspection (Athipattu) are not
-   * targeted. The Marathahalli office-cabin page keeps Mahadevapura: it is a different product.
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × the Mahadevapura locality, Whitefield Road (the
+   * road corridor), Hoodi, Garudacharpalya, Basavanagar, the ITPL Road approach and the area around Mahadevapura
+   * metro, for hotel FF&E, banquet furniture overflow, mall and hotel maintenance spares, residential interior
+   * staging, shopfitters' and retail fixture installers' stock, and EV charger installers' equipment. Not
+   * targeted: the Whitefield locality (named only in the FAQ that says it is separate; its neighbourhoods are
+   * not named), KR Puram and Tin Factory, Brookefield and its ITPL Main Road stretch, Doddanekundi (each named
+   * only in its link sentence), boutique stock (Indiranagar), pop-up shop cabins (Indiranagar shop cabin),
+   * exhibition booth kits (Munnekollal), sign and flex printing (Ramamurthy Nagar), general electrical
+   * contractors' cable and switchgear (Kaggadasapura), inverter, UPS and battery stock (Bilekahalli), EV
+   * charging waiting lounges (Mahadevapura portable cabins), electric vehicle storage (Thanisandra Main Road),
+   * restricted-site delivery (Bellandur) and used-container inspection (Athipattu). "Bengaluru" stays out of
+   * the title, as the brief asks.
    *
-   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Mahadevapura shipping container
-   * city page/Storage Containers in Mahadevapura/cabin (1–5).webp", no EXIF / XMP / ICC) of a red-brown
-   * container (the overhead and interior views render it orange-red). Each is copied with its VP8 data
-   * byte-for-byte plus an XMP dc:title / dc:description that labels it a render. (1) three-quarter
-   * exterior = hero / og:image (the brief's "shipping-container-mahadevapura-front"); (5) empty interior
-   * = interior-contractor section; (4) roof from above = delivery section; (3) end wall = grade section;
-   * (2) cargo doors with a lockbox = price section (security fittings). No image shows hotel furniture,
-   * banquet stock, maintenance racks, kitchen panels or appliances, so those five slots of the brief are
-   * not used and no alt text or caption claims them. No alt text or caption names a size.
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Mahadevapura shipping container city
+   * page/Storage Containers in Mahadevapura/cabin (1–5).webp") of a red-brown container, each published with
+   * its VP8 data byte-for-byte plus an XMP dc:title / dc:description that labels it a render (A, unchanged
+   * files). The owner asked for the existing images to be used: no new drop exists and no catalogue image shows
+   * retail fixtures, EV charging equipment or racked interiors. (1) three-quarter exterior = hero / og:image;
+   * (5) empty interior = interior contractors; (3) end wall = shopfitting section; (2) cargo doors with a
+   * lockbox = EV section; (4) roof from above = placement. The brief's eleven use-case slots (gondolas, racks,
+   * glass counters, mannequins, hardware, signage frames, chargers, pedestals, cable drums, distribution gear,
+   * mounting hardware) and its "organized racks" interior alt are not used, and no alt text, caption or
+   * filename claims those items, a size or a place.
    *
    * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and the hero's og:image size.
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -29813,11 +30540,11 @@ export const CITY_PAGES: CityPage[] = [
     slug: "shipping-container-mahadevapura",
     city: "Mahadevapura",
     listTitle: "Shipping & Storage Containers in Mahadevapura",
-    metaTitle: "Shipping Container in Mahadevapura | Storage & Cargo",
+    metaTitle: "Shipping Container in Mahadevapura | Whitefield Road",
     metaDescription:
-      "Shipping and storage containers in Mahadevapura for hotel furniture, banquet equipment, mall maintenance spares and apartment interior contractors. Get a quote.",
+      "Shipping and storage containers in Mahadevapura and along Whitefield Road for shopfitters, display fixtures, EV charger installers and commercial equipment.",
     keywords:
-      "shipping container in Mahadevapura, cargo container Mahadevapura, storage container Mahadevapura, used shipping container Mahadevapura, storage container Hoodi, storage container Garudacharpalya, shipping container price in Mahadevapura, storage container for rent in Mahadevapura",
+      "shipping container in Mahadevapura, shipping container on Whitefield Road, cargo container Mahadevapura, storage container Mahadevapura, storage container Whitefield Road, storage container Hoodi, storage container Garudacharpalya, storage container Basavanagar, used shipping container Mahadevapura, shipping container price in Mahadevapura, shipping container price on Whitefield Road, storage container for rent in Mahadevapura, storage container for rent on Whitefield Road, shopfitter storage container, retail fixture storage, display rack and gondola storage, mannequin and visual merchandising storage, EV charger installer storage container, EV charging equipment storage, charger pedestal and cable storage, EV charger installation site store",
     // The Mahadevapura locality on Whitefield Road (not the civic zone).
     geo: {
       region: "IN-KA",
@@ -29826,10 +30553,11 @@ export const CITY_PAGES: CityPage[] = [
       icbm: "12.9913, 77.6874",
     },
     motion: true,
-    serviceJsonLd: { serviceType: "Shipping Container" },
+    // Version B brief §2: "shipping container on Whitefield Road" targets this same URL.
+    serviceJsonLd: { serviceType: "Shipping Container", alternateName: ["Shipping Container on Whitefield Road"] },
     // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Bellandur is linked in the body, so the nearby block leaves it out.
+    // Bellandur, KR Puram, Brookefield, Doddanekundi, Munnekollal, Ramamurthy Nagar, Kaggadasapura, Bilekahalli and Athipattu are linked in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -29840,16 +30568,17 @@ export const CITY_PAGES: CityPage[] = [
       caption: "Illustrative storage container arrangement for commercial applications.",
     },
 
-    h1: "Shipping & Storage Containers in Mahadevapura",
+    h1: "Shipping & Storage Containers in Mahadevapura and on Whitefield Road",
     tagline:
-      "Storage for hotel refurbishments, banquet furniture, mall and hotel maintenance spares, and interior contractors fitting out new apartments.",
+      "Storage for hotel refurbishments, banquet furniture, maintenance spares and interior contractors, and for shopfitters and EV charger installers on Whitefield Road.",
     intro: [
       "Mahadevapura sits on one of east Bengaluru's busiest corridors. Shoppers head to its large malls, business travellers fill the hotels along Whitefield Road, and the metro now runs right through. Behind the main road, new apartment towers keep handing over keys, and interior teams follow close behind to fit kitchens and wardrobes in hundreds of new homes.",
       "Busy places like these have a quieter problem: where to put things while work happens. Hotels need somewhere to keep furniture during a refurbishment. Malls need space for maintenance spares. Interior contractors need somewhere to stage kitchens and wardrobes until each flat is ready. Portable Office Cabin supplies shipping containers in Mahadevapura for exactly these jobs.",
+      "Retail fit-outs and electrical installation projects along Whitefield Road run into the same problem: shop fixtures and charging equipment often arrive before a store or a parking bay is ready for them. So alongside hospitality and building maintenance inventory and interior contractor staging, our containers may be considered for retail shopfitting materials and EV charging installation equipment.",
     ],
     heroCta: true,
 
-    solutionsHeading: "Storage for Hotels, Malls & Hospitality",
+    solutionsHeading: "Storage Containers for Hotels, Malls and Hospitality Businesses",
     solutions: [
       {
         title: "Furniture During Refurbishment",
@@ -29889,7 +30618,7 @@ export const CITY_PAGES: CityPage[] = [
 
     extraSections: [
       {
-        heading: "Staging Stores for Interior Contractors",
+        heading: "Storage Containers for Interior Contractors",
         placement: "afterSolutions",
         image: {
           src: "/images/cities/shipping-container-mahadevapura/storage-container-empty-interior-mahadevapura.webp",
@@ -29916,6 +30645,7 @@ export const CITY_PAGES: CityPage[] = [
         ],
         closing: [
           "Working with the builder or association: many complexes have rules for where contractors can keep material, when deliveries can happen and how lifts are used. Agree on a container spot and schedule before you start.",
+          "Kitchens and wardrobes for homes are a different kind of stock from a shop's display fixtures; gondola shelving, counters and mannequins are covered in the shopfitting section below.",
         ],
         // Portable cabin brief (2026-11-17, §5C): the reciprocal link to the Mahadevapura portable cabin page, for
         // the clubhouse amenity rooms a complex may need while its flats are being fitted out.
@@ -29928,7 +30658,390 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
-        heading: "Placement & Delivery",
+        heading: "Storage Containers for Shopfitters & Retail Fixture Installers",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-mahadevapura/shipping-container-end-wall-mahadevapura.webp",
+          alt: "Corrugated steel end wall of a red-brown shipping container with corner castings and forklift pockets on a paved yard",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of the blind end, which has no doors: gondola runs, counters and glass go in through the cargo doors at the other end, and the floor rating of the unit you are offered decides how much fixture weight it takes.",
+        },
+        paragraphs: [
+          "Shopfitting contractors install the fixtures used by retail stores, showrooms and commercial outlets, including the shops in and around the malls on Whitefield Road. Their inventory may include gondola shelving, display racks, glass counters, mannequins, cash counters, signage frames and the hardware that holds them together.",
+          "These materials often arrive before a store is ready for installation. A suitably configured shipping container may provide additional storage at an authorised project site or the contractor's yard, keeping each store's fixtures together until the fitting team calls for them.",
+          "This section is about the fixtures a store is built with, not the clothes or goods a shop sells, and not a container fitted out as a shop.",
+        ],
+        // Version B brief §6 and §7 rule 10: exhibition booth equipment is the Munnekollal page's application.
+        inlineLinks: [
+          {
+            before: "Building stands for expos and trade shows rather than fitting out stores? Booth frames, panels and counters are covered on our page on",
+            link: { label: "exhibition booth storage in Munnekollal", href: "/cities-we-serve/shipping-container-munnekollal" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Gondola shelving and wall system storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Gondola shelving." },
+              { text: "Wall display systems." },
+              { text: "Suitable retail shelving accessories." },
+              { text: "Approved mounting components." },
+            ],
+            closing: [
+              "Use appropriate racks, keep the components organised by store project and fixture specification, and protect them against deformation, impact and corrosion.",
+            ],
+          },
+          {
+            heading: "Display table and counter storage",
+            paragraphs: ["Items in this group may include:"],
+            bullets: [
+              { text: "Retail display tables." },
+              { text: "Cash counters." },
+              { text: "Suitable display cabinets." },
+              { text: "Other finished shop fixtures." },
+            ],
+            closing: ["Wrap finished surfaces in protective covers and padding, and stand heavy pieces on stable supports instead of stacking them."],
+          },
+          {
+            heading: "Glass display counter storage",
+            paragraphs: ["Glass components need protecting against:"],
+            bullets: [
+              { text: "Impact." },
+              { text: "Scratching." },
+              { text: "Unstable stacking." },
+              { text: "Edge damage." },
+            ],
+            closing: [
+              "Use suitable glass transport and storage supports. Not every glass panel should be stored upright, so follow the manufacturer's handling instructions for each one.",
+            ],
+          },
+          {
+            heading: "Mannequin storage",
+            paragraphs: ["Visual merchandising stock may include:"],
+            bullets: [
+              { text: "Retail mannequins." },
+              { text: "Display stands." },
+              { text: "Suitable visual merchandising accessories." },
+            ],
+            closing: ["Keep them in protective packaging, store detachable parts separately where appropriate, and organise everything by store or customer."],
+          },
+          {
+            heading: "Shelf bracket, hook and fitting storage",
+            paragraphs: ["Organise compatible accessories such as:"],
+            bullets: [
+              { text: "Shelf brackets." },
+              { text: "Hooks." },
+              { text: "Hangers." },
+              { text: "Suitable fasteners." },
+              { text: "Approved retail fixture fittings." },
+            ],
+            closing: ["Labelled bins and drawers keep them sorted by fixture system, so a store's fittings leave with its racks."],
+          },
+          {
+            heading: "Signage frame and lightbox storage",
+            paragraphs: ["Store signage stock may include:"],
+            bullets: [
+              { text: "Signage frames." },
+              { text: "Suitable lightboxes." },
+              { text: "Approved display accessories." },
+            ],
+            closing: [
+              "Protect fragile faces and the electrical components inside lightboxes. Lighting parts are stored only as their manufacturer's instructions allow; hazardous lighting components do not belong in an ordinary storage container.",
+            ],
+            // Version B brief §6 and §7 rule 11: sign making and flex printing are the Ramamurthy Nagar page's application.
+            inlineLinks: [
+              {
+                before: "Printing flex banners or making signboards, rather than installing a store's signage frames? See our page on",
+                link: { label: "storage for sign makers and flex printers in Ramamurthy Nagar", href: "/cities-we-serve/shipping-container-ramamurthy-nagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Removed fixture storage",
+            paragraphs: ["During a retail refit, suitable fixtures taken out of a store may be stored for a while before:"],
+            bullets: [
+              { text: "Reuse." },
+              { text: "Inspection." },
+              { text: "Return." },
+              { text: "Recycling." },
+              { text: "Disposal." },
+            ],
+            closing: ["Keep damaged items apart from reusable stock."],
+          },
+          {
+            heading: "Store-wise installation staging",
+            paragraphs: ["Organise fixtures by:"],
+            bullets: [
+              { text: "Store." },
+              { text: "Floor." },
+              { text: "Project." },
+              { text: "Installation date." },
+              { text: "Fixture type." },
+              { text: "Quantity." },
+              { text: "Delivery sequence." },
+            ],
+            closing: ["Keep a packing list with each store's consignment."],
+          },
+          {
+            heading: "Shopfitting inventory register",
+            paragraphs: ["Keep records of:"],
+            bullets: [
+              { text: "Fixture name." },
+              { text: "Model or specification." },
+              { text: "Dimensions." },
+              { text: "Quantity." },
+              { text: "Weight." },
+              { text: "Storage location." },
+              { text: "Assigned project." },
+              { text: "Condition." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shopfitting Material Storage Safety",
+        placement: "afterSolutions",
+        subsections: [
+          {
+            heading: "Heavy fixtures",
+            paragraphs: ["Before loading gondola runs, counters or cabinets, verify rack capacities, the container's floor-loading limit and safe handling arrangements."],
+          },
+          {
+            heading: "Glass components",
+            paragraphs: ["Use suitable protective supports and restraints so that no panel can slide, tip over or rest against another."],
+          },
+          {
+            heading: "Cutting and fabrication",
+            paragraphs: [
+              "A storage-only shipping container is not automatically a place for cutting, welding, grinding, painting or active fabrication. Do that work in a proper workshop or an authorised work area.",
+            ],
+          },
+          {
+            heading: "Paints and adhesives",
+            paragraphs: [
+              "Store paints, solvents, adhesives and other chemical products as their manufacturers' instructions, safety data sheets and the applicable regulations require. An ordinary storage container should not be assumed suitable for hazardous materials.",
+            ],
+          },
+          {
+            heading: "Electrical lightboxes",
+            paragraphs: [
+              "Store electrical equipment as its manufacturer requires. Don't switch on or charge lightboxes or any other equipment inside an ordinary storage-only container unless proper electrical and fire-safety provisions are in place.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for EV Charger Installation Companies",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-mahadevapura/shipping-container-cargo-doors-mahadevapura.webp",
+          alt: "Closed double cargo doors of a red-brown shipping container with four vertical locking bars, cam handles and a central lockbox",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative cargo-door view with a central lockbox. A lock slows down casual access to boxed chargers and copper cable; it is not a promise that nothing will be taken, and locks are quoted for the selected unit.",
+        },
+        paragraphs: [
+          "EV charger installation contractors put in charging points at offices, hotels, shopping centres, apartment complexes and commercial car parks. Their equipment may include wall-mounted chargers, charging pedestals, cable drums, electrical protection devices, mounting hardware and bay accessories.",
+          "A suitably configured shipping container may provide additional storage for compatible, unenergised equipment before installation. This section covers the installer's equipment only: it is not about storing electric vehicles or their batteries, and a storage container is not a charging station.",
+        ],
+        // Version B brief §6 and §7 rule 14: EV charging waiting lounges are the Mahadevapura portable cabin page's application.
+        inlineLinks: [
+          {
+            before: "Need somewhere for drivers to wait while their cars charge, rather than a store for the chargers? See our",
+            link: { label: "portable cabins for EV charging waiting lounges", href: "/cities-we-serve/portable-cabin-mahadevapura" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Wall-mounted EV charger storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Wall-mounted charging units." },
+              { text: "Suitable charger accessories." },
+              { text: "Other approved installation equipment." },
+            ],
+            closing: [
+              "Keep units in the manufacturer's protective packaging, organise them by model, power rating and installation project, and record serial numbers where appropriate.",
+            ],
+          },
+          {
+            heading: "EV charger pedestal storage",
+            paragraphs: ["Free-standing hardware may include:"],
+            bullets: [
+              { text: "Charging pedestals." },
+              { text: "Mounting posts." },
+              { text: "Suitable support structures." },
+            ],
+            closing: ["Use stable supports and restraints, and protect pedestals against impact and deformation."],
+          },
+          {
+            heading: "Charging cable and electrical cable storage",
+            paragraphs: ["Cable stock may include:"],
+            bullets: [
+              { text: "Approved cable drums." },
+              { text: "Charging cables." },
+              { text: "Suitable installation cable accessories." },
+            ],
+            closing: [
+              "Sit cable drums on appropriate supports or restraints so they cannot roll, and protect them against moisture, crushing and unauthorised access. Copper cable and electrical equipment may need extra inventory security.",
+            ],
+            // Version B brief §6 and §7 rule 12: general electrical contractors' cable and switchgear are the Kaggadasapura page's application.
+            inlineLinks: [
+              {
+                before: "Wiring homes, shops and offices rather than installing chargers? General electrical contractors' stock is covered on our page on",
+                link: { label: "cable and switchgear storage in Kaggadasapura", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Electrical distribution equipment storage",
+            paragraphs: ["Protection and distribution gear may include:"],
+            bullets: [
+              { text: "Distribution boards." },
+              { text: "Isolators." },
+              { text: "Suitable protection devices." },
+              { text: "Approved electrical accessories." },
+            ],
+            closing: ["Keep this equipment in its protective packaging and follow the manufacturer's storage requirements."],
+          },
+          {
+            heading: "Mounting hardware and cable gland storage",
+            paragraphs: ["Small parts to organise include:"],
+            bullets: [
+              { text: "Mounting brackets." },
+              { text: "Cable glands." },
+              { text: "Suitable fasteners." },
+              { text: "Approved electrical fittings." },
+            ],
+            closing: ["Labelled bins and drawers keep each charger model's fixings together."],
+          },
+          {
+            heading: "Charging bay signage and accessories",
+            paragraphs: ["Bay accessories may include:"],
+            bullets: [
+              { text: "Charging bay signs." },
+              { text: "Suitable wheel stops." },
+              { text: "Approved parking accessories." },
+            ],
+            closing: ["Store heavy items such as wheel stops on suitable supports."],
+          },
+          {
+            heading: "Site-wise installation kits",
+            paragraphs: ["Group equipment by:"],
+            bullets: [
+              { text: "Customer." },
+              { text: "Installation site." },
+              { text: "Charger model." },
+              { text: "Quantity." },
+              { text: "Serial number." },
+              { text: "Required accessories." },
+              { text: "Installation date." },
+              { text: "Assigned team." },
+            ],
+            closing: ["Check each kit against its list before it is dispatched."],
+          },
+          {
+            heading: "EV charger installation inventory register",
+            paragraphs: ["Record for each item:"],
+            bullets: [
+              { text: "Equipment type." },
+              { text: "Manufacturer." },
+              { text: "Model." },
+              { text: "Serial number." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Assigned project." },
+              { text: "Condition." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "EV Charger Equipment Storage Safety",
+        placement: "afterSolutions",
+        subsections: [
+          {
+            heading: "Battery storage and charging",
+            paragraphs: [
+              "This page covers EV charger installation equipment, not EV batteries. We don't recommend storing or charging EV batteries inside an ordinary storage-only container.",
+            ],
+            // Version B brief §6 and §7 rule 13: inverter, UPS and battery inventory is the Bilekahalli page's application.
+            inlineLinks: [
+              {
+                before: "Dealing in inverters, UPS units and their batteries? Battery storage precautions are set out on our page on",
+                link: { label: "inverter and UPS stock storage in Bilekahalli", href: "/cities-we-serve/shipping-container-bilekahalli" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Electrical installation",
+            paragraphs: [
+              "Installation, testing and commissioning must be carried out by appropriately qualified or licensed personnel, as the applicable requirements demand. A shipping container used for storage is not an electrical installation certification.",
+            ],
+          },
+          {
+            heading: "Charger protection",
+            paragraphs: ["Follow the manufacturer's storage requirements for:"],
+            bullets: [
+              { text: "Temperature." },
+              { text: "Humidity." },
+              { text: "Dust." },
+              { text: "Packaging." },
+              { text: "Handling." },
+            ],
+          },
+          {
+            heading: "Cable drums",
+            paragraphs: ["Use appropriate supports and restraints, and keep the total load within the container's floor-loading limit."],
+          },
+          {
+            heading: "Security",
+            paragraphs: [
+              "Protect valuable electrical equipment against unauthorised access. A lock helps, but a locked container on its own is not a guarantee against theft.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Container Layout Options",
+        placement: "afterSolutions",
+        paragraphs: ["Depending on the application, a suitable container may include:"],
+        bullets: [
+          { text: "Hospitality equipment storage sections." },
+          { text: "Building maintenance spare parts shelves." },
+          { text: "Interior contractor material staging." },
+          { text: "Gondola shelving racks." },
+          { text: "Retail fixture protective bays." },
+          { text: "Glass counter supports." },
+          { text: "Mannequin storage sections." },
+          { text: "Signage frame racks." },
+          { text: "Shopfitting hardware bins." },
+          { text: "EV charger shelving." },
+          { text: "Pedestal storage supports." },
+          { text: "Cable drum sections." },
+          { text: "Electrical accessory drawers." },
+          { text: "Site-wise equipment staging." },
+          { text: "Suitable lighting." },
+          { text: "Ventilation and insulation." },
+          { text: "Appropriate locking arrangements." },
+        ],
+        closing: [
+          "Every layout has to reflect the actual dimensions and weights of what you store, the manufacturers' storage requirements and the safety considerations, and the quotation lists exactly what is fitted.",
+        ],
+      },
+      {
+        heading: "Shipping Container Placement & Delivery in Mahadevapura",
         placement: "afterSolutions",
         image: {
           src: "/images/cities/shipping-container-mahadevapura/shipping-container-roof-overhead-mahadevapura.webp",
@@ -29939,7 +31052,22 @@ export const CITY_PAGES: CityPage[] = [
         },
         paragraphs: [
           "Containers must sit on private land, such as a hotel's service yard, a mall's back-of-house area, a contractor's agreed spot inside an apartment project or a vacant plot, always with the permission of the property owner, builder or association.",
+          "For shopfitters and EV charger installers, that usually means their own yard, an approved commercial storage plot or an authorised project site.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Permission from the property owner, builder, association or building management." },
+          { text: "The road width and the gate clearance." },
+          { text: "The container's dimensions against the space available." },
+          { text: "Turning room for the heavy vehicle." },
+          { text: "Whether the ground is firm and stable." },
+          { text: "How the unit will be lifted or unloaded." },
+          { text: "That emergency access stays clear." },
+          { text: "The local rules that apply." },
+        ],
+        closing: [
           "Whitefield Road and the ITPL Road approach are heavily congested, so delivery timing is planned around the traffic after a route check. Send the site pin with photos of the approach road, the gate, any tight turns, overhead cables and the spot where the container will stand. The transport team confirms the vehicle, the unloading method and the delivery window once it has checked the access; no delivery time is fixed before then.",
+          "No container is set down on a public road or footpath without the required authorisation.",
         ],
         // Brief §5: Bellandur's "Planning delivery through a society gate or narrow lane" covers tight-site delivery.
         inlineLinks: [
@@ -29951,16 +31079,25 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
-        heading: "Container Sizes",
+        heading: "Shipping Container Sizes",
         placement: "afterSolutions",
         table: {
           caption:
-            "Capacities are approximate. Exact dimensions vary slightly by manufacturer, and the quotation confirms availability and the measurements of the actual unit.",
-          headers: ["Container", "Approximate capacity", "Typical application in Mahadevapura"],
+            "Capacities are approximate. Exact dimensions vary slightly by manufacturer, and the quotation confirms availability and the measurements of the actual unit. Volume is not a payload rating: whether a given number of chargers, cable drums or fixtures fits depends on their real dimensions and weight, the door opening and the floor rating.",
+          headers: ["Container size", "Approximate capacity", "Typical application in Mahadevapura"],
           // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a 320 px phone.
           rows: [
-            ["20\u00a0ft", "~33 m³", "Hotel furniture a floor at a time, maintenance spares, or interior materials for several flats"],
-            ["40\u00a0ft", "~67 m³", "Banquet furniture overflow, larger hotel refurbishments, or interior materials for a whole tower"],
+            ["10\u00a0ft, if available", "~15 m³", "Smaller EV charger installation inventories and accessories"],
+            [
+              "20\u00a0ft",
+              "~33 m³",
+              "Hotel furniture a floor at a time, maintenance spares, interior materials for several flats, retail fixtures, or charger equipment and suitable cable drums",
+            ],
+            [
+              "40\u00a0ft",
+              "~67 m³",
+              "Banquet furniture overflow, larger hotel refurbishments, interior materials for a whole tower, or larger shopfitting inventories where space and access allow",
+            ],
             ["40\u00a0ft high cube", "~76 m³", "Taller panel racks and stacked chair trolleys"],
           ],
         },
@@ -29976,13 +31113,6 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Choosing a Container Grade",
         placement: "afterSolutions",
-        image: {
-          src: "/images/cities/shipping-container-mahadevapura/shipping-container-end-wall-mahadevapura.webp",
-          alt: "Corrugated steel end wall of a red-brown shipping container with corner castings and forklift pockets on a paved yard",
-          width: 1448,
-          height: 1086,
-          caption: "Illustrative render of the blind end. The grade and condition of the unit you are offered are stated in its quotation.",
-        },
         paragraphs: [
           "The grade describes a container's condition. A one-trip unit has made a single loaded voyage. A cargo-worthy unit is used but still sound enough to carry cargo. A wind-and-watertight (WWT) unit has left shipping service but is graded to keep out wind and rain.",
           "For hotel furniture and interior panels, choose a clean, dry one-trip or excellent cargo-worthy container. Marks and damp can ruin finished surfaces. For maintenance spares, a sound cargo-worthy unit offers good value.",
@@ -30000,21 +31130,17 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Shipping Container Price in Mahadevapura",
         placement: "afterSolutions",
-        image: {
-          src: "/images/cities/shipping-container-mahadevapura/shipping-container-cargo-doors-mahadevapura.webp",
-          alt: "Closed double cargo doors of a red-brown shipping container with four vertical locking bars, cam handles and a central lockbox",
-          width: 1448,
-          height: 1086,
-          caption: "Illustrative cargo-door view. Locks and a lockbox are quoted for the selected unit.",
-        },
         paragraphs: ["The container price depends on:"],
         bullets: [
-          { title: "Size", text: "20 ft, 40 ft or 40 ft high cube." },
-          { title: "Grade and condition", text: "one-trip, cargo-worthy, or wind and watertight." },
-          { title: "Fit-out", text: "padded racks, panel racks, shelving, bins, lighting and vents." },
+          { title: "Size", text: "10 ft where available, 20 ft, 40 ft or 40 ft high cube." },
+          { title: "Grade and condition", text: "new or used (one-trip, cargo-worthy, or wind and watertight) and the unit's structural condition." },
+          {
+            title: "Fit-out",
+            text: "padded racks, panel racks, shelving, bins, protective fixture bays, cable drum supports, electrical equipment shelving, lighting, vents and insulation.",
+          },
           { title: "Security", text: "a lockbox and heavy-duty locks." },
-          { title: "Duration", text: "the length of a refurbishment or interiors project, if you rent." },
-          { title: "Delivery", text: "timing and site access." },
+          { title: "Duration", text: "the length of a refurbishment, interiors project, store fit-out or charger roll-out, if you rent." },
+          { title: "Delivery", text: "transport, unloading, timing and site access." },
           { title: "Buy or rent", text: "an outright purchase or a rental period." },
           {
             title: "Market rates",
@@ -30024,10 +31150,11 @@ export const CITY_PAGES: CityPage[] = [
         closing: ["Tell us what you'll store, for how long and where, and we'll send an itemised quote."],
       },
       {
-        heading: "Storage Container on Rent in Mahadevapura",
+        heading: "Storage Container on Rent on Whitefield Road",
         placement: "afterSolutions",
         paragraphs: [
           "Running a three-month hotel refurbishment or an interiors project across several towers? Ask us about storage containers on rent in Mahadevapura. Your quotation states the rental period, the unit offered and how delivery and collection will work.",
+          "Temporary storage can also suit a retail fit-out or an EV charger installation roll-out. Hire terms run from one month to five years, as a monthly rental, a long-term lease or rent-plus-buy; any deposit, the transport charges and the collection arrangements are set out in your quotation.",
         ],
         inlineLinks: [
           {
@@ -30038,22 +31165,31 @@ export const CITY_PAGES: CityPage[] = [
         ],
       },
       {
-        heading: "How It Works",
+        heading: "How to Order a Shipping Container",
         placement: "afterSolutions",
         ordered: true,
         bullets: [
-          { text: "Tell us what you'll store, for how long and where." },
-          { text: "Get a recommendation and an itemised quote, including racks and labelling." },
-          { text: "Confirm the spot and schedule with the property owner, builder or association." },
-          { text: "We deliver and place the container once the site access has been checked, at a time agreed with you." },
-          { text: "Ask for extra units, layout changes or collection when you're done, where available for your order." },
+          { text: "Tell us what you intend to store and for how long." },
+          { text: "List the materials and equipment involved." },
+          { text: "Give their dimensions, quantities and estimated weight." },
+          { text: "Flag anything heavy, fragile or sensitive to heat, damp or dust." },
+          { text: "Choose a suitable container size with us." },
+          { text: "Discuss racks, shelves, labelling and protective storage bays." },
+          { text: "Confirm the environmental and safety requirements." },
+          { text: "Share the proposed location, with the site pin and photos of the approach." },
+          { text: "Check permissions and site access with the property owner, builder, association or building management." },
+          { text: "Get an itemised quotation." },
+          { text: "Finalise the specification and delivery arrangements; we deliver once site access has been checked, at a time agreed with you." },
         ],
+        closing: ["Ask for extra units, layout changes or collection when you're done, where available for your order."],
       },
       {
         heading: "Why Mahadevapura Businesses Choose Us",
         bullets: [
           { title: "Hospitality storage", text: "planned for refurbishments, banquet overflow and maintenance spares." },
           { title: "Interior project staging", text: "sorted by tower and flat." },
+          { title: "Shopfitting storage", text: "racks, padded bays and labelled bins planned around fixtures, glass and mannequins, staged store by store." },
+          { title: "EV charger equipment storage", text: "shelving for boxed chargers, supports for pedestals and cable drums, and kits grouped site by site." },
           {
             title: "The right grade",
             text: "one-trip or cargo-worthy units for finished furniture and panels, with the condition stated in the quotation.",
@@ -30066,9 +31202,9 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
 
-    areasHeading: "Areas We Serve",
+    areasHeading: "Areas Served Around Mahadevapura and Whitefield Road",
     areasText:
-      "We supply shipping and storage containers in the Mahadevapura locality and nearby, including Whitefield Road, Hoodi, Garudacharpalya, Basavanagar and the ITPL Road approach. Delivery access is checked for each site.",
+      "We supply shipping and storage containers in the Mahadevapura locality and along Whitefield Road, including Hoodi, Garudacharpalya, Basavanagar, the ITPL Road approach and the area around Mahadevapura metro station. Delivery access is checked for each site.",
     // KR Puram brief (2026-11-16, agreed with #257's owner): KR Puram has its own shipping page, so the areas
     // section links to it (anchor "KR Puram") instead of listing it. nearbySkipsBodyLinks keeps it single.
     areasInlineLink: {
@@ -30076,6 +31212,26 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "KR Puram", href: "/cities-we-serve/shipping-container-kr-puram" },
       after: ".",
     },
+    // Version B brief §3 and §7: Brookefield (with its ITPL Main Road stretch) and Doddanekundi keep their own pages.
+    areasInlineLinks: [
+      {
+        before: "Brookefield, further along towards ITPL, is served from",
+        link: { label: "Brookefield's container page", href: "/cities-we-serve/shipping-container-brookefield" },
+        after: ".",
+      },
+      {
+        before: "South of Mahadevapura on the Outer Ring Road, precision-parts and IT-disposal storage is handled on our page on",
+        link: { label: "Doddanekundi storage containers", href: "/cities-we-serve/shipping-container-doddanekundi" },
+        after: ".",
+      },
+      // Shigehalli brief (2026-11-22, §7): wholesale toy and tableware stock in Shigehalli (Seegehalli) is that
+      // page's intent; this page's own targeting is unchanged. Rendered after the KR Puram sentence above.
+      {
+        before: "Wholesale toy and tableware stock in Shigehalli, also spelt Seegehalli, has a page of its own:",
+        link: { label: "storage containers in Seegehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
+    ],
 
     faqs: [
       {
@@ -30093,12 +31249,56 @@ export const CITY_PAGES: CityPage[] = [
           "Sort material by tower and flat number, store panels on padded racks, keep hardware in labelled bins, leave appliances boxed until installation, and keep a delivery and issue log.",
       },
       {
+        question: "Can shopfitters store retail fixtures inside a shipping container?",
+        answer:
+          "Potentially, yes, using suitable protective racks, supports and packaging, with each store's fixtures kept together. The quotation lists any racks or bays that are fitted.",
+      },
+      {
+        question: "How should mannequins be stored?",
+        answer: "In protective packaging, with detachable parts stored separately where appropriate and everything labelled by store or customer.",
+      },
+      {
+        question: "Can glass display counters be stored inside a container?",
+        answer:
+          "Potentially, using suitable supports, padding and restraints and following the manufacturer's handling instructions; not every glass panel should be stored upright.",
+      },
+      {
+        question: "Can EV charger installation companies store equipment inside a container?",
+        answer:
+          "Potentially, where chargers, cables and accessories are kept unenergised, in their packaging and as the manufacturers' storage requirements state.",
+      },
+      {
+        question: "Can EV charger cable drums be stored inside a container?",
+        answer:
+          "Potentially, depending on the drums' actual weight, safe handling arrangements and the container's floor-loading limit. Supports or restraints stop them rolling.",
+      },
+      {
+        question: "Can EV batteries be stored or charged inside an ordinary storage container?",
+        answer:
+          "We don't recommend it. This page covers charger installation equipment, not EV batteries, and an ordinary storage-only container is not designed for storing or charging them.",
+      },
+      {
+        question: "Can a standard shipping container be used as an EV charging station?",
+        answer:
+          "Not automatically. EV charging infrastructure needs a suitable design, suitable equipment and a compliant electrical installation by qualified personnel. The containers on this page are for storage.",
+      },
+      {
         question: "Where can a container go inside an apartment complex?",
         answer: "Only where the builder or association agrees. Settle the spot, delivery times and lift usage before you start.",
       },
       {
+        question: "Is this page for Whitefield or Whitefield Road?",
+        answer:
+          "Whitefield Road. It covers Mahadevapura and the Whitefield Road corridor through it, including Hoodi, Garudacharpalya and Basavanagar. The Whitefield locality itself is a separate area.",
+      },
+      {
         question: "Which container grade is best for finished furniture and panels?",
         answer: "A clean, dry one-trip or excellent cargo-worthy container, because damp and marks can damage finished surfaces.",
+      },
+      {
+        question: "What is the shipping container price in Mahadevapura?",
+        answer:
+          "It depends on the size, the condition and grade, any racks or other fittings, and the delivery requirements. Tell us what you'll store and where, and we'll send an itemised quotation.",
       },
       {
         question: "How quickly can you deliver?",
@@ -30107,8 +31307,8 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
 
-    ctaHeading: "Space to Work While the Work Gets Done",
-    ctaText: `Whether you're refreshing hotel rooms, juggling banquet furniture between events, keeping a mall's spares in order or fitting kitchens across a new tower, we'll quote a container set up to keep everything organised and ready when you need it. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Mahadevapura, Whitefield Road, Hoodi and Garudacharpalya.`,
+    ctaHeading: "Request a Shipping Container Quotation in Mahadevapura",
+    ctaText: `Whether you're refreshing hotel rooms, juggling banquet furniture between events, keeping a mall's spares in order, fitting kitchens across a new tower, staging gondola shelving, counters and mannequins for a store opening, or holding chargers and cable drums for the next installation, we'll quote a container set up to keep everything organised and ready when you need it. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Mahadevapura, Whitefield Road, Hoodi, Garudacharpalya and Basavanagar.`,
     // Brief §5: the final CTA's "request a shipping container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Shipping Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -30118,7 +31318,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Container enquiry for Mahadevapura",
       intro:
-        "Choose the container and how many you need, then tell us what you'll store, for how long and where in Mahadevapura it will stand. Mention any racks, bins or locks and whether you'd like to buy or rent; we'll reply with an itemised quotation.",
+        "Choose the container and how many you need, then tell us what you'll store, for how long and where in Mahadevapura or along Whitefield Road it will stand. Mention any racks, fixture bays, cable drum supports, bins or locks and whether you'd like to buy or rent; we'll reply with an itemised quotation.",
     },
     // The cargo category and the rental product are linked in the body, so they are not repeated here.
     relatedLinksHeading: "Related products",
@@ -30130,7 +31330,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
     ],
 
-    disclaimer: `Portable Office Cabin supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch in Mahadevapura. Every unit is subject to availability. Its quotation states the size, grade, condition and internal dimensions, any racks, bins, vents, lighting, locks or lockbox, any rental term, and how delivery, unloading and collection are arranged; no delivery date, time window or vehicle access is guaranteed. All five images are illustrative renders, not photographs taken in Mahadevapura or of a delivered or fitted unit, and none shows hotel, banquet, maintenance or interior stock. The hotels, malls, banquet halls, apartment projects and contractors described are examples of uses, not clients or completed projects, and the localities and roads named show where enquiries are welcome, not confirmed delivery points. Guidance on storing furniture, appliances, paints and chemicals, on placement and on permissions is general information, not safety, legal or engineering advice.`,
+    disclaimer: `Portable Office Cabin supplies containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office in Electronic City, Bengaluru; it has no yard, depot or branch in Mahadevapura or on Whitefield Road. Every unit is subject to availability. Its quotation states the size, grade, condition and internal dimensions, the floor-loading limit, any racks, fixture bays, glass supports, cable drum supports, shelves, bins, vents, lighting, insulation, locks or lockbox, any rental term, and how delivery, unloading and collection are arranged; no delivery date, time window or vehicle access is guaranteed. All five images are illustrative renders, not photographs taken in Mahadevapura or on Whitefield Road or of a delivered or fitted unit, and none shows hotel, banquet, maintenance, interior, shop-fixture or EV charging stock. The hotels, malls, banquet halls, apartment projects, contractors, shopfitters and EV charger installers described are examples of uses, not clients or completed projects, and the localities and roads named show where enquiries are welcome, not confirmed delivery points. No container on this page is offered as an EV charging station, as a store for EV batteries or for hazardous or flammable products, as a place to cut, weld, paint or fabricate, or as rated for unlimited load; storing equipment in one is not an electrical installation certification, and a lock is not a guarantee against theft. Guidance on storing furniture, fixtures, glass, appliances, electrical equipment, paints and chemicals, on placement and on permissions is general information, not safety, legal, electrical or engineering advice; manufacturers' instructions and the relevant authorities' requirements come first.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -58756,6 +59956,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "portable cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
         after: ".",
       },
+      // New Thippasandra brief (2026-11-22, §7): New Thippasandra, Puttappa Layout and Geethanjali Layout belong
+      // to the New Thippasandra page; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Shops on New Thippasandra Main Road keeping cookers, steel vessels or other utensil stock are covered on our page on",
+        link: { label: "kitchenware shop storage containers in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -64524,6 +65731,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "dewatering equipment storage in Murugeshpalya", href: "/cities-we-serve/shipping-container-murugeshpalya" },
         after: ".",
       },
+      // New Thippasandra brief (2026-11-22, §7): retail stationery and kitchenware stock in New Thippasandra
+      // (New Tippasandra) is that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Stationery and kitchenware shops next door in New Thippasandra can read about",
+        link: { label: "stationery and kitchenware stock storage in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -64954,6 +66168,692 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a shop, office or yard in Indiranagar. Delivery, unloading and placement are assessed and arranged for each site, and delivery dates are not guaranteed. Hire of a shop cabin is subject to availability and the quotation. The footprints, layouts, fitting rooms, display fittings, lighting, joined modules, wet-area and grooming fit-outs, utility provisions, branding, installation, collection and removal described on this page are options to discuss; what is supplied is confirmed in the approved drawing, specification and quotation for each order. The images on this page are illustrative renders of one portable shop cabin design, not photographs of installations in Indiranagar, and they do not show the apparel, gallery or grooming layouts described. The roads, localities and venues named here are used only to describe locations; they are not clients, completed projects or confirmed sites. HAL 2nd Stage and HAL 3rd Stage are locality names, and Portable Office Cabin is not affiliated with Hindustan Aeronautics Limited. Business activity, site use and outdoor signage are subject to the site owner and the relevant local authority; the notes on this page are general planning guidance, not legal, licensing, electrical or engineering advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN NEW THIPPASANDRA (New Tippasandra, east Bengaluru) — back-room stock
+   * storage for retail stationery and office-supply shops (paper reams, notebooks and long books, school
+   * season stock, files and folders, pens and small accessories, school craft supplies, inventory register)
+   * and for retail kitchenware and utensil shops (pressure cookers and cookware, steel utensils, non-stick
+   * pans, new boxed gas stoves, mixer grinders, copper and brass, iron tawas and kadais, festive and wedding
+   * gift sets, spare parts, inventory register).
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — New Thippasandra Shipping
+   * Container Page" + "use the existing images for the city page … show animation in the page"): meta title,
+   * H1, keywords, section order, H2 / H3 headings, sizes table, the nine ordering steps and the eight FAQs are
+   * the brief's, and so is the copy, lightly edited for flow and British spelling. The brief's meta description
+   * ("Shipping and storage containers in New Thippasandra, east Bengaluru, for stationery shops storing
+   * notebooks and paper, and kitchenware stores stocking utensils and cookware.", 173 characters) is over the
+   * site's 160-character limit, so "storing" and "stocking" became possessives (158 characters, every term
+   * kept). The template has no separate Open Graph title or description: og:title / og:description use the
+   * meta title and description, as on every city page. The brief's notes to the implementer ("Do not assume
+   * adhesives…", "Do not recommend storing thinners…", "Do not store gas cylinders, fuel or connected gas
+   * equipment…", "Do not recommend storing gas cylinders, kerosene…", "Do not promise early-morning
+   * delivery…", "add a contextual link to the verified Bellandur…", "Do not invent prices…", "Conditional
+   * section…", "direct customers to…", "Do not use these neighbouring areas…", "Highlight only verified
+   * capabilities…", "Do not claim guaranteed moisture-free storage…", "Use verified company phone numbers…")
+   * are instructions, not page copy: where one carries a fact for the reader it is reworded as a plain
+   * statement ("adhesives, paints, solvents and aerosol products are not assumed to be suitable…", "thinners,
+   * aerosol paints and other hazardous products are not stored … unless…", "gas cylinders, fuel and connected
+   * gas equipment are not stored…", "early-morning delivery … is offered only after the transport
+   * arrangements are confirmed"); otherwise it is left out. FAQ 4's answer is reworded the same way. "New
+   * Tippasandra" is used in the intro and the areas text, as the brief asks. The route follows the site
+   * convention (/cities-we-serve/…), not the brief's root slug. The tagline, captions, link lead-ins,
+   * enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental lists
+   * hire terms from one month to five years; no deposit, price or delivery charge is stated here); the 10 ft
+   * row keeps the brief's "if available"; shelving, pallets, drawers, bins, lighting, ventilation, insulation
+   * and locks are layout options and price factors, never stock items or guaranteed conditions. The optional
+   * Kannada search terms are not used: the page is in English. No Product JSON-LD: city pages carry no prices
+   * (file rule) and a Product block without offers earns no rich result, so the Service JSON-LD (no offers;
+   * areaServed "New Thippasandra, Bengaluru, Karnataka", not an address), FAQPage and BreadcrumbList stand, as
+   * on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers for shop stock" → the cargo category) +
+   *     heroCta.
+   *   Stationery stores, "Stationery Storage Safety", kitchenware shops and "Kitchenware Storage Safety" →
+   *     four afterIntro extra sections with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order" (ordered, nine steps) → afterSolutions extra sections,
+   *     so the steps stay before the areas.
+   *   "Areas Served" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's eight.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §7, only where the destination exists and supports the anchor; a small number, not every
+   * candidate): intro → the cargo category; stationery section → "print-shop paper and packaging storage in
+   * Rajajinagar" (its printing-press and packaging sections: printing and paper board, not retail
+   * stationery); school-season H3 → "school storage through the academic year in JP Nagar" (that page's
+   * section of the same name: a school's own furniture, textbooks, notebooks and uniforms); craft-supply H3 →
+   * "storage for artists' canvases and easels in Kalyan Nagar" (its "Storage Containers for Artists & Art
+   * Classes" section); kitchenware section → "restaurant equipment storage between leases in Koramangala" (its
+   * "Restaurant equipment storage between moves" section) and "tent-house catering vessel storage in Horamavu"
+   * (its "Catering Vessels, Lighting and Electrical Accessories" H3) and "wholesale crockery and tableware storage
+   * in Shigehalli" (its "Storage Containers for Crockery & Tableware Wholesalers" section; added at this PR's
+   * refresh once #316 was live, as the owner approved with #319); placement → "container delivery notes
+   * for tight-access sites" (the Bellandur page's society-gate and narrow-lane section); sizes → "a
+   * second-hand container inspection list": the brief's /shipping-container-chennai is not a route, so it
+   * points to the Athipattu page's "Used Container Inspection" checklist, as the sibling pages do; rental →
+   * /products/shipping-container-rental; areas → "container storage in Indiranagar" (HAL 2nd and 3rd Stage,
+   * Jeevan Bima Nagar) and "storage containers for Kaggadasapura and Malleshpalya" (Malleshpalya, Vignana
+   * Nagar). NOT linked, because no such page exists: CV Raman Nagar, Jayanagar (books and library stock),
+   * Kammanahalli (export-surplus clothing) and /shipping-container-chennai; the books and library
+   * distinction is made in words only, and CV Raman Nagar is not named. Not linked by choice (the brief asks
+   * for a few useful links): RT Nagar, Banashankari and
+   * Marathahalli ORR. Anchors differ from the siblings' anchors for the same targets. Inbound: the Indiranagar
+   * and Kaggadasapura pages' areas sections (one `areasInlineLinks` item each, at the end of each list; their
+   * boundaries and targeting unchanged), the Karnataka shipping hub ("Shipping Containers in New
+   * Thippasandra"), the cargo category's location links ("Storage containers in New Thippasandra") and every
+   * Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from
+   * repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × New Thippasandra (New Tippasandra), New
+   * Thippasandra Main Road, Thippasandra (Old Thippasandra), Puttappa Layout and Geethanjali Layout, for retail
+   * stationery and office-supply stock (school-season stock included) and retail kitchenware, household
+   * cookware and utensil stock. Named only in the pointer sentences to their own pages: HAL 2nd and 3rd Stage
+   * and Jeevan Bima Nagar (Indiranagar page); Malleshpalya and Vignana Nagar (Kaggadasapura page). Not named at
+   * all: CV Raman Nagar (no page yet, kept separate), Domlur, Murugeshpalya and the Thippasandra village near
+   * Magadi. Kept apart from books and library stock, printing and paper board (Rajajinagar), a school's own
+   * stock (JP Nagar), school shoes and bags (RT Nagar), art supplies for artists (Kalyan Nagar), wholesale
+   * crockery (Shigehalli), catering vessels (Horamavu), kirana backstock and plasticware (Banashankari),
+   * commercial kitchen equipment (Koramangala) and furniture showroom stock (Marathahalli ORR). "Bengaluru"
+   * stays out of the
+   * title, as the brief asks; the description and body say "east Bengaluru", and the geo meta and the Service
+   * JSON-LD's areaServed carry "New Thippasandra, Bengaluru, Karnataka".
+   *
+   * Images: no New Thippasandra images were supplied; the owner asked for EXISTING images. The five
+   * owner-supplied Bellandur shipping-container renders (one charcoal-grey container with bronze-painted cargo
+   * doors; used only on the Bellandur page until now) are copied with their VP8 data byte-for-byte and a fresh
+   * XMP dc:title / dc:description that labels each one an illustrative render shared with the Bellandur page
+   * (no creator, GPS, camera or date); the Bellandur files are untouched. Three-quarter exterior = hero /
+   * og:image (the brief's hero filename and alt, followed by what the picture shows); lined interior with
+   * steel shelving, cartons, lidded bins and bubble-wrapped items = stationery section (the brief's interior
+   * filename; the alt says "stock shelves", not "retail stock", because nothing identifies the goods); door
+   * end = kitchenware section; overhead view = placement section; side wall with two small vents = sizes
+   * section. No image shows paper, notebooks, stationery, utensils, cookware, stoves or gift sets, so the
+   * brief's thirteen use-case image slots are not used, and no alt text, caption or filename claims those
+   * items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-new-thippasandra",
+    city: "New Thippasandra",
+    listTitle: "Shipping & Storage Containers in New Thippasandra",
+    metaTitle: "Shipping Container in New Thippasandra | Shop Storage",
+    // Brief: "…for stationery shops storing notebooks and paper, and kitchenware stores stocking utensils and
+    // cookware." (173 chars); possessives keep it at 158 with every term.
+    metaDescription:
+      "Shipping and storage containers in New Thippasandra, east Bengaluru, for stationery shops' notebooks and paper, and kitchenware stores' utensils and cookware.",
+    keywords:
+      "shipping container in New Thippasandra, shipping container in New Tippasandra, cargo container New Thippasandra, storage container New Thippasandra, storage container New Thippasandra Main Road, storage container Old Thippasandra, storage container Puttappa Layout, storage container Geethanjali Layout, used shipping container New Thippasandra, shipping container price in New Thippasandra, storage container for rent in New Thippasandra, stationery shop storage container, stationery stock storage, school season stock storage, paper and notebook storage, office supplies storage, kitchenware shop storage container, utensil stock storage, steel utensils storage, cookware and pressure cooker storage",
+    // Approximate point near New Thippasandra Main Road, east Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "New Thippasandra, Bengaluru, Karnataka, India",
+      position: "12.9730;77.6510",
+      icbm: "12.9730, 77.6510",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Rajajinagar, JP Nagar, Kalyan Nagar, Koramangala, Horamavu, Shigehalli, Bellandur, Athipattu, Indiranagar
+    // and Kaggadasapura are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-new-thippasandra/shipping-container-new-thippasandra.webp",
+      alt: "Shipping container exterior suitable for retail inventory storage: a charcoal-grey corrugated steel container with closed bronze-painted cargo doors, locking bars and handles, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a storage container, also shown on our Bellandur page. It was not photographed in New Thippasandra and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in New Thippasandra",
+    tagline:
+      "Back-room space for a stationery shop's paper, notebooks and school-season stock, and for a kitchenware store's cookers, steel vessels and festive gift sets.",
+    intro: [
+      "New Thippasandra, also spelt New Tippasandra, is an established shopping and residential area in east Bengaluru. Its market streets include retailers selling stationery, office supplies, household utensils, cookware and other everyday products.",
+      "Retail shops often need additional inventory space during school reopening periods, festivals and wedding seasons.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers for shop stock", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in New Thippasandra for compatible commercial inventory, stationery stock and kitchenware storage requirements.",
+    },
+
+    areasHeading: "Areas Served",
+    areasText:
+      "This page covers New Thippasandra, also written New Tippasandra, including New Thippasandra Main Road, Thippasandra (Old Thippasandra), Puttappa Layout and Geethanjali Layout. Shops here sit on busy market streets and narrow cross roads, so the approach, the gate and the spot where the container will stand are checked for each address before a delivery date is put forward.",
+    // Brief §5 and §8: HAL 2nd and 3rd Stage and Jeevan Bima Nagar belong to the Indiranagar page; Malleshpalya
+    // and Vignana Nagar to the Kaggadasapura page. CV Raman Nagar has no page yet, so it is not named.
+    areasInlineLinks: [
+      {
+        before: "For HAL 2nd Stage, HAL 3rd Stage and Jeevan Bima Nagar, see our page on",
+        link: { label: "container storage in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+        after: ".",
+      },
+      {
+        before: "Malleshpalya and Vignana Nagar are covered on our page on",
+        link: { label: "storage containers for Kaggadasapura and Malleshpalya", href: "/cities-we-serve/shipping-container-kaggadasapura" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Stationery & Office Supply Stores",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-new-thippasandra/new-thippasandra-container-storage-interior.webp",
+          alt: "Shipping container interior with organised stock shelves: grey steel shelving either side of a central aisle holding cardboard cartons, lidded plastic bins and bubble-wrapped items, under ceiling lights",
+          width: 1451,
+          height: 1084,
+          caption:
+            "Illustrative render of a fitted-out interior. Steel shelving, wall lining and lights are added only where your quotation lists them, and heavy paper cartons belong on the lowest shelves.",
+        },
+        paragraphs: [
+          "Stationery shops handle notebooks, copier paper, registers, pens, files, school supplies and office accessories. Inventory requirements may increase before school reopening periods and during seasonal retail demand.",
+          "A suitably configured shipping container may provide additional storage space for compatible stationery stock.",
+          "This section is about a shop's stock for sale. Book and library collections, and the textbooks and uniforms a school keeps for its own pupils, are different applications.",
+        ],
+        // Brief §7 and §8: printing and paper board belong to the Rajajinagar page.
+        inlineLinks: [
+          {
+            before: "Running a printing press or packaging unit, with paper reels and board rather than retail stationery? See",
+            link: { label: "print-shop paper and packaging storage in Rajajinagar", href: "/cities-we-serve/shipping-container-rajajinagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Paper Ream & Copier Paper Storage",
+            paragraphs: [
+              "Store compatible paper reams and copier paper cartons on suitable pallets or shelving, and protect the paper from moisture, condensation and excessive heat.",
+              "Distribute heavy loads according to the container's floor-loading capacity.",
+            ],
+          },
+          {
+            heading: "Notebook & Long Book Storage",
+            paragraphs: ["Organise notebooks and long books by:"],
+            bullets: [
+              { text: "Size." },
+              { text: "Ruling." },
+              { text: "Product code." },
+              { text: "Brand." },
+              { text: "Class or intended use." },
+              { text: "Quantity." },
+            ],
+            closing: ["Use clearly labelled cartons, and avoid stacking heavy cartons on lighter stock."],
+          },
+          {
+            heading: "School Season Stationery Storage",
+            paragraphs: ["Suitable stock may include:"],
+            bullets: [
+              { text: "Notebooks." },
+              { text: "Geometry boxes." },
+              { text: "Pens and pencils." },
+              { text: "Erasers and sharpeners." },
+              { text: "School stationery kits." },
+              { text: "Other compatible school supplies." },
+            ],
+            closing: ["Prepare stock according to seasonal demand and customer orders."],
+            // Brief §8: a school's own stock belongs to the JP Nagar page.
+            inlineLinks: [
+              {
+                before: "A school keeping its own furniture, textbooks and uniforms between terms, rather than a shop's stock for sale? Read about",
+                link: { label: "school storage through the academic year in JP Nagar", href: "/cities-we-serve/shipping-container-jp-nagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Office File & Folder Storage",
+            paragraphs: ["Keep these on labelled shelves or in labelled bins:"],
+            bullets: [
+              { text: "Office files." },
+              { text: "Folders." },
+              { text: "Registers." },
+              { text: "Envelopes." },
+              { text: "Suitable office stationery." },
+            ],
+          },
+          {
+            heading: "Pen & Small Accessory Storage",
+            paragraphs: ["Use suitable drawers and bins for:"],
+            bullets: [
+              { text: "Pens." },
+              { text: "Pencils." },
+              { text: "Geometry accessories." },
+              { text: "Small stationery items." },
+              { text: "Compatible office accessories." },
+            ],
+            closing: ["Maintain stock counts."],
+          },
+          {
+            heading: "School Craft Supply Storage",
+            paragraphs: ["Compatible supplies may include:"],
+            bullets: [
+              { text: "Chart paper." },
+              { text: "Craft paper." },
+              { text: "Suitable school project materials." },
+              { text: "Approved water-based craft products." },
+            ],
+            closing: [
+              "Follow the manufacturer's storage instructions. Adhesives, paints, solvents and aerosol products are not assumed to be suitable for ordinary container storage; each is checked against its label first.",
+            ],
+            // Brief §8: art supplies for artists belong to the Kalyan Nagar page.
+            inlineLinks: [
+              {
+                before: "Storing an artist's canvases, easels and paints rather than a shop's school craft stock? See",
+                link: { label: "storage for artists' canvases and easels in Kalyan Nagar", href: "/cities-we-serve/shipping-container-kalyan-nagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Stationery Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product category." },
+              { text: "Brand." },
+              { text: "Product code." },
+              { text: "Quantity." },
+              { text: "Carton location." },
+              { text: "Stock condition." },
+              { text: "Customer order." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Stationery Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Moisture & Condensation",
+            paragraphs: [
+              "Paper absorbs moisture. Use suitable packaging, pallets, ventilation and environmental controls where they are required: a standard shipping container is not automatically humidity-controlled.",
+            ],
+          },
+          {
+            heading: "Heat-sensitive Products",
+            paragraphs: [
+              "Follow the manufacturer's temperature requirements for adhesives, wax crayons, tapes and other heat-sensitive products.",
+            ],
+          },
+          {
+            heading: "Solvents & Flammable Materials",
+            paragraphs: [
+              "Thinners, aerosol paints and other hazardous products are not stored inside an ordinary storage-only container unless appropriate safeguards are in place and the applicable regulations are met.",
+            ],
+          },
+          {
+            heading: "Pest Protection",
+            paragraphs: ["Keep cartons sealed where appropriate, and maintain suitable housekeeping and pest-control procedures."],
+          },
+          {
+            heading: "Floor Loading",
+            paragraphs: ["Paper inventory can be heavy. Verify the total stock weight and how the load is distributed."],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Kitchenware & Utensil Shops",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-new-thippasandra/shipping-container-cargo-doors-new-thippasandra.webp",
+          alt: "Door end of a charcoal-grey container seen straight on, its two bronze-painted cargo doors closed with four vertical locking bars and handles",
+          width: 1451,
+          height: 1084,
+          caption:
+            "Illustrative render. Measure your largest carton, whether a cooker set, a boxed stove or a gift-set crate, against the clear door opening as well as the floor area.",
+        },
+        paragraphs: [
+          "Kitchenware shops sell household utensils, cookware, pressure cookers, steel vessels, pans, tawas and other kitchen accessories. Bulky cartons and seasonal inventory may require additional storage space.",
+          "A suitably configured shipping container can provide storage for compatible kitchenware products.",
+          "This section covers a retail shop's stock for household customers, not wholesale crockery and tableware, catering vessels or commercial kitchen equipment.",
+        ],
+        // Brief §8: commercial kitchen equipment belongs to the Koramangala page, catering vessels to Horamavu and
+        // wholesale crockery and tableware to Shigehalli (linked once #316 was live, as the owner approved with #319).
+        inlineLinks: [
+          {
+            before: "A restaurant keeping its commercial kitchen equipment somewhere between leases? See",
+            link: { label: "restaurant equipment storage between leases in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+            after: ".",
+          },
+          {
+            before: "Hiring out large catering vessels with shamianas for weddings and functions? Read about",
+            link: { label: "tent-house catering vessel storage in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+            after: ".",
+          },
+          {
+            before: "Buying dinner sets, plates and mugs by the carton to supply shops, hotels and restaurants, rather than selling kitchenware to households? See",
+            link: { label: "wholesale crockery and tableware storage in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Pressure Cooker & Cookware Storage",
+            paragraphs: [
+              "Store boxed pressure cookers and cookware sets on suitable shelving, with heavier cartons kept low. Follow the manufacturer's stacking and handling instructions.",
+            ],
+          },
+          {
+            heading: "Steel Utensil Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Stainless steel vessels." },
+              { text: "Pots." },
+              { text: "Plates." },
+              { text: "Bowls." },
+              { text: "Suitable household utensils." },
+            ],
+            closing: ["Organise them by size and product type, and use protective packaging to prevent scratches and deformation."],
+          },
+          {
+            heading: "Non-stick Pan Storage",
+            paragraphs: [
+              "Store non-stick pans in protective packaging and avoid contact that could damage the coating. Follow the manufacturer's storage instructions.",
+            ],
+          },
+          {
+            heading: "New Boxed Gas Stove Storage",
+            paragraphs: [
+              "New, unused and disconnected gas stoves may be suitable for storage when the manufacturer's requirements are met.",
+              "Gas cylinders, fuel and connected gas equipment are not stored in an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Mixer Grinder Storage",
+            paragraphs: [
+              "Store compatible mixer grinders in their protective cartons, following the package's orientation and stacking instructions.",
+            ],
+          },
+          {
+            heading: "Copper & Brass Vessel Storage",
+            paragraphs: [
+              "Use suitable wrapping and dry storage conditions, and protect the vessels against moisture and unsuitable environmental exposure.",
+            ],
+          },
+          {
+            heading: "Iron Tawa & Kadai Storage",
+            paragraphs: [
+              "Protect iron cookware against rust as the manufacturer instructs, with suitable protective wrapping or an approved surface treatment.",
+            ],
+          },
+          {
+            heading: "Festive & Wedding Gift Set Storage",
+            paragraphs: ["Organise compatible kitchenware gift sets by:"],
+            bullets: [
+              { text: "Product type." },
+              { text: "Design." },
+              { text: "Quantity." },
+              { text: "Customer order." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Keep fragile and heavy items appropriately separated."],
+          },
+          {
+            heading: "Kitchenware Spare Parts Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Pressure cooker gaskets." },
+              { text: "Replacement handles." },
+              { text: "Suitable cooker accessories." },
+              { text: "Other kitchenware fittings." },
+            ],
+            closing: ["Use labelled drawers or bins."],
+          },
+          {
+            heading: "Kitchenware Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Brand." },
+              { text: "Model." },
+              { text: "Size." },
+              { text: "Quantity." },
+              { text: "Carton location." },
+              { text: "Condition." },
+              { text: "Customer order." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Kitchenware Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Heavy Cartons",
+            paragraphs: ["Keep heavy cartons low, use stable shelving and verify the floor-loading limits."],
+          },
+          {
+            heading: "Gas Cylinders & Fuel",
+            paragraphs: ["Gas cylinders, kerosene and other fuel are not kept inside an ordinary storage-only container."],
+          },
+          {
+            heading: "Cleaning Products",
+            paragraphs: [
+              "Follow the manufacturer's labels and the applicable safety requirements for polishes, cleaners and chemicals.",
+            ],
+          },
+          {
+            heading: "Surface Protection",
+            paragraphs: ["Use suitable wrapping for copper, brass, non-stick cookware and finished metal products."],
+          },
+          {
+            heading: "Safe Handling",
+            paragraphs: ["Keep access routes clear and avoid unstable stacking."],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in New Thippasandra",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-new-thippasandra/shipping-container-roof-view-new-thippasandra.webp",
+          alt: "Charcoal-grey container seen from directly above on pale paving between hedges, showing its corrugated roof and long rectangular footprint",
+          width: 1451,
+          height: 1084,
+          caption:
+            "Illustrative overhead view. Behind a market street, the plot has to leave room for the lorry to set the unit down and for both cargo doors to swing fully open.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including approved commercial yards, suitable storage compounds, permitted shop service areas and other authorised private plots.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Unloading requirements." },
+          { text: "Container dimensions." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Market streets and cross roads may have restricted vehicle access. Early-morning delivery, or access through a particular street, is offered only after the transport arrangements have been confirmed.",
+        ],
+        // Brief §5: restricted-site delivery guidance → the Bellandur page's society-gate and narrow-lane section.
+        inlineLinks: [
+          {
+            before: "Is the only way in through a narrow cross road or a shared gate? Go through our",
+            link: { label: "container delivery notes for tight-access sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " before choosing a spot.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-new-thippasandra/shipping-container-side-wall-new-thippasandra.webp",
+          alt: "Long corrugated side wall of a charcoal-grey storage container with a small vent near each top corner, standing on a paved pad",
+          width: 2051,
+          height: 767,
+          caption:
+            "Illustrative side view with a small vent near each top corner. Vents help air move but do not control humidity, so paper still needs pallets and dry packing.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Exact dimensions, door openings, availability and payload limits must be verified for the unit you are offered.",
+          headers: ["Size", "Approximate capacity", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Smaller stationery or kitchenware inventory"],
+            ["20 ft", "33 m³", "School-season stationery or kitchenware backstock"],
+            ["40 ft", "67 m³", "Larger retail inventory where site access permits"],
+          ],
+        },
+        closing: ["Paper and steel utensils can be heavy, so usable weight capacity may matter more than volume."],
+        // Brief §7: used-container buying guidance → the Athipattu page's inspection checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Weighing up a used unit? Work through",
+            link: { label: "a second-hand container inspection list", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in New Thippasandra",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving." },
+          { text: "Pallets." },
+          { text: "Storage drawers and bins." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation where required." },
+          { text: "Locking arrangements." },
+          { text: "Transportation." },
+          { text: "Unloading." },
+          { text: "Site accessibility." },
+        ],
+        closing: ["Request an itemised quotation."],
+      },
+      {
+        heading: "Storage Container on Rent in New Thippasandra",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful during school reopening periods or seasonal kitchenware demand. Containers are hired for periods from one month to five years, and the rental quotation states the unit, the hire period, any deposit, the transport charges and how the container is collected at the end.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes available for hire are listed under",
+            link: { label: "short-term container hire", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Provide inventory dimensions and quantities." },
+          { text: "Identify heavy or fragile products." },
+          { text: "Confirm estimated stock weight." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelves, pallets and storage drawers." },
+          { text: "Confirm site permissions and access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible commercial inventory requirements. For stationery and kitchenware retailers in New Thippasandra, that covers:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft containers, with a 10 ft unit when one is in stock." },
+          { title: "Storage-oriented modifications", text: "shelves, drawers and bins planned around reams, notebook cartons and boxed cookware, each priced as its own line." },
+          { title: "Shelving and pallet provisions", text: "heavy paper and steel stock kept low, with shelf loads matched to the container floor." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock fitted to your unit named in the quotation." },
+          { title: "Ventilation and insulation options", text: "chosen for paper and metal stock, with no promise of moisture-free storage, hazardous-material certification or unlimited floor loading." },
+          { title: "Quotation and delivery coordination", text: "an itemised quotation first, then a check of the road, the gate and the drop spot before a date is agreed." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can stationery shops store paper inside shipping containers?",
+        answer: "Potentially, when suitable packaging, pallets and moisture-control measures are provided.",
+      },
+      {
+        question: "How much paper can a shipping container hold?",
+        answer:
+          "The allowable quantity depends on carton weight, load distribution and the container's verified floor-loading and payload limits.",
+      },
+      {
+        question: "Can school craft supplies be stored inside containers?",
+        answer:
+          "Compatible supplies may be stored according to the manufacturer's requirements. Hazardous or flammable materials may need specialised storage.",
+      },
+      {
+        question: "Can kitchenware shops store new boxed gas stoves?",
+        answer:
+          "Unused and disconnected stoves may be suitable for storage when the manufacturer's requirements are met. Gas cylinders and fuel are not stored inside an ordinary storage-only container.",
+      },
+      {
+        question: "How can copper and brass utensils be protected?",
+        answer: "Use suitable protective wrapping and environmental conditions according to the manufacturer's guidance.",
+      },
+      {
+        question: "Where can a shipping container be placed?",
+        answer: "At a suitable authorised site with the required permissions and access arrangements.",
+      },
+      {
+        question: "What is the shipping container price in New Thippasandra?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in New Thippasandra",
+    ctaText: `Whether you need additional storage for paper cartons, notebooks, school stationery, steel utensils, cookware or compatible kitchenware inventory, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Phone ${COMPANY.phones[0].display}, message us on WhatsApp at ${COMPANY.whatsapp.display} or write to ${COMPANY.email.sales}. Service area: New Thippasandra, Old Thippasandra, Puttappa Layout and Geethanjali Layout, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for New Thippasandra",
+      intro:
+        "Choose the container type and how many units you need, add the New Thippasandra address or a map pin, and say whether you want to buy or hire. Tell us whether the stock is stationery or kitchenware, roughly how many cartons there are and how heavy the heaviest ones are, so the shelving and floor load can be planned.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Every container is dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; there is no yard, depot, showroom or branch in New Thippasandra or the layouts this page names. Each unit is defined by its written quotation: internal and door-opening sizes, grade and condition, floor-loading and payload limits, any shelving, pallets, drawers, bins, lights, vents, insulation or locks, the hire terms where it is rented, and how it is delivered, unloaded and collected. Stock changes, so a delivery date or an early-morning slot holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as moisture-free, humidity-controlled, fire-rated or certified for hazardous materials, and a container is not supplied to hold gas cylinders, kerosene or other fuel, connected gas equipment, thinners, aerosol paints or solvents. The five pictures are illustrative renders from our existing imagery, also shown on our Bellandur page, not photographs taken in New Thippasandra; none shows a delivered or fitted unit, stationery or kitchenware stock. Volumes are approximate and are not payload ratings. Stationery, office-supply and kitchenware shops are named as possible uses, not as customers or completed projects, and the localities listed show where enquiries are accepted, not confirmed delivery addresses. Notes on paper, craft supplies, gas stoves, cylinders, fuel, cleaning products, floor loading, placement and permissions are general information, not safety, legal, insurance or engineering advice; follow the manufacturers' instructions and the requirements of the authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -68170,6 +70070,14 @@ export const CITY_PAGES: CityPage[] = [
     areasHeading: "Areas We Serve",
     areasText:
       "Our storage containers go to businesses, campuses and NGOs across Brookefield, including the Brookefield stretch of ITPL Main Road, Thubarahalli and the residential lanes around them. Each address is confirmed after its access is checked.",
+    // Mahadevapura Version B brief (2026-11-22, §6): Mahadevapura and the Whitefield Road corridor have their own page; this page's targeting is unchanged.
+    areasInlineLinks: [
+      {
+        before: "Hoodi, Garudacharpalya and the Whitefield Road corridor through Mahadevapura are served from our",
+        link: { label: "Whitefield Road container page", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: ".",
+      },
+    ],
 
     extraSections: [
       {
