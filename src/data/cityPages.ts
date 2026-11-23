@@ -65695,16 +65695,18 @@ export const CITY_PAGES: CityPage[] = [
    * "storage for artists' canvases and easels in Kalyan Nagar" (its "Storage Containers for Artists & Art
    * Classes" section); kitchenware section → "restaurant equipment storage between leases in Koramangala" (its
    * "Restaurant equipment storage between moves" section) and "tent-house catering vessel storage in Horamavu"
-   * (its "Catering Vessels, Lighting and Electrical Accessories" H3); placement → "container delivery notes
+   * (its "Catering Vessels, Lighting and Electrical Accessories" H3) and "wholesale crockery and tableware storage
+   * in Shigehalli" (its "Storage Containers for Crockery & Tableware Wholesalers" section; added at this PR's
+   * refresh once #316 was live, as the owner approved with #319); placement → "container delivery notes
    * for tight-access sites" (the Bellandur page's society-gate and narrow-lane section); sizes → "a
    * second-hand container inspection list": the brief's /shipping-container-chennai is not a route, so it
    * points to the Athipattu page's "Used Container Inspection" checklist, as the sibling pages do; rental →
    * /products/shipping-container-rental; areas → "container storage in Indiranagar" (HAL 2nd and 3rd Stage,
    * Jeevan Bima Nagar) and "storage containers for Kaggadasapura and Malleshpalya" (Malleshpalya, Vignana
    * Nagar). NOT linked, because no such page exists: CV Raman Nagar, Jayanagar (books and library stock),
-   * Shigehalli (wholesale crockery), Kammanahalli (export-surplus clothing) and /shipping-container-chennai;
-   * the books, library and wholesale-crockery distinctions are made in words only, and CV Raman Nagar is not
-   * named. Not linked by choice (the brief asks for a few useful links): RT Nagar, Banashankari and
+   * Kammanahalli (export-surplus clothing) and /shipping-container-chennai; the books and library
+   * distinction is made in words only, and CV Raman Nagar is not named. Not linked by choice (the brief asks
+   * for a few useful links): RT Nagar, Banashankari and
    * Marathahalli ORR. Anchors differ from the siblings' anchors for the same targets. Inbound: the Indiranagar
    * and Kaggadasapura pages' areas sections (one `areasInlineLinks` item each, at the end of each list; their
    * boundaries and targeting unchanged), the Karnataka shipping hub ("Shipping Containers in New
@@ -65720,8 +65722,9 @@ export const CITY_PAGES: CityPage[] = [
    * all: CV Raman Nagar (no page yet, kept separate), Domlur, Murugeshpalya and the Thippasandra village near
    * Magadi. Kept apart from books and library stock, printing and paper board (Rajajinagar), a school's own
    * stock (JP Nagar), school shoes and bags (RT Nagar), art supplies for artists (Kalyan Nagar), wholesale
-   * crockery, catering vessels (Horamavu), kirana backstock and plasticware (Banashankari), commercial kitchen
-   * equipment (Koramangala) and furniture showroom stock (Marathahalli ORR). "Bengaluru" stays out of the
+   * crockery (Shigehalli), catering vessels (Horamavu), kirana backstock and plasticware (Banashankari),
+   * commercial kitchen equipment (Koramangala) and furniture showroom stock (Marathahalli ORR). "Bengaluru"
+   * stays out of the
    * title, as the brief asks; the description and body say "east Bengaluru", and the geo meta and the Service
    * JSON-LD's areaServed carry "New Thippasandra, Bengaluru, Karnataka".
    *
@@ -65763,8 +65766,8 @@ export const CITY_PAGES: CityPage[] = [
     serviceJsonLd: { serviceType: "Shipping Container" },
     // The hero is 1200 × 896 px (read from its VP8 header); og:image carries that size.
     ogImageDimensions: true,
-    // Rajajinagar, JP Nagar, Kalyan Nagar, Koramangala, Horamavu, Bellandur, Athipattu, Indiranagar and
-    // Kaggadasapura are linked in the body, so the nearby block leaves them out.
+    // Rajajinagar, JP Nagar, Kalyan Nagar, Koramangala, Horamavu, Shigehalli, Bellandur, Athipattu, Indiranagar
+    // and Kaggadasapura are linked in the body, so the nearby block leaves them out.
     nearbySkipsBodyLinks: true,
 
     heroImage: {
@@ -65982,7 +65985,8 @@ export const CITY_PAGES: CityPage[] = [
           "A suitably configured shipping container can provide storage for compatible kitchenware products.",
           "This section covers a retail shop's stock for household customers, not wholesale crockery and tableware, catering vessels or commercial kitchen equipment.",
         ],
-        // Brief §8: commercial kitchen equipment belongs to the Koramangala page, catering vessels to Horamavu.
+        // Brief §8: commercial kitchen equipment belongs to the Koramangala page, catering vessels to Horamavu and
+        // wholesale crockery and tableware to Shigehalli (linked once #316 was live, as the owner approved with #319).
         inlineLinks: [
           {
             before: "A restaurant keeping its commercial kitchen equipment somewhere between leases? See",
@@ -65992,6 +65996,11 @@ export const CITY_PAGES: CityPage[] = [
           {
             before: "Hiring out large catering vessels with shamianas for weddings and functions? Read about",
             link: { label: "tent-house catering vessel storage in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+            after: ".",
+          },
+          {
+            before: "Buying dinner sets, plates and mugs by the carton to supply shops, hotels and restaurants, rather than selling kitchenware to households? See",
+            link: { label: "wholesale crockery and tableware storage in Shigehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
             after: ".",
           },
         ],
