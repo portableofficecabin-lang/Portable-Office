@@ -810,6 +810,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Nagavara / Nagawara (air cooler dealers' seasonal stock; umbrella and rainwear wholesalers' monsoon
     // stock; owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Nagavara", href: "/cities-we-serve/shipping-container-nagavara" },
+    // Richmond Town, central Bengaluru (office, hotel and restaurant refurbishment storage, event equipment;
+    // owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Richmond Town", href: "/cities-we-serve/shipping-container-richmond-town" },
   ],
 };
 
