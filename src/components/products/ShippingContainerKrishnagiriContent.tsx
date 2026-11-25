@@ -118,7 +118,7 @@ export function ShippingContainerKrishnagiriContent() {
           Shipping Containers in Krishnagiri — Storage, Offices & Modular Solutions
         </h2>
         <p className="text-muted-foreground mb-4">
-          As India's industrial growth accelerates through 2025–2026, demand for shipping container solutions in Krishnagiri continues rising. Portable Office Cabin serves as a trusted manufacturer and supplier of portable and prefabricated container structures for customers across Krishnagiri, Hosur, Rayakottai, and throughout India. Whether you need storage, site offices, or modular buildings, our products are designed for both B2B construction firms and B2C small businesses.
+          As India's industrial growth accelerates, demand for shipping container solutions in Krishnagiri continues rising. Portable Office Cabin serves as a trusted manufacturer and supplier of portable and prefabricated container structures for customers across Krishnagiri, Hosur, Rayakottai, and throughout India. Whether you need storage, site offices, or modular buildings, our products are designed for both B2B construction firms and B2C small businesses.
         </p>
         <p className="text-muted-foreground mb-4">
           There are several manufacturers and suppliers of used shipping containers in Krishnagiri. Portable Office Cabin is a provider of used shipping containers for storage in Krishnagiri, offering 20 ft and 40 ft units. Prefabricated and portable building solutions offer substantial cost savings compared to traditional construction methods, reducing construction time, labour costs, and material waste through streamlined manufacturing processes.
@@ -221,7 +221,7 @@ export function ShippingContainerKrishnagiriContent() {
       {/* Pricing */}
       <section>
         <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-          Pricing (2025–2026)
+          Pricing
         </h2>
         <div className="bg-card rounded-xl shadow-card overflow-hidden">
           <table className="w-full">

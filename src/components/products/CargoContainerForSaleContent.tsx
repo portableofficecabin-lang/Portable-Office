@@ -208,7 +208,7 @@ export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) 
 
       <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Quick overview: cargo containers for sale in 2026</h3>
+          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Quick overview: cargo containers for sale</h3>
           <div className="space-y-4 text-muted-foreground">
             <p>We commonly stock 10 ft fabricated containers, 20 ft GP, 30 ft custom units, 40 ft GP, and 40 ft high cube containers, with reefer options available on request.</p>
             {/* Purchasable page: the same sizing argument without the ex-yard ₹ figures that

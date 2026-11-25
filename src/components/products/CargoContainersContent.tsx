@@ -39,7 +39,7 @@ const containerSizes = [
 ];
 
 const quickGuide = [
-  { scenario: "Exporting dry goods from India in 2026", recommendation: "20 ft or 40 ft General Purpose, or High Cube for lighter, bulkier items" },
+  { scenario: "Exporting dry goods from India", recommendation: "20 ft or 40 ft General Purpose, or High Cube for lighter, bulkier items" },
   { scenario: "Heavy machinery or construction equipment", recommendation: "Flat Rack or Open Top for crane loading" },
   { scenario: "Perishable food, pharmaceuticals, vaccines", recommendation: "ISO Reefer or Super Freezer depending on temperature requirements" },
   { scenario: "On-site office for a 12–24 month project", recommendation: "20 ft or 40 ft Container Office by Portable Office Cabin" },
@@ -210,7 +210,7 @@ export function CargoContainersContent() {
                 <li>Extra internal height for bulky but lighter cargo</li>
                 <li>Better stacking compatibility on ships and double-stack rail</li>
                 <li>Compatible with gooseneck chassis for efficient truck transport</li>
-                <li>Commonly used since 2020–2026 for e-commerce, textiles, electronics, and furniture shipments</li>
+                <li>Commonly used for e-commerce, textiles, electronics, and furniture shipments</li>
               </ul>
             </div>
             <div>
@@ -417,7 +417,7 @@ export function CargoContainersContent() {
 
       {/* 2020-2026 Supply Chain */}
       <section>
-        <h2 className="text-3xl font-bold text-foreground mb-6">Cargo Containers in the 2020–2026 Supply Chain</h2>
+        <h2 className="text-3xl font-bold text-foreground mb-6">Cargo Containers in Today's Supply Chain</h2>
         <div className="space-y-4">
           <p className="text-muted-foreground leading-relaxed">
             The COVID-19 pandemic exposed global dependence on container availability and port capacity. Container shortages, port congestion, and freight rate spikes affected Asia–Europe and trans-Pacific routes throughout 2020–2021.
@@ -534,7 +534,7 @@ export function CargoContainersContent() {
             </Card>
           </div>
           <p className="text-muted-foreground text-sm">
-            <strong>Popular configurations (2023–2026):</strong> Double-stacked site offices with external staircase, combined office plus store containers, and administration blocks from 4–10 joined containers for large infrastructure projects.
+            <strong>Popular configurations:</strong> Double-stacked site offices with external staircase, combined office plus store containers, and administration blocks from 4–10 joined containers for large infrastructure projects.
           </p>
         </div>
       </section>

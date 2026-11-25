@@ -82,6 +82,7 @@ import { MarketingOfficeContent } from "@/components/products/MarketingOfficeCon
 import { PrefabMarketingOfficeContent } from "@/components/products/PrefabMarketingOfficeContent";
 import { ConstructionIndividualBuildingContent } from "@/components/products/ConstructionIndividualBuildingContent";
 import { ContainerCafeRestaurantContent } from "@/components/products/ContainerCafeRestaurantContent";
+import { ProductBuyerGuide } from "@/components/products/ProductBuyerGuide";
 
 const SITE = "https://portableofficecabin.com";
 
@@ -770,6 +771,11 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "g1-workmen-accommodation" && slug === "workmen-accommodation" && <div className="mt-16"><WorkmenAccommodationContent /></div>}
           {cs === "g1-workmen-accommodation" && slug === "labour-colony" && <div className="mt-16"><LabourColonyContent /></div>}
           {cs === "security-cabins" && slug === "security-cabin" && <div className="mt-16"><SecurityCabinContent /></div>}
+
+          {/* Buyer guide for the catalogue products that have no *Content component of their own
+              (Guard Security Cabin, 40ft Bunkhouse, Luxury Prefab Villa, 20ft Storage Container).
+              Keyed by the static catalogue id; renders nothing for every other product. */}
+          <ProductBuyerGuide productId={product.id} />
 
           {/* PORTABLE CABINS — hub + guide cross-links, server-rendered on every product in the
               category. This REPLACES the former fallback that rendered the hub's entire long-form
