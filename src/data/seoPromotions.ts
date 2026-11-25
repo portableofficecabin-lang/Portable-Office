@@ -801,6 +801,12 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kodigehalli (tree care crews' saws, ropes and safety gear; roofing contractors' sheets, sections and
     // fixings; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
+    // Kengeri (farm drip irrigation dealers' stock; industrial safety equipment and PPE distributors' stock;
+    // owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Kengeri", href: "/cities-we-serve/shipping-container-kengeri" },
+    // Channasandra, east Bengaluru (corporate gifting and tensile structure storage; owner brief 2026-11-25),
+    // appended so the live links keep their positions.
+    { name: "Shipping Containers in Channasandra", href: "/cities-we-serve/shipping-container-channasandra" },
     // Nagavara / Nagawara (air cooler dealers' seasonal stock; umbrella and rainwear wholesalers' monsoon
     // stock; owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Nagavara", href: "/cities-we-serve/shipping-container-nagavara" },

@@ -20735,7 +20735,9 @@ export const CITY_PAGES: CityPage[] = [
    * shipping page's nearby block. `nearbySkipsBodyLinks` keeps the nearby block from repeating Bellandur.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Rajarajeshwari Nagar, RR Nagar, Ideal Homes
-   * Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere, for household
+   * Township, Kenchenahalli, Pattanagere, Halagevaderahalli and Gattigere (Channasandra brief, 2026-11-25,
+   * §8: the west Channasandra beside RR Nagar is no longer targeted here, so it cannot be confused with the
+   * east Bengaluru Channasandra, PIN 560066, which has its own page), for household
    * belongings stored while a house is used for a TV or film shoot, and for college motorsport vehicles,
    * spares, tools and team equipment. Not targeted: Uttarahalli and Chikkalasandra (Banashankari),
    * Rajajinagar (its own page), Kengeri and Nagarbhavi (kept for possible future pages), Mysore Road (its
@@ -20768,7 +20770,7 @@ export const CITY_PAGES: CityPage[] = [
     metaDescription:
       "Shipping and storage containers in RR Nagar for homeowners storing furniture during film shoots and college motorsport teams storing race cars, tools and spares.",
     keywords:
-      "shipping container in Rajarajeshwari Nagar, shipping container in RR Nagar, cargo container RR Nagar, storage container Rajarajeshwari Nagar, storage container RR Nagar, storage container Ideal Homes Township, storage container Kenchenahalli, storage container Pattanagere, storage container Halagevaderahalli, storage container Channasandra, storage container Gattigere, used shipping container RR Nagar, shipping container price in RR Nagar, storage container for rent in RR Nagar, furniture storage during film shoots, college motorsport team storage container",
+      "shipping container in Rajarajeshwari Nagar, shipping container in RR Nagar, cargo container RR Nagar, storage container Rajarajeshwari Nagar, storage container RR Nagar, storage container Ideal Homes Township, storage container Kenchenahalli, storage container Pattanagere, storage container Halagevaderahalli, storage container Gattigere, used shipping container RR Nagar, shipping container price in RR Nagar, storage container for rent in RR Nagar, furniture storage during film shoots, college motorsport team storage container",
     // Approximate point in Rajarajeshwari Nagar, west Bengaluru (rounded; for the owner to confirm).
     geo: {
       region: "IN-KA",
@@ -20806,8 +20808,10 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     areasHeading: "Areas Served Around Rajarajeshwari Nagar",
+    // Channasandra brief (2026-11-25, §8): the brief's areas sentence, without Channasandra; the access sentence
+    // after it is unchanged.
     areasText:
-      "This page covers shipping and storage container requirements in Rajarajeshwari Nagar (RR Nagar), Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere. Many of these are residential streets with parked cars and tight gates, so the approach and the spot where the container will stand are checked for each property or campus before a delivery is confirmed.",
+      "We supply shipping and storage containers across Rajarajeshwari Nagar (RR Nagar), including Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli and Gattigere. Many of these are residential streets with parked cars and tight gates, so the approach and the spot where the container will stand are checked for each property or campus before a delivery is confirmed.",
     // RR Nagar shop-cabin brief (2026-11-18): oil, millet and gated-community shop cabins are that page's intent.
     areasInlineLinks: [
       {
@@ -20827,6 +20831,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Hostels and PG operators arranging shared storage for students over the break, a little to the north in Nagarbhavi, are covered on our page on",
         link: { label: "student vacation storage containers in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+        after: ".",
+      },
+      // Kengeri brief (2026-11-25, §14): Kengeri, Kengeri Satellite Town and Kengeri Hobli, for drip irrigation
+      // dealers and PPE distributors, are that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "For shipping container storage in Kengeri and Kengeri Satellite Town, further out along Mysore Road, see our dedicated page on",
+        link: { label: "storage containers in Kengeri", href: "/cities-we-serve/shipping-container-kengeri" },
         after: ".",
       },
     ],
@@ -26410,6 +26421,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "shipping containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
         after: ".",
       },
+      // Channasandra brief (2026-11-25, §7): corporate gifting and tensile structure storage in Channasandra
+      // (Chansandra) is that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "For corporate gifting merchandise and tensile structure material storage in Channasandra, explore our dedicated",
+        link: { label: "Channasandra shipping container page", href: "/cities-we-serve/shipping-container-channasandra" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -26897,6 +26915,744 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers are supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; it has no yard, depot, showroom or branch in Shigehalli or Seegehalli. Each unit's internal and door-opening sizes, grade and condition, floor-loading limit, fittings (shelves, racks, pallets, bins, lights, vents, insulation or locks), hire terms where it is rented, and its delivery, unloading and collection are set by the written quotation. Stock changes, so a delivery date holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as climate-controlled, humidity-controlled, fire-rated or theft-proof, none is supplied as a place to charge batteries, and no promise is made that fragile stock will arrive or stay unbroken. The six pictures are illustrative images from our existing catalogue imagery, not photographs taken in Shigehalli; none shows a delivered or fitted unit, toys or tableware. Volumes are approximate and are not payload ratings. Toy and crockery wholesalers are named as possible uses, not as customers or completed projects, and the locality named shows where enquiries are accepted, not a confirmed delivery address. Notes on batteries, fragile goods, stacking, fire safety, placement and permissions are general information, not safety, legal or engineering advice; follow the manufacturers' instructions and the requirements of the authorities concerned.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN CHANNASANDRA (Chansandra, east Bengaluru, PIN 560066) — stock storage
+   * for corporate gifting and employee welcome kit companies (branded merchandise, welcome kits, T-shirts and
+   * hoodies, gift boxes and packaging, client-wise order staging, a packing area only in a container built for
+   * occupied use, fragile gifts, inventory register) and for tensile structure and car parking shade
+   * installers (fabric rolls, pre-cut panels, steel pipes and sections, cables and tensioning hardware, base
+   * plates and anchor bolts, ladders and safety equipment, site-wise installation kits).
+   *
+   * Owner brief of 2026-11-25 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — Shipping & Storage
+   * Containers in Channasandra (Chansandra)" + "show animation in the page"): meta title, meta description,
+   * H1, keywords, section order, H2 / H3 headings, sizes table, the nine ordering steps and the nine FAQs are
+   * the brief's, and so is the copy, lightly edited for flow and British spelling. The template has no
+   * separate Open Graph title or description: og:title / og:description use the meta title and description,
+   * as on every city page (the brief's OG wording is reported in the PR). The brief's notes to the
+   * implementer ("Do not describe an ordinary storage-only shipping container as a safe occupied packing
+   * workspace…", "Do not recommend storing chocolates…", "Do not recommend charging or testing…", "Do not
+   * recommend storing hazardous or flammable products…", "Do not recommend welding, cutting or grinding…",
+   * "Do not assume an ordinary shipping container is suitable…", "Do not assume a container can hold
+   * unlimited steel inventory", "add a contextual link…", "Do not invent prices…", "Conditional section…",
+   * "Do not expand this section…", "Highlight only verified capabilities…", "Do not claim guaranteed climate
+   * control…", "Use verified company phone numbers…") are instructions, not page copy: where one carries a
+   * fact for the reader it is reworded as a plain statement ("an ordinary storage-only container is not a
+   * safe occupied packing workspace without…", "food products are not stored in an ordinary storage-only
+   * container unless…", "battery-powered products are not charged or tested inside…", "welding, cutting and
+   * grinding are not carried out inside…", "a container cannot hold unlimited steel inventory"); otherwise it
+   * is left out. FAQs 2, 3 and 6 are reworded the same way. The route follows the site convention
+   * (/cities-we-serve/…), not the brief's root slug; no Channasandra or Chansandra route existed, and there
+   * is one page for both spellings. The tagline, captions, link lead-ins, enquiry-form intro and disclaimer
+   * were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here); the
+   * 10 ft row says "when available"; shelving, fabric roll holders, side racks, packing tables, bins,
+   * lighting, ventilation, insulation, climate control and locks are layout options and price factors named
+   * in a quotation, never stock items or guaranteed conditions. The optional Kannada search terms are not
+   * used: the page is in English. No Product JSON-LD: city pages carry no prices (file rule) and a Product
+   * block without offers earns no rich result, so the Service JSON-LD (no offers; areaServed "Channasandra,
+   * Bengaluru, Karnataka", not an address), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers for business stock" → the cargo
+   *     category) + heroCta.
+   *   Corporate gifting, "Corporate Gifting Storage Safety", tensile structures and "Tensile Structure
+   *     Material Storage Safety" → four afterIntro extra sections with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, nine steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas We Serve" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's nine.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §7, only where the destination exists and supports the anchor; a small number, not every
+   * candidate): intro → the cargo category; corporate gifting section → "dealership merchandise and gift-set
+   * storage in Hebbal" (its car-dealership section lists promotional merchandise and gift sets) and "retail
+   * stationery stock storage in New Thippasandra" (its stationery shop section); candles H3 → "storage for
+   * handmade soap and candle makers in Sahakara Nagar" (that page's soap and candle section: making candles,
+   * not buying them in as gifts); tensile section → "railing, gate and scaffolding stock storage on
+   * Thanisandra Main Road" (its scaffolding hire and railing and gate fabricator sections) and "playground
+   * and outdoor gym equipment storage on Begur Road" (its playground equipment installer section); placement
+   * → "delivery guidance for restricted sites" (the Bellandur page's society-gate and narrow-lane section);
+   * sizes → "used container condition checks": the brief's /shipping-container-chennai is not a route, so it
+   * points to the Athipattu page's "Used Container Inspection" checklist, as the sibling pages do; rental →
+   * /products/shipping-container-rental; areas → "Shigehalli's storage container page" and "Mahadevapura's
+   * shipping container page" (the Whitefield Road corridor). NOT linked, because no live page supports the
+   * anchor: Kundalahalli (#274 not merged), Thubarahalli (no page; Brookefield's page names it), Kodigehalli
+   * (#321, roofing sheets, not yet live; the roofing distinction is made in words), a D2C finished-goods page
+   * (the live Koramangala page covers self-storage, restaurant equipment and bicycles, so it is not linked)
+   * and /shipping-container-chennai. Not linked by choice (the brief asks for a few useful links):
+   * Brookefield and Vellore (climate control is only a quotation option here). Anchors differ from the
+   * siblings' anchors for the same targets. Inbound: the Shigehalli and Mahadevapura pages' areas sections
+   * (one `areasInlineLinks` item each, at the end of each list; their boundaries and targeting unchanged),
+   * the Karnataka shipping hub ("Shipping Containers in Channasandra"), the cargo category's location links
+   * ("Storage containers in Channasandra") and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Channasandra (east Bengaluru, PIN 560066),
+   * Chansandra, Chennasandra (spelling variant, used sparingly) and Channasandra Main Road, for corporate
+   * gifting and employee welcome kit stock and for tensile fabric, car parking shade and tensile structure
+   * contractors' materials and equipment. Named only as landmarks: the Whitefield IT corridor (intro), the
+   * Hopefarm Channasandra metro station (intro), and Hope Farm and Kadugodi (the geographic FAQ). Named only in
+   * the pointer sentences to their own pages: Shigehalli and Seegehalli (Shigehalli page); Mahadevapura and
+   * the Whitefield Road corridor (Mahadevapura page). Not named at all: Belathur, Siddapura,
+   * Ramagondanahalli, Immadihalli and Hagadur (kept for a possible future Whitefield page). Not targeted: the
+   * Channasandra near RR Nagar (west Bengaluru), K Channasandra and B Channasandra; the RR Nagar shipping page
+   * stopped targeting its Channasandra in this change, as the brief asks. Kept apart from dealership
+   * merchandise (Hebbal), D2C finished goods (no live page), retail stationery (New Thippasandra), soap and
+   * candle making (Sahakara Nagar), metal roofing sheets and terrace sheds (no live page yet), playground
+   * equipment and outdoor gyms (Begur Road), railings and gates and scaffolding hire (Thanisandra Main Road).
+   * "Bengaluru" stays out of the title, as the brief asks; the description and body say "east Bengaluru",
+   * and the geo meta and the Service JSON-LD's areaServed carry "Channasandra, Bengaluru, Karnataka".
+   *
+   * Images: four owner-supplied WebP renders ("public/images/Storage Containers in Channasandra city
+   * page/Storage Containers in Channasandra/cabin (1–4).webp", lossy VP8, no EXIF / XMP) of one navy-blue
+   * container with a pale roof edge, kept byte-identical (VP8 bitstream untouched) with an XMP dc:title /
+   * dc:description added that labels each one an illustrative render (no creator, GPS, camera or date). (1)
+   * three-quarter exterior = hero / og:image (the brief's hero filename and alt, followed by what the
+   * picture shows); (2) plain end wall = corporate gifting section (the brief's "front view" filename);
+   * (3) cargo doors = tensile section, beside the door-opening check (the brief's "rear view" filename);
+   * (4) roof from above = placement section (the brief's "top view" filename). The drop folder's
+   * "cabin (1).png" is not used: it shows a glazed window in a cargo door, which the brief rules out for an
+   * unmodified shipping container. No image shows the interior, merchandise, gift boxes, garments, fabric,
+   * pipes, fittings or safety equipment, so the interior slot and the brief's thirteen use-case image slots
+   * are not used, and no alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-channasandra",
+    city: "Channasandra",
+    listTitle: "Shipping & Storage Containers in Channasandra",
+    metaTitle: "Shipping Container in Channasandra | Storage Solutions",
+    // Brief: "…for corporate gifting stock, employee welcome kits…" (161 chars); "corporate gift stock" (one of the
+    // brief's keywords) keeps it at 158, under the site's 160-character limit, with every other word kept.
+    metaDescription:
+      "Shipping containers in Channasandra (Chansandra), east Bengaluru, for corporate gift stock, employee welcome kits, tensile fabric and parking shade materials.",
+    keywords:
+      "shipping container in Channasandra, shipping container in Chansandra, cargo container Channasandra, storage container Channasandra, storage container Chansandra, storage container Chennasandra, storage container Channasandra Main Road, used shipping container Channasandra, shipping container price in Channasandra, storage container for sale in Channasandra, used cargo container in Channasandra, storage container for rent in Channasandra, corporate gifting storage container, corporate gift stock storage, employee welcome kit storage, corporate merchandise storage, branded merchandise storage, corporate gift packaging storage, tensile structure installer storage container, tensile fabric storage, tensile fabric roll storage, car parking shade material storage, shade sail storage, parking shade contractor material storage",
+    // Approximate point near the Hopefarm Channasandra metro station, east Bengaluru (rounded; for the owner to
+    // confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Channasandra, Bengaluru, Karnataka, India",
+      position: "12.9880;77.7540",
+      icbm: "12.9880, 77.7540",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 2336 × 1760 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Hebbal, New Thippasandra, Sahakara Nagar, Thanisandra Main Road, Begur Road, Bellandur, Athipattu,
+    // Shigehalli and Mahadevapura are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-channasandra/shipping-container-channasandra.webp",
+      alt: "Steel shipping container exterior suitable for commercial inventory storage: a navy-blue corrugated container with a pale roof edge and closed cargo doors with locking bars, on a concrete pad",
+      width: 2336,
+      height: 1760,
+      caption:
+        "Illustrative render supplied for this page, not a photograph of a container delivered in Channasandra.",
+    },
+
+    h1: "Shipping & Storage Containers in Channasandra",
+    tagline:
+      "Extra space for a corporate gifting company's merchandise and welcome kits, and for a tensile shade installer's fabric rolls, steel pipes and fittings.",
+    intro: [
+      "Channasandra, also written as Chansandra, is a growing residential locality in east Bengaluru, near the Whitefield IT corridor. The area includes apartment developments and local businesses, with connectivity through the Hopefarm Channasandra metro station.",
+      "Corporate gifting companies serving nearby offices, and tensile structure contractors working on apartment parking areas, terraces and outdoor spaces, may require additional storage for their inventory and equipment.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers for business stock", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Channasandra for compatible commercial merchandise, contractor equipment and material storage requirements.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We supply shipping and storage containers across Channasandra (Chansandra), including Channasandra Main Road. This is the Channasandra in east Bengaluru, PIN 560066, sometimes spelt Chennasandra. Each site's approach road, gate width and standing area are looked at before we propose a delivery date.",
+    // Brief §5 and §9: Shigehalli belongs to the Shigehalli page; the Whitefield Road corridor to the
+    // Mahadevapura page. Whitefield, Hope Farm, Kadugodi, Belathur, Siddapura, Ramagondanahalli, Immadihalli and
+    // Hagadur are kept for a possible future Whitefield page and are not listed here.
+    areasInlineLinks: [
+      {
+        before: "For Shigehalli, also spelt Seegehalli, go to",
+        link: { label: "Shigehalli's storage container page", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
+      {
+        before: "Sites along the Whitefield Road corridor are covered on",
+        link: { label: "Mahadevapura's shipping container page", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Corporate Gifting & Employee Welcome Kit Companies",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-channasandra/channasandra-shipping-container-front-view.webp",
+          alt: "Front view of a corrugated steel shipping container: the plain navy-blue end wall with a pale top rail, corner castings and two forklift pockets",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render of a container's closed end wall. Paper packaging and garments need dry conditions, and a standard container is not automatically humidity-controlled.",
+        },
+        paragraphs: [
+          "Corporate gifting companies supply branded merchandise, employee welcome kits, festive gift packages and promotional products for businesses.",
+          "Large corporate orders may involve hundreds of products that must be organised, checked and dispatched according to customer requirements.",
+          "A suitably configured shipping container may provide additional storage space for compatible merchandise and packaging materials.",
+          "This section is about gifting stock assembled for business clients. A car dealership's own accessories and merchandise, a direct-to-consumer brand's finished goods and a stationery shop's retail stock are different applications.",
+        ],
+        // Brief §9: dealership merchandise belongs to the Hebbal page and retail stationery to New Thippasandra.
+        inlineLinks: [
+          {
+            before: "Keeping a car dealership's branded merchandise and delivery gifts near the showroom? See",
+            link: { label: "dealership merchandise and gift-set storage in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+            after: ".",
+          },
+          {
+            before: "Selling notebooks, pens and office supplies over the counter rather than packing them into client kits? Read about",
+            link: { label: "retail stationery stock storage in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Branded Corporate Merchandise Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Branded water bottles." },
+              { text: "Coffee mugs." },
+              { text: "Notebooks." },
+              { text: "Pens." },
+              { text: "Corporate bags." },
+              { text: "Promotional accessories." },
+              { text: "Other compatible merchandise." },
+            ],
+            closing: ["Organise products by category, client and order reference."],
+          },
+          {
+            heading: "Employee Welcome Kit Storage",
+            paragraphs: ["Employee onboarding kits may include:"],
+            bullets: [
+              { text: "Notebooks and stationery." },
+              { text: "Branded bottles." },
+              { text: "T-shirts." },
+              { text: "Bags." },
+              { text: "Employee accessories." },
+              { text: "Printed welcome materials." },
+              { text: "Gift packaging." },
+            ],
+            closing: ["Use labelled shelves and cartons to organise kits according to each client's requirements."],
+          },
+          {
+            heading: "Corporate T-shirt & Hoodie Storage",
+            paragraphs: ["Store compatible garments in suitable protective packaging, organised by:"],
+            bullets: [
+              { text: "Size." },
+              { text: "Colour." },
+              { text: "Design." },
+              { text: "Client." },
+              { text: "Order number." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Protect garments against moisture and unsuitable temperatures."],
+          },
+          {
+            heading: "Gift Box & Packaging Material Storage",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Rigid gift boxes." },
+              { text: "Packaging sleeves." },
+              { text: "Tissue paper." },
+              { text: "Protective fillers." },
+              { text: "Gift bags." },
+              { text: "Labels." },
+              { text: "Suitable packing accessories." },
+            ],
+            closing: ["Keep paper-based packaging away from moisture and condensation."],
+          },
+          {
+            heading: "Client-wise Order Staging",
+            paragraphs: ["Create organised inventory sections according to:"],
+            bullets: [
+              { text: "Corporate client." },
+              { text: "Purchase order." },
+              { text: "Product category." },
+              { text: "Required quantity." },
+              { text: "Packing status." },
+              { text: "Delivery date." },
+            ],
+            closing: ["This can help reduce order-mixing errors during large corporate gifting projects."],
+          },
+          {
+            heading: "Gift Kit Packing & Checking Area",
+            paragraphs: ["Where a container is specifically designed for occupied working use, suitable provisions may include:"],
+            bullets: [
+              { text: "Packing tables." },
+              { text: "Appropriate lighting." },
+              { text: "Ventilation." },
+              { text: "Safe electrical installations." },
+              { text: "Suitable access and emergency exits." },
+              { text: "Organised storage shelves." },
+            ],
+            closing: [
+              "An ordinary storage-only shipping container is not a safe occupied packing workspace without these modifications and the applicable compliance checks.",
+            ],
+          },
+          {
+            heading: "Fragile Corporate Gift Storage",
+            paragraphs: ["Compatible fragile merchandise may include:"],
+            bullets: [
+              { text: "Ceramic mugs." },
+              { text: "Glassware." },
+              { text: "Decorative gift products." },
+              { text: "Other breakable items." },
+            ],
+            closing: ["Use suitable protective packaging and stable lower shelves, and avoid excessive stacking."],
+          },
+          {
+            heading: "Corporate Gift Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Product code." },
+              { text: "Corporate client." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Packing status." },
+              { text: "Product condition." },
+              { text: "Dispatch date." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Corporate Gifting Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Food Products",
+            paragraphs: [
+              "Chocolates, sweets, dry fruits and other food products are not stored in an ordinary storage-only container unless appropriate food-storage conditions are provided.",
+            ],
+          },
+          {
+            heading: "Power Banks & Electronic Gifts",
+            paragraphs: [
+              "Power banks and other battery-powered products may require specialised storage conditions. Follow the manufacturer's instructions, the applicable fire-safety requirements and the battery-storage regulations.",
+              "Climate control alone does not establish safe battery storage, and battery-powered products are not charged or tested inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Candles & Heat-sensitive Products",
+            paragraphs: [
+              "Wax products, candles and certain promotional items may be affected by excessive heat. Verify the manufacturer's storage-temperature requirements.",
+            ],
+            // Brief §9: soap and candle making belongs to the Sahakara Nagar page.
+            inlineLinks: [
+              {
+                before: "Making candles or handmade soap yourself, rather than buying them in for gift kits? See",
+                link: { label: "storage for handmade soap and candle makers in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Perfumes & Aerosols",
+            paragraphs: [
+              "Follow the manufacturer's labels, the safety data sheets and the applicable regulations. Hazardous or flammable products are not stored in an ordinary storage-only container without suitable safeguards.",
+            ],
+          },
+          {
+            heading: "Moisture Protection",
+            paragraphs: [
+              "Paper packaging, clothing and certain merchandise may be affected by condensation. A standard shipping container is not automatically humidity-controlled, so discuss the ventilation, insulation and environmental-control requirements for your stock.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Tensile Structure & Car Parking Shade Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-channasandra/channasandra-shipping-container-rear-view.webp",
+          alt: "Shipping container rear cargo doors with locking bars: two closed navy-blue doors with four vertical steel locking bars, handles and hinges",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render. Measure your longest pipe and largest fabric roll against the clear door opening and the internal length before choosing a size.",
+        },
+        paragraphs: [
+          "Tensile structure contractors install fabric-based shade systems for apartment parking areas, walkways, terraces, play areas and other outdoor spaces.",
+          "These businesses may handle fabric rolls, steel pipes, cables, base plates, anchor bolts and installation equipment.",
+          "A suitably configured shipping container may provide additional storage space for compatible materials and equipment before installation.",
+          "This section covers fabric shade structures. Metal roofing sheets and terrace sheds, playground equipment and outdoor gyms, railings and gates, and scaffolding hire are different applications.",
+        ],
+        // Brief §9: railings and gates and scaffolding hire belong to the Thanisandra Main Road page; playground
+        // equipment and outdoor gyms to Begur Road.
+        inlineLinks: [
+          {
+            before: "Fabricating railings and gates, or hiring out scaffolding, rather than installing shade structures? See",
+            link: { label: "railing, gate and scaffolding stock storage on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+            after: ".",
+          },
+          {
+            before: "Installing the slides and outdoor gym stations that go under a play-area shade? Read about",
+            link: { label: "playground and outdoor gym equipment storage on Begur Road", href: "/cities-we-serve/shipping-container-begur-road" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Tensile Fabric Roll Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Coated tensile fabric." },
+              { text: "Shade fabric rolls." },
+              { text: "Suitable membrane materials." },
+              { text: "Approved shade sail materials." },
+            ],
+            closing: [
+              "Store fabric according to the manufacturer's requirements, on suitable roll holders and protective supports, away from sharp edges, moisture and unsuitable temperatures.",
+            ],
+          },
+          {
+            heading: "Pre-cut Tensile Fabric Panel Storage",
+            paragraphs: ["Organise prepared fabric panels according to:"],
+            bullets: [
+              { text: "Project name." },
+              { text: "Site location." },
+              { text: "Panel dimensions." },
+              { text: "Material type." },
+              { text: "Installation schedule." },
+            ],
+            closing: [
+              "Use protective packaging and the manufacturer's approved rolling or storage methods, and avoid tight folding where it could damage the material.",
+            ],
+          },
+          {
+            heading: "Steel Pipe & Structural Section Storage",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Steel pipes." },
+              { text: "Structural tubes." },
+              { text: "Suitable steel sections." },
+              { text: "Parking shade support components." },
+            ],
+            closing: [
+              "Use appropriately designed side racks and restraints, and verify the container's floor-loading capacity, the material dimensions and safe handling arrangements.",
+            ],
+          },
+          {
+            heading: "Cable & Tensioning Hardware Storage",
+            paragraphs: ["Organise compatible fittings in labelled bins or protective packaging, such as:"],
+            bullets: [
+              { text: "Steel cables." },
+              { text: "Turnbuckles." },
+              { text: "Shackles." },
+              { text: "Clamps." },
+              { text: "Suitable tensioning accessories." },
+            ],
+            closing: ["Follow the manufacturer's inspection and storage instructions for safety-critical components."],
+          },
+          {
+            heading: "Base Plate & Anchor Bolt Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Base plates." },
+              { text: "Anchor bolts." },
+              { text: "Nuts." },
+              { text: "Washers." },
+              { text: "Fasteners." },
+              { text: "Suitable installation accessories." },
+            ],
+            closing: ["Organise them by specification, size and project."],
+          },
+          {
+            heading: "Ladder & Safety Equipment Storage",
+            paragraphs: ["Store suitable installation equipment, including:"],
+            bullets: [
+              { text: "Ladders." },
+              { text: "Harnesses." },
+              { text: "Safety lines." },
+              { text: "Protective helmets." },
+              { text: "Gloves." },
+              { text: "Other approved safety equipment." },
+            ],
+            closing: [
+              "Secure tall or heavy equipment against falling, and follow the manufacturer's requirements for inspection and storage.",
+            ],
+          },
+          {
+            heading: "Site-wise Installation Material Kits",
+            paragraphs: ["Prepare installation materials according to:"],
+            bullets: [
+              { text: "Customer or project." },
+              { text: "Fabric panel dimensions." },
+              { text: "Pipe lengths." },
+              { text: "Required fittings." },
+              { text: "Anchor bolt specifications." },
+              { text: "Installation date." },
+              { text: "Dispatch requirements." },
+            ],
+            closing: ["Keep a checklist, and work through it before materials leave the storage area."],
+          },
+        ],
+      },
+      {
+        heading: "Tensile Structure Material Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Welding, Cutting & Grinding",
+            paragraphs: [
+              "Welding, cutting and grinding are not carried out inside an ordinary storage-only container. Fabrication and other hot work take place in an appropriately designated work area with suitable safety measures.",
+            ],
+          },
+          {
+            heading: "Wet Tensile Fabric",
+            paragraphs: [
+              "Do not store damp fabric in tightly packed rolls. Follow the manufacturer's instructions for cleaning, drying and storage.",
+            ],
+          },
+          {
+            heading: "Sharp Edges",
+            paragraphs: ["Separate fabric rolls from sharp metal components and unprotected fasteners."],
+          },
+          {
+            heading: "Sealants & Cleaning Chemicals",
+            paragraphs: [
+              "Follow the product labels, the safety data sheets and the applicable storage requirements. An ordinary shipping container is not assumed to be suitable for hazardous-material storage.",
+            ],
+          },
+          {
+            heading: "Long Steel Sections",
+            paragraphs: [
+              "A standard 20 ft shipping container typically has an internal length of approximately 5.9 metres, depending on its design. Allow additional clearance for loading and handling.",
+              "Longer materials may require a 40 ft container or direct delivery to the installation site. Verify the actual internal dimensions and door clearances before selecting a container.",
+            ],
+          },
+          {
+            heading: "Heavy Material Storage",
+            paragraphs: [
+              "Check the allowable floor loads, point loads, payload capacity and rack specifications: a container cannot hold unlimited steel inventory.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in Channasandra",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-channasandra/channasandra-shipping-container-top-view.webp",
+          alt: "Top view of a steel shipping container roof: pale corrugated roof panels inside a navy-blue frame, on a concrete yard",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative overhead view of the roof. Plan the spot so that long pipes can be carried straight in once both cargo doors are swung fully open.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including contractor yards, permitted commercial plots, authorised office service areas, suitable storage compounds and approved project sites.",
+          "For apartment or customer-site installations, obtain the required permission from the property owner, the apartment association or the relevant authority.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Overhead cables." },
+          { text: "Tree branches." },
+          { text: "Ground stability." },
+          { text: "Container dimensions." },
+          { text: "Unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Channasandra Main Road may have restricted access during busy periods, so the delivery time is arranged after a suitable route assessment.",
+        ],
+        // Brief §5: restricted-site delivery guidance → the Bellandur page's society-gate and narrow-lane section.
+        inlineLinks: [
+          {
+            before: "Coming in through an apartment gate or along a narrow lane? See our",
+            link: { label: "delivery guidance for restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes in Channasandra",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Volumes are approximate. Exact dimensions, availability, payload limits and internal storage arrangements are confirmed in the quotation for the specific unit.",
+          headers: ["Container size", "Approximate internal volume", "Potential application"],
+          rows: [
+            ["10 ft, when available", "15 m³", "Corporate merchandise and gift packaging"],
+            ["20 ft", "33 m³", "Employee welcome kits, tensile fabric and installation fittings"],
+            ["40 ft", "67 m³", "Longer steel sections, fabric rolls and larger inventory"],
+          ],
+        },
+        closing: [
+          "For fabric and packaging storage, inspect the door seals, the structural condition and the environmental-control requirements.",
+        ],
+        // Brief §7: used-container condition guidance → the Athipattu page's inspection checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Start with our",
+            link: { label: "used container condition checks", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Channasandra",
+        placement: "afterSolutions",
+        paragraphs: ["The price depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving." },
+          { text: "Fabric roll holders." },
+          { text: "Side racks." },
+          { text: "Packing tables, where appropriate." },
+          { text: "Storage bins and drawers." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation." },
+          { text: "Climate control, where it is part of the quotation." },
+          { text: "Locking arrangements." },
+          { text: "Transportation." },
+          { text: "Unloading." },
+          { text: "Site accessibility." },
+          { text: "Current market rates." },
+        ],
+        closing: ["Request an itemised quotation based on the intended application."],
+      },
+      {
+        heading: "Storage Container on Rent in Channasandra",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for corporate festive gifting, year-end merchandise orders and seasonal tensile shade installation projects. Hire runs from one month up to five years. A rental quotation sets out the container size, the hire term, any security deposit, the transport, loading and unloading charges, and the collection arrangements when the hire ends.",
+        ],
+        inlineLinks: [
+          {
+            before: "The sizes offered on hire are listed under our",
+            link: { label: "container hire terms", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Provide inventory or material dimensions." },
+          { text: "Confirm approximate stock quantities and weight." },
+          { text: "Identify fragile or heat-sensitive products." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelving, racks and other modifications." },
+          { text: "Confirm property permission and delivery access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible commercial merchandise and contractor material requirements. For gifting firms and shade installers in Channasandra, the verified options are:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, plus 10 ft when stock allows." },
+          { title: "Storage-oriented modifications", text: "shelf bays, bins and drawers laid out for gift cartons, kit boxes and small fittings, itemised separately in the quote." },
+          { title: "Merchandise shelving", text: "a bay per client, with breakables and heavy cartons on the bottom shelves." },
+          { title: "Fabric roll and steel section racks", text: "roll holders and wall racks sized to your rolls and pipe lengths, rated against the floor and point loads." },
+          { title: "Locking arrangements", text: "the cargo doors take a lock, and the quotation states which one is fitted." },
+          { title: "Ventilation and insulation options", text: "chosen with paper packaging, garments and fabric in mind; climate control, moisture-free storage and hazardous-material certification are not promised." },
+          { title: "Quotation and delivery coordination", text: "an itemised price, then a look at the approach road, the gate and the standing area before a delivery date is fixed." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can corporate gifting companies store merchandise in shipping containers?",
+        answer: "Potentially, when suitable packaging, shelving and environmental conditions are provided.",
+      },
+      {
+        question: "Can employee welcome kits be packed inside a container?",
+        answer:
+          "A container specifically modified for occupied working use may provide a suitable packing area. An ordinary storage-only container is not automatically a safe workspace.",
+      },
+      {
+        question: "Can power banks and electronic gifts be stored inside shipping containers?",
+        answer:
+          "These products may require specialised storage conditions and fire-safety provisions. Follow the manufacturer's requirements and the applicable regulations.",
+      },
+      {
+        question: "How should tensile fabric be stored?",
+        answer:
+          "Follow the manufacturer's instructions, use suitable roll supports and protect the fabric from moisture, sharp edges and unsuitable temperatures.",
+      },
+      {
+        question: "Can steel pipes and parking shade materials be stored inside containers?",
+        answer:
+          "Potentially, provided their dimensions, weight and storage arrangements are compatible with the container's verified capacity.",
+      },
+      {
+        question: "Can welding or cutting be performed inside a standard storage container?",
+        answer:
+          "No. Welding, cutting and grinding are not carried out inside an ordinary storage-only container; they belong in a designated work area with suitable safety measures.",
+      },
+      {
+        question: "Which Channasandra does this page cover?",
+        answer:
+          "This page covers Channasandra in east Bengaluru, PIN 560066, near Hope Farm and Kadugodi. It does not cover the Channasandra near RR Nagar, K Channasandra or B Channasandra.",
+      },
+      {
+        question: "What is the shipping container price in Channasandra?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a shipping container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport arrangements and site accessibility.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Channasandra",
+    ctaText: `Whether you need additional storage for corporate gifts, employee welcome kits, branded merchandise, tensile fabric rolls, steel pipes or parking shade installation materials, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Channasandra (Chansandra) and Channasandra Main Road, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Channasandra",
+      intro:
+        "Pick the container type and quantity, give the Channasandra address or drop a map pin, and tell us whether you are buying or hiring. Say whether it will hold gifting merchandise or tensile structure material, with your longest pipe length and heaviest load, so that racks, shelves and floor loading can be planned.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers leave from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the Bengaluru office is in Electronic City, and the company has no branch, yard or depot in Channasandra. What you receive is what the written quotation describes: the internal and door-opening dimensions, the grade and condition, the floor, point-load and payload limits, every fitting (shelves, roll holders, side racks, packing tables, bins, lights, vents, insulation, climate control or locks), the hire terms for a rented unit, and the delivery, unloading and collection arrangements. Availability varies, and no delivery date is fixed until the quotation confirms it. A container is not described as moisture-free, humidity- or climate-controlled, fire-rated, food-grade, approved for hazardous materials or fit to work in unless an approved specification says so, and none is supplied for hot work such as welding, cutting or grinding, or for charging batteries. All four images are illustrative renders of one navy-blue container; they were not taken in Channasandra and show no delivered or fitted unit, merchandise, gift kits, fabric or steel. Volumes and the 5.9-metre internal length are approximate and are not payload ratings. Corporate gifting firms and tensile structure installers illustrate the kinds of business that might use a container; they are not customers or finished projects, and the places named show where enquiries come from, not addresses already delivered to. The notes on food, batteries, candles, perfumes, aerosols, sealants, fabric, steel, floor loads, placement and permissions are general guidance only, not safety, legal, insurance or engineering advice: the product makers' instructions and the rules of the relevant authorities take precedence.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -31229,6 +31985,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Wholesale toy and tableware stock in Shigehalli, also spelt Seegehalli, has a page of its own:",
         link: { label: "storage containers in Seegehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
+      // Channasandra brief (2026-11-25, §7): Channasandra (Chansandra, PIN 560066) has its own page; this
+      // page's own boundaries and targeting are unchanged.
+      {
+        before: "For storage requirements in Channasandra, also written Chansandra, see our page on",
+        link: { label: "storage containers in Chansandra", href: "/cities-we-serve/shipping-container-channasandra" },
         after: ".",
       },
     ],
@@ -48951,6 +49714,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "storage containers in Vijayanagar", href: "/cities-we-serve/shipping-container-vijayanagar-bengaluru" },
         after: ".",
       },
+      // Kengeri brief (2026-11-25, §14): Kengeri and Kengeri Satellite Town, for drip irrigation dealers and PPE
+      // distributors, are that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "For agricultural irrigation equipment and industrial safety stock storage in Kengeri, see our page on",
+        link: { label: "irrigation and PPE storage containers in Kengeri", href: "/cities-we-serve/shipping-container-kengeri" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -49511,6 +50281,774 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `All containers are dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; there is no yard, depot, showroom or branch in Nagarbhavi or the localities this page names. The written quotation defines each unit: its internal and door-opening sizes, grade and condition, floor-loading limit, any racks, shelves, drawers, bins, cases, bays, cages, compartments, lights, vents, insulation, environmental controls or locks, the hire terms where it is rented, and how it is delivered, unloaded and collected. Container stock changes, so a delivery date or time holds only after the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as gas-industry certified, fire-rated, theft-proof or climate-controlled, no temperature or humidity level is promised, and a container is not supplied to hold gas cylinders, fuel, flammable primers, paints, solvents or food, or as a workshop for cutting, welding, brazing or pressure testing. Portable Office Cabin supplies containers and agreed fittings only; it does not run student storage, hold anyone's belongings, insure them or manage access. The five pictures are illustrative images from our existing catalogue imagery, not photographs taken in Nagarbhavi; none shows a delivered or fitted unit, gas installation stock or students' belongings. Volumes are approximate and are not payload ratings. PNG contractors, hostels, PG operators and student groups are named as possible uses, not as customers or completed projects, and the localities listed show where enquiries are accepted, not confirmed delivery addresses. Notes on gas installation, cylinders, fuel, students' belongings, batteries, valuables, fire safety, placement and permissions are general information, not safety, legal, insurance or engineering advice; follow the instructions of the gas distribution company, the manufacturers and the authorities concerned.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN KENGERI (west Bengaluru) — stock storage for farm drip irrigation and
+   * sprinkler dealers (drip lateral and inline pipe coils, HDPE and PVC pipes, filters and valves, drippers
+   * and fittings, sprinklers and rain guns, farm-wise installation kits, stock register) and for industrial
+   * safety equipment and PPE distributors (safety shoes, helmets, gloves and accessories, high-visibility
+   * and protective clothing, harnesses and lanyards, respirator cartridges and first-aid kits, customer-wise
+   * order staging, inventory register).
+   *
+   * Owner brief of 2026-11-25 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — Shipping & Storage
+   * Containers in Kengeri" + "show animation in the page and complete the page"): meta title, meta
+   * description, H1, keywords, section order, H2 / H3 headings, sizes table, the nine ordering steps and the
+   * nine FAQs are the brief's, and so is the copy, lightly edited for flow and British spelling (organise,
+   * fertilisers, pressurised, itemised). The template has no separate Open Graph title or description:
+   * og:title / og:description use the meta title and description, as on every city page. The visible
+   * breadcrumb and the BreadcrumbList are the city-page template's (Home › Cities We Serve › this page), as
+   * on every sibling, not the brief's "Home → Shipping Containers → Kengeri". The brief's notes to the
+   * implementer ("Do not recommend storing flammable solvents…", "Do not treat an ordinary shipping
+   * container as a dedicated agricultural chemical storage facility", "Do not claim that a shipping
+   * container is completely rodent-proof", "Do not recommend ordinary storage-only containers for gas
+   * cylinders…", "Do not recommend charging or testing…", "Do not store expired products…", "Do not place
+   * containers on public roads…", "Do not guarantee early-morning delivery…", "Do not invent prices…",
+   * "Conditional section…", "Do not guarantee rodent-proof storage…", "Use verified company contact
+   * numbers…") are instructions, not page copy: where one carries a fact for the reader it is reworded as a
+   * plain statement ("flammable solvents are not stored in an ordinary storage-only container", "an
+   * ordinary shipping container is not a dedicated agricultural chemical store", "no shipping container is
+   * offered as completely rodent-proof", "early-morning delivery is offered only after the transport
+   * arrangements are confirmed"); otherwise it is left out. FAQ 7's answer is reworded the same way. The
+   * route follows the site convention (/cities-we-serve/…), not the brief's root slug. The tagline,
+   * captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here); the
+   * 10 ft row keeps the brief's "if offered" as "if available"; racks, shelving, bins, hooks, lighting,
+   * ventilation, insulation and locks are layout options and price factors, never stock items or guaranteed
+   * conditions. Left out of the keywords: "shipping container manufacturers in Kengeri" (nothing is made in
+   * Kengeri; file rule above), "storage container near me in Kengeri" and the optional Kannada terms (the
+   * page is in English). No Product JSON-LD: city pages carry no prices (file rule) and a Product block
+   * without offers earns no rich result, so the Service JSON-LD (no offers; areaServed "Kengeri, Bengaluru,
+   * Karnataka", not an address), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers" → the cargo category) + heroCta.
+   *   Drip irrigation dealers, "Irrigation Equipment Storage Safety", PPE distributors and "PPE Storage
+   *     Safety Requirements" → four afterIntro extra sections with the brief's H3s as `subsections`.
+   *   Placement, delivery to agricultural sites, sizes, price, rent and "How to Order" (ordered, nine
+   *     steps) → afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas We Serve" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's nine.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §14, only where the destination exists and supports the anchor; the six priority links
+   * plus three of the candidates, not every candidate): intro → the cargo category; irrigation section →
+   * "landscaping equipment storage containers on Bannerghatta Road" (its "Stores for Landscapers, Nurseries
+   * & Garden Contractors" section: garden irrigation, not farm installations), "agricultural supply storage
+   * containers in Vidyaranyapura" (its "Storage Containers for Seed & Agri-Input Dealers" section) and
+   * "borewell pump and cable drum storage on Kanakapura Road" (its "Stores for Borewell & Water Contractors"
+   * section); delivery → "restricted-site delivery and placement notes" (the Bellandur page's society-gate
+   * and narrow-lane section); sizes → "what to check on a used shipping container": the brief's
+   * /shipping-container-chennai is not a route, so it points to the Athipattu page's "Used Container
+   * Inspection" checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas →
+   * RR Nagar, Nagarbhavi and Mysore Road. NOT linked, because no such page or section exists: Uttarahalli
+   * (no shipping page; not named), the Shigehalli parking and traffic safety equipment application (the
+   * live Shigehalli page covers toys and crockery) and /shipping-container-chennai. Not linked by choice:
+   * Krishnagiri farm inputs (outside Bengaluru, and Vidyaranyapura already marks the agri-input line) and
+   * the Shivamogga PPE shop cabin (a retail kiosk about 280 km away, not a storage need here). Anchors
+   * differ from the siblings' anchors for the same targets. Inbound: the RR Nagar and Nagarbhavi pages'
+   * areas sections (one `areasInlineLinks` item each, at the end of each list; their boundaries and
+   * targeting unchanged), the Karnataka shipping hub ("Shipping Containers in Kengeri"), the cargo
+   * category's location links ("Storage containers in Kengeri") and every Karnataka shipping page's nearby
+   * block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kengeri, Kengeri Satellite Town (Kengeri
+   * Upanagara, its other name), Kengeri Hobli, Kommaghatta, Hemmigepura, Dubasipalya and Kodipalya, for
+   * farm drip irrigation and sprinkler dealers' stock and industrial safety equipment and PPE distributors'
+   * stock. Named only in the pointer sentences to their own pages: Rajarajeshwari Nagar and Ideal Homes
+   * Township (RR Nagar page). Mysore Road is named only as a road (delivery note) and in the link to its
+   * page. Not named at all: Kenchenahalli, Pattanagere, Halagevaderahalli and Gattigere (RR Nagar page),
+   * Channasandra (neither the east Bengaluru locality nor the one near RR Nagar), Challaghatta
+   * (Murugeshpalya page), Uttarahalli, Subramanyapura and Gubbalala (no shipping page; kept apart), Sir MV
+   * Layout (ambiguous), Kumbalgodu, Ullal, Mallathahalli and Papareddypalya (kept for possible future
+   * pages) and NICE Road. Kept apart from landscaping and garden irrigation (Bannerghatta Road), seed and
+   * agri-input dealers (Vidyaranyapura), borewell pumps and cable drums (Kanakapura Road), shoot houses and
+   * student motorsport (RR Nagar), towing equipment and used auto parts (Mysore Road), PNG contractors and
+   * student storage (Nagarbhavi) and safety equipment retail shop cabins (Shivamogga). "Bengaluru" stays out
+   * of the title, as the brief asks; the description and intro say "west Bengaluru", and the geo meta and
+   * the Service JSON-LD's areaServed carry "Kengeri, Bengaluru, Karnataka".
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/hipping & Storage Containers in
+   * Kengeri city page/hipping & Storage Containers in Kengeri/cabin (1–5).webp", no EXIF / XMP / ICC; none
+   * byte-identical to an image already in the repo) of one sage-green corrugated steel container. All five
+   * are used, VP8 data copied byte-for-byte with an XMP dc:title / dc:description marking each as an
+   * illustrative render (no creator, copyright, GPS, camera or date set): three-quarter view with closed
+   * cargo doors (3, 2336 × 1760) = hero / og:image (the brief's hero filename and alt); empty interior seen
+   * through the open doors (1) = irrigation section, captioned as empty; cargo doors straight on (4) = PPE
+   * section; roof seen from above (2) = placement; closed end wall (5) = sizes. The blank end is called the
+   * "end wall", not "front" or "back" (on a container the door end is the rear, which readers would not
+   * expect). No image shows pipes, coils, filters, sprinklers, PPE, racks or shelves, so the brief's
+   * twenty-one application image slots are not used, and no alt text, caption or filename claims those
+   * items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-kengeri",
+    city: "Kengeri",
+    listTitle: "Shipping & Storage Containers in Kengeri",
+    metaTitle: "Shipping Container in Kengeri | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Kengeri, west Bengaluru, for drip irrigation dealers storing pipes and fittings, and PPE suppliers storing safety equipment.",
+    keywords:
+      "shipping container in Kengeri, cargo container Kengeri, storage container Kengeri, storage container Kengeri Satellite Town, storage container Kengeri Upanagara, storage container Kengeri Hobli, storage container Kommaghatta, storage container Hemmigepura, storage container Dubasipalya, storage container Kodipalya, used shipping container Kengeri, shipping container for sale in Kengeri, shipping container price in Kengeri, storage container price in Kengeri, 20 ft shipping container in Kengeri, 40 ft shipping container in Kengeri, storage container for rent in Kengeri, drip irrigation dealer storage container, drip irrigation pipe storage, sprinkler equipment storage container, HDPE pipe storage container, irrigation fittings storage, safety equipment distributor storage container, PPE stock storage, industrial safety equipment storage, safety shoe storage container, safety harness storage",
+    // Approximate point between old Kengeri and Kengeri Satellite Town, west Bengaluru (rounded; for the
+    // owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Kengeri, Bengaluru, Karnataka, India",
+      position: "12.9120;77.4840",
+      icbm: "12.9120, 77.4840",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 2336 × 1760 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Bannerghatta Road, Vidyaranyapura, Kanakapura Road, Bellandur, Athipattu, Rajarajeshwari Nagar,
+    // Nagarbhavi and Mysore Road are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-kengeri/shipping-container-kengeri.webp",
+      alt: "Corrugated steel shipping container exterior suitable for commercial storage: a sage-green container with closed cargo doors and vertical locking bars, on a paved yard",
+      width: 2336,
+      height: 1760,
+      caption:
+        "Illustrative render, not a photograph from Kengeri or of a container we have delivered.",
+    },
+
+    h1: "Shipping & Storage Containers in Kengeri",
+    tagline:
+      "A lockable store for a drip irrigation dealer's pipe coils, filters and fittings, or a PPE distributor's safety shoes, helmets, gloves and harnesses.",
+    intro: [
+      "Kengeri sits on the western edge of Bengaluru, where established residential layouts meet farmland, workshops and industrial businesses.",
+      "Kengeri Satellite Town, also known as Kengeri Upanagara, is a settled residential and commercial area, while the villages of Kengeri Hobli still have farms, coconut plantations and other cultivation.",
+      "That combination creates storage needs for farm irrigation equipment dealers and for industrial safety equipment distributors.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Kengeri for compatible agricultural irrigation stock, industrial safety products and commercial equipment.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Portable Office Cabin supplies shipping and storage containers across Kengeri, Kengeri Satellite Town (Kengeri Upanagara), Kengeri Hobli, Kommaghatta, Hemmigepura, Dubasipalya and Kodipalya. Farm roads here can be narrow or soft after rain and some older streets are tight, so each address is checked for its route, gate width and firm ground before a delivery date is suggested.",
+    // Brief §9 and §15: Rajarajeshwari Nagar and its layouts belong to the RR Nagar page, Nagarbhavi to the
+    // Nagarbhavi page and the city stretch of Mysore Road to the Mysore Road page. Uttarahalli has no
+    // shipping page, so it is not named.
+    areasInlineLinks: [
+      {
+        before: "Closer to the city, Rajarajeshwari Nagar and Ideal Homes Township are covered on our page on",
+        link: { label: "shipping and storage containers in Rajarajeshwari Nagar", href: "/cities-we-serve/shipping-container-rajarajeshwari-nagar" },
+        after: ".",
+      },
+      {
+        before: "Nagarbhavi, further north-east, has a page of its own:",
+        link: { label: "shipping containers in Nagarbhavi", href: "/cities-we-serve/shipping-container-nagarbhavi" },
+        after: ".",
+      },
+      {
+        before: "Workshops and yards on the city stretch of the highway are covered on our page for",
+        link: { label: "shipping containers on Mysore Road", href: "/cities-we-serve/shipping-container-mysore-road" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Drip Irrigation & Sprinkler Dealers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kengeri/kengeri-shipping-container-interior.webp",
+          alt: "Empty shipping container interior with corrugated steel walls and flooring, seen through the open cargo doors, with a ribbed ceiling and a plain board floor",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of an empty interior. Pipe racks, pallets, shelves and bins are fitted only where your quotation lists them; none are shown here.",
+        },
+        paragraphs: [
+          "Drip irrigation dealers supply pipes, drippers, filters, sprinklers and installation accessories used in farms, orchards and plantations. Agricultural irrigation projects often need large quantities of pipe, coils and small fittings to be available before installation begins.",
+          "A suitably configured shipping container may provide additional organised storage space for compatible irrigation equipment and materials.",
+          "This section is about a dealer's stock for farm installations. Garden irrigation for landscaping work, seeds and other agri-inputs, and borewell pumps are separate applications with pages of their own.",
+        ],
+        // Brief §14 and §15: landscaping and garden irrigation belong to the Bannerghatta Road page, seed and
+        // agri-input dealers to Vidyaranyapura and borewell pumps and cable drums to Kanakapura Road.
+        inlineLinks: [
+          {
+            before: "Supplying sprinklers and drip kits to landscaping projects and nurseries rather than farms? See",
+            link: { label: "landscaping equipment storage containers on Bannerghatta Road", href: "/cities-we-serve/shipping-container-bannerghatta-road" },
+            after: ".",
+          },
+          {
+            before: "Selling seeds, sprayers and other agri-inputs over the counter? Read about",
+            link: { label: "agricultural supply storage containers in Vidyaranyapura", href: "/cities-we-serve/shipping-container-vidyaranyapura" },
+            after: ".",
+          },
+          {
+            before: "Drilling borewells or installing submersible pumps rather than drip systems? See",
+            link: { label: "borewell pump and cable drum storage on Kanakapura Road", href: "/cities-we-serve/shipping-container-kanakapura-road" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Drip Lateral & Inline Pipe Coil Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Drip lateral pipe coils." },
+              { text: "Inline drip irrigation pipes." },
+              { text: "Irrigation tubing." },
+              { text: "Micro-irrigation pipes." },
+              { text: "Suitable flexible water distribution pipes." },
+            ],
+            closing: [
+              "Store coils on suitable pallets or supports, and protect them from direct sunlight, excessive heat, sharp edges and unsuitable storage conditions.",
+              "Organise coils by diameter, length and product specification.",
+            ],
+          },
+          {
+            heading: "HDPE & PVC Irrigation Pipe Storage",
+            paragraphs: ["Suitable inventory may include:"],
+            bullets: [
+              { text: "HDPE mains pipes." },
+              { text: "PVC irrigation pipes." },
+              { text: "Water distribution pipes." },
+              { text: "Irrigation sub-main pipes." },
+              { text: "Compatible pipe accessories." },
+            ],
+            closing: [
+              "Use appropriately designed side racks and restraints, and organise pipes by diameter, length and specification.",
+              "Verify the actual container dimensions before selecting a container size.",
+            ],
+          },
+          {
+            heading: "Irrigation Filter & Valve Storage",
+            paragraphs: ["Compatible irrigation equipment may include:"],
+            bullets: [
+              { text: "Screen filters." },
+              { text: "Disc filters." },
+              { text: "Venturi injectors." },
+              { text: "Irrigation valves." },
+              { text: "Suitable pressure regulators." },
+              { text: "Filter accessories." },
+            ],
+            closing: ["Use protective packaging and labelled shelves, and separate equipment by model, size and project requirement."],
+          },
+          {
+            heading: "Dripper & Irrigation Fitting Storage",
+            paragraphs: ["Organise small irrigation accessories such as:"],
+            bullets: [
+              { text: "Drippers." },
+              { text: "Emitters." },
+              { text: "Connectors." },
+              { text: "End caps." },
+              { text: "Elbows." },
+              { text: "Tees." },
+              { text: "Couplings." },
+              { text: "Suitable irrigation fittings." },
+            ],
+            closing: ["Labelled bins and drawers make each item easier to identify."],
+          },
+          {
+            heading: "Sprinkler & Rain Gun Storage",
+            paragraphs: ["Compatible equipment may include:"],
+            bullets: [
+              { text: "Agricultural sprinklers." },
+              { text: "Rain guns." },
+              { text: "Sprinkler risers." },
+              { text: "Suitable sprinkler nozzles." },
+              { text: "Sprinkler fittings and accessories." },
+            ],
+            closing: [
+              "Organise products by model, specification and installation requirement, and protect delicate components against physical damage.",
+            ],
+          },
+          {
+            heading: "Farm-wise Irrigation Installation Kits",
+            paragraphs: ["Prepare installation materials for each farm project, with records covering:"],
+            bullets: [
+              { text: "Customer or farm name." },
+              { text: "Project reference." },
+              { text: "Pipe diameter." },
+              { text: "Required pipe length." },
+              { text: "Filter specifications." },
+              { text: "Sprinkler quantity." },
+              { text: "Fitting quantities." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["This helps a dealer gather each farm's materials before they are transported to the installation site."],
+          },
+          {
+            heading: "Irrigation Equipment Stock Register",
+            paragraphs: ["Maintain an inventory register covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Product code." },
+              { text: "Available quantity." },
+              { text: "Pipe diameter." },
+              { text: "Pipe length." },
+              { text: "Storage location." },
+              { text: "Reserved stock." },
+              { text: "Dispatch status." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Irrigation Equipment Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Standard 6 Metre PVC Pipes",
+            paragraphs: [
+              "A standard 20 ft shipping container generally has an internal length of approximately 5.9 metres, so standard 6 metre pipes may not fit lengthwise inside it.",
+              "A 40 ft container may be more suitable for longer pipes, subject to its actual dimensions, door clearances and loading arrangements.",
+            ],
+          },
+          {
+            heading: "Solvent Cement & Primers",
+            paragraphs: [
+              "Solvent cement, primers and other flammable products need appropriate storage arrangements. Follow the manufacturer's labels, the safety data sheets and the applicable fire-safety requirements.",
+              "Flammable solvents are not stored in an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Fertilisers & Agricultural Chemicals",
+            paragraphs: [
+              "An ordinary shipping container is not a dedicated agricultural chemical store. Follow each product's storage requirements and the applicable regulations.",
+            ],
+          },
+          {
+            heading: "Rodent Protection",
+            paragraphs: [
+              "Rodents may damage irrigation tubing and flexible pipes. Keep coils packed and raised off the floor, maintain sound door seals and suitable pest-control arrangements, and do not keep food alongside irrigation equipment.",
+              "No shipping container is offered as completely rodent-proof.",
+            ],
+          },
+          {
+            heading: "Temperature & Material Protection",
+            paragraphs: [
+              "Plastic pipes and irrigation accessories may have manufacturer-specific storage-temperature requirements. Check ventilation, insulation and environmental conditions where they matter.",
+            ],
+          },
+          {
+            heading: "Heavy Pipe Coil Storage",
+            paragraphs: [
+              "Check the container's floor-loading capacity, how the load will be distributed and how the coils will be handled safely before storing large quantities of pipe coils.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Industrial Safety Equipment & PPE Distributors",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-kengeri/kengeri-shipping-container-cargo-doors.webp",
+          alt: "Steel cargo doors with vertical locking bars on a sage-green shipping container, closed and seen straight on, with handles and corner castings",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render. Footwear cartons and loaded pallets must pass through this door opening, so measure them against it, not only against the floor.",
+        },
+        paragraphs: [
+          "Industrial safety equipment distributors supply personal protective equipment to factories, workshops, warehouses and construction sites. They may need additional storage for safety footwear, helmets, gloves, protective clothing and fall-protection equipment.",
+          "A suitably configured shipping container may provide organised storage space for compatible PPE inventory.",
+        ],
+        subsections: [
+          {
+            heading: "Industrial Safety Shoe Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Industrial safety shoes." },
+              { text: "Protective work boots." },
+              { text: "Suitable safety footwear." },
+              { text: "Replacement footwear stock." },
+            ],
+            closing: [
+              "Arrange cartons on suitable shelves by model, size, product specification, customer order and stock availability.",
+              "Follow the manufacturer's requirements for temperature, humidity and storage conditions.",
+            ],
+          },
+          {
+            heading: "Industrial Safety Helmet Storage",
+            paragraphs: ["Organise safety helmets by:"],
+            bullets: [
+              { text: "Colour." },
+              { text: "Model." },
+              { text: "Size." },
+              { text: "Protection classification." },
+              { text: "Customer requirement." },
+            ],
+            closing: [
+              "Protect helmets against direct sunlight, excessive heat and physical damage, and avoid stacking or pressure that could deform them.",
+            ],
+          },
+          {
+            heading: "Industrial Gloves & Protective Accessories",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Industrial gloves." },
+              { text: "Protective eyewear." },
+              { text: "Earplugs." },
+              { text: "Suitable masks." },
+              { text: "Other compatible personal protective equipment." },
+            ],
+            closing: [
+              "Use labelled bins or the manufacturer's protective packaging, and separate products by application and specification.",
+            ],
+          },
+          {
+            heading: "High-Visibility Jackets & Protective Clothing",
+            paragraphs: ["Suitable inventory may include:"],
+            bullets: [
+              { text: "Reflective safety jackets." },
+              { text: "High-visibility vests." },
+              { text: "Industrial coveralls." },
+              { text: "Suitable protective workwear." },
+            ],
+            closing: [
+              "Organise by size, type and customer requirement, and protect fabric products against moisture, contamination and unsuitable temperatures.",
+            ],
+          },
+          {
+            heading: "Safety Harness & Lanyard Storage",
+            paragraphs: [
+              "Fall-protection equipment may include safety harnesses, lanyards, approved safety lines and compatible fall-protection accessories. Store it according to the manufacturer's instructions, protected against:",
+            ],
+            bullets: [
+              { text: "Direct sunlight." },
+              { text: "Excessive heat." },
+              { text: "Moisture." },
+              { text: "Chemicals." },
+              { text: "Sharp edges." },
+              { text: "Mechanical damage." },
+            ],
+            closing: [
+              "Maintain inspection records and equipment identification, and keep damaged, expired or retired equipment apart from usable stock.",
+            ],
+          },
+          {
+            heading: "Respirator Cartridge & First-aid Kit Storage",
+            paragraphs: ["Compatible products may include:"],
+            bullets: [
+              { text: "Respirator cartridges." },
+              { text: "Suitable protective masks." },
+              { text: "First-aid kits." },
+              { text: "Approved replacement accessories." },
+            ],
+            closing: [
+              "Follow the manufacturer's storage requirements, keep expiry-date records and rotate stock. Expired products are kept apart from approved dispatch inventory.",
+            ],
+          },
+          {
+            heading: "Customer-wise PPE Order Staging",
+            paragraphs: ["Organise orders by:"],
+            bullets: [
+              { text: "Customer name." },
+              { text: "Factory or project site." },
+              { text: "Purchase order." },
+              { text: "Product specification." },
+              { text: "Required quantity." },
+              { text: "Size requirements." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Check each order against a checklist before the materials are dispatched."],
+          },
+          {
+            heading: "Industrial Safety Equipment Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Product model." },
+              { text: "Size." },
+              { text: "Quantity." },
+              { text: "Batch number, where applicable." },
+              { text: "Expiry date, where applicable." },
+              { text: "Inspection status." },
+              { text: "Customer reservation." },
+              { text: "Storage location." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "PPE Storage Safety Requirements",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Pressurised Equipment",
+            paragraphs: [
+              "Gas cylinders, pressurised equipment and bulk fire extinguisher stock are not kept in an ordinary storage-only container without appropriate storage and safety provisions. Follow the applicable regulations and the manufacturer's requirements.",
+            ],
+          },
+          {
+            heading: "Battery-powered Safety Equipment",
+            paragraphs: [
+              "Gas detectors and other battery-powered safety devices may need specific storage conditions. Charging or testing them inside an ordinary storage-only container is not recommended.",
+            ],
+          },
+          {
+            heading: "Expiry-date Monitoring",
+            paragraphs: [
+              "Check the manufacturer's expiry dates and shelf-life requirements for respirator cartridges, masks, first-aid supplies and other relevant equipment.",
+            ],
+          },
+          {
+            heading: "Fall-protection Equipment",
+            paragraphs: [
+              "Storage does not replace the required inspections of harnesses, lanyards and other safety-critical equipment. Follow the manufacturer's requirements and the applicable inspection procedures.",
+            ],
+          },
+          {
+            heading: "Heat & Humidity Protection",
+            paragraphs: [
+              "An ordinary shipping container is not automatically temperature-controlled. Check that the storage conditions suit helmets, footwear, respirators, protective clothing and other heat-sensitive equipment.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in Kengeri",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kengeri/kengeri-shipping-container-top-view.webp",
+          alt: "Top view showing the steel shipping container roof: a sage-green container seen from directly above on paving between planted beds",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative overhead view. A farm plot or dealer's yard needs a firm, level patch this long, plus clear space at the door end for unloading pipe and cartons.",
+        },
+        paragraphs: ["Shipping containers may be placed on suitable authorised premises, including:"],
+        bullets: [
+          { text: "Irrigation equipment dealer yards." },
+          { text: "Agricultural supply warehouses." },
+          { text: "Authorised farm premises." },
+          { text: "Industrial supplier compounds." },
+          { text: "Commercial storage plots." },
+          { text: "Workshop premises." },
+          { text: "Other suitable private land." },
+        ],
+        closing: [
+          "Obtain the property owner's permission and the applicable local approvals before placement. Containers are not placed on public roads or footpaths without the required authorisation.",
+        ],
+      },
+      {
+        heading: "Delivery to Agricultural Sites",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Farm approaches may have narrow roads, uneven surfaces or soft ground, particularly during the monsoon.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Road width." },
+          { text: "Ground stability." },
+          { text: "Gate clearance." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Overhead cables." },
+          { text: "Tree branches." },
+          { text: "Loading and unloading requirements." },
+          { text: "A suitable container foundation or supports." },
+          { text: "Property-owner permission." },
+          { text: "Applicable land-use requirements." },
+        ],
+        closing: [
+          "Mysore Road can be congested, and some older Kengeri streets have restricted access, so the delivery time is arranged once the route has been checked. Early-morning delivery is offered only after the transport arrangements are confirmed.",
+        ],
+        // Brief §5: restricted-site delivery guidance → the Bellandur page's society-gate and narrow-lane section.
+        inlineLinks: [
+          {
+            before: "Is the way in a narrow lane or a shared gate? Read our",
+            link: { label: "restricted-site delivery and placement notes", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " before choosing a spot.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes in Kengeri",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-kengeri/kengeri-shipping-container-end-wall.webp",
+          alt: "Closed end wall of a sage-green shipping container showing its corrugated steel construction between the corner posts and castings",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render of the closed end. A typical 20 ft container is about 5.9 m long inside, so standard 6 metre pipes need a longer unit.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Confirm the exact dimensions, door openings, available sizes and payload capacity of the specific unit quoted to you.",
+          headers: ["Container size", "Approximate internal volume", "Typical application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Gloves, helmets, irrigation fittings and smaller stock"],
+            ["20 ft", "33 m³", "Drip pipe coils, filters, valves, PPE inventory and shelving"],
+            ["40 ft", "67 m³", "Standard 6 metre PVC pipes, bulk pipe coils and larger inventory"],
+          ],
+        },
+        closing: [
+          "A standard 40 ft container may accommodate longer irrigation pipes, subject to its actual dimensions and loading arrangements.",
+          "Safety footwear, steel racks and large pipe coils can create significant floor loads, so load distribution and floor capacity are verified before the specification is confirmed.",
+        ],
+        // Brief §6: used-container inspection guidance → the Athipattu page's checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Go through",
+            link: { label: "what to check on a used shipping container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " before you buy.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Kengeri",
+        placement: "afterSolutions",
+        paragraphs: ["The price of a shipping container in Kengeri depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition." },
+          { text: "Container grade." },
+          { text: "One-trip, cargo-worthy or wind-and-watertight condition, where offered." },
+          { text: "Heavy-duty shelving." },
+          { text: "Irrigation pipe racks." },
+          { text: "PPE storage shelves." },
+          { text: "Storage bins and drawers." },
+          { text: "Suitable equipment hooks." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation, where required." },
+          { text: "Locking arrangements." },
+          { text: "Transportation." },
+          { text: "Loading and unloading." },
+          { text: "Agricultural site accessibility." },
+          { text: "Current market rates." },
+        ],
+        closing: [
+          "Portable Office Cabin can provide an itemised quotation based on the intended storage application and delivery requirements.",
+        ],
+      },
+      {
+        heading: "Storage Container on Rent in Kengeri",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Agricultural irrigation dealers may need additional storage before the summer or planting season, and industrial safety equipment distributors when supplying a new construction project or a factory's requirements.",
+          "Hire terms run from one month to five years. Your rental quotation sets out the size, the term, any security deposit, the transport and unloading charges, and the collection arrangements when the hire ends.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire options and sizes are on our",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain your intended storage application." },
+          { text: "Provide the quantity and dimensions of your inventory." },
+          { text: "Confirm the estimated stock weight." },
+          { text: "Identify products requiring special environmental conditions." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss pipe racks, shelving, bins and other modifications." },
+          { text: "Confirm property permission and delivery access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible agricultural irrigation equipment and industrial safety stock. For dealers and distributors in Kengeri, that covers:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, plus 10 ft when stock allows." },
+          { title: "Storage-oriented modifications", text: "racks, shelves, bins and hooks planned around coils, cartons and harnesses, each priced as its own line." },
+          { title: "Irrigation pipe rack provisions", text: "side racks and restraints for straight pipes and pallets for coils, matched to the unit's length and floor." },
+          { title: "Heavy-duty shelving and PPE stock organisation", text: "shelves laid out by model and size, with space kept for staging customer orders." },
+          { title: "Locking and ventilation options", text: "cargo-door locks and any vents listed line by line in your quotation." },
+          { title: "Farm-site delivery assessment", text: "the road, the gate, the ground and any overhead cables checked before a date is agreed." },
+          { title: "Itemised quotation and delivery coordination", text: "every fitting, transport and unloading charge listed separately." },
+        ],
+        closing: [
+          "No unit is offered as rodent-proof, climate-controlled or with unlimited load capacity, and delivery is not immediate unless the quotation confirms it.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can drip irrigation dealers store pipes inside shipping containers?",
+        answer:
+          "Yes, provided the pipe dimensions, weight, environmental requirements and storage arrangements are compatible with the selected container. Pipe coils may be stored on suitable pallets, while straight pipes may require appropriately designed racks.",
+      },
+      {
+        question: "Can standard 6 metre PVC pipes fit inside a 20 ft shipping container?",
+        answer:
+          "Standard 6 metre pipes generally do not fit lengthwise inside a typical 20 ft container. A 40 ft container may be more suitable, subject to verified dimensions.",
+      },
+      {
+        question: "Can rats damage drip irrigation pipes inside a container?",
+        answer:
+          "Rodents may damage flexible irrigation pipes. Suitable packaging, sound door seals, raised storage and pest-control arrangements can help reduce the risk.",
+      },
+      {
+        question: "Can a shipping container be placed on agricultural land?",
+        answer:
+          "Potentially, subject to landowner permission, applicable land-use regulations, suitable ground conditions and delivery access.",
+      },
+      {
+        question: "Can PPE distributors store safety shoes and helmets inside containers?",
+        answer: "Yes, where suitable storage arrangements and the manufacturer-specified environmental conditions are maintained.",
+      },
+      {
+        question: "How should safety harnesses be stored?",
+        answer:
+          "Follow the manufacturer's instructions and protect harnesses against chemicals, sharp edges, moisture, excessive heat and direct sunlight.",
+      },
+      {
+        question: "Can fire extinguishers and gas cylinders be stored inside an ordinary container?",
+        answer:
+          "An ordinary storage-only container is not assumed to be suitable for pressurised equipment. Appropriate safety provisions and regulatory compliance must be established first.",
+      },
+      {
+        question: "What is the shipping container price in Kengeri?",
+        answer: "Pricing depends on container size, condition, modifications, transportation and site accessibility.",
+      },
+      {
+        question: "How quickly can a shipping container be delivered?",
+        answer: "Delivery depends on container availability, customisation, transportation arrangements and site conditions.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Kengeri",
+    ctaText: `Whether you need additional storage for drip irrigation pipes, sprinklers, agricultural fittings, industrial safety shoes, helmets, gloves or fall-protection equipment, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Serving Kengeri, Kengeri Satellite Town, Kengeri Hobli, Kommaghatta, Hemmigepura, Dubasipalya and Kodipalya.`,
+    // Brief §12: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Kengeri",
+      intro:
+        "Pick the container type and quantity, share the Kengeri site address or a map pin, and tell us if you are buying or hiring. Mention whether you are storing irrigation pipe and fittings or PPE, your longest pipe length, the rough stock weight and anything that needs special conditions; racks, shelving and floor load are planned from that.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Every container is dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; there is no yard, depot, showroom or branch in Kengeri or the villages this page names. Each unit is defined by its written quotation: internal and door-opening sizes, grade and condition, floor-loading and payload limits, any racks, shelving, bins, hooks, lights, vents, insulation or locks, the hire terms where it is rented, and how it is delivered, unloaded and collected. Stock changes, so a delivery date or an early-morning slot holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as rodent-proof, temperature- or humidity-controlled, fire-rated or certified for hazardous materials, and a container is not supplied as a store for gas cylinders, pressurised equipment, bulk fire extinguishers, solvent cement, primers or other flammable solvents, fertilisers or agricultural chemicals, or for charging battery-powered devices. The five pictures are illustrative renders, not photographs taken in Kengeri; none shows a delivered or fitted unit, irrigation equipment or PPE stock. Volumes are approximate and are not payload ratings. Irrigation dealers and PPE distributors are named as possible uses, not as customers or completed projects, and the localities listed show where enquiries are accepted, not confirmed delivery addresses. Notes on pipe lengths, solvents, chemicals, rodents, pressurised and battery-powered equipment, expiry dates, fall-protection inspection, floor loading, placement and permissions are general information, not safety, legal, insurance or engineering advice; follow the manufacturers' instructions and the requirements of the authorities concerned.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
