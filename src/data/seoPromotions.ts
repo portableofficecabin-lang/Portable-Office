@@ -795,6 +795,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // New Thippasandra (retail stationery and kitchenware stock; owner brief 2026-11-22), appended so the
     // live links keep their positions.
     { name: "Shipping Containers in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
+    // HRBR Layout (wedding and party wear rental stock; children's sports coaching academy equipment;
+    // owner brief 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
     // Kodigehalli (tree care crews' saws, ropes and safety gear; roofing contractors' sheets, sections and
     // fixings; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },

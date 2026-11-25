@@ -57876,6 +57876,12 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "construction equipment storage in Thanisandra", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
         after: ".",
       },
+      // HRBR Layout brief (2026-11-22, §4 and §5): the neighbouring HRBR Layout page; this page's targeting is unchanged.
+      {
+        before: "Wedding-wear rental stores and children's sports academies just east of here, in HRBR Layout, have a page on",
+        link: { label: "wedding outfit rental and sports academy storage in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -58314,8 +58320,8 @@ export const CITY_PAGES: CityPage[] = [
    * shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the
    * pages its body links.
    *
-   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kalyan Nagar, HRBR Layout (1st, 2nd and 3rd
-   * Block), HBR Layout, Kammanahalli and Chelikere, for salon and spa equipment storage and for artists'
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Kalyan Nagar, HBR Layout and Chelikere, for
+   * salon and spa equipment storage and for artists'
    * and art-class inventory. Not targeted: Hennur Road, Hennur Cross, Kothanur, Byrathi, Geddalahalli,
    * Hennur Bande and Babusapalya (Hennur Road page; named here only in the link to it); Horamavu, AC stock
    * and tent-house stock (Horamavu page); Banaswadi and OMBR Layout (Banaswadi page, linked once from the
@@ -58324,7 +58330,10 @@ export const CITY_PAGES: CityPage[] = [
    * hotel artwork and furniture (Mahadevapura), linen and laundry (Kundalahalli), dance costumes and books
    * (Jayanagar) and climate-controlled containers as such (Vellore). "Bengaluru" stays out of the title,
    * as the brief asks; the geo meta and the Service JSON-LD's areaServed carry "Kalyan Nagar, Bengaluru,
-   * Karnataka".
+   * Karnataka". HRBR Layout brief (2026-11-22, §4): HRBR Layout (1st, 2nd and 3rd Block) moved to its own
+   * page, linked once from the areas section; Kammanahalli was dropped from this page's targeting for a
+   * Kammanahalli page of its own (none exists yet, so it is not linked). The title, H1, description and
+   * the salon, spa and art sections are unchanged; no image alt text named either locality.
    *
    * Images: five owner-supplied WebP renders ("public/images/Storage Containers in Kalyan Nagar/Storage
    * Containers in Kalyan Nagar/cabin (1–5).webp", lossy VP8, no EXIF / XMP / ICC) of one charcoal-grey
@@ -58347,8 +58356,10 @@ export const CITY_PAGES: CityPage[] = [
     metaTitle: "Shipping Container in Kalyan Nagar | Salon & Art Storage",
     metaDescription:
       "Shipping and storage containers in Kalyan Nagar for salon chairs, spa furniture, artwork, framed paintings, easels and art-class supplies.",
+    // HRBR Layout brief (2026-11-22, §4): HRBR Layout has its own page and Kammanahalli is left for a page of
+    // its own, so both terms are out of this page's keywords, areas text and service line.
     keywords:
-      "shipping container in Kalyan Nagar, cargo container Kalyan Nagar, storage container Kalyan Nagar, storage container HRBR Layout, storage container HBR Layout, storage container Kammanahalli, storage container Chelikere, used shipping container Kalyan Nagar, shipping container price in Kalyan Nagar, storage container for rent in Kalyan Nagar, salon equipment storage container, spa furniture storage, salon renovation storage, salon product overflow storage, art storage container, artwork and canvas storage, art-class supplies storage, easel and drawing-board storage",
+      "shipping container in Kalyan Nagar, cargo container Kalyan Nagar, storage container Kalyan Nagar, storage container HBR Layout, storage container Chelikere, used shipping container Kalyan Nagar, shipping container price in Kalyan Nagar, storage container for rent in Kalyan Nagar, salon equipment storage container, spa furniture storage, salon renovation storage, salon product overflow storage, art storage container, artwork and canvas storage, art-class supplies storage, easel and drawing-board storage",
     // Approximate point in Kalyan Nagar, north-east Bengaluru (rounded; for the owner to confirm).
     geo: {
       region: "IN-KA",
@@ -58387,7 +58398,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas Served Around Kalyan Nagar",
     areasText:
-      "This page covers shipping and storage container requirements in Kalyan Nagar, HRBR Layout (1st, 2nd and 3rd Block), HBR Layout, Kammanahalli and Chelikere. Many premises here sit on narrow layout streets, so the approach road and the container's standing position are surveyed for every address before a delivery date is fixed.",
+      "We supply shipping and storage containers across Kalyan Nagar, including HBR Layout and Chelikere. Many premises here sit on narrow layout streets, so the approach road and the container's standing position are surveyed for every address before a delivery date is fixed.",
     // Brief §5: the two neighbouring container pages, each with its own storage intent.
     areasInlineLinks: [
       {
@@ -58404,6 +58415,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Neighbouring Banaswadi has its own page on",
         link: { label: "antique furniture and beverage distributor storage containers", href: "/cities-we-serve/shipping-container-banaswadi" },
+        after: ".",
+      },
+      // HRBR Layout page (owner brief of 2026-11-22, §4: HRBR Layout, not HBR Layout, has its own page).
+      {
+        before: "HRBR Layout, which is a different area from HBR Layout, has a page of its own for its 1st, 2nd and 3rd Blocks:",
+        link: { label: "shipping containers in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
         after: ".",
       },
     ],
@@ -58825,7 +58842,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Request a Shipping Container Quotation in Kalyan Nagar",
-    ctaText: `Whether you need temporary storage for salon renovation equipment or organised space for artwork, canvases and art-class supplies, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Phone ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp or write to ${COMPANY.email.sales}. Service area: Kalyan Nagar, Bengaluru, Karnataka.`,
+    ctaText: `Whether you need temporary storage for salon renovation equipment or organised space for artwork, canvases and art-class supplies, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Phone ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp or write to ${COMPANY.email.sales}. Service area: Kalyan Nagar, HBR Layout and Chelikere, Bengaluru, Karnataka.`,
     // Brief's closing section: the quotation request → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons;
@@ -59500,8 +59517,9 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Banaswadi, Chikka Banaswadi, Dodda
    * Banaswadi, Banaswadi Main Road, OMBR Layout, Subbayyanapalya and Lingarajapuram, for antique and
    * heritage furniture storage and for beverage distributors' crates, bottles and spare coolers. Not
-   * targeted: Kalyan Nagar, HRBR Layout, HBR Layout and Kammanahalli (Kalyan Nagar page; named here only in
-   * the lead-in to the link to it), Kasturi Nagar, Horamavu and Ramamurthy Nagar (their own pages),
+   * targeted: Kalyan Nagar and HBR Layout (Kalyan Nagar page; named here only in the lead-in to the link to
+   * it), HRBR Layout (its own page since 2026-11-22, linked once from the areas section), Kammanahalli
+   * (kept free for a page of its own), Kasturi Nagar, Horamavu and Ramamurthy Nagar (their own pages),
    * Kacharakanahalli and St Thomas Town (kept free for possible future pages). Kept apart from furniture
    * rental and refurbished furniture (Brookefield), upholstery workshops (Vijayanagar, Bengaluru), hotel
    * artwork and furniture (Mahadevapura), artists' work (Kalyan Nagar), office coffee and vending machines
@@ -59572,8 +59590,10 @@ export const CITY_PAGES: CityPage[] = [
       "We take container enquiries from Banaswadi, Chikka Banaswadi, Dodda Banaswadi, Banaswadi Main Road, OMBR Layout, Subbayyanapalya and Lingarajapuram. Several older lanes in these localities are tight for heavy vehicles, so we survey the approach and the spot where the container will stand at each address before agreeing a delivery date.",
     // Brief §5: the three neighbouring container pages, each with its own storage intent.
     areasInlineLinks: [
+      // HRBR Layout brief (2026-11-22, §4): HRBR Layout has its own page and Kammanahalli is no longer a
+      // Kalyan Nagar locality, so this lead-in names only what that page still covers.
       {
-        before: "Kalyan Nagar, HRBR Layout, HBR Layout and Kammanahalli are served from our page on",
+        before: "Kalyan Nagar and HBR Layout are served from our page on",
         link: { label: "shipping containers in Kalyan Nagar", href: "/cities-we-serve/shipping-container-kalyan-nagar" },
         after: ".",
       },
@@ -59585,6 +59605,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Businesses in Horamavu are covered separately:",
         link: { label: "shipping containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+        after: ".",
+      },
+      // HRBR Layout page (owner brief of 2026-11-22): a contextual link from the neighbouring page.
+      {
+        before: "Rental wardrobes and coaching kit in HRBR Layout, to the north, are covered on our page on",
+        link: { label: "storage containers in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
         after: ".",
       },
     ],
@@ -60067,6 +60093,618 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers are built at the Portable Office Cabin factory, ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City. There is no yard, depot, storage facility or branch in Banaswadi or the localities around it. Everything specific to a unit (its size, grade, condition, inside dimensions, floor loading and door opening; any supports, pallets, padding, racks, shelving, crate bays, lighting, ventilation, insulation, environmental controls or locks; hire terms; and delivery, unloading and collection) is fixed in its quotation. Stock changes, and no delivery date or time is guaranteed. Unless a unit's approved specification says otherwise, none is sold or hired as conservation-grade or climate-controlled storage or with a guaranteed temperature or humidity, and none is offered as an approved store for solvents, polishes, compressed-gas cylinders or other hazardous goods, or as a licensed store for alcohol. All five images are illustrative renders of a single container; none was taken in Banaswadi, and none shows a delivered or fitted unit, furniture, collectibles, crates, bottles or coolers. Capacities are approximate. Antique dealers, restorers and beverage distributors appear as examples of typical uses, not as clients or completed projects, and the localities named are where we welcome enquiries, not confirmed delivery points. The guidance on furniture, metalware, pests, chemicals, antiquities law, crates, bottles, refrigeration equipment, gas cylinders, alcohol, placement and permissions is general information, not conservation, pest-control, safety, electrical, legal or engineering advice: follow the instructions of manufacturers, suppliers, conservators and the authorities.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN HRBR LAYOUT — storage for wedding and party wear rental stores
+   * (bridal gowns, lehengas, suits, sherwanis, party dresses, off-season stock, accessories, returned
+   * outfits, booking register, garment protection) and for children's sports coaching academies (football,
+   * cricket and skating kit, portable goals and nets, multi-sport kit, bibs, session kits, checklists) in
+   * HRBR Layout, north-east Bengaluru.
+   *
+   * Owner brief of 2026-11-22 ("CLAUDE AI — TWO-PAGE SEO IMPLEMENTATION COMMAND", Page 1): meta title,
+   * meta description, H1, keywords, section order, H2 / H3 headings, the sizes table, the eight ordering
+   * steps and the seven FAQs are the brief's, and so is the copy, lightly edited for flow and British
+   * spelling. The brief's notes to the implementer ("Only advertise climate-controlled containers if…",
+   * "Do not recommend ironing or steaming…", "Do not describe the container as a changing room…", "Do not
+   * place wet or sweaty items…", "Do not recommend battery charging…", "Do not place containers in public
+   * parks…", "Do not promise delivery at a particular time…", "Do not invent prices or discounts", "Publish
+   * only if rental…", "Highlight only verified capabilities…", "Do not guarantee that standard containers
+   * prevent mould…", "Use verified phone numbers…") are instructions, not page copy: where one carries a
+   * fact for the reader it is reworded as a plain statement ("insulated or air-conditioned fit-outs are
+   * quoted against a stated specification", "garments are not ironed or steamed inside…", "the container is
+   * not supplied as a changing room…", "wet or sweaty kit is not put away…", "batteries are not charged
+   * inside…", "no container goes into a public park, road or footpath without…", "a delivery time is
+   * agreed only after…", "no standard container is promised to prevent mould…"); otherwise it is left
+   * out. FAQ 4's and FAQ 5's answers are reworded the same way. Where an H3 has two checklists the
+   * template's single list carries the longer one. "H.R.B.R. Layout" is used once, in the areas section.
+   * The route follows the site convention (/cities-we-serve/…), not the brief's root slug. The tagline,
+   * captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row says "if available" (the brief's "if offered"); climate control is described only as a
+   * fit-out quoted against a specification, as on the Vellore page, never as a stock item; rails, shelves,
+   * racks, bins, bags, lighting, ventilation, insulation and locks are layout options and price factors
+   * "where your quotation includes them". The optional Kannada search terms are not used: the page is in
+   * English. No Product JSON-LD: city pages carry no prices (file rule) and a Product block without offers
+   * earns no rich result, so the Service JSON-LD (no offers), FAQPage and BreadcrumbList stand, as on
+   * every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container options" → the cargo category) + heroCta.
+   *   Wedding and party wear rental stores, "Protecting Rental Garments", children's sports coaching
+   *     academies and "Sports Equipment Storage Safety" → four afterIntro extra sections, the first three
+   *     with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order" (ordered, eight steps) → afterSolutions extra
+   *     sections, so the steps stay before the areas.
+   *   "Areas We Serve" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's seven.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §5, only where the destination exists and supports the anchor): intro → the cargo
+   * category; wedding section → "boutique and fashion-label stock storage in Indiranagar" (that page's
+   * "Storage for Boutiques & Fashion Labels": selling stock, not rental outfits); "Premium bridal wear" →
+   * "insulated or air-conditioned container enquiries" (the Vellore page's "Insulated and air-conditioned
+   * storage enquiries", which explains how such a fit-out is specified and quoted); sports section →
+   * "storage for sports turfs and gyms around Marathahalli" (that page's "Storage for sports turfs and
+   * gyms"); placement → "container delivery on narrow residential streets" (the Bellandur page's
+   * society-gate and narrow-lane notes); sizes → "checks before buying a used container": the brief's
+   * Chennai route does not exist, so it points to the Athipattu page's "Used Container Inspection"
+   * checklist, as the sibling pages do; rental → /products/shipping-container-rental; areas → Kalyan Nagar
+   * (Kalyan Nagar, HBR Layout and Chelikere), Hennur Road, Banaswadi and Horamavu. NOT linked: the brief's
+   * Kammanahalli, Mathikere and Jayanagar shipping pages (no such live routes), Malleshwaram and
+   * Murugeshpalya (their live pages cover architectural salvage and picture framing, and flood-season and
+   * dewatering storage, not sarees or golf academies), so those distinctions are not drawn. Anchors differ
+   * from the siblings' anchors for the same targets. Inbound: the Kalyan Nagar, Hennur Road and Banaswadi
+   * pages' areas sections (one `areasInlineLinks` item each, at the end of each list), the Karnataka
+   * shipping hub ("Shipping Containers in HRBR Layout"), the cargo category's location links ("Storage
+   * containers in HRBR Layout") and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks`
+   * keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × HRBR Layout (H.R.B.R. Layout) and HRBR 1st,
+   * 2nd and 3rd Block, for wedding and party wear rental inventory (gowns, lehengas, sherwanis, suits) and
+   * for children's sports coaching academy equipment. HRBR Layout and these keywords move here from the
+   * Kalyan Nagar page, which keeps Kalyan Nagar, HBR Layout and Chelikere (HBR Layout is a different area
+   * and is named here only in the pointer to that page). Named only in the pointer sentences to their own
+   * pages: Hennur Road, Banaswadi and Horamavu. Not named: Kammanahalli, Kacharakanahalli and St Thomas
+   * Town (the brief assigns them to a Kammanahalli page that does not exist yet). Kept apart from boutique
+   * and fashion-label selling stock (Indiranagar), salons, spas and artists (Kalyan Nagar), church, choir
+   * and party décor (Hennur Road) and sports turfs and gyms (Marathahalli ORR). "Bengaluru" stays out of
+   * the title, as the brief asks; the geo meta and the Service JSON-LD's areaServed carry "HRBR Layout,
+   * Bengaluru, Karnataka".
+   *
+   * Images: no new images were supplied; the owner asked for EXISTING images. Five catalogue images already
+   * in the repo, copied with their VP8 data byte-for-byte plus an XMP dc:title / dc:description that labels
+   * each one an illustrative image (no creator, GPS, camera or date); the product originals are untouched.
+   * The green cargo-container gallery set (/images/products/cargo-shipping-container-gallery-1/2/3.webp:
+   * one green container in a paved yard) gives the hero / og:image (corner view, the brief's hero filename
+   * and alt), the wedding section (door end straight on) and the sports section (door-end corner); the
+   * empty container interior (/images/products/cargo-shipping-container-interior.webp, the brief's
+   * interior filename, but not its "with organized shelving" alt: nothing is fitted) gives the garment
+   * protection section; the navy container (/images/products/shipping-container-stacked.webp) gives the
+   * sizes section. No image shows garments, rails, garment bags, accessories, sports balls, nets, goals,
+   * skates or shelving, so the brief's ten use-case image slots are not used, and no alt text, caption or
+   * filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-hrbr-layout",
+    city: "HRBR Layout",
+    listTitle: "Shipping & Storage Containers in HRBR Layout",
+    metaTitle: "Shipping Container in HRBR Layout | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in HRBR Layout for wedding and party wear rental stores storing gowns and suits, and sports academies storing balls, nets and coaching kits.",
+    keywords:
+      "shipping container in HRBR Layout, cargo container HRBR Layout, storage container HRBR Layout, storage container HRBR 1st Block, storage container HRBR 2nd Block, storage container HRBR 3rd Block, used shipping container HRBR Layout, shipping container price in HRBR Layout, storage container for rent in HRBR Layout, outfit rental storage container, wedding wear rental stock storage, gown and suit rental storage, lehenga and sherwani storage, sports academy equipment storage, sports coaching kit storage, football and cricket coaching equipment storage, skating academy gear storage",
+    // Approximate point in HRBR Layout, north-east Bengaluru (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "HRBR Layout, Bengaluru, Karnataka, India",
+      position: "13.0150;77.6380",
+      icbm: "13.0150, 77.6380",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1024 × 1024 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Kalyan Nagar, Hennur Road, Banaswadi, Horamavu, Indiranagar, Marathahalli ORR, Vellore, Bellandur and
+    // Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-hrbr-layout/shipping-container-hrbr-layout.webp",
+      alt: "Shipping container exterior suitable for commercial inventory storage: a green steel container seen from one corner, its long corrugated side and plain end wall on a paved yard under a clear sky",
+      width: 1024,
+      height: 1024,
+      caption: "Illustrative image of a container from our catalogue. It was not photographed in HRBR Layout and is not a delivered unit.",
+    },
+
+    h1: "Shipping & Storage Containers in HRBR Layout",
+    tagline:
+      "A lockable back room for gowns, lehengas and sherwanis between bookings, and a dry place where a coaching academy's balls, cones, bats and pads wait for the next session.",
+    intro: [
+      "HRBR Layout is an established residential and commercial locality in north-east Bengaluru, with independent houses, apartments, cafés and local businesses across its blocks.",
+      "Wedding and party wear rental stores may need additional space for seasonal garment collections, while children's sports coaching academies may need secure storage for training equipment.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage container options", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in HRBR Layout for compatible commercial inventory and sports equipment storage requirements.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "This page covers HRBR Layout, also written H.R.B.R. Layout, including its 1st, 2nd and 3rd Blocks. HRBR Layout is not the same place as HBR Layout, which has its own page below. Most streets here are residential, so the road width, the gate, overhanging branches, overhead cables and a firm spot to set the container down are checked for each address before a delivery date is proposed.",
+    // Brief §2 "Areas We Serve" and §13: Kalyan Nagar, HBR Layout and Chelikere stay on the Kalyan Nagar page;
+    // Hennur Road, Banaswadi and Horamavu keep their own pages. Kammanahalli has no page yet, so it is not named.
+    areasInlineLinks: [
+      {
+        before: "Kalyan Nagar, HBR Layout and Chelikere are served from our page on",
+        link: { label: "storage containers in Kalyan Nagar", href: "/cities-we-serve/shipping-container-kalyan-nagar" },
+        after: ".",
+      },
+      {
+        before: "Addresses on Hennur Road itself are covered by",
+        link: { label: "shipping containers along Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
+        after: ".",
+      },
+      {
+        before: "Banaswadi, to the south, has its own page:",
+        link: { label: "container storage in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+        after: ".",
+      },
+      {
+        before: "For Horamavu, further east, go to",
+        link: { label: "storage containers in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Wedding & Party Wear Rental Stores",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-hrbr-layout/shipping-container-cargo-doors-hrbr-layout.webp",
+          alt: "Green container seen straight on from its door end: two closed cargo doors with vertical locking bars, lever handles and a central lock plate, on a paved yard",
+          width: 1024,
+          height: 1024,
+          caption:
+            "Illustrative image. Garment rails are planned around the door opening and the internal height, so long bridal gowns can hang clear of the floor and come out without being folded.",
+        },
+        paragraphs: [
+          "Wedding and party wear rental businesses handle gowns, lehengas, sherwanis, suits, dresses and accessories that must be kept organised between bookings.",
+          "A suitably modified shipping container may provide additional storage space for compatible rental inventory when the required environmental conditions can be maintained.",
+        ],
+        // Brief §13: boutique selling stock belongs to the Indiranagar page; rental outfits stay here.
+        inlineLinks: [
+          {
+            before: "Running a boutique that sells its stock rather than renting it out? See",
+            link: { label: "boutique and fashion-label stock storage in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Bridal gown and lehenga storage",
+            paragraphs: ["Organise garments by:"],
+            bullets: [
+              { text: "Design." },
+              { text: "Size." },
+              { text: "Booking date." },
+              { text: "Collection." },
+              { text: "Condition." },
+              { text: "Customer reservation." },
+            ],
+            closing: [
+              "Use suitable hanging rails and protective garment bags, and allow enough spacing to avoid crushing heavy embroidery and embellishments.",
+            ],
+          },
+          {
+            heading: "Suit and sherwani storage",
+            paragraphs: [
+              "Store suits and sherwanis on suitable hangers, keep matching garments and accessories together, and organise them by size and booking status.",
+            ],
+          },
+          {
+            heading: "Party dress storage",
+            paragraphs: ["Suitable inventory may include:"],
+            bullets: [
+              { text: "Party dresses." },
+              { text: "Formal gowns." },
+              { text: "Occasion wear." },
+              { text: "Other compatible garments." },
+            ],
+            closing: ["Use protective packaging and appropriate environmental controls."],
+          },
+          {
+            heading: "Off-season garment storage",
+            paragraphs: [
+              "Separate garments that are not currently required for display or rental, and maintain an inventory register so items can be located without unnecessary handling.",
+            ],
+          },
+          {
+            heading: "Wedding accessories storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Stoles." },
+              { text: "Turbans." },
+              { text: "Belts." },
+              { text: "Costume jewellery." },
+              { text: "Suitable garment accessories." },
+            ],
+            closing: ["Use labelled protective boxes."],
+          },
+          {
+            heading: "Returned outfit storage",
+            paragraphs: [
+              "Keep returned garments separate from clean, approved rental stock, with marked holding sections for items awaiting inspection or professional cleaning.",
+            ],
+          },
+          {
+            heading: "Outfit rental booking register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Garment code." },
+              { text: "Size." },
+              { text: "Customer booking." },
+              { text: "Dispatch date." },
+              { text: "Return date." },
+              { text: "Cleaning status." },
+              { text: "Damage status." },
+              { text: "Storage location." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Protecting Rental Garments",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-hrbr-layout/hrbr-layout-container-storage-interior.webp",
+          alt: "Empty container interior seen through open doors in a green frame: pale grey corrugated walls and roof over a worn timber floor, with no rails, shelves or racks fitted",
+          width: 1024,
+          height: 1024,
+          caption:
+            "Illustrative image of an unfitted interior. Rails, garment-bag hooks, vents, insulation and lights are added only where the written quotation lists them.",
+        },
+        subsections: [
+          {
+            heading: "Moisture and humidity",
+            paragraphs: [
+              "Clothing may be damaged by condensation, moisture and unsuitable humidity. An ordinary shipping container is not automatically suitable for long-term storage of delicate fabrics, so appropriate ventilation, insulation, humidity control and monitoring need to be verified first.",
+            ],
+          },
+          {
+            heading: "Premium bridal wear",
+            paragraphs: [
+              "Expensive or delicate garments may require purpose-designed, climate-controlled storage. A standard container is not climate-controlled; insulated or air-conditioned fit-outs are quoted against a stated specification.",
+            ],
+            // Brief §5: climate-controlled options → the Vellore page's insulated and air-conditioned section.
+            inlineLinks: [
+              {
+                before: "Planning to keep high-value bridal wear in a conditioned unit? Read how we handle",
+                link: { label: "insulated or air-conditioned container enquiries", href: "/cities-we-serve/shipping-container-vellore" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Clean and dry storage",
+            paragraphs: ["Store garments only after appropriate cleaning and drying."],
+          },
+          {
+            heading: "Ironing and steaming",
+            paragraphs: ["Garments are not ironed or steamed inside an ordinary storage-only container."],
+          },
+          {
+            heading: "Fabric protection",
+            paragraphs: [
+              "Follow garment-care instructions, and avoid storage products that may leave odours or damage fabrics.",
+            ],
+          },
+          {
+            heading: "Storage only",
+            paragraphs: [
+              "The container is not supplied as a changing room, trial room or customer fitting facility unless it has been specifically designed and approved for that purpose.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Children's Sports Coaching Academies",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-hrbr-layout/green-shipping-container-door-end-hrbr-layout.webp",
+          alt: "The green container from its door-end corner: closed cargo doors with four vertical locking bars beside the long corrugated side, on a paved yard",
+          width: 1024,
+          height: 1024,
+          caption:
+            "Illustrative image. A full-width door end lets coaches wheel out goal frames and kit trolleys at the start of a session and return them in the same order.",
+        },
+        paragraphs: [
+          "Children's football, cricket, skating and other sports coaching academies often manage training equipment across different venues.",
+          "A suitably configured shipping container may provide organised storage for compatible coaching equipment.",
+        ],
+        // Brief §13: sports turfs and gyms belong to the Marathahalli ORR page; coaching academies stay here.
+        inlineLinks: [
+          {
+            before: "Operating a turf or a gym rather than a coaching academy? See",
+            link: { label: "storage for sports turfs and gyms around Marathahalli", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Football training equipment storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Footballs." },
+              { text: "Cones." },
+              { text: "Markers." },
+              { text: "Agility ladders." },
+              { text: "Training bibs." },
+              { text: "Suitable practice equipment." },
+            ],
+            closing: ["Organise by age group or training batch."],
+          },
+          {
+            heading: "Cricket coaching equipment storage",
+            paragraphs: ["Suitable inventory may include:"],
+            bullets: [
+              { text: "Cricket bats." },
+              { text: "Pads." },
+              { text: "Helmets." },
+              { text: "Stumps." },
+              { text: "Training balls." },
+              { text: "Practice accessories." },
+            ],
+            closing: ["Use protective bags and racks."],
+          },
+          {
+            heading: "Skating academy equipment storage",
+            paragraphs: ["Organise:"],
+            bullets: [
+              { text: "Skates." },
+              { text: "Helmets." },
+              { text: "Knee pads." },
+              { text: "Elbow pads." },
+              { text: "Other suitable protective equipment." },
+            ],
+            closing: ["Use labelled shelves by size."],
+          },
+          {
+            heading: "Portable goal and net storage",
+            paragraphs: [
+              "Store portable goals, rebounders and nets using stable supports, and secure heavy or tall equipment against falling.",
+            ],
+          },
+          {
+            heading: "Basketball and multi-sport equipment",
+            paragraphs: ["Organise compatible training accessories by sport and coaching session."],
+          },
+          {
+            heading: "Training bib and uniform storage",
+            paragraphs: [
+              "Clean and dry fabric equipment before storage. Wet or sweaty items are not put away inside an enclosed container.",
+            ],
+          },
+          {
+            heading: "Session-wise equipment kits",
+            paragraphs: ["Prepare kits by:"],
+            bullets: [
+              { text: "Coaching venue." },
+              { text: "Training batch." },
+              { text: "Sport." },
+              { text: "Age group." },
+              { text: "Required equipment." },
+              { text: "Session date." },
+            ],
+          },
+          {
+            heading: "First-aid and equipment checklist",
+            paragraphs: ["Maintain suitable first-aid supplies and equipment checklists according to the academy's requirements."],
+          },
+        ],
+      },
+      {
+        heading: "Sports Equipment Storage Safety",
+        placement: "afterIntro",
+        bullets: [
+          { text: "Dry wet equipment before storage." },
+          { text: "Secure portable goals and heavy items." },
+          { text: "Keep aisles and access routes clear." },
+          { text: "Follow the manufacturer's instructions for battery-powered equipment." },
+          { text: "Batteries are not charged inside an ordinary storage-only container." },
+          { text: "Inspect protective equipment before reuse." },
+          { text: "Follow the manufacturer's requirements for helmets and safety gear." },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in HRBR Layout",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including commercial yards, permitted shop service areas, authorised school or club premises and other suitable private plots.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Property-owner permission." },
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Tree branches and overhead cables." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Ground stability." },
+          { text: "Unloading arrangements." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "No container goes into a public park, onto a road or onto a footpath without the required authorisation, and a delivery time is agreed only after the transport arrangements have been confirmed.",
+        ],
+        // Brief §5: delivery and placement guidance → the Bellandur page's society-gate and narrow-lane notes.
+        inlineLinks: [
+          {
+            before: "Tight turn into your street, or a low gate? Our notes on",
+            link: { label: "container delivery on narrow residential streets", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " explain what we check.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes in HRBR Layout",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-hrbr-layout/navy-shipping-container-hrbr-layout.webp",
+          alt: "Navy-blue steel shipping container seen from its door-end corner, its long corrugated side and closed cargo doors against a plain light-grey background",
+          width: 800,
+          height: 800,
+          caption:
+            "Illustrative image. Which length suits you depends as much on the street and the set-down spot as on how many rails or kit bins you need.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Exact dimensions, door openings and available sizes must be verified for the unit you are offered. Volume alone does not establish suitable storage conditions.",
+          headers: ["Size", "Approximate volume", "Potential application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Sports coaching equipment"],
+            ["20 ft", "33 m³", "Garment rails or larger sports inventory"],
+            ["40 ft", "67 m³", "Larger storage requirements where access permits"],
+          ],
+        },
+        // Brief §5: used-container inspection → the Athipattu page's checklist (no Chennai route exists).
+        inlineLinks: [
+          {
+            before: "Weighing up a second-hand unit? Run through our",
+            link: { label: "checks before buying a used container", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in HRBR Layout",
+        placement: "afterSolutions",
+        paragraphs: ["Pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition." },
+          { text: "Hanging rails." },
+          { text: "Shelving." },
+          { text: "Protective garment storage." },
+          { text: "Sports equipment racks." },
+          { text: "Locking arrangements." },
+          { text: "Ventilation." },
+          { text: "Insulation." },
+          { text: "Climate control, where specified." },
+          { text: "Transportation." },
+          { text: "Unloading and site access." },
+        ],
+        closing: ["Request an itemised quotation."],
+      },
+      {
+        heading: "Storage Container on Rent in HRBR Layout",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful during wedding seasons, sports camps or seasonal coaching activities. Hire runs for anything from one month to five years; the quotation states the unit, the period, any deposit, the transport charges and how the container is delivered and collected.",
+        ],
+        inlineLinks: [
+          {
+            before: "Hire sizes and terms are set out on our page for",
+            link: { label: "shipping containers on rent", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain your intended storage application." },
+          { text: "Provide garment or equipment quantities." },
+          { text: "Identify any environmental requirements." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss rails, shelves, bins and securing arrangements." },
+          { text: "Confirm site permissions." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible commercial inventory requirements. For rental wardrobes and coaching kit in HRBR Layout, that covers:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, and a 10 ft container when one is in stock." },
+          { title: "Storage-oriented modifications", text: "each one named and priced on its own line of the quotation." },
+          { title: "Garment rail provisions", text: "hanging rails set out for gown length and garment-bag spacing." },
+          { title: "Sports equipment shelving", text: "shelves, bins and tie-down points sized to the kit you actually store." },
+          { title: "Locking arrangements", text: "lockable cargo doors, with the lock supplied on your unit written into the quotation." },
+          { title: "Environmental-control options", text: "ventilation, insulation or air conditioning only where a specification is agreed; no standard container is promised to prevent mould or fabric damage." },
+          { title: "Quotation and delivery coordination", text: "a written quotation first, then a look at the street, the gate and the set-down spot before a date is fixed." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can wedding rental stores keep gowns and suits in shipping containers?",
+        answer: "Potentially, when suitable hanging rails, protective packaging and environmental controls are provided.",
+      },
+      {
+        question: "Will clothes become damp or musty inside a container?",
+        answer:
+          "They can if humidity and condensation are not adequately controlled. Delicate garments may require specialised storage.",
+      },
+      {
+        question: "Can sports coaching academies store equipment in containers?",
+        answer: "Yes, where the container is suitable for the equipment and appropriate storage arrangements are provided.",
+      },
+      {
+        question: "Can a container be placed in a public park?",
+        answer:
+          "Only where the necessary permissions and legal authorisation exist. Public land cannot be assumed to be available for private storage.",
+      },
+      {
+        question: "Is HRBR Layout the same as HBR Layout?",
+        answer: "No. They are distinct areas. HBR Layout is covered on our Kalyan Nagar shipping container page.",
+      },
+      {
+        question: "What is the shipping container price in HRBR Layout?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport and site access.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in HRBR Layout",
+    ctaText: `Whether you need additional storage for wedding outfits, suits, lehengas, football coaching kits, cricket equipment or skating accessories, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, send a WhatsApp message to ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: HRBR Layout 1st, 2nd and 3rd Blocks, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for HRBR Layout",
+      intro:
+        "Choose the container type and how many you need, then give the HRBR Layout address (and which block) or drop a map pin, and say whether you want to buy or hire. Tell us roughly how many outfits need hanging space or which sports the kit is for, the longest item to go in, and whether you need ventilation or a conditioned unit, so we can quote for the right layout.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Every container is dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City, and it has no yard, depot, showroom or branch in HRBR Layout or the neighbouring areas named here. A unit's internal and door-opening dimensions, grade, condition and floor-loading limit, any hanging rails, garment-bag hooks, shelves, racks, bins, tie-downs, lights, vents, insulation, air conditioning or locks, the hire terms where it is rented, and its delivery, unloading and collection are fixed only by its written quotation. Stock moves, so a delivery date or time holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as climate-controlled, humidity-controlled, fire-rated or theft-proof, no temperature or humidity level is promised, nothing is promised to keep fabrics free of mould, odour or creasing, and a container is not supplied as a changing room, trial room, fitting room, laundry or charging point. The five pictures are illustrative images from our existing catalogue, not photographs taken in HRBR Layout; none shows a delivered or fitted unit, garments or sports equipment. Volumes are approximate and are not payload ratings. Rental stores and coaching academies are named as possible uses, not as customers or completed projects, and the blocks listed show where enquiries are accepted, not confirmed delivery addresses. The notes on fabrics, humidity, cleaning, batteries, equipment, placement and permissions are general information, not garment-care, safety, legal or engineering advice; follow the garment-care labels, the equipment manufacturers' instructions and the rules of the authorities concerned.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN PANATHUR — yard stores for water tanker operators (hoses, pump
