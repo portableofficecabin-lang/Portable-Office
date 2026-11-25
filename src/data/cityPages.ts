@@ -61940,6 +61940,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "storage containers in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
         after: ".",
       },
+      // Frazer Town brief (2026-11-25, §21): Frazer Town (Pulikeshi Nagar), for bungalow redevelopment, restaurant
+      // and community hall storage, is that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Families rebuilding older bungalows in Frazer Town, to the south-west, can read about",
+        link: { label: "bungalow redevelopment storage in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -62420,6 +62427,1095 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers are built at the Portable Office Cabin factory, ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the company's Bengaluru office is in Electronic City. There is no yard, depot, storage facility or branch in Banaswadi or the localities around it. Everything specific to a unit (its size, grade, condition, inside dimensions, floor loading and door opening; any supports, pallets, padding, racks, shelving, crate bays, lighting, ventilation, insulation, environmental controls or locks; hire terms; and delivery, unloading and collection) is fixed in its quotation. Stock changes, and no delivery date or time is guaranteed. Unless a unit's approved specification says otherwise, none is sold or hired as conservation-grade or climate-controlled storage or with a guaranteed temperature or humidity, and none is offered as an approved store for solvents, polishes, compressed-gas cylinders or other hazardous goods, or as a licensed store for alcohol. All five images are illustrative renders of a single container; none was taken in Banaswadi, and none shows a delivered or fitted unit, furniture, collectibles, crates, bottles or coolers. Capacities are approximate. Antique dealers, restorers and beverage distributors appear as examples of typical uses, not as clients or completed projects, and the localities named are where we welcome enquiries, not confirmed delivery points. The guidance on furniture, metalware, pests, chemicals, antiquities law, crates, bottles, refrigeration equipment, gas cylinders, alcohol, placement and permissions is general information, not conservation, pest-control, safety, electrical, legal or engineering advice: follow the instructions of manufacturers, suppliers, conservators and the authorities.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN FRAZER TOWN (PULIKESHI NAGAR, central-east Bengaluru) — storage for
+   * older-bungalow redevelopment (furniture, books and documents, disconnected appliances, compact compound
+   * placement, room-wise organisation), for restaurants, bakeries and caterers (takeaway packaging, spare
+   * furniture, catering utensils, bakery trays, Ramzan and festival-season non-food stock, food-storage
+   * limits), for community halls and event furniture (stackable chairs, shamiana fabric, decorations,
+   * event-wise registers, institutional placement safety) and for local traders and redevelopment
+   * contractors; narrow-lane delivery with crane-assisted placement where a site allows it.
+   *
+   * Owner brief of 2026-11-25 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — Shipping & Cargo
+   * Containers in Frazer Town (Pulikeshi Nagar)" + "show animation in the page and complete the page"): meta
+   * title, meta description, H1, keywords, section order, H2 / H3 headings, the buy-or-rent and sizes
+   * tables, the twelve ordering steps and the FAQs are the brief's, and so is the copy, lightly edited for
+   * flow and British spelling (organise, authorised, itemised, specialised). Rental is in the catalogue
+   * (Shipping Container Rental: 10 ft / 20 ft / 40 ft / 40 ft HC, one month to five years), so the brief's
+   * "Sale & Rent" title, its "Buy or rent … 10, 20 and 40 ft" description, the rental section and the
+   * Ramzan rental FAQ stand; 10 ft is "subject to stock". The template has no separate Open Graph title or
+   * description: og:title / og:description use the meta title and description, as on every city page.
+   * The visible breadcrumb and the BreadcrumbList are the city-page template's (Home › Cities We Serve ›
+   * this page), as on every sibling, not the brief's "Home → Shipping Containers → Frazer Town". The
+   * brief's notes to the implementer ("Do not recommend ordinary shipping containers for irreplaceable
+   * documents…", "Do not store LPG cylinders…", "Do not guarantee mould-free storage", "Do not guarantee
+   * night or early-morning delivery", "Do not claim that the company arranges crane permits…", "Do not
+   * invent…", "Publish only if…", "Remove this FAQ…") are instructions, not page copy: where one carries a
+   * fact for the reader it is reworded as a plain statement ("an ordinary shipping container is not
+   * recommended for irreplaceable documents…", "LPG cylinders … are not stored in an ordinary storage
+   * container", "no container is offered as mould-free storage", "night and early-morning slots are not
+   * guaranteed", "permission to occupy a public road for a crane … is not included unless your quotation
+   * lists it"); otherwise it is left out. The buy-back FAQ is left out (no verified buy-back policy: the
+   * site only says a buy-back "would require separate confirmation"), and so are actual-unit photographs,
+   * yard visits, relocation and rent-to-own. The route follows the site convention (/cities-we-serve/…),
+   * not the brief's root slug. The tagline, captions, link lead-ins, enquiry-form intro and disclaimer were
+   * written for their slots.
+   * Checked against the catalogue, as the brief asks: grades One-trip / Cargo-Worthy / Wind & Water Tight
+   * (Cargo Container for Sale); types GP, high cube, open top, flat rack and reefer (cargo containers
+   * guide), so the brief's "side-opening container" is described as what the catalogue lists, a side
+   * opening cut as a modification ("Doors, windows, insulation, electrical…"), subject to a structural
+   * review; crane and trailer coordination (rental product), so crane-assisted placement is offered after an
+   * assessment, never as a guarantee, with no crane-permit service claimed. No Product JSON-LD: city pages
+   * carry no prices (file rule) and a Product block without offers earns no rich result, so the Service
+   * JSON-LD (no offers; areaServed "Frazer Town, Bengaluru, Karnataka", not an address), FAQPage and
+   * BreadcrumbList stand, as on every sibling. No ImageObject block: the template has none, and the hero
+   * is already the Service image and og:image. The optional Kannada terms are left out (the page is in
+   * English).
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and cargo containers" → the cargo category) + heroCta.
+   *   "Who Uses…", bungalow redevelopment, restaurants / bakeries / caterers, community halls and
+   *     commercial & construction storage → five afterIntro extra sections, with the brief's H3s as
+   *     `subsections`.
+   *   Buy or rent, sale grades, rent & hire, sizes, container types, delivery, price, maintenance and "How
+   *     to Order" (ordered, twelve steps) → afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas We Serve" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's, less buy-back (nine).
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §21, only where the destination exists and supports the anchor): intro → the cargo
+   * category; spare restaurant furniture → "restaurant equipment storage between moves in Koramangala" (its
+   * solutions section of that name); catering equipment → "tent-house and catering vessel storage in
+   * Horamavu" (its "Storage for Tent House & Shamiana Suppliers" section); food storage safety →
+   * "climate-controlled container options" (the Vellore page's "Insulated and air-conditioned storage
+   * enquiries"; there is no refrigerated container product page, so none is linked); institutional storage
+   * → "storage for churches and choirs on Hennur Road" (its parish and choir section); delivery →
+   * "shipping container delivery to restricted sites" (the Bellandur page's society-gate and narrow-lane
+   * section); used container inspection → "used shipping container inspection": the brief's
+   * /shipping-container-chennai is not a route and the Chennai product page has one sentence on inspection,
+   * so it points to the Athipattu page's checklist, as the sibling pages do; rental → the rental product;
+   * areas → Banaswadi, Indiranagar and the Bengaluru shipping promotion ("shipping container solutions
+   * across Bengaluru"). NOT linked, because no such page exists: Cox Town, Cooke Town, Richards Town, Benson
+   * Town, Pottery Town, Tannery Road, Shivajinagar, Vasanth Nagar, Ulsoor, St Thomas Town, Kammanahalli,
+   * Lingarajapuram, Hulimavu (no shipping page; Hulimavu is a content brief, not a route) and a refrigerated
+   * container product. Anchors differ from the siblings' anchors for the same targets. Inbound: the
+   * Banaswadi and Indiranagar pages' areas sections (one `areasInlineLinks` item each, at the end of each
+   * list; their boundaries and targeting unchanged), the Karnataka shipping hub ("Shipping Containers in
+   * Frazer Town"), the cargo category's location links ("Shipping containers in Frazer Town", the brief's
+   * anchor) and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks` keeps this page's
+   * nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Frazer Town, its other name Pulikeshi Nagar
+   * and the spelling Fraser Town (one page for all three; no variant routes exist or are added), for
+   * older-bungalow redevelopment storage, compact residential compounds, restaurant takeaway packaging and
+   * spare furniture, bakery and catering utensils, Ramzan and festival-season non-food stock and community
+   * hall furniture. Mosque Road, Coles Road and Wheeler Road are named as local road references only (areas
+   * and delivery copy), not as keywords. Named only in the pointer sentences to their own pages: Banaswadi
+   * and Lingarajapuram (Banaswadi page), Halasuru and Indiranagar (Indiranagar page); Koramangala, Horamavu,
+   * Hennur Road, Vellore and Bellandur only in their application links. Shivajinagar is named once, as the
+   * wholesale market traders stock up at (brief §8), never as a target. Not named at all: Cox Town, Cooke
+   * Town, Richards Town, Benson Town, Pottery Town, Tannery Road, Vasanth Nagar, St Thomas Town,
+   * Kammanahalli and Hennur (kept for possible future pages). Kept apart from apartment and society
+   * renovation storage (Bellandur), restaurant equipment between moves (Koramangala), bar kegs and boutique
+   * stock (Indiranagar), tent-house and catering-vessel hire stock (Horamavu), churches, choirs and décor
+   * sellers (Hennur Road), wedding-wear rental (HRBR Layout) and antiques and beverage crates (Banaswadi).
+   * "Bengaluru" stays out of the title, as the brief asks; the intro says "Bengaluru neighbourhood", and the
+   * geo meta and the Service JSON-LD's areaServed carry "Frazer Town, Bengaluru, Karnataka".
+   *
+   * Images: six owner-dropped lossy VP8 webp renders ("public/images/Cargo Containers in Frazer Town city
+   * page/Cargo Containers in Frazer Town/cabin (1–6).webp", no EXIF / XMP / ICC; none matches the VP8 data
+   * of an image already in the repo) of one navy-blue corrugated steel container with a fixed, black-framed
+   * window cut into one long side. All six are used, VP8 data copied byte-for-byte with an XMP dc:title /
+   * dc:description marking each as an illustrative render (no creator, copyright, GPS, camera or date
+   * set): three-quarter view of the window side and the closed cargo doors (1, 2336 × 1760) = hero /
+   * og:image; empty interior through the open doors, window on the left wall (2) = bungalow redevelopment;
+   * window side straight on (3) = container types (side openings); roof from above (4) = delivery;
+   * blank end wall (5) = sizes; closed cargo doors straight on (6) = maintenance. Every caption that shows
+   * the window says it is a modification a standard cargo container does not have. The blank end is called
+   * the "end wall", not "front" or "back" (on a container the door end is the rear, which readers would not
+   * expect). No image shows furniture, packaging, catering equipment, shamiana fabric, a compound, a lane,
+   * a lorry or a crane, so the brief's application image slots are not used, and no alt text, caption or
+   * filename claims those items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-frazer-town",
+    city: "Frazer Town",
+    listTitle: "Shipping & Cargo Containers in Frazer Town",
+    metaTitle: "Shipping Container in Frazer Town | Sale & Rent",
+    metaDescription:
+      "Buy or rent shipping containers in Frazer Town for bungalow redevelopment, restaurant equipment and commercial storage. Explore 10, 20 and 40 ft options.",
+    keywords:
+      "shipping container in Frazer Town, cargo container in Frazer Town, storage container in Frazer Town, shipping container Pulikeshi Nagar, cargo container Pulikeshi Nagar, storage container Pulikeshi Nagar, shipping container Fraser Town, used shipping container Frazer Town, new shipping container Frazer Town, second-hand shipping container Frazer Town, shipping container for sale in Frazer Town, cargo container for sale in Frazer Town, shipping container on rent in Frazer Town, shipping container hire Frazer Town, shipping container price in Frazer Town, cargo container price in Frazer Town, 10 ft shipping container Frazer Town, 20 ft shipping container Frazer Town, 40 ft shipping container Frazer Town, 40 ft high cube container Frazer Town, bungalow redevelopment storage container, old house rebuilding storage container, compact compound storage container, restaurant equipment storage container, bakery equipment storage container, catering equipment storage container, restaurant packaging material storage, festival-season storage container, Ramzan seasonal storage container, community hall furniture storage, event furniture storage container, narrow-road shipping container delivery, crane-assisted container placement",
+    // Approximate point in central Frazer Town (Pulikeshi Nagar), between Coles Park and Mosque Road
+    // (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Frazer Town, Bengaluru, Karnataka, India",
+      position: "12.9980;77.6130",
+      icbm: "12.9980, 77.6130",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container", alternateName: ["Cargo Container"] },
+    // The hero is 2336 × 1760 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Koramangala, Horamavu, Vellore, Hennur Road, Bellandur, Athipattu, Banaswadi and Indiranagar are linked
+    // in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-frazer-town/shipping-container-frazer-town.webp",
+      alt: "Corrugated steel shipping container exterior with cargo doors: a navy-blue container with closed doors, vertical locking bars and a fixed window in one side wall, on a paved yard",
+      width: 2336,
+      height: 1760,
+      caption:
+        "Illustrative render, not a photograph from Frazer Town or of a container we have delivered. The side window is a modification; a standard cargo container has none.",
+    },
+
+    h1: "Shipping Container in Frazer Town – Cargo & Storage Solutions",
+    tagline:
+      "Lockable storage while an old bungalow is rebuilt, room for a restaurant's packaging and spare furniture, and a home for community hall chairs between functions.",
+    intro: [
+      "Frazer Town is an established Bengaluru neighbourhood of older residential properties, apartment buildings, restaurants, shops and community facilities.",
+      "Many properties around Mosque Road, Coles Road and Wheeler Road have little spare compound space, which makes building conventional storage difficult.",
+      "A suitably selected steel shipping container can provide enclosed, relocatable storage on authorised premises without a conventional warehouse building.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and cargo containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " for extra storage during bungalow redevelopment, restaurant expansion, commercial stock management and community events. New and used units are chosen around what you are storing, the compound space available and how a delivery vehicle can reach you.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Portable Office Cabin supplies shipping and cargo containers in Frazer Town (Pulikeshi Nagar, PIN 560005), including suitable residential and commercial premises around Mosque Road, Coles Road and Wheeler Road and along Frazer Town's residential lanes. Each address is checked for its approach road, gate and placement space before a delivery date is suggested.",
+    // Brief §16 and §22: Banaswadi and Lingarajapuram belong to the Banaswadi page, Halasuru (Ulsoor) and
+    // Indiranagar to the Indiranagar page; the Bengaluru shipping promotion is the brief's service-area hub.
+    // Cox Town, Cooke Town, Richards Town, Benson Town and the other candidates have no page, so they are
+    // not named.
+    areasInlineLinks: [
+      {
+        before: "Banaswadi and Lingarajapuram, to the north-east, are covered on our page on",
+        link: { label: "shipping containers in Banaswadi", href: "/cities-we-serve/shipping-container-banaswadi" },
+        after: ".",
+      },
+      {
+        before: "Halasuru and Indiranagar, further south-east, are served from our page on",
+        link: { label: "shipping containers in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+        after: ".",
+      },
+      {
+        before: "For other neighbourhoods, start from our",
+        link: { label: "shipping container solutions across Bengaluru", href: "/promotions/shipping-container-in-bangalore" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Who Uses Shipping Containers in Frazer Town?",
+        placement: "afterIntro",
+        paragraphs: ["Shipping containers may suit:"],
+        bullets: [
+          { text: "Families rebuilding older residential properties." },
+          { text: "Bungalow redevelopment contractors." },
+          { text: "Restaurants and bakeries." },
+          { text: "Catering equipment suppliers." },
+          { text: "Commercial traders and shopkeepers." },
+          { text: "Community halls." },
+          { text: "Schools and religious institutions." },
+          { text: "Event furniture suppliers." },
+          { text: "Anyone needing temporary storage during property redevelopment." },
+        ],
+        closing: [
+          "The right container depends on the intended use, the space available, its structural condition and the storage environment.",
+        ],
+      },
+      {
+        heading: "Storage Containers for Bungalow Redevelopment",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-frazer-town/frazer-town-shipping-container-interior.webp",
+          alt: "Empty shipping container interior with corrugated steel walls and flooring, seen through open cargo doors: navy-blue walls, a ribbed ceiling, a plywood floor and a window in the left wall",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render of an empty interior. The window is a modification, and shelving or racks are fitted only where your quotation lists them; none are shown here.",
+        },
+        paragraphs: [
+          "Older residential properties in Frazer Town are being redeveloped, structurally renovated or rebuilt. While the work goes on, homeowners may need temporary storage for compatible furniture, household belongings and property-related equipment.",
+        ],
+        subsections: [
+          {
+            heading: "Furniture Storage During House Rebuilding",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Wooden tables." },
+              { text: "Chairs." },
+              { text: "Beds." },
+              { text: "Disassembled wardrobes." },
+              { text: "Cabinets." },
+              { text: "Bookshelves." },
+              { text: "Other suitable household furniture." },
+            ],
+            closing: [
+              "Use appropriate protective packaging and follow the manufacturer's storage instructions.",
+              "Keep moisture-sensitive items away from floor and wall surfaces where conditions are unsuitable.",
+            ],
+          },
+          {
+            heading: "Books, Documents & Family Belongings",
+            paragraphs: ["Compatible packed items may include:"],
+            bullets: [
+              { text: "Books." },
+              { text: "Household documents." },
+              { text: "Decorative items." },
+              { text: "Photographs." },
+              { text: "Packed household accessories." },
+              { text: "Other suitable family belongings." },
+            ],
+            closing: [
+              "Paper, photographs and valuable belongings may need controlled temperature and humidity.",
+              "An ordinary shipping container is not recommended for irreplaceable documents, antiques or valuable family heirlooms unless suitable environmental protection and security arrangements have been confirmed.",
+            ],
+          },
+          {
+            heading: "Household Appliance Storage",
+            paragraphs: ["Compatible appliances may include:"],
+            bullets: [
+              { text: "Disconnected washing machines." },
+              { text: "Disconnected refrigerators." },
+              { text: "Microwave ovens." },
+              { text: "Other suitable household appliances." },
+            ],
+            closing: [
+              "Clean, drain and dry appliances where applicable before storage, and follow the manufacturer's storage instructions.",
+              "Appliances are not operated inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Compact Compound Storage",
+            paragraphs: [
+              "Where suitable private compound space is available, a compact container may provide temporary storage during redevelopment. Before choosing a container, check:",
+            ],
+            bullets: [
+              { text: "Available ground dimensions." },
+              { text: "Door-opening clearance." },
+              { text: "Gate width." },
+              { text: "Existing compound walls." },
+              { text: "Building setbacks." },
+              { text: "Drainage." },
+              { text: "Ground stability." },
+              { text: "Heavy-vehicle access." },
+              { text: "Applicable property permissions." },
+            ],
+            closing: ["A compact container is not automatically suitable for every residential property."],
+          },
+          {
+            heading: "Redevelopment Material Organisation",
+            paragraphs: ["Organise compatible materials by:"],
+            bullets: [
+              { text: "Room or property section." },
+              { text: "Item category." },
+              { text: "Packing date." },
+              { text: "Storage location." },
+              { text: "Collection schedule." },
+              { text: "Required protection." },
+            ],
+            closing: [
+              "An inventory register makes items easier to find during reconstruction and when they are moved back into the house.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Restaurants, Bakeries & Caterers",
+        placement: "afterIntro",
+        paragraphs: [
+          "Restaurants, bakeries and catering businesses around Frazer Town may need additional storage for packaging materials, spare equipment and seasonal commercial supplies.",
+          "A suitably configured shipping container can add space for compatible non-food inventory.",
+        ],
+        subsections: [
+          {
+            heading: "Restaurant Packaging Material Storage",
+            paragraphs: ["Compatible products may include:"],
+            bullets: [
+              { text: "Empty takeaway cartons." },
+              { text: "Paper bags." },
+              { text: "Food-grade packaging in sealed protective cartons." },
+              { text: "Disposable cups." },
+              { text: "Unused takeaway containers." },
+              { text: "Packaging accessories." },
+            ],
+            closing: [
+              "Protect packaging against moisture, pests, contamination and unsuitable temperatures, and follow the applicable food-contact packaging storage requirements.",
+            ],
+          },
+          {
+            heading: "Spare Restaurant Furniture Storage",
+            paragraphs: ["Compatible items may include:"],
+            bullets: [
+              { text: "Stackable chairs." },
+              { text: "Tables." },
+              { text: "Foldable furniture." },
+              { text: "Spare seating." },
+              { text: "Suitable serving counters." },
+              { text: "Non-electrical display equipment." },
+            ],
+            closing: [
+              "Store furniture on suitable supports with restraints, keep a safe walkway and avoid unstable stacking.",
+            ],
+            // Brief §22: restaurant equipment moved between premises is the Koramangala page's intent.
+            inlineLinks: [
+              {
+                before: "Moving a whole restaurant's equipment out while new premises are fitted out? Read about",
+                link: { label: "restaurant equipment storage between moves in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Catering Equipment Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Clean, dry stainless steel serving vessels." },
+              { text: "Catering utensils." },
+              { text: "Serving trays." },
+              { text: "Buffet stands." },
+              { text: "Disconnected catering equipment." },
+              { text: "Other suitable event-service accessories." },
+            ],
+            closing: [
+              "Clean and dry all equipment before storage.",
+              "LPG cylinders, fuel, flammable liquids and incompatible chemicals are not stored in an ordinary storage container.",
+            ],
+            // Brief §22: tent-house and catering-vessel hire stock is the Horamavu page's intent.
+            inlineLinks: [
+              {
+                before: "Hiring out vessels, canopies and furniture as a tent-house business? See",
+                link: { label: "tent-house and catering vessel storage in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Bakery Equipment & Packaging Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Clean baking trays." },
+              { text: "Empty cake boxes." },
+              { text: "Suitable packaging materials." },
+              { text: "Disconnected bakery equipment." },
+              { text: "Spare utensils." },
+              { text: "Non-perishable, non-food accessories." },
+            ],
+            closing: ["An ordinary storage container is not a bakery production space or an occupied commercial kitchen."],
+          },
+          {
+            heading: "Ramzan & Festival-season Storage",
+            paragraphs: [
+              "Restaurants and shops may need extra space during Ramzan, festive periods and other busy trading seasons. Possible uses include:",
+            ],
+            bullets: [
+              { text: "Additional packaging cartons." },
+              { text: "Spare tables and chairs." },
+              { text: "Clean catering equipment." },
+              { text: "Suitable display materials." },
+              { text: "Non-food seasonal commercial inventory." },
+            ],
+            closing: [
+              "Containers can be hired from one month, so a unit can be taken for the season and collected afterwards; the hire terms are set out in your quotation.",
+            ],
+          },
+          {
+            heading: "Food Storage Safety",
+            paragraphs: ["An ordinary shipping container is not automatically suitable for food storage. Food products may need:"],
+            bullets: [
+              { text: "Appropriate temperature control." },
+              { text: "Humidity control." },
+              { text: "Pest prevention." },
+              { text: "Hygienic storage surfaces." },
+              { text: "Suitable cleaning procedures." },
+              { text: "Food-safety compliance." },
+              { text: "Product-specific storage conditions." },
+            ],
+            closing: [
+              "Temperature-sensitive food may need an appropriately specified refrigerated container or another compliant storage facility. A ventilated storage container is not offered for unrestricted food storage.",
+            ],
+            // Brief §21: the climate-controlled guidance belongs to the Vellore page (no reefer product page exists).
+            inlineLinks: [
+              {
+                before: "What an insulated or air-conditioned unit involves is explained in our",
+                link: { label: "climate-controlled container options", href: "/cities-we-serve/shipping-container-vellore" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Community Halls & Event Furniture",
+        placement: "afterIntro",
+        paragraphs: [
+          "Community halls, schools, religious institutions and event organisers may need additional storage between functions and gatherings.",
+          "A suitable shipping container can provide enclosed space for compatible event equipment.",
+        ],
+        subsections: [
+          {
+            heading: "Community Hall Furniture Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Stackable chairs." },
+              { text: "Foldable tables." },
+              { text: "Spare seating." },
+              { text: "Suitable portable furniture." },
+              { text: "Non-electrical display stands." },
+            ],
+            closing: ["Use suitable stacking arrangements and secure items against movement."],
+          },
+          {
+            heading: "Shamiana & Event Fabric Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Clean, dry shamiana fabrics." },
+              { text: "Folded event covers." },
+              { text: "Decorative fabrics." },
+              { text: "Compatible temporary event accessories." },
+            ],
+            closing: [
+              "Dry all fabric before storage and follow the manufacturer's folding, rolling and storage instructions.",
+              "No container is offered as mould-free storage.",
+            ],
+          },
+          {
+            heading: "Festival Decoration Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Decorative items." },
+              { text: "Reusable event materials." },
+              { text: "Non-electrical display accessories." },
+              { text: "Packaged lighting accessories." },
+              { text: "Suitable event signage." },
+            ],
+            closing: [
+              "Store electrical equipment disconnected from power.",
+              "Fireworks, fuel and other hazardous materials are not stored in an ordinary storage container.",
+            ],
+          },
+          {
+            heading: "Event-wise Inventory Organisation",
+            paragraphs: ["Organise equipment by:"],
+            bullets: [
+              { text: "Event name." },
+              { text: "Equipment category." },
+              { text: "Quantity." },
+              { text: "Collection date." },
+              { text: "Return date." },
+              { text: "Condition." },
+              { text: "Storage location." },
+            ],
+            closing: ["Keep returned equipment separate until it has been inspected, cleaned and dried."],
+          },
+          {
+            heading: "Institutional Storage Safety",
+            paragraphs: ["Placing a container at a school, religious institution or community facility has to take account of:"],
+            bullets: [
+              { text: "Property permission." },
+              { text: "Emergency access." },
+              { text: "Pedestrian movement." },
+              { text: "Fire-safety requirements." },
+              { text: "Applicable local approvals." },
+              { text: "Safe separation from occupied areas." },
+            ],
+            closing: ["A container must not obstruct emergency exits or public access routes."],
+            // Brief §22: churches, choirs and décor sellers are the Hennur Road page's intent.
+            inlineLinks: [
+              {
+                before: "Parishes keeping crib sets, feast-day stock and choir robes are covered on our page on",
+                link: { label: "storage for churches and choirs on Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Commercial & Construction Storage",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Storage Containers for Local Traders",
+            paragraphs: [
+              "Shopkeepers who stock up at the wholesale markets in nearby Shivajinagar may need extra space for compatible merchandise. Possible uses include:",
+            ],
+            bullets: [
+              { text: "Packaged retail stock." },
+              { text: "Non-food merchandise." },
+              { text: "Commercial accessories." },
+              { text: "Empty packaging materials." },
+              { text: "Suitable spare equipment." },
+            ],
+            closing: ["Shelving and a labelled inventory keep stock easy to find."],
+          },
+          {
+            heading: "Storage Containers for Redevelopment Contractors",
+            paragraphs: ["Contractors working on residential redevelopment may need storage for:"],
+            bullets: [
+              { text: "Construction hand tools." },
+              { text: "Packaged fittings." },
+              { text: "Compatible electrical installation materials." },
+              { text: "Tile cartons." },
+              { text: "Suitable dry construction materials." },
+            ],
+            closing: [
+              "Moisture-sensitive products, including cement, need appropriate storage conditions; an ordinary shipping container is not offered as moisture-free storage.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Buy or Rent a Shipping Container in Frazer Town",
+        placement: "afterSolutions",
+        paragraphs: ["Whether to buy or rent depends on how long you need the storage, your budget and what you plan to keep in it."],
+        table: {
+          caption: "A general comparison; the terms that apply are the ones in your purchase or rental quotation.",
+          headers: ["Requirement", "Buying", "Renting"],
+          rows: [
+            ["Storage duration", "Longer-term requirements", "Temporary requirements"],
+            ["Payment", "Agreed purchase terms", "Agreed rental charges"],
+            ["Modifications", "Subject to structural and regulatory requirements", "Subject to the rental agreement"],
+            ["Ownership", "You own the purchased unit", "Ownership stays with the rental provider"],
+            ["End of use", "Keep, relocate or resell it where possible", "Return or collection under the agreement"],
+            ["Suitable applications", "Long-term commercial storage", "Redevelopment and seasonal storage"],
+          ],
+        },
+        closing: [
+          "Buying does not automatically become cheaper after a set number of months. Compare the actual purchase cost, rental charges, transport, maintenance and possible resale value over your own storage period.",
+        ],
+      },
+      {
+        heading: "Shipping Containers for Sale in Frazer Town",
+        placement: "afterSolutions",
+        paragraphs: ["Grades available depend on current stock; the grade of each unit is stated in your quotation."],
+        subsections: [
+          {
+            heading: "New One-trip Shipping Containers",
+            paragraphs: [
+              "One-trip containers have usually carried a single cargo load and tend to look newer than older used units. Possible uses include:",
+            ],
+            bullets: [
+              { text: "Long-term storage." },
+              { text: "Residential placement where appearance matters." },
+              { text: "Commercial inventory storage." },
+              { text: "Suitable conversion projects." },
+            ],
+            closing: ["The condition of each available unit is checked individually."],
+          },
+          {
+            heading: "Used Cargo-worthy Shipping Containers",
+            paragraphs: [
+              "Cargo-worthy containers may be used for cargo transport where the applicable structural, certification and examination requirements are met. Before international shipment, check:",
+            ],
+            bullets: [
+              { text: "Structural condition." },
+              { text: "CSC approval and examination status." },
+              { text: "Carrier acceptance." },
+              { text: "Cargo compatibility." },
+              { text: "Payload capacity." },
+            ],
+            closing: ["Not every used cargo-worthy container has current certification."],
+          },
+          {
+            heading: "Used Wind & Watertight Shipping Containers",
+            paragraphs: [
+              "Wind and watertight containers can be an economical choice for compatible stationary storage. Possible uses include:",
+            ],
+            bullets: [
+              { text: "Redevelopment storage." },
+              { text: "Restaurant equipment storage." },
+              { text: "Commercial inventory." },
+              { text: "Community event equipment." },
+            ],
+            closing: [
+              "Inspect the actual unit before purchase. A wind and watertight container is not condensation-free, floodproof or completely theft-proof.",
+            ],
+          },
+          {
+            heading: "Actual Container Condition",
+            paragraphs: ["Before you buy, ask for details of the specific unit, such as:"],
+            bullets: [
+              { text: "Exterior condition." },
+              { text: "Interior condition." },
+              { text: "Cargo doors." },
+              { text: "Flooring condition." },
+              { text: "Roof condition." },
+              { text: "Verified container dimensions." },
+            ],
+            closing: [
+              "The pictures on this page are illustrative renders, not photographs of a unit for sale, and do not show the condition of any particular container.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container on Rent & Hire in Frazer Town",
+        placement: "afterSolutions",
+        paragraphs: ["Temporary container hire may suit:"],
+        bullets: [
+          { text: "Bungalow redevelopment." },
+          { text: "Short-term restaurant storage." },
+          { text: "Shop renovation." },
+          { text: "Festival-season equipment storage." },
+          { text: "Community events." },
+          { text: "Temporary construction projects." },
+        ],
+        closing: [
+          "Hire terms run from one month to five years. Your rental quotation sets out the available size, the minimum term, the monthly charge, any security deposit, transport, loading and unloading, extension terms, collection, and who is responsible for damage.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and hire options are listed on our",
+            link: { label: "shipping container rental", href: "/products/shipping-container-rental" },
+            after: " page.",
+          },
+        ],
+      },
+      {
+        heading: "Which Container Size Fits a Frazer Town Compound?",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-frazer-town/frazer-town-shipping-container-end-wall.webp",
+          alt: "Closed end wall of a navy-blue shipping container showing its corrugated steel panel between the corner posts and castings",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render of the closed end. A container's width is about 2.44 m outside, so measure the gate and the space beside walls, not only the length.",
+        },
+        paragraphs: [
+          "In Frazer Town, the compound space available and how a delivery vehicle can reach it matter as much as storage volume when choosing a container.",
+        ],
+        table: {
+          caption:
+            "Measurements are approximate and vary by container type and manufacturer. Confirm the actual dimensions, door openings, payload capacity and available specifications of the unit quoted to you.",
+          headers: ["Container size", "Approx. inside size", "Approx. volume", "Suitable use"],
+          rows: [
+            ["10 ft, subject to stock", "2.8 × 2.35 × 2.39 m", "15–16 m³", "Compact storage and limited compound space"],
+            ["20 ft standard", "5.9 × 2.35 × 2.39 m", "33 m³", "Furniture, restaurant equipment and commercial stock"],
+            ["40 ft standard", "12.0 × 2.35 × 2.39 m", "67 m³", "Larger storage needs"],
+            ["40 ft high cube", "12.0 × 2.35 × 2.69 m", "76 m³", "Taller shelving and bulky equipment"],
+          ],
+        },
+        subsections: [
+          {
+            heading: "10 ft Shipping Container",
+            paragraphs: ["Where one is in stock, a 10 ft container may suit:"],
+            bullets: [
+              { text: "Smaller residential compounds." },
+              { text: "Compact restaurant equipment storage." },
+              { text: "Limited commercial stock." },
+              { text: "Community hall accessories." },
+            ],
+            closing: [
+              "A 10 ft container generally needs about 3 metres by 2.5 metres of ground, plus room for its doors to open and for installation access. The actual placement is assessed for each site.",
+            ],
+          },
+          {
+            heading: "20 ft Shipping Container",
+            paragraphs: ["A 20 ft container may suit:"],
+            bullets: [
+              { text: "Furniture during bungalow redevelopment." },
+              { text: "Catering equipment." },
+              { text: "Commercial packaging materials." },
+              { text: "Community hall furniture." },
+              { text: "Organised commercial inventory." },
+            ],
+            closing: ["No container size is quoted as holding the contents of a particular number of bedrooms."],
+          },
+          {
+            heading: "40 ft Shipping Container",
+            paragraphs: [
+              "A 40 ft container may suit larger commercial and redevelopment sites. Confirm the ground space, delivery access and unloading arrangements before choosing this size.",
+            ],
+          },
+          {
+            heading: "40 ft High Cube Shipping Container",
+            paragraphs: [
+              "A high cube container is about 30 cm taller than a standard-height container, which may suit taller racks and compatible bulky equipment. Availability is confirmed in your quotation.",
+            ],
+          },
+          {
+            heading: "Container Door Clearance",
+            paragraphs: [
+              "A standard shipping container's door opening is typically about 2.3 metres wide and a little under 2.3 metres high. Measure the largest item before choosing a container, and confirm the door opening of any modified or specialised unit.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Cargo Container Types",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-frazer-town/frazer-town-shipping-container-side-view.webp",
+          alt: "Long side of a navy-blue corrugated steel shipping container seen straight on, with a single black-framed fixed window cut into the side wall",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render of a modified container. A window or extra door like this is cut in only on order, after a structural review; a standard cargo container has none.",
+        },
+        paragraphs: [
+          "Portable Office Cabin supplies or arranges the following types, subject to stock; the type and its specification are confirmed in your quotation.",
+        ],
+        subsections: [
+          {
+            heading: "Standard Dry Container",
+            paragraphs: ["An enclosed steel container commonly used for compatible dry cargo and stationary storage."],
+          },
+          {
+            heading: "High Cube Container",
+            paragraphs: ["A container with extra height for compatible taller inventory."],
+          },
+          {
+            heading: "Open Top Container",
+            paragraphs: ["A specialised container designed for loading suitable cargo from above."],
+          },
+          {
+            heading: "Flat Rack Container",
+            paragraphs: [
+              "A specialised configuration for compatible oversized cargo, such as certain machinery and structural materials. A flat rack is not an enclosed storage container.",
+            ],
+          },
+          {
+            heading: "Refrigerated Container",
+            paragraphs: [
+              "A refrigerated (reefer) container can provide controlled-temperature storage or transport for suitable products. Confirm the temperature range, the power supply and the product's suitability before ordering.",
+            ],
+          },
+          {
+            heading: "Side Openings",
+            paragraphs: [
+              "Extra side access, such as a side door, can be cut into a standard container as a modification for easier loading and unloading. Each opening needs a structural review and is priced in your quotation.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Delivery Through Frazer Town's Lanes",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-frazer-town/frazer-town-shipping-container-top-view.webp",
+          alt: "Elevated view showing the steel shipping container roof: a navy-blue container seen from directly above on a paved pad edged with timber decking and planting",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative overhead view. Besides the container's footprint, a compound needs clear space at the door end and room for the vehicle or crane that sets it down.",
+        },
+        paragraphs: [
+          "Delivery planning matters where residential roads, compound walls and limited vehicle access decide where a container can stand.",
+          "Roads around Mosque Road, Coles Road and Wheeler Road are assessed site by site before a heavy vehicle is sent.",
+        ],
+        subsections: [
+          {
+            heading: "Site Accessibility Assessment",
+            paragraphs: ["Before delivery is arranged, we confirm:"],
+            bullets: [
+              { text: "Road width." },
+              { text: "Gate width and height." },
+              { text: "Compound dimensions." },
+              { text: "Heavy-vehicle turning space." },
+              { text: "Parked-vehicle restrictions." },
+              { text: "Existing compound walls." },
+              { text: "Overhead electrical cables." },
+              { text: "Tree branches." },
+              { text: "Ground stability." },
+              { text: "Container weight." },
+              { text: "Container dimensions." },
+              { text: "Emergency access." },
+              { text: "Applicable local permissions." },
+            ],
+            closing: ["Send photographs and measurements of the site and its approach road."],
+          },
+          {
+            heading: "Night & Early-morning Delivery Planning",
+            paragraphs: ["Delivery timing depends on:"],
+            bullets: [
+              { text: "Applicable heavy-vehicle movement restrictions." },
+              { text: "Local traffic conditions." },
+              { text: "Residential noise restrictions." },
+              { text: "Transport availability." },
+              { text: "Site accessibility." },
+              { text: "Required permissions." },
+            ],
+            closing: [
+              "Night and early-morning slots are not guaranteed; a time is offered only once the applicable rules and the delivery arrangements are confirmed.",
+            ],
+          },
+          {
+            heading: "Crane-assisted Container Placement",
+            paragraphs: [
+              "Where ordinary truck unloading is not possible, a crane may be used to place the container. Before a crane lift is confirmed, we check:",
+            ],
+            bullets: [
+              { text: "The available lifting area." },
+              { text: "Where the crane can stand." },
+              { text: "Ground-bearing conditions." },
+              { text: "Container weight." },
+              { text: "Required lifting capacity." },
+              { text: "Overhead obstructions." },
+              { text: "Suitable lifting equipment." },
+              { text: "Public road occupation permissions." },
+              { text: "Availability of a qualified operator." },
+            ],
+            closing: [
+              "Lifting a container over a compound wall is not always feasible, and every lift is planned and carried out by appropriately qualified personnel.",
+              "Permission to occupy a public road for a crane must be in place before the lift; obtaining it is not included unless your quotation lists it.",
+            ],
+          },
+          {
+            heading: "Delivery Cost Transparency",
+            paragraphs: ["Where they apply, these are quoted as separate lines:"],
+            bullets: [
+              { text: "Container transport." },
+              { text: "Crane charges." },
+              { text: "Loading." },
+              { text: "Unloading." },
+              { text: "Additional handling." },
+              { text: "Other agreed delivery-related charges." },
+            ],
+            // Brief §12: detailed restricted-site guidance belongs to the Bellandur page.
+            inlineLinks: [
+              {
+                before: "Squeezing a container past a society gate or down a tight lane? Read our notes on",
+                link: { label: "shipping container delivery to restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Frazer Town",
+        placement: "afterSolutions",
+        paragraphs: [
+          "The price of a shipping container in Frazer Town depends on its size, condition, intended use and delivery requirements. The factors include:",
+        ],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition." },
+          { text: "Container grade." },
+          { text: "Purchase or rental arrangement." },
+          { text: "Rental duration, where hired." },
+          { text: "Lockbox." },
+          { text: "Shelving." },
+          { text: "Ventilation." },
+          { text: "Insulation." },
+          { text: "Lighting." },
+          { text: "Additional doors." },
+          { text: "Painting." },
+          { text: "Transport distance." },
+          { text: "Crane requirements." },
+          { text: "Loading and unloading." },
+          { text: "Site accessibility." },
+          { text: "Current market conditions." },
+        ],
+        closing: [
+          "Portable Office Cabin provides an itemised quotation based on your requirements; the price, transport and any crane charges are stated there, not on this page.",
+        ],
+      },
+      {
+        heading: "Keeping Your Shipping Container in Good Condition",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-frazer-town/frazer-town-cargo-container-locking-doors.webp",
+          alt: "Steel cargo doors with vertical locking bars and hinges on a navy-blue container, closed and seen straight on, with door handles and corner castings",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render of the cargo doors. The hinges, locking bars, handles and door seals are the parts to check on a regular inspection.",
+        },
+        paragraphs: ["Regular inspection and appropriate maintenance help protect the container and its contents."],
+        subsections: [
+          {
+            heading: "Suitable Ground Supports",
+            paragraphs: [
+              "Place the container on supports or a foundation designed for the site and the loaded container, with drainage and ground stability assessed. Loose concrete blocks or sleepers are not a substitute for supports chosen for the load.",
+            ],
+          },
+          {
+            heading: "Roof & External Surface Maintenance",
+            paragraphs: [
+              "Leaves and debris collect on containers placed near trees. Roof inspection and cleaning are done by trained personnel with suitable access equipment; nobody should climb onto a container roof without proper safety provisions.",
+            ],
+          },
+          {
+            heading: "Ventilation & Condensation Management",
+            paragraphs: ["Paper, fabric, wood and electronic products can be affected by moisture and condensation. Consider:"],
+            bullets: [
+              { text: "Suitable ventilation." },
+              { text: "Insulation." },
+              { text: "Appropriate protective packaging." },
+              { text: "Environmental monitoring." },
+              { text: "Suitable moisture-control measures." },
+            ],
+            closing: ["Ventilation and desiccants alone do not guarantee suitable storage conditions."],
+          },
+          {
+            heading: "Cargo Door Maintenance",
+            paragraphs: ["Periodically inspect:"],
+            bullets: [
+              { text: "Door hinges." },
+              { text: "Locking bars." },
+              { text: "Door seals." },
+              { text: "Locking mechanisms." },
+              { text: "Visible corrosion." },
+            ],
+            closing: ["Follow suitable maintenance and lubrication instructions."],
+          },
+          {
+            heading: "Paint & Corrosion Protection",
+            paragraphs: [
+              "Inspect damaged paint and visible corrosion, and use appropriate surface preparation and compatible protective coatings where needed. No container is offered as rust-free.",
+            ],
+          },
+          {
+            heading: "Used Container Inspection",
+            paragraphs: ["Before buying a used container, assess its:"],
+            bullets: [
+              { text: "Structural frame." },
+              { text: "Corner castings." },
+              { text: "Roof." },
+              { text: "Door seals." },
+              { text: "Flooring." },
+              { text: "Corrosion." },
+              { text: "Previous repairs." },
+              { text: "Signs of water ingress." },
+            ],
+            // Brief §14: detailed used-container inspection → the Athipattu page's checklist (no Chennai route).
+            inlineLinks: [
+              {
+                before: "Each point is explained in more detail in our guide to",
+                link: { label: "used shipping container inspection", href: "/cities-we-serve/shipping-container-in-athipattu" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain what you intend to store." },
+          { text: "Tell us how long you need the storage." },
+          { text: "Confirm your preferred container size." },
+          { text: "Say whether you need a new or used container." },
+          { text: "Confirm whether you are buying or renting." },
+          { text: "Send photographs of your compound and access road." },
+          { text: "Provide gate measurements and the space available for the container." },
+          { text: "Discuss transport and any crane requirements." },
+          { text: "Confirm the applicable permissions." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise the container specification." },
+          { text: "Confirm the delivery and unloading arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin supplies shipping and cargo containers based on what you need to store, the container specifications available and how the unit will be used. For Frazer Town, that covers:",
+        ],
+        bullets: [
+          { title: "New and used containers", text: "one-trip, cargo-worthy and wind-and-watertight grades, each stated per unit in the quotation." },
+          { title: "Purchase or hire", text: "buy outright, or hire from one month to five years." },
+          { title: "Compact configurations", text: "20 ft units for tighter compounds, and 10 ft units when stock allows." },
+          { title: "Bungalow redevelopment storage", text: "space for furniture, packed belongings and disconnected appliances while the house is rebuilt." },
+          { title: "Restaurant, catering and community storage", text: "packaging, spare furniture, utensils and hall equipment kept apart from food and fuel." },
+          { title: "Commercial inventory storage", text: "shelving and labelled layouts planned around your stock." },
+          { title: "Site-access assessment", text: "the road, the gate, the ground and any overhead cables checked from your photographs before a date is agreed." },
+          { title: "Modification options", text: "lockbox, shelving, vents, insulation, lighting and extra doors, each priced as its own line." },
+          { title: "Transport and crane coordination", text: "crane-assisted placement where it is available and the site allows it." },
+          { title: "Itemised quotations", text: "every fitting, transport, crane and unloading charge listed separately." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the shipping container price in Frazer Town?",
+        answer:
+          "Pricing depends on the container size, condition, any modifications, transport and unloading. Crane-assisted placement may add charges. Contact Portable Office Cabin for an itemised quotation.",
+      },
+      {
+        question: "Do you deliver shipping containers to Pulikeshi Nagar?",
+        answer:
+          "Pulikeshi Nagar is another name for Frazer Town (sometimes spelt Fraser Town), and this page covers the whole locality, including premises around Mosque Road, Coles Road and Wheeler Road. Delivery is subject to site access and the applicable permissions.",
+      },
+      {
+        question: "Can a shipping container fit inside a small residential compound?",
+        answer:
+          "A compact container may fit where there is enough ground space, door clearance and delivery access. Send photographs and measurements of the site for an assessment.",
+      },
+      {
+        question: "Can I rent a container during Ramzan or the wedding season?",
+        answer:
+          "Yes. Containers can be hired from one month for compatible seasonal commercial stock and event equipment. The term, charges and availability are confirmed in your rental quotation.",
+      },
+      {
+        question: "Can I store household belongings while rebuilding my bungalow?",
+        answer:
+          "A suitably configured container can hold compatible household belongings. Consider packaging, temperature, humidity, pest protection and security. Valuable or irreplaceable belongings may need specialised storage.",
+      },
+      {
+        question: "Can restaurants store equipment inside shipping containers?",
+        answer:
+          "Clean, dry restaurant furniture, catering utensils, packaging materials and disconnected equipment can be stored under suitable conditions. Food products, LPG cylinders and hazardous materials need a separate assessment and appropriate storage facilities.",
+      },
+      {
+        question: "Can a crane place a container over a compound wall?",
+        answer:
+          "Possibly, after a professional assessment of the lifting capacity, ground conditions, overhead obstructions and applicable permissions. Not every compound can be reached by crane.",
+      },
+      {
+        question: "Can you deliver a shipping container at night?",
+        answer:
+          "Delivery timing depends on the applicable vehicle restrictions, residential noise rules, transport availability and site conditions. The arrangements are confirmed before a delivery is scheduled, and a night slot is not guaranteed.",
+      },
+      {
+        question: "Will a shipping container protect my belongings during the monsoon?",
+        answer:
+          "A suitably inspected container can help protect compatible belongings from the weather outside. Condensation, flooding, damaged seals and poor placement can still affect stored items, so appropriate storage and environmental protection are needed.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Frazer Town",
+    ctaText: `Whether you need temporary storage during bungalow redevelopment, extra room for restaurant equipment, community hall furniture or commercial inventory, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Serving Frazer Town (Pulikeshi Nagar), Bengaluru, Karnataka – 560005.`,
+    // Brief §19: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry for Frazer Town",
+      intro:
+        "Pick the container type and quantity, share the Frazer Town delivery address or a map pin, and tell us whether you are buying or hiring, for how long, what it will hold and your preferred delivery date. Photographs of the compound and the access road, with the gate's width and height, let us plan the delivery.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Every container is dispatched from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; there is no yard, depot, showroom or branch in Frazer Town. Each unit is defined by its written quotation: internal and door-opening sizes, grade and condition, payload limits, any lockbox, shelving, vents, insulation, lights, windows or extra doors, the hire terms where it is rented, and how it is delivered, lifted, unloaded and collected. Stock changes, so a size, a delivery date, a night or early-morning slot or a crane lift holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as condensation-free, mould-free, rust-free, floodproof, theft-proof or temperature- or humidity-controlled, and a storage container is not supplied as a store for food, LPG cylinders, fuel, flammable liquids, fireworks or other hazardous materials, as a kitchen or bakery, or for operating appliances. The six pictures are illustrative renders, not photographs taken in Frazer Town; none shows a delivered unit, a unit for sale, a customer's property or stored goods, and the window shown is a modification, not a feature of a standard cargo container. Volumes are approximate and are not payload ratings. Restaurants, bakeries, caterers, community halls, schools, religious institutions, traders and contractors are named as possible uses, not as customers or completed projects, and the roads listed show where enquiries are accepted, not confirmed delivery addresses. Notes on storage, food safety, placement, cranes, permissions and maintenance are general information, not safety, legal, insurance or engineering advice; follow the manufacturers' instructions and the requirements of the authorities concerned.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN HRBR LAYOUT — storage for wedding and party wear rental stores
@@ -69354,6 +70450,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Stationery and kitchenware shops next door in New Thippasandra can read about",
         link: { label: "stationery and kitchenware stock storage in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
+        after: ".",
+      },
+      // Frazer Town brief (2026-11-25, §21): Frazer Town (Pulikeshi Nagar), for bungalow redevelopment, restaurant
+      // and community hall storage, is that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "Restaurants, bakeries and community halls in Frazer Town, to the north-west, are covered on our page about",
+        link: { label: "restaurant and community hall storage containers in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
         after: ".",
       },
     ],

@@ -810,6 +810,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Nagavara / Nagawara (air cooler dealers' seasonal stock; umbrella and rainwear wholesalers' monsoon
     // stock; owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Nagavara", href: "/cities-we-serve/shipping-container-nagavara" },
+    // Frazer Town / Pulikeshi Nagar (bungalow redevelopment, restaurant packaging and spare furniture, community hall
+    // furniture; owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
   ],
 };
 
