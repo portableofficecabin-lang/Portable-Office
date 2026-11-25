@@ -801,6 +801,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kodigehalli (tree care crews' saws, ropes and safety gear; roofing contractors' sheets, sections and
     // fixings; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
+    // Nagavara / Nagawara (air cooler dealers' seasonal stock; umbrella and rainwear wholesalers' monsoon
+    // stock; owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Nagavara", href: "/cities-we-serve/shipping-container-nagavara" },
   ],
 };
 
