@@ -20735,7 +20735,9 @@ export const CITY_PAGES: CityPage[] = [
    * shipping page's nearby block. `nearbySkipsBodyLinks` keeps the nearby block from repeating Bellandur.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Rajarajeshwari Nagar, RR Nagar, Ideal Homes
-   * Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere, for household
+   * Township, Kenchenahalli, Pattanagere, Halagevaderahalli and Gattigere (Channasandra brief, 2026-11-25,
+   * §8: the west Channasandra beside RR Nagar is no longer targeted here, so it cannot be confused with the
+   * east Bengaluru Channasandra, PIN 560066, which has its own page), for household
    * belongings stored while a house is used for a TV or film shoot, and for college motorsport vehicles,
    * spares, tools and team equipment. Not targeted: Uttarahalli and Chikkalasandra (Banashankari),
    * Rajajinagar (its own page), Kengeri and Nagarbhavi (kept for possible future pages), Mysore Road (its
@@ -20768,7 +20770,7 @@ export const CITY_PAGES: CityPage[] = [
     metaDescription:
       "Shipping and storage containers in RR Nagar for homeowners storing furniture during film shoots and college motorsport teams storing race cars, tools and spares.",
     keywords:
-      "shipping container in Rajarajeshwari Nagar, shipping container in RR Nagar, cargo container RR Nagar, storage container Rajarajeshwari Nagar, storage container RR Nagar, storage container Ideal Homes Township, storage container Kenchenahalli, storage container Pattanagere, storage container Halagevaderahalli, storage container Channasandra, storage container Gattigere, used shipping container RR Nagar, shipping container price in RR Nagar, storage container for rent in RR Nagar, furniture storage during film shoots, college motorsport team storage container",
+      "shipping container in Rajarajeshwari Nagar, shipping container in RR Nagar, cargo container RR Nagar, storage container Rajarajeshwari Nagar, storage container RR Nagar, storage container Ideal Homes Township, storage container Kenchenahalli, storage container Pattanagere, storage container Halagevaderahalli, storage container Gattigere, used shipping container RR Nagar, shipping container price in RR Nagar, storage container for rent in RR Nagar, furniture storage during film shoots, college motorsport team storage container",
     // Approximate point in Rajarajeshwari Nagar, west Bengaluru (rounded; for the owner to confirm).
     geo: {
       region: "IN-KA",
@@ -20806,8 +20808,10 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     areasHeading: "Areas Served Around Rajarajeshwari Nagar",
+    // Channasandra brief (2026-11-25, §8): the brief's areas sentence, without Channasandra; the access sentence
+    // after it is unchanged.
     areasText:
-      "This page covers shipping and storage container requirements in Rajarajeshwari Nagar (RR Nagar), Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli, Channasandra and Gattigere. Many of these are residential streets with parked cars and tight gates, so the approach and the spot where the container will stand are checked for each property or campus before a delivery is confirmed.",
+      "We supply shipping and storage containers across Rajarajeshwari Nagar (RR Nagar), including Ideal Homes Township, Kenchenahalli, Pattanagere, Halagevaderahalli and Gattigere. Many of these are residential streets with parked cars and tight gates, so the approach and the spot where the container will stand are checked for each property or campus before a delivery is confirmed.",
     // RR Nagar shop-cabin brief (2026-11-18): oil, millet and gated-community shop cabins are that page's intent.
     areasInlineLinks: [
       {
@@ -26410,6 +26414,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "shipping containers in Hoskote", href: "/cities-we-serve/shipping-container-hoskote" },
         after: ".",
       },
+      // Channasandra brief (2026-11-25, §7): corporate gifting and tensile structure storage in Channasandra
+      // (Chansandra) is that page's intent; this page's own boundaries and targeting are unchanged.
+      {
+        before: "For corporate gifting merchandise and tensile structure material storage in Channasandra, explore our dedicated",
+        link: { label: "Channasandra shipping container page", href: "/cities-we-serve/shipping-container-channasandra" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -26897,6 +26908,744 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers are supplied from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and the company's Bengaluru office is in Electronic City; it has no yard, depot, showroom or branch in Shigehalli or Seegehalli. Each unit's internal and door-opening sizes, grade and condition, floor-loading limit, fittings (shelves, racks, pallets, bins, lights, vents, insulation or locks), hire terms where it is rented, and its delivery, unloading and collection are set by the written quotation. Stock changes, so a delivery date holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as climate-controlled, humidity-controlled, fire-rated or theft-proof, none is supplied as a place to charge batteries, and no promise is made that fragile stock will arrive or stay unbroken. The six pictures are illustrative images from our existing catalogue imagery, not photographs taken in Shigehalli; none shows a delivered or fitted unit, toys or tableware. Volumes are approximate and are not payload ratings. Toy and crockery wholesalers are named as possible uses, not as customers or completed projects, and the locality named shows where enquiries are accepted, not a confirmed delivery address. Notes on batteries, fragile goods, stacking, fire safety, placement and permissions are general information, not safety, legal or engineering advice; follow the manufacturers' instructions and the requirements of the authorities concerned.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN CHANNASANDRA (Chansandra, east Bengaluru, PIN 560066) — stock storage
+   * for corporate gifting and employee welcome kit companies (branded merchandise, welcome kits, T-shirts and
+   * hoodies, gift boxes and packaging, client-wise order staging, a packing area only in a container built for
+   * occupied use, fragile gifts, inventory register) and for tensile structure and car parking shade
+   * installers (fabric rolls, pre-cut panels, steel pipes and sections, cables and tensioning hardware, base
+   * plates and anchor bolts, ladders and safety equipment, site-wise installation kits).
+   *
+   * Owner brief of 2026-11-25 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — Shipping & Storage
+   * Containers in Channasandra (Chansandra)" + "show animation in the page"): meta title, meta description,
+   * H1, keywords, section order, H2 / H3 headings, sizes table, the nine ordering steps and the nine FAQs are
+   * the brief's, and so is the copy, lightly edited for flow and British spelling. The template has no
+   * separate Open Graph title or description: og:title / og:description use the meta title and description,
+   * as on every city page (the brief's OG wording is reported in the PR). The brief's notes to the
+   * implementer ("Do not describe an ordinary storage-only shipping container as a safe occupied packing
+   * workspace…", "Do not recommend storing chocolates…", "Do not recommend charging or testing…", "Do not
+   * recommend storing hazardous or flammable products…", "Do not recommend welding, cutting or grinding…",
+   * "Do not assume an ordinary shipping container is suitable…", "Do not assume a container can hold
+   * unlimited steel inventory", "add a contextual link…", "Do not invent prices…", "Conditional section…",
+   * "Do not expand this section…", "Highlight only verified capabilities…", "Do not claim guaranteed climate
+   * control…", "Use verified company phone numbers…") are instructions, not page copy: where one carries a
+   * fact for the reader it is reworded as a plain statement ("an ordinary storage-only container is not a
+   * safe occupied packing workspace without…", "food products are not stored in an ordinary storage-only
+   * container unless…", "battery-powered products are not charged or tested inside…", "welding, cutting and
+   * grinding are not carried out inside…", "a container cannot hold unlimited steel inventory"); otherwise it
+   * is left out. FAQs 2, 3 and 6 are reworded the same way. The route follows the site convention
+   * (/cities-we-serve/…), not the brief's root slug; no Channasandra or Chansandra route existed, and there
+   * is one page for both spellings. The tagline, captions, link lead-ins, enquiry-form intro and disclaimer
+   * were written for their slots.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here); the
+   * 10 ft row says "when available"; shelving, fabric roll holders, side racks, packing tables, bins,
+   * lighting, ventilation, insulation, climate control and locks are layout options and price factors named
+   * in a quotation, never stock items or guaranteed conditions. The optional Kannada search terms are not
+   * used: the page is in English. No Product JSON-LD: city pages carry no prices (file rule) and a Product
+   * block without offers earns no rich result, so the Service JSON-LD (no offers; areaServed "Channasandra,
+   * Bengaluru, Karnataka", not an address), FAQPage and BreadcrumbList stand, as on every sibling.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage containers for business stock" → the cargo
+   *     category) + heroCta.
+   *   Corporate gifting, "Corporate Gifting Storage Safety", tensile structures and "Tensile Structure
+   *     Material Storage Safety" → four afterIntro extra sections with the brief's H3s as `subsections`.
+   *   Placement, sizes, price, rent and "How to Order a Shipping Container" (ordered, nine steps) →
+   *     afterSolutions extra sections, so the steps stay before the areas.
+   *   "Areas We Serve" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's nine.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §7, only where the destination exists and supports the anchor; a small number, not every
+   * candidate): intro → the cargo category; corporate gifting section → "dealership merchandise and gift-set
+   * storage in Hebbal" (its car-dealership section lists promotional merchandise and gift sets) and "retail
+   * stationery stock storage in New Thippasandra" (its stationery shop section); candles H3 → "storage for
+   * handmade soap and candle makers in Sahakara Nagar" (that page's soap and candle section: making candles,
+   * not buying them in as gifts); tensile section → "railing, gate and scaffolding stock storage on
+   * Thanisandra Main Road" (its scaffolding hire and railing and gate fabricator sections) and "playground
+   * and outdoor gym equipment storage on Begur Road" (its playground equipment installer section); placement
+   * → "delivery guidance for restricted sites" (the Bellandur page's society-gate and narrow-lane section);
+   * sizes → "used container condition checks": the brief's /shipping-container-chennai is not a route, so it
+   * points to the Athipattu page's "Used Container Inspection" checklist, as the sibling pages do; rental →
+   * /products/shipping-container-rental; areas → "Shigehalli's storage container page" and "Mahadevapura's
+   * shipping container page" (the Whitefield Road corridor). NOT linked, because no live page supports the
+   * anchor: Kundalahalli (#274 not merged), Thubarahalli (no page; Brookefield's page names it), Kodigehalli
+   * (#321, roofing sheets, not yet live; the roofing distinction is made in words), a D2C finished-goods page
+   * (the live Koramangala page covers self-storage, restaurant equipment and bicycles, so it is not linked)
+   * and /shipping-container-chennai. Not linked by choice (the brief asks for a few useful links):
+   * Brookefield and Vellore (climate control is only a quotation option here). Anchors differ from the
+   * siblings' anchors for the same targets. Inbound: the Shigehalli and Mahadevapura pages' areas sections
+   * (one `areasInlineLinks` item each, at the end of each list; their boundaries and targeting unchanged),
+   * the Karnataka shipping hub ("Shipping Containers in Channasandra"), the cargo category's location links
+   * ("Storage containers in Channasandra") and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Channasandra (east Bengaluru, PIN 560066),
+   * Chansandra, Chennasandra (spelling variant, used sparingly) and Channasandra Main Road, for corporate
+   * gifting and employee welcome kit stock and for tensile fabric, car parking shade and tensile structure
+   * contractors' materials and equipment. Named only as landmarks: the Whitefield IT corridor (intro), the
+   * Hopefarm Channasandra metro station (intro), and Hope Farm and Kadugodi (the geographic FAQ). Named only in
+   * the pointer sentences to their own pages: Shigehalli and Seegehalli (Shigehalli page); Mahadevapura and
+   * the Whitefield Road corridor (Mahadevapura page). Not named at all: Belathur, Siddapura,
+   * Ramagondanahalli, Immadihalli and Hagadur (kept for a possible future Whitefield page). Not targeted: the
+   * Channasandra near RR Nagar (west Bengaluru), K Channasandra and B Channasandra; the RR Nagar shipping page
+   * stopped targeting its Channasandra in this change, as the brief asks. Kept apart from dealership
+   * merchandise (Hebbal), D2C finished goods (no live page), retail stationery (New Thippasandra), soap and
+   * candle making (Sahakara Nagar), metal roofing sheets and terrace sheds (no live page yet), playground
+   * equipment and outdoor gyms (Begur Road), railings and gates and scaffolding hire (Thanisandra Main Road).
+   * "Bengaluru" stays out of the title, as the brief asks; the description and body say "east Bengaluru",
+   * and the geo meta and the Service JSON-LD's areaServed carry "Channasandra, Bengaluru, Karnataka".
+   *
+   * Images: four owner-supplied WebP renders ("public/images/Storage Containers in Channasandra city
+   * page/Storage Containers in Channasandra/cabin (1–4).webp", lossy VP8, no EXIF / XMP) of one navy-blue
+   * container with a pale roof edge, kept byte-identical (VP8 bitstream untouched) with an XMP dc:title /
+   * dc:description added that labels each one an illustrative render (no creator, GPS, camera or date). (1)
+   * three-quarter exterior = hero / og:image (the brief's hero filename and alt, followed by what the
+   * picture shows); (2) plain end wall = corporate gifting section (the brief's "front view" filename);
+   * (3) cargo doors = tensile section, beside the door-opening check (the brief's "rear view" filename);
+   * (4) roof from above = placement section (the brief's "top view" filename). The drop folder's
+   * "cabin (1).png" is not used: it shows a glazed window in a cargo door, which the brief rules out for an
+   * unmodified shipping container. No image shows the interior, merchandise, gift boxes, garments, fabric,
+   * pipes, fittings or safety equipment, so the interior slot and the brief's thirteen use-case image slots
+   * are not used, and no alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-channasandra",
+    city: "Channasandra",
+    listTitle: "Shipping & Storage Containers in Channasandra",
+    metaTitle: "Shipping Container in Channasandra | Storage Solutions",
+    // Brief: "…for corporate gifting stock, employee welcome kits…" (161 chars); "corporate gift stock" (one of the
+    // brief's keywords) keeps it at 158, under the site's 160-character limit, with every other word kept.
+    metaDescription:
+      "Shipping containers in Channasandra (Chansandra), east Bengaluru, for corporate gift stock, employee welcome kits, tensile fabric and parking shade materials.",
+    keywords:
+      "shipping container in Channasandra, shipping container in Chansandra, cargo container Channasandra, storage container Channasandra, storage container Chansandra, storage container Chennasandra, storage container Channasandra Main Road, used shipping container Channasandra, shipping container price in Channasandra, storage container for sale in Channasandra, used cargo container in Channasandra, storage container for rent in Channasandra, corporate gifting storage container, corporate gift stock storage, employee welcome kit storage, corporate merchandise storage, branded merchandise storage, corporate gift packaging storage, tensile structure installer storage container, tensile fabric storage, tensile fabric roll storage, car parking shade material storage, shade sail storage, parking shade contractor material storage",
+    // Approximate point near the Hopefarm Channasandra metro station, east Bengaluru (rounded; for the owner to
+    // confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Channasandra, Bengaluru, Karnataka, India",
+      position: "12.9880;77.7540",
+      icbm: "12.9880, 77.7540",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 2336 × 1760 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Hebbal, New Thippasandra, Sahakara Nagar, Thanisandra Main Road, Begur Road, Bellandur, Athipattu,
+    // Shigehalli and Mahadevapura are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-channasandra/shipping-container-channasandra.webp",
+      alt: "Steel shipping container exterior suitable for commercial inventory storage: a navy-blue corrugated container with a pale roof edge and closed cargo doors with locking bars, on a concrete pad",
+      width: 2336,
+      height: 1760,
+      caption:
+        "Illustrative render supplied for this page, not a photograph of a container delivered in Channasandra.",
+    },
+
+    h1: "Shipping & Storage Containers in Channasandra",
+    tagline:
+      "Extra space for a corporate gifting company's merchandise and welcome kits, and for a tensile shade installer's fabric rolls, steel pipes and fittings.",
+    intro: [
+      "Channasandra, also written as Chansandra, is a growing residential locality in east Bengaluru, near the Whitefield IT corridor. The area includes apartment developments and local businesses, with connectivity through the Hopefarm Channasandra metro station.",
+      "Corporate gifting companies serving nearby offices, and tensile structure contractors working on apartment parking areas, terraces and outdoor spaces, may require additional storage for their inventory and equipment.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers",
+      link: { label: "shipping and storage containers for business stock", href: "/products/category/cargo-storage-shipping-containers" },
+      after: " in Channasandra for compatible commercial merchandise, contractor equipment and material storage requirements.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "We supply shipping and storage containers across Channasandra (Chansandra), including Channasandra Main Road. This is the Channasandra in east Bengaluru, PIN 560066, sometimes spelt Chennasandra. Each site's approach road, gate width and standing area are looked at before we propose a delivery date.",
+    // Brief §5 and §9: Shigehalli belongs to the Shigehalli page; the Whitefield Road corridor to the
+    // Mahadevapura page. Whitefield, Hope Farm, Kadugodi, Belathur, Siddapura, Ramagondanahalli, Immadihalli and
+    // Hagadur are kept for a possible future Whitefield page and are not listed here.
+    areasInlineLinks: [
+      {
+        before: "For Shigehalli, also spelt Seegehalli, go to",
+        link: { label: "Shigehalli's storage container page", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
+      {
+        before: "Sites along the Whitefield Road corridor are covered on",
+        link: { label: "Mahadevapura's shipping container page", href: "/cities-we-serve/shipping-container-mahadevapura" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Corporate Gifting & Employee Welcome Kit Companies",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-channasandra/channasandra-shipping-container-front-view.webp",
+          alt: "Front view of a corrugated steel shipping container: the plain navy-blue end wall with a pale top rail, corner castings and two forklift pockets",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render of a container's closed end wall. Paper packaging and garments need dry conditions, and a standard container is not automatically humidity-controlled.",
+        },
+        paragraphs: [
+          "Corporate gifting companies supply branded merchandise, employee welcome kits, festive gift packages and promotional products for businesses.",
+          "Large corporate orders may involve hundreds of products that must be organised, checked and dispatched according to customer requirements.",
+          "A suitably configured shipping container may provide additional storage space for compatible merchandise and packaging materials.",
+          "This section is about gifting stock assembled for business clients. A car dealership's own accessories and merchandise, a direct-to-consumer brand's finished goods and a stationery shop's retail stock are different applications.",
+        ],
+        // Brief §9: dealership merchandise belongs to the Hebbal page and retail stationery to New Thippasandra.
+        inlineLinks: [
+          {
+            before: "Keeping a car dealership's branded merchandise and delivery gifts near the showroom? See",
+            link: { label: "dealership merchandise and gift-set storage in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+            after: ".",
+          },
+          {
+            before: "Selling notebooks, pens and office supplies over the counter rather than packing them into client kits? Read about",
+            link: { label: "retail stationery stock storage in New Thippasandra", href: "/cities-we-serve/shipping-container-new-thippasandra" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Branded Corporate Merchandise Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Branded water bottles." },
+              { text: "Coffee mugs." },
+              { text: "Notebooks." },
+              { text: "Pens." },
+              { text: "Corporate bags." },
+              { text: "Promotional accessories." },
+              { text: "Other compatible merchandise." },
+            ],
+            closing: ["Organise products by category, client and order reference."],
+          },
+          {
+            heading: "Employee Welcome Kit Storage",
+            paragraphs: ["Employee onboarding kits may include:"],
+            bullets: [
+              { text: "Notebooks and stationery." },
+              { text: "Branded bottles." },
+              { text: "T-shirts." },
+              { text: "Bags." },
+              { text: "Employee accessories." },
+              { text: "Printed welcome materials." },
+              { text: "Gift packaging." },
+            ],
+            closing: ["Use labelled shelves and cartons to organise kits according to each client's requirements."],
+          },
+          {
+            heading: "Corporate T-shirt & Hoodie Storage",
+            paragraphs: ["Store compatible garments in suitable protective packaging, organised by:"],
+            bullets: [
+              { text: "Size." },
+              { text: "Colour." },
+              { text: "Design." },
+              { text: "Client." },
+              { text: "Order number." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Protect garments against moisture and unsuitable temperatures."],
+          },
+          {
+            heading: "Gift Box & Packaging Material Storage",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Rigid gift boxes." },
+              { text: "Packaging sleeves." },
+              { text: "Tissue paper." },
+              { text: "Protective fillers." },
+              { text: "Gift bags." },
+              { text: "Labels." },
+              { text: "Suitable packing accessories." },
+            ],
+            closing: ["Keep paper-based packaging away from moisture and condensation."],
+          },
+          {
+            heading: "Client-wise Order Staging",
+            paragraphs: ["Create organised inventory sections according to:"],
+            bullets: [
+              { text: "Corporate client." },
+              { text: "Purchase order." },
+              { text: "Product category." },
+              { text: "Required quantity." },
+              { text: "Packing status." },
+              { text: "Delivery date." },
+            ],
+            closing: ["This can help reduce order-mixing errors during large corporate gifting projects."],
+          },
+          {
+            heading: "Gift Kit Packing & Checking Area",
+            paragraphs: ["Where a container is specifically designed for occupied working use, suitable provisions may include:"],
+            bullets: [
+              { text: "Packing tables." },
+              { text: "Appropriate lighting." },
+              { text: "Ventilation." },
+              { text: "Safe electrical installations." },
+              { text: "Suitable access and emergency exits." },
+              { text: "Organised storage shelves." },
+            ],
+            closing: [
+              "An ordinary storage-only shipping container is not a safe occupied packing workspace without these modifications and the applicable compliance checks.",
+            ],
+          },
+          {
+            heading: "Fragile Corporate Gift Storage",
+            paragraphs: ["Compatible fragile merchandise may include:"],
+            bullets: [
+              { text: "Ceramic mugs." },
+              { text: "Glassware." },
+              { text: "Decorative gift products." },
+              { text: "Other breakable items." },
+            ],
+            closing: ["Use suitable protective packaging and stable lower shelves, and avoid excessive stacking."],
+          },
+          {
+            heading: "Corporate Gift Inventory Register",
+            paragraphs: ["Maintain records covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Product code." },
+              { text: "Corporate client." },
+              { text: "Quantity." },
+              { text: "Storage location." },
+              { text: "Packing status." },
+              { text: "Product condition." },
+              { text: "Dispatch date." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Corporate Gifting Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Food Products",
+            paragraphs: [
+              "Chocolates, sweets, dry fruits and other food products are not stored in an ordinary storage-only container unless appropriate food-storage conditions are provided.",
+            ],
+          },
+          {
+            heading: "Power Banks & Electronic Gifts",
+            paragraphs: [
+              "Power banks and other battery-powered products may require specialised storage conditions. Follow the manufacturer's instructions, the applicable fire-safety requirements and the battery-storage regulations.",
+              "Climate control alone does not establish safe battery storage, and battery-powered products are not charged or tested inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Candles & Heat-sensitive Products",
+            paragraphs: [
+              "Wax products, candles and certain promotional items may be affected by excessive heat. Verify the manufacturer's storage-temperature requirements.",
+            ],
+            // Brief §9: soap and candle making belongs to the Sahakara Nagar page.
+            inlineLinks: [
+              {
+                before: "Making candles or handmade soap yourself, rather than buying them in for gift kits? See",
+                link: { label: "storage for handmade soap and candle makers in Sahakara Nagar", href: "/cities-we-serve/shipping-container-sahakara-nagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Perfumes & Aerosols",
+            paragraphs: [
+              "Follow the manufacturer's labels, the safety data sheets and the applicable regulations. Hazardous or flammable products are not stored in an ordinary storage-only container without suitable safeguards.",
+            ],
+          },
+          {
+            heading: "Moisture Protection",
+            paragraphs: [
+              "Paper packaging, clothing and certain merchandise may be affected by condensation. A standard shipping container is not automatically humidity-controlled, so discuss the ventilation, insulation and environmental-control requirements for your stock.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Tensile Structure & Car Parking Shade Installers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-channasandra/channasandra-shipping-container-rear-view.webp",
+          alt: "Shipping container rear cargo doors with locking bars: two closed navy-blue doors with four vertical steel locking bars, handles and hinges",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render. Measure your longest pipe and largest fabric roll against the clear door opening and the internal length before choosing a size.",
+        },
+        paragraphs: [
+          "Tensile structure contractors install fabric-based shade systems for apartment parking areas, walkways, terraces, play areas and other outdoor spaces.",
+          "These businesses may handle fabric rolls, steel pipes, cables, base plates, anchor bolts and installation equipment.",
+          "A suitably configured shipping container may provide additional storage space for compatible materials and equipment before installation.",
+          "This section covers fabric shade structures. Metal roofing sheets and terrace sheds, playground equipment and outdoor gyms, railings and gates, and scaffolding hire are different applications.",
+        ],
+        // Brief §9: railings and gates and scaffolding hire belong to the Thanisandra Main Road page; playground
+        // equipment and outdoor gyms to Begur Road.
+        inlineLinks: [
+          {
+            before: "Fabricating railings and gates, or hiring out scaffolding, rather than installing shade structures? See",
+            link: { label: "railing, gate and scaffolding stock storage on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+            after: ".",
+          },
+          {
+            before: "Installing the slides and outdoor gym stations that go under a play-area shade? Read about",
+            link: { label: "playground and outdoor gym equipment storage on Begur Road", href: "/cities-we-serve/shipping-container-begur-road" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Tensile Fabric Roll Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Coated tensile fabric." },
+              { text: "Shade fabric rolls." },
+              { text: "Suitable membrane materials." },
+              { text: "Approved shade sail materials." },
+            ],
+            closing: [
+              "Store fabric according to the manufacturer's requirements, on suitable roll holders and protective supports, away from sharp edges, moisture and unsuitable temperatures.",
+            ],
+          },
+          {
+            heading: "Pre-cut Tensile Fabric Panel Storage",
+            paragraphs: ["Organise prepared fabric panels according to:"],
+            bullets: [
+              { text: "Project name." },
+              { text: "Site location." },
+              { text: "Panel dimensions." },
+              { text: "Material type." },
+              { text: "Installation schedule." },
+            ],
+            closing: [
+              "Use protective packaging and the manufacturer's approved rolling or storage methods, and avoid tight folding where it could damage the material.",
+            ],
+          },
+          {
+            heading: "Steel Pipe & Structural Section Storage",
+            paragraphs: ["Compatible materials may include:"],
+            bullets: [
+              { text: "Steel pipes." },
+              { text: "Structural tubes." },
+              { text: "Suitable steel sections." },
+              { text: "Parking shade support components." },
+            ],
+            closing: [
+              "Use appropriately designed side racks and restraints, and verify the container's floor-loading capacity, the material dimensions and safe handling arrangements.",
+            ],
+          },
+          {
+            heading: "Cable & Tensioning Hardware Storage",
+            paragraphs: ["Organise compatible fittings in labelled bins or protective packaging, such as:"],
+            bullets: [
+              { text: "Steel cables." },
+              { text: "Turnbuckles." },
+              { text: "Shackles." },
+              { text: "Clamps." },
+              { text: "Suitable tensioning accessories." },
+            ],
+            closing: ["Follow the manufacturer's inspection and storage instructions for safety-critical components."],
+          },
+          {
+            heading: "Base Plate & Anchor Bolt Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Base plates." },
+              { text: "Anchor bolts." },
+              { text: "Nuts." },
+              { text: "Washers." },
+              { text: "Fasteners." },
+              { text: "Suitable installation accessories." },
+            ],
+            closing: ["Organise them by specification, size and project."],
+          },
+          {
+            heading: "Ladder & Safety Equipment Storage",
+            paragraphs: ["Store suitable installation equipment, including:"],
+            bullets: [
+              { text: "Ladders." },
+              { text: "Harnesses." },
+              { text: "Safety lines." },
+              { text: "Protective helmets." },
+              { text: "Gloves." },
+              { text: "Other approved safety equipment." },
+            ],
+            closing: [
+              "Secure tall or heavy equipment against falling, and follow the manufacturer's requirements for inspection and storage.",
+            ],
+          },
+          {
+            heading: "Site-wise Installation Material Kits",
+            paragraphs: ["Prepare installation materials according to:"],
+            bullets: [
+              { text: "Customer or project." },
+              { text: "Fabric panel dimensions." },
+              { text: "Pipe lengths." },
+              { text: "Required fittings." },
+              { text: "Anchor bolt specifications." },
+              { text: "Installation date." },
+              { text: "Dispatch requirements." },
+            ],
+            closing: ["Keep a checklist, and work through it before materials leave the storage area."],
+          },
+        ],
+      },
+      {
+        heading: "Tensile Structure Material Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Welding, Cutting & Grinding",
+            paragraphs: [
+              "Welding, cutting and grinding are not carried out inside an ordinary storage-only container. Fabrication and other hot work take place in an appropriately designated work area with suitable safety measures.",
+            ],
+          },
+          {
+            heading: "Wet Tensile Fabric",
+            paragraphs: [
+              "Do not store damp fabric in tightly packed rolls. Follow the manufacturer's instructions for cleaning, drying and storage.",
+            ],
+          },
+          {
+            heading: "Sharp Edges",
+            paragraphs: ["Separate fabric rolls from sharp metal components and unprotected fasteners."],
+          },
+          {
+            heading: "Sealants & Cleaning Chemicals",
+            paragraphs: [
+              "Follow the product labels, the safety data sheets and the applicable storage requirements. An ordinary shipping container is not assumed to be suitable for hazardous-material storage.",
+            ],
+          },
+          {
+            heading: "Long Steel Sections",
+            paragraphs: [
+              "A standard 20 ft shipping container typically has an internal length of approximately 5.9 metres, depending on its design. Allow additional clearance for loading and handling.",
+              "Longer materials may require a 40 ft container or direct delivery to the installation site. Verify the actual internal dimensions and door clearances before selecting a container.",
+            ],
+          },
+          {
+            heading: "Heavy Material Storage",
+            paragraphs: [
+              "Check the allowable floor loads, point loads, payload capacity and rack specifications: a container cannot hold unlimited steel inventory.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in Channasandra",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-channasandra/channasandra-shipping-container-top-view.webp",
+          alt: "Top view of a steel shipping container roof: pale corrugated roof panels inside a navy-blue frame, on a concrete yard",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative overhead view of the roof. Plan the spot so that long pipes can be carried straight in once both cargo doors are swung fully open.",
+        },
+        paragraphs: [
+          "Containers may be placed on suitable authorised private premises, including contractor yards, permitted commercial plots, authorised office service areas, suitable storage compounds and approved project sites.",
+          "For apartment or customer-site installations, obtain the required permission from the property owner, the apartment association or the relevant authority.",
+          "Before delivery, confirm:",
+        ],
+        bullets: [
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Overhead cables." },
+          { text: "Tree branches." },
+          { text: "Ground stability." },
+          { text: "Container dimensions." },
+          { text: "Unloading requirements." },
+          { text: "Emergency access." },
+          { text: "Applicable local regulations." },
+        ],
+        closing: [
+          "Channasandra Main Road may have restricted access during busy periods, so the delivery time is arranged after a suitable route assessment.",
+        ],
+        // Brief §5: restricted-site delivery guidance → the Bellandur page's society-gate and narrow-lane section.
+        inlineLinks: [
+          {
+            before: "Coming in through an apartment gate or along a narrow lane? See our",
+            link: { label: "delivery guidance for restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: " first.",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes in Channasandra",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "Volumes are approximate. Exact dimensions, availability, payload limits and internal storage arrangements are confirmed in the quotation for the specific unit.",
+          headers: ["Container size", "Approximate internal volume", "Potential application"],
+          rows: [
+            ["10 ft, when available", "15 m³", "Corporate merchandise and gift packaging"],
+            ["20 ft", "33 m³", "Employee welcome kits, tensile fabric and installation fittings"],
+            ["40 ft", "67 m³", "Longer steel sections, fabric rolls and larger inventory"],
+          ],
+        },
+        closing: [
+          "For fabric and packaging storage, inspect the door seals, the structural condition and the environmental-control requirements.",
+        ],
+        // Brief §7: used-container condition guidance → the Athipattu page's inspection checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Considering a used unit? Start with our",
+            link: { label: "used container condition checks", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Channasandra",
+        placement: "afterSolutions",
+        paragraphs: ["The price depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition and grade." },
+          { text: "Shelving." },
+          { text: "Fabric roll holders." },
+          { text: "Side racks." },
+          { text: "Packing tables, where appropriate." },
+          { text: "Storage bins and drawers." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation." },
+          { text: "Climate control, where it is part of the quotation." },
+          { text: "Locking arrangements." },
+          { text: "Transportation." },
+          { text: "Unloading." },
+          { text: "Site accessibility." },
+          { text: "Current market rates." },
+        ],
+        closing: ["Request an itemised quotation based on the intended application."],
+      },
+      {
+        heading: "Storage Container on Rent in Channasandra",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary storage may be useful for corporate festive gifting, year-end merchandise orders and seasonal tensile shade installation projects. Hire runs from one month up to five years. A rental quotation sets out the container size, the hire term, any security deposit, the transport, loading and unloading charges, and the collection arrangements when the hire ends.",
+        ],
+        inlineLinks: [
+          {
+            before: "The sizes offered on hire are listed under our",
+            link: { label: "container hire terms", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain the intended storage application." },
+          { text: "Provide inventory or material dimensions." },
+          { text: "Confirm approximate stock quantities and weight." },
+          { text: "Identify fragile or heat-sensitive products." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelving, racks and other modifications." },
+          { text: "Confirm property permission and delivery access." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin offers shipping and storage container solutions for compatible commercial merchandise and contractor material requirements. For gifting firms and shade installers in Channasandra, the verified options are:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, plus 10 ft when stock allows." },
+          { title: "Storage-oriented modifications", text: "shelf bays, bins and drawers laid out for gift cartons, kit boxes and small fittings, itemised separately in the quote." },
+          { title: "Merchandise shelving", text: "a bay per client, with breakables and heavy cartons on the bottom shelves." },
+          { title: "Fabric roll and steel section racks", text: "roll holders and wall racks sized to your rolls and pipe lengths, rated against the floor and point loads." },
+          { title: "Locking arrangements", text: "the cargo doors take a lock, and the quotation states which one is fitted." },
+          { title: "Ventilation and insulation options", text: "chosen with paper packaging, garments and fabric in mind; climate control, moisture-free storage and hazardous-material certification are not promised." },
+          { title: "Quotation and delivery coordination", text: "an itemised price, then a look at the approach road, the gate and the standing area before a delivery date is fixed." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can corporate gifting companies store merchandise in shipping containers?",
+        answer: "Potentially, when suitable packaging, shelving and environmental conditions are provided.",
+      },
+      {
+        question: "Can employee welcome kits be packed inside a container?",
+        answer:
+          "A container specifically modified for occupied working use may provide a suitable packing area. An ordinary storage-only container is not automatically a safe workspace.",
+      },
+      {
+        question: "Can power banks and electronic gifts be stored inside shipping containers?",
+        answer:
+          "These products may require specialised storage conditions and fire-safety provisions. Follow the manufacturer's requirements and the applicable regulations.",
+      },
+      {
+        question: "How should tensile fabric be stored?",
+        answer:
+          "Follow the manufacturer's instructions, use suitable roll supports and protect the fabric from moisture, sharp edges and unsuitable temperatures.",
+      },
+      {
+        question: "Can steel pipes and parking shade materials be stored inside containers?",
+        answer:
+          "Potentially, provided their dimensions, weight and storage arrangements are compatible with the container's verified capacity.",
+      },
+      {
+        question: "Can welding or cutting be performed inside a standard storage container?",
+        answer:
+          "No. Welding, cutting and grinding are not carried out inside an ordinary storage-only container; they belong in a designated work area with suitable safety measures.",
+      },
+      {
+        question: "Which Channasandra does this page cover?",
+        answer:
+          "This page covers Channasandra in east Bengaluru, PIN 560066, near Hope Farm and Kadugodi. It does not cover the Channasandra near RR Nagar, K Channasandra or B Channasandra.",
+      },
+      {
+        question: "What is the shipping container price in Channasandra?",
+        answer: "Pricing depends on size, condition, modifications and delivery requirements.",
+      },
+      {
+        question: "How quickly can a shipping container be delivered?",
+        answer: "Delivery depends on availability, customisation, transport arrangements and site accessibility.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Channasandra",
+    ctaText: `Whether you need additional storage for corporate gifts, employee welcome kits, branded merchandise, tensile fabric rolls, steel pipes or parking shade installation materials, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Service area: Channasandra (Chansandra) and Channasandra Main Road, Bengaluru, Karnataka.`,
+    // Brief's closing section: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Storage container enquiry for Channasandra",
+      intro:
+        "Pick the container type and quantity, give the Channasandra address or drop a map pin, and tell us whether you are buying or hiring. Say whether it will hold gifting merchandise or tensile structure material, with your longest pipe length and heaviest load, so that racks, shelves and floor loading can be planned.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Containers leave from Portable Office Cabin's factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu; the Bengaluru office is in Electronic City, and the company has no branch, yard or depot in Channasandra. What you receive is what the written quotation describes: the internal and door-opening dimensions, the grade and condition, the floor, point-load and payload limits, every fitting (shelves, roll holders, side racks, packing tables, bins, lights, vents, insulation, climate control or locks), the hire terms for a rented unit, and the delivery, unloading and collection arrangements. Availability varies, and no delivery date is fixed until the quotation confirms it. A container is not described as moisture-free, humidity- or climate-controlled, fire-rated, food-grade, approved for hazardous materials or fit to work in unless an approved specification says so, and none is supplied for hot work such as welding, cutting or grinding, or for charging batteries. All four images are illustrative renders of one navy-blue container; they were not taken in Channasandra and show no delivered or fitted unit, merchandise, gift kits, fabric or steel. Volumes and the 5.9-metre internal length are approximate and are not payload ratings. Corporate gifting firms and tensile structure installers illustrate the kinds of business that might use a container; they are not customers or finished projects, and the places named show where enquiries come from, not addresses already delivered to. The notes on food, batteries, candles, perfumes, aerosols, sealants, fabric, steel, floor loads, placement and permissions are general guidance only, not safety, legal, insurance or engineering advice: the product makers' instructions and the rules of the relevant authorities take precedence.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -31229,6 +31978,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Wholesale toy and tableware stock in Shigehalli, also spelt Seegehalli, has a page of its own:",
         link: { label: "storage containers in Seegehalli", href: "/cities-we-serve/shipping-container-shigehalli" },
+        after: ".",
+      },
+      // Channasandra brief (2026-11-25, §7): Channasandra (Chansandra, PIN 560066) has its own page; this
+      // page's own boundaries and targeting are unchanged.
+      {
+        before: "For storage requirements in Channasandra, also written Chansandra, see our page on",
+        link: { label: "storage containers in Chansandra", href: "/cities-we-serve/shipping-container-channasandra" },
         after: ".",
       },
     ],
