@@ -807,6 +807,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Channasandra, east Bengaluru (corporate gifting and tensile structure storage; owner brief 2026-11-25),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Channasandra", href: "/cities-we-serve/shipping-container-channasandra" },
+    // Nagavara / Nagawara (air cooler dealers' seasonal stock; umbrella and rainwear wholesalers' monsoon
+    // stock; owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Nagavara", href: "/cities-we-serve/shipping-container-nagavara" },
     // Babusapalya / Babusa Palya (furniture and kitchen hardware dealers' stock; mobile and computer
     // accessories distributors' stock; owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Babusapalya", href: "/cities-we-serve/shipping-container-babusa-palya" },
