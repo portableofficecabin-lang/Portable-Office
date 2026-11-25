@@ -801,6 +801,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kodigehalli (tree care crews' saws, ropes and safety gear; roofing contractors' sheets, sections and
     // fixings; owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
+    // Kengeri (farm drip irrigation dealers' stock; industrial safety equipment and PPE distributors' stock;
+    // owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Kengeri", href: "/cities-we-serve/shipping-container-kengeri" },
   ],
 };
 
