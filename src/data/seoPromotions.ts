@@ -804,6 +804,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Kengeri (farm drip irrigation dealers' stock; industrial safety equipment and PPE distributors' stock;
     // owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Kengeri", href: "/cities-we-serve/shipping-container-kengeri" },
+    // Channasandra, east Bengaluru (corporate gifting and tensile structure storage; owner brief 2026-11-25),
+    // appended so the live links keep their positions.
+    { name: "Shipping Containers in Channasandra", href: "/cities-we-serve/shipping-container-channasandra" },
   ],
 };
 
