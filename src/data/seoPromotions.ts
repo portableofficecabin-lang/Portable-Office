@@ -798,6 +798,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // HRBR Layout (wedding and party wear rental stock; children's sports coaching academy equipment;
     // owner brief 2026-11-22), appended so the live links keep their positions.
     { name: "Shipping Containers in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
+    // Kodigehalli (tree care crews' saws, ropes and safety gear; roofing contractors' sheets, sections and
+    // fixings; owner brief 2026-11-22), appended so the live links keep their positions.
+    { name: "Shipping Containers in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
     // Channasandra, east Bengaluru (corporate gifting and tensile structure storage; owner brief 2026-11-25),
     // appended so the live links keep their positions.
     { name: "Shipping Containers in Channasandra", href: "/cities-we-serve/shipping-container-channasandra" },
