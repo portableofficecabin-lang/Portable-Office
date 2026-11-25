@@ -45452,8 +45452,8 @@ export const CITY_PAGES: CityPage[] = [
    * component stores for scaffolding and formwork hire yards, covered, lockable storage for private cars
    * and motorbikes while their owners are away (both Version A), storage for false ceiling and gypsum
    * contractors, and stock storage for stainless steel railing and gate fabricators (both Version B)
-   * (north Bengaluru: Thanisandra, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur,
-   * Amruthahalli). The first shipping-container page in north Bengaluru.
+   * (north Bengaluru: Thanisandra, Hegde Nagar, Rachenahalli, Sampigehalli and Amruthahalli; Nagavara /
+   * Nagawara has its own page since 2026-11-25). The first shipping-container page in north Bengaluru.
    *
    * VERSION A — owner brief of 2026-11-16 (meta title, meta description, H1, keywords, local areas, links
    * and image plan used as given then; the brief's root slug became /cities-we-serve/<slug>, the
@@ -45530,7 +45530,7 @@ export const CITY_PAGES: CityPage[] = [
    * `directoryLabel` keep "Thanisandra Main Road").
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Thanisandra, Thanisandra Main Road,
-   * Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli, for scaffolding-hire
+   * Hegde Nagar, Rachenahalli, Sampigehalli and Amruthahalli, for scaffolding-hire
    * component stores, private car and motorbike storage, false ceiling and gypsum contractors' materials,
    * and stainless steel railing and gate fabricators' stock. Not targeted (named only in pointer
    * sentences): Hebbal and Kodigehalli (Hebbal page), Hennur Road and Kothanur (Hennur Road page),
@@ -45541,6 +45541,11 @@ export const CITY_PAGES: CityPage[] = [
    * owner-builder materials (HSR Layout), dealers' building materials (Shivamogga), contractor material
    * stores (Dharmapuri), bicycles (Koramangala), bike-rental fleet gear (BTM Layout), and household moves
    * or family storage (HSR Layout, JP Nagar).
+   * Nagavara brief (2026-11-25, Part 15): Nagavara and Nagawara moved to the Nagavara page (linked once
+   * from the areas section, in the brief's sentence) and Jakkur was dropped for a Jakkur page of its own
+   * (none exists yet, so it is not named or linked). The title, H1, description, application sections,
+   * images and existing links are unchanged; no image alt text, caption or filename named either
+   * locality, so there was no image metadata to correct. The service line follows the brief's Step 8.
    *
    * Images. Version A (unchanged, URLs kept): five owner-dropped lossy VP8 webp renders ("public/images/
    * thanisandra shipping container city page/Thanisandra Main Road/cabin (1–5).webp") of one dark green
@@ -45567,8 +45572,10 @@ export const CITY_PAGES: CityPage[] = [
     metaTitle: "Shipping Container in Thanisandra | Storage Solutions",
     metaDescription:
       "Shipping and storage containers in Thanisandra for scaffolding, vehicle storage, gypsum and false ceiling materials, stainless steel railings and gate fabricators.",
+    // Nagavara brief (2026-11-25, Part 15): Nagawara has its own page and Jakkur is kept free for a page of
+    // its own, so both are out of this page's keywords, areas text and service line.
     keywords:
-      "shipping container in Thanisandra, shipping container on Thanisandra Main Road, cargo container Thanisandra, storage container Thanisandra, storage container Thanisandra Main Road, storage container Nagawara, storage container Hegde Nagar, storage container Rachenahalli, storage container Sampigehalli, storage container Jakkur, storage container Amruthahalli, used shipping container Thanisandra, shipping container price in Thanisandra, shipping container price on Thanisandra Main Road, storage container for rent in Thanisandra, scaffolding storage container, formwork equipment storage, scaffolding hire yard storage, car storage container, motorbike storage container, false ceiling contractor storage container, gypsum board storage, ceiling channel storage, ceiling grid storage, ceiling tile storage, railing fabricator storage container, stainless steel pipe storage, stainless steel tube storage, gate fabricator stock storage, finished railing storage, finished gate storage",
+      "shipping container in Thanisandra, shipping container on Thanisandra Main Road, cargo container Thanisandra, storage container Thanisandra, storage container Thanisandra Main Road, storage container Hegde Nagar, storage container Rachenahalli, storage container Sampigehalli, storage container Amruthahalli, used shipping container Thanisandra, shipping container price in Thanisandra, shipping container price on Thanisandra Main Road, storage container for rent in Thanisandra, scaffolding storage container, formwork equipment storage, scaffolding hire yard storage, car storage container, motorbike storage container, false ceiling contractor storage container, gypsum board storage, ceiling channel storage, ceiling grid storage, ceiling tile storage, railing fabricator storage container, stainless steel pipe storage, stainless steel tube storage, gate fabricator stock storage, finished railing storage, finished gate storage",
     // The road near Thanisandra, between Nagawara to the south and Hegde Nagar to the north (approximate).
     // The placename is kept as it was: it already names Thanisandra (the Service JSON-LD's areaServed), and
     // changing it would also change this page's card subtitle in 43 sibling pages' nearby blocks.
@@ -45619,7 +45626,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas Served Around Thanisandra",
     areasText:
-      "We supply shipping and storage containers in Thanisandra and along Thanisandra Main Road, including Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli. Each site's access is checked before delivery is confirmed.",
+      "We supply shipping and storage containers across Thanisandra and along Thanisandra Main Road, including Hegde Nagar, Rachenahalli, Sampigehalli and Amruthahalli. Each site's access is checked before delivery is confirmed.",
     // Version B brief §3 and §6: Hebbal and Kodigehalli, Hennur Road and Kothanur, Yelahanka and Yelahanka
     // New Town each have their own page; this page's targeting stays on the localities above.
     areasInlineLinks: [
@@ -45647,6 +45654,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Kodigehalli, to the west near Kodigehalli Gate, has its own page on",
         link: { label: "tree care and roofing contractor storage in Kodigehalli", href: "/cities-we-serve/shipping-container-kodigehalli" },
+        after: ".",
+      },
+      // Nagavara brief (2026-11-25, Part 15 Step 7 and Part 14): Nagavara (Nagawara) has its own page; Jakkur has
+      // none yet, so it is not linked.
+      {
+        before: "For shipping container storage requirements in Nagavara (Nagawara), including air cooler and seasonal rainwear inventory, explore our",
+        link: { label: "dedicated Nagavara shipping container page", href: "/cities-we-serve/shipping-container-nagavara" },
         after: ".",
       },
     ],
@@ -46429,7 +46443,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Request a Shipping Container Quotation in Thanisandra",
-    ctaText: `Whether you need storage for scaffolding equipment, compatible vehicles, false ceiling materials, gypsum boards, stainless steel railings or gate fabrication stock, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Service area: Thanisandra, Thanisandra Main Road, Nagawara, Hegde Nagar, Rachenahalli, Sampigehalli, Jakkur and Amruthahalli, Bengaluru, Karnataka.`,
+    ctaText: `Whether you need storage for scaffolding equipment, compatible vehicles, false ceiling materials, gypsum boards, stainless steel railings or gate fabrication stock, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Service area: Thanisandra, Thanisandra Main Road, Hegde Nagar and Rachenahalli, Bengaluru, Karnataka.`,
     // Brief §5: the final CTA's "request a storage container quotation" → /contact (the CTA box button's target).
     ctaButtonLabel: "Request a Storage Container Quotation",
     // Not a container-office page: an empty list drops the two container-office secondary buttons.
@@ -46453,6 +46467,756 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin supplies containers through its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its Electronic City office in Bengaluru, and has no yard, depot, garage or vehicle-storage facility in Thanisandra or on Thanisandra Main Road. This page describes how a container placed on the customer's own or leased land can be used; it is not an offer of a managed storage, vehicle-storage, insurance or inspection service. Each unit is subject to availability, and its quotation states its size, grade, condition, internal dimensions, door opening and floor rating, any racks, bins, bearers, padded supports, drawers, ramp, chocks, tie-downs, vents, insulation, lighting or locks, any hire terms, and how the unit is delivered, unloaded and collected; delivery dates, site access, vehicle fit and the fit of long stock are not guaranteed. No unit is offered as moisture-proof, fire-rated or a workshop, and none is supplied for welding, grinding, cutting or spray painting, or as a store for compressed-gas cylinders, fuel, paints or thinners. The ten images are renders shown for illustration: five of a dark green container with a glazed side panel and five of a charcoal-grey container; none is a photograph taken in Thanisandra or of a delivered unit, and none shows a component store, a vehicle store, ceiling materials or fabrication stock. Scaffolding hire yards, vehicle owners, false ceiling contractors and railing and gate fabricators are mentioned to illustrate uses; they are not clients or completed projects, and the localities listed show where enquiries are invited, not places where a delivery is confirmed. Guidance on loads, racking, handling, batteries, fuel, electric vehicles, gypsum, steel, gas cylinders, fire risk, pests, insurance, placement and permissions is general information, not engineering, safety, legal or insurance advice; follow the manufacturers' and suppliers' instructions.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN NAGAVARA (NAGAWARA) — seasonal stock storage for air cooler dealers
+   * (boxed desert, personal and tower coolers, cooling pads, pumps and motors, demonstration and returned
+   * units, inventory register) and for umbrella and rainwear wholesalers (umbrellas, raincoats and rain
+   * suits, ponchos, gumboots, customer-wise order staging, off-season stock) in Nagavara, north Bengaluru.
+   *
+   * Owner brief of 2026-11-25 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — Shipping & Storage
+   * Containers in Nagavara (Nagawara)"): meta title, meta description, H1, keywords, section order, H2 / H3
+   * headings, the sizes table, the ten ordering steps and the eleven FAQs are the brief's, and so is the
+   * copy, lightly edited for flow and British spelling. The brief's notes to the implementer ("Do not
+   * recommend repair, electrical testing or battery charging…", "Do not store water-filled air coolers",
+   * "Do not assume all rainwear products can be stored indefinitely…", "Do not recommend ordinary
+   * storage-only containers for flammable or hazardous products…", "Do not claim guaranteed
+   * condensation-free…", "Do not place containers on public roads…", "Do not guarantee early-morning
+   * delivery…", "Offer plinths or foundation services only if verified", "Do not invent prices…", "Publish
+   * only if rental … verified", "Highlight only verified capabilities…") are instructions, not page copy:
+   * where one carries a fact for the reader it is a plain statement ("repairs, electrical testing and
+   * battery charging are not carried out inside an ordinary storage-only container", "a water-filled cooler
+   * is never put into storage", "stored rainwear still needs periodic inspection", "no standard container
+   * is promised to stay free of condensation", "plinths, raised supports and other civil work are not part
+   * of a container supply unless the quotation lists them", "an early-morning slot is offered only when it
+   * has been confirmed"); otherwise it is left out. "Do not exceed approved carton stacking limits" stays,
+   * as advice to the reader.
+   * Checked against the catalogue, as the brief asks: the rental section stays (Shipping Container Rental
+   * lists hire terms from one month to five years; no deposit, price or delivery charge is stated here);
+   * the 10 ft row says "if available" (the brief's "if offered"); container grades (one-trip, cargo-worthy)
+   * are catalogue terms; climate control is described only as a fit-out quoted against a specification, as
+   * on the Vellore page, never as a stock item; shelving, pallets, bins, lighting, ventilation, insulation,
+   * locks and raised supports are price factors and layout options "where the quotation includes them".
+   * The optional Kannada search terms are not used: the page is in English, and the brief keeps them out of
+   * alt text and hidden blocks. "shipping container manufacturers in Nagavara" is left out of the keywords:
+   * the containers are made near Hosur, not in Nagavara. No Product JSON-LD: city pages carry no prices
+   * (file rule) and a Product block without offers earns no rich result, so the Service JSON-LD (no
+   * offers), FAQPage and BreadcrumbList stand, as on every sibling. The site has no separate og:title /
+   * og:description fields: Open Graph reuses the meta title and description, as on every location page.
+   * The route follows the site convention (/cities-we-serve/…), not the brief's root slug; no Nagawara
+   * route exists, so there is nothing to redirect.
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and storage container range" → the cargo category) + heroCta.
+   *   Air cooler dealers, "Air Cooler Storage Safety", umbrella and rainwear wholesalers and "Rainwear
+   *     Storage Safety" → four afterIntro extra sections with the brief's H3s as `subsections`.
+   *   Placement, "Delivery & Site Accessibility", "Flood-aware Container Placement", sizes, price, rent and
+   *     "How to Order a Shipping Container" (ordered, ten steps) → afterSolutions extra sections, so the
+   *     steps stay before the areas. The sizes section's "plan container selection according to" list is
+   *     an H3 ("Planning the container"), so it can follow the table.
+   *   "Areas We Serve" → areas + areasInlineLinks. "Why Choose Portable Office Cabin?" → a default extra
+   *   section (after the areas, as in the brief). FAQs: the brief's eleven.
+   *   CTA: the brief's closing section (phone, WhatsApp and e-mail from COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief Part 14, only where the destination exists and supports the anchor): intro → the cargo
+   * category; air cooler section → Horamavu's "Stock Stores for AC & Appliance Installation Businesses"
+   * (installers' stock, not a cooler dealer's); "Temperature protection" → the Vellore page's insulated and
+   * air-conditioned storage notes; gumboot H3 → RT Nagar's "Storage Containers for Footwear Shops" (a shoe
+   * shop's selling stock, not rainwear wholesale); delivery → the Bellandur page's restricted-site delivery
+   * notes; sizes → the Athipattu page's "Used Container Inspection" checklist (the brief's
+   * /shipping-container-chennai is not a route); rental → /products/shipping-container-rental; areas →
+   * Thanisandra Main Road, Kalyan Nagar, Hebbal (Bengaluru) and Hennur Road. NOT linked: Jakkur,
+   * Kammanahalli and Kengeri (no live routes on this main); HRBR Layout (four neighbouring pages are linked
+   * already); Kaggadasapura, Yelahanka New Town and Mahadevapura (their live pages cover electrical and
+   * plumbing contractors and recyclables, beekeeping, and interior fit-out, not the fans, appliance repair
+   * or appliance staging the brief's map assumes). Anchors differ from the siblings' anchors for the same
+   * targets. Inbound: the Thanisandra Main Road page (the brief's sentence), Kalyan Nagar, Hebbal
+   * (Bengaluru) and Hennur Road (one areasInlineLinks item each, at the end of each list), the Karnataka
+   * shipping hub ("Shipping Containers in Nagavara"), the cargo category's location links ("Storage
+   * containers in Nagavara") and every Karnataka shipping page's nearby block. `nearbySkipsBodyLinks`
+   * keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Nagavara (Nagawara), the Nagavara lake area,
+   * Veerannapalya (Veeranapalya) and Govindapura, for air cooler dealers' seasonal stock (coolers, cooling
+   * pads, pumps, motors, demonstration and returned units) and for umbrella and rainwear wholesalers'
+   * monsoon stock (umbrellas, raincoats, rain suits, ponchos, gumboots). Nagavara and Nagawara move here
+   * from the Thanisandra Main Road page, which keeps Thanisandra, Thanisandra Main Road, Hegde Nagar,
+   * Rachenahalli, Sampigehalli and Amruthahalli; Jakkur leaves that page too and is kept free for a Jakkur
+   * page of its own (none exists yet, so it is not named here). Named only in the pointer sentences to their
+   * own pages: Thanisandra Main Road, Kalyan Nagar, Hebbal and Hennur Road; Thanisandra Main Road and the
+   * Outer Ring Road also appear as roads in the delivery section. Nagavarapalya (east Bengaluru, the
+   * Kaggadasapura page) is a different place, named only in the FAQ that tells the two apart. Kept apart
+   * from AC and appliance installers (Horamavu), electrical and plumbing contractors (Kaggadasapura), shoe
+   * shops and luggage retailers (RT Nagar), and industrial PPE (the Kengeri page, not live yet). "Bengaluru"
+   * stays out of the title, as the brief asks; the description, the geo meta and the Service JSON-LD's
+   * areaServed carry it.
+   *
+   * Images: the owner's five renders ("public/images/Storage Containers in Nagavara city page/Storage
+   * Containers in Nagavara/cabin (1–5).webp", lossy VP8, no EXIF / XMP / ICC) of one sage-green steel
+   * container on a paved yard, each copied with its VP8 data byte-for-byte plus an XMP dc:title /
+   * dc:description that labels it an illustrative image (no creator, camera, GPS or date); the drop folder
+   * stays as the master. (1) three-quarter exterior, 2336 × 1760 = hero / og:image (the brief's hero
+   * filename); (5) empty interior = air cooler section (the brief's interior filename, not its "with
+   * organized air cooler inventory" alt: nothing is stored or fitted); (2) cargo doors straight on =
+   * rainwear section; (4) roof from above = flood-aware placement; (3) blind end wall = sizes (the brief's
+   * "back view"). No image shows an air cooler, cooling pad, pump, umbrella, raincoat, gumboot, shelf, bin
+   * or raised support, so the brief's twenty application and placement image slots are not used, and no
+   * alt text, caption or filename claims those items, a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-nagavara",
+    city: "Nagavara",
+    listTitle: "Shipping & Storage Containers in Nagavara",
+    metaTitle: "Shipping Container in Nagavara | Storage Solutions",
+    metaDescription:
+      "Shipping and storage containers in Nagavara (Nagawara), north Bengaluru, for air cooler stock, cooling pads, umbrellas, raincoats and seasonal inventory.",
+    keywords:
+      "shipping container in Nagavara, shipping container in Nagawara, cargo container Nagavara, cargo container Nagawara, storage container Nagavara, storage container Nagawara, storage container Veerannapalya, storage container Veeranapalya, storage container Govindapura, used shipping container Nagavara, shipping container for sale in Nagavara, storage container for rent in Nagavara, shipping container price in Nagavara, shipping container price in Nagawara, storage container price in Nagavara, used cargo container in Nagavara, 20 ft shipping container in Nagavara, 40 ft shipping container in Nagavara, air cooler dealer storage container, air cooler stock storage, air cooler warehouse container, desert cooler storage, cooling pad storage container, air cooler spare parts storage, summer stock storage container, umbrella wholesaler storage container, umbrella stock storage, raincoat stock storage, rainwear wholesale storage, gumboot stock storage, monsoon stock storage container, seasonal rainwear inventory storage",
+    // Approximate point near the Nagavara (Nagawara) junction on the Outer Ring Road, north Bengaluru
+    // (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Nagavara, Bengaluru, Karnataka, India",
+      position: "13.0420;77.6210",
+      icbm: "13.0420, 77.6210",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 2336 × 1760 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // Thanisandra Main Road, Kalyan Nagar, Hebbal, Hennur Road, Horamavu, RT Nagar, Vellore, Bellandur and
+    // Athipattu are linked in the body, so the nearby block leaves them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-nagavara/shipping-container-nagavara.webp",
+      alt: "Corrugated steel shipping container exterior suitable for seasonal merchandise storage: a sage-green container seen from one corner, its long side and closed cargo doors with vertical locking bars, on a paved yard",
+      width: 2336,
+      height: 1760,
+      caption: "Illustrative render, not a photograph of a delivered unit or of a site in Nagavara.",
+    },
+
+    h1: "Shipping & Storage Containers in Nagavara",
+    tagline:
+      "Room for boxed coolers, cooling pads and pump spares before the summer rush, and for umbrella, raincoat and gumboot cartons before the monsoon.",
+    intro: [
+      "Nagavara, also known as Nagawara, is a residential and commercial locality in north Bengaluru, with shops, distributors and businesses along the Outer Ring Road and in the residential streets beside it.",
+      "Seasonal demand changes what needs storing through the year. Air cooler dealers may need extra inventory space before summer, while umbrella and rainwear wholesalers build up their stock before the monsoon.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin offers its",
+      link: { label: "shipping and storage container range", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " in Nagavara for compatible seasonal merchandise, air cooler inventory, rainwear products and other commercial storage, with the layout, the stock and the site's access checked before anything is confirmed.",
+    },
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Portable Office Cabin supplies shipping and storage container solutions across Nagavara, also written Nagawara, including the Nagavara lake area, Veerannapalya (also spelt Veeranapalya) and Govindapura. Roads here range from the Outer Ring Road to narrow residential streets, so we look at the route, the gate and where the container will sit before suggesting a delivery date.",
+    // Brief Part 9 and Part 16: Thanisandra Main Road, Kalyan Nagar, Hebbal and Hennur Road keep their own
+    // pages and localities; Jakkur has no page yet, so it is not named.
+    areasInlineLinks: [
+      {
+        before: "For neighbouring localities, Thanisandra and the length of its main road have their own page:",
+        link: { label: "shipping containers along Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+        after: ".",
+      },
+      {
+        before: "Kalyan Nagar, to the south-east, is covered by our page on",
+        link: { label: "salon equipment and art supply storage in Kalyan Nagar", href: "/cities-we-serve/shipping-container-kalyan-nagar" },
+        after: ".",
+      },
+      {
+        before: "Hebbal, to the west across the Outer Ring Road, has a page of its own:",
+        link: { label: "dealership and agri-tech equipment storage in Hebbal", href: "/cities-we-serve/shipping-container-hebbal-bengaluru" },
+        after: ".",
+      },
+      {
+        before: "Addresses on Hennur Road, to the east, are served from our page on",
+        link: { label: "church, music and party-supply storage on Hennur Road", href: "/cities-we-serve/shipping-container-hennur-road" },
+        after: ".",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Storage Containers for Air Cooler Dealers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-nagavara/nagavara-shipping-container-interior.webp",
+          alt: "Empty shipping container interior with corrugated steel walls and flooring: sage-green walls and roof seen through open cargo doors, over brown floor panels, with no shelves or racks fitted",
+          width: 1448,
+          height: 1086,
+          caption:
+            "Illustrative render of an empty interior. Shelving, pallets, bins and lighting are fitted only where the written quotation lists them.",
+        },
+        paragraphs: [
+          "Air cooler dealers supply desert, personal and tower coolers to homes, shops and commercial establishments.",
+          "These products take up considerable space, particularly when dealers buy in seasonal inventory ahead of summer. A suitably configured shipping container may provide additional, organised storage for compatible air cooler stock and replacement components.",
+        ],
+        // Brief Part 16: AC installers' stock belongs to the Horamavu page; cooler dealers' stock stays here.
+        inlineLinks: [
+          {
+            before: "Installing air conditioners rather than selling coolers? See",
+            link: { label: "AC and appliance installer stock in Horamavu", href: "/cities-we-serve/shipping-container-horamavu" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Desert air cooler storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Boxed desert air coolers." },
+              { text: "Residential air coolers." },
+              { text: "Commercial air cooler models." },
+              { text: "Suitable evaporative cooling equipment." },
+              { text: "Replacement cooler components." },
+            ],
+            closing: [
+              "Store boxed units upright, as the manufacturer's packaging instructs, and do not exceed the approved carton stacking limits.",
+            ],
+          },
+          {
+            heading: "Personal & tower air cooler storage",
+            paragraphs: ["Organise air coolers by:"],
+            bullets: [
+              { text: "Model." },
+              { text: "Size." },
+              { text: "Cooling capacity." },
+              { text: "Product specification." },
+              { text: "Customer order." },
+              { text: "Stock availability." },
+            ],
+            closing: ["Keep frequently dispatched models in accessible positions without blocking safe access."],
+          },
+          {
+            heading: "Cooling pad storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Honeycomb cooling pads." },
+              { text: "Replacement evaporative cooling pads." },
+              { text: "Suitable filter pads." },
+              { text: "Manufacturer-approved cooling accessories." },
+            ],
+            closing: [
+              "Keep cooling pads in their protective packaging, in dry conditions and away from moisture and unsuitable temperatures.",
+            ],
+          },
+          {
+            heading: "Air cooler pump & motor storage",
+            paragraphs: ["Organise compatible spare parts such as:"],
+            bullets: [
+              { text: "Water circulation pumps." },
+              { text: "Replacement motors." },
+              { text: "Float valves." },
+              { text: "Water distribution fittings." },
+              { text: "Suitable switches and controls." },
+              { text: "Replacement cooler accessories." },
+            ],
+            closing: [
+              "Use labelled bins, drawers and protective packaging, and follow the manufacturer's storage requirements for electrical components.",
+            ],
+          },
+          {
+            heading: "Display & demonstration unit storage",
+            paragraphs: ["Dealers may need extra space for demonstration units between selling seasons. Before storage:"],
+            bullets: [
+              { text: "Drain any remaining water." },
+              { text: "Clean the equipment." },
+              { text: "Let the tank and internal components dry." },
+              { text: "Disconnect the power supply." },
+              { text: "Use suitable protective packaging." },
+              { text: "Label each unit with its model and condition." },
+            ],
+            closing: ["A water-filled air cooler is never put into storage."],
+          },
+          {
+            heading: "Returned & repair unit storage",
+            paragraphs: ["Create a separate, marked storage section for:"],
+            bullets: [
+              { text: "Returned air coolers." },
+              { text: "Damaged packaging." },
+              { text: "Units awaiting inspection." },
+              { text: "Equipment requiring repair." },
+              { text: "Warranty-related stock." },
+            ],
+            closing: [
+              "Keep returned equipment apart from new, dispatch-ready inventory. Repairs, electrical testing and battery charging are not carried out inside an ordinary storage-only container.",
+            ],
+          },
+          {
+            heading: "Air cooler inventory management",
+            paragraphs: ["Maintain an inventory register covering:"],
+            bullets: [
+              { text: "Product name." },
+              { text: "Model number." },
+              { text: "Quantity." },
+              { text: "Product condition." },
+              { text: "Storage location." },
+              { text: "Reserved customer stock." },
+              { text: "Warranty or return status." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["A register like this helps dealers keep track of seasonal stock before and during the summer rush."],
+          },
+        ],
+      },
+      {
+        heading: "Air Cooler Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Drain water before storage",
+            paragraphs: [
+              "Used, demonstration and returned air coolers should be drained and dried before storage. Standing water can encourage mosquito breeding, mould growth and unpleasant odours.",
+            ],
+          },
+          {
+            heading: "Protect cooling pads against moisture",
+            paragraphs: [
+              "Damp cooling pads may develop mould or deteriorate. Follow the manufacturer's instructions and keep storage conditions suitable.",
+            ],
+          },
+          {
+            heading: "Electrical & battery-powered equipment",
+            paragraphs: [
+              "Battery-powered air coolers are not charged or tested inside an ordinary storage-only shipping container. Follow the manufacturer's instructions and the applicable electrical and fire-safety requirements.",
+            ],
+          },
+          {
+            heading: "Temperature protection",
+            paragraphs: [
+              "An ordinary shipping container can become hot during summer. Check the manufacturer's storage-temperature limits for plastic components, electrical parts and packaged products, and discuss ventilation, insulation or climate control where the stock needs it.",
+            ],
+            // Brief Part 14: climate-controlled options → the Vellore page's insulated and air-conditioned notes.
+            inlineLinks: [
+              {
+                before: "Need stock held within a temperature range? Read about",
+                link: { label: "climate-control options for heat-sensitive stock", href: "/cities-we-serve/shipping-container-vellore" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Off-season air cooler storage",
+            paragraphs: [
+              "Clean and pack unsold or demonstration stock properly before long-term storage, inspect it periodically and follow the manufacturer's recommendations.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Storage Containers for Umbrella & Rainwear Wholesalers",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-nagavara/nagavara-shipping-container-cargo-doors.webp",
+          alt: "Shipping container cargo doors with vertical locking bars: the closed doors of a sage-green steel container seen straight on, with lever handles and a central lock box",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render. Cartons go in and out through the full-width cargo doors, so the layout can follow the order in which stock is dispatched.",
+        },
+        paragraphs: [
+          "Umbrella and rainwear wholesalers supply retailers, commercial establishments and other businesses with seasonal rain protection products.",
+          "Bulk stock often arrives before the monsoon, adding to the space needed for umbrellas, raincoats, rain suits, ponchos and gumboots. A suitably configured shipping container may provide organised storage for compatible seasonal rainwear inventory.",
+        ],
+        subsections: [
+          {
+            heading: "Wholesale umbrella stock storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Folding umbrellas." },
+              { text: "Long umbrellas." },
+              { text: "Children's umbrellas." },
+              { text: "Promotional umbrellas." },
+              { text: "Commercial umbrella stock." },
+            ],
+            closing: [
+              "Arrange cartons by product type, model, colour, size and customer order, on suitable shelving and in protective packaging.",
+            ],
+          },
+          {
+            heading: "Raincoat & rain suit storage",
+            paragraphs: ["Compatible products may include:"],
+            bullets: [
+              { text: "PVC raincoats." },
+              { text: "Two-piece rain suits." },
+              { text: "Hooded rainwear." },
+              { text: "Children's raincoats." },
+              { text: "Suitable commercial rainwear." },
+            ],
+            closing: [
+              "Organise them by size, colour and material, and follow the manufacturer's instructions on storage temperature and packaging.",
+            ],
+          },
+          {
+            heading: "Poncho & disposable rainwear storage",
+            paragraphs: ["Store compatible products such as:"],
+            bullets: [
+              { text: "Reusable ponchos." },
+              { text: "Disposable rain ponchos." },
+              { text: "Packaged rainwear." },
+              { text: "Suitable emergency rain protection products." },
+            ],
+            closing: ["Labelled bins or cartons make the stock easier to identify."],
+          },
+          {
+            heading: "Gumboot & waterproof footwear storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Rubber gumboots." },
+              { text: "PVC gumboots." },
+              { text: "Waterproof footwear." },
+              { text: "Suitable seasonal rain boots." },
+            ],
+            closing: [
+              "Arrange cartons by size, model and customer requirement, keep heavier cartons on stable lower shelves, and protect rubber and plastic footwear from excessive heat and direct sunlight.",
+            ],
+            // Brief Part 16: a shoe shop's selling stock belongs to the RT Nagar page; rainwear wholesale stays here.
+            inlineLinks: [
+              {
+                before: "Selling everyday shoes from a shop rather than wholesaling rain boots? See",
+                link: { label: "footwear shop stock storage in RT Nagar", href: "/cities-we-serve/shipping-container-rt-nagar" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Customer-wise wholesale order staging",
+            paragraphs: ["Organise rainwear orders by:"],
+            bullets: [
+              { text: "Customer name." },
+              { text: "Purchase order." },
+              { text: "Product category." },
+              { text: "Required size." },
+              { text: "Colour." },
+              { text: "Quantity." },
+              { text: "Dispatch date." },
+            ],
+            closing: ["Keep a checklist for each order and tick it off before the goods leave the container."],
+          },
+          {
+            heading: "Off-season rainwear inventory storage",
+            paragraphs: ["Unsold seasonal products may need storing until the next monsoon. Before long-term storage:"],
+            bullets: [
+              { text: "Make sure products are clean and dry." },
+              { text: "Inspect the packaging." },
+              { text: "Separate damaged stock." },
+              { text: "Organise products by model and size." },
+              { text: "Keep the inventory records up to date." },
+              { text: "Follow the manufacturer's storage instructions." },
+            ],
+            closing: ["Stored rainwear still needs periodic inspection: not every product keeps indefinitely."],
+          },
+        ],
+      },
+      {
+        heading: "Rainwear Storage Safety",
+        placement: "afterIntro",
+        subsections: [
+          {
+            heading: "Moisture protection",
+            paragraphs: [
+              "Wet umbrellas, raincoats or gumboots do not go into closed cartons: let them dry before packing. A standard shipping container is not humidity-controlled.",
+            ],
+          },
+          {
+            heading: "PVC raincoat storage",
+            paragraphs: [
+              "Excessive heat may affect PVC rainwear. Avoid heavy stacking pressure and storage against very hot surfaces, and follow the manufacturer's temperature and packaging requirements.",
+            ],
+          },
+          {
+            heading: "Rubber footwear protection",
+            paragraphs: [
+              "Protect rubber gumboots and other rubber products from direct sunlight, excessive heat and unsuitable storage conditions.",
+            ],
+          },
+          {
+            heading: "Water-repellent sprays",
+            paragraphs: [
+              "Water-repellent sprays, aerosols and chemical treatments can have special storage requirements. Follow the manufacturer's labels, the safety data sheets and the applicable fire-safety regulations. An ordinary storage-only container is not a store for flammable or hazardous products unless the appropriate safeguards are in place.",
+            ],
+          },
+          {
+            heading: "Condensation prevention",
+            paragraphs: [
+              "Where stock is moisture-sensitive, discuss ventilation, insulation and environmental control before ordering. No standard container is promised to stay free of condensation or moisture.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Placement in Nagavara",
+        placement: "afterSolutions",
+        paragraphs: ["Shipping containers may be placed on suitable, authorised premises, including:"],
+        bullets: [
+          { text: "Air cooler dealer compounds." },
+          { text: "Wholesale merchandise yards." },
+          { text: "Commercial storage plots." },
+          { text: "Authorised shop premises." },
+          { text: "Suitable warehouse compounds." },
+          { text: "Other approved private properties." },
+        ],
+        closing: [
+          "The property owner's permission and any applicable local approvals are needed before placement, and no container goes onto a public road or footpath without authorisation.",
+        ],
+      },
+      {
+        heading: "Delivery & Site Accessibility",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Roads around the Nagavara junction, Thanisandra Main Road and the Outer Ring Road can be congested and may have access restrictions. Before delivery is arranged, confirm:",
+        ],
+        bullets: [
+          { text: "Road width." },
+          { text: "Gate clearance." },
+          { text: "Heavy-vehicle turning space." },
+          { text: "Overhead cables." },
+          { text: "Tree branches." },
+          { text: "Ground stability." },
+          { text: "Container dimensions." },
+          { text: "Loading and unloading requirements." },
+          { text: "Applicable local permissions." },
+          { text: "Emergency access." },
+        ],
+        closing: [
+          "Delivery timing is arranged after a route assessment, and an early-morning slot is offered only when it has been confirmed.",
+        ],
+        // Brief Part 5 and Part 14: restricted-site delivery guidance → the Bellandur page.
+        inlineLinks: [
+          {
+            before: "For a tight entrance, a busy road or a low gate, read our notes on",
+            link: { label: "delivery planning for congested and restricted sites", href: "/cities-we-serve/shipping-container-bellandur" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Flood-aware Container Placement",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-nagavara/nagavara-shipping-container-top-view.webp",
+          alt: "Top view showing the steel shipping container roof: a sage-green corrugated roof with four corner castings, on a paved strip between lawns and a low boundary wall",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render. Clear ground on all four sides keeps the doors usable and lets surface water drain away from the container.",
+        },
+        paragraphs: ["Low-lying plots near lakes and drainage channels may collect water during heavy rain. Before placement:"],
+        bullets: [
+          { text: "Assess the site's drainage and flood exposure." },
+          { text: "Choose suitable, stable ground." },
+          { text: "Verify the foundation or support requirements." },
+          { text: "Consider properly designed raised supports where necessary." },
+          { text: "Keep access clear around the container." },
+          { text: "Confirm the applicable site and land-use permissions." },
+        ],
+        closing: [
+          "A raised plinth on its own does not make a site flood-proof. Plinths, raised supports and other civil work are not part of a container supply unless the quotation lists them.",
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes in Nagavara",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-nagavara/nagavara-shipping-container-back-view.webp",
+          alt: "Rear view of a steel shipping container showing its corrugated construction: the blind end wall of a sage-green container with corner castings, seen straight on",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render. Boxed coolers fill a container long before they reach its weight limit, so carton sizes decide the length you need.",
+        },
+        table: {
+          caption:
+            "Volumes are approximate. Exact dimensions, available sizes, payload capacities and door clearances must be verified on the specific unit quoted.",
+          headers: ["Container size", "Approximate internal volume", "Typical application"],
+          rows: [
+            ["10 ft, if available", "15 m³", "Cooler spares, cooling pads, umbrellas and smaller rainwear inventory"],
+            ["20 ft", "33 m³", "Boxed air coolers, seasonal rainwear and wholesale merchandise"],
+            ["40 ft", "67 m³", "Larger seasonal inventory and bulk wholesale stock"],
+          ],
+        },
+        // Brief Part 6 and Part 14: used-container inspection → the Athipattu page's checklist (no Chennai route).
+        inlineLinks: [
+          {
+            before: "Weighing up a second-hand unit? Work through our",
+            link: { label: "checks to run on a used container before buying", href: "/cities-we-serve/shipping-container-in-athipattu" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Planning the container",
+            paragraphs: ["Air coolers can take up a lot of space relative to their weight. Choose the container according to:"],
+            bullets: [
+              { text: "Carton dimensions." },
+              { text: "Approved stacking limits." },
+              { text: "Required inventory quantity." },
+              { text: "Shelving arrangements." },
+              { text: "Safe access requirements." },
+              { text: "Floor-loading capacity." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Nagavara",
+        placement: "afterSolutions",
+        paragraphs: ["The price of a shipping container in Nagavara depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Structural condition." },
+          { text: "Container grade: one-trip, cargo-worthy or wind-and-watertight, where offered." },
+          { text: "Storage shelving." },
+          { text: "Pallets." },
+          { text: "Storage bins." },
+          { text: "Lighting." },
+          { text: "Ventilation." },
+          { text: "Insulation." },
+          { text: "Climate control, where specified." },
+          { text: "Raised supports or plinths, where the quotation includes them." },
+          { text: "Locking arrangements." },
+          { text: "Transportation." },
+          { text: "Loading and unloading." },
+          { text: "Site accessibility." },
+          { text: "Current market rates." },
+        ],
+        closing: ["Portable Office Cabin provides an itemised quotation based on your storage application and delivery requirements."],
+      },
+      {
+        heading: "Storage Container on Rent in Nagavara",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Air cooler dealers may need extra storage before summer, while umbrella and rainwear wholesalers may need temporary space before and during the monsoon. Hire terms run from one month to five years, and the quotation sets out the container size, the hire period, any security deposit, the transport, loading and unloading charges, any modifications and the collection arrangements.",
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and hire terms are listed on our page for",
+            link: { label: "shipping containers for hire", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "How to Order a Shipping Container",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Explain your intended storage application." },
+          { text: "Give the quantity and dimensions of your inventory." },
+          { text: "Confirm the required storage period." },
+          { text: "Identify any products that need special environmental conditions." },
+          { text: "Select a suitable container size." },
+          { text: "Discuss shelving, pallets and other modifications." },
+          { text: "Confirm the property permission and site access." },
+          { text: "Assess the ground and drainage conditions." },
+          { text: "Request an itemised quotation." },
+          { text: "Finalise the specifications and delivery arrangements." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: [
+          "Portable Office Cabin supplies shipping and storage containers for compatible seasonal merchandise and commercial inventory. For cooler dealers and rainwear wholesalers in Nagavara, that includes:",
+        ],
+        bullets: [
+          { title: "Available container sizes", text: "20 ft and 40 ft units, with a 10 ft unit supplied when stock allows." },
+          { title: "Air cooler storage layouts", text: "floor space and shelving planned around upright cartons and their stacking limits." },
+          { title: "Umbrella and rainwear arrangements", text: "shelves, labelled bins and order-staging space for carton stock." },
+          { title: "Shelving, pallets and bins", text: "listed item by item in the quotation, so the layout carries only what your stock needs." },
+          { title: "Locking arrangements", text: "lockable cargo doors; the lock fitted to your unit is named in the quotation." },
+          { title: "Ventilation and insulation options", text: "fitted only against an agreed specification; no standard container is promised to be waterproof, floodproof or temperature-controlled." },
+          { title: "Site-access and flood-aware assessment", text: "the route, the gate, the ground and the drainage are looked at before a date is fixed." },
+          { title: "Purchase or hire", text: "buy outright, or hire for anything from one month to five years." },
+          { title: "Itemised quotations and delivery coordination", text: "the quotation comes first; the delivery is then planned around your road, gate and set-down spot." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can air cooler dealers store inventory inside shipping containers?",
+        answer:
+          "Yes, provided the equipment dimensions, packaging, stacking limits and environmental requirements suit the selected container. Store boxed air coolers upright, as the manufacturer instructs.",
+      },
+      {
+        question: "Can used or demonstration air coolers be stored inside a container?",
+        answer:
+          "Potentially, once the water tank and internal components have been drained, cleaned and dried. Follow the manufacturer's instructions before long-term storage.",
+      },
+      {
+        question: "Can cooling pads and air cooler spare parts be stored inside a container?",
+        answer: "Yes, where dry storage conditions, protective packaging and organised shelving are maintained.",
+      },
+      {
+        question: "Can umbrella wholesalers store seasonal stock inside shipping containers?",
+        answer: "Yes, provided the umbrellas are clean, dry and stored according to their packaging and environmental requirements.",
+      },
+      {
+        question: "Will PVC raincoats get damaged inside a hot shipping container?",
+        answer:
+          "Excessive heat may damage some PVC products. Check the manufacturer's storage-temperature limits and consider suitable environmental-control measures.",
+      },
+      {
+        question: "Can gumboots be stored inside a shipping container?",
+        answer: "Yes, where suitable temperature, packaging and storage conditions are maintained.",
+      },
+      {
+        question: "Can a shipping container be placed near a flood-prone area?",
+        answer:
+          "Placement needs a site assessment, stable ground, attention to drainage and the applicable permissions. Raised supports may help in some circumstances, but they do not make a site flood-proof.",
+      },
+      {
+        question: "Is Nagavara the same place as Nagawara?",
+        answer: "Yes. Nagavara and Nagawara are two spellings of the same locality, and this page covers both.",
+      },
+      {
+        question: "Is Nagavara the same place as Nagavarapalya?",
+        answer:
+          "No. Nagavarapalya is a different locality in east Bengaluru, covered on our Kaggadasapura shipping container page. This page covers Nagavara (Nagawara) in north Bengaluru.",
+      },
+      {
+        question: "What is the shipping container price in Nagavara?",
+        answer: "Pricing depends on container size, condition, modifications, transportation and site accessibility.",
+      },
+      {
+        question: "How quickly can a shipping container be delivered?",
+        answer: "Delivery depends on container availability, any customisation, transport arrangements and site conditions.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quotation in Nagavara",
+    ctaText: `Whether you need additional storage for air coolers before summer or for umbrellas, raincoats and gumboots before the monsoon, Portable Office Cabin can discuss suitable shipping container options based on your seasonal inventory. Call ${COMPANY.phones[0].display}, message ${COMPANY.whatsapp.display} on WhatsApp, or write to ${COMPANY.email.sales}. Serving: Nagavara (Nagawara), the Nagavara lake area, Veerannapalya and Govindapura, Bengaluru, Karnataka.`,
+    // Brief Part 12: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "storage container",
+      heading: "Nagavara storage container enquiry",
+      intro:
+        "Pick the container type and quantity, add your Nagavara address or a map pin, and tell us whether you are buying or hiring. A rough count of the cooler or rainwear cartons you hold at the peak of the season, their sizes, and any stock that needs ventilation or a conditioned unit help us quote the right layout.",
+    },
+    // The cargo category and the rental product are linked in the body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin dispatches every container from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs its Bengaluru office from Electronic City; it has no yard, depot, showroom or branch in Nagavara or in the neighbouring localities named on this page. The written quotation alone fixes a unit's internal and door-opening dimensions, grade, condition, payload and floor-loading limit, any shelving, racks, pallets, bins, lighting, ventilation, insulation, air conditioning, raised supports or locks, the hire terms for a rented unit, and the delivery, unloading and collection. Because stock changes, a delivery date or time is firm only once the quotation confirms it. Without an approved specification, no unit is sold as climate-controlled, humidity-controlled, waterproof, floodproof, fire-rated or theft-proof; no temperature or humidity level is promised; no unit is promised to keep stock free of condensation, mould or heat damage; and a container is not supplied as a repair workshop, testing bay, charging point or store for flammable or hazardous goods. All five pictures are illustrative renders, not photographs taken in Nagavara, and none shows a delivered or fitted unit, air coolers, rainwear or a raised support. Container volumes are approximate and are not payload ratings. Air cooler dealers and rainwear wholesalers are described as possible uses, not as customers or completed projects, and the localities listed show where enquiries are accepted, not confirmed delivery addresses. The notes on drainage, moisture, heat, batteries, sprays, placement and permissions are general guidance, not product-care, safety, legal or engineering advice; follow the manufacturers' instructions and the rules of the relevant authorities.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -53731,7 +54495,8 @@ export const CITY_PAGES: CityPage[] = [
    * dealership accessories, merchandise and PDI supplies and for agri-tech and research field kits. The
    * Hebbal shop page is Mysuru's Hebbal (portable shop × Hebbal, Mysuru) and keeps its own keywords: every
    * title, H1 and description here says "Bengaluru", and FAQ 1 tells the two apart. Not targeted:
-   * Thanisandra, Nagawara, Jakkur and Amruthahalli and private vehicle storage (Thanisandra Main Road page),
+   * Thanisandra and Amruthahalli and private vehicle storage (Thanisandra Main Road page), Nagavara and
+   * Nagawara (Nagavara page since 2026-11-25; named here only in the link to it), Jakkur (no page yet),
    * Yelahanka, Kogilu and Attur Layout (Yelahanka page), tyres and service-centre spares (Marathahalli ORR),
    * farm inputs and agricultural supplies (Krishnagiri). No live page names these localities for this
    * product, so no sibling's copy changes. Kodigehalli brief (2026-11-22, §10): Kodigehalli (Kodigehally),
@@ -53874,6 +54639,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "For Kodigehalli, see our dedicated",
         link: { label: "Kodigehalli shipping container page", href: "/cities-we-serve/shipping-container-kodigehalli" },
+        after: ".",
+      },
+      // Nagavara brief (2026-11-25, Part 14): air cooler and rainwear stock in Nagavara is that page's intent; this
+      // page's own targeting is unchanged.
+      {
+        before: "For air cooler dealers and seasonal rainwear wholesalers in Nagavara, to the east, explore our page on",
+        link: { label: "air cooler and rainwear stock storage in Nagavara", href: "/cities-we-serve/shipping-container-nagavara" },
         after: ".",
       },
     ],
@@ -54842,7 +55614,7 @@ export const CITY_PAGES: CityPage[] = [
    * sentence), so it points to the Athipattu page's "Used Container Inspection" checklist, as the sibling
    * pages do; rental → /products/shipping-container-rental; areas → Hebbal (Hebbal, Kodigehalli,
    * Byatarayanapura and Kempapura), Vidyaranyapura (Vidyaranyapura and Thindlu), Thanisandra Main Road
-   * (Thanisandra, Jakkur and Amruthahalli) and RT Nagar. Not linked: Koramangala (its page has no D2C
+   * (Thanisandra and Amruthahalli) and RT Nagar. Not linked: Koramangala (its page has no D2C
    * finished-goods section, so it does not support the brief's anchor) and Jalahalli West (no page on this
    * main). Anchors differ from the siblings' anchors for the same targets. Inbound: the Hebbal, Bengaluru
    * and Vidyaranyapura shipping pages' areas sections (one `areasInlineLinks` item each, their own
@@ -54853,8 +55625,8 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Sahakara Nagar and Sahakar Nagar (one page for
    * both spellings), for handmade soap and candle makers' stock and for pottery and ceramics studios' stock.
    * Not targeted: Hebbal, Kodigehalli, Byatarayanapura and Kempapura (Hebbal page; named here only in the
-   * link to it); Vidyaranyapura and Thindlu (Vidyaranyapura page; same); Thanisandra, Jakkur and
-   * Amruthahalli (Thanisandra Main Road page; same); RT Nagar (its own page; same); Tata Nagar (not named).
+   * link to it); Vidyaranyapura and Thindlu (Vidyaranyapura page; same); Thanisandra and
+   * Amruthahalli (Thanisandra Main Road page; same); Jakkur (no page yet; not named); RT Nagar (its own page; same); Tata Nagar (not named).
    * Kept apart from party-supply retail stock (Hennur Road; named here only in the link to it), general art
    * classes (Kalyan Nagar; same), climate-controlled units as such (Vellore; same), general D2C goods
    * (Koramangala; not targeted), baking supplies (Jalahalli West; not targeted) and gallery cabins
@@ -54926,7 +55698,7 @@ export const CITY_PAGES: CityPage[] = [
     areasText:
       "This page covers shipping and storage container requirements in Sahakara Nagar, also written Sahakar Nagar, and its residential blocks. Most streets here are residential and of modest width, so the approach, the gate, the standing spot and the land use are checked for each address before any delivery date is proposed.",
     // Brief §2 and §5: Hebbal, Kodigehalli, Byatarayanapura and Kempapura belong to the Hebbal page;
-    // Vidyaranyapura and Thindlu to the Vidyaranyapura page; Thanisandra, Jakkur and Amruthahalli to the
+    // Vidyaranyapura and Thindlu to the Vidyaranyapura page; Thanisandra and Amruthahalli to the
     // Thanisandra Main Road page; RT Nagar to its own page.
     areasInlineLinks: [
       {
@@ -54940,7 +55712,8 @@ export const CITY_PAGES: CityPage[] = [
         after: ".",
       },
       {
-        before: "Thanisandra, Jakkur and Amruthahalli, to the east, are covered under",
+        // Nagavara brief (2026-11-25, Part 15): Jakkur is no longer a Thanisandra Main Road locality.
+        before: "Thanisandra and Amruthahalli, to the east, are covered under",
         link: { label: "container storage on Thanisandra Main Road", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
         after: ".",
       },
@@ -55554,8 +56327,8 @@ export const CITY_PAGES: CityPage[] = [
    * Thindlu, Nanjappa Circle, Doddabettahalli and Doddabommasandra, for seed and agri-input dealers' stock
    * and for laboratory glassware and supplies dealers' stock. Not targeted: Hebbal, Kodigehalli,
    * Byatarayanapura and Ganganagar (Hebbal page; named here only in the link to it); Yelahanka (Yelahanka
-   * page; same); Yelahanka New Town (its own page; same); Thanisandra and Jakkur (Thanisandra Main Road
-   * page; not named); Jalahalli (kept for a possible future page; not named); Mathikere (its own page
+   * page; same); Yelahanka New Town (its own page; same); Thanisandra (Thanisandra Main Road
+   * page; not named); Jakkur (no page yet; not named); Jalahalli (kept for a possible future page; not named); Mathikere (its own page
    * since the owner's brief of 2026-11-22; named only in the link sentence to it); Sahakara
    * Nagar (its own page, linked from the areas);
    * BEL Layout and HMT Layout (not named). Kept apart from agri-tech field kits (Hebbal), dairy feed
@@ -56336,8 +57109,9 @@ export const CITY_PAGES: CityPage[] = [
    * "used shipping container inspection": the brief's Chennai route does not exist, so it points to the
    * Athipattu page's "Used Container Inspection" checklist, as the sibling pages do; rental →
    * /products/shipping-container-rental; areas → Hebbal (Bengaluru), Sahakara Nagar, Vidyaranyapura and
-   * Thanisandra Main Road (which covers Jakkur). NOT linked: Sanjaynagar (its page is not live yet), the
-   * brief's Jakkur and Haralur Road routes (no such pages; Jakkur is covered by the Thanisandra page) and
+   * Thanisandra Main Road. NOT linked: Sanjaynagar (its page is not live yet), the brief's Jakkur and
+   * Haralur Road routes (no such pages; since the Nagavara brief of 2026-11-25 Jakkur is no longer a
+   * Thanisandra Main Road locality, so it is not named) and
    * Panathur (its live page covers water tanker operators, not painting and waterproofing). Anchors differ
    * from the siblings' anchors for the same targets. Inbound: the Hebbal (Bengaluru), Sahakara Nagar,
    * Vidyaranyapura and Thanisandra Main Road pages' areas sections (Kodigehalli is taken out of each one's
@@ -56351,7 +57125,7 @@ export const CITY_PAGES: CityPage[] = [
    * equipment and for roofing sheets and terrace shed materials. Kodigehalli moves here from the Hebbal
    * (Bengaluru) page, which keeps Hebbal, Hebbal Kempapura, Bhadrappa Layout, Byatarayanapura, Ganganagar
    * and the Hebbal stretch of Bellary Road. Named only in the pointer sentences to their own pages: those
-   * Hebbal localities, Sahakara Nagar, Vidyaranyapura, Thanisandra and Jakkur. Named only to say this page
+   * Hebbal localities, Sahakara Nagar, Vidyaranyapura and Thanisandra. Named only to say this page
    * does not cover them (areas section and FAQ 5): Kodigehalli near KR Puram, Bande Kodigehalli and
    * Kodihalli near Domlur. Not named: Tata Nagar, Canara Bank Layout and Judicial Layout. Kept apart from
    * landscaping and nurseries (Bannerghatta Road), scaffolding, railings, gates and false ceilings
@@ -56424,7 +57198,8 @@ export const CITY_PAGES: CityPage[] = [
     areasText:
       "This page covers Kodigehalli in north Bengaluru, PIN 560092, also spelt Kodigehally: Kodigehalli Main Road, Kodigehalli Gate and Virupakshapura. It does not cover the Kodigehalli near KR Puram, Bande Kodigehalli near Yelahanka or Kodihalli near Domlur. Roads here run from the busy main road to narrow residential lanes, so the route, the gate, overhead cables and a firm set-down spot are checked for every address before a delivery date is proposed.",
     // Brief §7 "Areas We Serve" and §13: the Hebbal localities stay on the Hebbal (Bengaluru) page; Sahakara
-    // Nagar and Vidyaranyapura keep their own pages; Jakkur is covered by the Thanisandra Main Road page.
+    // Nagar and Vidyaranyapura keep their own pages; so does Thanisandra (Nagavara brief of 2026-11-25: Jakkur
+    // is no longer one of its localities and has no page yet, so it is not named).
     areasInlineLinks: [
       {
         before: "Hebbal, Hebbal Kempapura, Bhadrappa Layout, Byatarayanapura and Ganganagar are served from our page on",
@@ -56442,8 +57217,8 @@ export const CITY_PAGES: CityPage[] = [
         after: ".",
       },
       {
-        before: "Jakkur, to the north-east, is covered together with Thanisandra on our page on",
-        link: { label: "shipping containers in Thanisandra and Jakkur", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
+        before: "Thanisandra, to the east, is covered on our page on",
+        link: { label: "shipping containers in Thanisandra", href: "/cities-we-serve/shipping-container-thanisandra-main-road" },
         after: ".",
       },
     ],
@@ -57820,8 +58595,8 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Yelahanka, Yelahanka
    * Old Town, Attur Layout, Allalasandra, Kogilu, Kattigenahalli, the Yelahanka stretch of Doddaballapur
    * Road and the Yelahanka side of Bagalur Road, for air freight packing and export crating material
-   * stores and equestrian tack rooms. Not targeted: Thanisandra, Nagawara, Jakkur and Amruthahalli (the
-   * Thanisandra Main Road page), Hebbal (Bengaluru; the Hebbal shop page is Mysuru's Hebbal), Devanahalli
+   * stores and equestrian tack rooms. Not targeted: Thanisandra and Amruthahalli (the
+   * Thanisandra Main Road page), Nagavara and Nagawara (Nagavara page), Jakkur (no page yet), Hebbal (Bengaluru; the Hebbal shop page is Mysuru's Hebbal), Devanahalli
    * and Doddaballapur as separate markets, rail and road consignment staging (KR Puram), shipper-owned
    * containers and CSC plates (Chennai), kennel and shelter feed (Bannerghatta Road) and boutique garment
    * care (Indiranagar). The container-office and porta-cabin pages that list Yelahanka sell other products.
@@ -59323,7 +60098,8 @@ export const CITY_PAGES: CityPage[] = [
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Hennur Road and the localities above, for
    * church, parish and choir storage, instrument and music-school storage, and décor and party-supply
-   * stock. Not targeted: Thanisandra, Nagawara and Jakkur (Thanisandra Main Road page), Yelahanka and
+   * stock. Not targeted: Thanisandra (Thanisandra Main Road page), Nagavara and Nagawara (Nagavara page
+   * since 2026-11-25; named here only in the link to it), Jakkur (no page yet), Yelahanka and
    * Bagalur Road (Yelahanka page), Horamavu, Kalkere and Rampura (Horamavu page), Kalyan Nagar, HRBR
    * Layout, HBR Layout, Kammanahalli and Chelikere (Kalyan Nagar page, 2026-11-18) and Banaswadi (Banaswadi
    * page, 2026-11-19); Hindu festival committees and
@@ -59418,6 +60194,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Wedding-wear rental stores and children's sports academies just east of here, in HRBR Layout, have a page on",
         link: { label: "wedding outfit rental and sports academy storage in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
+        after: ".",
+      },
+      // Nagavara brief (2026-11-25, Part 14): the neighbouring Nagavara page; this page's targeting is unchanged.
+      {
+        before: "For storage container requirements in Nagavara, to the west, visit our",
+        link: { label: "dedicated Nagavara storage container page", href: "/cities-we-serve/shipping-container-nagavara" },
         after: ".",
       },
     ],
@@ -59961,6 +60743,13 @@ export const CITY_PAGES: CityPage[] = [
         link: { label: "shipping containers in HRBR Layout", href: "/cities-we-serve/shipping-container-hrbr-layout" },
         after: ".",
       },
+      // Nagavara page (owner brief of 2026-11-25, Part 14): a contextual link from the neighbouring page; this
+      // page's targeting is unchanged.
+      {
+        before: "For seasonal merchandise storage requirements in Nagavara, to the north-west, see our page on",
+        link: { label: "seasonal merchandise storage in Nagavara", href: "/cities-we-serve/shipping-container-nagavara" },
+        after: ".",
+      },
     ],
 
     extraSections: [
@@ -60463,8 +61252,8 @@ export const CITY_PAGES: CityPage[] = [
    * Nagar; 1st and 2nd Block; RT Nagar Main Road / 80 Feet Road), Dinnur, Sultanpalya,
    * Cholanayakanahalli, Matadahalli and Manorayanapalya, for footwear-shop stock and for luggage and bag
    * retailers' inventory. Not targeted: Hebbal, Ganganagar, Kodigehalli and Byatarayanapura (Hebbal page;
-   * Hebbal and Ganganagar named here only in the link to it); Thanisandra, Nagawara and Hegde Nagar
-   * (Thanisandra Main Road page); Kaval Byrasandra, HMT Layout and Mekhri Circle; Sanjaynagar and Sahakar
+   * Hebbal and Ganganagar named here only in the link to it); Thanisandra and Hegde Nagar
+   * (Thanisandra Main Road page); Nagavara and Nagawara (Nagavara page); Kaval Byrasandra, HMT Layout and Mekhri Circle; Sanjaynagar and Sahakar
    * Nagar (kept for possible future pages). Kept apart from schools' textbooks and uniforms (JP Nagar),
    * boutique stock (Indiranagar), garment stock (Bommanahalli), kirana backstock (Banashankari), furniture
    * and electronics showrooms (Marathahalli) and climate-controlled containers as such (Vellore).
