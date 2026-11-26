@@ -48,6 +48,9 @@ describe("promotion copy states no unsupported claims", () => {
       if (f !== "src/views/SEOPromotionPage.tsx") {
         expect({ f, found: /₹\s?1\.5\b/.test(src) }).toEqual({ f, found: false });
         expect({ f, found: /Used\/refurbished 20 ft storage container/.test(src) }).toEqual({ f, found: false });
+        // No indicative "₹X – ₹Y lakh" ranges at all: the price table lists catalogue products with their
+        // own fixed prices (src/data/bangaloreContainerPrices.ts).
+        expect({ f, found: /₹\s?\d+(\.\d+)?\s?[–-]\s?₹\s?\d+(\.\d+)?\s?lakh/i.test(src) }).toEqual({ f, found: false });
       }
     }
     expect(/<Star\b/.test(readFileSync(join(process.cwd(), "src/views/SEOPromotionPage.tsx"), "utf8"))).toBe(false);

@@ -6,6 +6,8 @@ import {
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { bangaloreContainerRows } from "@/data/bangaloreContainerPrices";
+import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
 
 const IMG = "/images/products";
 
@@ -91,16 +93,12 @@ const BUILD_SPEC = [
   "Lockable steel doors; windows, ventilation, and electrical fit-outs to order",
 ];
 
-/* The "Used/refurbished 20 ft storage container ₹1.5 – ₹2.5 lakh" row was removed on 2026-11-26: the six
- * exact used/refurbished 20 ft configurations in the catalogue (productCommerce.ts ids 29–34) sell at
- * ₹50,000–₹1,50,000 before GST (₹59,000–₹1,77,000 incl. GST), so the row was not substantiated by any of
- * them. Those units have fixed prices on their product pages; do not restate them here as a range. */
-const PRICES = [
-  ["New 20 ft storage container", "₹2 – ₹3.5 lakh"],
-  ["20 ft container office (insulated, fitted)", "₹3 – ₹5 lakh"],
-  ["40 ft storage container", "₹3 – ₹5 lakh"],
-  ["40 ft container office / accommodation", "₹5 – ₹8 lakh"],
-];
+/* Price table: catalogue links, not ranges (owner, 2026-11-26). The indicative ranges that stood here
+ * ("₹1.5 – ₹2.5 lakh", "₹2 – ₹3.5 lakh", "₹3 – ₹5 lakh" ×2, "₹5 – ₹8 lakh") matched no catalogue
+ * configuration. Each row now lists the exact products of that configuration with their own fixed,
+ * GST-inclusive price, read from the commerce catalogue at render (src/data/bangaloreContainerPrices.ts);
+ * the "40 ft storage container" row was removed because no single 40 ft storage product exists. */
+const PRICE_ROWS = bangaloreContainerRows();
 
 const COMPARISON = [
   ["Time to ready", "7–15 working days + transit", "2–3 months"],
@@ -209,27 +207,36 @@ export function ShippingContainerBangaloreContent() {
       <section className="bg-muted/30 rounded-2xl p-6 lg:p-8">
         <H2 id="price" icon={IndianRupee}>Shipping Container Price in Bangalore</H2>
         <p className="text-muted-foreground mb-6 leading-relaxed max-w-3xl">
-          Used and refurbished 20 ft containers have one fixed, GST-inclusive price on their product pages in our <Link href="/products/category/cargo-storage-shipping-containers" className="text-accent hover:underline">shipping container range</Link>. For other units, your final price depends on five factors: size (20ft vs 40ft), condition (new build vs refurbished used), insulation, interior fit-out, and delivery distance. Indicative ranges:
+          Every container below is sold online at one fixed, GST-inclusive price; follow a link for its specification and photos, or browse the full <Link href="/products/category/cargo-storage-shipping-containers" className="text-accent hover:underline">shipping container range</Link>. Custom sizes, insulation and interior fit-outs are quoted in writing, and that price depends on size (20ft vs 40ft), condition (new build vs refurbished used), insulation, interior fit-out, and delivery distance.
         </p>
         <div className="overflow-x-auto bg-card rounded-xl shadow-card border border-border mb-4">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-accent/10 text-left">
                 <th className="px-5 py-3 font-semibold text-foreground">Container Type</th>
-                <th className="px-5 py-3 font-semibold text-foreground">Indicative Price Range*</th>
+                <th className="px-5 py-3 font-semibold text-foreground">Product and fixed price (incl. GST)*</th>
               </tr>
             </thead>
             <tbody>
-              {PRICES.map((row, i) => (
-                <tr key={row[0]} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
-                  <td className="px-5 py-3 text-foreground">{row[0]}</td>
-                  <td className="px-5 py-3 font-medium text-foreground whitespace-nowrap">{row[1]}</td>
+              {PRICE_ROWS.map((row, i) => (
+                <tr key={row.type} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
+                  <td className="px-5 py-3 text-foreground align-top">{row.type}</td>
+                  <td className="px-5 py-3 text-foreground">
+                    <ul className="space-y-1">
+                      {row.items.map((item) => (
+                        <li key={item.id}>
+                          <Link href={item.href} className="text-accent hover:underline">{item.name}</Link>{" "}
+                          <span className="font-medium whitespace-nowrap">{item.price}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-muted-foreground italic mb-5">*Indicative only — final pricing depends on specification and site. <Link href="/contact" className="text-accent hover:underline">Contact us</Link> for a detailed written quote that lists GST and transport separately.</p>
+        <p className="text-xs text-muted-foreground italic mb-5">*The same fixed price as on each product page, GST included. Delivery is free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}; other PIN codes are charged by delivery zone at checkout. For custom builds, <Link href="/contact" className="text-accent hover:underline">contact us</Link> for a written quote that lists GST and transport separately.</p>
         <p className="text-muted-foreground leading-relaxed max-w-3xl">Because we manufacture in-house at our own Tamil Nadu factory near Hosur rather than trading imported units, you avoid dealer margins and port repositioning charges that inflate prices elsewhere in the market.</p>
       </section>
 
