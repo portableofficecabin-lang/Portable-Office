@@ -9,7 +9,8 @@ import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 import { primaryPhone } from "@/lib/site-navigation";
 
 /*
- * Product id 29, /products/shipping-container-in-kormangala (the slug keeps its old spelling): the used
+ * Product id 29, /products/used-20ft-shipping-container-as-is-grade (renamed 2026-11 from the misspelt
+ * /products/shipping-container-in-kormangala, which 301s here — src/data/productSlugRenames.ts): the used
  * 20 ft container in as-is grade, sold online at one fixed price.
  *
  * REFOCUSED 2026-11-15 (owner decision): until then this block was a long "Koramangala local guide"

@@ -132,7 +132,7 @@ export function PrefabPortaCabinContent() {
             { icon: Zap, title: "Rapid Deployment", desc: "Far less time on site than RCC buildings" },
             { icon: Shield, title: "Cost Effectiveness", desc: "40–60% lower than conventional construction with less waste" },
             { icon: RotateCcw, title: "Relocatable Design", desc: "Units can be shifted 5–10 times over their lifespan without structural degradation" },
-            { icon: Thermometer, title: "Energy Efficiency", desc: "PUF insulation reduces AC loads by up to 30% in extreme heat" },
+            { icon: Thermometer, title: "Energy Efficiency", desc: "PUF insulation cuts heat gain, so the AC works less in extreme heat" },
             { icon: Settings, title: "Weather Resistance", desc: "Anti-corrosion coatings and proper drainage handle monsoons" },
             { icon: Leaf, title: "Eco Friendly Construction", desc: "90% recyclable materials, zero construction debris, solar panel compatibility" },
           ].map((feature) => (

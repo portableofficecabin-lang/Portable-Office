@@ -68,11 +68,11 @@ const MAJOR_CITIES = [
 // /cities-we-serve/shipping-container-koramangala in the Karnataka shipping-container group, and the
 // product page it used to point at was refocused on the as-is unit itself.
 const LOCAL_PAGES = [
-  { name: "Peenya Industrial Area, Bengaluru", href: "/products/shipping-container-in-peenya-industrial" },
-  { name: "Narsapura KIADB, Kolar", href: "/products/shipping-container-in-narsapura-industrial" },
-  { name: "Krishnagiri, Tamil Nadu", href: "/products/shipping-container-in-krishnagiri" },
-  { name: "SIPCOT Industrial Estates, Tamil Nadu", href: "/products/shipping-container-in-sipcot" },
-  { name: "Chennai, Tamil Nadu", href: "/products/shipping-container-in-chennai" },
+  { name: "Peenya Industrial Area, Bengaluru", href: "/products/used-20ft-shipping-container-cargo-worthy" },
+  { name: "Narsapura KIADB, Kolar", href: "/products/refurbished-20ft-shipping-container" },
+  { name: "Krishnagiri, Tamil Nadu", href: "/products/refurbished-20ft-shipping-container-premium" },
+  { name: "SIPCOT Industrial Estates, Tamil Nadu", href: "/products/refurbished-20ft-shipping-container-industrial" },
+  { name: "Chennai, Tamil Nadu", href: "/products/used-20ft-shipping-container-wind-water-tight" },
   { name: "Bangalore Offers & Stock", href: "/promotions/shipping-container-in-bangalore" },
 ];
 

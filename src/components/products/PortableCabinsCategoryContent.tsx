@@ -125,7 +125,7 @@ export const portableCabinsFaqs: { question: string; answer: string }[] = [
   {
     question: "Are portable cabins cheaper than brick-and-mortar construction?",
     answer:
-      "Yes — up to 60% cheaper than conventional construction, and dramatically faster. You also avoid demolition losses: when the project ends, the cabin moves to your next site or can be resold, so it retains value as an asset.",
+      "A standard cabin usually avoids the RCC foundation and long civil works of a brick-and-mortar building — a level base suited to the site is enough — with far less time on site. You also avoid demolition losses: when the project ends, the cabin moves to your next site or can be resold, so it retains value as an asset.",
   },
 ];
 
@@ -145,14 +145,13 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
           use, with far less time on site than conventional construction. Whether you need a site office for a construction project,
           secure staff accommodation, a sales office or a{" "}
           <Link href="/products/category/security-cabins" className="text-accent hover:underline">security cabin</Link>,
-          our portable cabins cost up to 60% less than conventional construction and can be
+          our standard portable cabins sit on a level base suited to the site rather than an RCC foundation, and can be
           relocated whenever your project moves.
         </p>
         <p>
-          We are an ISO 9001:2015 certified manufacturer (Certificate No. QT-99968/0726) with 15+
-          years in modular construction, our own in-house factory at Kamandoddi, Hosur — Tamil Nadu,
-          just ~40 km from Bangalore — and 500+ projects delivered across India for clients including Tata Projects,
-          Ashok Leyland, Asian Paints and Brigade Group.
+          We are an ISO 9001:2015 certified manufacturer (Certificate No. QT-99968/0726) with our own
+          in-house factory at Kamandoddi, Hosur — Tamil Nadu, just ~40 km from Bangalore — delivering
+          across India to clients including Tata Projects, Ashok Leyland, Asian Paints and Brigade Group.
           {minPrice !== null && <> Prices start at <strong className="text-foreground">{inr(minPrice)} (incl. GST)</strong>.</>}
         </p>
         {/* Links UP to the range hub and DOWN to its guides (added 2026-10-10). The hub is a static
@@ -289,8 +288,8 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
         <ul className="space-y-2 text-muted-foreground leading-relaxed list-disc pl-5">
           <li><strong className="text-foreground">In-house manufacturing, no middlemen.</strong> Our own factory at Kamandoddi, Hosur in Tamil Nadu means factory-direct prices and full quality control — we are the manufacturer, not a reseller.</li>
           <li><strong className="text-foreground">ISO 9001:2015 certified.</strong> Documented quality processes on every build (Certificate No. QT-99968/0726); GST-registered and Udyam/MSME registered (UDYAM-TN-11-0068545).</li>
-          <li><strong className="text-foreground">15+ years, 500+ projects delivered.</strong> Trusted by Tata Projects, Ashok Leyland, Asian Paints and Brigade Group.</li>
-          <li><strong className="text-foreground">Up to 60% cheaper than civil construction</strong> — and the cabin is an asset you can relocate or resell, not a structure you demolish.</li>
+          <li><strong className="text-foreground">Project clients.</strong> Trusted by Tata Projects, Ashok Leyland, Asian Paints and Brigade Group.</li>
+          <li><strong className="text-foreground">No RCC foundation for standard cabins, no demolition</strong> — a level base suited to the site is enough, and the cabin is an asset you can relocate or resell, not a structure you demolish.</li>
           <li><strong className="text-foreground">Pan-India delivery.</strong> Cabins delivered and installed across the country, factory-finished and usable when they arrive.</li>
         </ul>
       </div>

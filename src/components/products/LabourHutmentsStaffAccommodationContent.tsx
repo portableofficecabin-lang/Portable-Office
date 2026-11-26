@@ -33,7 +33,7 @@ export function LabourHutmentsStaffAccommodationContent() {
 
   const faqs = [
     { q: "How quickly can a 100-bed labour colony be installed?", a: "For a 100-bed G+1 modular labour hutment colony, your written quotation sets out factory preparation and site installation, which starts once civil work is ready. Work progresses parallel to main site mobilisation, saving valuable project time." },
-    { q: "What does the labour hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Full colony packages are sized to the brief — configuration, panel thickness, and amenities all change the build — so those are quoted separately. Either way it is 20–30% cheaper than traditional RCC/brick construction, with the added benefit of reusability across 3–5 project sites." },
+    { q: "What does the labour hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Full colony packages are sized to the brief — configuration, panel thickness, and amenities all change the build — so those are quoted separately. Either way, it carries the added benefit of reusability across 3–5 project sites." },
     { q: "Can labour hutments be relocated to another project site?", a: "Yes. Bolt-together assembly allows easy dismantling with 80% material recovery for transport and reinstallation at subsequent sites, making them highly cost-effective over multiple project cycles." },
     { q: "What compliance standards do your labour hutments meet?", a: "Our structures comply with BOCW Act requirements, NBC 2016 fire safety and egress norms, IS 456/800/875 structural standards, and client-specific HSE requirements. Complete documentation including drawings, test certificates, and O&M manuals is provided." },
     { q: "Do you offer multi-storey labour accommodation?", a: "Yes, we offer G+1 and G+2 configurations that maximise space on land-scarce urban sites. Multi-storey units use heavy-duty steel framing designed for Zone V earthquake compliance." },
@@ -482,9 +482,7 @@ export function LabourHutmentsStaffAccommodationContent() {
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
-            "15+ years of prefabrication experience",
             "In-house design, manufacturing & installation",
-            "500+ projects delivered",
             "A written quotation for every order",
             "Track record in labour colonies, container offices, PEB structures",
             "Commitment to quality, worker well-being & sustainable construction",

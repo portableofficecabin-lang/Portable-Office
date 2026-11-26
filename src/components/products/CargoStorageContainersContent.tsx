@@ -46,7 +46,7 @@ const faqs = [
   { q: "What sizes of cargo containers are available in India?", a: "The most common are 20 ft GP (33 m³ internal volume) and 40 ft GP (67 m³). High cube variants add 30.5 cm height. Specialized sizes include 10 ft (for urban sites), 45 ft pallet-wide, and half-height units for dense bulk cargo." },
   { q: "How do I inspect a used container before buying?", a: "Check corner posts for bending, wall thickness with ultrasonic gauging, roof for pinholes, door alignment and seal compression, lock rod operation, and marine plywood floor for delamination or rot. Verify CSC plate details and manufacture date (post-2010 preferred)." },
   { q: "What maintenance does a cargo container need?", a: "Annual repainting with epoxy coating (80 μm minimum), rust treatment at first signs, lubricate hinges with lithium EP2 grease, roof inspection after monsoon, pest treatment for timber floors, and clear drainage around the base." },
-  { q: "Does Portable Office Cabin deliver across India?", a: "Yes. Portable Office Cabin provides PAN-India delivery with hydraulic ramps for safe transport, crane positioning, and grout foundations for installation. Over 500 projects completed with ISO 9001 quality management." },
+  { q: "Does Portable Office Cabin deliver across India?", a: "Yes. Portable Office Cabin provides PAN-India delivery with hydraulic ramps for safe transport, crane positioning, and grout foundations for installation, with ISO 9001 quality management." },
 ];
 
 export function CargoStorageContainersContent() {
@@ -83,7 +83,7 @@ export function CargoStorageContainersContent() {
             <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Constructed from corten steel (weathering steel), mild steel with protective coatings, or stainless steel for specialized applications</li>
             <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Each unit carries a CSC plate with unique ISO 6346 BIC code, maximum gross weight, tare weight, and validity period</li>
             <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Designed for stacking via twist-lock fittings at corner castings, enabling efficient space utilization</li>
-            <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Standard sizes fit vessel bays, rail wagons, and truck chassis—reducing handling costs by up to 90%</li>
+            <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Standard sizes fit vessel bays, rail wagons, and truck chassis—reducing handling between transport modes</li>
           </ul>
           <div className="bg-accent/10 p-6 rounded-xl border border-accent/20">
             <h4 className="font-semibold text-foreground mb-3">Why This Matters for Indian Buyers</h4>
@@ -307,7 +307,7 @@ export function CargoStorageContainersContent() {
             </div>
             <div>
               <p className="font-medium text-foreground mb-1">Quality & Compliance</p>
-              <p>500+ projects, ISO 9001 quality management, NBC fire safety</p>
+              <p>ISO 9001 quality management, NBC fire safety</p>
             </div>
           </div>
         </div>
