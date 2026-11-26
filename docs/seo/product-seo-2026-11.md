@@ -188,3 +188,27 @@ Proposed page titles (≤ 41 characters + " | Portable Office Cabin"):
    project lines, Office Cabins dB and install-time figures, the toilet hub's 2025 price ranges.
 6. **ISO 9001:2015** — header, footer and Organization schema still state it; the certificate has
    not been produced.
+
+## 7. Structured data (audited; changes need the protected-flow approval)
+
+Checked on a local production build of main (fed products: Executive Portable Cabin 20ft, Luxury
+Prefab Villa, Security Cabin; plus Container Office, the rental, the container cafe and the Portable
+Cabins category).
+
+**In place and correct.** Purchasable product pages carry Product with name, image, description, sku,
+brand, gtin/mpn and an Offer: price in INR equal to the visible ₹ figure, `InStock`, `NewCondition`,
+`priceValidUntil`, per-zone `shippingDetails` with handling and transit times, and a
+`MerchantReturnPolicy` (`IN`, `MerchantReturnNotPermitted`). Quote-only pages (container cafe,
+house construction, rental) use Service with no Offer. Every page has a BreadcrumbList that matches
+its visible trail; Container Office adds a ProductGroup. Organization is on the home page.
+
+**Proposals** (all inside `src/lib/seo/structured-data.ts` or the category ItemList — protected
+Product JSON-LD offer logic, so not changed without "I approve changing the protected Merchant
+purchase flow."):
+
+| # | Finding | Proposal |
+|---|---|---|
+| S1 | For purchasable products the Product `name` is the Merchant `feedTitle` with the brand suffix ("Executive Portable Cabin 20ft x 10ft PUF Insulated for Site Offices \| Portable Office Cabin"), while the visible H1 is "Executive Portable Cabin 20ft". The override is deliberate (structured-data.ts, "schema name MUST be the feed title"). | Use the visible H1 (`h1Title`) as `name`. Google matches structured data to the feed by URL and offer, not by name, and its structured-data policy expects the markup to describe what the page shows. |
+| S2 | `/products/category/portable-cabins` and `/products/category/prefab-building` publish an ItemList of Product + Offer nodes with no image, brand or sku. Merchant-listing reports can flag such nodes as incomplete products. | Publish the summary ItemList (position, url, name) that Container Offices already uses; the offers stay on each product page. |
+| S3 | The Container Office ProductGroup's `hasVariant` Product (25 × 14 ft) has no image, description or brand of its own. | Repeat the parent's image and brand on the variant node. |
+| S4 | AggregateRating on Container Office and VIP Container Office rests on one review each. | Keep only if the reviews are from genuine customers (see §6.4). |
