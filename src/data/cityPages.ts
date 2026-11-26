@@ -41366,7 +41366,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Petty Shop / Bunk Shop",
         text: "A compact prefabricated shop cabin for daily essentials, packaged snacks, bottled drinks, mobile recharges and small retail operations. It can be fitted with a rolling shutter, a counter, shelving and electrical points.",
-        link: { label: "Compare portable cabin sizes", href: "/guides/portable-cabin-sizes-and-dimensions" },
+        link: { label: "How to choose a portable cabin size", href: "/guides/portable-cabin-sizes-and-dimensions" },
       },
       {
         title: "Tea Stall and Snack Kiosk",
@@ -71542,7 +71542,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For how size, insulation and fit-out shape the cost, see our",
-            link: { label: "portable cabin price guide", href: "/guides/portable-cabin-price-and-cost" },
+            link: { label: "portable cabin cost guide", href: "/guides/portable-cabin-price-and-cost" },
             after: ".",
           },
         ],

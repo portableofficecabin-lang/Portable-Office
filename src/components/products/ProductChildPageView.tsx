@@ -71,6 +71,16 @@ export function ProductChildPageView({ group, page }: { group: ProductChildGroup
             </p>
           ))}
 
+          {page.introLink && (
+            <p className="mb-4 text-base leading-relaxed text-muted-foreground">
+              {`${page.introLink.lead} `}
+              <Link href={page.introLink.href} className="text-accent hover:underline">
+                {page.introLink.label}
+              </Link>
+              .
+            </p>
+          )}
+
           {/* Content sections */}
           {page.sections.map((s) => (
             <div key={s.heading} className="mt-10">

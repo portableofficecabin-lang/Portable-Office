@@ -161,8 +161,8 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
         <p>
           New to portable cabins? Start with the{" "}
           <Link href="/products/portable-cabin" className="text-accent hover:underline">portable cabin sizes, specifications and prices overview</Link>, then read the{" "}
-          <Link href="/guides/portable-cabin-price-and-cost" className="text-accent hover:underline">price and cost guide</Link>, the{" "}
-          <Link href="/guides/portable-cabin-sizes-and-dimensions" className="text-accent hover:underline">sizes and dimensions guide</Link> or the{" "}
+          <Link href="/guides/portable-cabin-price-and-cost" className="text-accent hover:underline">guide to what decides cabin cost</Link>, the{" "}
+          <Link href="/guides/portable-cabin-sizes-and-dimensions" className="text-accent hover:underline">guide to choosing a cabin size</Link> or the{" "}
           <Link href="/guides/portable-cabin-materials-ms-vs-puf" className="text-accent hover:underline">MS sheet vs PUF panel comparison</Link>. Choosing between
           mild steel, galvanised and colour-coated skins? See the{" "}
           <Link href="/products/metal-portable-cabin" className="text-accent hover:underline">metal portable cabin guide</Link>.

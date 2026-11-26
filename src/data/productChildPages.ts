@@ -44,6 +44,8 @@ export interface ProductChildPage {
   metaDescription: string;
   h1: string;
   intro: string[];
+  /** Optional closing intro sentence that ends in a link: "<lead> <label>." (label is the anchor). */
+  introLink?: { lead: string; label: string; href: string };
   sections: ChildSection[];
   faqs: { q: string; a: string }[];
   /** Render the live GST-inclusive price table of the parent category's purchasable SKUs. */
@@ -82,18 +84,22 @@ export const productChildGroups: ProductChildGroup[] = [
     children: [
       {
         slug: "price-and-cost-guide",
-        keyword: "portable cabin price",
-        title: "Portable Cabin Price & Cost Guide",
+        keyword: "portable cabin cost factors",
+        title: "What Decides Portable Cabin Cost",
         metaDescription:
-          "What a portable cabin costs in India: fixed GST-inclusive prices, what drives the price up or down, and what transport and installation add. Live prices included.",
-        h1: "Portable Cabin Price & Cost Guide",
+          "What decides the cost of a portable cabin: size, wall system, fit-out, transport and installation, and what is included as standard or quoted separately.",
+        h1: "What Decides the Cost of a Portable Cabin",
         intro: [
-          "Every purchasable cabin on this site carries one fixed, GST-inclusive price — the same figure on the product page, in the cart, at checkout and on the payment screen. This guide explains what sits behind that number so you can compare configurations confidently.",
-          "The live prices below come from the same catalogue the checkout uses, so they can never be out of date.",
+          "A cabin's cost is set by its size, its wall system, the finishes inside it, and the transport and installation it needs. This guide explains each of those, what is included as standard and what is quoted separately.",
         ],
+        introLink: {
+          lead: "For the current GST-inclusive price of every model, see",
+          label: "portable cabin sizes, specifications and prices",
+          href: "/products/portable-cabin",
+        },
         sections: [
           {
-            heading: "What decides the price of a portable cabin",
+            heading: "The main cost factors",
             paragraphs: [
               "Size is the biggest lever: steel, panels and flooring all scale with floor area, so a longer cabin costs more in close proportion to its footprint. The second lever is the wall system — PUF-insulated sandwich panels cost more than plain sheet walls but keep interiors workable through Indian summers.",
               "Fit-out completes the picture: electricals, lighting and AC provision, attached toilets, pantry counters, extra windows and premium flooring each add their own material and labour. A bare storage-grade cabin and a fully fitted executive office of the same size can sit far apart in price for exactly these reasons.",
@@ -110,7 +116,7 @@ export const productChildGroups: ProductChildGroup[] = [
           {
             heading: "What is included — and what is quoted separately",
             paragraphs: [
-              "The displayed price is the ex-works cabin price including GST. Transport to your site and crane unloading are quoted separately because they depend entirely on distance and site access — the checkout calculates transport from your delivery PIN code before you pay, so there are no surprises.",
+              "The price on each product page is the ex-works cabin price including GST. Transport to your site and crane unloading are quoted separately because they depend entirely on distance and site access — the checkout calculates transport from your delivery PIN code before you pay, so there are no surprises.",
               "Installation is light by design: cabins arrive factory-finished and are placed on a simple level base, so on-site work is limited to placement, levelling and service connections.",
             ],
           },
@@ -123,7 +129,7 @@ export const productChildGroups: ProductChildGroup[] = [
         ],
         faqs: [
           {
-            q: "Are the prices shown final?",
+            q: "Are the prices on the product pages final?",
             a: "The cabin price is final and GST-inclusive. Transport and crane unloading are added at checkout based on your delivery PIN code, so the payable total is visible before payment.",
           },
           {
@@ -143,7 +149,6 @@ export const productChildGroups: ProductChildGroup[] = [
             a: "Yes. Fixed-price cabins can be ordered and paid for online through secure Razorpay checkout — UPI, cards and net banking are accepted.",
           },
         ],
-        showPriceTable: true,
         related: [
           { label: "Use the instant price calculator", href: "/#cabin-calculator" },
           { label: "Porta cabins on rent — when hiring beats buying", href: "/blog/porta-cabins-on-rent" },
@@ -151,17 +156,22 @@ export const productChildGroups: ProductChildGroup[] = [
       },
       {
         slug: "sizes-and-dimensions",
-        keyword: "portable cabin sizes",
-        title: "Portable Cabin Sizes & Dimensions",
+        keyword: "how to choose a portable cabin size",
+        title: "Portable Cabin Dimensions Explained",
         metaDescription:
-          "Standard portable cabin sizes in India — 10×8, 20×8 and 40×8 ft — with internal dimensions, who each size suits, and how custom sizes work.",
-        h1: "Portable Cabin Sizes & Dimensions Guide",
+          "How to choose a portable cabin size: internal vs external dimensions, who a 10×8, 20×8 or 40×8 ft cabin suits, road-transport limits and custom sizes.",
+        h1: "Portable Cabin Dimensions: Inside vs Outside",
         intro: [
-          "Portable cabins in India follow container-friendly modules so they travel legally by road and lift safely by crane. This guide covers the standard sizes we build, what fits inside each, and when a custom footprint makes sense.",
+          "Cabin sizes are quoted as outside dimensions, but what matters on site is the usable floor inside and the space the cabin needs around it. This guide explains how to choose a size: internal and external dimensions, road-transport limits and when a custom footprint makes sense.",
         ],
+        introLink: {
+          lead: "The standard sizes and their prices are on the",
+          label: "portable cabin range page",
+          href: "/products/portable-cabin",
+        },
         sections: [
           {
-            heading: "The standard sizes",
+            heading: "How to choose a size",
             paragraphs: [
               "Three footprints cover most requirements. A 10×8 ft cabin suits a security post, ticket counter or single-desk office. A 20×8 ft cabin is the workhorse — a comfortable two-to-four person site office, a sample-collection room or a small classroom. A 40×8 ft cabin hosts a full office with cabins-within-the-cabin, a meeting area, or accommodation for a site crew.",
               "Height is typically 8 ft 6 in externally, giving a finished internal clear height comfortable for ceiling fans and ductless ACs.",
@@ -193,7 +203,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "Do custom sizes cost much more?", a: "Somewhat, because standard sizes optimise sheet material and transport. The calculator on the home page prices your exact size instantly." },
         ],
         related: [
-          { label: "Price & cost guide", href: "/guides/portable-cabin-price-and-cost" },
+          { label: "What decides cabin cost", href: "/guides/portable-cabin-price-and-cost" },
           { label: "Layouts & interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
         ],
       },
@@ -242,7 +252,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "What flooring do cabins use?", a: "Marine plywood decking finished with vinyl or laminate — durable, mop-cleanable and comfortable underfoot." },
         ],
         related: [
-          { label: "Sizes & dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
+          { label: "Choosing a cabin size", href: "/guides/portable-cabin-sizes-and-dimensions" },
           { label: "Cabin with toilet & pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
         ],
       },
@@ -339,7 +349,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "What base does a classroom cabin need?", a: "A simple level base — compacted ground with concrete pads or a plinth. No building-grade foundation is required." },
         ],
         related: [
-          { label: "Sizes & dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
+          { label: "Choosing a cabin size", href: "/guides/portable-cabin-sizes-and-dimensions" },
           { label: "Insulation & cooling", href: "/products/portable-cabin/insulation-and-cooling" },
         ],
       },
@@ -387,7 +397,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "Are insulated panels heavier to transport?", a: "The panel is light for its stiffness — foam is mostly air. Transport and craneage are unaffected compared to a sheet cabin of the same size." },
         ],
         related: [
-          { label: "Price & cost guide", href: "/guides/portable-cabin-price-and-cost" },
+          { label: "What decides cabin cost", href: "/guides/portable-cabin-price-and-cost" },
           { label: "For schools & classrooms", href: "/products/portable-cabin/for-schools-and-classrooms" },
         ],
       },
@@ -437,7 +447,7 @@ export const productChildGroups: ProductChildGroup[] = [
         ],
         related: [
           { label: "Transport & delivery guide", href: "/guides/portable-cabin-transport-and-delivery" },
-          { label: "Sizes & dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
+          { label: "Choosing a cabin size", href: "/guides/portable-cabin-sizes-and-dimensions" },
         ],
       },
       {
