@@ -38,7 +38,15 @@ export interface BangaloreContainerItem {
 /** Rows resolved against the live catalogue. A product that is missing or no longer purchasable is
  *  dropped (never shown with a stale price); a row left with no products is dropped too. */
 export function bangaloreContainerRows(): { type: string; items: BangaloreContainerItem[] }[] {
-  return BANGALORE_CONTAINER_ROWS.map((row) => ({
+  return resolveCatalogueRows(BANGALORE_CONTAINER_ROWS);
+}
+
+/** Resolve "configuration → exact catalogue product ids" rows against the live catalogue (shared by
+ *  every catalogue-backed price list, so none of them can type a price by hand). */
+export function resolveCatalogueRows(
+  rows: readonly { type: string; productIds: readonly string[] }[],
+): { type: string; items: BangaloreContainerItem[] }[] {
+  return rows.map((row) => ({
     type: row.type,
     items: row.productIds.flatMap((id) => {
       const product = products.find((p) => String(p.id) === id);

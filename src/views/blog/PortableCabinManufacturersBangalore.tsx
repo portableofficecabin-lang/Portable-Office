@@ -10,6 +10,10 @@ import transportImage from "@/assets/blog/portable-cabin-manufacturers-bangalore
 import prefabColonyHero from "@/assets/blog/prefab-colony-hero.webp";
 import msPortableCabinHero from "@/assets/blog/ms-portable-cabin-hero.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { bengaluruGuideRows } from "@/data/bengaluruBuyersGuidePrices";
+
+/** Exact catalogue products per configuration, with their own fixed GST-inclusive price. */
+const GUIDE_PRICE_ROWS = bengaluruGuideRows();
 
 const articleStructuredData = {
   "@context": "https://schema.org",
@@ -281,11 +285,7 @@ export default function PortableCabinManufacturersBangalore() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">What Decides the Price of a Portable Cabin</h2>
         <p className="text-muted-foreground mb-6 leading-relaxed">
-          Prices vary with size, material and fit-out level; steel prices and freight also move the final quote. Standard units show one fixed, GST-inclusive price on their product page, and custom builds are priced on a written quotation. Current prices:{" "}
-          <Link href="/products/category/portable-cabins" className="font-medium text-primary hover:underline">portable cabins</Link>,{" "}
-          <Link href="/products/category/container-offices" className="font-medium text-primary hover:underline">container offices</Link>,{" "}
-          <Link href="/products/category/security-cabins" className="font-medium text-primary hover:underline">security cabins</Link> and{" "}
-          <Link href="/products/category/portable-toilet-cabins" className="font-medium text-primary hover:underline">portable toilets</Link>.
+          Prices vary with size, material and fit-out level; steel prices and freight also move the final quote. Standard units show one fixed, GST-inclusive price on their product page, and custom builds are priced on a written quotation. Current prices for common configurations are listed below the table.
         </p>
         <div className="overflow-x-auto mb-6">
           <table className="w-full text-sm border border-border/40 rounded-xl overflow-hidden">
@@ -297,7 +297,7 @@ export default function PortableCabinManufacturersBangalore() {
             </thead>
             <tbody>
               {[
-                ["Size & Layout", "A bigger footprint uses more steel, panels and fittings: a 40 ft office costs more than a 20 ft one, which costs more than a guard booth"],
+                ["Size & Layout", "A bigger footprint uses more steel, panels and fittings, so a 40 ft unit costs more than a 20 ft unit of the same build"],
                 ["Material Choice", "MS, GI, ACP or PUF-panel construction, and whether the walls and roof are insulated"],
                 ["Specification Level", "Shell only or fully fitted: false ceiling, UPVC windows, an attached toilet, electricals and AC provision each add to the price"],
                 ["Multiple Units", "Larger projects are quoted together in one written quotation"],
@@ -311,6 +311,37 @@ export default function PortableCabinManufacturersBangalore() {
             </tbody>
           </table>
         </div>
+        {/* Exact catalogue products with their own fixed GST-inclusive price, resolved at render
+            (src/data/bengaluruBuyersGuidePrices.ts) — no hand-typed price ranges (D6 review, 2026-11-26). */}
+        <h3 className="text-lg font-semibold text-foreground mb-3">Current prices for common configurations</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border border-border/40 rounded-xl overflow-hidden">
+            <thead>
+              <tr className="bg-primary/10">
+                <th className="text-left p-3 font-semibold text-foreground border-b border-border/30">Configuration</th>
+                <th className="text-left p-3 font-semibold text-foreground border-b border-border/30">Product and fixed price (incl. GST)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {GUIDE_PRICE_ROWS.map((row, idx) => (
+                <tr key={row.type} className={idx % 2 === 0 ? "bg-card" : "bg-muted/20"}>
+                  <td className="p-3 font-medium text-foreground border-b border-border/20 align-top">{row.type}</td>
+                  <td className="p-3 text-muted-foreground border-b border-border/20">
+                    <ul className="space-y-1">
+                      {row.items.map((item) => (
+                        <li key={item.id}>
+                          <Link href={item.href} className="font-medium text-primary hover:underline">{item.name}</Link>{" "}
+                          <span className="font-medium text-foreground whitespace-nowrap">{item.price}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-muted-foreground mt-2">Custom sizes and fit-outs are priced on a written quotation.</p>
       </section>
 
       {/* How to Choose the Right Manufacturer */}
