@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { PageHero } from "@/components/layout/PageHero";
-import { FileText, ChevronRight, Mail, Phone } from "lucide-react";
+import { FileText, ChevronRight } from "lucide-react";
 import { motion } from "@/components/ui/static-motion";
+import { CompanyContactBlock } from "@/components/legal/CompanyContactBlock";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -164,24 +165,7 @@ export default function TermsConditionsPage() {
 
           <Section title="13. Contact Us" index={12}>
             <p>If you have any questions about these terms, please contact us:</p>
-            <div className="mt-4 space-y-3">
-              <p className="font-semibold text-foreground">Portable Office Cabin</p>
-              <p>Survey No. 222 Door No: 2/149-6 Road 1C, Kamandoddi, Tamil Nadu 635117</p>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-accent" />
-                <a href="tel:+919731897976" className="hover:text-accent">+91 9731897976</a>
-                <span className="text-border">|</span>
-                <a href="tel:+919019910931" className="hover:text-accent">+91 90199 10931</a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-accent" />
-                <a href="mailto:sales@portableofficecabin.com" className="hover:text-accent">sales@portableofficecabin.com</a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-accent" />
-                <a href="mailto:portableofficecabin@gmail.com" className="hover:text-accent">portableofficecabin@gmail.com</a>
-              </div>
-            </div>
+            <CompanyContactBlock />
           </Section>
         </div>
       </section>

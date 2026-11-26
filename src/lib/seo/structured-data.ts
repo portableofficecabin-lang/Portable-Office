@@ -13,8 +13,50 @@ import {
   SHIPPING_ZONES,
   type ShippingZone,
 } from "@/data/shippingZones";
+import { COMPANY } from "@/lib/company";
 
 export const SITE_URL = "https://portableofficecabin.com";
+
+/* ── ONE BUSINESS ENTITY, EVERYWHERE ─────────────────────────────────────────────────────────────
+ * Every Organization / LocalBusiness node on the site is built from src/lib/company.ts (the
+ * single source of verified business facts) and carries a stable @id, so the homepage's
+ * Organization + LocalBusiness and the `provider` of every city/promotion Service are recognisably
+ * the SAME business with the SAME name, address and phone — the consistency Google cross-checks
+ * against the Business Profile and directory listings. Before 2026-11-25 these were four
+ * hand-typed copies with three phone formats and an address worded differently from the footer.
+ * To change a fact, change company.ts; never type it here. */
+export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+export const LOCAL_BUSINESS_ID = `${SITE_URL}/#localbusiness`;
+
+const FACTORY = COMPANY.addresses.tamilNaduFactory;
+/** The Tamil Nadu factory as a schema.org PostalAddress — CompanyAddress maps onto it field for field. */
+export const companyPostalAddress = {
+  "@type": "PostalAddress",
+  streetAddress: FACTORY.street,
+  addressLocality: FACTORY.locality,
+  addressRegion: FACTORY.region,
+  postalCode: FACTORY.postalCode,
+  addressCountry: "IN",
+} as const;
+const PRIMARY_PHONE = COMPANY.phones[0].e164;
+const SAME_AS = [COMPANY.social.facebook, COMPANY.social.linkedin, COMPANY.social.instagram];
+/** Kept as it was: 12.7409, 77.8253 is Hosur town, not the factory's own pin. The owner has been
+ *  asked for the factory's GPS location; replace both values together when it arrives. */
+const BUSINESS_GEO = { "@type": "GeoCoordinates", latitude: "12.7409", longitude: "77.8253" } as const;
+const OPENING_HOURS = [
+  {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    opens: COMPANY.businessHours.weekdays.opens,
+    closes: COMPANY.businessHours.weekdays.closes,
+  },
+  {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Sunday"],
+    opens: COMPANY.businessHours.sunday.opens,
+    closes: COMPANY.businessHours.sunday.closes,
+  },
+];
 
 /** Structured data must carry absolute URLs — a bundler-hashed relative asset path
  *  (e.g. /_next/static/media/foo.webp) is unresolvable to a crawler. */
@@ -572,115 +614,73 @@ function generateAreaServedForSchema() {
   ];
 }
 
+// The certification and registration claims below are unchanged in substance; they now read
+// their values from company.ts. (The ISO 9001 claim has no issuing body, scope or validity on
+// record — that is an open owner decision, not something this file can resolve.)
+const CERTIFICATION = {
+  "@type": "Certification",
+  name: "ISO 9001:2015",
+  about: "Quality Management System",
+  certificationIdentification: COMPANY.isoCertificate,
+} as const;
+const UDYAM_ID = { "@type": "PropertyValue", propertyID: "Udyam Registration Number", value: COMPANY.udyam } as const;
+
 export const organizationStructuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Portable Office Cabin",
-  description:
-    "Leading manufacturer of portable cabins, container offices, and prefab solutions in India",
-  url: "https://portableofficecabin.com",
-  logo: "https://portableofficecabin.com/logo.jpeg",
-  taxID: "33FVKPK6238Q1ZT",
-  hasCertification: {
-    "@type": "Certification",
-    name: "ISO 9001:2015",
-    about: "Quality Management System",
-    certificationIdentification: "QT-99968/0726",
-  },
-  identifier: {
-    "@type": "PropertyValue",
-    propertyID: "Udyam Registration Number",
-    value: "UDYAM-TN-11-0068545",
-  },
+  "@id": ORGANIZATION_ID,
+  name: COMPANY.legalName,
+  description: "Manufacturer of portable cabins, container offices and prefab structures in India",
+  url: COMPANY.url,
+  logo: `${SITE_URL}/logo.jpeg`,
+  email: COMPANY.email.sales,
+  telephone: PRIMARY_PHONE,
+  taxID: COMPANY.gstin,
+  hasCertification: CERTIFICATION,
+  identifier: UDYAM_ID,
   // Only profiles that actually exist — a sameAs pointing at a dead page is a bad
   // entity-verification signal. There is no Twitter/X and no IndiaMart profile.
-  sameAs: [
-    "https://www.facebook.com/portableofficecabin",
-    "https://www.linkedin.com/in/portable-office-cabin-9b939a168",
-    "https://www.instagram.com/portableofficecabin",
-  ],
+  sameAs: SAME_AS,
   contactPoint: [
     {
       "@type": "ContactPoint",
-      telephone: "+91-9731897976",
+      telephone: COMPANY.phones[0].e164,
       contactType: "sales",
       areaServed: generateAreaServedForSchema(),
       availableLanguage: ["English", "Hindi", "Tamil", "Kannada", "Telugu"],
     },
     {
       "@type": "ContactPoint",
-      telephone: "+91-90199-10931",
+      telephone: COMPANY.phones[1].e164,
       contactType: "customer service",
       areaServed: "IN",
       availableLanguage: ["English", "Hindi"],
     },
   ],
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Survey No. 222 Door No: 2/149-6 Road 1C, Kamandoddi",
-    addressLocality: "Hosur",
-    addressRegion: "Tamil Nadu",
-    postalCode: "635117",
-    addressCountry: "IN",
-  },
+  address: companyPostalAddress,
 };
 
 export const localBusinessStructuredData = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  name: "Portable Office Cabin",
+  "@id": LOCAL_BUSINESS_ID,
+  parentOrganization: { "@id": ORGANIZATION_ID },
+  name: COMPANY.legalName,
   description:
     "Manufacturer and supplier of portable cabins, container offices, prefab homes, and modular structures across India",
-  url: "https://portableofficecabin.com",
-  telephone: "+91-9731897976",
-  email: "sales@portableofficecabin.com",
+  url: COMPANY.url,
+  telephone: PRIMARY_PHONE,
+  email: COMPANY.email.sales,
   priceRange: "₹₹₹",
-  image: "https://portableofficecabin.com/logo.jpeg",
-  taxID: "33FVKPK6238Q1ZT",
-  hasCertification: {
-    "@type": "Certification",
-    name: "ISO 9001:2015",
-    about: "Quality Management System",
-    certificationIdentification: "QT-99968/0726",
-  },
-  identifier: {
-    "@type": "PropertyValue",
-    propertyID: "Udyam Registration Number",
-    value: "UDYAM-TN-11-0068545",
-  },
+  image: `${SITE_URL}/logo.jpeg`,
+  taxID: COMPANY.gstin,
+  hasCertification: CERTIFICATION,
+  identifier: UDYAM_ID,
   // Same verified-real profiles as the Organization node.
-  sameAs: [
-    "https://www.facebook.com/portableofficecabin",
-    "https://www.linkedin.com/in/portable-office-cabin-9b939a168",
-    "https://www.instagram.com/portableofficecabin",
-  ],
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Survey No. 222 Door No: 2/149-6 Road 1C, Kamandoddi",
-    addressLocality: "Hosur",
-    addressRegion: "Tamil Nadu",
-    postalCode: "635117",
-    addressCountry: "IN",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: "12.7409",
-    longitude: "77.8253",
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "07:00",
-      closes: "22:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Sunday"],
-      opens: "10:00",
-      closes: "19:00",
-    },
-  ],
+  sameAs: SAME_AS,
+  address: companyPostalAddress,
+  geo: BUSINESS_GEO,
+  openingHoursSpecification: OPENING_HOURS,
   areaServed: generateAreaServedForSchema(),
   hasOfferCatalog: {
     "@type": "OfferCatalog",
@@ -703,8 +703,9 @@ export const serviceAreaStructuredData = {
   serviceType: "Portable Cabin & Container Office Manufacturing",
   provider: {
     "@type": "Organization",
-    name: "Portable Office Cabin",
-    url: "https://portableofficecabin.com",
+    "@id": ORGANIZATION_ID,
+    name: COMPANY.legalName,
+    url: COMPANY.url,
   },
   areaServed: [
     {
@@ -751,7 +752,7 @@ export const serviceAreaStructuredData = {
     },
   ],
   description:
-    "Pan-India portable cabin, container office, prefab home, and modular building manufacturing with delivery and installation support across Bangalore, Chennai, Hyderabad, Mumbai, Pune, Delhi NCR, Ahmedabad, Kolkata, and 500+ cities.",
+    "Pan-India portable cabin, container office, prefab home, and modular building manufacturing with delivery and installation support across Bangalore, Chennai, Hyderabad, Mumbai, Pune, Delhi NCR, Ahmedabad and Kolkata.",
 };
 
 export function generatePromotionStructuredData(content: {
@@ -789,25 +790,16 @@ export function generatePromotionStructuredData(content: {
     // West Bengal, Karnataka …) and we occupy exactly one of them — the Tamil Nadu factory.
     // The page's own city and coordinates belong on areaServed below, which is what
     // schema.org actually means by "where this service is provided".
+    // Same @id as the homepage LocalBusiness: every city and promotion page names the one business.
     provider: {
       "@type": "LocalBusiness",
-      name: "Portable Office Cabin",
-      url: "https://portableofficecabin.com",
-      telephone: "+91-9731897976",
-      email: "sales@portableofficecabin.com",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Survey No. 222 Door No: 2/149-6 Road 1C, Kamandoddi",
-        addressLocality: "Hosur",
-        addressRegion: "Tamil Nadu",
-        postalCode: "635117",
-        addressCountry: "IN",
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: "12.7409",
-        longitude: "77.8253",
-      },
+      "@id": LOCAL_BUSINESS_ID,
+      name: COMPANY.legalName,
+      url: COMPANY.url,
+      telephone: PRIMARY_PHONE,
+      email: COMPANY.email.sales,
+      address: companyPostalAddress,
+      geo: BUSINESS_GEO,
     },
     areaServed: {
       "@type": "Place",
