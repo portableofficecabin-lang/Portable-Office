@@ -32,7 +32,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
    * record of what this page is meant to rank for. */
   "45": {
     title: "Individual House Construction Cost & Specification | Portable Office Cabin",
-    description: "What individual house construction includes and what sets the cost per sq ft — RCC frame, masonry, finishes, G+1 to G+5, and the specification your rate is quoted against.",
+    description: "What individual house construction includes and what sets the cost per sq ft: RCC frame, masonry, finishes, G+1 to G+5, and the specification you are quoted on.",
     keywords: "individual house construction cost, house construction cost per sq ft, house construction specification, what is included in house construction, G+1 house construction cost, G+2 house construction cost, 40x30 house construction cost, RCC house construction specification, house construction materials list",
   },
   // Executive Portable Cabin 20ft
@@ -340,7 +340,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   "47": {
     title: "Container Cafe and Restaurant",
     h1: "Container Cafe and Restaurant",
-    description: "Open your cafe faster with a custom container cafe or restaurant. Kiosks, dine-in cafes and stacked designs, with kitchen layout, insulation and branding options, as specified in the quotation.",
+    description: "Custom shipping container cafes and restaurants: kiosks, dine-in cafes and stacked designs, with kitchen layout, insulation and branding to your quotation.",
     keywords: "container cafe, container restaurant, shipping container cafe, container cafe design, container cafe manufacturer, container cafe price, 20 ft container cafe, 40 ft container cafe, container kitchen, container coffee kiosk, modular restaurant",
   },
 };

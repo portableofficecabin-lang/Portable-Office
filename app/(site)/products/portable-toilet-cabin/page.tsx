@@ -17,7 +17,7 @@ const SITE = "https://portableofficecabin.com";
 const PATH = "/products/portable-toilet-cabin";
 const H1 = "Portable Toilet Cabin";
 const DESCRIPTION =
-  "Portable toilet cabin manufacturer in India — MS, GI, FRP & bio-toilet units with water tanks, exhaust and western/Indian pans. Single & multi-seater, fast pan-India delivery.";
+  "Portable toilet cabins in MS, GI and FRP, plus bio-toilets: single or multi-seater, with water tank, exhaust and western or Indian pan, delivered across India.";
 const IMAGE = `${SITE}/images/products/portable-toilet.webp`;
 const TOILET_LOCATION_LINKS = CATEGORY_LINKS["portable-toilet-cabins"]?.locationLinks ?? [];
 
