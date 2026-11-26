@@ -5,11 +5,28 @@ import { IsoCertificationBadge } from "@/components/IsoCertificationBadge";
 import heroCabin from "@/assets/hero-cabin-900.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { startingFromEstimate, formatINR } from "@/components/home/cabin-calculator/pricing";
+import { DISPATCH_WORKING_DAYS, SHIPPING_ZONES } from "@/data/shippingZones";
 
+// "60% Cheaper Than Traditional" removed 2026-11-26: no cost comparison is on record.
 const highlights = [
   { icon: Zap, text: "Far Less Time on Site" },
-  { icon: IndianRupee, text: "60% Cheaper Than Traditional" },
+  { icon: IndianRupee, text: "Factory-Direct Prices" },
   { icon: Leaf, text: "Eco-Friendly Materials" },
+];
+
+// Every figure here comes from the site's own policy data, so it cannot drift from checkout or the
+// policy pages. Replaced 2026-11-26: "500+ Cabins Delivered", "15+ Years in Business", "2 Factories"
+// and "98% Happy Clients" — none has a record behind it, and the only factory is the one near Hosur.
+const FREE_ZONE_PINS = SHIPPING_ZONES.find((zone) => zone.rate === 0)?.pincodePrefixes ?? [];
+const heroFacts = [
+  { value: `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max}`, label: "Working days to dispatch" },
+  { value: "Free", label: `Delivery to PIN ${FREE_ZONE_PINS.join(" · ")}` },
+  // The structural warranty tiers of the warranty policy (MS 5 · GI 15 · ACP 20 · PUF panel 25 years).
+  // Values stay at four characters or fewer: on desktop the four stats share the hero's text column,
+  // and longer values ("5–25 yrs", "Mon–Sun") wrapped onto two lines at this size.
+  { value: "5–25", label: "Years structural warranty, by material" },
+  // COMPANY.businessHours: Mon–Sat and Sunday.
+  { value: "7", label: "Days a week open, Mon–Sun" },
 ];
 
 export function HeroSection() {
@@ -80,7 +97,7 @@ export function HeroSection() {
               <span className="text-gradient">Portable Office Cabin</span> Manufacturer
             </h1>
             <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-semibold text-white/90 leading-snug mb-6">
-              India's Trusted Portable Cabin & Container Office Supplier
+              Portable Cabin & Container Office Supplier Across India
             </h2>
             
             <p 
@@ -94,7 +111,7 @@ export function HeroSection() {
               className="text-base text-white/60 mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-up"
               style={{ animationDelay: "0.25s" }}
             >
-              Up to 60% cheaper than traditional construction. Kinder to the planet. 
+              Factory-direct prices. Kinder to the planet.
               Far less time on site than conventional construction.
             </p>
 
@@ -178,22 +195,12 @@ export function HeroSection() {
               className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12 pt-8 border-t border-white/10 animate-fade-up"
               style={{ animationDelay: "0.5s" }}
             >
-              <div className="text-center lg:text-left">
-                <div className="font-display text-3xl lg:text-4xl font-bold text-accent">500+</div>
-                <div className="text-white/50 text-sm mt-1">Cabins Delivered</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="font-display text-3xl lg:text-4xl font-bold text-accent">15+</div>
-                <div className="text-white/50 text-sm mt-1">Years in Business</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="font-display text-3xl lg:text-4xl font-bold text-accent">2</div>
-                <div className="text-white/50 text-sm mt-1">Factories</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="font-display text-3xl lg:text-4xl font-bold text-accent">98%</div>
-                <div className="text-white/50 text-sm mt-1">Happy Clients</div>
-              </div>
+              {heroFacts.map((fact) => (
+                <div key={fact.label} className="text-center lg:text-left">
+                  <div className="font-display text-3xl lg:text-4xl font-bold text-accent">{fact.value}</div>
+                  <div className="text-white/50 text-sm mt-1">{fact.label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
