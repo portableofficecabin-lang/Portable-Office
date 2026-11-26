@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { allChildParams } from "@/data/productChildPages";
+import { allChildParams, allGuidePages } from "@/data/productChildPages";
 import { publishedFamilies, publishedVariants, variantPath } from "@/data/productFamilies";
 import { seoPromotions } from "@/data/seoPromotions";
 import { CITY_PAGES } from "@/data/cityPages";
@@ -76,8 +76,13 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
     "weekly",
     new Date("2026-09-06"),
   ),
-  // SEO child pages under each main product (registry-driven — src/data/productChildPages.ts)
+  // SEO child pages under each main product (registry-driven — src/data/productChildPages.ts).
+  // Guides that moved to /guides (src/data/guideMoves.ts) are excluded by allChildParams() and
+  // listed below at their new URL instead, so no retired URL stays in the sitemap.
   ...allChildParams().map(({ slug, child }) => entry(`/products/${slug}/${child}`, 0.7, "monthly")),
+  // Guides section (D5, 2026-11): the /guides index and each guide.
+  entry("/guides", 0.6, "monthly"),
+  ...allGuidePages().map(({ guideSlug }) => entry(`/guides/${guideSlug}`, 0.7, "monthly")),
   /* STANDARD SIZE VARIANT pages — one per published size of every published product family
    * (src/data/productFamilies.ts). Each is a distinct, self-canonical, indexable landing
    * page, so every one must be listed here: a variant URL that is crawlable and canonical

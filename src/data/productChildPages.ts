@@ -8,7 +8,9 @@
  *
  * URL contract:  /products/<parentSlug>/<childSlug>
  * (the nested route falls through Next's router even where the parent is a dedicated
- * static segment, e.g. /products/portable-cabin).
+ * static segment, e.g. /products/portable-cabin) — EXCEPT the informational guides listed in
+ * src/data/guideMoves.ts, which live at /guides/<guideSlug> (D5, 2026-11). Build every child
+ * link with childPagePath() so it follows that map.
  *
  * CONTENT RULES (enforced by review, stated here so additions follow them):
  *  • Every child targets ONE primary keyword / search intent that no existing product,
@@ -23,6 +25,8 @@
  *    already appear on the live site.
  *  • Unique, useful copy per page — no shared boilerplate paragraphs between children.
  */
+
+import { GUIDES_PATH, movedGuideSlug } from "./guideMoves";
 
 export interface ChildSection {
   heading: string;
@@ -189,8 +193,8 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "Do custom sizes cost much more?", a: "Somewhat, because standard sizes optimise sheet material and transport. The calculator on the home page prices your exact size instantly." },
         ],
         related: [
-          { label: "Price & cost guide", href: "/products/portable-cabin/price-and-cost-guide" },
-          { label: "Layouts & interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+          { label: "Price & cost guide", href: "/guides/portable-cabin-price-and-cost" },
+          { label: "Layouts & interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
         ],
       },
       {
@@ -238,7 +242,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "What flooring do cabins use?", a: "Marine plywood decking finished with vinyl or laminate — durable, mop-cleanable and comfortable underfoot." },
         ],
         related: [
-          { label: "Sizes & dimensions guide", href: "/products/portable-cabin/sizes-and-dimensions" },
+          { label: "Sizes & dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
           { label: "Cabin with toilet & pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
         ],
       },
@@ -287,7 +291,7 @@ export const productChildGroups: ProductChildGroup[] = [
         ],
         related: [
           { label: "Portable toilet cabins range", href: "/products/category/portable-toilet-cabins" },
-          { label: "Layouts & interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+          { label: "Layouts & interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
         ],
       },
       {
@@ -335,7 +339,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "What base does a classroom cabin need?", a: "A simple level base — compacted ground with concrete pads or a plinth. No building-grade foundation is required." },
         ],
         related: [
-          { label: "Sizes & dimensions guide", href: "/products/portable-cabin/sizes-and-dimensions" },
+          { label: "Sizes & dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
           { label: "Insulation & cooling", href: "/products/portable-cabin/insulation-and-cooling" },
         ],
       },
@@ -383,7 +387,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "Are insulated panels heavier to transport?", a: "The panel is light for its stiffness — foam is mostly air. Transport and craneage are unaffected compared to a sheet cabin of the same size." },
         ],
         related: [
-          { label: "Price & cost guide", href: "/products/portable-cabin/price-and-cost-guide" },
+          { label: "Price & cost guide", href: "/guides/portable-cabin-price-and-cost" },
           { label: "For schools & classrooms", href: "/products/portable-cabin/for-schools-and-classrooms" },
         ],
       },
@@ -432,8 +436,8 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "Who connects electricity and water?", a: "Your site electrician and plumber connect supply to the cabin's external points — the internal wiring and plumbing arrive complete and tested." },
         ],
         related: [
-          { label: "Transport & delivery guide", href: "/products/portable-cabin/transport-and-delivery" },
-          { label: "Sizes & dimensions guide", href: "/products/portable-cabin/sizes-and-dimensions" },
+          { label: "Transport & delivery guide", href: "/guides/portable-cabin-transport-and-delivery" },
+          { label: "Sizes & dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
         ],
       },
       {
@@ -482,7 +486,7 @@ export const productChildGroups: ProductChildGroup[] = [
         ],
         related: [
           { label: "Warranty information", href: "/warranty" },
-          { label: "Installation & site preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+          { label: "Installation & site preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
         ],
       },
       {
@@ -581,7 +585,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "What if my street is too narrow for a lorry?", a: "Tell us before dispatch — options include smaller cabins delivered separately and joined on site, or a hydra shuttling from the nearest accessible point." },
         ],
         related: [
-          { label: "Installation & site preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+          { label: "Installation & site preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
           { label: "Shipping & delivery policy", href: "/shipping" },
         ],
       },
@@ -642,17 +646,50 @@ export function getChildGroup(parentSlug: string): ProductChildGroup | undefined
   return productChildGroups.find((g) => g.parentSlug === parentSlug);
 }
 
-/** Single child lookup. */
+/**
+ * Single child lookup for the NESTED route /products/<parent>/<child>. A child that moved to
+ * /guides (src/data/guideMoves.ts) is not served there any more — next.config.ts 301s its old URL
+ * — so it is not found here; getGuidePage() finds it.
+ */
 export function getChildPage(
   parentSlug: string,
   childSlug: string,
 ): { group: ProductChildGroup; page: ProductChildPage } | undefined {
+  if (movedGuideSlug(parentSlug, childSlug)) return undefined;
   const group = getChildGroup(parentSlug);
   const page = group?.children.find((c) => c.slug === childSlug);
   return group && page ? { group, page } : undefined;
 }
 
-/** Every (parent, child) pair — the route's generateStaticParams and the sitemap read this. */
+/** Every (parent, child) pair served under /products — the nested route's params and the sitemap. */
 export function allChildParams(): { slug: string; child: string }[] {
-  return productChildGroups.flatMap((g) => g.children.map((c) => ({ slug: g.parentSlug, child: c.slug })));
+  return productChildGroups.flatMap((g) =>
+    g.children.filter((c) => !movedGuideSlug(g.parentSlug, c.slug)).map((c) => ({ slug: g.parentSlug, child: c.slug })),
+  );
+}
+
+/**
+ * The canonical URL of a registry child: /guides/<guideSlug> for a moved guide, otherwise
+ * /products/<parent>/<child>. Every link to a child page is built with this, so a move is one data
+ * change and no link can point at the retired URL.
+ */
+export function childPagePath(group: ProductChildGroup, page: ProductChildPage): string {
+  const guideSlug = movedGuideSlug(group.parentSlug, page.slug);
+  return guideSlug ? `${GUIDES_PATH}/${guideSlug}` : `/products/${group.parentSlug}/${page.slug}`;
+}
+
+/** Every guide served at /guides/<slug>, in registry order. */
+export function allGuidePages(): { group: ProductChildGroup; page: ProductChildPage; guideSlug: string }[] {
+  return productChildGroups.flatMap((group) =>
+    group.children.flatMap((page) => {
+      const guideSlug = movedGuideSlug(group.parentSlug, page.slug);
+      return guideSlug ? [{ group, page, guideSlug }] : [];
+    }),
+  );
+}
+
+/** The guide served at /guides/<guideSlug>, if any. */
+export function getGuidePage(guideSlug: string): { group: ProductChildGroup; page: ProductChildPage } | undefined {
+  const hit = allGuidePages().find((g) => g.guideSlug === guideSlug);
+  return hit ? { group: hit.group, page: hit.page } : undefined;
 }

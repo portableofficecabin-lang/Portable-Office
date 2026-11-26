@@ -35,7 +35,7 @@ import {
 } from "../src/data/categoryLandings";
 import { categories, getProductDetailPath, products } from "../src/data/products";
 import { getCommerce, isPurchasable, isRentalPrice } from "../src/data/productCommerce";
-import { allChildParams } from "../src/data/productChildPages";
+import { allChildParams, allGuidePages } from "../src/data/productChildPages";
 import { CITY_PAGES, cityPageBySlug, type CityPage } from "../src/data/cityPages";
 import { seoPromotions } from "../src/data/seoPromotions";
 import { DISPATCH_WORKING_DAYS, INSTALLATION, SHIPPING_ZONES } from "../src/data/shippingZones";
@@ -58,6 +58,9 @@ const ROUTES = new Set<string>([
   ...products.map((p) => getProductDetailPath(p)),
   ...categories.filter((c) => isCategoryIndexable(c.slug, products)).map((c) => `/products/category/${c.slug}`),
   ...allChildParams().map(({ slug, child }) => `/products/${slug}/${child}`),
+  // Guides moved to /guides (D5, src/data/guideMoves.ts).
+  "/guides",
+  ...allGuidePages().map(({ guideSlug }) => `/guides/${guideSlug}`),
   ...CITY_PAGES.map((c) => `/cities-we-serve/${c.slug}`),
   ...seoPromotions.map((p) => new URL(p.canonicalUrl).pathname),
   // Static route segments that exist as their own page.tsx.

@@ -146,7 +146,7 @@ ok(smRes.status === 200, `sitemap.xml status ${smRes.status} (want 200)`);
  *   • a PRODUCT CHILD  (e.g. /products/marketing-office/prefab-marketing-office)
  *   • a SIZE VARIANT   (e.g. /products/container-office/20x10-ft)
  * plus a third kind that is NOT a product — the price-free registry GUIDE pages
- * (e.g. /products/portable-cabin/price-and-cost-guide).
+ * (e.g. /products/portable-cabin/insulation-and-cooling).
  *
  * The old single-segment pattern matched only `/products/<parent>` out of a nested URL, so
  * a nested canonical could never be found in `productUrls`. That produced a FALSE "feed URL

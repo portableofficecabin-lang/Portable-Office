@@ -17,7 +17,7 @@
 import Link from "next/link";
 import { ArrowRight, BookOpen, LayoutGrid } from "lucide-react";
 
-import { getChildGroup } from "@/data/productChildPages";
+import { childPagePath, getChildGroup } from "@/data/productChildPages";
 
 const HUB_PARENT_SLUG = "portable-cabin";
 const HUB_HREF = `/products/${HUB_PARENT_SLUG}`;
@@ -90,7 +90,7 @@ export function PortableCabinGuideLinks({ productSlug }: { productSlug: string }
           </span>
         </Link>
         {guides.map((child) => (
-          <Link key={child.slug} href={`/products/${group.parentSlug}/${child.slug}`} className={cardClass}>
+          <Link key={child.slug} href={childPagePath(group, child)} className={cardClass}>
             <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10">
               <BookOpen className="h-[18px] w-[18px] text-accent" aria-hidden="true" />
             </span>

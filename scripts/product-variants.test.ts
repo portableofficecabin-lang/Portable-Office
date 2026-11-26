@@ -181,7 +181,8 @@ section("2. Reserved child slugs");
 
   // Known existing guide pages must still resolve — the size ladder must not have
   // displaced them.
-  for (const slug of ["price-and-cost-guide", "sizes-and-dimensions", "materials-ms-vs-puf"]) {
+  // (Since D5 the informational guides live at /guides — src/data/guideMoves.ts; the three below stay nested.)
+  for (const slug of ["with-toilet-and-pantry", "for-schools-and-classrooms", "insulation-and-cooling"]) {
     check(!!getChildPage("portable-cabin", slug), `existing guide /products/portable-cabin/${slug} still resolves`);
   }
 }
@@ -1113,7 +1114,8 @@ await (async () => {
   }
 
   // Nothing the size work touched may have removed an existing URL.
-  check(urls.some((u) => u.endsWith("/products/portable-cabin/price-and-cost-guide")), "sitemap still lists the guide pages");
+  check(urls.some((u) => u.endsWith("/products/portable-cabin/insulation-and-cooling")), "sitemap still lists the nested guide pages");
+  check(urls.some((u) => u.endsWith("/guides/portable-cabin-price-and-cost")), "sitemap lists the guides moved to /guides");
   check(urls.some((u) => u === `${SITE}/products`), "sitemap still lists /products");
   check(urls.every((u) => !u.includes("?")), "no query-parameter URL entered the sitemap");
   check(urls.every((u) => !u.endsWith(".html")), "no .html URL entered the sitemap");
