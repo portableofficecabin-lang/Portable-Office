@@ -348,7 +348,7 @@ export function CargoShippingContainerContent() {
                   ["Deployment time", "Far shorter — set out in your written quotation", "3–6 months"],
                   ["Cost", "Fixed factory price, less civil work", "Site-built, priced per project"],
                   ["Relocation", "Crane and flatbed", "Demolition required"],
-                  ["End-of-project waste", "Near zero", "Significant debris"],
+                  ["End-of-project waste", "Minimal — units relocate", "Significant debris"],
                 ].map((row, i) => (
                   <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : "bg-background"}>
                     <td className="p-3 text-sm font-medium text-foreground">{row[0]}</td>

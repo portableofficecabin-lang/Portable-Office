@@ -111,8 +111,8 @@ export function MarketingOfficeContent() {
         <p>
           We build marketing offices out of container modules and deliver them finished. Insulated,
           air-conditioned, tile-floored, lit properly, wrapped in your project branding inside and
-          out. It arrives on a trailer, gets set down in a morning, and your sales team is closing in
-          it the same week your hoarding goes up.
+          out. It arrives on a trailer, is set down on a prepared base, and your sales team can use it
+          once it is connected.
         </p>
       </div>
 

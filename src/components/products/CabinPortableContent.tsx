@@ -7,7 +7,7 @@ import cabinPortableSite from "@/assets/products/cabin-portable-site.webp";
 import cabinPortableOffice from "@/assets/products/cabin-portable-office.webp";
 import cabinPortableContainer from "@/assets/products/cabin-portable-container.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
-import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
+import { DISPATCH_WORKING_DAYS, FREE_DELIVERY_PIN_PREFIXES_TEXT, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 
 export function CabinPortableContent() {
   return (
@@ -622,7 +622,7 @@ export function CabinPortableContent() {
             { q: "Is permission required from local authorities?", a: "Temporary structures under 200 sqm often need minimal permissions. For placements exceeding one year, check with local panchayat or municipal authorities." },
             { q: "Can cabins be air-conditioned?", a: "Yes, portable cabins come with pre-provisioned AC points and electrical capacity for split AC units." },
             { q: "What about fire safety?", a: "Fire-retardant panels and compliant electrical systems are available on request to meet safety norms." },
-            { q: "How do delivery timelines vary?", a: "Metro cities typically see 2-week delivery; remote or hilly terrain may require 4+ weeks due to logistics challenges. Please wait for confirmation of lead times based on your specific location." },
+            { q: "How do delivery timelines vary?", a: `Standard units bought online are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation, plus ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days in transit depending on your delivery zone; checkout shows the delivery estimate for your PIN code.` },
             { q: "Why buy a portable cabin outright?", a: "Outright purchase makes the cabin a company asset: it pays for itself through reuse across 3-5 projects, can be refitted internally between deployments, and gives you full control over customization and relocation." },
           ].map((faq, idx) => (
             <AccordionItem key={idx} value={`faq-${idx}`} className="border border-border/40 rounded-xl px-4 bg-card">

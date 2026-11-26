@@ -72,7 +72,7 @@ const WHY_STEEL = [
     icon: Truck,
     title: "It moves with your projects",
     body:
-      "When one site finishes, the cabin goes on a truck to the next one. Plenty of our customers have moved the same cabin four or five times over a decade. You are buying an asset, not a temporary arrangement.",
+      "When one site finishes, the cabin goes on a truck to the next one. You are buying an asset, not a temporary arrangement.",
   },
   {
     icon: ClipboardList,
