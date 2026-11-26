@@ -64113,7 +64113,8 @@ export const CITY_PAGES: CityPage[] = [
    * section); used container inspection → "used shipping container inspection": the brief's
    * /shipping-container-chennai is not a route and the Chennai product page has one sentence on inspection,
    * so it points to the Athipattu page's checklist, as the sibling pages do; rental → the rental product;
-   * areas → Banaswadi, Indiranagar and the Bengaluru shipping promotion ("shipping container solutions
+   * areas → Banaswadi, Indiranagar, Richmond Town (the Richmond Town brief's §28 reciprocal) and the Bengaluru
+   * shipping promotion ("shipping container solutions
    * across Bengaluru"). NOT linked, because no such page exists: Cox Town, Cooke Town, Richards Town, Benson
    * Town, Pottery Town, Tannery Road, Shivajinagar, Vasanth Nagar, Ulsoor, St Thomas Town, Kammanahalli,
    * Lingarajapuram, Hulimavu (no shipping page; Hulimavu is a content brief, not a route) and a refrigerated
@@ -64130,7 +64131,8 @@ export const CITY_PAGES: CityPage[] = [
    * spare furniture, bakery and catering utensils, Ramzan and festival-season non-food stock and community
    * hall furniture. Mosque Road, Coles Road and Wheeler Road are named as local road references only (areas
    * and delivery copy), not as keywords. Named only in the pointer sentences to their own pages: Banaswadi
-   * and Lingarajapuram (Banaswadi page), Halasuru and Indiranagar (Indiranagar page); Koramangala, Horamavu,
+   * and Lingarajapuram (Banaswadi page), Halasuru and Indiranagar (Indiranagar page), Richmond Town (Richmond
+   * Town page); Koramangala, Horamavu,
    * Hennur Road, Vellore and Bellandur only in their application links. Shivajinagar is named once, as the
    * wholesale market traders stock up at (brief §8), never as a target. Not named at all: Cox Town, Cooke
    * Town, Richards Town, Benson Town, Pottery Town, Tannery Road, Vasanth Nagar, St Thomas Town,
@@ -64224,6 +64226,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Halasuru and Indiranagar, further south-east, are served from our page on",
         link: { label: "shipping containers in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+        after: ".",
+      },
+      // Richmond Town brief (2026-11-25, §28): office, hotel and restaurant refurbishment and professional event
+      // equipment storage in Richmond Town are that page's intent; this page's areas and targeting are unchanged.
+      {
+        before: "For office interior refurbishment, hotel renovations and professional event equipment storage in Richmond Town, explore our dedicated",
+        link: { label: "Richmond Town shipping container solutions", href: "/cities-we-serve/shipping-container-richmond-town" },
         after: ".",
       },
       {
@@ -73094,16 +73103,18 @@ export const CITY_PAGES: CityPage[] = [
    * types guide); delivery → "restricted-site container delivery" (Bellandur); areas → the Bengaluru
    * shipping promotion ("shipping containers across Bengaluru") and the Portable Cabin in Richmond Town page
    * ("portable cabin in Richmond Town", the two pages' agreed two-way link; that page links back from its
-   * applications section). NOT linked: Frazer Town (its reciprocal pair is a follow-up once both pages are
-   * live), Hulimavu (no live page), Vishweshwaraiah Layout (residential plot storage, not this page's
+   * applications section); heritage restoration → "heritage bungalow and household storage in Frazer Town"
+   * (that page's household and bungalow redevelopment intent; it links back from its areas section). NOT
+   * linked: Hulimavu (no live page), Vishweshwaraiah Layout (residential plot storage, not this page's
    * applications) and Shanthinagar, Langford Town, Ashok Nagar, Austin Town, Neelasandra, Wilson Garden, Victoria
    * Layout, Vivek Nagar and Adugodi (no shipping page; Adugodi is in Koramangala's areas list). Anchors differ
    * from the siblings' anchors for the same targets. Inbound: the Koramangala page's areas section (a new
    * one-item `areasInlineLinks`; its areas text, targeting and HSR Layout link unchanged), the Karnataka
    * shipping hub ("Shipping Containers in Richmond Town"), the cargo category's location links ("Shipping
    * containers in Richmond Town", the brief's anchor), the Portable Cabin in Richmond Town page's applications
-   * section ("shipping containers in Richmond Town", its brief's §32 wording) and every Karnataka shipping
-   * page's nearby block.
+   * section ("shipping containers in Richmond Town", its brief's §32 wording), the Frazer Town page's areas
+   * section ("Richmond Town shipping container solutions", this brief's §28 wording, appended at the end of
+   * its `areasInlineLinks`) and every Karnataka shipping page's nearby block.
    * `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
    *
    * KEYWORD OWNERSHIP: shipping / cargo / storage container × Richmond Town, with Richmond Road (the local
@@ -73117,11 +73128,11 @@ export const CITY_PAGES: CityPage[] = [
    * Koramangala, Vellore, Athipattu and Bellandur appear only in their application links. Portable, porta and
    * office cabins × Richmond Town belong to the Portable Cabin in Richmond Town page and appear here only in
    * the link to it (none in the title, description, keywords or headings). Kept apart from
-   * household and heritage-bungalow storage and community halls (Frazer Town, draft), restaurant equipment
+   * household and heritage-bungalow storage and community halls (Frazer Town, linked once), restaurant equipment
    * between moves (Koramangala), bar kegs and boutique stock (Indiranagar), tent-house and catering vessels
    * (Horamavu), wedding-wear rental and children's sports coaching (HRBR Layout), costumes and books
    * (Jayanagar pages), school sports-day stock (JP Nagar) and residential plot construction storage (SMV
-   * Layout, draft): household storage is secondary here (heritage restoration only), and the school section
+   * Layout): household storage is secondary here (heritage restoration only), and the school section
    * covers refurbishment furniture only. "Bengaluru" stays out of the title; the intro says "central
    * Bengaluru neighbourhood", and the geo meta and the Service JSON-LD's areaServed carry "Richmond Town,
    * Bengaluru, Karnataka".
@@ -73531,6 +73542,15 @@ export const CITY_PAGES: CityPage[] = [
         closing: [
           "Antiques, artwork, valuable documents and delicate wooden furniture may need specialist packing, insurance and controlled storage conditions; an ordinary shipping container does not provide museum-grade preservation.",
           "Placement must comply with the applicable property, planning and heritage-related requirements.",
+        ],
+        // Brief §27 / §29: household storage and heritage-bungalow redevelopment are the Frazer Town page's intent;
+        // this section stays secondary and points there (that page links back from its areas section).
+        inlineLinks: [
+          {
+            before: "Rebuilding an older family bungalow and storing household belongings rather than commercial stock? See",
+            link: { label: "heritage bungalow and household storage in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
+            after: ".",
+          },
         ],
       },
       {
