@@ -146,17 +146,17 @@ export interface ResolvedCategoryLanding extends Omit<CategoryLandingCopy, "meta
 const GUIDE = {
   installation: {
     name: "Installation and site preparation",
-    href: "/products/portable-cabin/installation-and-site-preparation",
+    href: "/guides/portable-cabin-installation-and-site-preparation",
     description: "Base, access and crane planning before a unit arrives.",
   },
   transport: {
     name: "Transport and delivery",
-    href: "/products/portable-cabin/transport-and-delivery",
+    href: "/guides/portable-cabin-transport-and-delivery",
     description: "Trucks, cranes and what to check on the route to site.",
   },
   layouts: {
     name: "Layouts and interiors",
-    href: "/products/portable-cabin/layouts-and-interiors",
+    href: "/guides/portable-cabin-layouts-and-interiors",
     description: "Planning desks, partitions, storage and services inside a cabin.",
   },
   insulation: {
@@ -166,7 +166,7 @@ const GUIDE = {
   },
   materials: {
     name: "MS vs PUF panel construction",
-    href: "/products/portable-cabin/materials-ms-vs-puf",
+    href: "/guides/portable-cabin-materials-ms-vs-puf",
     description: "How the two common wall builds differ in heat, cost and life.",
   },
   toiletPantry: {
@@ -176,12 +176,12 @@ const GUIDE = {
   },
   newVsUsed: {
     name: "Buying new vs used",
-    href: "/products/portable-cabin/buying-guide-new-vs-used",
+    href: "/guides/portable-cabin-new-vs-used",
     description: "What to inspect before paying for a second-hand unit.",
   },
   maintenance: {
     name: "Maintenance and lifespan",
-    href: "/products/portable-cabin/maintenance-and-lifespan",
+    href: "/guides/portable-cabin-maintenance-and-lifespan",
     description: "The routine checks that keep a steel structure in service.",
   },
 } satisfies Record<string, LinkItem>;

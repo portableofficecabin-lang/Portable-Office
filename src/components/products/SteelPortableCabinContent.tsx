@@ -440,7 +440,7 @@ export function SteelPortableCabinContent() {
               choice if the room will be air-conditioned all day — a clinic, a control room, an
               executive office through a Chennai summer — because a sealed foam core holds
               temperature in a way sheet-and-wool walls do not. Our{" "}
-              <Link href="/products/portable-cabin/materials-ms-vs-puf" className="font-medium text-accent underline-offset-4 hover:underline">
+              <Link href="/guides/portable-cabin-materials-ms-vs-puf" className="font-medium text-accent underline-offset-4 hover:underline">
                 MS sheet vs PUF panel comparison
               </Link>{" "}
               goes through it in detail.
