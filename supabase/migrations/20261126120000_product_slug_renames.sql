@@ -25,8 +25,10 @@
 --      they were.
 --    • no id or SKU changes.
 --
---  APPLY MANUALLY after the code is live: Supabase dashboard → SQL editor → run this file (or
---  `supabase db push`). NEVER run full_schema.sql against production.
+--  APPLY MANUALLY after the code is live AND after the owner approves the production migration:
+--  Supabase dashboard → SQL editor → run this file. Use `supabase db push` only if `supabase migration
+--  list` shows this is the ONLY pending migration (db push applies every pending file). NEVER run
+--  full_schema.sql against production. Sequence + checks: docs/seo/d4-product-url-renames-runbook.md
 --  ROLLBACK: supabase/rollback/20261126120000_product_slug_renames.down.sql
 -- ════════════════════════════════════════════════════════════════════════════════════════════
 
