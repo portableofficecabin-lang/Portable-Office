@@ -49,7 +49,7 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "What maintenance does a container need?",
     answer:
-      "Very little. We recommend repainting every few years and periodic checks of door seals and fittings. Maintained this way, a container lasts 15–20 years or more. Warranty cover follows our published warranty policy; the full terms are on our Warranty page.",
+      "Very little. We recommend repainting every few years and periodic checks of door seals and fittings. Warranty cover follows our published warranty policy; the full terms are on our Warranty page.",
   },
   {
     question: "Can you deliver outside Bangalore?",
@@ -86,7 +86,6 @@ const SIZES = [
 
 const BUILD_SPEC = [
   "Galvanized steel frame and corten/MS steel body for corrosion resistance",
-  "IS-grade raw materials throughout",
   "50mm PUF insulated wall and roof panels (optional) for thermal comfort",
   "Weatherproof construction rated for Bangalore's monsoon and summer",
   "Lockable steel doors; windows, ventilation, and electrical fit-outs to order",
@@ -126,7 +125,6 @@ const DELIVERY_AREA_LINKS: Record<string, { href: string; title: string }> = {
 
 const WHY_US = [
   "Manufacturer, not middleman — factory-direct pricing from our own Kamandoddi (Tamil Nadu) factory near Hosur, about 40 km from Bangalore",
-  "15+ years of manufacturing experience and 500+ projects delivered across India",
   "Material-based structural warranty, as set out on our Warranty page",
   "End-to-end service: design, fabrication, delivery, installation, and after-sales support",
   "GST-registered and verified (GSTIN: 33FVKPK6238Q1ZT) with transparent, written quotations",
@@ -238,7 +236,7 @@ export function ShippingContainerBangaloreContent() {
         <div className="grid md:grid-cols-2 gap-5">
           <div className="bg-card border border-border rounded-2xl p-6">
             <h3 className="font-display font-bold text-lg text-foreground mb-2">New</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">A new (one-trip or factory-built) container costs more upfront but gives you a 15–20+ year service life, clean interiors, and full warranty coverage. It is the right choice for <Link href="/products/category/container-offices" className="text-accent hover:underline">offices</Link>, accommodation, and customer-facing spaces.</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">A new (one-trip or factory-built) container costs more upfront but gives you a longer service life, clean interiors, and full warranty coverage. It is the right choice for <Link href="/products/category/container-offices" className="text-accent hover:underline">offices</Link>, accommodation, and customer-facing spaces.</p>
           </div>
           <div className="bg-card border border-border rounded-2xl p-6">
             <h3 className="font-display font-bold text-lg text-foreground mb-2">Used / refurbished</h3>
@@ -278,7 +276,7 @@ export function ShippingContainerBangaloreContent() {
         <H2 id="industries" icon={Factory}>Industries We Serve in Bangalore</H2>
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <p className="text-muted-foreground leading-relaxed">
-            Construction and infrastructure contractors use our containers as site offices, stores, and labour accommodation on metro, road, and real-estate projects. Manufacturers and warehouses in Peenya, Bommasandra, and Jigani use them for overflow storage and security cabins. IT parks and facility managers deploy them as temporary offices during campus expansions. Event companies, retailers, and café operators commission branded conversions. Government agencies and PSUs procure them for site infrastructure — we are GST-registered and experienced with institutional documentation requirements.
+            Construction and infrastructure contractors use our containers as site offices, stores, and labour accommodation on metro, road, and real-estate projects. Manufacturers and warehouses in Peenya, Bommasandra, and Jigani use them for overflow storage and security cabins. IT parks and facility managers deploy them as temporary offices during campus expansions. Event companies, retailers, and café operators commission branded conversions. Public-sector buyers can procure them for site infrastructure too: we are GST-registered and quote in writing.
           </p>
           <OptimizedImage src={`${IMG}/container-office-interior-meeting.webp`} alt="Container office interior with electrical fit-out, Bangalore" aspectRatio="3/2" geoTag={false} className="rounded-2xl shadow-lg" />
         </div>
