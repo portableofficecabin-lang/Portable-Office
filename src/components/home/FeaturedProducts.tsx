@@ -87,11 +87,15 @@ export async function FeaturedProducts() {
                   </div>
                 )}
 
-                {/* Product Name on Image */}
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <h3 className="font-display font-bold text-lg text-white drop-shadow-lg line-clamp-2">
+                {/* Product Name on Image — a visual label only. The card's ONE heading is the <h3>
+                    below; this used to be a second <h3> with the same text, so every product name
+                    appeared twice in the heading outline (and was read twice by screen readers).
+                    Same classes on a <p>: font-display is set explicitly and preflight zeroes both
+                    elements' margins, so it renders identically. */}
+                <div className="absolute bottom-0 left-0 right-0 p-4" aria-hidden="true">
+                  <p className="font-display font-bold text-lg text-white drop-shadow-lg line-clamp-2">
                     {product.name}
-                  </h3>
+                  </p>
                 </div>
 
                 {/* Hover overlay */}
