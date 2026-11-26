@@ -67,7 +67,7 @@ export function PrefabPortaCabinContent() {
           setting the finished cabin down on site.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          In 2026, the demand for portable cabins continues to surge. Metro expansions in Delhi and Mumbai, highway projects under Bharatmala, and rural development initiatives all require fast, flexible structures. Whether you need site offices for a 6-month project or semi-permanent labour accommodation for a decade, prefab porta cabins deliver 40–60% cost savings compared to conventional RCC construction.
+          Demand for portable cabins continues to grow. Metro expansions in Delhi and Mumbai, highway projects under Bharatmala, and rural development initiatives all require fast, flexible structures. Whether you need site offices for a 6-month project or semi-permanent labour accommodation for a decade, prefab porta cabins deliver 40–60% cost savings compared to conventional RCC construction.
         </p>
         <p className="text-muted-foreground leading-relaxed">
           This guide covers everything procurement teams and project managers need: features, types (from compact security cabins to G+1 labour colonies), specifications, and how to choose the right prefab porta cabin for your specific requirements.
