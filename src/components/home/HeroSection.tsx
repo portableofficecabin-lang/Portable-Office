@@ -22,8 +22,11 @@ const heroFacts = [
   { value: `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max}`, label: "Working days to dispatch" },
   { value: "Free", label: `Delivery to PIN ${FREE_ZONE_PINS.join(" · ")}` },
   // The structural warranty tiers of the warranty policy (MS 5 · GI 15 · ACP 20 · PUF panel 25 years).
-  { value: "5–25 yrs", label: "Structural warranty, by material" },
-  { value: "Mon–Sun", label: "Open 7 days a week" },
+  // Values stay at four characters or fewer: on desktop the four stats share the hero's text column,
+  // and longer values ("5–25 yrs", "Mon–Sun") wrapped onto two lines at this size.
+  { value: "5–25", label: "Years structural warranty, by material" },
+  // COMPANY.businessHours: Mon–Sat and Sunday.
+  { value: "7", label: "Days a week open, Mon–Sun" },
 ];
 
 export function HeroSection() {
