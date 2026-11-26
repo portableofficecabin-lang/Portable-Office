@@ -207,8 +207,8 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Prefab Porta Cabin
   "23": {
     title: "Prefab Porta Cabin – Types, Pricing & Guide",
-    description: "Prefab porta cabin for India 2026 — MS frame, PUF sandwich panels, bolted assembly, relocatable. 40–60% cheaper than RCC. Price incl. GST, buy online.",
-    keywords: "prefab porta cabin, porta cabin price India, portable cabin types, prefab cabin manufacturer, modular porta cabin, site office porta cabin, prefab porta cabin 2026, porta cabin sizes India",
+    description: "Prefab porta cabin for India — MS frame, PUF sandwich panels, bolted assembly, relocatable. 40–60% cheaper than RCC. Price incl. GST, buy online.",
+    keywords: "prefab porta cabin, porta cabin price India, portable cabin types, prefab cabin manufacturer, modular porta cabin, site office porta cabin, porta cabin sizes India",
   },
   // Labor Hutments
   "24": {

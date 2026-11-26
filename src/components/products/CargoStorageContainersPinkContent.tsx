@@ -101,7 +101,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               Pink cargo storage containers are standard ISO shipping containers—or newly fabricated modular units—finished in vibrant pink shades for branding, retail, and workspace applications. Businesses across India increasingly use them to stand out in visually competitive urban environments.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              From 2024 to 2026, real-world examples include pop-up stores at Mumbai's Phoenix Marketcity, container cafés in Bengaluru's Whitefield IT parks, site offices on Hyderabad metro projects, and registration booths at IIT Bombay's Techfest.
+              Typical uses include pop-up stores at malls, container cafés in IT parks, site offices on metro projects, and registration booths at college festivals.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               Pink cargo containers are made from high-grade mild steel, ensuring durability for shipping and storage, and are painted with weather-resistant coatings, making them suitable for long-term outdoor storage. They are fully ventilated to keep stored items in good condition. Repurposing shipping containers for storage is an eco-friendly choice that prevents the energy-intensive process of melting them down.
@@ -171,7 +171,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
                 : "A pink shipping container acts as 24/7 outdoor advertising. Positioned in high-traffic areas, a single 20ft unit visible to 10,000 daily passersby can deliver ₹5–10 lakh in annual advertising value without recurring hoarding costs."}
             </p>
             <p className="text-muted-foreground leading-relaxed text-sm">
-              Consider these scenarios: a pink container boutique at Goa's Baga Beach market during the 2025 tourist season, a cosmetic brand kiosk in a Delhi NCR mall parking lot, or a college fest registration booth in Pune handling 1,000 registrations per hour.
+              Consider these scenarios: a pink container boutique at a beach market during the tourist season, a cosmetic brand kiosk in a Delhi NCR mall parking lot, or a college fest registration booth in Pune handling 1,000 registrations per hour.
             </p>
             <p className="text-muted-foreground leading-relaxed text-sm">
               The underlying structure remains unchanged—high-grade Corten steel or MS frame, floor load capacity up to 500 kg/sqm, weatherproofing, and lockable double doors. Pink shipping containers also offer drive-up access for easy loading and unloading.
