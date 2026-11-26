@@ -827,6 +827,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Frazer Town / Pulikeshi Nagar (bungalow redevelopment, restaurant packaging and spare furniture, community hall
     // furniture; owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
+    // Richmond Town, central Bengaluru (office, hotel and restaurant refurbishment storage, event equipment;
+    // owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Richmond Town", href: "/cities-we-serve/shipping-container-richmond-town" },
   ],
 };
 

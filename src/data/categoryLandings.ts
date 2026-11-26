@@ -411,6 +411,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers in Babusapalya", href: "/cities-we-serve/shipping-container-babusa-palya" },
       // Frazer Town page (owner brief, 2026-11-25, §21: the brief's anchor, from the main shipping container page).
       { name: "Shipping containers in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
+      // Richmond Town page (owner brief, 2026-11-25, §28: the brief's category anchor).
+      { name: "Shipping containers in Richmond Town", href: "/cities-we-serve/shipping-container-richmond-town" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
