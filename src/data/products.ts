@@ -743,8 +743,11 @@ export const products: Product[] = [
     category: "Portable Cabins",
     categorySlug: "portable-cabins",
     slug: "ms-portable-cabin",
-    description: "Complete guide to MS portable cabins in India covering mild steel construction, standard sizes, price ranges, applications, customization options, and installation guidance for 2024–2025 buyers.",
-    shortDescription: "Complete 2024–2025 guide to mild steel portable cabins in India",
+    // Year-free since 2026-11-25 (product SEO pass): "for 2024–2025 buyers" dated the copy on every
+    // card that shows it (/products and all category grids) and in <g:description>; "price ranges"
+    // is gone too — this SKU is sold at one fixed GST-inclusive price.
+    description: "Mild steel (MS) portable cabins built in India: how they are constructed, standard sizes, applications, customisation options and installation guidance.",
+    shortDescription: "Insulated mild steel portable cabins: construction, sizes and uses",
     specifications: [
       { label: "Popular Sizes", value: "8x20 ft, 10x20 ft, 10x30 ft, 40x10 ft" },
       { label: "Frame Material", value: "MS C-channel 75x40 mm or RHS 50x50x3 mm" },
@@ -1373,7 +1376,7 @@ export const products: Product[] = [
     name: "Cabins in Office",
     category: "Container Offices",
     categorySlug: "container-offices",
-    description: "Modern modular office cabins for 2026 — glass-and-steel prefabricated workspaces including manager cabins, team pods, phone booths, meeting rooms, and executive suites. 30–40 dB acoustic performance with double-glazed glass. Install 4–6 cabins over a weekend with minimal disruption.",
+    description: "Modern modular office cabins — glass-and-steel prefabricated workspaces including manager cabins, team pods, phone booths, meeting rooms, and executive suites. 30–40 dB acoustic performance with double-glazed glass. Install 4–6 cabins over a weekend with minimal disruption.",
     shortDescription: "Modern modular office cabins — glass partitions, acoustic booths, meeting pods & executive suites for hybrid workspaces",
     specifications: [
       { label: "Frame Material", value: "Powder-coated aluminium or steel" },
