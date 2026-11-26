@@ -16,6 +16,8 @@
 #   S4 a new city page that answers 404 in the new build             → gate blocks the switch
 #   S4b the new release reports another commit                       → gate blocks the switch
 #   S4c a page answering 200 with the not-found page (soft 404)      → gate blocks the switch
+#   S4d a page answering 200 with its body but the not-found HEAD    → gate blocks the switch
+#       (noindex, default title, no canonical: the 2026-11-25 cached-404 "hybrid")
 #   S5 a good commit (chunks of the 2 previous builds still served, redirect 301), then
 #      `rollback`                                                    → previous release live
 #   S6 two deploys at once                                           → the second is refused
@@ -323,6 +325,19 @@ grep -q "NOT switching traffic" "$WORK/last.log" || fail "S4c: no 'NOT switching
 pass "S4c: a branded 404 served with status 200 counted as a failure; production untouched"
 bot_untouched "S4c"
 
+# ── S4d: a page that answers 200 with its own body but the not-found HEAD (noindex) ──────
+# Production on 2026-11-25 (#323): the first regeneration of a cached 404 kept the not-found head.
+step "S4d a city page answers 200 with the not-found head (noindex) → gate blocks the switch"
+rm -f "$WORK/src/fault.txt"; set_cities city-a city-b city-new
+echo "notfound-head:city-new" > "$WORK/src/fault.txt"
+commit "v4d: not-found head" >/dev/null
+poll_start; deploy fail; poll_stop "S4d"
+[ "$(live_build)" = "$BEFORE" ] && [ "$(upstream_port)" = "$PORT_BEFORE" ] && [ "$(pm2_names)" = "$NAMES_BEFORE" ] || fail "S4d: production changed although the gate failed"
+grep -qF "seo: /cities-we-serve/city-new (city) answered 200 with the not-found page's head" "$WORK/last.log" || fail "S4d: the gate did not report the not-found head"
+grep -q "NOT switching traffic" "$WORK/last.log" || fail "S4d: no 'NOT switching' message"
+pass "S4d: a 200 page with the not-found head (noindex) counted as a failure; production untouched"
+bot_untouched "S4d"
+
 # ── S5: good commit, then rollback ─────────────────────────────────────────────────────
 step "S5 good commit, then rollback to the previous release"
 rm -f "$WORK/src/fault.txt"; set_cities city-a city-b city-new city-fixed
@@ -362,7 +377,7 @@ deploy ok
 n=$(ls -1d "$APP_ROOT"/releases/*/ | wc -l)
 nf=$(ls -1d "$APP_ROOT"/releases/*.failed/ 2>/dev/null | wc -l)
 [ $((n - nf)) -le $((KEEP_RELEASES + 2)) ] || fail "S7: $((n - nf)) good release dirs kept (limit $KEEP_RELEASES + current/previous)"
-[ "$nf" -le 1 ] || fail "S7: $nf failed release dirs kept (limit KEEP_FAILED=1; S3–S4c left five)"
+[ "$nf" -le 1 ] || fail "S7: $nf failed release dirs kept (limit KEEP_FAILED=1; S3–S4d left six)"
 [ -d "$(readlink -f "$APP_ROOT/current")" ] && [ -d "$(readlink -f "$APP_ROOT/previous")" ] || fail "S7: current/previous pruned"
 pass "S7: $n release directories kept"
 bot_untouched "S7"
