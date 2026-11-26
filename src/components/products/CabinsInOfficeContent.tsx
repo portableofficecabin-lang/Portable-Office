@@ -64,7 +64,7 @@ export function CabinsInOfficeContent() {
       {/* Introduction */}
       <section>
         <h2 className="text-3xl font-bold text-foreground mb-6">
-          Cabins in Office: Modern Modular Workspaces for 2026
+          Cabins in Office: Modern Modular Workspaces
         </h2>
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-4 text-muted-foreground leading-relaxed">
@@ -72,7 +72,7 @@ export function CabinsInOfficeContent() {
               Cabins in office settings have transformed dramatically over the past three decades. What once meant bulky wooden partitions and fixed manager rooms now refers to sleek, prefabricated office structures built with glass-and-steel modular systems that can be assembled in a short time. We are proud to deliver high-quality, reliable prefab office solutions, backed by years of experience and a strong dedication to quality.
             </p>
             <p>
-              This guide covers what office cabins are, why companies in 2026 use them, and how to design and install them quickly to support hybrid work and productivity goals.
+              This guide covers what office cabins are, why companies use them, and how to design and install them quickly to support hybrid work and productivity goals.
             </p>
           </div>
           <OptimizedImage
@@ -352,7 +352,7 @@ export function CabinsInOfficeContent() {
 
       {/* Design Trends */}
       <section>
-        <h2 className="text-2xl font-bold text-foreground mb-4">Design Trends for Office Cabins in 2024–2026</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-4">Design Trends for Office Cabins</h2>
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { title: "Transparent Privacy", desc: "Clear glass with acoustic films and subtle frosting lines" },
@@ -400,7 +400,7 @@ export function CabinsInOfficeContent() {
       <section>
         <h2 className="text-2xl font-bold text-foreground mb-4">Future of Office Cabins</h2>
         <p className="text-muted-foreground leading-relaxed">
-          Office cabins will remain central as companies refine hybrid policies through 2026 and beyond. Emerging concepts include demountable cabins that can be relocated floor-to-floor, climate-controlled focus pods for Indian summers, and cabins designed for VR/AR collaboration. Data-driven design is rising — sensors now report cabin occupancy, air quality, and noise levels to optimise layouts over time. Sustainability drives the manufacture of cabins with recyclable aluminium, low-VOC panels, and modular components that support reuse after office moves.
+          Office cabins will remain central as companies refine hybrid policies. Emerging concepts include demountable cabins that can be relocated floor-to-floor, climate-controlled focus pods for Indian summers, and cabins designed for VR/AR collaboration. Data-driven design is rising — sensors now report cabin occupancy, air quality, and noise levels to optimise layouts over time. Sustainability drives the manufacture of cabins with recyclable aluminium, low-VOC panels, and modular components that support reuse after office moves.
         </p>
       </section>
 

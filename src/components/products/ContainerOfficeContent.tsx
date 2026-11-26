@@ -682,7 +682,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
         </h2>
         <div className="space-y-4 text-muted-foreground">
           <p>
-            Modern container offices offer speed, flexibility, and long-term value for Indian businesses navigating 2025–26 and beyond. The combination of factory quality, rapid deployment, and relocatability addresses challenges that traditional buildings simply cannot match.
+            Modern container offices offer speed, flexibility, and long-term value for Indian businesses. The combination of factory quality, rapid deployment, and relocatability addresses challenges that traditional buildings simply cannot match.
           </p>
           <p>
             Container offices integrate naturally with other modular solutions from Portable Office Cabin—prefab labour colonies, rooftop sheds, prefab canteens, container homes, and portable toilets for comprehensive site infrastructure.
