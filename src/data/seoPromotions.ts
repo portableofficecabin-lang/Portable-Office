@@ -816,6 +816,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Babusapalya / Babusa Palya (furniture and kitchen hardware dealers' stock; mobile and computer
     // accessories distributors' stock; owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Babusapalya", href: "/cities-we-serve/shipping-container-babusa-palya" },
+    // Frazer Town / Pulikeshi Nagar (bungalow redevelopment, restaurant packaging and spare furniture, community hall
+    // furniture; owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
   ],
 };
 
