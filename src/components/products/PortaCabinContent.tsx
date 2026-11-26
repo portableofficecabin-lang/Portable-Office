@@ -38,7 +38,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             { icon: Truck, title: "Optional Installation", desc: "Added at checkout" },
             { icon: IndianRupee, title: "Cost-Effective", desc: "Usually no RCC foundation or long civil works — the base depends on cabin size and site" },
             { icon: Building2, title: "Reusable & Relocatable", desc: "Move across multiple project sites" },
-            { icon: Leaf, title: "Eco-Friendly", desc: "70–80% less construction waste" },
+            { icon: Leaf, title: "Eco-Friendly", desc: "Less construction waste than brick-and-mortar" },
           ].map((benefit) => (
             <div key={benefit.title} className="bg-accent/5 border border-accent/15 rounded-xl p-5 text-center hover:border-accent/30 transition-colors">
               <benefit.icon className="h-8 w-8 text-accent mx-auto mb-3" />
@@ -197,7 +197,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             {
               icon: Leaf,
               title: "Sustainability Benefits",
-              desc: "Recyclable steel frames, 70–80% less construction waste, reduced on-site dust and noise. Components can be refurbished or recycled at end of life.",
+              desc: "Recyclable steel frames, less construction waste, reduced on-site dust and noise. Components can be refurbished or recycled at end of life.",
             },
             {
               icon: Settings,
@@ -515,7 +515,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             },
             {
               title: "Sustainability Advantages",
-              desc: "Lower embodied carbon vs repeated brick construction. 70–80% less construction waste. Steel frames fully recyclable. Cabins can be upgraded and repurposed throughout lifespan.",
+              desc: "Lower embodied carbon vs repeated brick construction. Less construction waste. Steel frames fully recyclable. Cabins can be upgraded and repurposed throughout lifespan.",
             },
           ].map((item) => (
             <div key={item.title} className="bg-card border border-border rounded-xl p-6">

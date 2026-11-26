@@ -22,7 +22,7 @@ const highlights = [
   { icon: Lock, title: "Industrial Security", description: "Heavy-duty locking systems, CCTV provisions, and weather-resistant doors" },
   { icon: Users, title: "Labour Accommodation", description: "G+1 stacked dormitories with attached toilets, dining, and fire safety provisions" },
   { icon: Wrench, title: "Full Customization", description: "Partitions, restrooms, pantry, data cabling, and corporate branding" },
-  { icon: Leaf, title: "ESG Compliant", description: "90% container reuse, solar-ready roofs, and reflective coatings for energy savings" },
+  { icon: Leaf, title: "ESG Compliant", description: "Container reuse, solar-ready roofs, and reflective coatings for energy savings" },
 ];
 
 const containerTypes = [
@@ -300,7 +300,7 @@ export function ShippingContainerSIPCOTContent() {
             "Optional roof insulation and reflective coatings for thermal comfort",
             "Solar-ready roofs for energy savings in SIPCOT estates",
             "Ideal for customers following ESG mandates and sustainability targets",
-            "90% container reuse — minimal debris compared to conventional building",
+            "Container reuse — minimal debris compared to conventional building",
           ].map((item) => (
             <li key={item} className="flex items-start gap-2">
               <Leaf className="h-5 w-5 text-accent shrink-0 mt-0.5" />

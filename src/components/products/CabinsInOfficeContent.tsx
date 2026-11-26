@@ -239,7 +239,7 @@ export function CabinsInOfficeContent() {
         <h2 className="text-2xl font-bold text-foreground mb-4">Benefits of Having Cabins in an Office</h2>
         <div className="grid md:grid-cols-2 gap-6">
           {[
-            { title: "Productivity Gains", desc: "Fewer call disruptions; 20–30% higher focus in enclosed zones for tasks requiring 60–90 minutes of deep work" },
+            { title: "Productivity Gains", desc: "Fewer call disruptions and quieter enclosed zones for tasks requiring 60–90 minutes of deep work" },
             { title: "Privacy & Confidentiality", desc: "Suitable for HR meetings, performance reviews, client negotiations, and legal discussions" },
             { title: "Hybrid Work Support", desc: "Dedicated video conferencing space with stable acoustics and lighting for remote collaboration" },
             { title: "Employee Well-being", desc: "Reduced noise fatigue; ability to step away for focused work without leaving the office" },
@@ -388,9 +388,9 @@ export function CabinsInOfficeContent() {
             </ul>
           </div>
           <div className="bg-background rounded-lg p-4 border">
-            <h4 className="font-semibold text-foreground text-sm mb-2">Real-world example:</h4>
+            <h4 className="font-semibold text-foreground text-sm mb-2">A practical check:</h4>
             <p className="text-xs text-muted-foreground">
-              A fintech startup downsized from 10 large cabins to 6 smaller ones plus 8 phone pods after tracking actual usage — boosting utilization by 25% and freeing up portable workspaces for project teams.
+              Track how your cabins and meeting rooms are actually used for a few weeks before ordering more — a mix of fewer large cabins and a few small phone booths can meet the same need with less floor space.
             </p>
           </div>
         </div>

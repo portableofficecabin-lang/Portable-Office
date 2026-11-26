@@ -34,7 +34,7 @@ const faqs = [
   { q: "What are the most common container sizes?", a: "The 20 ft (33 m³, 1 TEU) and 40 ft (67 m³, 2 TEU) containers dominate global trade. The 40 ft High Cube (76 m³) provides extra height for bulky cargo or conversion projects." },
   { q: "How long does a cargo shipping container last?", a: "In active shipping, containers typically serve 10–15 years and travel approximately 500,000 km. Converted to buildings with proper maintenance—repainting every 5–7 years, floor recoating, rust treatment—they can last 25–50 years." },
   { q: "What maintenance do containers require?", a: "Shipping containers need CSC re-inspection every 30 months. Building conversions require periodic exterior repainting (marine-grade paint), floor surface maintenance, and seal checks on doors and windows." },
-  { q: "Can containers be stacked safely on-site?", a: "Yes. Shipping containers stack up to 9 high on ships using twistlocks. For building applications, properly engineered foundations and connections allow 3–6 level stacking depending on structural analysis." },
+  { q: "Can containers be stacked safely on-site?", a: "Yes, within limits. Each ISO container's permitted stacking load is stated on its CSC safety-approval plate, and units are locked together at the corner castings with twistlocks. For a building, how many levels are possible depends on a structural design for the site, its foundations and the connections between units." },
   { q: "What approvals are needed for container buildings in India?", a: "Container structures require local building permissions from the municipal corporation or panchayat. NBC Part 4 mandates 2-hour fire rating for certain occupancy types. Electrical installations must comply with IS 1642 standards." },
   { q: "How do you make containers comfortable in hot climates?", a: "Insulation is critical—100 mm PIR panels achieve U-values of 0.25 W/m²K. Additional strategies include green roofs, shading canopies, evaporative coolers (achieving 15–20°C drops), and light-coloured exterior finishes to reduce solar gain." },
   { q: "How quickly can Portable Office Cabin deliver a container office?", a: "Standard products bought online are dispatched within 7–15 working days of order confirmation. Complex multi-unit configurations or customized interiors follow the timeline in your written quotation." },
@@ -176,7 +176,7 @@ export function CargoShippingContainerContent() {
           <div className="bg-muted/30 rounded-lg p-4">
             <h3 className="font-semibold text-foreground mb-2">Key Structural Features</h3>
             <ul className="space-y-1 text-sm text-muted-foreground">
-              <li>• Eight ISO corner castings (215 × 215 × 178 mm) allow stacking up to 9 high</li>
+              <li>• Eight ISO corner castings (215 × 215 × 178 mm) for lifting, twistlock connection and stacking within the load rated on the CSC plate</li>
               <li>• Forklift pockets on 20 ft bases enable easy loading</li>
               <li>• Floor load ratings reach 7.1 tons/m² uniformly</li>
               <li>• High Cube extra headroom ideal for insulation and ceiling finishes</li>
@@ -237,7 +237,7 @@ export function CargoShippingContainerContent() {
         <h2 className="text-2xl font-bold text-foreground mb-4">Securing, Safety & International Standards</h2>
         <div className="space-y-4 text-muted-foreground leading-relaxed">
           <p>
-            Safety standards matter because containers endure extreme conditions: stacked up to 11 high on vessels, vibrating across long distances on rail, and bouncing over rough roads on trucks.
+            Safety standards matter because containers endure extreme conditions: stacked high on vessels, vibrating across long distances on rail, and bouncing over rough roads on trucks.
           </p>
           <div className="grid md:grid-cols-2 gap-4 mt-4">
             <div className="bg-card border border-border rounded-xl p-5">
@@ -275,10 +275,9 @@ export function CargoShippingContainerContent() {
           </p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 mt-4">
             {[
-              "Wind resistance exceeding 200 km/h",
               "Structural lifespan of 30+ years",
-              "Stackability up to 6–9 levels",
-              "50–70% faster deployment",
+              "Stackable for multi-level layouts, subject to structural design",
+              "Faster deployment than site-built structures",
               "Minimal foundation requirements",
               "Factory-controlled fabrication quality",
             ].map((item, i) => (
@@ -346,9 +345,9 @@ export function CargoShippingContainerContent() {
               <tbody>
                 {[
                   ["Deployment time", "Far shorter — set out in your written quotation", "3–6 months"],
-                  ["Cost savings", "40–60% lower", "Baseline"],
+                  ["Cost", "Fixed factory price, less civil work", "Site-built, priced per project"],
                   ["Relocation", "Crane and flatbed", "Demolition required"],
-                  ["End-of-project waste", "Near zero", "Significant debris"],
+                  ["End-of-project waste", "Minimal — units relocate", "Significant debris"],
                 ].map((row, i) => (
                   <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : "bg-background"}>
                     <td className="p-3 text-sm font-medium text-foreground">{row[0]}</td>
@@ -425,13 +424,13 @@ export function CargoShippingContainerContent() {
         <h2 className="text-2xl font-bold text-foreground mb-4">Benefits of Using Cargo Containers & Modular Solutions</h2>
         <div className="grid sm:grid-cols-2 gap-3">
           {[
-            "50–70% faster deployment than conventional construction",
+            "Faster deployment than conventional construction",
             "Fixed factory pricing eliminates site-based cost overruns",
-            "10–20 workers versus 50+ for equivalent masonry",
+            "Smaller site crews than equivalent masonry",
             "5–10 deployment cycles for quality units",
             "300 MPa steel withstands extreme conditions",
-            "95% recycled steel content in many containers",
-            "80% reduction in construction waste vs traditional building",
+            "Steel that can be recycled at end of life",
+            "Less construction waste than traditional building",
             "Fits standard flatbed trucks, rail wagons, and vessels",
           ].map((benefit, i) => (
             <div key={i} className="flex items-start gap-2 bg-accent/5 rounded-lg p-3">

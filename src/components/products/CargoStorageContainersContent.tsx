@@ -19,7 +19,7 @@ const containerTypes = [
   { icon: Building2, title: "High Cube", desc: "15% more internal volume than standard units. Additional headroom makes them ideal for container office conversions and container homes with ceiling heights exceeding 2.5 metres." },
   { icon: Wrench, title: "Open Top", desc: "Removable tarpaulin roofs for crane loading of over-height cargo like turbines and heavy machinery reaching heights up to 2.7 metres." },
   { icon: Anchor, title: "Flat Rack", desc: "Collapsible end walls with open sides, rated for 40-ton point loads. Transport vehicles, steel coils, excavators via slings or chains." },
-  { icon: Truck, title: "Double Door & Open Side", desc: "Access from both ends or full side access. Speeds loading/unloading by 30–50% in confined depots. Ideal for warehousing and pop-up retail." },
+  { icon: Truck, title: "Double Door & Open Side", desc: "Access from both ends or full side access. Speeds loading and unloading in confined depots. Ideal for warehousing and pop-up retail." },
   { icon: Thermometer, title: "Reefer (Refrigerated)", desc: "Precise temperature control from -30°C to +30°C with ±0.25°C accuracy. Vital for pharmaceutical and frozen food exports." },
 ];
 
@@ -42,7 +42,7 @@ const faqs = [
   { q: "What is the price of a cargo storage container from Portable Office Cabin?", a: `Our cargo storage container is available to buy online at a fixed, GST-inclusive price of ${cargoContainerPrice} — the same price shown on the product page, in the cart, and at checkout. Custom configurations, specialized units, and full conversions are available on request.` },
   { q: "What is the difference between cargo-worthy and wind & water-tight containers?", a: "Cargo-worthy (CW) containers have valid CSC approval for continued sea transport with minor wear acceptable. Wind & water-tight (WWT) units may have minor dents but are suitable for static storage — they keep weather out but aren't certified for shipping." },
   { q: "Can cargo containers be converted into offices or homes?", a: "Yes. Portable Office Cabin converts GP and HC containers into fully equipped offices, homes, cafés, and labour colonies using frame-preserving cuts, welding reinforcements per IS 800, PUF insulation panels, and comprehensive electrical and plumbing fit-outs." },
-  { q: "What steel types are used in cargo storage containers?", a: "Three main types: Corten (weathering) steel (ASTM A588, 355 MPa yield, self-passivating) is the industry standard. Mild steel (IS 2062 Grade B, 250 MPa) costs 20–30% less but needs protective coatings. Stainless steel (AISI 304/316L) is used for food and pharmaceutical applications." },
+  { q: "What steel types are used in cargo storage containers?", a: "Three main types: Corten (weathering) steel (ASTM A588, 355 MPa yield, self-passivating) is the industry standard. Mild steel (IS 2062 Grade B, 250 MPa) costs less but needs protective coatings. Stainless steel (AISI 304/316L) is used for food and pharmaceutical applications." },
   { q: "What sizes of cargo containers are available in India?", a: "The most common are 20 ft GP (33 m³ internal volume) and 40 ft GP (67 m³). High cube variants add 30.5 cm height. Specialized sizes include 10 ft (for urban sites), 45 ft pallet-wide, and half-height units for dense bulk cargo." },
   { q: "How do I inspect a used container before buying?", a: "Check corner posts for bending, wall thickness with ultrasonic gauging, roof for pinholes, door alignment and seal compression, lock rod operation, and marine plywood floor for delamination or rot. Verify CSC plate details and manufacture date (post-2010 preferred)." },
   { q: "What maintenance does a cargo container need?", a: "Annual repainting with epoxy coating (80 μm minimum), rust treatment at first signs, lubricate hinges with lithium EP2 grease, roof inspection after monsoon, pest treatment for timber floors, and clear drainage around the base." },
@@ -222,7 +222,7 @@ export function CargoStorageContainersContent() {
             <div className="bg-card border border-border rounded-xl p-5">
               <h4 className="font-bold text-foreground mb-2">Mild Steel (IS 2062 Grade B)</h4>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• 250 MPa yield strength, 20–30% cost savings over corten</li>
+                <li>• 250 MPa yield strength, lower cost than corten</li>
                 <li>• Requires epoxy primers + polyurethane topcoats (150–200 μm DFT)</li>
                 <li>• 15–20 year lifespan with proper maintenance</li>
                 <li>• Common for inland storage and prefab applications</li>
@@ -281,7 +281,7 @@ export function CargoStorageContainersContent() {
             </div>
             <div className="border-l-4 border-accent pl-4">
               <h4 className="font-bold text-foreground">Prefab Labour Colonies</h4>
-              <p className="text-sm text-muted-foreground">Integrated worker accommodation with dormitories (100+ beds, 2–3 high stacking), dining halls, canteens, and sanitary blocks. Deployed at power plants and industrial parks.</p>
+              <p className="text-sm text-muted-foreground">Integrated worker accommodation for power plants and industrial parks: dormitories on more than one level, dining halls, canteens and sanitary blocks.</p>
             </div>
             <div className="border-l-4 border-accent pl-4">
               <h4 className="font-bold text-foreground">Container Homes & Cafés</h4>
