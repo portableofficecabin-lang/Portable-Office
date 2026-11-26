@@ -7,7 +7,7 @@ Every claim on the site that has no record behind it is listed here with where i
 | Group | What happens | Count |
 |---|---|---|
 | **A. Removed in this PR** | Each is replaced with a fact the site already states (dispatch days, PIN-code delivery zones, the warranty policy, the factory near Hosur). Tell me any ID to keep and I restore that line. | 22 items in 18 files |
-| **B. Waiting for your evidence** | Unchanged. You send the evidence, or approve removal. | 9 items |
+| **B. Waiting for your evidence** | Unchanged. You send the evidence, or approve removal. | 10 items |
 | **C. Documents sent to customers** (admin PDFs, calculator PDF) | Unchanged. Listed only; a separate PR after your decision. | 4 items |
 | **D. Product, category and Merchant files** | Unchanged here. They belong to the product SEO session, which takes them in its own draft PR. Rows marked Merchant-protected need your separate Merchant approval, not just a PR number. | 98 lines |
 
@@ -58,6 +58,7 @@ A new test, `src/lib/seo/sitewideClaims.test.ts`, fails if any of these claims r
 | E7 | Lifespans "8–15 year lifespan" and "8–15+ year…" | `app/(site)/blog/labour-shed-prefabricated-structures/page.tsx:9` (meta), `LabourShedPrefabricatedStructures.tsx:139` | Same question as issue-107 Q9: one lifespan table per material, labelled "typical, with maintenance", or remove. |
 | E8 | "Eco-Friendly Materials", "Kinder to the planet", "sustainable materials" | `HeroSection.tsx:12`, `:97`; `WhyChooseUs.tsx` (Eco-Friendly card) | Vague environmental claim. Keep it only if you can name what is eco-friendly (e.g. recyclable steel, reusable units). Otherwise approve a factual line such as "Steel units that can be moved and reused". |
 | E9 | "Every structure we build meets the highest industry standards"; "To be the global leader…" (a vision statement) | `About.tsx:12`, `:74` | Low risk: puffery and an aspiration, not a factual claim. Keep unless you prefer plainer wording. |
+| E10 | **"BIS Certified MS Steel"** in the Merchant feed title and material of the Porta Cabin; **"IS 800" / "IS 2062" steel** in product titles and specs (e.g. "Prefab Labour Hutment IS 800 Steel…") | `src/data/productCommerce.ts:482–483` (**Merchant feed title, Merchant-protected**); `src/data/products.ts`, `productCommerce.ts`, product content files (product SEO session's files) | Mill test certificates or the steel supplier's BIS licence for the sections you use (ISMC, RHS, SHS). IS 800 is a design code, not a steel grade: say "designed to IS 800" only if the structural design follows it. The product SEO session changes these after your decision, and the feed title needs your separate Merchant approval. |
 
 ## C. Documents sent to customers (unchanged; listed only)
 
