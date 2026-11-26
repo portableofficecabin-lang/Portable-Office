@@ -254,6 +254,27 @@ const nextConfig: NextConfig = {
       { source: "/about", destination: "/about-us", statusCode: 301 },
       { source: "/projects", destination: "/gallery", statusCode: 301 },
       { source: "/terms", destination: "/terms-and-conditions", statusCode: 301 },
+      // ── Portable-cabin guides moved to /guides (D5, 2026-11; src/data/guideMoves.ts) ──
+      // ONE hop from the old nested URL and from its `.html` form. Config-level because the
+      // nested [slug]/[child] route is fully static (dynamicParams=false): a page-level redirect
+      // would never run for a URL it no longer prerenders. src/data/guideMoves.test.ts reads this
+      // file and checks every pair.
+      { source: "/products/portable-cabin/price-and-cost-guide", destination: "/guides/portable-cabin-price-and-cost", statusCode: 301 },
+      { source: "/products/portable-cabin/price-and-cost-guide.html", destination: "/guides/portable-cabin-price-and-cost", statusCode: 301 },
+      { source: "/products/portable-cabin/sizes-and-dimensions", destination: "/guides/portable-cabin-sizes-and-dimensions", statusCode: 301 },
+      { source: "/products/portable-cabin/sizes-and-dimensions.html", destination: "/guides/portable-cabin-sizes-and-dimensions", statusCode: 301 },
+      { source: "/products/portable-cabin/materials-ms-vs-puf", destination: "/guides/portable-cabin-materials-ms-vs-puf", statusCode: 301 },
+      { source: "/products/portable-cabin/materials-ms-vs-puf.html", destination: "/guides/portable-cabin-materials-ms-vs-puf", statusCode: 301 },
+      { source: "/products/portable-cabin/installation-and-site-preparation", destination: "/guides/portable-cabin-installation-and-site-preparation", statusCode: 301 },
+      { source: "/products/portable-cabin/installation-and-site-preparation.html", destination: "/guides/portable-cabin-installation-and-site-preparation", statusCode: 301 },
+      { source: "/products/portable-cabin/maintenance-and-lifespan", destination: "/guides/portable-cabin-maintenance-and-lifespan", statusCode: 301 },
+      { source: "/products/portable-cabin/maintenance-and-lifespan.html", destination: "/guides/portable-cabin-maintenance-and-lifespan", statusCode: 301 },
+      { source: "/products/portable-cabin/transport-and-delivery", destination: "/guides/portable-cabin-transport-and-delivery", statusCode: 301 },
+      { source: "/products/portable-cabin/transport-and-delivery.html", destination: "/guides/portable-cabin-transport-and-delivery", statusCode: 301 },
+      { source: "/products/portable-cabin/layouts-and-interiors", destination: "/guides/portable-cabin-layouts-and-interiors", statusCode: 301 },
+      { source: "/products/portable-cabin/layouts-and-interiors.html", destination: "/guides/portable-cabin-layouts-and-interiors", statusCode: 301 },
+      { source: "/products/portable-cabin/buying-guide-new-vs-used", destination: "/guides/portable-cabin-new-vs-used", statusCode: 301 },
+      { source: "/products/portable-cabin/buying-guide-new-vs-used.html", destination: "/guides/portable-cabin-new-vs-used", statusCode: 301 },
       // ── Home Construction service pages ───────────────────────────────────
       // Home Construction is a CATEGORY (/products/category/home-construction),
       // so its child pages live under /products/<parent>/<child> like every

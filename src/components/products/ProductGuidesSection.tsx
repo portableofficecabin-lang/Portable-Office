@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
 
-import { getChildGroup } from "@/data/productChildPages";
+import { childPagePath, getChildGroup } from "@/data/productChildPages";
 
 export function ProductGuidesSection({ parentSlug }: { parentSlug: string }) {
   const group = getChildGroup(parentSlug);
@@ -26,7 +26,7 @@ export function ProductGuidesSection({ parentSlug }: { parentSlug: string }) {
         {group.children.map((c) => (
           <Link
             key={c.slug}
-            href={`/products/${group.parentSlug}/${c.slug}`}
+            href={childPagePath(group, c)}
             className="group flex flex-col rounded-2xl border border-border/60 bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-lg"
           >
             <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10">
