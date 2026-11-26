@@ -502,6 +502,11 @@
       "commit": "a5eb55c",
       "sha": "cd9e7317b0f7aedc"
     },
+    "shipping-container-banaswadi": {
+      "lastmod": "2026-11-26T13:28:58+05:30",
+      "commit": "f20563c",
+      "sha": "3354cd8695148558"
+    },
     "shipping-container-bannerghatta-road": {
       "lastmod": "2026-11-19T15:56:56+05:30",
       "commit": "50b7ca8",
@@ -572,6 +577,11 @@
       "commit": "2e83cd7",
       "sha": "54e4bbe5db2f4733"
     },
+    "shipping-container-frazer-town": {
+      "lastmod": "2026-11-26T13:28:58+05:30",
+      "commit": "f20563c",
+      "sha": "0c5d24445d5b5142"
+    },
     "shipping-container-hebbal-bengaluru": {
       "lastmod": "2026-11-25T20:55:37+05:30",
       "commit": "a62de02",
@@ -631,6 +641,11 @@
       "lastmod": "2026-10-18T19:07:50+05:30",
       "commit": "7942b24",
       "sha": "ca6fd6a5914831cf"
+    },
+    "shipping-container-indiranagar": {
+      "lastmod": "2026-11-26T13:28:58+05:30",
+      "commit": "f20563c",
+      "sha": "4a070f05c0f4ec8c"
     },
     "shipping-container-jalahalli-west": {
       "lastmod": "2026-11-23T08:45:47+05:30",
