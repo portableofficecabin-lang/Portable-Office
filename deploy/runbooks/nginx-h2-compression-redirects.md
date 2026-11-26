@@ -47,6 +47,26 @@ Two findings outside this change, for later:
 - The homepage HTML is 727 KB uncompressed, mostly the React payload.
 - Desktop CLS on `/` is 0.122.
 
+### Mobile LCP element on each tested page (26 Nov, production `6c83e1e`)
+
+Lighthouse's "LCP element" audit errored in all 18 runs ("Required TraceElements gatherer"), so the element was read from Chrome's own `largest-contentful-paint` entries instead. The setup matched Lighthouse mobile: 412 × 823 at 1.75×, 150 ms RTT, 1.6 Mbps down, CPU 4× slower, cache off, 2 runs per page.
+
+| Page | LCP element | Observed LCP | Lighthouse LCP (simulated) |
+|---|---|---|---|
+| `/` | `<img>` `/assets/hero-bg-mobile.webp` (hero background; `loading=eager`, `fetchpriority=high`, preloaded) | 2.17–2.26 s | 5.9 s |
+| `/products/portable-cabin` | `<p>` intro text "Every portable cabin we make, in one place…" | 1.78–1.82 s | 3.9 s |
+| `/cities-we-serve/portable-cabin-kolar` | `<img>` `/_next/image?url=…portable-cabin-kolar-front-elevation.webp&w=750` (hero render; `fetchpriority=high`) | 1.72–1.74 s | 4.1 s |
+
+All three LCP elements are already set to load early: eager loading with high priority for the images, and plain server-rendered text for the product page.
+
+Lighthouse's higher numbers are its simulated estimate, which charges every request on the critical path a full slow-4G round trip. Those requests are the HTML, the CSS and the 41–56 queued HTTP/1.1 requests. Removing that queueing (HTTP/2) and shrinking the transfer (Brotli) is exactly what this change does. The after-run will show how much of the gap closes.
+
+### Checked from outside (read-only, 26 Nov)
+
+- **Certificate:** covers `portableofficecabin.com` and `www.portableofficecabin.com`. Issuer Let's Encrypt, valid to 4 Jan 2027, so it is certbot-managed. One STOP condition in step 0 is cleared.
+- **Edge state:** the same as section 1, re-run at `6c83e1e`. ALPN `http/1.1` on both sites, gzip, and 2–3 redirect hops on `http://www…`.
+- **Not checkable from the laptop:** the nginx version, the site file, the Brotli package and the deploy script's nginx handling. The laptop has no SSH access to the VPS (no key), so step 0 has to run on the VPS.
+
 ## 2. Before you start
 
 - [ ] The owner has approved this nginx change by name (separately from any PR number).
