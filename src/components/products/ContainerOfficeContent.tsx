@@ -74,7 +74,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             "Ready to use upon delivery with complete electrical and interior fit-out",
             "Movable between project locations using standard transport",
             "Fully customizable layouts, finishes, and branding",
-            "Cost-effective compared to brick-and-mortar offices with 60-70% lower setup time",
+            "Cost-effective compared to brick-and-mortar offices, with a far shorter setup time",
           ].map((item) => (
             <div key={item} className="flex items-start gap-3 bg-muted/50 rounded-xl p-4">
               <CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" />
@@ -131,7 +131,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             Many portable office cabins on the market are built as temporary sheds with lighter frames, lower insulation values, and finishes designed for short-term use. While they cost less upfront, their limited structural integrity, poor thermal performance, and rapid depreciation make them expensive over time.
           </p>
           <p>
-            Modern container offices, by contrast, function as capital assets. They retain 50–70% of their value over a 5–10 year lifecycle with basic maintenance, can be repurposed or sold in secondary markets, and provide consistent comfort regardless of external conditions.
+            Modern container offices, by contrast, function as capital assets. They retain resale value over their lifecycle with basic maintenance, can be repurposed or sold in secondary markets, and provide consistent comfort regardless of external conditions.
           </p>
         </div>
 
@@ -551,7 +551,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
           <div className="bg-muted/50 rounded-xl p-5">
             <h4 className="font-display font-semibold text-foreground mb-2">Resale and Redeployment Value</h4>
             <p className="text-muted-foreground text-sm">
-              Well-maintained container offices retain 50–70% of value with proper care. Units can be repurposed as storage, converted to guard rooms, or sold in secondary markets—unlike traditional buildings that depreciate toward zero.
+              Well-maintained container offices retain resale value with proper care. Units can be repurposed as storage, converted to guard rooms, or sold in secondary markets—unlike traditional buildings that depreciate toward zero.
             </p>
           </div>
         </div>
@@ -755,7 +755,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             },
             {
               q: "Are second-hand containers reliable for office use?",
-              a: "Cargo-worthy used containers offer excellent value when properly refurbished. We inspect, repair, and treat used containers to match new-unit durability, with 20–30% cost savings for budget-conscious projects.",
+              a: "Cargo-worthy used containers offer excellent value when properly refurbished. We inspect, repair, and treat used containers to match new-unit durability, at a lower cost for budget-conscious projects.",
             },
             {
               q: WARRANTY_QUESTION,

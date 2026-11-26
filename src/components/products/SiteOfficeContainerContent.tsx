@@ -39,7 +39,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
             { icon: Zap, title: "Ready to Use", desc: "Complete electrical and interior fit-out upon delivery" },
             { icon: Truck, title: "Movable", desc: "Relocate between project locations using standard transport" },
             { icon: Settings, title: "Fully Customizable", desc: "Layouts, finishes, and branding tailored to you" },
-            { icon: IndianRupee, title: "Cost-Effective", desc: "60-70% lower setup time vs. brick-and-mortar" },
+            { icon: IndianRupee, title: "Cost-Effective", desc: "Far shorter setup time than brick-and-mortar" },
           ].map((item) => (
             <div key={item.title} className="bg-accent/5 border border-accent/15 rounded-xl p-5 text-center hover:border-accent/30 transition-colors">
               <item.icon className="h-8 w-8 text-accent mx-auto mb-3" />
@@ -774,7 +774,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
             },
             {
               q: "Are second hand containers as reliable as new ones?",
-              a: "Cargo-worthy used containers offer excellent value when properly refurbished. We inspect, repair, and treat used containers to match new-unit durability. The cost savings (20-30% lower) make them attractive for budget-conscious projects without compromising quality.",
+              a: "Cargo-worthy used containers offer excellent value when properly refurbished. We inspect, repair, and treat used containers to match new-unit durability. The lower cost makes them attractive for budget-conscious projects without compromising quality.",
             },
             {
               q: "Can furniture be included in the container office package?",

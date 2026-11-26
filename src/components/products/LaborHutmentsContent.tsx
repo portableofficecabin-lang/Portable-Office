@@ -10,7 +10,7 @@ export function LaborHutmentsContent() {
   const faqs = [
     { q: "How quickly can a 100-person labor camp be installed?", a: "A 100-person camp needs far less time on site than masonry construction. Most fabrication happens off site, and on-site erection begins once materials reach the location." },
     { q: "What does the labor hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Larger colonies are sized to the brief — panel thickness, interior furnishings, sanitary provisions, and number of floors all change the build — so those are quoted separately." },
-    { q: "Can labor hutments be relocated to another project?", a: "Yes. Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition. Units are designed for 3–10 project reuses." },
+    { q: "Can labor hutments be relocated to another project?", a: "Yes. Hutments can be dismantled and relocated, unlike fixed buildings requiring demolition. Units are designed for 3–10 project reuses." },
     { q: "What is the service life of prefab labor hutments?", a: "Can be temporary (1–3 years) or semi-permanent (up to 15–20 years) depending on specifications, foundation type, and maintenance practices. Anti-corrosive coatings and galvanized steel ensure long-term durability." },
     { q: "Do you offer G+1 and G+2 configurations?", a: "Yes. Single-story, G+1, and G+2 options are available with staircases, corridors, and balcony walkways to address land availability constraints on urban and remote sites." },
     { q: "What compliance standards do your hutments meet?", a: "Designs adapt for PSU tenders requiring minimum 2.5–3.5 sqm per worker and specified sanitation ratios. Electrical layouts include MCBs, earthing, and optional fire-retardant linings meeting safety regulations." },
@@ -87,7 +87,7 @@ export function LaborHutmentsContent() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { icon: Thermometer, title: "Insulation", desc: "Wall panel and roof systems use 30–60mm PUF/EPS cores, reducing indoor temperatures by 10–15°C in peak summers and cutting HVAC requirements" },
-            { icon: Shield, title: "Structural Strength", desc: "Galvanized steel frames provide wind resistance up to 150 km/h and suitability for seismic zones III–IV when properly anchored" },
+            { icon: Shield, title: "Structural Strength", desc: "Galvanized steel frames, with anchoring specified for the site's wind and seismic conditions" },
             { icon: Zap, title: "Safety Compliance", desc: "Electrical layouts include MCBs, earthing, and optional fire-retardant linings meeting safety regulations and local codes" },
             { icon: Settings, title: "Sanitation", desc: "Pre-planned integration of toilets, bathing areas, water tanks, septic systems, and plumbing lines with proper sanitary fittings" },
             { icon: Users, title: "Comfort", desc: "Cross-ventilation, exhaust fans, LED lighting, ceiling fans, provision for split ACs, mosquito mesh, and weather resistant reflective roofing" },
@@ -112,8 +112,8 @@ export function LaborHutmentsContent() {
         <div className="grid sm:grid-cols-2 gap-4">
           {[
             { title: "Fast Installation", desc: "A 100-person camp needs far less time on site than masonry — critical for reducing project mobilization time" },
-            { title: "Cost Efficiency", desc: "Lower foundation needs, controlled fabrication, and reuse across 3–10 projects deliver 20–35% lifecycle savings as a cost effective solution" },
-            { title: "Reusability", desc: "Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition" },
+            { title: "Cost Efficiency", desc: "Lower foundation needs, controlled fabrication, and reuse across 3–10 projects deliver lifecycle savings as a cost effective solution" },
+            { title: "Reusability", desc: "Hutments can be dismantled and relocated, unlike fixed buildings requiring demolition" },
             { title: "Scalability", desc: "Add or remove blocks as workforce size changes during phased EPC contracts for highways, metro rail, or refineries" },
             { title: "Reduced Disruption", desc: "Most fabrication happens off site, minimizing dust, noise, and congestion at the project location" },
           ].map((item) => (
@@ -134,7 +134,7 @@ export function LaborHutmentsContent() {
           Customization Options for Labor Hutments
         </h2>
         <p className="text-muted-foreground mb-6">
-          Portable Office Cabin offers 100% project-based customization, allowing clients across India to tailor layouts, finishes, and services to their specific needs.
+          Portable Office Cabin offers project-based customization, allowing clients across India to tailor layouts, finishes, and services to their specific needs.
         </p>
         <div className="grid md:grid-cols-2 gap-4">
           {[
@@ -241,7 +241,7 @@ export function LaborHutmentsContent() {
             <tbody>
               {[
                 ["Specification Drivers", "Panel thickness (30mm vs 60mm), floors, interior furnishings, sanitary provisions, foundation"],
-                ["Lifecycle Value", "Amortizes to 20–35% savings over 5–10 years through reusability across 3–10 projects"],
+                ["Lifecycle Value", "Cost spread over 5–10 years through reusability across 3–10 projects"],
                 ["Ownership Value", "Buying prefab hutments makes them a company asset — full control over layout, and reuse across 3–10 projects"],
               ].map((row, i) => (
                 <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : ""}>
@@ -293,8 +293,8 @@ export function LaborHutmentsContent() {
         </p>
         <div className="grid sm:grid-cols-2 gap-4">
           {[
-            { icon: Leaf, title: "Reduced Waste", desc: "Controlled factory production generates under 5% material waste versus 15–20% in conventional builds" },
-            { icon: Zap, title: "Energy Efficient", desc: "Insulated panels and LED lighting reduce power consumption 25–40%; solar integration possible for lighting and fans" },
+            { icon: Leaf, title: "Reduced Waste", desc: "Controlled factory production generates less material waste than conventional builds" },
+            { icon: Zap, title: "Energy Efficient", desc: "Insulated panels and LED lighting reduce power consumption; solar integration possible for lighting and fans" },
             { icon: Building2, title: "Less Site Disturbance", desc: "Smaller on-site footprint, reduced dust and noise, shorter heavy-vehicle movements" },
             { icon: RotateCcw, title: "Reusability", desc: "Multiple project deployments cut repetitive raw material usage and lower embodied carbon over time" },
           ].map((item) => (
