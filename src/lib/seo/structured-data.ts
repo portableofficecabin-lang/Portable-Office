@@ -464,11 +464,14 @@ export function generateProductStructuredData(product: {
       }
     : {};
 
-  // For a fed SKU the schema name MUST be the feed title: it is what <g:title> sends and what
-  // the page <title> renders, and Google matches the feed item to its landing page on it.
-  // Quote-only SKUs (and callers with no commerce object) keep the caller's name — they are
-  // never fed, so there is nothing to match.
-  const name = purchasable && commerce ? commerce.feedTitle : product.name;
+  // PROTECTED-FLOW CHANGE S1 (draft, needs "I approve changing the protected Merchant purchase
+  // flow." before merge): the Product name is the caller's name — for a product page, the visible
+  // H1 (commerce.h1Title, passed in by ProductDetailServer). It used to be the Merchant feedTitle
+  // ("… for Site Offices | Portable Office Cabin"), which appears nowhere on the page and carries the
+  // site name. Structured data must describe what the page shows; Merchant Center matches a landing
+  // page to its feed item by URL and offer (price, availability), which are unchanged. The feed's
+  // <g:title> still sends feedTitle (app/api/merchant-feed/route.ts is untouched).
+  const name = product.name;
 
   /* GOOGLE'S HARD REQUIREMENT: a Product node must carry at least one of offers, review or
    * aggregateRating, or the whole item is reported invalid and drops out of rich results

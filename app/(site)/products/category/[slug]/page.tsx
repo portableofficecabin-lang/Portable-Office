@@ -118,11 +118,13 @@ export default async function Page({ params }: PageProps) {
   const category = categories.find((c) => c.slug === slug);
   if (!category) notFound();
 
-  /* Price-rich results for the portable-cabins category: an ItemList of the category's PURCHASABLE
-   * products with their live GST-inclusive prices and REAL /products/<slug> URLs. Gated by the same
-   * `isPurchasable` predicate that gates Add-to-Cart, product JSON-LD and the Merchant feed — so a
-   * quote-only product can never leak an offer here, and a price here can never differ from the
-   * card, the product page or the feed. */
+  /* PROTECTED-FLOW CHANGE S2 (draft, needs "I approve changing the protected Merchant purchase
+   * flow." before merge): a SUMMARY ItemList — position, url, name — of the category's purchasable
+   * products, in price order, exactly like the Container Offices category below. It used to nest a
+   * Product + Offer node per item (price, currency, availability) with no image, brand or SKU:
+   * incomplete Product nodes that merchant-listing reports flag, on a page that is not where any of
+   * them is sold. Each product page keeps its own complete Product + Offer JSON-LD; prices, the
+   * cards and the Merchant feed are unchanged. */
   const itemListSchema = RICH_CATEGORY_FAQS[slug]
     ? {
         "@context": "https://schema.org",
@@ -132,24 +134,14 @@ export default async function Page({ params }: PageProps) {
           .filter((p) => p.categorySlug === slug && isOutrightSale(p.id))
           .map((p) => ({ p, price: sellPrice(getCommerce(p.id)!.basePrice) }))
           .sort((a, b) => a.price - b.price)
-          .map(({ p, price }, i) => ({
+          .map(({ p }, i) => ({
             "@type": "ListItem",
             position: i + 1,
-            item: {
-              "@type": "Product",
-              name: p.name,
-              // p.slug is an optional OVERRIDE most products don't set — the canonical URL comes
-              // from getProductDetailPath(), which also nests a product child under its parent
-              // (/products/marketing-office/prefab-marketing-office). getProductSlug() gave the
-              // flat child slug, which 308-redirects, so the list pointed at a redirect.
-              url: `${SITE}${getProductDetailPath(p)}`,
-              offers: {
-                "@type": "Offer",
-                priceCurrency: "INR",
-                price: String(price),
-                availability: "https://schema.org/InStock",
-              },
-            },
+            // getProductDetailPath() also nests a product child under its parent
+            // (/products/marketing-office/prefab-marketing-office), so the list never points at a
+            // redirecting flat slug. The name is the product page's H1.
+            url: `${SITE}${getProductDetailPath(p)}`,
+            name: getCommerce(p.id)?.h1Title ?? p.name,
           })),
       }
     : null;
