@@ -81,7 +81,7 @@ export const productChildGroups: ProductChildGroup[] = [
         keyword: "portable cabin price",
         title: "Portable Cabin Price & Cost Guide",
         metaDescription:
-          "What a portable cabin costs in India: fixed GST-inclusive prices, what drives the price up or down, and what transport and installation add. Live prices included.",
+          "What a portable cabin costs in India: fixed GST-inclusive prices, what drives the price up or down, and what transport and installation add.",
         h1: "Portable Cabin Price & Cost Guide",
         intro: [
           "Every purchasable cabin on this site carries one fixed, GST-inclusive price — the same figure on the product page, in the cart, at checkout and on the payment screen. This guide explains what sits behind that number so you can compare configurations confidently.",
@@ -342,7 +342,7 @@ export const productChildGroups: ProductChildGroup[] = [
       {
         slug: "insulation-and-cooling",
         keyword: "insulated portable cabin",
-        title: "Insulated Portable Cabins — PUF Panels & Cooling",
+        title: "Insulated Portable Cabins & PUF Panels",
         metaDescription:
           "How PUF-insulated portable cabins stay cool in Indian summers: panel construction, insulation thickness, AC sizing, and when plain sheet walls are enough.",
         h1: "Insulated Portable Cabins: PUF Panels & Cooling",
@@ -390,7 +390,7 @@ export const productChildGroups: ProductChildGroup[] = [
       {
         slug: "installation-and-site-preparation",
         keyword: "portable cabin installation",
-        title: "Portable Cabin Installation & Site Preparation",
+        title: "Portable Cabin Installation & Site Prep",
         metaDescription:
           "How a portable cabin is installed: base preparation, crane access, levelling, utility hook-ups and the day-of-delivery sequence, step by step.",
         h1: "Portable Cabin Installation & Site Preparation",
@@ -540,7 +540,7 @@ export const productChildGroups: ProductChildGroup[] = [
       {
         slug: "transport-and-delivery",
         keyword: "portable cabin transport",
-        title: "Portable Cabin Transport & Delivery Across India",
+        title: "Portable Cabin Transport & Delivery",
         metaDescription:
           "How portable cabins are transported: lorry sizes per cabin size, crane unloading, route planning, pan-India delivery timelines and what affects freight cost.",
         h1: "Portable Cabin Transport & Delivery",
@@ -588,7 +588,7 @@ export const productChildGroups: ProductChildGroup[] = [
       {
         slug: "materials-ms-vs-puf",
         keyword: "portable cabin material ms vs puf",
-        title: "Portable Cabin Materials: MS Sheet vs PUF Panel",
+        title: "Portable Cabin Materials: MS vs PUF Panel",
         metaDescription:
           "MS sheet walls or PUF sandwich panels? A straight comparison of the two portable cabin wall systems — comfort, cost, durability and which use suits each.",
         h1: "Portable Cabin Materials: MS Sheet vs PUF Panel",

@@ -9,7 +9,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   ArrowRight, Calendar, Clock, User, Tag, BookOpen, Search,
-  TrendingUp, FileText, Bookmark, Share2
+  FileText, Bookmark, Share2
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -389,38 +389,15 @@ export default function Blog({ initialDbRows = [] }: { initialDbRows?: BlogDbRow
                   <BookOpen className="h-5 w-5 text-accent" /> About This Blog
                 </h3>
                 <p className="text-sm text-foreground/80 leading-relaxed">
-                  Expert insights from India's leading portable cabin & prefab structure manufacturer.
-                  We share buying guides, cost comparisons, project case studies, and construction industry trends.
+                  {/* No superlatives and no content we don't publish (there are no case studies yet). */}
+                  Insights from a portable cabin & prefab structure manufacturer.
+                  We share buying guides, cost comparisons and construction industry trends.
                 </p>
               </div>
 
-              {/* Trending Topics */}
-              <div className="bg-card border border-border/50 rounded-xl p-6 shadow-sm">
-                <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-accent" /> Trending Topics
-                </h3>
-                <ul className="space-y-3">
-                  {[
-                    { title: "Portable Cabin Price in India 2025", views: "2.4K views" },
-                    { title: "Container Office Setup Guide", views: "1.8K views" },
-                    { title: "Prefab vs Traditional Construction", views: "1.5K views" },
-                    { title: "Labour Camp Design Standards", views: "1.2K views" },
-                  ].map((topic) => (
-                    <li key={topic.title}>
-                      <Link
-                        href="/blog/labour-shed-prefabricated-structures"
-                        className="flex items-start gap-3 group/item"
-                      >
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
-                        <div>
-                          <p className="text-sm font-semibold text-foreground group-hover/item:text-accent transition-colors leading-snug">{topic.title}</p>
-                          <span className="text-xs text-foreground/70">{topic.views}</span>
-                        </div>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {/* A "Trending Topics" box stood here until 2026-11-25. It showed invented view counts
+                  ("2.4K views" …) for four posts that do not exist, all linking to one unrelated post.
+                  Removed: the site must not show statistics it cannot back up. */}
 
               {/* Popular Tags */}
               <div className="bg-card border border-border/50 rounded-xl p-6 shadow-sm">

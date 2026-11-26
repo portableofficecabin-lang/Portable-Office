@@ -176,7 +176,7 @@ export function PortableCabinContent({ offer }: { offer?: { productId?: string; 
           Applications of Portable Cabins
         </h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
-          From 2020–2025, use of portable cabins has grown strongly across infrastructure, education, and industrial sectors. The industry has seen significant adoption in both manufacturing and service environments.
+          In recent years, use of portable cabins has grown strongly across infrastructure, education, and industrial sectors. The industry has seen significant adoption in both manufacturing and service environments.
         </p>
 
         <div className="rounded-2xl overflow-hidden shadow-lg mb-8">
