@@ -20,6 +20,7 @@ import {
 } from "@/components/products/containerOfficesCategoryData";
 import { CategoryLandingContent } from "@/components/products/CategoryLandingContent";
 import { categoryLandingMetaDescription, resolveCategoryLanding } from "@/data/categoryLandings";
+import { CATEGORY_META, defaultCategoryTitle } from "@/data/categoryMeta";
 
 /** Categories that ship a rich landing page (copy + FAQ + ItemList schema), keyed by slug. */
 const RICH_CATEGORY_FAQS: Record<string, { question: string; answer: string }[]> = {
@@ -62,61 +63,6 @@ export async function generateStaticParams() {
   return staticCategories.map((c) => ({ slug: c.slug }));
 }
 
-/**
- * Per-category SEO metadata overrides. The description prices/claims are the site's REAL figures
- * (₹2.36 lakh = the labour hutment's GST-inclusive sellPrice) — never a copywriter's number.
- */
-const CATEGORY_META: Record<string, { title: string; description: string; keywords?: string }> = {
-  "container-offices": {
-    title: "Container Office Manufacturer in India — Prices & Sizes",
-    description:
-      "Explore container office cabins in custom sizes with MS steel construction, insulation, electrical fittings and flexible layouts. Request a factory-direct quote.",
-    keywords:
-      "container office, container office manufacturer, container office price, " +
-      "container office cabin, portable container office, container office India",
-  },
-  "portable-cabins": {
-    title: "Portable Cabins in India — Prices, Sizes & Manufacturer",
-    description:
-      "Factory-built portable cabins from ₹2.36 lakh (incl. GST). ISO 9001 manufacturer with 15+ years' experience. 20ft, 40ft & custom sizes, MS & PUF builds, pan-India delivery.",
-    keywords:
-      "portable cabins, portable cabin manufacturer in India, porta cabin, portable cabin price, "
-      + "portable office cabin, prefabricated portable cabin, MS portable cabin, "
-      + "20ft portable cabin, 40ft portable cabin bunkhouse",
-  },
-  /* HOME CONSTRUCTION — a HUB, not a competitor. Rewritten 2026-09-07.
-   *
-   * The old copy was wrong twice over. It sold "steel structure, insulated walls, roofing" —
-   * that is the PREFAB range, not the RCC civil work this category actually holds — and it
-   * claimed an "ISO 9001 manufacturer", a claim being withdrawn from public surfaces (commits
-   * 53d483d, e84cecd) and one that describes manufacturing rather than construction anyway.
-   *
-   * Its job now is to ROUTE, so the title and description deliberately avoid the head terms its
-   * own children are competing for ("building construction contractor in Bangalore",
-   * "construction contractor in Hosur", "house construction cost per sq ft"). A hub that
-   * out-ranks its own children for their keyword is the cannibalisation, not the cure. */
-  "home-construction": {
-    // 41 chars, so the rendered tag (+ the 24-char brand suffix the layout template appends)
-    // lands at 65 and displays in full. An earlier draft ran to 92 and was truncated.
-    title: "Home Construction Services in Bangalore",
-    description:
-      "RCC houses built on your own plot in Bangalore and Hosur. Find the right page: contractor "
-      + "services, what a build includes and what it costs, or the area you are building in.",
-    keywords:
-      "home construction services, house construction company, RCC house construction, "
-      + "home construction Bangalore Hosur, house building services",
-  },
-  "prefab-building": {
-    title: "Prefab Buildings — Panel-Built Structures, Made to Your Plan",
-    description:
-      "Prefab buildings with far less time on site than conventional construction — insulated panels, steel truss roof, clear-span width and any footprint. ISO 9001 manufacturer, built in Tamil Nadu, delivered pan-India.",
-    keywords:
-      "prefab building, prefabricated building manufacturer, prefab building system, "
-      + "panel built structure, prefab office building, prefab sales gallery, "
-      + "prefab marketing office, modular building India",
-  },
-};
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const categories = await getMergedCategories();
@@ -137,13 +83,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
    * description in place of the one-line tagline (36–69 characters before). Computed from the
    * merged catalogue, so its model count always matches the grid. */
   const mergedProducts = await getAllProductsMerged();
-  const landingDescription = override
+  // A title-only override (src/data/categoryMeta.ts) still gets the computed landing description.
+  const landingDescription = override?.description
     ? undefined
     : categoryLandingMetaDescription(slug, mergedProducts, cat.name);
+  const productCount = mergedProducts.filter((p) => p.categorySlug === slug).length;
   return buildPageMetadata({
     // No brand suffix here — the root layout title template appends
     // "| Portable Office Cabin" exactly once (avoids a doubled brand).
-    title: override?.title ?? `${cat.name} — Models, Specs & Prices`,
+    title: override?.title ?? defaultCategoryTitle(cat.name, productCount),
     description:
       override?.description ||
       landingDescription ||
