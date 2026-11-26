@@ -315,7 +315,7 @@ export function LaborHutmentsContent() {
           Experience and Expertise in Prefabricated Solutions
         </h2>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          With years of experience serving India's leading construction and infrastructure development projects, Portable Office Cabin has become a trusted name in prefabricated labour hutments and modular building solutions. Our team of experts collaborates closely with clients to understand their specific requirements, ensuring that every prefabricated structure is tailored to the unique demands of each site and industry.
+          Portable Office Cabin builds prefabricated labour hutments and modular buildings for construction and infrastructure projects. Our team of experts collaborates closely with clients to understand their specific requirements, ensuring that every prefabricated structure is tailored to the unique demands of each site and industry.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
           All our prefabricated labor hutments are constructed off site in controlled environments using high quality materials, for consistent quality and quicker installation at your desired location. This off-site manufacturing approach not only speeds up project timelines but also minimizes disruption at the construction site, allowing your operations to continue smoothly.
@@ -338,7 +338,7 @@ export function LaborHutmentsContent() {
         </p>
         <div className="grid sm:grid-cols-2 gap-4">
           {[
-            { title: "Experience", desc: "Operating since the early 2010s with projects delivered across multiple Indian states for diverse industries" },
+            { title: "Delivery", desc: "Delivered across India, with transport priced from your delivery PIN code" },
             { title: "End-to-End Capability", desc: "Design, fabrication, transportation, installation, and maintenance support as a single supplier" },
             { title: "Quality and Customization", desc: "Focus on high quality materials, workmanship, and tailored solutions for EPC contractors, developers, and PSU tenders" },
             { title: "Service and Support", desc: "Responsive pre-sales assistance, site visits, and after-sales support for modifications, relocations, or repairs" },
