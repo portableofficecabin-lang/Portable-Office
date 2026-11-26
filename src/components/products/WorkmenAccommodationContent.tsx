@@ -373,7 +373,7 @@ export const WorkmenAccommodationContent = () => {
           Why Choose Portable Office Cabin for Workmen Accommodation
         </h2>
         <div className="space-y-4 text-muted-foreground">
-          <p>Portable Office Cabin is a specialised manufacturer and supplier of modular buildings focused on Indian project conditions with over 10 years of experience and cumulative delivery exceeding 1 million sq ft across 20+ states.</p>
+          <p>Portable Office Cabin is a specialised manufacturer and supplier of modular buildings focused on Indian project conditions, built at our own factory in Tamil Nadu.</p>
           <div className="grid sm:grid-cols-2 gap-3 mt-4">
             {[
               "In-house design and fabrication from raw material to finished product",

@@ -72,7 +72,7 @@ const faqs = [
   },
   {
     q: "What materials are cargo containers made from?",
-    a: "Most containers use Corten (weathering) steel with 355 MPa yield strength and self-passivating corrosion resistance. Mild steel (IS 2062 Grade B) is 20–30% cheaper for inland use. Stainless steel (AISI 304/316L) serves food and pharma applications.",
+    a: "Most containers use Corten (weathering) steel with 355 MPa yield strength and self-passivating corrosion resistance. Mild steel (IS 2062 Grade B) is a lower-cost option for inland use. Stainless steel (AISI 304/316L) serves food and pharma applications.",
   },
   {
     q: "Does Portable Office Cabin deliver cargo containers across India?",
@@ -99,7 +99,7 @@ export function CargoContainersContent() {
               The International Organization for Standardization established standard sizes that remain foundational: 20 ft, 40 ft, and 40 ft High Cube units dominate the industry. A standard 20 ft container measures roughly 6.1 metres long, 2.44 metres wide, and 2.59 metres high externally. The 40 ft variant doubles the length while maintaining the same width and height profile.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              At Portable Office Cabin, we use the same ISO-grade containers and engineered steel frames as the foundation for modular offices, container homes, and site facilities. The structural integrity that protects goods during sea transport translates directly into durable, relocatable buildings.
+              At Portable Office Cabin, we use the same steel shipping containers and engineered steel frames as the foundation for modular offices, container homes, and site facilities. The structural integrity that protects goods during sea transport translates directly into durable, relocatable buildings.
             </p>
           </div>
           <OptimizedImage
