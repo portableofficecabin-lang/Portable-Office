@@ -39,13 +39,20 @@ The blog posts are **not duplicates**: each shares only 0.0–0.8% of its text w
 
 - **Owner:** `/promotions/portable-cabin-in-bangalore`. D1 keeps it as the Bangalore hub, linked from 18 city pages. Its title already carries "Manufacturer & Supplier".
 - **Conflict:** the post's title and H1 lead with "Portable Cabin Manufacturers in Bangalore" and add "| Prices".
-- **Proposed title and H1:** "Choosing a Portable Cabin Supplier in Bengaluru: 10 Checks Before You Order". Link the hub with the anchor "portable cabins in Bangalore".
+- **Proposed title and H1** (as built in #352): "How to Choose a Portable Cabin Supplier in Bengaluru". The post has six checks, so the title does not promise ten. Link the hub with the anchor "portable cabins in Bangalore".
 - **Prices:** the post's generic ranges are not from the catalogue and conflict with it, e.g. a 40 ft container office's live prices are ₹7,31,600–₹18,88,000 including GST, as on `/promotions/shipping-container-in-bangalore`. The ranges are:
   - "₹80,000–1.2 lakh"
   - "₹5–7 lakh" for a 40 ft container
   - "₹12–18 lakh"
   - "₹1,200–1,800/sq.ft."
-- **Proposed fix:** replace the ranges with "Standard units show their fixed GST-inclusive price on the product page; custom builds are quoted in writing", with links.
+- **Proposed fix** (as built in #352): replace the ranges with what decides the price, plus a table of the **exact catalogue products** for five common configurations, each with its own fixed GST-inclusive price read from the catalogue at render:
+  - 20 × 10 ft portable cabin;
+  - 20 × 8 ft site office;
+  - 40 ft container office;
+  - 20 × 10 ft guard cabin;
+  - 4-unit toilet block.
+
+  Custom sizes are quoted in writing.
 
 ### B3 · labour colony in Bangalore
 
