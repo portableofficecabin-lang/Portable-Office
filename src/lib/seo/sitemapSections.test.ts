@@ -40,8 +40,11 @@ describe("sitemapSectionFor — every page type lands in its own sitemap", () =>
   it("blog posts → blog", () => {
     expect(sitemapSectionFor(`${SITE_URL}/blog/porta-cabins-on-rent`)).toBe("blog");
   });
+  it("buying guides at /guides/<slug> → guides (D5, #345)", () => {
+    expect(sitemapSectionFor(`${SITE_URL}/guides/portable-cabin-price-and-cost`)).toBe("guides");
+  });
   it("hubs and company pages → pages", () => {
-    for (const p of ["/", "/products", "/blog", "/cities-we-serve", "/promotions", "/about-us", "/contact", "/marketplace", "/warranty"]) {
+    for (const p of ["/", "/products", "/blog", "/cities-we-serve", "/promotions", "/guides", "/about-us", "/contact", "/marketplace", "/warranty"]) {
       expect(sitemapSectionFor(`${SITE_URL}${p === "/" ? "" : p}`)).toBe("pages");
     }
   });
@@ -66,12 +69,17 @@ describe("splitSitemap — a partition, nothing lost or doubled", () => {
 });
 
 describe("XML", () => {
-  it("index lists all six section files on the canonical host", () => {
+  it("index lists every section file on the canonical host by default", () => {
     const xml = sitemapIndexXml();
     expect(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(true);
     expect(xml).toContain('<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
     for (const s of SITEMAP_SECTIONS) expect(xml).toContain(`<loc>${SITE_URL}${sectionPath(s)}</loc>`);
     expect((xml.match(/<sitemap>/g) ?? []).length).toBe(SITEMAP_SECTIONS.length);
+  });
+  it("index lists only the sections it is given (the route passes the non-empty ones)", () => {
+    const xml = sitemapIndexXml(["pages", "cities"]);
+    expect((xml.match(/<sitemap>/g) ?? []).length).toBe(2);
+    expect(xml).not.toContain(sectionPath("guides"));
   });
   it("urlset escapes XML, keeps a bare date string and omits absent fields", () => {
     const xml = urlsetXml([

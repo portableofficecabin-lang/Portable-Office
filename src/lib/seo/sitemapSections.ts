@@ -23,7 +23,9 @@ import type { MetadataRoute } from "next";
 
 export const SITE_URL = "https://portableofficecabin.com";
 
-export const SITEMAP_SECTIONS = ["pages", "products", "categories", "cities", "promotions", "blog"] as const;
+// "guides" = /guides/<slug> buying guides (D5, PR #345 moves the portable-cabin guides there). Until
+// they exist the section is empty, and the index lists only sections that have URLs.
+export const SITEMAP_SECTIONS = ["pages", "products", "categories", "cities", "promotions", "blog", "guides"] as const;
 export type SitemapSection = (typeof SITEMAP_SECTIONS)[number];
 
 /** Published path of a section's file, e.g. "/sitemaps/products.xml". */
@@ -31,7 +33,7 @@ export const sectionPath = (section: SitemapSection) => `/sitemaps/${section}.xm
 export const SITEMAP_INDEX_PATH = "/sitemap-index.xml";
 
 /** Which per-type sitemap a URL belongs to. Index pages (/products, /blog, /cities-we-serve,
- *  /promotions) are hubs, not members of their type, so they go to "pages". */
+ *  /promotions, /guides) are hubs, not members of their type, so they go to "pages". */
 export function sitemapSectionFor(url: string): SitemapSection {
   const path = url.startsWith("http") ? new URL(url).pathname : url;
   if (/^\/products\/category\/[^/]+$/.test(path)) return "categories";
@@ -39,6 +41,7 @@ export function sitemapSectionFor(url: string): SitemapSection {
   if (/^\/cities-we-serve\/.+/.test(path)) return "cities";
   if (/^\/promotions\/.+/.test(path)) return "promotions";
   if (/^\/blog\/.+/.test(path)) return "blog";
+  if (/^\/guides\/.+/.test(path)) return "guides";
   return "pages";
 }
 
@@ -73,10 +76,11 @@ export function urlsetXml(entries: MetadataRoute.Sitemap): string {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
 }
 
-/** The <sitemapindex>. No <lastmod> per child: a child also changes when a URL is added or removed,
- *  which no entry date records, so any date here would be a guess. */
-export function sitemapIndexXml(): string {
-  const body = SITEMAP_SECTIONS.map((s) => `<sitemap>\n<loc>${SITE_URL}${sectionPath(s)}</loc>\n</sitemap>`).join("\n");
+/** The <sitemapindex>, listing the given sections (the route passes only non-empty ones, so an empty
+ *  section is never submitted). No <lastmod> per child: a child also changes when a URL is added or
+ *  removed, which no entry date records, so any date here would be a guess. */
+export function sitemapIndexXml(sections: readonly SitemapSection[] = SITEMAP_SECTIONS): string {
+  const body = sections.map((s) => `<sitemap>\n<loc>${SITE_URL}${sectionPath(s)}</loc>\n</sitemap>`).join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</sitemapindex>\n`;
 }
 
