@@ -17,9 +17,15 @@
  *   • /api/ becomes crawlable for anyone — EXCEPT /api/merchant-feed, which must stay allowed
  *     for everyone (Google's feed fetcher obeys robots.txt);
  *   • the default `User-agent: *` policy drifts from its intended shape (cart/checkout blocked
- *     for ordinary bots, and the exact expected disallow set).
+ *     for ordinary bots, and the exact expected disallow set);
+ *   • robots.txt and noindex disagree: an account page (/login, /register, /forgot-password,
+ *     /reset-password, /my-account) is blocked — so its X-Robots-Tag noindex can't be seen — or
+ *     drops out of next.config.ts PRIVATE_PATHS (which sends that header);
+ *   • robots.txt stops advertising /sitemap-index.xml.
  */
 
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import robotsFn from "../app/robots";
 
 /* ---------------------------------------------------------------- normalize Next's shape ----- */
@@ -157,8 +163,7 @@ for (const ua of GENERIC_BOTS) {
 // opens a private area; an added entry silently hides public content. Both must be deliberate —
 // if you intended the change, update EXPECTED_STAR_DISALLOWS here in the same commit.
 const EXPECTED_STAR_DISALLOWS = [
-  "/admin/", "/api/", "/auth/", "/login", "/register", "/forgot-password",
-  "/reset-password", "/my-account", "/*?page=", "/*&page=", "/cart", "/checkout",
+  "/admin/", "/api/", "/auth/", "/*?page=", "/*&page=", "/cart", "/checkout",
 ].sort();
 const starGroup = groups.find((g) => g.agents.includes("*"));
 const actualStarDisallows = (starGroup?.rules ?? [])
@@ -169,6 +174,30 @@ check(
   JSON.stringify(actualStarDisallows) === JSON.stringify(EXPECTED_STAR_DISALLOWS),
   `\`User-agent: *\` disallow set unchanged (${actualStarDisallows.length} entries)`,
 );
+
+// 6. robots.txt and noindex must AGREE (2026-11-25). A noindexed page has to be crawlable, or the
+// crawler never sees its noindex and can index the bare URL ("Indexed, though blocked by
+// robots.txt"); /login is linked from every page's header. So: every account page is crawlable for
+// EVERYONE, and each one is in next.config.ts PRIVATE_PATHS, which sends X-Robots-Tag noindex.
+// The same holds for /cart and /checkout for Google's bots (section 1).
+const nextConfigSrc = readFileSync(join(process.cwd(), "next.config.ts"), "utf8");
+const privatePaths = [...(nextConfigSrc.match(/const PRIVATE_PATHS = \[([\s\S]*?)\];/)?.[1] ?? "").matchAll(/"([^"]+)"/g)].map(
+  (m) => m[1].replace(/\/:path\*$/, ""),
+);
+check(privatePaths.length > 0, `next.config.ts PRIVATE_PATHS parsed (${privatePaths.length} entries)`);
+check(/X-Robots-Tag", value: "noindex, nofollow"/.test(nextConfigSrc), "next.config.ts sends X-Robots-Tag noindex on PRIVATE_PATHS");
+const ACCOUNT_PAGES = ["/login", "/register", "/forgot-password", "/reset-password", "/my-account", "/my-account/orders"];
+for (const p of ACCOUNT_PAGES) {
+  check(privatePaths.some((pp) => p === pp || p.startsWith(`${pp}/`)), `${p} carries the noindex header (PRIVATE_PATHS)`);
+  for (const ua of EVERYONE) check(isAllowed(ua, p), `${ua} can crawl ${p} (so it can see the noindex)`);
+}
+for (const ua of GOOGLE_BOTS) for (const p of ["/cart", "/checkout"]) {
+  check(privatePaths.includes(p), `${p} carries the noindex header that ${ua} can see`);
+}
+
+// 7. robots.txt advertises the per-type sitemap index (src/lib/seo/sitemapSections.ts).
+const sitemaps = ([] as string[]).concat(meta.sitemap ?? []);
+check(sitemaps.includes("https://portableofficecabin.com/sitemap-index.xml"), "robots.txt lists /sitemap-index.xml");
 
 // The three groups themselves must exist — a deleted Google group falls back to `*` and
 // instantly re-breaks the Merchant Center purchase check.
