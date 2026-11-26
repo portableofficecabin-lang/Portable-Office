@@ -36,7 +36,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { icon: Truck, title: "Optional Installation", desc: "Added at checkout" },
-            { icon: IndianRupee, title: "Cost-Effective", desc: "30–40% cheaper than traditional" },
+            { icon: IndianRupee, title: "Cost-Effective", desc: "No RCC foundation or long civil works" },
             { icon: Building2, title: "Reusable & Relocatable", desc: "Move across multiple project sites" },
             { icon: Leaf, title: "Eco-Friendly", desc: "70–80% less construction waste" },
           ].map((benefit) => (
@@ -165,7 +165,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           Advantages of Porta Cabins Over Traditional Construction
         </h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
-          When compared to conventional brick-and-mortar construction, porta cabins deliver significant advantages in cost, speed, and flexibility. Industry data suggests porta cabins are typically 30–40% cheaper and 60–70% faster to deploy than traditional buildings for comparable use cases in 2025 India.
+          When compared to conventional brick-and-mortar construction, porta cabins deliver significant advantages in cost, speed, and flexibility: no RCC foundation or long civil works, units that arrive factory-built and ready to use, and a structure that moves to the next site instead of being demolished.
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">

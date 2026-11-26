@@ -57,7 +57,7 @@ const usedVsNew = [
     title: "Used containers",
     points: [
       "Excellent value for storage and budget-led conversions",
-      "Often 20–40% cheaper than new units of similar size",
+      "Usually priced below new units of similar size",
       "Inspected for structural integrity, floor condition, and door operation",
     ],
   },
@@ -175,7 +175,7 @@ export function ShippingContainerForSaleContent({ offer }: { offer?: FixedOffer 
         <div className="rounded-3xl border border-border bg-card p-8">
           <h3 className="mb-4 font-display text-2xl font-bold text-foreground">Affordable shipping containers for sale across India</h3>
           <p className="mb-5 leading-relaxed text-muted-foreground">
-            Portable Office Cabin is a supplier and manufacturer of ISO-grade containers designed for both storage and prefabricated building
+            Portable Office Cabin is a supplier and manufacturer of containers designed for both storage and prefabricated building
             applications. We support construction firms, industrial plants, educational institutions, and businesses with immediate availability,
             professional logistics, and fit-out capability.
           </p>

@@ -73,7 +73,7 @@ export function LabourColonyContent() {
               A labour colony is a structured worker accommodation facility deployed near project sites, factories, and infrastructure works. In India's construction industry, housing large workforces efficiently directly impacts project timelines, worker retention, and operational costs.
             </p>
             <p>
-              Portable Office Cabin is a leading manufacturer of prefabricated labour colonies, serving construction firms, industrial plants, and government tenders across Mumbai, Thane, Ahmedabad, Hyderabad, Kanpur, and remote project sites. Our modular structures offer quick installation, cost-effective pricing, relocatability, and hygienic living conditions—advantages traditional brick-and-mortar camps cannot match.
+              Portable Office Cabin is a manufacturer of prefabricated labour colonies, serving construction firms, industrial plants, and government tenders across Mumbai, Thane, Ahmedabad, Hyderabad, Kanpur, and remote project sites. Our modular structures offer quick installation, cost-effective pricing, relocatability, and hygienic living conditions—advantages traditional brick-and-mortar camps cannot match.
             </p>
           </div>
           <OptimizedImage

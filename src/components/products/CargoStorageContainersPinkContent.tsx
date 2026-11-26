@@ -57,7 +57,7 @@ const pricingRows = [
 const faqs = [
   {
     q: "What makes pink cargo containers different from standard containers?",
-    a: "Pink cargo containers share the same ISO-grade structural specifications as standard units—Corten steel or MS frame, 500 kg/sqm floor load, weatherproof construction. The difference is a specialised paint system using epoxy primer (80 microns) with polyurethane topcoat (60 microns) in RAL 3015 light pink, Pantone hot pink, or custom brand-matched shades, resisting 5000 hours of salt spray.",
+    a: "Pink cargo containers share the same structural specifications as standard units—Corten steel or MS frame, 500 kg/sqm floor load, weatherproof construction. The difference is a specialised paint system using epoxy primer (80 microns) with polyurethane topcoat (60 microns) in RAL 3015 light pink, Pantone hot pink, or custom brand-matched shades, resisting 5000 hours of salt spray.",
   },
   {
     q: "Can I customise the shade of pink?",
@@ -450,7 +450,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
         <h2 className="text-3xl font-bold text-foreground mb-6">Why Work with Portable Office Cabin?</h2>
         <div className="space-y-4">
           <p className="text-muted-foreground leading-relaxed">
-            Portable Office Cabin specialises in prefabricated and modular building solutions—portable cabins, container offices, labour colonies, PEB structures, and container homes—with 15+ years of experience and 500+ projects delivered across India.
+            Portable Office Cabin specialises in prefabricated and modular building solutions—portable cabins, container offices, labour colonies, PEB structures, and container homes—built at our own factory in Tamil Nadu and delivered across India.
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[

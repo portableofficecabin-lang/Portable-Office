@@ -43,7 +43,7 @@ export function CabinPortableContent() {
         </p>
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           {[
-            { icon: IndianRupee, title: "60% Cheaper", desc: "Up to 60% cheaper than reinforced cement concrete (RCC) structures for temporary or semi-permanent needs" },
+            { icon: IndianRupee, title: "Lower Site Costs", desc: "No reinforced cement concrete (RCC) foundation or long civil works for temporary or semi-permanent needs — the cabin sits on a simple level base" },
             { icon: Clock, title: "Optional Installation", desc: "On-site installation & positioning can be added at checkout" },
             { icon: Shield, title: "10-20+ Year Lifespan", desc: "Lifespan extending 10-20+ years with basic maintenance like periodic repainting and sealant checks" },
             { icon: Zap, title: "Dynamic Environments", desc: "Ideal for dynamic project environments where traditional construction is too slow or costly" },
@@ -383,7 +383,7 @@ export function CabinPortableContent() {
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Utility Integration: Power, Water & Comfort Systems</h2>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          When it comes to portable cabins, seamless utility integration is essential for creating office spaces and site offices that are not only functional but also comfortable and efficient. As a leading manufacturer in India, we understand that every project—whether it's a construction site, a modular meeting room, or a temporary accommodation unit—demands reliable access to power, water, and climate control.
+          When it comes to portable cabins, seamless utility integration is essential for creating office spaces and site offices that are not only functional but also comfortable and efficient. As a manufacturer, we understand that every project—whether it's a construction site, a modular meeting room, or a temporary accommodation unit—demands reliable access to power, water, and climate control.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
           Our portable office cabins and site offices are engineered with advanced electrical systems, ensuring a stable and safe power supply for all your operational needs. From customized wiring layouts to strategically placed outlets and lighting, each cabin is designed to suit the specific requirements of your business. Whether you need dedicated workstations, meeting rooms, or specialized equipment, our experts ensure your portable office is fitted for productivity from day one.
