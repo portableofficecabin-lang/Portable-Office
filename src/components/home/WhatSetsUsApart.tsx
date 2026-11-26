@@ -78,14 +78,17 @@ export function WhatSetsUsApart() {
                 <div className="flex items-center gap-3 mb-8">
                   <div className="w-1.5 h-8 bg-gradient-to-b from-accent to-amber-light rounded-full" />
                   <h3 className="font-display text-2xl font-bold text-white">
-                    Industry-Leading Standards
+                    What You Can Count On
                   </h3>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
+                  {/* 2026-11-26: the heading and the project-count and years tiles were replaced, as no
+                      record supports them (claims S5–S7 in docs/claims/sitewide-claims-2026-11-26.md).
+                      The ISO tile stays until the owner confirms the certificate. */}
                   {[
-                    { value: "500+", label: "Projects Completed" },
-                    { value: "15+", label: "Years Experience" },
+                    { value: "Fixed", label: "GST-inclusive prices, standard units" },
+                    { value: "In-house", label: "Manufacturing near Hosur" },
                     { value: "ISO 9001", label: "2015 Certified" },
                     { value: "7 Days", label: "Support, Mon-Sun" },
                   ].map((stat) => (
@@ -98,7 +101,7 @@ export function WhatSetsUsApart() {
 
                 <div className="mt-8 pt-6 border-t border-white/10 text-center">
                   <p className="text-white/50 text-sm">
-                    Trusted by construction companies, schools, hospitals & government agencies across India
+                    Site offices, classrooms, clinics, security posts and staff housing, delivered across India
                   </p>
                 </div>
               </div>

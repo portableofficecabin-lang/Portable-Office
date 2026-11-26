@@ -134,7 +134,7 @@ export default function CareersPage() {
               Who We Are
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-              Portable Office Cabin is one of India's most trusted names in the portable cabin and modular building industry. For over 15 years, we've been designing, manufacturing, and delivering premium portable structures — from site offices and container workspaces to prefab homes and security cabins.
+              Portable Office Cabin designs and manufactures premium portable structures at its own factory in Tamil Nadu, near Hosur, and delivers them across India — from site offices and container workspaces to prefab homes and security cabins.
             </p>
             <p className="text-muted-foreground text-lg leading-relaxed">
               Our team of skilled professionals is the backbone of everything we do. We're always looking for motivated individuals who want to grow alongside a company that values hard work, innovation, and integrity.
