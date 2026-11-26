@@ -27,7 +27,7 @@ export const seoData = {
   home: {
     title: "Portable Office Cabin Manufacturer Serving Bangalore | India",
     description:
-      "Leading portable office cabin manufacturer serving Bangalore from our Hosur factory. Container offices, site cabins & prefab structures. 7–15 working-day dispatch. Call now!",
+      "Portable office cabin manufacturer serving Bangalore from our Hosur factory. Container offices, site cabins & prefab structures. 7–15 working-day dispatch. Call now!",
     keywords:
       "portable office cabin manufacturer Bangalore, container office, site cabin, prefab structure, porta cabin India",
   },
@@ -41,7 +41,7 @@ export const seoData = {
   about: {
     title: "About Us | Portable Office Cabin Manufacturer",
     description:
-      "Portable Office Cabin: 15+ years building portable cabins & prefab solutions across India. 500+ projects delivered.",
+      "Portable Office Cabin builds portable cabins & prefab solutions at its own Tamil Nadu factory near Hosur and delivers across India.",
     keywords:
       "portable cabin manufacturer, prefab company India, modular building supplier, portable office manufacturer, about portable cabin company",
   },
@@ -577,7 +577,7 @@ export const organizationStructuredData = {
   "@type": "Organization",
   name: "Portable Office Cabin",
   description:
-    "Leading manufacturer of portable cabins, container offices, and prefab solutions in India",
+    "Manufacturer of portable cabins, container offices and prefab structures in India",
   url: "https://portableofficecabin.com",
   logo: "https://portableofficecabin.com/logo.jpeg",
   taxID: "33FVKPK6238Q1ZT",
@@ -751,7 +751,7 @@ export const serviceAreaStructuredData = {
     },
   ],
   description:
-    "Pan-India portable cabin, container office, prefab home, and modular building manufacturing with delivery and installation support across Bangalore, Chennai, Hyderabad, Mumbai, Pune, Delhi NCR, Ahmedabad, Kolkata, and 500+ cities.",
+    "Pan-India portable cabin, container office, prefab home, and modular building manufacturing with delivery and installation support across Bangalore, Chennai, Hyderabad, Mumbai, Pune, Delhi NCR, Ahmedabad and Kolkata.",
 };
 
 export function generatePromotionStructuredData(content: {

@@ -87,7 +87,7 @@ const linkClusters = [
   {
     pillar: "Cargo Storage & Shipping Containers",
     pillarHref: "/products/category/cargo-storage-shipping-containers",
-    description: "ISO-grade steel containers for material storage, warehousing, and secure logistics across India.",
+    description: "Steel containers for material storage, warehousing, and secure logistics across India.",
     links: [
       { label: "All Storage Solutions", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "20ft / 40ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },

@@ -431,7 +431,7 @@ export default function LabourShedPrefabricatedStructures() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                 {[
-                  { icon: Users, title: "Experience Since 2010s", desc: "Diverse portfolio across construction, industrial, and government projects." },
+                  { icon: Users, title: "Built for Site Work", desc: "Labour sheds, site offices and stores for construction and industrial projects." },
                   { icon: Factory, title: "End-to-End Capability", desc: "In-house design, manufacturing, logistics, installation, and after-sales support." },
                   { icon: Shield, title: "Quality & Sustainability", desc: "Durable steel structures, recyclable materials, waste reduction through precise manufacturing." },
                   { icon: Truck, title: "Versatile Product Range", desc: "Portable cabins, security rooms, PEB structures, canteens, container homes, toilets — all from one source." }
