@@ -19,7 +19,7 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "What is the price of a shipping container in Bangalore?",
     answer:
-      "Prices start from ₹1.5 lakh for basic models. A fitted 20ft container office typically costs more depending on insulation, electricals, and interiors. Your detailed written quote lists GST and transport separately.",
+      "Standard containers are sold at one fixed, GST-inclusive price shown on each product page in our shipping container range. A fitted 20ft container office typically costs more depending on insulation, electricals, and interiors. Your detailed written quote lists GST and transport separately.",
   },
   {
     question: "How long does delivery take in Bangalore?",
@@ -91,8 +91,11 @@ const BUILD_SPEC = [
   "Lockable steel doors; windows, ventilation, and electrical fit-outs to order",
 ];
 
+/* The "Used/refurbished 20 ft storage container ₹1.5 – ₹2.5 lakh" row was removed on 2026-11-26: the six
+ * exact used/refurbished 20 ft configurations in the catalogue (productCommerce.ts ids 29–34) sell at
+ * ₹50,000–₹1,50,000 before GST (₹59,000–₹1,77,000 incl. GST), so the row was not substantiated by any of
+ * them. Those units have fixed prices on their product pages; do not restate them here as a range. */
 const PRICES = [
-  ["Used/refurbished 20 ft storage container", "₹1.5 – ₹2.5 lakh"],
   ["New 20 ft storage container", "₹2 – ₹3.5 lakh"],
   ["20 ft container office (insulated, fitted)", "₹3 – ₹5 lakh"],
   ["40 ft storage container", "₹3 – ₹5 lakh"],
@@ -102,7 +105,7 @@ const PRICES = [
 const COMPARISON = [
   ["Time to ready", "7–15 working days + transit", "2–3 months"],
   ["Relocatable", "Yes — moves with your project", "No"],
-  ["Cost", "From ₹1.5 lakh, fixed quote", "Higher, prone to overruns"],
+  ["Cost", "Fixed price or written quote", "Higher, prone to overruns"],
   ["Site disruption", "Minimal — built off-site", "High — months of on-site work"],
   ["Resale value", "Retains value; can be resold", "None once demolished"],
 ];
@@ -206,7 +209,7 @@ export function ShippingContainerBangaloreContent() {
       <section className="bg-muted/30 rounded-2xl p-6 lg:p-8">
         <H2 id="price" icon={IndianRupee}>Shipping Container Price in Bangalore</H2>
         <p className="text-muted-foreground mb-6 leading-relaxed max-w-3xl">
-          Shipping container prices in Bangalore start from ₹1.5 lakh for basic models. Your final price depends on five factors: size (20ft vs 40ft), condition (new build vs refurbished used), insulation, interior fit-out, and delivery distance. Indicative ranges:
+          Used and refurbished 20 ft containers have one fixed, GST-inclusive price on their product pages in our <Link href="/products/category/cargo-storage-shipping-containers" className="text-accent hover:underline">shipping container range</Link>. For other units, your final price depends on five factors: size (20ft vs 40ft), condition (new build vs refurbished used), insulation, interior fit-out, and delivery distance. Indicative ranges:
         </p>
         <div className="overflow-x-auto bg-card rounded-xl shadow-card border border-border mb-4">
           <table className="w-full text-sm">

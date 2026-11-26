@@ -43,6 +43,12 @@ describe("promotion copy states no unsupported claims", () => {
       // Code comments may name the removed claims; only check what renders (strip comments).
       const src = readFileSync(join(process.cwd(), f), "utf8").replace(/\{\/\*[\s\S]*?\*\/\}/g, "").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
       for (const re of BANNED.filter((r) => !/₹/.test(r.source))) expect({ f, claim: re.source, found: re.test(src) }).toEqual({ f, claim: re.source, found: false });
+      // The Bangalore page's "from ₹1.5 lakh" and its "Used/refurbished 20 ft … ₹1.5 – ₹2.5 lakh" row were not
+      // substantiated by any catalogue configuration (ids 29–34: ₹50,000–₹1,50,000 before GST). Removed 2026-11-26.
+      if (f !== "src/views/SEOPromotionPage.tsx") {
+        expect({ f, found: /₹\s?1\.5\b/.test(src) }).toEqual({ f, found: false });
+        expect({ f, found: /Used\/refurbished 20 ft storage container/.test(src) }).toEqual({ f, found: false });
+      }
     }
     expect(/<Star\b/.test(readFileSync(join(process.cwd(), "src/views/SEOPromotionPage.tsx"), "utf8"))).toBe(false);
   });

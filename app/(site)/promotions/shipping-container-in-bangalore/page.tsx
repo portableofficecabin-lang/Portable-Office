@@ -29,7 +29,7 @@ export const revalidate = 86400; // 24h
 export const metadata: Metadata = buildPageMetadata({
   absoluteTitle: "Shipping Container in Bangalore | Price, Sizes & Supplier",
   description:
-    "Buy shipping containers in Bangalore from a local manufacturer. 10ft, 20ft & 40ft units for storage, offices & housing. Price from ₹1.5 lakh. Call us today.",
+    "Buy shipping containers in Bangalore from a local manufacturer. 10ft, 20ft & 40ft units for storage, offices & housing. Fixed online prices. Call us today.",
   keywords:
     "shipping container in Bangalore, shipping container price Bangalore, 20ft shipping container, 40ft container, storage container Bangalore, container office Bangalore, used shipping container Bangalore, container manufacturer Bangalore",
   path: PATH,
@@ -99,7 +99,7 @@ export default function ShippingContainerBangalorePage() {
                 Looking for a <strong className="text-foreground">shipping container in Bangalore</strong> for storage, a site office, or a custom conversion? Portable Office Cabin manufactures and supplies containers directly from our own Tamil Nadu factory at Kamandoddi, near Hosur — barely 40 km from Bangalore on the Hosur road corridor — which means factory pricing, faster delivery, and full control over quality.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-7">
-                Every unit is built with a steel structure, a galvanized frame for corrosion resistance, and optional 50mm PUF insulated panels for thermal comfort in Bangalore&apos;s climate. Prices start from ₹1.5 lakh, and warranty cover follows our published <Link href="/warranty" className="font-medium text-accent underline-offset-4 hover:underline">warranty policy</Link>.
+                Every unit is built with a steel structure, a galvanized frame for corrosion resistance, and optional 50mm PUF insulated panels for thermal comfort in Bangalore&apos;s climate. Standard units have one fixed, GST-inclusive price on their product page, and warranty cover follows our published <Link href="/warranty" className="font-medium text-accent underline-offset-4 hover:underline">warranty policy</Link>.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a href="tel:+919731897976" className="inline-flex items-center gap-2 border-2 border-accent text-accent font-semibold px-6 py-3 rounded-full hover:bg-accent/10 transition-colors">
