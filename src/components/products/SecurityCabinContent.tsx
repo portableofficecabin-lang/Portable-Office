@@ -72,7 +72,7 @@ export function SecurityCabinContent() {
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              Security cabins have become essential infrastructure across India in 2026. From residential society gates to industrial plants, toll plazas, and construction sites, these prefabricated structures provide protected working environments for security personnel manning entry points and checkpoints.
+              Security cabins have become essential infrastructure across India. From residential society gates to industrial plants, toll plazas, and construction sites, these prefabricated structures provide protected working environments for security personnel manning entry points and checkpoints.
             </p>
             <p>
               We manufacture and supply a complete range of portable security cabins including MS, GI, FRP, ACP, PVC, PUF, and steel variants with pan-India delivery. Every cabin is engineered for durability, weather resistance, quick installation, and minimal maintenance requirements.

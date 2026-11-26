@@ -37,7 +37,7 @@ export function CabinPortableContent() {
 
       {/* Fast Answer */}
       <section>
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Fast Answer: What Is a Cabin Portable & Why It Matters in 2026</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Fast Answer: What Is a Cabin Portable & Why It Matters</h2>
         <p className="text-muted-foreground leading-relaxed mb-6">
           A portable cabin is a prefabricated, movable structure manufactured primarily from mild steel (MS), galvanized iron (GI), or repurposed shipping container shells. These units arrive at your site ready to use or in modular panels for rapid assembly, serving as offices, worker accommodation, storage, security booths, and utility spaces.
         </p>
@@ -59,12 +59,12 @@ export function CabinPortableContent() {
         </div>
 
         <div className="bg-muted/30 border border-border/30 rounded-xl p-6">
-          <h3 className="font-semibold text-foreground mb-3">Real-world examples of cabin portable applications:</h3>
+          <h3 className="font-semibold text-foreground mb-3">Typical cabin portable applications:</h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> 20 ft MS site office for a Bengaluru IT park construction project</li>
-            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> GI labour cabins deployed on a 2025 highway project in Maharashtra</li>
-            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> 40 ft container office at a solar plant in Rajasthan</li>
-            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Prefab security cabins at industrial gates in Gujarat</li>
+            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> 20 ft MS site offices for IT park and commercial construction projects</li>
+            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> GI labour cabins for highway and road projects</li>
+            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> 40 ft container offices at solar and wind plants</li>
+            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Prefab security cabins at industrial gates</li>
           </ul>
         </div>
         <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
@@ -117,7 +117,7 @@ export function CabinPortableContent() {
           <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Optional AC/split AC provisions</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-foreground mb-4">2026 compliance aspects for India:</h3>
+        <h3 className="text-xl font-semibold text-foreground mb-4">Compliance points to plan for in India:</h3>
         <ul className="space-y-2 text-muted-foreground">
           <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Fire-retardant panels available on demand</li>
           <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Electrical work following IS standards with proper earthing</li>
@@ -201,11 +201,11 @@ export function CabinPortableContent() {
         </ul>
 
         <div className="bg-muted/30 border border-border/30 rounded-xl p-6 mb-6">
-          <h3 className="font-semibold text-foreground mb-3">Real-world deployments:</h3>
+          <h3 className="font-semibold text-foreground mb-3">Typical deployments:</h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-primary mt-0.5 shrink-0" /> 2024 metro rail sites in Mumbai using 40 ft container offices for planning teams</li>
-            <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-primary mt-0.5 shrink-0" /> 2025 solar park offices in Gujarat using ACP-panel MS porta cabins</li>
-            <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Highway project command centers in Rajasthan</li>
+            <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Metro rail sites using 40 ft container offices for planning teams</li>
+            <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Solar park offices using ACP-panel MS porta cabins</li>
+            <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Highway project command centres</li>
           </ul>
         </div>
 
@@ -257,7 +257,7 @@ export function CabinPortableContent() {
           </div>
         </div>
         <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-          A 2025 real estate sales office in Pune used a 30 ft ACP-clad conference cabin for client presentations at their greenfield site. These cabins can be relocated by crane or trailer and refitted internally when business requirements change, making them highly economical over multiple projects.
+          Real estate developers use 30 ft ACP-clad conference cabins as sales offices for client presentations at greenfield sites. These cabins can be relocated by crane or trailer and refitted internally when business requirements change, making them highly economical over multiple projects.
         </p>
       </section>
 
@@ -285,7 +285,7 @@ export function CabinPortableContent() {
           ))}
         </div>
         <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-          Highway projects in 2025 have deployed complete labour colonies with all amenities, enabling crews to house workers properly from day one of execution.
+          Highway projects deploy complete labour colonies with all amenities, so crews can house workers properly from day one of execution.
         </p>
       </section>
 
@@ -328,7 +328,7 @@ export function CabinPortableContent() {
           </div>
         </div>
         <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-          Portable toilets have been deployed at 2023-2025 religious events, trade fairs, and EPC project sites across Uttar Pradesh, Tamil Nadu, and Telangana.
+          Portable toilets serve religious events, trade fairs and EPC project sites wherever permanent sanitation is not available.
         </p>
       </section>
 
@@ -416,7 +416,7 @@ export function CabinPortableContent() {
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Cost, Speed & Sustainability Benefits</h2>
         <p className="text-muted-foreground leading-relaxed mb-6">
-          The rapid growth of cabins portable from 2020 to 2026 in India stems from three interconnected advantages: cost savings, speed of deployment, and environmental benefits.
+          The rapid growth of portable cabins in India stems from three interconnected advantages: cost savings, speed of deployment, and environmental benefits.
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
           <div className="bg-card border border-border/40 rounded-xl p-5">
@@ -481,7 +481,7 @@ export function CabinPortableContent() {
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">How the Portable Cabin Process Works: From Enquiry to Move-In</h2>
         <p className="text-muted-foreground leading-relaxed mb-6">
-          The standard journey in 2026 follows a predictable path: enquiry → site assessment → design and quote → manufacturing → delivery and installation → handover.
+          The standard journey follows a predictable path: enquiry → site assessment → design and quote → manufacturing → delivery and installation → handover.
         </p>
         <div className="space-y-4">
           {[
@@ -549,7 +549,7 @@ export function CabinPortableContent() {
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
-            { icon: HardHat, title: "Construction & Infrastructure", desc: "Site offices for highway, metro, and industrial park projects (2022-2026). Labour colonies, store rooms, QA/QC laboratories" },
+            { icon: HardHat, title: "Construction & Infrastructure", desc: "Site offices for highway, metro, and industrial park projects. Labour colonies, store rooms, QA/QC laboratories" },
             { icon: Zap, title: "Power & Renewable Energy", desc: "Site control rooms at solar and wind farms. Inverter station enclosures. O&M offices in Gujarat, Rajasthan, and Tamil Nadu" },
             { icon: Users, title: "Education & Institutional", desc: "Additional classrooms for schools. Admin blocks and exam control rooms. Temporary libraries and activity rooms" },
             { icon: Building2, title: "Commercial & Retail", desc: "Portable sales offices for real estate launches. Ticket counters and event kiosks. Pop-up showrooms for automobile displays" },
@@ -611,7 +611,7 @@ export function CabinPortableContent() {
 
       {/* FAQs */}
       <section>
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">FAQs About Cabin Portable in 2026</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">FAQs About Cabin Portable</h2>
         <p className="text-muted-foreground leading-relaxed mb-6">
           Here are answers to the most common questions buyers in India have about portable cabins.
         </p>
@@ -637,7 +637,7 @@ export function CabinPortableContent() {
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Get Your Cabin Portable Solution in Place Now</h2>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          Portable cabins deliver the speed, savings, and flexibility that traditional construction simply cannot match in 2026. With the prefab and portable cabin industry in India projected to reach $23-35 billion by 2030, these solutions have proven their reliability across construction sites, renewable energy projects, and countless other applications.
+          Portable cabins deliver the speed, savings, and flexibility that traditional construction simply cannot match. With the prefab and portable cabin industry in India projected to reach $23-35 billion by 2030, these solutions have proven their reliability across construction sites, renewable energy projects, and countless other applications.
         </p>
         <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 mb-6">
           <h3 className="font-semibold text-foreground mb-3">Take action for your upcoming project:</h3>
