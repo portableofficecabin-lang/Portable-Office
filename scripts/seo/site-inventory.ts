@@ -365,9 +365,9 @@ function evaluate(r: PageRecord) {
   if (r.type === "product" && r.commerce?.outright) {
     add(r, "AIO", r.ldTypes.includes("Product"), "product-schema", r.ldTypes.includes("Product") ? "present" : "absent");
     add(r, "AIO", Number(r.productLd?.price) === r.commerce.sellPrice, "offer-price-equals-catalogue", `JSON-LD ${r.productLd?.price ?? "none"} vs catalogue ${r.commerce.sellPrice}`);
-    // The JSON-LD name of a purchasable SKU is its Merchant feed title by design (structured-data.ts,
-    // protected): it must equal the feed title, not the shorter on-page H1.
-    add(r, "AIO", r.productLd?.name === r.feedTitle, "product-name-equals-feed-title", `"${r.productLd?.name}"`);
+    // S1 (protected change, with structured-data.ts): the JSON-LD name of a purchasable SKU is the
+    // visible H1 — structured data describes what the page shows. The feed keeps its own <g:title>.
+    add(r, "AIO", !!r.productLd?.name && r.h1.includes(r.productLd.name), "product-name-equals-h1", `"${r.productLd?.name}" vs H1 "${r.h1[0] ?? ""}"`);
   }
   if (r.type === "category" || r.type === "directory") {
     add(r, "AIO", r.ldTypes.some((t) => t === "ItemList" || t === "CollectionPage"), "collection-schema", r.ldTypes.join(", "));
