@@ -300,6 +300,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // home ceremonies, in Rajarajeshwari Nagar (owner brief 2026-11-18); the page links back here. Appended so
     // the live links keep their positions.
     { name: "Portable Cabins in Rajarajeshwari Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
+    // Portable cabins for temporary offices during refurbishment, reception cabins, security and valet booths and
+    // site offices in Richmond Town (owner brief 2026-11-25; anchor = the brief's service-area hub anchor); the page
+    // links back here. Appended so the live links keep their positions.
+    { name: "Richmond Town – Temporary Offices & Commercial Cabins", href: "/cities-we-serve/portable-cabin-richmond-town" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
@@ -564,6 +568,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
     // Portable / porta cabin page for Rajarajeshwari Nagar, Bengaluru (owner brief 2026-11-18), here and on Porta Cabin; appended so the live links keep their positions.
     { name: "Portable Cabins in Rajarajeshwari Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
+    // Portable / porta cabin page for Richmond Town, Bengaluru (owner brief 2026-11-25), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Richmond Town", href: "/cities-we-serve/portable-cabin-richmond-town" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -609,6 +615,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Porta Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
     // Portable / porta cabin page for Rajarajeshwari Nagar, Bengaluru (owner brief 2026-11-18), here and on Portable Cabin; appended so the live links keep their positions.
     { name: "Porta Cabins in RR Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
+    // Portable / porta cabin page for Richmond Town, Bengaluru (owner brief 2026-11-25), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Porta Cabins in Richmond Town", href: "/cities-we-serve/portable-cabin-richmond-town" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -816,6 +824,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Babusapalya / Babusa Palya (furniture and kitchen hardware dealers' stock; mobile and computer
     // accessories distributors' stock; owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Babusapalya", href: "/cities-we-serve/shipping-container-babusa-palya" },
+    // Frazer Town / Pulikeshi Nagar (bungalow redevelopment, restaurant packaging and spare furniture, community hall
+    // furniture; owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
   ],
 };
 
