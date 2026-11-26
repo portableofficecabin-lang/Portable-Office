@@ -68960,6 +68960,1098 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN RICHMOND TOWN — temporary offices during commercial refurbishment, reception and
+   * customer-service cabins, security and valet booths, site offices, sales and registration counters and
+   * institutional admin cabins for central Bengaluru properties.
+   *
+   * Owner brief of 2026-11-25 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — Portable Cabin in Richmond
+   * Town", Downloads/Portable Cabin in Richmond Town.docx): SEO title (the "Rent & Sale" variant: /rental-service
+   * hires out site office and security guard cabins), meta description, H1, keywords, section order, H2 / H3
+   * headings, the three tables and the ten FAQs are the brief's, and so is the copy, lightly edited for flow and
+   * British spelling. Route: the city-page convention /cities-we-serve/portable-cabin-richmond-town (the brief's
+   * own canonical rule); no root-level page. The brief's notes to the implementer are applied, not printed:
+   *   • sizes: the catalogue's common footprints are 10×8, 20×8 and 40×8 ft (sizes guide) and guard cabins come
+   *     in 4×4 and 6×6 ft (porta cabin and portable cabin pages), so the brief's table is captioned as planning
+   *     examples, not stock or certified occupancy; no universal internal height is published;
+   *   • specifications: the construction table separates typical items (the office cabin page's MS frame,
+   *     primer and paint, concealed wiring, MCB box, LED lights, AC point and bracket; aluminium sliding windows
+   *     from the MS cabin page) from optional ones; PUF thickness is "as specified" (the site states 40–50 mm
+   *     PUF or EPS, so 50 mm is not published as standard); MDF only "where suitable" (offered as an interior
+   *     finish package); ACP on request (security cabin page); a wood-look exterior is not claimed as stock;
+   *   • rental: /rental-service hires out 10×10 and 20×10 ft site office cabins and an 8×8 ft security guard
+   *     cabin, each with a minimum period, and no furnished unit, so the section says so without rates or
+   *     periods, fitted reception or valet cabins on hire are confirmed per quotation, and the brief's
+   *     "furnished portable cabin rental" keyword is dropped;
+   *   • no price, delivery time, same-day installation, night delivery, temperature, energy or acoustic promise;
+   *     no claim that building management approval alone is enough; relocation is "may be possible";
+   *   • no Kannada copy on the page, so the brief's optional Kannada keywords are not used; "Portakabin" is not
+   *     used anywhere.
+   * Written for the slots: the tagline, the link lead-ins, the image alt text and captions, the two table
+   * captions, the enquiry-checklist lead-in and the disclaimer.
+   * Mapped onto the template in the brief's order (no template change):
+   *   • H1, tagline, intro (the brief's seven paragraphs, plus where the cabins are built), `introLink` (the
+   *     portable cabins category) and the heroCta row (quotation · Call · WhatsApp).
+   *   • Applications, refurbishment offices, reception cabins, security booths, valet booths, site offices,
+   *     sales / registration counters, institutional cabins, sizes (table), construction specifications
+   *     (table), MS / GI / PUF, interior finishing, exterior finishes, AC & attached toilet, rent, sale, renting
+   *     versus buying (the brief's H3 table, an H2 here because a subsection has no table), delivery &
+   *     installation and price → afterSolutions extra sections; their H3s are `subsections`.
+   *   • "Areas We Serve Near Richmond Town" → areas; the brief's enquiry checklist → an extra section without a
+   *     placement (after the areas, before the FAQs); the FAQs; the CTA (phone, WhatsApp and e-mail from
+   *     COMPANY). No enquiry form: the portable-cabins category has no category landing, so /api/enquiries
+   *     rejects it (as on the other portable cabin pages); the buttons go to /contact, phone and WhatsApp.
+   *
+   * LINKS (brief §31, every route checked live 200 / index on build a62de02): intro → "portable and prefabricated
+   * cabins" (category); applications → "standalone portable toilets" (portable toilet cabin page); refurbishment
+   * → "portable office cabin solutions" (office portable cabin page); security → "portable security cabins and
+   * guard booths" (security cabin page); site offices → "portable site office cabins" (construction site portable
+   * office page); sales → "portable sales and marketing offices" (prefab marketing office page); sizes → sizes
+   * guide; specifications → "MS portable cabin specifications" (MS portable cabin page); MS / GI / PUF → "PUF
+   * insulated portable cabins" (insulation and cooling guide); interiors → layouts guide; AC & toilet →
+   * "portable cabins with attached toilets" (toilet and pantry guide); rent → /rental-service; delivery →
+   * installation guide; price → price guide; areas → "portable cabins across Bengaluru" (Bangalore hub).
+   * Brief §32 (mandatory two-way link with the Richmond Town shipping container page, session 32's
+   * /cities-we-serve/shipping-container-richmond-town, not yet released): whichever page is released SECOND adds
+   * both halves — this page's applications section ("shipping containers in Richmond Town") and the last
+   * `areasInlineLinks` item on that page ("portable cabin in Richmond Town"). Inbound: the Bangalore hub
+   * ("Richmond Town – Temporary Offices & Commercial Cabins", the brief's hub anchor), the Karnataka portable
+   * hub ("Portable Cabins in Richmond Town"), the Karnataka porta hub ("Porta Cabins in Richmond Town") and the
+   * /cities-we-serve directory.
+   *
+   * KEYWORD OWNERSHIP: portable / porta / prefab / prefabricated / movable / ready-built cabin × Richmond Town,
+   * Richmond Road and Richmond Circle, for occupied working space: temporary offices during commercial
+   * refurbishment, reception and customer-service cabins, hotel and restaurant valet / parking booths,
+   * commercial service and ticket counters, event registration and admission counters, and institutional admin
+   * cabins. Not targeted: shipping, cargo or storage containers (the Richmond Town shipping page), container
+   * office or container cabin (container-conversion pages), portable shops, standalone toilets, and the
+   * neighbouring localities (named only in the areas paragraph; none has a portable cabin page). "Bengaluru"
+   * stays out of the title; the geo meta and the Service JSON-LD's areaServed carry "Richmond Town, Bengaluru".
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Portable Cabin in Richmond Town city
+   * page/Portable Cabin in Richmond Town/cabin (1–5).webp", no EXIF / XMP / ICC) of one olive-green
+   * corrugated-steel cabin. Each is copied with an XMP dc:title / dc:description that labels it a render (no
+   * creator, GPS or date). (1) three-quarter exterior = hero / og:image (the brief's
+   * "portable-cabin-richmond-town"); (5) furnished office interior = refurbishment section; (2) front elevation
+   * = exterior finishes; (3) rear wall with the AC outdoor unit = AC & toilet section — the unit's manufacturer
+   * logo is covered with a patch of its own plain panel (the brief: no third-party logos), the only pixel
+   * change, so (3) is re-encoded once; (4) top view = delivery & installation. (1), (2), (4) and (5) keep their
+   * VP8 data byte-for-byte. None shows a reception counter, guard booth, valet booth, toilet, ACP, glass front
+   * or crane, so those image slots are not used and no alt text or caption claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (provider = our factory,
+   * areaServed = Richmond Town, alternateName = the porta and prefabricated cabin names, no offers, so no
+   * Product schema with invented prices) and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-richmond-town",
+    city: "Richmond Town",
+    listTitle: "Portable Cabins in Richmond Town",
+    metaTitle: "Portable Cabin in Richmond Town | Rent & Sale",
+    metaDescription:
+      "Portable cabins in Richmond Town for temporary offices, security booths, site offices and sales counters. Explore customised insulated cabin options.",
+    keywords:
+      "portable cabin in Richmond Town, porta cabin in Richmond Town, portable cabins Richmond Town, portacabin in Richmond Town, portable cabin manufacturers in Richmond Town, porta cabin manufacturers Richmond Town, portable cabin suppliers Richmond Town, prefab cabin Richmond Town, prefabricated cabin Richmond Town, movable cabin Richmond Town, ready-built cabin Richmond Town, portable cabin for sale in Richmond Town, portable cabin price in Richmond Town, buy portable cabin Richmond Town, customised portable cabin Richmond Town, portable cabin on rent in Richmond Town, porta cabin rental Richmond Town, portable office cabin Richmond Town, temporary office cabin Richmond Town, portable reception cabin Richmond Town, valet parking booth Richmond Town, parking ticket booth Richmond Town, event registration cabin Richmond Town, portable site office Richmond Town, portable cabin Richmond Road, portable cabin Richmond Circle",
+    // Approximate point in central Richmond Town, south of Richmond Road, the same as the Richmond Town
+    // shipping-container page (rounded; owner to confirm). PIN 560025.
+    geo: {
+      region: "IN-KA",
+      placename: "Richmond Town, Bengaluru, Karnataka, India",
+      position: "12.9620;77.6030",
+      icbm: "12.9620, 77.6030",
+    },
+    motion: true,
+    // Brief §2 / §39: "porta cabin" and the prefab synonym as the Service's other names.
+    serviceJsonLd: { serviceType: "Portable Cabin", alternateName: ["Porta Cabins in Richmond Town", "Prefabricated Cabins in Richmond Town"] },
+    // The hero is 1445 × 1088 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-richmond-town/portable-cabin-richmond-town.webp",
+      alt: "Olive-green corrugated-steel portable cabin with two black-framed sliding windows, a steel door and entrance steps on a paved yard",
+      width: 1445,
+      height: 1088,
+      caption:
+        "Illustrative render of one cabin design, not photographed in Richmond Town. The window, door and finish choices for your cabin are agreed before it is built.",
+    },
+
+    h1: "Portable Cabin Manufacturers in Richmond Town",
+    tagline:
+      "Temporary offices, reception cabins, security and valet booths, site offices and sales counters for Richmond Town properties, built to your layout.",
+    intro: [
+      "Richmond Town is an established central Bengaluru neighbourhood with heritage residences, commercial offices, hotels, restaurants, educational institutions and residential developments.",
+      "Creating extra working space within an existing property can be difficult, particularly where permanent construction would need extensive alterations, approvals and a longer project schedule.",
+      "Portable Office Cabin manufactures and supplies prefabricated cabins for temporary offices, security staff, construction projects, reception areas and commercial service counters. The cabins are built at our factory near Hosur and delivered to your site.",
+      "Each cabin can be customised to the space available, the intended use, the insulation required, the electrical fittings and the interior layout.",
+      "Whether you need a temporary office during a building refurbishment, a security cabin at an entrance gate or a compact valet parking booth, we can suggest suitable prefabricated cabin options for your Richmond Town premises.",
+      "Cabins are manufactured with the structural framing, wall panels, roofing, doors, windows and electrical provisions set out in the approved quotation.",
+      "Delivery, installation and commissioning depend on site readiness, transport access and the approvals that apply.",
+    ],
+    // Brief §31: the main portable cabin category (which owns the head term) from the introduction.
+    introLink: {
+      before: "For our standard cabin designs, browse our",
+      link: { label: "portable and prefabricated cabins", href: "/products/category/portable-cabins" },
+      after: ".",
+    },
+    heroCta: true,
+
+    extraSections: [
+      {
+        heading: "Portable Cabin Applications in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: ["Portable cabins may be considered for:"],
+        bullets: [
+          { text: "Temporary office accommodation." },
+          { text: "Office refurbishment projects." },
+          { text: "Commercial reception areas." },
+          { text: "Security and entrance gate booths." },
+          { text: "Construction site offices." },
+          { text: "Hotel valet parking booths." },
+          { text: "Restaurant parking counters." },
+          { text: "Residential project sales offices." },
+          { text: "Event registration desks." },
+          { text: "Ticket counters." },
+          { text: "School admission counters." },
+          { text: "Temporary staff rooms." },
+          { text: "Institutional help desks." },
+          { text: "Property management offices." },
+        ],
+        // Brief §5: standalone washrooms belong to the portable toilet page. The Richmond Town shipping page's
+        // storage link (brief §32) is added here by whichever of the two pages is released second.
+        inlineLinks: [
+          {
+            before: "For a standalone washroom rather than an occupied cabin, see our",
+            link: { label: "standalone portable toilets", href: "/products/portable-toilet-cabin" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Temporary Office Cabins During Commercial Refurbishment",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-richmond-town/furnished-portable-office-cabin-richmond-town.webp",
+          alt: "Furnished portable office cabin interior with a desk and chairs, low cabinets, a wall TV, LED ceiling lights and two split ACs",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of a furnished office interior. Furniture, the false ceiling and AC units are included only where your quotation lists them.",
+        },
+        paragraphs: [
+          "Commercial establishments undergoing interior renovation may need temporary working accommodation while their permanent offices are being upgraded.",
+          "A suitably designed portable office cabin can provide a separate working area for administrative staff, managers and project teams.",
+        ],
+        subsections: [
+          {
+            heading: "Temporary staff accommodation",
+            paragraphs: ["Possible configurations include:"],
+            bullets: [
+              { text: "Open office workstations." },
+              { text: "Administrative desks." },
+              { text: "A manager's cabin." },
+              { text: "A reception desk." },
+              { text: "A small discussion area." },
+              { text: "Document cabinets." },
+              { text: "Electrical sockets." },
+              { text: "Network point provisions." },
+              { text: "LED lighting." },
+              { text: "Ceiling fans." },
+              { text: "AC provision." },
+            ],
+          },
+          {
+            heading: "Office layout options",
+            paragraphs: ["Depending on the cabin's dimensions and the number of occupants, layouts may include:"],
+            bullets: [
+              { text: "A single open-plan office." },
+              { text: "A manager's room behind a separate partition." },
+              { text: "A staff workstation area." },
+              { text: "A small meeting corner." },
+              { text: "A temporary reception and administration area." },
+            ],
+            closing: [
+              "A 20\u00a0ft or 30\u00a0ft cabin may suit a smaller office team, subject to the actual internal dimensions and the approved furniture layout.",
+            ],
+          },
+          {
+            heading: "Phased commercial refurbishment",
+            paragraphs: ["Temporary office cabins may support businesses during:"],
+            bullets: [
+              { text: "Office flooring replacement." },
+              { text: "Electrical renovation." },
+              { text: "Interior partition replacement." },
+              { text: "False ceiling work." },
+              { text: "Reception refurbishment." },
+              { text: "Commercial building upgrades." },
+            ],
+            closing: [
+              "A cabin used as an occupied office is designed for that use, with adequate ventilation, electrical safety, access and the fire safety requirements that apply.",
+            ],
+            inlineLinks: [
+              {
+                before: "For office cabin models and their standard fittings, see our",
+                link: { label: "portable office cabin solutions", href: "/products/office-portable-cabin" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Reception & Customer Service Cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hotels, offices and commercial establishments undergoing refurbishment may need a temporary reception area to keep customer-facing operations running.",
+        ],
+        subsections: [
+          {
+            heading: "Possible applications",
+            bullets: [
+              { text: "A temporary reception desk." },
+              { text: "Visitor registration." },
+              { text: "A customer enquiry counter." },
+              { text: "A building administration desk." },
+              { text: "A temporary help desk." },
+              { text: "A property management counter." },
+            ],
+          },
+          {
+            heading: "Optional configurations",
+            bullets: [
+              { text: "Glass viewing panels." },
+              { text: "A reception counter." },
+              { text: "Staff seating." },
+              { text: "LED lighting." },
+              { text: "Electrical outlets." },
+              { text: "AC provision." },
+              { text: "Document shelving." },
+              { text: "Approved signage." },
+            ],
+            closing: [
+              "The layout leaves enough room for staff to move and for customers to be served. Where needed, accessibility and the entrance arrangements are assessed too.",
+              "A reception cabin helps keep a front desk open during works, but the cabin alone cannot guarantee uninterrupted business operations.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Security Cabins & Guard Booths",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Portable security cabins may be considered for heritage residences, apartment entrances, office campuses and commercial premises.",
+        ],
+        subsections: [
+          {
+            heading: "Typical compact cabin sizes",
+            bullets: [{ text: "4\u00a0×\u00a04\u00a0ft." }, { text: "6\u00a0×\u00a06\u00a0ft." }, { text: "Customised dimensions." }],
+          },
+          {
+            heading: "Possible specifications",
+            bullets: [
+              { text: "MS or GI structural construction." },
+              { text: "Viewing windows." },
+              { text: "A lockable entrance door." },
+              { text: "An LED light." },
+              { text: "A fan." },
+              { text: "An electrical socket." },
+              { text: "A small desk or shelf." },
+              { text: "Intercom provision." },
+              { text: "Suitable ventilation." },
+            ],
+            closing: [
+              "Window placement is designed around the visibility the guard needs and the approved layout; all-round visibility is offered only where the chosen cabin design provides it.",
+            ],
+            // Brief §8: kept brief so the dedicated security cabin page keeps its keyword ownership.
+            inlineLinks: [
+              {
+                before: "For guard cabin models, sizes and specifications, see our",
+                link: { label: "portable security cabins and guard booths", href: "/products/security-cabin" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Hotel Valet & Parking Booths",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hotels, restaurants and commercial buildings in Richmond Town can use a compact cabin to manage parking.",
+        ],
+        subsections: [
+          {
+            heading: "Valet parking booth applications",
+            bullets: [
+              { text: "Hotel entrance management." },
+              { text: "Restaurant valet service." },
+              { text: "Commercial parking administration." },
+              { text: "Visitor vehicle registration." },
+              { text: "Parking ticket collection." },
+              { text: "A shelter for parking staff." },
+            ],
+          },
+          {
+            heading: "Possible features",
+            bullets: [
+              { text: "A compact service counter." },
+              { text: "Viewing windows." },
+              { text: "A sliding service window." },
+              { text: "A key organisation shelf." },
+              { text: "Staff seating." },
+              { text: "An electrical socket." },
+              { text: "LED lighting." },
+              { text: "A fan or ventilation provision." },
+              { text: "Optional approved branding." },
+            ],
+            closing: [
+              "The booth stands within an authorised area, clear of pedestrian movement, emergency access and vehicle circulation. It is never set on a public road or footpath unless the required permissions are in place.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Site Office Cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Construction and redevelopment projects in Richmond Town may need temporary accommodation for engineers, supervisors and project administration staff.",
+        ],
+        subsections: [
+          {
+            heading: "Possible applications",
+            bullets: [
+              { text: "Commercial redevelopment projects." },
+              { text: "Building refurbishment." },
+              { text: "Residential renovation." },
+              { text: "Property restoration." },
+              { text: "Construction project management." },
+            ],
+          },
+          {
+            heading: "Typical site office configurations",
+            bullets: [
+              { text: "A 20\u00a0×\u00a010\u00a0ft cabin." },
+              { text: "A 30\u00a0×\u00a010\u00a0ft cabin." },
+              { text: "Customised cabin dimensions." },
+            ],
+          },
+          {
+            heading: "Optional interior features",
+            bullets: [
+              { text: "An engineer's desk." },
+              { text: "A drawing table." },
+              { text: "A meeting table." },
+              { text: "Office chairs." },
+              { text: "Document storage." },
+              { text: "Internal partitions." },
+              { text: "LED lighting." },
+              { text: "Electrical sockets." },
+              { text: "AC provision." },
+              { text: "An attached toilet, where suitable." },
+            ],
+            closing: [
+              "A site office cabin may be moved to another project when this one finishes, subject to its structural condition, transport feasibility and site access.",
+            ],
+            inlineLinks: [
+              {
+                before: "For site office models and their full specifications, see our",
+                link: { label: "portable site office cabins", href: "/products/construction-site-portable-office" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Sales Offices, Ticket Counters & Registration Cabins",
+        placement: "afterSolutions",
+        paragraphs: ["Customised prefabricated cabins may be considered for temporary customer-facing commercial activities."],
+        subsections: [
+          {
+            heading: "Project sales offices",
+            paragraphs: ["Possible configurations include:"],
+            bullets: [
+              { text: "A customer consultation desk." },
+              { text: "Staff workstations." },
+              { text: "A display area." },
+              { text: "Reception seating." },
+              { text: "Glass frontage." },
+              { text: "AC provision." },
+              { text: "Approved branding." },
+            ],
+          },
+          {
+            heading: "Event registration cabins",
+            paragraphs: ["Possible configurations include:"],
+            bullets: [
+              { text: "A registration counter." },
+              { text: "Staff seating." },
+              { text: "Electrical sockets." },
+              { text: "Network provisions." },
+              { text: "Document shelves." },
+              { text: "A sliding service window." },
+            ],
+          },
+          {
+            heading: "Ticket and admission counters",
+            paragraphs: ["Possible applications include:"],
+            bullets: [
+              { text: "Event ticket counters." },
+              { text: "School admission counters." },
+              { text: "Institutional registration desks." },
+              { text: "Club event help desks." },
+              { text: "Parking ticket booths." },
+            ],
+            inlineLinks: [
+              {
+                before: "For sales gallery and site sales office designs, see our",
+                link: { label: "portable sales and marketing offices", href: "/products/marketing-office/prefab-marketing-office" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Educational & Institutional Cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Schools, churches, clubs and other institutions may need temporary working accommodation during renovation, maintenance or scheduled events.",
+          "Possible applications include:",
+        ],
+        bullets: [
+          { text: "Temporary administrative offices." },
+          { text: "Admission counters." },
+          { text: "Staff rooms." },
+          { text: "Visitor help desks." },
+          { text: "Event registration cabins." },
+          { text: "Maintenance supervision offices." },
+        ],
+        closing: [
+          "Each configuration is based on the intended occupancy, the site area available, accessibility and the safety requirements that apply. These are administrative working spaces: a portable cabin is not automatically approved for classroom or other institutional use.",
+        ],
+      },
+      {
+        heading: "Portable Cabin Sizes in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: ["Cabin dimensions are chosen to suit the placement space available, the intended use and the approved interior layout."],
+        // Sizes use no-break spaces (\u00a0) so a footprint never splits over two lines on a narrow phone; the short
+        // headers keep the four columns inside a 360 px screen.
+        table: {
+          caption: "Indicative planning examples, not certified occupancy limits or stock sizes.",
+          headers: ["Cabin size", "Floor area (sq ft)", "Indicative staff", "Typical use"],
+          rows: [
+            ["4\u00a0×\u00a04\u00a0ft", "16", "1 person", "Compact guard booth"],
+            ["6\u00a0×\u00a06\u00a0ft", "36", "1–2 people", "Gate cabin or valet booth"],
+            ["10\u00a0×\u00a08\u00a0ft", "80", "1–2 people", "Small site office or cashier cabin"],
+            ["20\u00a0×\u00a010\u00a0ft", "200", "3–4 people", "Site office or sales office"],
+            ["30\u00a0×\u00a010\u00a0ft", "300", "5–6 people", "Project office or reception"],
+            ["40\u00a0×\u00a010\u00a0ft", "400", "7–8 people", "Temporary commercial office"],
+          ],
+        },
+        closing: [
+          "Floor areas are nominal. The usable area depends on wall thickness, partitions, furniture, internal fittings and circulation space.",
+          "Our most common footprints are 10\u00a0×\u00a08, 20\u00a0×\u00a08 and 40\u00a0×\u00a08\u00a0ft; the other sizes above are confirmed in your quotation.",
+        ],
+        subsections: [
+          {
+            heading: "Customised cabin dimensions",
+            paragraphs: ["Customised dimensions may be considered, subject to:"],
+            bullets: [
+              { text: "Structural design." },
+              { text: "The intended application." },
+              { text: "Road transport restrictions." },
+              { text: "Vehicle availability." },
+              { text: "Site accessibility." },
+              { text: "Lifting requirements." },
+              { text: "The permissions that apply." },
+            ],
+            closing: [
+              "Internal height may be around 8\u00a0ft where the design supports it; the height of your cabin is stated in its quotation rather than assumed for every model.",
+            ],
+            inlineLinks: [
+              {
+                before: "Internal measurements for each standard footprint are listed in our",
+                link: { label: "portable cabin dimensions guide", href: "/products/portable-cabin/sizes-and-dimensions" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin Construction Specifications",
+        placement: "afterSolutions",
+        paragraphs: [
+          "The specification of each cabin is set in its quotation. The table separates items typical of our office cabins from optional ones; not every cabin includes every item.",
+        ],
+        table: {
+          caption: "Typical = found in most office cabin quotations; optional or as specified = added only where your quotation lists it.",
+          headers: ["Component", "Specification", "Typical or optional"],
+          rows: [
+            ["Structural frame", "Welded mild steel sections", "Typical"],
+            ["Steel protection", "Anti-rust primer and paint system", "Typical"],
+            ["External wall", "MS or GI sheet, or insulated panel construction", "As specified"],
+            ["Roof", "Steel or insulated roofing system", "As specified"],
+            ["Insulation", "PUF (or another insulated panel) to the selected thickness", "As specified"],
+            ["Floor base", "Steel supporting structure", "Typical"],
+            ["Flooring board", "Cement fibre board or an approved alternative", "As specified"],
+            ["Floor finish", "Vinyl or another approved flooring", "As specified"],
+            ["Interior finish", "MDF or another specified lining, where suitable", "Optional"],
+            ["Windows", "Aluminium sliding windows or an approved alternative", "Typical"],
+            ["Door", "Lockable entrance door", "Typical"],
+            ["Electrical wiring", "Concealed wiring", "Typical"],
+            ["Lighting", "LED lights", "Typical"],
+            ["Ventilation", "Fans and suitable ventilation", "Typical"],
+            ["Electrical protection", "MCB distribution box and protective devices", "Typical"],
+            ["AC", "AC point and outdoor-unit bracket; the AC unit itself per quotation", "Provision typical, unit optional"],
+            ["Partitions", "To the approved layout", "Optional"],
+            ["Toilet", "Subject to design and site services", "Optional"],
+            ["Furniture", "Customised office furniture", "Optional"],
+            ["Exterior finish", "Painted steel; ACP or another approved finish on request", "Paint typical, ACP optional"],
+          ],
+        },
+        inlineLinks: [
+          {
+            before: "For frame, wall and roof details of our steel cabins, see our",
+            link: { label: "MS portable cabin specifications", href: "/products/ms-portable-cabin" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "MS, GI & PUF Insulated Portable Cabins",
+        placement: "afterSolutions",
+        subsections: [
+          {
+            heading: "MS portable cabins",
+            paragraphs: [
+              "Mild steel portable cabins may be considered for security booths, temporary offices and site administration. The final structure and protective coating follow the approved design.",
+            ],
+          },
+          {
+            heading: "GI portable cabins",
+            paragraphs: [
+              "Galvanised steel components may be used in suitable cabin configurations, according to the manufacturing specification. Galvanising slows corrosion; it does not remove the need for maintenance.",
+            ],
+          },
+          {
+            heading: "PUF insulated portable cabins",
+            paragraphs: [
+              "PUF insulated wall and roof panels can help reduce heat transfer compared with uninsulated metal construction. Actual indoor comfort depends on:",
+            ],
+            bullets: [
+              { text: "Insulation thickness." },
+              { text: "Panel construction." },
+              { text: "Roof exposure." },
+              { text: "The outdoor temperature." },
+              { text: "Window size." },
+              { text: "Ventilation." },
+              { text: "The number of occupants." },
+              { text: "Electrical equipment." },
+              { text: "AC capacity." },
+            ],
+            closing: [
+              "The PUF panel thickness for your cabin is stated in its quotation. We don't promise a particular temperature reduction, electricity saving or acoustic performance.",
+            ],
+            inlineLinks: [
+              {
+                before: "For how insulation and cooling are chosen, see our guide to",
+                link: { label: "PUF insulated portable cabins", href: "/products/portable-cabin/insulation-and-cooling" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin Interior Finishing",
+        placement: "afterSolutions",
+        paragraphs: ["Interior finishes are chosen to suit the intended use."],
+        subsections: [
+          {
+            heading: "Interior finishing options",
+            bullets: [
+              { text: "MDF interior lining, where suitable." },
+              { text: "Approved wall panels." },
+              { text: "A false ceiling." },
+              { text: "Vinyl flooring." },
+              { text: "LED lighting." },
+              { text: "Ceiling fans." },
+              { text: "Electrical sockets." },
+              { text: "Internal partitions." },
+              { text: "Office furniture." },
+              { text: "Network point provisions." },
+              { text: "AC provision." },
+            ],
+            closing: ["Interior materials are checked for moisture exposure, fire performance and the intended occupancy."],
+          },
+          {
+            heading: "Office furniture options",
+            bullets: [
+              { text: "A manager's table." },
+              { text: "Staff workstations." },
+              { text: "Pedestal drawer units." },
+              { text: "A meeting table." },
+              { text: "A reception counter." },
+              { text: "File cabinets." },
+              { text: "Overhead storage cabinets." },
+              { text: "Office chairs." },
+            ],
+            closing: ["Furniture is optional: it is supplied only where your quotation and approved layout include it."],
+            inlineLinks: [
+              {
+                before: "Partition, ceiling and furniture planning is explained in our",
+                link: { label: "guide to cabin layouts and interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Exterior Finishes for Richmond Town Properties",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-richmond-town/portable-cabin-richmond-town-front-view.webp",
+          alt: "Front view of an olive-green portable cabin with two barred sliding windows, a steel door at one end and steel steps",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative render of a painted steel exterior. The colour, window canopies and lights are chosen with you before the cabin is built.",
+        },
+        paragraphs: [
+          "Richmond Town has established residences and commercial properties where the appearance of a portable cabin can matter.",
+          "Customised exterior finishes can be considered to suit the property.",
+        ],
+        subsections: [
+          {
+            heading: "ACP cladding",
+            paragraphs: ["Where offered, ACP cladding can give a different exterior appearance for:"],
+            bullets: [{ text: "Commercial reception cabins." }, { text: "Sales offices." }, { text: "Security cabins." }, { text: "Valet booths." }],
+            closing: ["The cladding system used meets the fire safety requirements that apply."],
+          },
+          {
+            heading: "Wood-look exterior finishes",
+            paragraphs: [
+              "Where available, a wood-look finish may be considered for appearance-sensitive properties. A wood-look finish is a decorative surface, not genuine timber.",
+            ],
+          },
+          {
+            heading: "Glass frontage",
+            paragraphs: ["Optional glass frontage may be considered for:"],
+            bullets: [
+              { text: "Reception cabins." },
+              { text: "Sales offices." },
+              { text: "Registration counters." },
+              { text: "Customer-facing commercial cabins." },
+            ],
+            closing: ["The glazing specification, privacy and safety are agreed for each cabin."],
+          },
+          {
+            heading: "Customised colours and branding",
+            paragraphs: ["Possible options include:"],
+            bullets: [
+              { text: "Neutral grey." },
+              { text: "White." },
+              { text: "Charcoal." },
+              { text: "Beige." },
+              { text: "Approved corporate colours." },
+              { text: "Authorised company branding." },
+            ],
+            closing: [
+              "Only finishes we actually offer are quoted, and no third-party logo is applied without authorisation. A considered exterior does not remove any heritage or planning approval the property needs.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin with AC & Attached Toilet",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-richmond-town/portable-office-cabin-ac-provision.webp",
+          alt: "Rear wall of an olive-green portable cabin with a split AC outdoor unit mounted on brackets",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative render of a split AC outdoor unit on a wall bracket. The AC unit itself is supplied only where your quotation includes it.",
+        },
+        subsections: [
+          {
+            heading: "Air-conditioning options",
+            paragraphs: ["Depending on the approved cabin design, you can ask for:"],
+            bullets: [
+              { text: "AC electrical provision." },
+              { text: "Split AC installation." },
+              { text: "Suitable window AC installation." },
+              { text: "Approved outdoor-unit mounting arrangements." },
+            ],
+            closing: ["The electrical load, cooling requirement and AC specification are confirmed before the cabin is built."],
+          },
+          {
+            heading: "Attached toilet options",
+            paragraphs: ["Where the cabin is designed to take a toilet, possible fittings include:"],
+            bullets: [
+              { text: "A toilet compartment." },
+              { text: "A WC." },
+              { text: "A wash basin." },
+              { text: "Water supply provision." },
+              { text: "A drainage connection." },
+              { text: "Exhaust ventilation." },
+              { text: "Suitable moisture-resistant finishes." },
+            ],
+            closing: [
+              "Water supply and drainage at the site are checked first. A water tank, plumbing connection or sewage disposal arrangement is included only where your quotation lists it.",
+            ],
+            inlineLinks: [
+              {
+                before: "Plumbing, drainage and layout options for a cabin toilet are covered in our guide to",
+                link: { label: "portable cabins with attached toilets", href: "/products/portable-cabin/with-toilet-and-pantry" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin on Rent in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Renting can suit a temporary office refurbishment, a construction project, a commercial event or another short-term administrative need.",
+          "Our rental fleet includes standard site office cabins and a security guard cabin, each with its own minimum hire period; the listed rental units do not include furniture. A reception, valet or registration cabin fitted out to your layout is a custom build, so its availability on hire and the hire terms are set out in your quotation.",
+        ],
+        subsections: [
+          {
+            heading: "Possible rental applications",
+            bullets: [
+              { text: "A temporary office during refurbishment." },
+              { text: "Construction site administration." },
+              { text: "Hotel reception renovation." },
+              { text: "An event registration counter." },
+              { text: "A temporary valet booth." },
+              { text: "An institutional help desk." },
+            ],
+          },
+          {
+            heading: "Rental arrangements",
+            paragraphs: ["Your rental quotation confirms:"],
+            bullets: [
+              { text: "The cabin sizes available." },
+              { text: "The minimum rental period." },
+              { text: "Monthly rental charges." },
+              { text: "The security deposit." },
+              { text: "Delivery, installation and collection charges." },
+              { text: "AC availability." },
+              { text: "Maintenance responsibilities." },
+              { text: "Responsibility for damage." },
+              { text: "Rental extension terms." },
+            ],
+            inlineLinks: [
+              {
+                before: "Current rental units and the minimum period for each are listed on our",
+                link: { label: "portable cabin rental page", href: "/rental-service" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin for Sale in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Buying a portable cabin may suit customers who need working accommodation for longer. Possible applications include:",
+        ],
+        bullets: [
+          { text: "A permanent security booth, subject to approval." },
+          { text: "A long-term commercial reception." },
+          { text: "Hotel valet parking management." },
+          { text: "Project administration." },
+          { text: "Reusable construction site offices." },
+          { text: "Property management cabins." },
+        ],
+        closing: ["A purchased cabin is built to the approved dimensions, structural specification, interior fittings and exterior finish."],
+      },
+      {
+        heading: "Renting Versus Buying a Portable Cabin",
+        placement: "afterSolutions",
+        table: {
+          caption: "General guidance; the right choice depends on your actual costs, customisation and reuse.",
+          headers: ["Requirement", "Renting may suit", "Buying may suit"],
+          rows: [
+            ["Short refurbishment project", "Yes, subject to availability", "Depends on future reuse"],
+            ["Temporary event", "Yes, subject to availability", "Depends on how often you use it"],
+            ["Long-term security booth", "Compare the total rental cost", "Worth considering"],
+            ["Multiple construction projects", "Compare rental and relocation costs", "A reusable cabin"],
+            ["Customised permanent configuration", "Depends on the rental terms", "Often worth considering"],
+          ],
+        },
+        closing: [
+          "There is no fixed rule on when renting is better than buying: compare the total costs, the customisation you need and how often the cabin will be reused.",
+        ],
+      },
+      {
+        heading: "Delivery & Installation in Richmond Town",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-richmond-town/portable-cabin-richmond-town-top-view.webp",
+          alt: "Top view of an olive-green portable cabin showing its corrugated steel roof, window canopies and entrance steps",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative top view of a cabin on a paved pad. The base, lifting and access for your site are assessed before delivery.",
+        },
+        paragraphs: ["Delivery and installation need an assessment of the approved placement area, road access and site conditions."],
+        subsections: [
+          {
+            heading: "Site assessment",
+            paragraphs: ["Before manufacturing or delivery, confirm:"],
+            bullets: [
+              { text: "The required cabin dimensions." },
+              { text: "The intended occupancy." },
+              { text: "The placement area available." },
+              { text: "The ground or slab load capacity." },
+              { text: "Vehicle access." },
+              { text: "Gate dimensions." },
+              { text: "Overhead clearance." },
+              { text: "Crane access." },
+              { text: "Electrical supply." },
+              { text: "Water and drainage requirements." },
+              { text: "The property approvals that apply." },
+            ],
+          },
+          {
+            heading: "Foundation and base preparation",
+            paragraphs: ["Depending on the cabin design and site conditions, suitable supports may include:"],
+            bullets: [
+              { text: "Designed concrete pedestals." },
+              { text: "An approved PCC base." },
+              { text: "An engineered supporting structure." },
+              { text: "Another suitable foundation arrangement." },
+            ],
+            closing: [
+              "No single foundation suits every cabin and site. Your quotation states whether the base is prepared by us or by your own contractor.",
+            ],
+          },
+          {
+            heading: "Transport scheduling",
+            paragraphs: ["Delivery in central Bengaluru may depend on:"],
+            bullets: [
+              { text: "Heavy-vehicle restrictions." },
+              { text: "Property management requirements." },
+              { text: "Local traffic conditions." },
+              { text: "Vehicle availability." },
+              { text: "Noise restrictions." },
+              { text: "The permissions required." },
+            ],
+            closing: ["Night or early-morning delivery may be considered where it is permitted and can be arranged; it is not guaranteed."],
+          },
+          {
+            heading: "Crane unloading and placement",
+            paragraphs: ["Professional lifting equipment may be needed to position the cabin. Confirm:"],
+            bullets: [
+              { text: "The cabin's lifting weight." },
+              { text: "The approved lifting points." },
+              { text: "Crane capacity." },
+              { text: "Lifting radius." },
+              { text: "Ground-bearing conditions." },
+              { text: "Overhead electrical clearance." },
+              { text: "Qualified lifting personnel." },
+              { text: "Any road-use permissions required." },
+            ],
+            closing: ["A hydra crane does not suit every installation; the lifting method is chosen for your site."],
+          },
+          {
+            heading: "Electrical commissioning",
+            paragraphs: ["Electrical connections are made by suitably qualified personnel, who verify:"],
+            bullets: [
+              { text: "Supply capacity." },
+              { text: "Earthing." },
+              { text: "Electrical protection." },
+              { text: "The distribution board connection." },
+              { text: "AC electrical requirements." },
+              { text: "The electrical safety requirements that apply." },
+            ],
+          },
+          {
+            heading: "Water and drainage connections",
+            paragraphs: ["For cabins with toilets, confirm:"],
+            bullets: [
+              { text: "Water supply." },
+              { text: "The drainage connection." },
+              { text: "The plumbing layout." },
+              { text: "The sanitation requirements that apply." },
+            ],
+          },
+          {
+            heading: "Building management coordination",
+            paragraphs: ["Obtain the approvals that apply:"],
+            bullets: [
+              { text: "The property owner's authorisation." },
+              { text: "Building management approval." },
+              { text: "Association approval." },
+              { text: "A vehicle gate pass." },
+              { text: "Statutory permissions." },
+            ],
+            closing: ["Building management approval alone may not be enough; the other permissions still apply."],
+          },
+          {
+            heading: "Installation completion",
+            paragraphs: [
+              "Installation time depends on the cabin specification, foundation readiness, lifting arrangements, utility connections and inspections. We don't promise same-day occupancy or installation within a fixed number of hours.",
+            ],
+            inlineLinks: [
+              {
+                before: "Base, access and lifting preparation is covered in our",
+                link: { label: "cabin installation and site preparation guide", href: "/products/portable-cabin/installation-and-site-preparation" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin Price in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: ["Portable cabin pricing depends on the configuration you choose and your site. The main factors are:"],
+        bullets: [
+          { text: "Cabin dimensions." },
+          { text: "Structural steel specification." },
+          { text: "MS or GI construction." },
+          { text: "Insulation requirements." },
+          { text: "PUF panel thickness." },
+          { text: "Interior finishing." },
+          { text: "Flooring." },
+          { text: "Doors and windows." },
+          { text: "Electrical fittings." },
+          { text: "Internal partitions." },
+          { text: "Furniture." },
+          { text: "AC requirements." },
+          { text: "An attached toilet." },
+          { text: "ACP cladding." },
+          { text: "Glass frontage." },
+          { text: "Customised branding." },
+          { text: "Transport." },
+          { text: "Loading and unloading." },
+          { text: "Crane requirements." },
+          { text: "Foundation preparation." },
+          { text: "Installation requirements." },
+          { text: "The rental period, where applicable." },
+        ],
+        closing: [
+          "A price may be worked out on floor area, on the approved specification or on the complete customised cabin. Send us the dimensions you need, the intended use and photographs of the site for a customised quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "The cost drivers are explained in more detail in our",
+            link: { label: "portable cabin cost guide", href: "/products/portable-cabin/price-and-cost-guide" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "What to Include in Your Enquiry",
+        paragraphs: ["A quotation is quicker to prepare when your enquiry includes:"],
+        bullets: [
+          { text: "The cabin size you need." },
+          { text: "The number of cabins." },
+          { text: "The intended application." },
+          { text: "The expected number of occupants." },
+          { text: "The interior layout you need." },
+          { text: "Your MS, GI or PUF preference." },
+          { text: "Insulation requirements." },
+          { text: "Furniture requirements." },
+          { text: "AC requirements." },
+          { text: "Attached toilet requirements." },
+          { text: "The exterior colour and finish." },
+          { text: "Whether you want to buy or rent." },
+          { text: "The delivery date you need." },
+          { text: "The installation address." },
+          { text: "Photographs of the site." },
+          { text: "The placement dimensions available." },
+        ],
+      },
+    ],
+
+    areasHeading: "Areas We Serve Near Richmond Town",
+    areasText:
+      "Portable cabin and porta cabin enquiries for Richmond Town (PIN 560025) are handled on this page, including the Richmond Road stretch and the streets around Richmond Circle. We also take enquiries from nearby Langford Town, Shanthinagar, Ashok Nagar, Residency Road, Vittal Mallya Road, Lavelle Road, MG Road, Brigade Road, Austin Town, Wilson Garden, Neelasandra and Adugodi. Vehicle access and the placement area are assessed property by property before we confirm a delivery.",
+    // Brief §23: the Bengaluru portable cabin service-area hub.
+    areasInlineLink: {
+      before: "For other Bengaluru neighbourhoods, see our",
+      link: { label: "portable cabins across Bengaluru", href: "/promotions/portable-cabin-in-bangalore" },
+      after: ".",
+    },
+
+    faqs: [
+      {
+        question: "What is the price of a portable cabin in Richmond Town?",
+        answer:
+          "The price depends on the cabin size, structural specification, insulation, interior finishes, electrical fittings, optional furniture and delivery requirements. Contact Portable Office Cabin with your requirements for a customised quotation.",
+      },
+      {
+        question: "What is the difference between a porta cabin and a portable cabin?",
+        answer:
+          "None in practice: porta cabin and portable cabin are both common generic names for a prefabricated, movable cabin. People also search for prefab cabins, prefabricated cabins and ready-built cabins.",
+      },
+      {
+        question: "How soon can I get a portable cabin in Richmond Town?",
+        answer:
+          "Manufacturing and delivery schedules depend on the cabin size, the customisation, production availability and site readiness. Ask for a confirmed schedule with your quotation.",
+      },
+      {
+        question: "Will a portable cabin become hot inside?",
+        answer:
+          "Indoor temperature depends on insulation, roof exposure, ventilation, the outdoor temperature and the number of occupants. PUF insulation can help reduce heat transfer, and ventilation and air-conditioning may be needed for full-time office use.",
+      },
+      {
+        question: "Can a portable cabin include an attached toilet and AC?",
+        answer:
+          "Yes, in suitable customised configurations. The electrical supply, plumbing, drainage and ventilation are confirmed before the design is finalised.",
+      },
+      {
+        question: "Can I rent a portable cabin during office refurbishment?",
+        answer:
+          "Standard site office cabins can be hired, subject to availability and a minimum hire period. Whether a cabin fitted out to your layout can be hired is confirmed in your quotation.",
+      },
+      {
+        question: "Can a portable cabin be customised to match my commercial property?",
+        answer:
+          "Colours, exterior finishes, ACP cladding, glass frontage and your own branding can be considered where offered. The final configuration depends on the approved design and the property's requirements.",
+      },
+      {
+        question: "Do I need permission to install a portable cabin?",
+        answer:
+          "Permission requirements depend on the property, the intended use, how long the cabin stays and local regulations. Obtain the property owner's authorisation and any building management or statutory approvals that apply.",
+      },
+      {
+        question: "Can the portable cabin be relocated later?",
+        answer:
+          "Relocation may be possible, depending on the cabin's structural condition, dimensions, lifting arrangements, transport access and the new site. Relocation and its charges are confirmed separately.",
+      },
+      {
+        question: "Can I install a portable cabin in a hotel parking area?",
+        answer:
+          "A suitably designed cabin may be considered for an authorised parking area after assessing the space available, vehicle circulation, structural capacity, pedestrian access and the approvals that apply.",
+      },
+    ],
+
+    ctaHeading: "Get a Portable Cabin Quote for Richmond Town",
+    ctaText: `Whether you need a temporary office, a security booth, a valet parking cabin, a construction site office or a customised reception space, Portable Office Cabin can discuss suitable configurations based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Richmond Town, Bengaluru, Karnataka 560025.`,
+    // The CTA box button → /contact.
+    ctaButtonLabel: "Request a Cabin Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons; the
+    // call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    // The category, the product pages and the guides linked in the body are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Portable Cabin Sizes & Specifications", href: "/products/portable-cabin" },
+      { label: "Porta Cabin Models", href: "/products/porta-cabin" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds its cabins at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office is in Electronic City, Bengaluru; it has no factory, yard, showroom or branch in Richmond Town. Every cabin is subject to availability, and its quotation states the dimensions, layout, fit-out, furniture, electrical and plumbing provisions, any hire terms, and who arranges the base, transport, unloading, placement and utility connections; no delivery or installation date is guaranteed. Portable Office Cabin does not obtain permissions from property owners, building management, associations or the authorities. The sizes and staff numbers on this page are planning examples, not stock or certified occupancy limits. All five images are illustrative renders of one olive-green cabin; none was photographed in Richmond Town or shows a supplied unit, and none shows a reception counter, guard booth, valet booth, toilet, ACP cladding or glass frontage. Hotels, restaurants, schools, churches and clubs are mentioned only as examples of typical uses, not as customers, and Richmond Town and the neighbourhoods named indicate where enquiries can come from, not completed installations. Notes on electrical work, lifting, foundations, fire safety and permissions are general guidance, not electrical, engineering or legal advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN KORAMANGALA — partitioned self-storage bays, restaurant
    * equipment between leases and bicycle rooms (owner brief "Version B", 2026-11-15).
    *
