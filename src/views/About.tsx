@@ -23,13 +23,10 @@ export default function AboutPage() {
     },
   ];
 
-  const milestones = [
-    { year: "2008", title: "Company Founded", description: "Started with a vision to revolutionize portable structures" },
-    { year: "2012", title: "100th Project", description: "Delivered our 100th portable cabin installation" },
-    { year: "2016", title: "Prefab Homes Launch", description: "Expanded into prefabricated home solutions" },
-    { year: "2020", title: "500+ Projects", description: "Crossed 500 successful project deliveries" },
-    { year: "2024", title: "Industry Leader", description: "Recognized as a leading portable structure manufacturer" },
-  ];
+  // The "Our Journey" timeline (2008 founded · 2012 100th project · 2016 prefab homes · 2020 500+
+  // projects · 2024 industry leader) was removed 2026-11-26: no record supports any of its dates or
+  // counts, and other pages gave other founding years. Restore it only with milestones the owner
+  // confirms (docs/claims/sitewide-claims-2026-11-26.md).
 
   return (
     <Layout>
@@ -40,7 +37,7 @@ export default function AboutPage() {
         title="About Us"
         description={
           <>
-            For over 15 years, we&apos;ve been manufacturing premium portable structures
+            We manufacture portable structures at our own factory in Tamil Nadu, near Hosur,
             that help businesses and individuals build their spaces anywhere.
           </>
         }
@@ -103,38 +100,6 @@ export default function AboutPage() {
                 <p className="text-muted-foreground">
                   {value.description}
                 </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold text-foreground mb-4">
-              Our Journey
-            </h2>
-          </div>
-          <div className="max-w-3xl mx-auto">
-            {milestones.map((milestone, index) => (
-              <div key={milestone.year} className="flex gap-6 pb-8 last:pb-0">
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white font-bold shrink-0">
-                    {milestone.year.slice(2)}
-                  </div>
-                  {index < milestones.length - 1 && (
-                    <div className="w-0.5 h-full bg-accent/20 mt-2" />
-                  )}
-                </div>
-                <div className="pb-8">
-                  <div className="text-accent font-semibold">{milestone.year}</div>
-                  <h3 className="font-display font-bold text-lg text-foreground">
-                    {milestone.title}
-                  </h3>
-                  <p className="text-muted-foreground">{milestone.description}</p>
-                </div>
               </div>
             ))}
           </div>

@@ -19,8 +19,9 @@ const reasons = [
   },
   {
     icon: IndianRupee,
-    title: "Up to 60% Cheaper",
-    description: "Our buildings cost significantly less than building from the ground up — that's a big chunk of change saved.",
+    // Was "Up to 60% Cheaper" (2026-11-26): no cost comparison is on record.
+    title: "Factory-Direct Pricing",
+    description: "We build at our own factory and sell direct, with no middlemen — standard units carry one fixed, GST-inclusive price online, and custom builds are priced on a written quotation.",
   },
   {
     icon: Leaf,

@@ -93,7 +93,7 @@ export default function PrefabLabourColonyBengaluru() {
           {/* Intro paragraph */}
           <section className="prose prose-lg max-w-none">
             <p className="text-foreground/85 leading-relaxed">
-              At <strong>Portable Office Cabin</strong>, we manufacture turnkey prefab labour colonies in-house at our Tamil Nadu factory near Hosur — barely 40 km from the city — and design, deliver and install them across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a leading manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited is also a leading manufacturer of prefabricated labour huts in Bengaluru.
+              At <strong>Portable Office Cabin</strong>, we manufacture turnkey prefab labour colonies in-house at our Tamil Nadu factory near Hosur — barely 40 km from the city — and design, deliver and install them across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited is also a leading manufacturer of prefabricated labour huts in Bengaluru.
             </p>
           </section>
 
@@ -124,7 +124,7 @@ export default function PrefabLabourColonyBengaluru() {
           {/* Branded Internal Link */}
           <div className="bg-accent/10 border border-accent/30 rounded-xl p-5">
             <p className="text-sm text-foreground/85 leading-relaxed">
-              <strong>Portable Office Cabin</strong> is India's trusted manufacturer of portable cabins, container offices, prefab homes, and modular building solutions. We deliver quality construction with customizable designs at competitive prices.{" "}
+              <strong>Portable Office Cabin</strong> is a manufacturer of portable cabins, container offices, prefab homes, and modular building solutions. We deliver quality construction with customizable designs at competitive prices.{" "}
               <Link href="/" className="text-accent font-semibold hover:underline">Visit our homepage →</Link>
             </p>
           </div>
@@ -180,7 +180,7 @@ export default function PrefabLabourColonyBengaluru() {
               Portable Office Cabin's Prefabricated Labor Colony Solutions
             </h2>
             <p className="text-foreground/85 leading-relaxed">
-              Portable Office Cabin has been delivering prefabricated labour accommodation and modular site infrastructure across Karnataka since the 2010s. As both a B2B and B2C manufacturer and supplier, we serve large EPC contractors and real estate developers, medium-sized contractors, and individual industrial plot owners who need smaller-scale solutions.
+              Portable Office Cabin delivers prefabricated labour accommodation and modular site infrastructure across Karnataka. As both a B2B and B2C manufacturer and supplier, we serve large EPC contractors and real estate developers, medium-sized contractors, and individual industrial plot owners who need smaller-scale solutions.
             </p>
             <p className="text-foreground/85 leading-relaxed">
               Our approach is simple: we handle everything from initial layout planning to final installation, giving you a single point of responsibility for your entire labour colony.

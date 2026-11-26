@@ -8,7 +8,7 @@ import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 export const metadata = buildPageMetadata({
   title: "Careers — Join Our Team",
   description:
-    "Explore career opportunities at Portable Office Cabin, India's leading portable cabin and modular building manufacturer. We're hiring talented professionals.",
+    "Explore career opportunities at Portable Office Cabin, a portable cabin and modular building manufacturer with its own factory in Tamil Nadu. We're hiring talented professionals.",
   path: "/careers",
 });
 

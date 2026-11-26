@@ -2995,8 +2995,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Site Office Containers", href: "/products/category/site-office-containers" },
       { label: "Cargo Containers for Container Shops", href: "/products/category/cargo-storage-shipping-containers" },
-      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "MS or PUF: Choosing the Material", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
       // Sibling shop pages named in the owner's brief, linked once live: Shivamogga (#195), Sriperumbudur
       // (#208), Hassan (#210, live 2026-11-07) and Hoskote (#202). Hassan and Hoskote link back here.
@@ -3895,7 +3895,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Agarbatti and Sandalwood Kiosk",
         text: "A compact retail kiosk may be configured for incense, packaged sandalwood products, souvenirs and gift items, with display shelving and a glass-front retail counter. Retailers remain responsible for sourcing their products and for the trade requirements that apply.",
-        link: { label: "Shelving, counters and interior layouts", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Shelving, counters and interior layouts", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Betel and Paan Kiosk",
@@ -4146,8 +4146,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Container Site Offices", href: "/products/category/site-office-containers" },
-      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "MS or PUF: Choosing the Material", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Truck-Driver and Highway Kiosks in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
       // Shivamogga's shop page (#195, live 2026-11-06): one of the brief's named sibling shop pages.
@@ -9231,7 +9231,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
       { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
       { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       // Hoskote's portable-shop sibling (2026-11-05), which links back from its nearby locations.
       { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
       // Hoskote's shipping and storage container sibling (2026-11-21), which links back from its areas section.
@@ -9362,7 +9362,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Bakery and Snacks Kiosk",
         text: "A portable bakery counter with a glass display front, shelves and lighting, plus electrical provisions for suitable display equipment such as a lit showcase.",
-        link: { label: "Cabin layouts and interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Cabin layouts and interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Tender Coconut and Juice Stall",
@@ -9392,7 +9392,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Mini Mart for Residential Layouts",
         text: "A larger shop cabin laid out with shelves along the walls, a billing counter near the door, storage space and room for suitable refrigeration equipment, sized for a residential layout or an apartment community.",
-        link: { label: "Portable cabin sizes and dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
+        link: { label: "Portable cabin sizes and dimensions", href: "/guides/portable-cabin-sizes-and-dimensions" },
       },
       {
         title: "Container Shop",
@@ -9632,10 +9632,10 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
       { label: "Cargo and Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
-      { label: "MS vs PUF Cabin Materials", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "MS vs PUF Cabin Materials", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "Security Cabin", href: "/products/security-cabin" },
-      { label: "Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
     ],
     nearbyLinks: {
       heading: "Nearby locations",
@@ -10472,7 +10472,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinksHeading: "Related products",
     relatedLinks: [
       { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
       { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
@@ -11231,7 +11231,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Truck Spares and Lubricants Shop",
         text: "Possible features include heavy-duty shelving, a rolling shutter, lockable storage, a counter, suitable lighting and appropriate flooring. Shelving is specified for the expected loads, and lubricants and other regulated or combustible materials must be stored according to the applicable safety requirements.",
-        link: { label: "Planning shelving, counters and storage inside a cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Planning shelving, counters and storage inside a cabin", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Driver Essentials Kiosk",
@@ -11246,7 +11246,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Highway Location Considerations",
         text: "A highway kiosk needs legally permitted commercial land, approved access, suitable road setbacks, safe vehicle circulation, appropriate parking, exterior lighting, clear signage and waste management. Customers should reach it through the approved access: a kiosk is never a reason for direct, unauthorized access from NH 48 or for unsafe roadside parking.",
-        link: { label: "Preparing the site and base for a cabin", href: "/products/portable-cabin/installation-and-site-preparation" },
+        link: { label: "Preparing the site and base for a cabin", href: "/guides/portable-cabin-installation-and-site-preparation" },
       },
     ],
 
@@ -11471,8 +11471,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Office Containers", href: "/products/category/site-office-containers" },
       { label: "Security Cabin Range", href: "/products/category/security-cabins" },
       { label: "Keeping a Cabin Cool: Insulation Guide", href: "/products/portable-cabin/insulation-and-cooling" },
-      { label: "MS or PUF Panels: Material Guide", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "MS or PUF Panels: Material Guide", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Cabin Transport and Delivery Guide", href: "/guides/portable-cabin-transport-and-delivery" },
       { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Portable Shops in Shivamogga's Machenahalli Area", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
       { label: "Shop Cabins for Hebbal's Office Areas, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
@@ -12372,7 +12372,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Industrial Hassan",
         text: "Industrial areas and SEZ surroundings, such as the KIADB Hassan Growth Centre and the areas around the KIADB textile and pharmaceutical SEZs, may support permitted retail businesses serving employees, contractors and visitors. Possible shop cabin applications include fancy stores, snacks and daily essentials shops, mobile accessory counters, compact retail kiosks and smart-finish kiosks for approved commercial locations.",
-        link: { label: "Layouts and interiors for a compact retail cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Layouts and interiors for a compact retail cabin", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Hassan City",
@@ -12387,7 +12387,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Heritage and Agricultural Hassan",
         text: "The district includes heritage destinations, such as Belur, Halebidu and Shravanabelagola, and agricultural communities. Possible applications include souvenir kiosks, pooja and flower stalls, agricultural input shops and village convenience stores. Heritage-area placement and regulated agricultural product sales require appropriate approvals.",
-        link: { label: "Preparing the base and access at a rural site", href: "/products/portable-cabin/installation-and-site-preparation" },
+        link: { label: "Preparing the base and access at a rural site", href: "/guides/portable-cabin-installation-and-site-preparation" },
       },
     ],
 
@@ -12615,7 +12615,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Security Guard Cabins", href: "/products/security-cabin" },
       { label: "Container Site Office", href: "/products/container-site-office" },
       { label: "All Portable Cabin Models", href: "/products/category/portable-cabins" },
-      { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Cabin Transport and Delivery Guide", href: "/guides/portable-cabin-transport-and-delivery" },
       { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Portable Shop Cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
       { label: "Portable Shop Cabins in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
@@ -13767,7 +13767,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabin Models", href: "/products/category/portable-toilet-cabins" },
       { label: "4-Unit Portable Toilet Block", href: "/products/portable-toilet-block-4-unit" },
       { label: "Container Site Offices", href: "/products/category/site-office-containers" },
-      { label: "Preparing the Site and Base", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Preparing the Site and Base", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Toilet Cabin in Karnataka", href: "/promotions/portable-toilet-cabin-in-karnataka" },
     ],
     nearbyLinks: {
@@ -14028,7 +14028,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
       { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
@@ -14908,7 +14908,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Sugarcane Juice Kiosk",
         text: "A portable sugarcane juice kiosk may include a serving window, an equipment counter, a power provision for the crusher, washable surfaces, a water supply, a drainage outlet, insect mesh, space for bagasse collection and a shade canopy. The crusher's actual electrical load and dimensions must be confirmed before the layout is finalised.",
-        link: { label: "How cabin interiors and layouts are planned", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "How cabin interiors and layouts are planned", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Jaggery and Local Produce Shop",
@@ -14923,7 +14923,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Tender Coconut Stall",
         text: "Possible features include an open-front service counter, a shade awning, coconut storage, a husk collection area, washable floor or counter surfaces and suitable drainage.",
-        link: { label: "Preparing the base and drainage on site", href: "/products/portable-cabin/installation-and-site-preparation" },
+        link: { label: "Preparing the base and drainage on site", href: "/guides/portable-cabin-installation-and-site-preparation" },
       },
       {
         title: "Tourist Kiosk",
@@ -15211,7 +15211,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Office Cabin Range", href: "/products/category/portable-cabins" },
       { label: "Security Cabins and Guard Booths", href: "/products/category/security-cabins" },
       { label: "Site Office Containers", href: "/products/category/site-office-containers" },
-      { label: "Insulated PUF or MS: Which Material?", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Insulated PUF or MS: Which Material?", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
     ],
     nearbyLinks: {
@@ -15873,7 +15873,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
       { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
-      { label: "MS or PUF Cabin Materials", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "MS or PUF Cabin Materials", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Container Site Office", href: "/products/container-site-office" },
     ],
@@ -17511,8 +17511,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Office Cabins with a Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
       { label: "All Portable Cabins", href: "/products/category/portable-cabins" },
       { label: "Site Office Containers", href: "/products/category/site-office-containers" },
-      { label: "Portable Cabin Layouts and Interiors", href: "/products/portable-cabin/layouts-and-interiors" },
-      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabin Layouts and Interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
       { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Request an Office Cabin Quotation", href: "/contact" },
@@ -20419,7 +20419,7 @@ export const CITY_PAGES: CityPage[] = [
    *
    * KEYWORD OWNERSHIP: shipping / storage container × JP Nagar, for home rebuilds, downsizing and
    * school storage. Bellandur keeps household, society and shop storage in Bellandur; Marathahalli ORR
-   * keeps commercial storage on the ORR; Koramangala (/products/shipping-container-in-kormangala)
+   * keeps commercial storage on the ORR; Koramangala (/products/used-20ft-shipping-container-as-is-grade)
    * keeps offices, cafés and conversions. No other shipping page names JP Nagar or its localities.
    * Bannerghatta Road brief (2026-11-16): Arekere, Bilekahalli, Gottigere and Bannerghatta Road moved to
    * the Bannerghatta Road page; the areas text is that brief's replacement, plus a "Bannerghatta Road" link.
@@ -23977,7 +23977,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Cabins", href: "/products/category/portable-cabins" },
       { label: "Insulated Portable Cabins: PUF Panels & Cooling", href: "/products/portable-cabin/insulation-and-cooling" },
-      { label: "Portable Cabin Installation & Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabin Installation & Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
       { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
@@ -36052,7 +36052,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Cabins on Rent", href: "/rental-service" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
       { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
@@ -37473,7 +37473,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Container Offices", href: "/products/category/container-offices" },
-      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/refurbished-20ft-shipping-container-industrial" },
       { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
       { label: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
       { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
@@ -38453,7 +38453,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Container Offices", href: "/products/category/container-offices" },
-      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/refurbished-20ft-shipping-container-industrial" },
       { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
       { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
@@ -38900,7 +38900,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Tailoring and Alteration Shop Cabin",
         text: "Possible features include space for a sewing machine, a worktable, good task lighting, a clothing rail, material storage and electrical sockets.",
-        link: { label: "Planning a workroom layout inside a cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Planning a workroom layout inside a cabin", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Salon and Barber Shop Cabin",
@@ -38917,7 +38917,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Courier and Parcel Counter",
         text: "Possible features include a parcel receiving counter, sorting shelves, lockable storage, a suitable electrical provision and a customer service window.",
-        link: { label: "Cabin sizes and dimensions explained", href: "/products/portable-cabin/sizes-and-dimensions" },
+        link: { label: "Cabin sizes and dimensions explained", href: "/guides/portable-cabin-sizes-and-dimensions" },
       },
     ],
 
@@ -39160,9 +39160,9 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Container Site Offices", href: "/products/category/site-office-containers" },
-      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
-      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Preparing the Site and Base", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/refurbished-20ft-shipping-container-industrial" },
+      { label: "MS or PUF: Choosing the Material", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Preparing the Site and Base", href: "/guides/portable-cabin-installation-and-site-preparation" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -40994,7 +40994,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Granite Quarries and Processing Units",
         text: "Quarry entrances, machinery yards and block storage areas are often remote, with dust and heavy vehicles close by. A robust MS watchman cabin with a lockable steel door, window grills and a raised base suits these positions; the dust exposure and vehicle movement at the site decide where it is placed.",
-        link: { label: "Choosing MS or PUF for a quarry cabin", href: "/products/portable-cabin/materials-ms-vs-puf" },
+        link: { label: "Choosing MS or PUF for a quarry cabin", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       },
       {
         title: "Warehouses and Highway Truck Yards",
@@ -41366,7 +41366,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Petty Shop / Bunk Shop",
         text: "A compact prefabricated shop cabin for daily essentials, packaged snacks, bottled drinks, mobile recharges and small retail operations. It can be fitted with a rolling shutter, a counter, shelving and electrical points.",
-        link: { label: "Compare portable cabin sizes", href: "/products/portable-cabin/sizes-and-dimensions" },
+        link: { label: "How to choose a portable cabin size", href: "/guides/portable-cabin-sizes-and-dimensions" },
       },
       {
         title: "Tea Stall and Snack Kiosk",
@@ -41389,7 +41389,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Convenience Store / Mini Supermarket",
         text: "A larger prefabricated shop layout with shelving, a billing counter, storage and space for refrigeration equipment, where the electrical load and ventilation are designed for it.",
-        link: { label: "Plan the shop layout and interior", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Plan the shop layout and interior", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Pharmacy Kiosk",
@@ -41399,7 +41399,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Container Shop",
         text: "A retail shop conversion using a shipping container structure, with engineered openings, shutters, display windows and branding. Openings in a container's walls have to be designed for the structure, so the front is fixed before fabrication starts.",
-        link: { label: "Shipping containers in Krishnagiri", href: "/products/shipping-container-in-krishnagiri" },
+        link: { label: "Shipping containers in Krishnagiri", href: "/products/refurbished-20ft-shipping-container-premium" },
       },
     ],
 
@@ -41599,12 +41599,12 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
-      { label: "Shipping Container in Krishnagiri", href: "/products/shipping-container-in-krishnagiri" },
+      { label: "Shipping Container in Krishnagiri", href: "/products/refurbished-20ft-shipping-container-premium" },
       { label: "Cargo and Storage Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
-      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "MS or PUF: Choosing the Material", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
       { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
@@ -41739,7 +41739,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Mine and Quarry Check Posts",
         text: "Mineral operations around Salem, including magnesite mining and quarrying, may need entry and exit monitoring for vehicles, equipment and personnel. A check post cabin can be planned with suitable observation windows, a document-pass counter, space for registers, protected electrical fittings and dust-conscious window and door arrangements, with a view toward the approved vehicle-checking area. A raised document window can be considered where the vehicle dimensions and safe traffic arrangements allow. The cabin is not dustproof, and its view covers the checking area rather than the whole site.",
-        link: { label: "MS sheet or PUF panel for a check post", href: "/products/portable-cabin/materials-ms-vs-puf" },
+        link: { label: "MS sheet or PUF panel for a check post", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       },
       {
         title: "Sago Factory Gates",
@@ -41754,7 +41754,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Truck Yards and Transport Companies",
         text: "Transport yards around Sankagiri and along the NH 44 and NH 544 corridors may need a security booth for vehicle-entry monitoring and recordkeeping. Possible features include a vehicle-entry observation window, a document counter, CCTV and floodlight mounting provisions, space for communication equipment and suitable exterior lighting.",
-        link: { label: "Preparing the base at a yard entrance", href: "/products/portable-cabin/installation-and-site-preparation" },
+        link: { label: "Preparing the base at a yard entrance", href: "/guides/portable-cabin-installation-and-site-preparation" },
       },
       {
         title: "Steel and Engineering Units",
@@ -42350,7 +42350,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabin", href: "/products/portable-toilet-cabin" },
       { label: "Planning a cabin with a toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
       { label: "Cabin insulation and cooling guide", href: "/products/portable-cabin/insulation-and-cooling" },
-      { label: "MS and PUF cabin materials compared", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "MS and PUF cabin materials compared", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "Container Site Office", href: "/products/container-site-office" },
       { label: "Security Cabin in Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
@@ -42887,7 +42887,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "All Security Cabin Models", href: "/products/category/security-cabins" },
       { label: "Guard Security Cabin with All-Round Windows", href: "/products/guard-security-cabin" },
-      { label: "MS Sheet or PUF Panel Cabins", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "MS Sheet or PUF Panel Cabins", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "PUF Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
       { label: "Security Cabin in Bangalore", href: "/promotions/security-cabin-in-bangalore" },
       { label: "Security Cabin in Karnataka", href: "/promotions/security-cabin-in-karnataka" },
@@ -43323,7 +43323,7 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / storage / cargo container and container rental × Dharmapuri,
    * Adhiyamankottai and Palacode. The Dharmapuri toilet page keeps site sanitation (the two pages link
    * to each other); the Mettur, Salem shipping page no longer lists Dharmapuri in its areas line. The
-   * Krishnagiri container product page (/products/shipping-container-in-krishnagiri) keeps its own
+   * Krishnagiri container product page (/products/refurbished-20ft-shipping-container-premium) keeps its own
    * title, meta and uses; it names Dharmapuri only as a delivery area in its body.
    *
    * LINKS (brief §5): the toilet page and /products/shipping-container-rental are live (HTTP 200).
@@ -45195,7 +45195,7 @@ export const CITY_PAGES: CityPage[] = [
    *   • FAQs (six) → faqs; the closing request → CTA + the cargo-category enquiry form (rental models
    *     kept: rental is in this brief's scope).
    * INSPECTION LINK (brief section 5): the Chennai shipping-container page
-   * (/products/shipping-container-in-chennai) has no used-container inspection checklist, only one
+   * (/products/used-20ft-shipping-container-wind-water-tight) has no used-container inspection checklist, only one
    * line that units are inspected before sale, so the anchor "how to inspect a used container" points
    * at /products/cargo-storage-containers, whose "Key Inspection Points" list and FAQ cover it.
    * Not claimed: delivery to every location, fixed timelines, guaranteed grades, high-cube stock,
@@ -47265,7 +47265,7 @@ export const CITY_PAGES: CityPage[] = [
    * text, the enquiry-form heading and intro, and the image alt text and captions.
    *
    * INTERLINKS (brief section 5): the rental link is in place (live, 200). The brief's Chennai target
-   * was checked: /products/shipping-container-in-chennai has no inspection checklist, so "how to
+   * was checked: /products/used-20ft-shipping-container-wind-water-tight has no inspection checklist, so "how to
    * inspect a used container" points at /products/cargo-storage-containers ("Key Inspection Points"),
    * the same target the Uttara Kannada shipping page uses for this anchor (one anchor, one target
    * across the site). It is therefore not repeated in the related links. The Vellore link (added by #231, the
@@ -51940,7 +51940,7 @@ export const CITY_PAGES: CityPage[] = [
     areasInlineLinks: [
       {
         before: "Factories in the Peenya Industrial Area, a little further north-west, are covered on our page on",
-        link: { label: "shipping containers for Peenya Industrial Area", href: "/products/shipping-container-in-peenya-industrial" },
+        link: { label: "shipping containers for Peenya Industrial Area", href: "/products/used-20ft-shipping-container-cargo-worthy" },
         after: ".",
       },
       // Vijayanagar, Bengaluru brief (2026-11-18): upholstery workshops and agarbatti units are that page's intent.
@@ -53215,7 +53215,7 @@ export const CITY_PAGES: CityPage[] = [
     areasInlineLinks: [
       {
         before: "Running a factory in the Peenya Industrial Area instead? See our page on",
-        link: { label: "storage containers for Peenya's industrial units", href: "/products/shipping-container-in-peenya-industrial" },
+        link: { label: "storage containers for Peenya's industrial units", href: "/products/used-20ft-shipping-container-cargo-worthy" },
         after: ".",
       },
       // Malleshwaram brief (2026-11-19, §5): picture framing and salvage stock are that page's intent.
@@ -60581,11 +60581,11 @@ export const CITY_PAGES: CityPage[] = [
    * they do not repeat the sibling shipping-container pages (8-word shingle check).
    *
    * INTERLINKS (brief section 5): the rental link is in place (live, 200). The Chennai shipping-container
-   * page (/products/shipping-container-in-chennai) still has no used-container inspection checklist
+   * page (/products/used-20ft-shipping-container-wind-water-tight) still has no used-container inspection checklist
    * (checked live 2026-11-08), so "how to inspect a used container" points at
    * /products/cargo-storage-containers ("Key Inspection Points"), the target the owner chose for
    * Coimbatore and the one Uttara Kannada and the hydel page use: one anchor, one target. The Krishnagiri
-   * container page (/products/shipping-container-in-krishnagiri) has no quarry content, so the brief's
+   * container page (/products/refurbished-20ft-shipping-container-premium) has no quarry content, so the brief's
    * optional quarry link is omitted. The Karnataka shipping-container hub (seoPromotions) and the cargo
    * category's location links list this page.
    *
@@ -68426,7 +68426,7 @@ export const CITY_PAGES: CityPage[] = [
    * the returnable-packaging, scrap-segregation and early-spares uses. Portable Security Cabins in
    * Shoolagiri keeps gatehouses (the two pages link to each other once each; its link sits in its
    * project-stage section). Container Office in SIPCOT Shoolagiri keeps offices. The Krishnagiri
-   * container product page (/products/shipping-container-in-krishnagiri) keeps its own title, meta
+   * container product page (/products/refurbished-20ft-shipping-container-premium) keeps its own title, meta
    * and uses and does not name Shoolagiri, so the brief's "link the existing Shoolagiri mention" has
    * nothing to link.
    *
@@ -70116,9 +70116,9 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Construction Site Portable Office", href: "/products/construction-site-portable-office" },
       { label: "Marketing Office", href: "/products/marketing-office" },
       { label: "Portable Cabin with Attached Toilet and Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
-      { label: "Portable Cabin Layouts and Interior Ideas", href: "/products/portable-cabin/layouts-and-interiors" },
-      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
-      { label: "Portable Cabin Transport and Delivery", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Cabin Layouts and Interior Ideas", href: "/guides/portable-cabin-layouts-and-interiors" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
+      { label: "Portable Cabin Transport and Delivery", href: "/guides/portable-cabin-transport-and-delivery" },
       { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
     ],
     nearbyLinks: {
@@ -70924,7 +70924,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "To compare MS sheet and PUF panel construction before you decide, see our guide to",
-            link: { label: "portable cabin materials", href: "/products/portable-cabin/materials-ms-vs-puf" },
+            link: { label: "portable cabin materials", href: "/guides/portable-cabin-materials-ms-vs-puf" },
             after: ".",
           },
         ],
@@ -70981,7 +70981,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For what to prepare before a cabin arrives, see our guide to",
-            link: { label: "portable cabin installation and site preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+            link: { label: "portable cabin installation and site preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
             after: ".",
           },
         ],
@@ -71321,7 +71321,7 @@ export const CITY_PAGES: CityPage[] = [
             inlineLinks: [
               {
                 before: "Partitions are fitted at the factory, before the cabin leaves. For how a cabin is divided into rooms, see our guide to",
-                link: { label: "portable cabin layouts and interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+                link: { label: "portable cabin layouts and interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
                 after: ".",
               },
             ],
@@ -71508,7 +71508,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For standard footprints and internal measurements, see our",
-            link: { label: "portable cabin sizes and dimensions guide", href: "/products/portable-cabin/sizes-and-dimensions" },
+            link: { label: "portable cabin sizes and dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
             after: ".",
           },
         ],
@@ -71551,7 +71551,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For how size, insulation and fit-out shape the cost, see our",
-            link: { label: "portable cabin price guide", href: "/products/portable-cabin/price-and-cost-guide" },
+            link: { label: "portable cabin cost guide", href: "/guides/portable-cabin-price-and-cost" },
             after: ".",
           },
         ],
@@ -71589,7 +71589,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "The cabin needs a level base and a clear approach when it arrives. For what to prepare, see our guide to",
-            link: { label: "preparing a site for cabin delivery", href: "/products/portable-cabin/installation-and-site-preparation" },
+            link: { label: "preparing a site for cabin delivery", href: "/guides/portable-cabin-installation-and-site-preparation" },
             after: ".",
           },
         ],
@@ -72205,7 +72205,7 @@ export const CITY_PAGES: CityPage[] = [
             inlineLinks: [
               {
                 before: "Internal measurements for each standard footprint are listed in our",
-                link: { label: "portable cabin dimensions guide", href: "/products/portable-cabin/sizes-and-dimensions" },
+                link: { label: "portable cabin dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
                 after: ".",
               },
             ],
@@ -72335,7 +72335,7 @@ export const CITY_PAGES: CityPage[] = [
             inlineLinks: [
               {
                 before: "Partition, ceiling and furniture planning is explained in our",
-                link: { label: "guide to cabin layouts and interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+                link: { label: "guide to cabin layouts and interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
                 after: ".",
               },
             ],
@@ -72633,7 +72633,7 @@ export const CITY_PAGES: CityPage[] = [
             inlineLinks: [
               {
                 before: "Base, access and lifting preparation is covered in our",
-                link: { label: "cabin installation and site preparation guide", href: "/products/portable-cabin/installation-and-site-preparation" },
+                link: { label: "cabin installation and site preparation guide", href: "/guides/portable-cabin-installation-and-site-preparation" },
                 after: ".",
               },
             ],
@@ -72674,7 +72674,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "The cost drivers are explained in more detail in our",
-            link: { label: "portable cabin cost guide", href: "/products/portable-cabin/price-and-cost-guide" },
+            link: { label: "portable cabin cost guide", href: "/guides/portable-cabin-price-and-cost" },
             after: ".",
           },
         ],
@@ -72792,7 +72792,7 @@ export const CITY_PAGES: CityPage[] = [
    *
    * Route: the brief's expected canonical, /cities-we-serve/shipping-container-koramangala, had never
    * been released. The only Koramangala shipping route was the product page
-   * /products/shipping-container-in-kormangala (id 29, the used 20 ft as-is unit with online Buy Now),
+   * /products/used-20ft-shipping-container-as-is-grade (id 29, the used 20 ft as-is unit with online Buy Now),
    * whose title named Koramangala. The owner chose this new city page for Version B and a refocus of
    * that product page on the unit itself (its title, descriptions and body no longer target "shipping
    * container in Koramangala" and it links here), so one indexable page owns the query.
@@ -73036,7 +73036,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinksHeading: "Related products",
     relatedLinks: [
       // The purchasable unit itself (refocused on the as-is grade when this page went live); it links back here.
-      { label: "Used 20 ft Shipping Container (As-Is Grade)", href: "/products/shipping-container-in-kormangala" },
+      { label: "Used 20 ft Shipping Container (As-Is Grade)", href: "/products/used-20ft-shipping-container-as-is-grade" },
       { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
@@ -74610,10 +74610,10 @@ export const CITY_PAGES: CityPage[] = [
     ctaSecondaryLinks: [],
     relatedLinksHeading: "Related products and guides",
     relatedLinks: [
-      { label: "Portable Cabin Layouts and Interior Ideas", href: "/products/portable-cabin/layouts-and-interiors" },
-      { label: "Portable Cabin Sizes and Dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
-      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
-      { label: "Portable Cabin Transport and Delivery", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Cabin Layouts and Interior Ideas", href: "/guides/portable-cabin-layouts-and-interiors" },
+      { label: "Portable Cabin Sizes and Dimensions", href: "/guides/portable-cabin-sizes-and-dimensions" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
+      { label: "Portable Cabin Transport and Delivery", href: "/guides/portable-cabin-transport-and-delivery" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -76653,7 +76653,7 @@ export const CITY_PAGES: CityPage[] = [
    * appear once each in the body.
    *
    * LINKS (brief §5): sizes section → /products/portable-shop-cabin ("portable shop cabins"); design
-   * section → /products/portable-cabin/layouts-and-interiors ("custom portable cabin layouts"); food-
+   * section → /guides/portable-cabin-layouts-and-interiors ("custom portable cabin layouts"); food-
    * protection H3 → /products/portable-cabin/insulation-and-cooling; community-placement H3 → the RR
    * Nagar security-cabin page (#281), anchor "portable security cabins in RR Nagar" (the brief's guard-post
    * reference; that page's brief asks for no link back).
@@ -77069,7 +77069,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For planning ideas, see our guide to",
-            link: { label: "custom portable cabin layouts", href: "/products/portable-cabin/layouts-and-interiors" },
+            link: { label: "custom portable cabin layouts", href: "/guides/portable-cabin-layouts-and-interiors" },
             after: ".",
           },
         ],
@@ -77189,10 +77189,10 @@ export const CITY_PAGES: CityPage[] = [
     ctaSecondaryLinks: [],
     relatedLinksHeading: "Related products and guides",
     relatedLinks: [
-      { label: "Portable Cabin Sizes and Dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
-      { label: "MS Sheet or PUF Panel Cabins", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
-      { label: "Portable Cabin Transport and Delivery", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Cabin Sizes and Dimensions", href: "/guides/portable-cabin-sizes-and-dimensions" },
+      { label: "MS Sheet or PUF Panel Cabins", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
+      { label: "Portable Cabin Transport and Delivery", href: "/guides/portable-cabin-transport-and-delivery" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",

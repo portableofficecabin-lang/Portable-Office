@@ -460,7 +460,7 @@ export default function Blog({ initialDbRows = [] }: { initialDbRows?: BlogDbRow
             Looking for Portable Cabin Solutions?
           </h2>
           <p className="text-primary-foreground/70 mb-6 max-w-xl mx-auto">
-            Explore our complete range of portable cabins, container offices, and prefab structures. India's most trusted manufacturer.
+            Explore our complete range of portable cabins, container offices, and prefab structures, built at our own factory in Tamil Nadu.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild size="lg" className="btn-accent">

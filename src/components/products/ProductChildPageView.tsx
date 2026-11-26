@@ -25,11 +25,24 @@ import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { products, getProductDetailPath } from "@/data/products";
 import { GST_PERCENT_LABEL, formatINR, sellPrice } from "@/lib/pricing/gst";
 import { whatsappUrl } from "@/lib/site-navigation";
-import type { ProductChildGroup, ProductChildPage } from "@/data/productChildPages";
+import { childPagePath, type ProductChildGroup, type ProductChildPage } from "@/data/productChildPages";
+import { GUIDES_PATH } from "@/data/guideMoves";
 
 export function ProductChildPageView({ group, page }: { group: ProductChildGroup; page: ProductChildPage }) {
   const parentPath = group.parentPath ?? `/products/${group.parentSlug}`;
   const siblings = group.children.filter((c) => c.slug !== page.slug);
+  /* A guide that moved to /guides (src/data/guideMoves.ts) sits under the Guides section, not
+   * under Products — its visible trail (and the route's BreadcrumbList) says so. The "View range"
+   * CTA below still links the parent product page. */
+  const isGuide = childPagePath(group, page).startsWith(`${GUIDES_PATH}/`);
+  const breadcrumbs = isGuide
+    ? [{ name: "Home", href: "/" }, { name: "Guides", href: GUIDES_PATH }, { name: page.h1 }]
+    : [
+        { name: "Home", href: "/" },
+        { name: "Products", href: "/products" },
+        { name: group.parentName, href: parentPath },
+        { name: page.h1 },
+      ];
 
   /* Live GST-inclusive prices of the parent category's purchasable SKUs — same source as
    * the product page, cart, JSON-LD and Merchant feed, so this table can never disagree. */
@@ -46,12 +59,7 @@ export function ProductChildPageView({ group, page }: { group: ProductChildGroup
         eyebrow={`${group.parentName} Guide`}
         title={page.h1}
         description={page.metaDescription}
-        breadcrumbs={[
-          { name: "Home", href: "/" },
-          { name: "Products", href: "/products" },
-          { name: group.parentName, href: parentPath },
-          { name: page.h1 },
-        ]}
+        breadcrumbs={breadcrumbs}
       />
 
       <section className="section-padding">
@@ -62,6 +70,16 @@ export function ProductChildPageView({ group, page }: { group: ProductChildGroup
               {para}
             </p>
           ))}
+
+          {page.introLink && (
+            <p className="mb-4 text-base leading-relaxed text-muted-foreground">
+              {`${page.introLink.lead} `}
+              <Link href={page.introLink.href} className="text-accent hover:underline">
+                {page.introLink.label}
+              </Link>
+              .
+            </p>
+          )}
 
           {/* Content sections */}
           {page.sections.map((s) => (
@@ -189,7 +207,7 @@ export function ProductChildPageView({ group, page }: { group: ProductChildGroup
                 {siblings.map((s) => (
                   <Link
                     key={s.slug}
-                    href={`${parentPath}/${s.slug}`}
+                    href={childPagePath(group, s)}
                     className="rounded-xl border border-border/60 bg-card p-4 text-sm font-semibold text-foreground transition-colors hover:border-accent/40 hover:text-accent"
                   >
                     {s.h1}

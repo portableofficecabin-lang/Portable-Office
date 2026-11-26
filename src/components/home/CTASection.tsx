@@ -5,8 +5,10 @@ import { whatsappUrl } from "@/lib/site-navigation";
 
 const ctaPoints = [
   { icon: ShieldCheck, text: "Transparent pricing and secure online payment" },
-  { icon: MapPin, text: "National teams of experts all over India" },
-  { icon: Award, text: "15+ years delivering outstanding results" },
+  // Were "National teams of experts all over India" and "15+ years delivering outstanding results"
+  // (2026-11-26): neither has a record behind it. Both replacements are facts the site already states.
+  { icon: MapPin, text: "Delivery across India, priced by PIN code" },
+  { icon: Award, text: "Built at our own factory in Tamil Nadu" },
   { icon: Clock, text: "From enquiry to move-in, faster than you'd think" },
 ];
 

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { products, categories, getProductDetailPath, getProductSlug } from "@/data/products";
+import { renamedProductSlug } from "@/data/productSlugRenames";
 
 /**
  * ── LEGACY WORDPRESS PRODUCT URLS → 301 ───────────────────────────────────────────────────────
@@ -43,6 +44,12 @@ function bestDestination(rawSlug: string): string {
   // 1. Exact live slug — the common case for a same-name migration.
   const exact = products.find((p) => getProductSlug(p) === wanted);
   if (exact) return getProductDetailPath(exact);
+
+  // 1b. A slug the catalogue RETIRED (src/data/productSlugRenames.ts) goes straight to the
+  //     renamed page — never through token matching, which could pick a sibling grade.
+  const renamed = renamedProductSlug(wanted);
+  const renamedProduct = renamed ? products.find((p) => getProductSlug(p) === renamed) : undefined;
+  if (renamedProduct) return getProductDetailPath(renamedProduct);
 
   // 2. Best token-overlap product. The 0.34 floor keeps genuinely unrelated slugs (an old blog
   //    permalink, a spam probe) from being "matched" onto an arbitrary product.
