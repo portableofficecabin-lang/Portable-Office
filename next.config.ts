@@ -199,6 +199,12 @@ const nextConfig: NextConfig = {
   // Deployment identity (see the top of this file): the BUILD_ID names its commit, and the same
   // values are inlined for app/api/build-info/route.ts.
   generateBuildId: async () => identity.buildId,
+  // ISR cache = Next's own file-system cache + a stale-build guard: a server process stops writing
+  // ISR entries once a newer `next build` has been written into its directory (the legacy in-place
+  // deploy), so it can no longer store a cached 404 / not-found head into the new build. Every other
+  // behaviour, including real 404s and the build's own prerender, is unchanged. See the file header
+  // and deploy/README.md ("Defect 1").
+  cacheHandler: join(process.cwd(), "isr-cache-handler.cjs"),
   env: {
     BUILD_INFO_COMMIT: identity.commit,
     BUILD_INFO_BUILD_ID: identity.buildId,
