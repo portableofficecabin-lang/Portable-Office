@@ -1,20 +1,26 @@
 /**
  * CITY-PAGE <lastmod> MANIFEST — writes src/data/sitemapLastmod.json from git history.
  *
- *   npm run seo:lastmod            (on a FULL clone, at the commit you are about to merge)
+ *   git fetch origin && npm run seo:lastmod          (FULL clone; any branch)
+ *   npm run seo:lastmod -- <ref>                     (date from another ref than origin/main)
  *
- * For every city page this records WHEN ITS CONTENT LAST CHANGED ON main:
- *   1. walk the first-parent history of src/data/cityPages.ts, oldest first — on this repo the
- *      first-parent commits of main are its merges, i.e. the moments changes went live (GitHub's
- *      merge timestamp, not a laptop clock);
+ * For every city page this records WHEN ITS CONTENT WENT LIVE, i.e. last changed ON main:
+ *   1. walk the first-parent history of src/data/cityPages.ts ON origin/main, oldest first — the
+ *      first-parent commits of main are its merges, so each date is GitHub's merge timestamp, the
+ *      moment the change was deployed (not a laptop clock, and never a feature branch's commit);
  *   2. cut each version of the file into its page blocks and hash each block's text with comments
  *      and whitespace removed (src/lib/seo/cityBlocks.ts);
- *   3. a page's lastmod is the time of the last commit at which its block's hash changed (or the
- *      block first appeared).
- * It also stores a hash of the page's CURRENT runtime object. app/sitemap.ts emits the date only
- * while that hash still matches (src/lib/seo/cityLastmod.ts), so a page edited after this script
- * last ran ships WITHOUT a lastmod instead of with a stale one, and a page added after the last run
- * has no entry and also ships without one. Re-running the script restores both.
+ *   3. a page's lastmod is the time of the last main merge at which its block's hash changed (or
+ *      the block first appeared).
+ * A page is dated only when its block is IDENTICAL in HEAD and on main: a page this branch adds or
+ * edits is not live yet, so it gets no date here (it gets one when the script runs after its merge).
+ * Running on a branch that merged main in is therefore safe — main's changes keep main's merge times
+ * instead of being credited to the branch's own merge commit (the 2026-11-26 bug this fixed).
+ *
+ * It also stores a hash of the page's runtime object. app/sitemap.ts emits the date only while that
+ * hash still matches (src/lib/seo/cityLastmod.ts), so a page edited after this script last ran ships
+ * WITHOUT a lastmod instead of with a stale one, and a page added after the last run has no entry and
+ * also ships without one. Re-running the script restores both.
  *
  * Comment-only and whitespace-only edits are not content changes. Edits to shared constants a block
  * only references (e.g. COMPANY phone numbers) do not move the date — they are not the page's own
@@ -28,19 +34,19 @@ import { cityContentHash } from "../../src/lib/seo/cityLastmod";
 
 const FILE = "src/data/cityPages.ts";
 const OUT = "src/data/sitemapLastmod.json";
-const REF = process.argv[2] ?? "HEAD";
+const MAIN = process.argv[2] ?? "origin/main";
 const git = (...args: string[]) => execFileSync("git", args, { maxBuffer: 1 << 30 }).toString();
 
 if (git("rev-parse", "--is-shallow-repository").trim() === "true") {
   console.error("sitemap-lastmod: shallow clone — history incomplete, refusing to guess dates. Run on a full clone.");
   process.exit(2);
 }
-if (REF === "HEAD" && git("status", "--porcelain", "--", FILE).trim()) {
+if (git("status", "--porcelain", "--", FILE).trim()) {
   console.error(`sitemap-lastmod: ${FILE} has uncommitted changes — commit them first so the dates match the content.`);
   process.exit(2);
 }
 
-const commits = git("log", "--first-parent", "--reverse", "--format=%H %cI", REF, "--", FILE)
+const commits = git("log", "--first-parent", "--reverse", "--format=%H %cI", MAIN, "--", FILE)
   .trim()
   .split("\n")
   .filter(Boolean)
@@ -64,14 +70,16 @@ for (const c of commits) {
   }
 }
 
-// Only date a page whose block at REF is the one the walk ended on; otherwise the date describes other text.
-const atRef = blockHashes(git("show", `${REF}:${FILE}`));
+// Date a page only when HEAD's text for it is exactly main's text (= what is live).
+const onMain = blockHashes(git("show", `${MAIN}:${FILE}`));
+const atHead = blockHashes(git("show", `HEAD:${FILE}`));
 const cities: Record<string, { lastmod: string; commit: string; sha: string }> = {};
-const undated: string[] = [];
+const notLive: string[] = [];
 for (const page of [...CITY_PAGES].sort((a, b) => a.slug.localeCompare(b.slug))) {
   const change = lastChange.get(page.slug);
-  if (!change || atRef.get(page.slug) !== lastHash.get(page.slug)) {
-    undated.push(page.slug);
+  const head = atHead.get(page.slug);
+  if (!change || head === undefined || head !== onMain.get(page.slug) || head !== lastHash.get(page.slug)) {
+    notLive.push(page.slug);
     continue;
   }
   cities[page.slug] = { lastmod: change.date, commit: change.sha, sha: cityContentHash(page) };
@@ -80,11 +88,11 @@ for (const page of [...CITY_PAGES].sort((a, b) => a.slug.localeCompare(b.slug)))
 const manifest = {
   _about:
     "Generated by `npm run seo:lastmod` (scripts/seo/sitemap-lastmod.ts); do not edit by hand. lastmod = time of the merge into main that last changed the page's own copy; sha = hash of the page's runtime data, checked at build so an edited page drops its lastmod until this is re-run.",
-  generatedFrom: git("rev-parse", "--short", REF).trim(),
+  generatedFrom: `${MAIN}@${git("rev-parse", "--short", MAIN).trim()}`,
   cities,
 };
 writeFileSync(OUT, JSON.stringify(manifest, null, 2) + "\n");
 console.log(
-  `sitemap-lastmod: ${commits.length} first-parent commits (${parsed} parsed), ${Object.keys(cities).length}/${CITY_PAGES.length} city pages dated` +
-    (undated.length ? `; no date for: ${undated.join(", ")}` : ""),
+  `sitemap-lastmod: ${commits.length} first-parent merges of ${MAIN} (${parsed} parsed), ${Object.keys(cities).length}/${CITY_PAGES.length} city pages dated` +
+    (notLive.length ? `; not dated (differs from ${MAIN} or not on it yet): ${notLive.join(", ")}` : ""),
 );
