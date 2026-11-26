@@ -20,7 +20,7 @@ const onlinePrice = formatINR(sellPrice(getCommerce("30")!.basePrice));
 const highlights = [
   { icon: Shield, title: "Corten Steel Durability", description: "Corrosion-resistant steel withstands hot summers and monsoon rains in Krishnagiri" },
   { icon: Clock, title: "Clear Dispatch Window", description: "Bought online: dispatched in 7–15 working days; custom builds follow your written quotation" },
-  { icon: IndianRupee, title: "20–35% Cost Savings", description: "Lower than RCC buildings with predictable budgeting and minimal civil work" },
+  { icon: IndianRupee, title: "Cost Savings", description: "Lower than RCC buildings with predictable budgeting and minimal civil work" },
   { icon: Truck, title: "Relocatable Units", description: "Move containers between Krishnagiri, Hosur, and Dharmapuri as projects shift" },
   { icon: Recycle, title: "Sustainable Choice", description: "Repurposing containers reduces construction waste and embodied carbon" },
   { icon: Wrench, title: "Full Customization", description: "Interior panels, insulation, electrical provisions, and security enhancements" },
@@ -268,7 +268,7 @@ export function ShippingContainerKrishnagiriContent() {
             "Full customization strength — from basic storage to premium fitted offices",
             "Local understanding of Krishnagiri's terrain, climate, and logistics",
             "Tamil Nadu factory near Hosur with a Bangalore office — quicker site visits and delivery",
-            "Sustainability: 90% container reuse, minimal debris versus brick-and-mortar",
+            "Sustainability: container reuse, minimal debris versus brick-and-mortar",
           ].map((point) => (
             <li key={point} className="flex items-start gap-3">
               <Shield className="h-5 w-5 text-accent shrink-0 mt-0.5" />

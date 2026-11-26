@@ -266,7 +266,7 @@ export function ShippingContainerChennaiContent() {
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: "70–80% faster", desc: "Installation vs. brick construction" },
+            { label: "Faster installation", desc: "Than brick construction" },
             { label: "Full relocatability", desc: "Move via crane to new site" },
             { label: "Lower material waste", desc: "Reuse existing steel containers" },
             { label: "Premium finishes", desc: "Double-glazed low-E glass, SS sinks" },

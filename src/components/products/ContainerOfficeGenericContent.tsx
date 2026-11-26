@@ -74,7 +74,7 @@ export function ContainerOfficeGenericContent() {
             {
               icon: DollarSign,
               title: "Cost Savings vs Traditional Construction",
-              desc: "Container offices typically prove 20–30% more economical while delivering comparable functionality. Savings come from reduced material costs, minimal foundation requirements, and significantly lower labour expenses due to factory-based fabrication.",
+              desc: "Container offices are often more economical while delivering comparable functionality. Savings come from reduced material costs, minimal foundation requirements, and significantly lower labour expenses due to factory-based fabrication.",
             },
             {
               icon: Clock,

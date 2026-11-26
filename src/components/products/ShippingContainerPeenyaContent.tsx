@@ -71,7 +71,7 @@ const faqs = [
   },
   {
     q: "Can containers be relocated if our factory moves from Peenya?",
-    a: "Yes, full relocatability is a key advantage. Containers can be lifted via crane or hydra and transported to Dobbaspet, Bidadi, Jigani, Nelamangala, Hoskote, or any other location. Approximately 80% of material value is retained during relocation."
+    a: "Yes, full relocatability is a key advantage. Containers can be lifted via crane or hydra and transported to Dobbaspet, Bidadi, Jigani, Nelamangala, Hoskote, or any other location."
   },
   {
     q: "Are used containers suitable for storage in Peenya's industrial conditions?",

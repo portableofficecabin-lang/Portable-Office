@@ -210,7 +210,7 @@ export function CabinPortableContent() {
         </div>
 
         <p className="text-muted-foreground leading-relaxed mb-4">
-          Container-based units typically cost 10-20% more than standard MS cabins but offer longer service life in remote or harsh environments. Bulk orders often receive project pricing from suppliers.
+          Container-based units offer longer service life in remote or harsh environments; their prices vary by model and fit-out. Bulk orders often receive project pricing from suppliers.
         </p>
 
         <h3 className="text-xl font-semibold text-foreground mb-3">Delivery timelines:</h3>
@@ -351,9 +351,9 @@ export function CabinPortableContent() {
         <div className="space-y-4">
           {[
             { icon: Hammer, title: "Mild Steel (MS) Cabins", items: ["Welded frame construction with MS sheet cladding", "Anti-rust primers and industrial paint finish", "Ideal for rugged site conditions", "Customized to any size", "Requires repainting every few years in harsh environments"] },
-            { icon: Shield, title: "GI (Galvanized Iron) Cabins", items: ["20-30% better corrosion resistance than MS", "Commonly used for labour cabins, security cabins, and toilets", "Excellent for coastal or high-rainfall regions like Maharashtra and Tamil Nadu"] },
+            { icon: Shield, title: "GI (Galvanized Iron) Cabins", items: ["Better corrosion resistance than MS", "Commonly used for labour cabins, security cabins, and toilets", "Excellent for coastal or high-rainfall regions like Maharashtra and Tamil Nadu"] },
             { icon: Layers, title: "Shipping Container Conversions", items: ["ISO 20 ft and 40 ft containers built from CORTEN steel", "Inherent weatherproofing and structural integrity", "Wind-resistant up to 150 km/h", "Modified with doors, windows, insulation, and interior finishes", "Heavier but longer-lasting"] },
-            { icon: Thermometer, title: "Sandwich Panel Systems (PUF/EPS/Rockwool)", items: ["Superior thermal insulation (R-values up to 30)", "Lighter weight (40-50 kg/m² density)", "30-50% faster erection time", "Suitable for PEB buildings and modular office blocks"] },
+            { icon: Thermometer, title: "Sandwich Panel Systems (PUF/EPS/Rockwool)", items: ["Superior thermal insulation (R-values up to 30)", "Lighter weight (40-50 kg/m² density)", "Faster erection time", "Suitable for PEB buildings and modular office blocks"] },
           ].map((material, idx) => (
             <div key={idx} className="flex gap-4 bg-card border border-border/40 rounded-xl p-5">
               <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
@@ -423,8 +423,8 @@ export function CabinPortableContent() {
             <IndianRupee className="w-8 h-8 text-primary mb-3" />
             <h3 className="font-semibold text-foreground mb-2 text-sm">Cost Advantages</h3>
             <ul className="space-y-1.5 text-xs text-muted-foreground">
-              <li>• 40-60% savings vs brick-and-mortar</li>
-              <li>• 80% reduction in site labour</li>
+              <li>• Less civil work on site than brick-and-mortar</li>
+              <li>• Less site labour: units arrive factory-built</li>
               <li>• ROI through 3-5 project reuse</li>
             </ul>
           </div>
@@ -450,9 +450,9 @@ export function CabinPortableContent() {
             <Leaf className="w-8 h-8 text-primary mb-3" />
             <h3 className="font-semibold text-foreground mb-2 text-sm">Sustainability</h3>
             <ul className="space-y-1.5 text-xs text-muted-foreground">
-              <li>• 90% recyclable steel</li>
+              <li>• Recyclable steel</li>
               <li>• Solar rooftop compatible</li>
-              <li>• 30-40% energy savings</li>
+              <li>• Insulated panels reduce cooling load</li>
             </ul>
           </div>
         </div>

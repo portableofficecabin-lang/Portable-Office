@@ -33,8 +33,8 @@ import pinkAngle from "@/assets/products/cargo-storage-containers-pink-angle.web
 import pinkPopup from "@/assets/products/cargo-storage-containers-pink-popup.webp";
 
 const highlights = [
-  { icon: Eye, title: "High Visibility", desc: "Pink containers attract 40% more attention than standard grey or blue units" },
-  { icon: Heart, title: "Strong Brand Recall", desc: "Pink scores 22% higher in recall tests versus neutral colours" },
+  { icon: Eye, title: "High Visibility", desc: "Pink containers stand out against standard grey or blue units" },
+  { icon: Heart, title: "Strong Brand Recall", desc: "A distinctive colour that sets your unit apart from neutral grey or blue containers" },
   { icon: Camera, title: "Instagram-Friendly", desc: "Drive 3x engagement rates for customer-facing businesses" },
   { icon: Shield, title: "Same Structural Strength", desc: "Identical load capacity, wind resistance, and durability as regular containers" },
 ];
@@ -77,7 +77,7 @@ const faqs = [
   },
   {
     q: "Can I buy a used container and get it painted pink?",
-    a: "Yes. Portable Office Cabin offers converted used containers at 20–30% lower cost than new fabrications. We inspect structural integrity, repair as needed, and apply the pink finish with full interior fit-out options.",
+    a: "Yes. Portable Office Cabin offers converted used containers at a lower cost than new fabrications. We inspect structural integrity, repair as needed, and apply the pink finish with full interior fit-out options.",
   },
 ];
 
@@ -200,7 +200,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               ))}
             </ul>
             <p className="text-muted-foreground text-sm">
-              You can buy converted used containers (20–30% lower cost) or new fabrications from MS sections. Interiors can remain neutral while exteriors shine pink. Units come foundation-ready or fully portable with forklift pockets and corner castings.
+              You can buy converted used containers (lower cost) or new fabrications from MS sections. Interiors can remain neutral while exteriors shine pink. Units come foundation-ready or fully portable with forklift pockets and corner castings.
             </p>
           </div>
           <OptimizedImage
@@ -333,7 +333,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
                 <li>• Retail inventory storage behind shops</li>
                 <li>• Event equipment storage for agencies</li>
                 <li>• Archive storage for schools and colleges</li>
-                <li>• Seasonal stock storage for e-commerce sellers (40% faster access vs. traditional godowns)</li>
+                <li>• Seasonal stock storage for e-commerce sellers</li>
               </ul>
             </div>
             <div>
@@ -457,7 +457,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               "In-house design, fabrication, and NDT-tested quality control",
               "Pan-India project execution from single units to 100-container complexes",
               "Coordination with architects and branding agencies for brand-aligned designs",
-              "80% recycled steel and sustainable manufacturing practices",
+              "Steel structures that can be reused, relocated or recycled",
               offer
                 ? "After-sales support: modifications, relocation assistance, and repaint every 5 years"
                 : "After-sales support: modifications, relocation (₹1 lakh/unit), and repaint every 5 years",

@@ -278,7 +278,7 @@ export function CargoShippingContainerContent() {
               "Wind resistance exceeding 200 km/h",
               "Structural lifespan of 30+ years",
               "Stackability up to 6–9 levels",
-              "50–70% faster deployment",
+              "Faster deployment than site-built structures",
               "Minimal foundation requirements",
               "Factory-controlled fabrication quality",
             ].map((item, i) => (
@@ -346,7 +346,7 @@ export function CargoShippingContainerContent() {
               <tbody>
                 {[
                   ["Deployment time", "Far shorter — set out in your written quotation", "3–6 months"],
-                  ["Cost savings", "40–60% lower", "Baseline"],
+                  ["Cost", "Fixed factory price, less civil work", "Site-built, priced per project"],
                   ["Relocation", "Crane and flatbed", "Demolition required"],
                   ["End-of-project waste", "Near zero", "Significant debris"],
                 ].map((row, i) => (
@@ -425,13 +425,13 @@ export function CargoShippingContainerContent() {
         <h2 className="text-2xl font-bold text-foreground mb-4">Benefits of Using Cargo Containers & Modular Solutions</h2>
         <div className="grid sm:grid-cols-2 gap-3">
           {[
-            "50–70% faster deployment than conventional construction",
+            "Faster deployment than conventional construction",
             "Fixed factory pricing eliminates site-based cost overruns",
-            "10–20 workers versus 50+ for equivalent masonry",
+            "Smaller site crews than equivalent masonry",
             "5–10 deployment cycles for quality units",
             "300 MPa steel withstands extreme conditions",
-            "95% recycled steel content in many containers",
-            "80% reduction in construction waste vs traditional building",
+            "Steel that can be recycled at end of life",
+            "Less construction waste than traditional building",
             "Fits standard flatbed trucks, rail wagons, and vessels",
           ].map((benefit, i) => (
             <div key={i} className="flex items-start gap-2 bg-accent/5 rounded-lg p-3">

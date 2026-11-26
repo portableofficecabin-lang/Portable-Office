@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     q: "Which material is best for security cabins — MS, GI, or FRP?",
-    a: "MS (mild steel) is the most economical option for standard sizes. GI offers 20–30% better corrosion resistance — ideal for coastal or high-rainfall areas. FRP is maintenance-free and corrosion-proof, best for institutional and corporate settings. Choose based on location, budget, and expected service life."
+    a: "MS (mild steel) is the most economical option for standard sizes. GI offers better corrosion resistance — ideal for coastal or high-rainfall areas. FRP is maintenance-free and corrosion-proof, best for institutional and corporate settings. Choose based on location, budget, and expected service life."
   },
   {
     q: "How long does a security cabin last?",
