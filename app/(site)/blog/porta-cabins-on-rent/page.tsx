@@ -4,11 +4,11 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 export const revalidate = 86400; // 24 hours
 
 export const metadata = buildPageMetadata({
-  absoluteTitle: "Porta Cabins on Rent Across India | Portable Office Cabin",
+  absoluteTitle: "Renting a Porta Cabin: Costs & Terms | Portable Office Cabin",
   description:
-    "Rent porta cabins across India — office cabins, security cabins, labour accommodation, container offices & portable toilets on hire.",
+    "What renting a porta cabin involves — rental types, monthly terms, delivery, installation and what to check before you hire.",
   keywords:
-    "porta cabin on rent, portable cabin rental India, site office on hire, container office rent, portable cabin rent Mumbai, porta cabin hire Pune, security cabin rental, labour camp rental India",
+    "renting a porta cabin, porta cabin rental terms, portable cabin hire guide, site office hire, security cabin rental, labour accommodation rental",
   path: "/blog/porta-cabins-on-rent",
   ogType: "article",
 });

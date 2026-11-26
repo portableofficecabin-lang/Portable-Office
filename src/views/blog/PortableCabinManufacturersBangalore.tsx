@@ -10,12 +10,16 @@ import transportImage from "@/assets/blog/portable-cabin-manufacturers-bangalore
 import prefabColonyHero from "@/assets/blog/prefab-colony-hero.webp";
 import msPortableCabinHero from "@/assets/blog/ms-portable-cabin-hero.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { bengaluruGuideRows } from "@/data/bengaluruBuyersGuidePrices";
+
+/** Exact catalogue products per configuration, with their own fixed GST-inclusive price. */
+const GUIDE_PRICE_ROWS = bengaluruGuideRows();
 
 const articleStructuredData = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "Portable Cabin Manufacturers in Bangalore",
-  description: "Find reliable portable cabin manufacturers in Bangalore. Types, pricing (2025–2026), features, customization options, and step-by-step process from enquiry to installation across Bengaluru.",
+  headline: "How to Choose a Portable Cabin Supplier in Bengaluru",
+  description: "A buyer's guide to choosing a portable cabin supplier in Bengaluru: cabin types, features for the local climate, what decides the price, and the process from enquiry to installation.",
   image: "https://portableofficecabin.com/blog/portable-cabin-manufacturers-bangalore-factory.png",
   author: {
     "@type": "Organization",
@@ -39,7 +43,7 @@ const articleStructuredData = {
     }
   },
   datePublished: "2026-03-14",
-  dateModified: "2026-03-14",
+  dateModified: "2026-11-26",
   mainEntityOfPage: "https://portableofficecabin.com/blog/portable-cabin-manufacturers-in-bangalore"
 };
 
@@ -88,7 +92,7 @@ export default function PortableCabinManufacturersBangalore() {
             <ChevronRight className="w-3 h-3" />
             <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-foreground font-medium">Portable Cabin Manufacturers in Bangalore</span>
+            <span className="text-foreground font-medium">Choosing a Portable Cabin Supplier</span>
           </nav>
         </div>
       </div>
@@ -106,10 +110,11 @@ export default function PortableCabinManufacturersBangalore() {
             <span className="text-slate-400 text-sm">• 20 min read</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-            Portable Cabin Manufacturers in Bangalore
+            How to Choose a Portable Cabin Supplier in Bengaluru
           </h1>
           <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl">
-            Bangalore's explosive growth since 2010 has transformed the city into India's construction powerhouse. IT parks along Outer Ring Road, metro rail expansion, and gated communities across Bengaluru have created massive demand for quick-deployable structures. This guide helps you find reliable portable cabin manufacturers in Bangalore and understand your options.
+            Bangalore's explosive growth since 2010 has transformed the city into India's construction powerhouse. IT parks along Outer Ring Road, metro rail expansion, and gated communities across Bengaluru have created massive demand for quick-deployable structures. This guide helps you choose a supplier and understand your options. For our own range and prices, see{" "}
+            <Link href="/promotions/portable-cabin-in-bangalore" className="font-semibold text-white underline underline-offset-4">portable cabins in Bangalore</Link>.
           </p>
           <p className="text-base text-slate-400 mt-4 leading-relaxed max-w-3xl">
             Portable cabin solutions now serve site offices, security cabins, portable toilets, container home conversions, and temporary accommodation across locations from central Bengaluru to Hoskote, Yelahanka, and Nelamangala.
@@ -137,7 +142,7 @@ export default function PortableCabinManufacturersBangalore() {
           <ul className="space-y-2 text-muted-foreground">
             <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-1 shrink-0" /> Types of portable cabins available from Bangalore suppliers</li>
             <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-1 shrink-0" /> Key features and customization options for local climate</li>
-            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-1 shrink-0" /> Realistic price ranges for 2025–2026</li>
+            <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-1 shrink-0" /> What decides the price, and where to see current prices</li>
             <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-1 shrink-0" /> How to evaluate cabin manufacturers and their services</li>
             <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-1 shrink-0" /> Step-by-step process from enquiry to installation</li>
           </ul>
@@ -278,9 +283,9 @@ export default function PortableCabinManufacturersBangalore() {
 
       {/* Pricing Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Portable Cabin Price Factors in Bangalore (2024–2026)</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">What Decides the Price of a Portable Cabin</h2>
         <p className="text-muted-foreground mb-6 leading-relaxed">
-          Prices vary based on size, material, and fit-out level. Local steel rates (₹60,000–75,000/tonne) and freight costs impact final quotes.
+          Prices vary with size, material and fit-out level; steel prices and freight also move the final quote. Standard units show one fixed, GST-inclusive price on their product page, and custom builds are priced on a written quotation. Current prices for common configurations are listed below the table.
         </p>
         <div className="overflow-x-auto mb-6">
           <table className="w-full text-sm border border-border/40 rounded-xl overflow-hidden">
@@ -292,11 +297,11 @@ export default function PortableCabinManufacturersBangalore() {
             </thead>
             <tbody>
               {[
-                ["Size & Layout", "4x4 ft FRP guard booths: ₹80,000–1.2 lakh; 20x10 ft fitted office containers: ₹5–7 lakh; 40ft container offices: ₹12–18 lakh"],
-                ["Material Choice", "Basic MS shells: ₹1,200–1,800/sq.ft.; fully finished with insulation: ₹2,500–3,500/sq.ft.; FRP adds 20% premium for lightness"],
-                ["Specification Level", "Shell-only at ₹1,000/sq.ft. vs turnkey at ₹3,000+/sq.ft. with false ceilings (₹200/sq.ft.), UPVC windows (₹400/sq.ft.), attached toilets (+₹1–2 lakh)"],
-                ["Bulk Orders", "Ordering 10+ units for large projects brings 15–25% volume discounts from business manufacturer suppliers"],
-                ["Transport & Installation", "Distance from the manufacturer's fabrication unit adds ₹10,000–25,000 (50–100km radius) plus ₹20,000–40,000 crane setup"],
+                ["Size & Layout", "A bigger footprint uses more steel, panels and fittings, so a 40 ft unit costs more than a 20 ft unit of the same build"],
+                ["Material Choice", "MS, GI, ACP or PUF-panel construction, and whether the walls and roof are insulated"],
+                ["Specification Level", "Shell only or fully fitted: false ceiling, UPVC windows, an attached toilet, electricals and AC provision each add to the price"],
+                ["Multiple Units", "Larger projects are quoted together in one written quotation"],
+                ["Delivery & Installation", "Free delivery to PIN codes beginning 560, 562, 563 or 635; other areas at the published zone rate. Installation is optional, at the price in our shipping policy"],
               ].map(([factor, details], idx) => (
                 <tr key={idx} className={idx % 2 === 0 ? "bg-card" : "bg-muted/20"}>
                   <td className="p-3 font-medium text-foreground border-b border-border/20 whitespace-nowrap">{factor}</td>
@@ -306,13 +311,44 @@ export default function PortableCabinManufacturersBangalore() {
             </tbody>
           </table>
         </div>
+        {/* Exact catalogue products with their own fixed GST-inclusive price, resolved at render
+            (src/data/bengaluruBuyersGuidePrices.ts) — no hand-typed price ranges (D6 review, 2026-11-26). */}
+        <h3 className="text-lg font-semibold text-foreground mb-3">Current prices for common configurations</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border border-border/40 rounded-xl overflow-hidden">
+            <thead>
+              <tr className="bg-primary/10">
+                <th className="text-left p-3 font-semibold text-foreground border-b border-border/30">Configuration</th>
+                <th className="text-left p-3 font-semibold text-foreground border-b border-border/30">Product and fixed price (incl. GST)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {GUIDE_PRICE_ROWS.map((row, idx) => (
+                <tr key={row.type} className={idx % 2 === 0 ? "bg-card" : "bg-muted/20"}>
+                  <td className="p-3 font-medium text-foreground border-b border-border/20 align-top">{row.type}</td>
+                  <td className="p-3 text-muted-foreground border-b border-border/20">
+                    <ul className="space-y-1">
+                      {row.items.map((item) => (
+                        <li key={item.id}>
+                          <Link href={item.href} className="font-medium text-primary hover:underline">{item.name}</Link>{" "}
+                          <span className="font-medium text-foreground whitespace-nowrap">{item.price}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-muted-foreground mt-2">Custom sizes and fit-outs are priced on a written quotation.</p>
       </section>
 
       {/* How to Choose the Right Manufacturer */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How to Choose the Right Portable Cabin Manufacturer in Bangalore</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Six Checks Before You Choose a Supplier</h2>
         <p className="text-muted-foreground mb-6 leading-relaxed">
-          Bangalore has 50+ players across industrial pockets. You need a checklist rather than picking the closest vendor to ensure quality and support.
+          Bengaluru has many suppliers across its industrial pockets. Use a checklist rather than picking the closest vendor, so quality and support are covered.
         </p>
         <div className="grid md:grid-cols-2 gap-5">
           {[

@@ -54,8 +54,8 @@ export interface BlogDbRow {
 
 const staticBlogPosts: BlogListPost[] = [
   {
-    title: "Portable Cabin Manufacturers in Bangalore",
-    description: "Find reliable portable cabin manufacturers in Bangalore. Types, pricing (2025–2026), features, customization options, and step-by-step process from enquiry to installation across Bengaluru.",
+    title: "How to Choose a Portable Cabin Supplier in Bengaluru",
+    description: "A buyer's guide to choosing a portable cabin supplier in Bengaluru: cabin types, features for the local climate, what decides the price, and the process from enquiry to installation.",
     slug: "portable-cabin-manufacturers-in-bangalore",
     date: "March 14, 2026",
     readTime: "20 min read",
@@ -66,8 +66,8 @@ const staticBlogPosts: BlogListPost[] = [
     featured: true,
   },
   {
-    title: "Prefabricated Labor Colony in Bengaluru",
-    description: "Complete guide to prefabricated labour colonies in Bengaluru – turnkey modular worker accommodation for construction sites, industrial projects, and infrastructure development across Karnataka.",
+    title: "Prefabricated Labour Colony in Bengaluru: A Planning Guide",
+    description: "A planning guide to prefabricated labour colonies in Bengaluru: layout, capacity, materials, compliance and setup for construction and industrial projects.",
     slug: "prefabricated-labor-colony-bengaluru",
     date: "February 26, 2025",
     readTime: "25 min read",
@@ -90,8 +90,8 @@ const staticBlogPosts: BlogListPost[] = [
     featured: false,
   },
   {
-    title: "Porta Cabins on Rent – Flexible Portable Space by Portable Office Cabin",
-    description: "Complete guide to renting porta cabins in India. Office cabins, security cabins, labour accommodation, container offices & portable toilets on hire.",
+    title: "Renting a Porta Cabin: Costs, Terms and What to Check Before You Hire",
+    description: "What renting a porta cabin involves in India: rental types, monthly terms, delivery and installation, and what to check before you hire.",
     slug: "porta-cabins-on-rent",
     date: "February 20, 2025",
     readTime: "18 min read",
