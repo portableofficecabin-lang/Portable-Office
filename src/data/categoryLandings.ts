@@ -405,6 +405,12 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers in Channasandra", href: "/cities-we-serve/shipping-container-channasandra" },
       // Nagavara storage page (owner brief, 2026-11-25: a link back from the main shipping container page).
       { name: "Storage containers in Nagavara", href: "/cities-we-serve/shipping-container-nagavara" },
+      // SMV Layout storage page (owner brief, 2026-11-25: a link back from the main shipping container page).
+      { name: "Storage containers in SMV Layout", href: "/cities-we-serve/shipping-container-vishweshwaraiah-layout" },
+      // Babusapalya storage page (owner brief, 2026-11-25: a link back from the main shipping container page).
+      { name: "Storage containers in Babusapalya", href: "/cities-we-serve/shipping-container-babusa-palya" },
+      // Frazer Town page (owner brief, 2026-11-25, §21: the brief's anchor, from the main shipping container page).
+      { name: "Shipping containers in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],

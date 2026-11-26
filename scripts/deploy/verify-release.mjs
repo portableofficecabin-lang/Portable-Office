@@ -23,6 +23,14 @@
  *   • sitemap   — every URL of the served /sitemap.xml on this host answers 200 (skipped by --quick)
  *   • not-found — every HTML page above (and below) that answers 200 must not be the site's
  *                 not-found page: a branded 404 served with status 200 is a failure, not a success
+ *   • seo       — every indexable HTML page above and below (health pages, new routes, every city page of
+ *                 every product category, critical routes, sitemap URLs) must carry its OWN head: no
+ *                 noindex (meta robots or X-Robots-Tag), a <title> that is not the root layout's default,
+ *                 a meta description and exactly one canonical that points at the page itself. A 200 page
+ *                 with the not-found head (default title + noindex + no canonical) is reported as cached
+ *                 not-found metadata — the "hybrid" a cached 404 regenerates into (2026-11-25, #323).
+ *                 Each new route is also fetched as Googlebot and must show it the same head.
+ *                 Skipped with --no-seo.
  *   • critical  — the routes in scripts/deploy/critical-routes.json of the release / source (the
  *                 shipping- and cargo-container pages, the Mysore and Mettur city pages, products,
  *                 categories, the enquiry page) answer 200 from the expected build, render an <h1>
@@ -70,6 +78,83 @@ export const NOT_FOUND_MARKERS = ["Oops! Page not found", "This page could not b
 /** True when an HTML body is the not-found page (whatever status it was served with). */
 export function isNotFoundPage(body) {
   return NOT_FOUND_MARKERS.some((m) => body.includes(m));
+}
+
+/**
+ * The root layout's default <title> (app/layout.tsx `title.default`, kept in step by
+ * verify-release.test.mjs). Every indexable page sets its own title, so a page that shows this one is
+ * rendering the not-found metadata (or lost its own metadata), never its intended head.
+ */
+export const DEFAULT_TITLE = "Portable Office Cabin | India's Leading Manufacturer";
+
+/** The site's canonical host; a canonical may also name the --host / --base host (staging, idle port). */
+export const SITE_HOST = "portableofficecabin.com";
+
+/** Googlebot's user agent: new routes are also fetched with it, and must show crawlers the same head. */
+export const GOOGLEBOT_UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
+
+/** Head fields that differ between two fetches of the same page (e.g. a browser and Googlebot). */
+export function seoHeadDiff(a, b) {
+  const x = seoHead(a || "");
+  const y = seoHead(b || "");
+  return ["title", "robots", "description", "canonicals"].filter((k) => JSON.stringify(x[k]) !== JSON.stringify(y[k]));
+}
+
+const decodeEntities = (s) =>
+  s.replace(/&amp;/g, "&").replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+
+/** The SEO-relevant head of an HTML page: title, robots, description, canonical(s), og:url. */
+export function seoHead(body) {
+  const first = (re) => {
+    const m = body.match(re);
+    return m ? decodeEntities(m[1]) : null;
+  };
+  // Attribute order is fixed in Next's metadata output (name/property, then content; rel, then href).
+  return {
+    title: first(/<title>([^<]*)<\/title>/),
+    robots: first(/<meta name="robots" content="([^"]*)"/),
+    description: first(/<meta name="description" content="([^"]*)"/),
+    canonicals: [...body.matchAll(/<link rel="canonical" href="([^"]*)"/g)].map((m) => decodeEntities(m[1])),
+    ogUrl: first(/<meta property="og:url" content="([^"]*)"/),
+  };
+}
+
+const normPath = (p) => (p.length > 1 ? p.replace(/\/+$/, "") : p) || "/";
+
+/**
+ * Head problems of an indexable page `p` answered with `r` ({ status, body, xRobotsTag }), as failure
+ * reasons without the "kind: path" prefix. `hosts` = hosts a canonical may name (apex/www ignored).
+ */
+export function seoHeadProblems(r, p, hosts = [SITE_HOST]) {
+  const h = seoHead(r.body || "");
+  const noindexMeta = /\bnoindex\b/i.test(h.robots || "");
+  const noindexHeader = /\bnoindex\b/i.test(r.xRobotsTag || "");
+  const defaultTitle = h.title === DEFAULT_TITLE;
+  if (noindexMeta && defaultTitle && h.canonicals.length === 0) {
+    return [
+      "answered 200 with the not-found page's head (the layout's default title, noindex, no canonical): cached not-found metadata from an earlier 404 of this URL",
+    ];
+  }
+  const out = [];
+  if (noindexHeader) out.push(`is served with X-Robots-Tag: ${r.xRobotsTag}`);
+  if (noindexMeta) out.push(`carries <meta name="robots" content="${h.robots}">`);
+  if (!h.title) out.push("has no <title>");
+  else if (defaultTitle) out.push(`has the root layout's default title "${DEFAULT_TITLE}" instead of its own`);
+  if (!h.description) out.push("has no meta description");
+  if (h.canonicals.length === 0) out.push("has no canonical link");
+  else if (h.canonicals.length > 1) out.push(`has ${h.canonicals.length} canonical links`);
+  else {
+    const allowed = new Set(hosts.filter(Boolean).map((x) => x.replace(/^www\./, "")));
+    let ok = false;
+    try {
+      const u = new URL(h.canonicals[0]);
+      ok = allowed.has(u.hostname.replace(/^www\./, "")) && normPath(u.pathname) === normPath(p.split("?")[0]);
+    } catch {
+      ok = false;
+    }
+    if (!ok) out.push(`has canonical ${h.canonicals[0]}, not this page`);
+  }
+  return out;
 }
 
 /** /_next/static JS/CSS files an HTML page references (src= / href=), de-duplicated, in order. */
@@ -239,12 +324,12 @@ export function checkBuildInfo(info, { expectCommit, buildId } = {}) {
   return failures;
 }
 
-/** One GET without following redirects. Resolves { status, body, contentType } — never rejects. */
-export function get(base, path, { host, resolveTo, timeoutMs = 30000 } = {}) {
+/** One GET without following redirects. Resolves { status, body, contentType, location, xRobotsTag } — never rejects. */
+export function get(base, path, { host, resolveTo, timeoutMs = 30000, userAgent = "portable-office-verify-release/1" } = {}) {
   const url = new URL(path, base);
   const isHttps = url.protocol === "https:";
   const lib = isHttps ? https : http;
-  const headers = { "user-agent": "portable-office-verify-release/1", accept: "text/html,application/xml;q=0.9,*/*;q=0.8" };
+  const headers = { "user-agent": userAgent, accept: "text/html,application/xml;q=0.9,*/*;q=0.8" };
   if (host) headers.host = host;
   const options = {
     method: "GET",
@@ -265,6 +350,7 @@ export function get(base, path, { host, resolveTo, timeoutMs = 30000 } = {}) {
           body: Buffer.concat(chunks).toString("utf8"),
           contentType: String(res.headers["content-type"] || ""),
           location: res.headers.location ? String(res.headers.location) : null,
+          xRobotsTag: String(res.headers["x-robots-tag"] || ""),
         }),
       );
       res.on("error", (e) => done({ status: 0, body: "", contentType: "", error: e.message }));
@@ -304,6 +390,7 @@ export async function verifyRelease(opts) {
     quick = false,
     critical = true,
     assets = true,
+    seo = true,
     concurrency = 4,
     timeoutMs = 30000,
     expectCommit,
@@ -312,13 +399,21 @@ export async function verifyRelease(opts) {
   let { buildId } = opts;
   const failures = [];
   const warnings = [];
-  const counts = { build: 0, health: 0, city: 0, new: 0, sitemap: 0, identity: 0, critical: 0, redirects: 0, assets: 0, continuity: 0 };
+  const counts = { build: 0, health: 0, city: 0, new: 0, sitemap: 0, identity: 0, critical: 0, redirects: 0, assets: 0, continuity: 0, seo: 0 };
   let identity = null;
   const req = (path, b = base) => get(b, path, { host, resolveTo: b === base ? resolveTo : undefined, timeoutMs });
   const isHtml = (r) => /text\/html/i.test(r.contentType || "");
   // A 200 that renders the not-found page is a failure (a "soft 404"), never a success.
   const softNotFound = (kind, p, r) =>
     r.status === 200 && isHtml(r) && isNotFoundPage(r.body) ? `${kind}: ${p} answered 200 but rendered the not-found page (soft 404)` : null;
+  // An indexable 200 HTML page must carry its own head (see "seo" in the header). Counted once per page.
+  const canonicalHosts = [SITE_HOST, host, new URL(base).hostname];
+  const seoFailures = (kind, p, r) => {
+    if (!seo || r.status !== 200 || !isHtml(r)) return [];
+    const problems = seoHeadProblems(r, p, canonicalHosts).map((x) => `seo: ${p} (${kind}) ${x}`);
+    if (problems.length === 0) counts.seo++;
+    return problems;
+  };
   // HTML of pages whose assets are checked below: /, /products, the first city page, every critical route.
   const assetPages = new Map();
 
@@ -386,7 +481,10 @@ export async function verifyRelease(opts) {
     const soft = softNotFound("health", p, r);
     if (r.status !== 200) failures.push(`health: ${p} answered ${r.status || r.error}`);
     else if (soft) failures.push(soft);
-    else counts.health++;
+    else {
+      counts.health++;
+      failures.push(...seoFailures("health", p, r));
+    }
     if (p === "/" && r.status === 200 && !servedByBuild(r.body, buildId)) {
       failures.push(`health: / is not served by build ${buildId} (another build answered)`);
     }
@@ -406,10 +504,17 @@ export async function verifyRelease(opts) {
     }
     if (kind === "city" && p === cityPaths[0]) assetPages.set(p, r.body);
     counts[kind]++;
-    return null;
+    const head = seoFailures(kind, p, r);
+    // A route this deploy introduces must show Googlebot the same head as a browser.
+    if (seo && kind === "new") {
+      const bot = await get(base, p, { host, resolveTo, timeoutMs, userAgent: GOOGLEBOT_UA });
+      const diff = bot.status === r.status ? seoHeadDiff(r.body, bot.body) : ["status"];
+      if (diff.length) head.push(`seo: ${p} (new) shows Googlebot a different head (${diff.join(", ")}${diff[0] === "status" ? ` ${bot.status || bot.error}` : ""})`);
+    }
+    return head.length ? head : null;
   };
-  for (const f of await pool(newPaths, concurrency, (p) => checkPage(p, "new"))) if (f) failures.push(f);
-  for (const f of await pool(cityPaths, concurrency, (p) => checkPage(p, "city"))) if (f) failures.push(f);
+  for (const f of await pool(newPaths, concurrency, (p) => checkPage(p, "new"))) if (f) failures.push(...[f].flat());
+  for (const f of await pool(cityPaths, concurrency, (p) => checkPage(p, "city"))) if (f) failures.push(...[f].flat());
 
   // ── critical routes: 200, this build, real content (an <h1>, any required markup) ─────────
   let criticalRoutes = [];
@@ -439,6 +544,7 @@ export async function verifyRelease(opts) {
       counts.critical++;
       assetPages.set(p, r.body);
     }
+    out.push(...seoFailures("critical", p, r));
     return out;
   });
   for (const list of criticalResults) failures.push(...list);
@@ -518,9 +624,10 @@ export async function verifyRelease(opts) {
         const soft = softNotFound("sitemap", p, r);
         if (soft) return soft;
         counts.sitemap++;
-        return null;
+        const head = seoFailures("sitemap", p, r);
+        return head.length ? head : null;
       });
-      for (const f of results) if (f) failures.push(f);
+      for (const f of results) if (f) failures.push(...[f].flat());
     }
   }
 
@@ -560,6 +667,7 @@ function parseArgs(argv) {
     else if (k === "--quick") a.quick = true;
     else if (k === "--no-critical") a.critical = false;
     else if (k === "--no-assets") a.assets = false;
+    else if (k === "--no-seo") a.seo = false;
     else if (k === "--github") a.github = true;
     else throw new Error(`unknown argument ${k}`);
   }
@@ -580,7 +688,7 @@ async function main() {
   const res = await verifyRelease({ ...args, log: (m) => console.log(`verify: ${m}`) });
   const c = res.counts;
   console.log(
-    `verify: ${args.base} — ${args.expectCommit ? `identity ${c.identity}/1, ` : ""}build ${c.build}, health ${c.health}/${HEALTH_PATHS.length}, new ${c.new}, city ${c.city}, critical ${c.critical}, redirects ${c.redirects}, assets ${c.assets}${args.compareBase ? `, continuity ${c.continuity}` : ""}, sitemap ${c.sitemap} OK` +
+    `verify: ${args.base} — ${args.expectCommit ? `identity ${c.identity}/1, ` : ""}build ${c.build}, health ${c.health}/${HEALTH_PATHS.length}, new ${c.new}, city ${c.city}, critical ${c.critical}, redirects ${c.redirects}, assets ${c.assets}${args.compareBase ? `, continuity ${c.continuity}` : ""}, sitemap ${c.sitemap}${args.seo === false ? "" : `, seo ${c.seo}`} OK` +
       ` · ${res.failures.length} failure(s), ${res.warnings.length} warning(s) · ${((Date.now() - started) / 1000).toFixed(1)}s`,
   );
   for (const w of res.warnings) console.log(args.github ? `::warning::${w}` : `verify: WARNING ${w}`);
