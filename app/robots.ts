@@ -22,21 +22,18 @@ import type { MetadataRoute } from "next";
  *  • the `?page=`/`&page=` disallows — paginated listing URLs are client-side views of the same
  *    static page (server emits canonical=<base>), so crawling them only manufactures
  *    "non-canonical URL" noise. Every product/category has a clean URL in the sitemap.
+ *
+ * ACCOUNT PAGES ARE CRAWLABLE ON PURPOSE (2026-11-25). /login, /register, /forgot-password,
+ * /reset-password and /my-account are kept OUT OF THE INDEX by `X-Robots-Tag: noindex, nofollow`
+ * (next.config.ts PRIVATE_PATHS), and a crawler can only obey a noindex it is allowed to fetch.
+ * While robots.txt blocked them, the header was invisible, and /login is linked from the header
+ * of every page — exactly how a blocked URL ends up "Indexed, though blocked by robots.txt".
+ * They render no user data without a session, so crawling them exposes nothing.
+ * Still disallowed: /admin/, /api/ and /auth/ (not pages: redirects and endpoints, never linked).
  */
 
-/** Disallows every crawler gets — the Google groups restate these, minus /cart + /checkout. */
-const PRIVATE_DISALLOWS = [
-  "/admin/",
-  "/api/",
-  "/auth/",
-  "/login",
-  "/register",
-  "/forgot-password",
-  "/reset-password",
-  "/my-account",
-  "/*?page=",
-  "/*&page=",
-];
+/** Disallows every crawler gets — the Google groups restate these; only `*` adds /cart + /checkout. */
+const PRIVATE_DISALLOWS = ["/admin/", "/api/", "/auth/", "/*?page=", "/*&page="];
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -67,6 +64,10 @@ export default function robots(): MetadataRoute.Robots {
         disallow: PRIVATE_DISALLOWS,
       },
     ],
-    sitemap: "https://portableofficecabin.com/sitemap.xml",
+    // The per-type sitemap index (products / categories / cities / promotions / blog / pages), so
+    // Search Console reports indexing per page type. /sitemap.xml still serves the same URLs as one
+    // flat list for the existing Search Console submission and the deploy tooling — see
+    // src/lib/seo/sitemapSections.ts.
+    sitemap: "https://portableofficecabin.com/sitemap-index.xml",
   };
 }
