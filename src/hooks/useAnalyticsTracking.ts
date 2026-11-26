@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
+import { analyticsAllowed } from "@/lib/analytics/trackingPolicy";
 
 // First-party analytics via direct Supabase REST (PostgREST) fetch calls. This
 // deliberately AVOIDS importing the heavy @supabase/supabase-js client bundle on
@@ -9,6 +10,9 @@ import { usePathname } from "next/navigation";
 // All work is deferred to browser idle so it never competes with hydration / LCP,
 // and there is NO third-party geo lookup (Google Analytics already provides
 // geography), so no ipapi.co request is made on page load.
+//
+// Nothing is sent from local builds, automated/test browsers or opted-out visitors — see
+// src/lib/analytics/trackingPolicy.ts (they used to write into the production tables).
 
 const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SB_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -21,7 +25,7 @@ const sbHeaders = (): Record<string, string> => ({
 });
 
 const sbInsert = (table: string, row: Record<string, unknown>): void => {
-  if (!SB_URL || !SB_KEY) return;
+  if (!SB_URL || !SB_KEY || !analyticsAllowed()) return;
   fetch(`${SB_URL}/rest/v1/${table}`, {
     method: "POST",
     headers: sbHeaders(),
@@ -31,7 +35,7 @@ const sbInsert = (table: string, row: Record<string, unknown>): void => {
 };
 
 const sbRpc = (fn: string, args: Record<string, unknown>): void => {
-  if (!SB_URL || !SB_KEY) return;
+  if (!SB_URL || !SB_KEY || !analyticsAllowed()) return;
   fetch(`${SB_URL}/rest/v1/rpc/${fn}`, {
     method: "POST",
     headers: sbHeaders(),
