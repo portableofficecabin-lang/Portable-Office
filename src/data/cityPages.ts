@@ -9231,7 +9231,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
       { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
       { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       // Hoskote's portable-shop sibling (2026-11-05), which links back from its nearby locations.
       { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
       // Hoskote's shipping and storage container sibling (2026-11-21), which links back from its areas section.
@@ -10472,7 +10472,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinksHeading: "Related products",
     relatedLinks: [
       { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
       { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
@@ -14028,7 +14028,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
       { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
@@ -20419,7 +20419,7 @@ export const CITY_PAGES: CityPage[] = [
    *
    * KEYWORD OWNERSHIP: shipping / storage container × JP Nagar, for home rebuilds, downsizing and
    * school storage. Bellandur keeps household, society and shop storage in Bellandur; Marathahalli ORR
-   * keeps commercial storage on the ORR; Koramangala (/products/shipping-container-in-kormangala)
+   * keeps commercial storage on the ORR; Koramangala (/products/used-20ft-shipping-container-as-is-grade)
    * keeps offices, cafés and conversions. No other shipping page names JP Nagar or its localities.
    * Bannerghatta Road brief (2026-11-16): Arekere, Bilekahalli, Gottigere and Bannerghatta Road moved to
    * the Bannerghatta Road page; the areas text is that brief's replacement, plus a "Bannerghatta Road" link.
@@ -36052,7 +36052,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Cabins on Rent", href: "/rental-service" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
       { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
@@ -37473,7 +37473,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Container Offices", href: "/products/category/container-offices" },
-      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/refurbished-20ft-shipping-container-industrial" },
       { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
       { label: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
       { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
@@ -38453,7 +38453,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Container Offices", href: "/products/category/container-offices" },
-      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/refurbished-20ft-shipping-container-industrial" },
       { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
       { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
@@ -39160,7 +39160,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Container Site Offices", href: "/products/category/site-office-containers" },
-      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/refurbished-20ft-shipping-container-industrial" },
       { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Preparing the Site and Base", href: "/products/portable-cabin/installation-and-site-preparation" },
     ],
@@ -41399,7 +41399,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Container Shop",
         text: "A retail shop conversion using a shipping container structure, with engineered openings, shutters, display windows and branding. Openings in a container's walls have to be designed for the structure, so the front is fixed before fabrication starts.",
-        link: { label: "Shipping containers in Krishnagiri", href: "/products/shipping-container-in-krishnagiri" },
+        link: { label: "Shipping containers in Krishnagiri", href: "/products/refurbished-20ft-shipping-container-premium" },
       },
     ],
 
@@ -41599,7 +41599,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
-      { label: "Shipping Container in Krishnagiri", href: "/products/shipping-container-in-krishnagiri" },
+      { label: "Shipping Container in Krishnagiri", href: "/products/refurbished-20ft-shipping-container-premium" },
       { label: "Cargo and Storage Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
@@ -43323,7 +43323,7 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / storage / cargo container and container rental × Dharmapuri,
    * Adhiyamankottai and Palacode. The Dharmapuri toilet page keeps site sanitation (the two pages link
    * to each other); the Mettur, Salem shipping page no longer lists Dharmapuri in its areas line. The
-   * Krishnagiri container product page (/products/shipping-container-in-krishnagiri) keeps its own
+   * Krishnagiri container product page (/products/refurbished-20ft-shipping-container-premium) keeps its own
    * title, meta and uses; it names Dharmapuri only as a delivery area in its body.
    *
    * LINKS (brief §5): the toilet page and /products/shipping-container-rental are live (HTTP 200).
@@ -45195,7 +45195,7 @@ export const CITY_PAGES: CityPage[] = [
    *   • FAQs (six) → faqs; the closing request → CTA + the cargo-category enquiry form (rental models
    *     kept: rental is in this brief's scope).
    * INSPECTION LINK (brief section 5): the Chennai shipping-container page
-   * (/products/shipping-container-in-chennai) has no used-container inspection checklist, only one
+   * (/products/used-20ft-shipping-container-wind-water-tight) has no used-container inspection checklist, only one
    * line that units are inspected before sale, so the anchor "how to inspect a used container" points
    * at /products/cargo-storage-containers, whose "Key Inspection Points" list and FAQ cover it.
    * Not claimed: delivery to every location, fixed timelines, guaranteed grades, high-cube stock,
@@ -47265,7 +47265,7 @@ export const CITY_PAGES: CityPage[] = [
    * text, the enquiry-form heading and intro, and the image alt text and captions.
    *
    * INTERLINKS (brief section 5): the rental link is in place (live, 200). The brief's Chennai target
-   * was checked: /products/shipping-container-in-chennai has no inspection checklist, so "how to
+   * was checked: /products/used-20ft-shipping-container-wind-water-tight has no inspection checklist, so "how to
    * inspect a used container" points at /products/cargo-storage-containers ("Key Inspection Points"),
    * the same target the Uttara Kannada shipping page uses for this anchor (one anchor, one target
    * across the site). It is therefore not repeated in the related links. The Vellore link (added by #231, the
@@ -51940,7 +51940,7 @@ export const CITY_PAGES: CityPage[] = [
     areasInlineLinks: [
       {
         before: "Factories in the Peenya Industrial Area, a little further north-west, are covered on our page on",
-        link: { label: "shipping containers for Peenya Industrial Area", href: "/products/shipping-container-in-peenya-industrial" },
+        link: { label: "shipping containers for Peenya Industrial Area", href: "/products/used-20ft-shipping-container-cargo-worthy" },
         after: ".",
       },
       // Vijayanagar, Bengaluru brief (2026-11-18): upholstery workshops and agarbatti units are that page's intent.
@@ -53215,7 +53215,7 @@ export const CITY_PAGES: CityPage[] = [
     areasInlineLinks: [
       {
         before: "Running a factory in the Peenya Industrial Area instead? See our page on",
-        link: { label: "storage containers for Peenya's industrial units", href: "/products/shipping-container-in-peenya-industrial" },
+        link: { label: "storage containers for Peenya's industrial units", href: "/products/used-20ft-shipping-container-cargo-worthy" },
         after: ".",
       },
       // Malleshwaram brief (2026-11-19, §5): picture framing and salvage stock are that page's intent.
@@ -60581,11 +60581,11 @@ export const CITY_PAGES: CityPage[] = [
    * they do not repeat the sibling shipping-container pages (8-word shingle check).
    *
    * INTERLINKS (brief section 5): the rental link is in place (live, 200). The Chennai shipping-container
-   * page (/products/shipping-container-in-chennai) still has no used-container inspection checklist
+   * page (/products/used-20ft-shipping-container-wind-water-tight) still has no used-container inspection checklist
    * (checked live 2026-11-08), so "how to inspect a used container" points at
    * /products/cargo-storage-containers ("Key Inspection Points"), the target the owner chose for
    * Coimbatore and the one Uttara Kannada and the hydel page use: one anchor, one target. The Krishnagiri
-   * container page (/products/shipping-container-in-krishnagiri) has no quarry content, so the brief's
+   * container page (/products/refurbished-20ft-shipping-container-premium) has no quarry content, so the brief's
    * optional quarry link is omitted. The Karnataka shipping-container hub (seoPromotions) and the cargo
    * category's location links list this page.
    *
@@ -68417,7 +68417,7 @@ export const CITY_PAGES: CityPage[] = [
    * the returnable-packaging, scrap-segregation and early-spares uses. Portable Security Cabins in
    * Shoolagiri keeps gatehouses (the two pages link to each other once each; its link sits in its
    * project-stage section). Container Office in SIPCOT Shoolagiri keeps offices. The Krishnagiri
-   * container product page (/products/shipping-container-in-krishnagiri) keeps its own title, meta
+   * container product page (/products/refurbished-20ft-shipping-container-premium) keeps its own title, meta
    * and uses and does not name Shoolagiri, so the brief's "link the existing Shoolagiri mention" has
    * nothing to link.
    *
@@ -72778,7 +72778,7 @@ export const CITY_PAGES: CityPage[] = [
    *
    * Route: the brief's expected canonical, /cities-we-serve/shipping-container-koramangala, had never
    * been released. The only Koramangala shipping route was the product page
-   * /products/shipping-container-in-kormangala (id 29, the used 20 ft as-is unit with online Buy Now),
+   * /products/used-20ft-shipping-container-as-is-grade (id 29, the used 20 ft as-is unit with online Buy Now),
    * whose title named Koramangala. The owner chose this new city page for Version B and a refocus of
    * that product page on the unit itself (its title, descriptions and body no longer target "shipping
    * container in Koramangala" and it links here), so one indexable page owns the query.
@@ -73013,7 +73013,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinksHeading: "Related products",
     relatedLinks: [
       // The purchasable unit itself (refocused on the as-is grade when this page went live); it links back here.
-      { label: "Used 20 ft Shipping Container (As-Is Grade)", href: "/products/shipping-container-in-kormangala" },
+      { label: "Used 20 ft Shipping Container (As-Is Grade)", href: "/products/used-20ft-shipping-container-as-is-grade" },
       { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },

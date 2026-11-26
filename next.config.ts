@@ -278,6 +278,25 @@ const nextConfig: NextConfig = {
         destination: "/products/category/home-construction",
         statusCode: 301,
       },
+      // ── Renamed product URLs (D4, 2026-11; src/data/productSlugRenames.ts) ─
+      // Six fixed-price container SKUs had a PLACE in their URL although each sells one
+      // grade; the new slug is the page's own H1. ONE hop from the old URL and from its
+      // `.html` form — these rules sit ABOVE the generic `.html` rule below, which would
+      // otherwise send the old .html URL to the old clean URL first (two hops). Config-level
+      // because the [slug] route is fully static: an unknown slug never reaches page code.
+      // src/data/productSlugRenames.test.ts reads this file and checks every pair.
+      { source: "/products/shipping-container-in-kormangala", destination: "/products/used-20ft-shipping-container-as-is-grade", statusCode: 301 },
+      { source: "/products/shipping-container-in-kormangala.html", destination: "/products/used-20ft-shipping-container-as-is-grade", statusCode: 301 },
+      { source: "/products/shipping-container-in-krishnagiri", destination: "/products/refurbished-20ft-shipping-container-premium", statusCode: 301 },
+      { source: "/products/shipping-container-in-krishnagiri.html", destination: "/products/refurbished-20ft-shipping-container-premium", statusCode: 301 },
+      { source: "/products/shipping-container-in-sipcot", destination: "/products/refurbished-20ft-shipping-container-industrial", statusCode: 301 },
+      { source: "/products/shipping-container-in-sipcot.html", destination: "/products/refurbished-20ft-shipping-container-industrial", statusCode: 301 },
+      { source: "/products/shipping-container-in-chennai", destination: "/products/used-20ft-shipping-container-wind-water-tight", statusCode: 301 },
+      { source: "/products/shipping-container-in-chennai.html", destination: "/products/used-20ft-shipping-container-wind-water-tight", statusCode: 301 },
+      { source: "/products/shipping-container-in-narsapura-industrial", destination: "/products/refurbished-20ft-shipping-container", statusCode: 301 },
+      { source: "/products/shipping-container-in-narsapura-industrial.html", destination: "/products/refurbished-20ft-shipping-container", statusCode: 301 },
+      { source: "/products/shipping-container-in-peenya-industrial", destination: "/products/used-20ft-shipping-container-cargo-worthy", statusCode: 301 },
+      { source: "/products/shipping-container-in-peenya-industrial.html", destination: "/products/used-20ft-shipping-container-cargo-worthy", statusCode: 301 },
       // ── Legacy .html → clean extensionless URLs ───────────────────────────
       // Product `.html` URLs 301 to the clean form (the page's rel=canonical,
       // sitemap, internal links and JSON-LD all use the clean form).

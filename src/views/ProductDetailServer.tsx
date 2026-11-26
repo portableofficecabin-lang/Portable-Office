@@ -757,12 +757,12 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "cargo-storage-shipping-containers" && slug === "used-shipping-container-for-sale" && <div className="mt-16"><UsedShippingContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-container-for-sale" && <div className="mt-16"><CargoContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-rental" && <div className="mt-16"><ShippingContainerRentalContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-kormangala" && <div className="mt-16"><ShippingContainerKormangalaContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-krishnagiri" && <div className="mt-16"><ShippingContainerKrishnagiriContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-sipcot" && <div className="mt-16"><ShippingContainerSIPCOTContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-chennai" && <div className="mt-16"><ShippingContainerChennaiContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-narsapura-industrial" && <div className="mt-16"><ShippingContainerNarsapuraContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-peenya-industrial" && <div className="mt-16"><ShippingContainerPeenyaContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "used-20ft-shipping-container-as-is-grade" && <div className="mt-16"><ShippingContainerKormangalaContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "refurbished-20ft-shipping-container-premium" && <div className="mt-16"><ShippingContainerKrishnagiriContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "refurbished-20ft-shipping-container-industrial" && <div className="mt-16"><ShippingContainerSIPCOTContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "used-20ft-shipping-container-wind-water-tight" && <div className="mt-16"><ShippingContainerChennaiContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "refurbished-20ft-shipping-container" && <div className="mt-16"><ShippingContainerNarsapuraContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "used-20ft-shipping-container-cargo-worthy" && <div className="mt-16"><ShippingContainerPeenyaContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-storage-containers" && <div className="mt-16"><CargoStorageContainersContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-containers" && <div className="mt-16"><CargoContainersContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-storage-containers-pink" && <div className="mt-16"><CargoStorageContainersPinkContent offer={contentOffer} /></div>}
