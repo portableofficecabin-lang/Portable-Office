@@ -100,7 +100,7 @@ const linkClusters = [
     pillarHref: "/rental-service",
     description: "From rental services and custom fabrication to UPVC windows — explore our complete service offering.",
     links: [
-      { label: "Portable Cabin Rental Service", href: "/rental-service" },
+      { label: "Porta Cabins on Rent", href: "/rental-service" },
       { label: "Our Projects & Case Studies", href: "/gallery" },
       { label: "About Portable Office Cabin", href: "/about-us" },
       { label: "Contact Us", href: "/contact" },

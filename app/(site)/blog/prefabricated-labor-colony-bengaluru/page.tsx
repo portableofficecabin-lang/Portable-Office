@@ -4,11 +4,11 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 export const revalidate = 86400; // 24 hours
 
 export const metadata = buildPageMetadata({
-  absoluteTitle: "Prefab Labour Colony in Bengaluru | Portable Office Cabin",
+  absoluteTitle: "Prefab Labour Colony in Bengaluru: A Planning Guide",
   description:
-    "Turnkey prefabricated labour colonies in Bengaluru — modular worker accommodation for construction & industrial projects. Fast, relocatable & compliance-ready.",
+    "A planning guide to prefabricated labour colonies in Bengaluru — layout, capacity, materials, compliance and the setup process for construction and industrial projects.",
   keywords:
-    "prefabricated labor colony Bengaluru, prefab labour camp Bangalore, modular worker accommodation Karnataka, labour colony construction site, prefab dormitory Bengaluru, worker housing Bangalore",
+    "prefab labour colony planning guide, labour colony layout Bengaluru, worker accommodation capacity, prefab dormitory design, labour colony compliance, modular worker accommodation Karnataka",
   path: "/blog/prefabricated-labor-colony-bengaluru",
   ogType: "article",
 });
