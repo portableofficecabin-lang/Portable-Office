@@ -813,6 +813,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Sir M. Vishweshwaraiah Layout (SMV Layout), west Bengaluru (independent house construction and
     // residential plot storage; owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Vishweshwaraiah Layout", href: "/cities-we-serve/shipping-container-vishweshwaraiah-layout" },
+    // Babusapalya / Babusa Palya (furniture and kitchen hardware dealers' stock; mobile and computer
+    // accessories distributors' stock; owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Babusapalya", href: "/cities-we-serve/shipping-container-babusa-palya" },
   ],
 };
 
