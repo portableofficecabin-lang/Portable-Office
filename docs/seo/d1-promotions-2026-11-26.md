@@ -17,6 +17,40 @@
 
 Result if approved in full: **23 promotion pages stay indexed** (10 hubs + 13 to rewrite), 10 merge into a stronger page and 66 leave the index. Every page keeps answering 200 until a 301 is separately approved.
 
+## Priority: clear replacement first
+
+You asked for promotion URLs with a clear replacement to come first.
+
+**Search Console and click logs were not available**, so this order uses only the evidence in this document:
+- I have no access to your Search Console property.
+- The site's own `page_views` and `click_events` tables can only be read by an admin; the read-only query under "Data that is missing" exports them.
+
+When either export arrives, any URL with real clicks, impressions or Call/WhatsApp clicks moves down the list or to Improve.
+
+**Priority 1: 8 URLs with a strong same-intent replacement** (a city page, the hand-written Bangalore page, or a Keep hub). Ordered by the internal links to move first, fewest first:
+
+| # | Promotion URL | Replacement | Links to move first |
+|---|---|---|---|
+| 1 | `/promotions/container-office-in-chennai` | `/cities-we-serve/container-office-in-chennai` (city page) | 0 |
+| 2 | `/promotions/cargo-storage-container-in-karnataka` | `/promotions/shipping-container-in-karnataka` (Keep hub) | 0 |
+| 3 | `/promotions/porta-cabin-in-bangalore` | `/promotions/portable-cabin-in-bangalore` (Keep hub) | 1 |
+| 4 | `/promotions/cargo-storage-container-in-tamil-nadu` | `/promotions/shipping-container-in-tamil-nadu` (Keep hub) | 1 |
+| 5 | `/promotions/cargo-storage-container-in-bangalore` | `/promotions/shipping-container-in-bangalore` (hand-written page) | 2 |
+| 6 | `/promotions/site-office-container-in-chennai` | `/cities-we-serve/container-office-in-chennai` (city page) | 3 |
+| 7 | `/promotions/porta-cabin-in-karnataka` | `/promotions/portable-cabin-in-karnataka` (Keep hub) | 10 |
+| 8 | `/promotions/porta-cabin-in-tamil-nadu` | `/promotions/portable-cabin-in-tamil-nadu` (Keep hub) | 17 |
+
+**Priority 2: 2 URLs whose replacement is itself an Improve page.** Consolidate these only after that page is rewritten:
+
+| # | Promotion URL | Replacement | Links to move first |
+|---|---|---|---|
+| 1 | `/promotions/cargo-storage-container-in-chennai` | `/promotions/shipping-container-in-chennai` (Improve page) | 0 |
+| 2 | `/promotions/porta-cabin-in-chennai` | `/promotions/portable-cabin-in-chennai` (Improve page) | 0 |
+
+**Priority 3: 28 noindex URLs whose category page is a clear replacement.** These are every Bunker Bed page and every West Bengal / Maharashtra page: no local presence and no city-page links, so nothing local is lost.
+
+**Priority 4: 38 noindex URLs to decide with Search Console data.** These are the zone 3 states and the Chennai pages with no local page. Three of them (`labour-colony-in-chennai`, `portable-toilet-cabin-in-chennai`, `security-cabin-in-chennai`) are linked from category pages, and those links would move first.
+
 ## Why the 99 pages are a risk
 
 - **Text shared with a sibling page:** 84.4–92.3% of each page's 5-word sequences also appear on its closest sibling. This was recomputed from the page text on `3827f98`, after #343. Each page is 516–564 words of body text.
