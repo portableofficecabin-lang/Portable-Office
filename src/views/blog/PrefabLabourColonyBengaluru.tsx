@@ -16,7 +16,7 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 const articleStructuredData = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "Prefabricated Labor Colony in Bengaluru",
+  headline: "Prefabricated Labour Colony in Bengaluru: A Planning Guide",
   description: "Complete guide to prefabricated labour colonies in Bengaluru – turnkey modular worker accommodation for construction sites, industrial projects, and infrastructure development across Karnataka.",
   image: "https://portableofficecabin.com/blog/prefab-colony-hero.png",
   author: {
@@ -41,7 +41,7 @@ const articleStructuredData = {
     }
   },
   datePublished: "2026-02-27",
-  dateModified: "2026-02-27",
+  dateModified: "2026-11-26",
   mainEntityOfPage: "https://portableofficecabin.com/blog/prefabricated-labor-colony-bengaluru"
 };
 
@@ -80,10 +80,14 @@ export default function PrefabLabourColonyBengaluru() {
               <span>25 min read</span>
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-              Prefabricated Labor Colony in Bengaluru
+              Prefabricated Labour Colony in Bengaluru: A Planning Guide
             </h1>
             <p className="text-lg text-foreground/80 leading-relaxed">
               Bengaluru's construction and infrastructure landscape is transforming at an unprecedented pace. With Metro Phase 2 and 3 extensions underway, Outer Ring Road widening projects, airport expansion at Devanahalli, and massive IT parks rising across the city, the demand for organised worker accommodation has never been higher. A prefabricated labor colony offers the answer—factory-built modular housing that can be deployed rapidly on site, providing safe, hygienic shelter for the workforce that builds this city (also referred to as Bangalore in many industry references).
+            </p>
+            <p className="text-base text-foreground/80">
+              Looking for models and prices? See{" "}
+              <Link href="/promotions/labour-colony-in-bangalore" className="font-semibold text-accent hover:underline">labour colony in Bangalore: models and prices</Link>.
             </p>
             <div className="rounded-2xl overflow-hidden border border-border/50">
               <img src={resolveImageUrl(prefabColonyHero)} alt="Prefabricated Labor Colony in Bengaluru – Modular Worker Accommodation" className="w-full h-auto object-cover" />
