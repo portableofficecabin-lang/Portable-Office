@@ -75,17 +75,52 @@ Lighthouse's higher numbers are its simulated estimate, which charges every requ
 
 ## 3. Step 0: look (read-only), then send the output to the laptop session
 
+**One paste, as root on the VPS.**
+- Nothing here changes nginx, packages, the app or the other site. `nginx -t` only tests the config.
+- The only file written is the report itself, `/root/poc-nginx-step0.txt`.
+- The output holds no secrets: certificate *paths* appear, never key contents.
+- The certificate was already checked from outside (section 1), so `certbot` is not needed here.
+
+```bash
+{
+echo "== 1. nginx version";            nginx -v 2>&1
+echo "== 2. http_v2 / brotli modules"; nginx -V 2>&1 | tr ' ' '\n' | grep -i -E 'brotli|http_v2' || echo "(none listed)"
+echo "== 3. config folders";           ls -la /etc/nginx/sites-enabled/ /etc/nginx/conf.d/ /etc/nginx/snippets/ /etc/nginx/modules-enabled/ 2>&1
+echo "== 4. our site file";            cat /etc/nginx/sites-available/portableofficecabin.com
+echo "== 5. Built on Trust listen/server_name"; grep -n -E 'listen|server_name' /etc/nginx/sites-available/builtontrustconstruction.com 2>&1
+echo "== 6. OS";                       . /etc/os-release; echo "$PRETTY_NAME"
+echo "== 7. Brotli packages";          apt-cache policy libnginx-mod-http-brotli-filter libnginx-mod-http-brotli-static 2>&1 | grep -E '^[a-z]|Candidate'
+echo "== 8. deploy script nginx lines"; grep -n -i 'nginx\|sites-' /usr/local/bin/deploy-portable-office || echo "no nginx lines"
+echo "== 9. nginx -t";                 nginx -t 2>&1
+} > /root/poc-nginx-step0.txt 2>&1; cat /root/poc-nginx-step0.txt
+```
+
+**Send the laptop session the whole printed output.** What each part decides:
+
+| Part | Decides |
+|---|---|
+| 1 nginx version | `http2 on;` (1.25.1 or newer) or `listen 443 ssl http2;` (older, which also affects Built on Trust) |
+| 2 modules | Whether HTTP/2 is compiled in (it is in every Ubuntu/Debian build) and whether Brotli is already loaded |
+| 3 folders | That `conf.d/` is empty and no snippet named `poc-*` exists yet; which modules load |
+| 4 site file | The exact current server blocks, `listen` lines, certificate lines, `proxy_pass` and any ACME location. The final file is written from this |
+| 5 Built on Trust | Whether it shares `IP:443` with our site (the HTTP/2 side effect on older nginx) |
+| 6–7 OS and packages | Whether Brotli can be installed from the archive, or is skipped |
+| 8 deploy script | **STOP** if it writes the site file |
+| 9 nginx -t | **STOP** if the current config already fails |
+
+The individual commands, for reference:
+
 ```bash
 nginx -v 2>&1
 nginx -V 2>&1 | tr ' ' '\n' | grep -i -E 'brotli|http_v2'
 ls -la /etc/nginx/sites-enabled/ /etc/nginx/conf.d/ /etc/nginx/snippets/ /etc/nginx/modules-enabled/
 cat /etc/nginx/sites-available/portableofficecabin.com
 grep -n -E 'listen|server_name' /etc/nginx/sites-available/builtontrustconstruction.com
-certbot certificates 2>/dev/null | sed -n '/portableofficecabin/,/Expiry/p'
 . /etc/os-release; echo "$PRETTY_NAME"
 apt-cache policy libnginx-mod-http-brotli-filter libnginx-mod-http-brotli-static | grep -E '^[a-z]|Candidate'
 # Does the legacy deploy script ever rewrite the nginx site file? (It must not, or the change is lost on the next deploy.)
 grep -n -i 'nginx\|sites-' /usr/local/bin/deploy-portable-office || echo "no nginx lines"
+nginx -t
 ```
 
 The laptop session then sends back the exact final site file, made from your current file and the template in step 4.
