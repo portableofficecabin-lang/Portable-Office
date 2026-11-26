@@ -174,7 +174,7 @@ export function OfficePortableCabinContent() {
             Office Portable Cabin – Fast, Flexible Workspaces by Portable Office Cabin
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            An office portable cabin is a prefabricated, self-contained workspace that arrives ready for immediate occupancy. In 2025, Indian businesses, contractors, and institutions are increasingly choosing these modular structures because they work faster, cost less, and move when the project moves.
+            An office portable cabin is a prefabricated, self-contained workspace that arrives ready for immediate occupancy. Indian businesses, contractors, and institutions are increasingly choosing these modular structures because they work faster, cost less, and move when the project moves.
           </p>
           <p className="text-muted-foreground">
             Portable Office Cabin delivers office cabins across Maharashtra, Gujarat, Karnataka, Tamil Nadu, and Delhi NCR for site offices, factory admin blocks, school offices, training rooms, and project command centres.

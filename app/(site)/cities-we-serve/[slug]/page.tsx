@@ -31,6 +31,7 @@ import {
   type CityPageTable,
 } from "@/data/cityPages";
 import { CATEGORY_LANDING_SLUGS, categoryModels } from "@/data/categoryLandings";
+import { cityMainProductLink } from "@/data/cityMainProductLinks";
 import { categories, products } from "@/data/products";
 import { CategoryEnquiryForm } from "@/components/products/CategoryEnquiryForm";
 import { ContainerOfficeNearbyBlock } from "@/components/locations/ContainerOfficeLocations";
@@ -135,6 +136,9 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
   const { slug } = await params;
   const page = cityPageBySlug(slug);
   if (!page) notFound();
+
+  /* Link up to the family's main product page, when the page does not already have one. */
+  const mainProductLink = cityMainProductLink(page);
 
   /* Opt-in motion pass (see the file header). `mc()` returns the extra class(es) with a leading
      space, or "" when the page is static, so a static page's class strings are unchanged.
@@ -743,6 +747,11 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {/* Optional extra sections (`extraSections`) without a `placement`: rendered here, after the
             "how" steps, as on every earlier page; unset = nothing rendered. */}
         {page.extraSections?.filter((sec) => !sec.placement).map(renderSection)}
+
+        {/* One contextual link up to the page's main product page (src/data/cityMainProductLinks.ts),
+            only for a mapped family whose main product the page does not already link; every other
+            page renders nothing here and is byte-identical to before. */}
+        {mainProductLink && renderInlineLink(mainProductLink)}
 
         <h2 className={`${h2}${mc("reveal")}`}>Frequently Asked Questions (FAQs)</h2>
         {page.faqs.map((f, i) => (

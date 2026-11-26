@@ -244,7 +244,7 @@ export function MSPortableCabinContent() {
         </div>
         <div className="space-y-4">
           <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-            MS Portable Cabins: Complete Guide to Mild Steel Portable Cabins in India (2024–2025)
+            MS Portable Cabins: Complete Guide to Mild Steel Portable Cabins in India
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
             The Indian construction and infrastructure sector adopted MS portable cabins because they solve a real problem fast: creating durable offices, accommodation, security points, classrooms, and sanitation blocks without waiting months for conventional construction.
