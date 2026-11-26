@@ -43,7 +43,7 @@ export function CabinPortableContent() {
         </p>
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           {[
-            { icon: IndianRupee, title: "Lower Site Costs", desc: "No reinforced cement concrete (RCC) foundation or long civil works for temporary or semi-permanent needs — the cabin sits on a simple level base" },
+            { icon: IndianRupee, title: "Lower Site Costs", desc: "Usually no reinforced cement concrete (RCC) foundation or long civil works — a level base of concrete blocks or RCC pads, confirmed at the site assessment" },
             { icon: Clock, title: "Optional Installation", desc: "On-site installation & positioning can be added at checkout" },
             { icon: Shield, title: "10-20+ Year Lifespan", desc: "Lifespan extending 10-20+ years with basic maintenance like periodic repainting and sealant checks" },
             { icon: Zap, title: "Dynamic Environments", desc: "Ideal for dynamic project environments where traditional construction is too slow or costly" },

@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 
 const switchReasons = [
-  "No RCC foundation or long civil works — the cabin sits on a simple level base",
+  "Single-storey cabins usually need no RCC foundation — a level hard surface or simple piers at support points, confirmed for your cabin size and site",
   "Optional on-site installation, added at checkout",
   "Fully relocatable across project phases and new sites",
   "Compliant electrical planning with insulation and AC-ready provisions",
