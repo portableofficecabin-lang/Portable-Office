@@ -40,6 +40,8 @@ const revision = readOr("REVISION", "");
 // fault.txt (committed in the fake app, one fault per line): wrong-commit makes the running app
 // report a commit other than the one it was built from (integration.sh scenario S4b);
 // soft-404:<slug> serves that city page as the not-found page WITH status 200 (S4c);
+// notfound-head:<slug> serves that city page's body with the not-found page's HEAD and status 200 —
+// the cached-404 "hybrid" production served on 2026-11-25 (S4d);
 // start-fail makes the process exit at start-up, so it never answers (S3b).
 const faults = readOr("fault.txt", "").split("\n").map((s) => s.trim());
 if (faults.includes("start-fail")) {
@@ -47,6 +49,7 @@ if (faults.includes("start-fail")) {
   process.exit(1);
 }
 const soft404 = faults.filter((f) => f.startsWith("soft-404:")).map((f) => f.slice("soft-404:".length));
+const notFoundHeadSlugs = faults.filter((f) => f.startsWith("notfound-head:")).map((f) => f.slice("notfound-head:".length));
 const buildInfo = JSON.stringify({
   commit: faults.includes("wrong-commit") ? "0".repeat(40) : /^[0-9a-f]{40}$/.test(revision) ? revision : "unknown",
   buildId,
@@ -54,14 +57,21 @@ const buildInfo = JSON.stringify({
   startedAt: new Date(Date.now() - process.uptime() * 1000).toISOString(),
 });
 
-const page = (title) =>
-  `<!DOCTYPE html><html><head><title>${title}</title>` +
+// A page's own head, as Next prints it: title, description, robots, one self-canonical.
+const ownHead = (title, p) =>
+  `<title>${title} | Portable Office Cabin</title><meta name="description" content="About ${title}"/>` +
+  `<meta name="robots" content="index, follow"/><link rel="canonical" href="https://${siteHost}${p === "/" ? "" : p}"/>`;
+// The not-found page's head (production, 2026-11-25): the layout's default title, noindex, no canonical.
+const NOT_FOUND_HEAD = `<meta name="robots" content="noindex"/><title>Portable Office Cabin | India&#x27;s Leading Manufacturer</title>`;
+
+const page = (title, p, head = ownHead(title, p)) =>
+  `<!DOCTYPE html><html><head>${head}` +
   `<script src="/_next/static/chunks/page-${buildId}.js"></script></head><body><h1>${title}</h1>` +
   `<script>self.__next_f.push([1,"0:{\\"P\\":null,\\"b\\":\\"${buildId}\\",\\"p\\":\\"\\"}\\n"])</script></body></html>`;
 
 // The site's not-found page (src/views/NotFound.tsx renders "Oops! Page not found").
 const notFound = () =>
-  `<!DOCTYPE html><html><head><title>Portable Office Cabin</title></head><body><p>404</p><p>Oops! Page not found</p>` +
+  `<!DOCTYPE html><html><head>${NOT_FOUND_HEAD}</head><body><p>404</p><p>Oops! Page not found</p>` +
   `<script>self.__next_f.push([1,"0:{\\"P\\":null,\\"b\\":\\"${buildId}\\",\\"p\\":\\"\\"}\\n"])</script></body></html>`;
 
 const server = http.createServer((req, res) => {
@@ -71,7 +81,7 @@ const server = http.createServer((req, res) => {
     res.writeHead(code, { "content-type": type, "x-fake-build": buildId });
     res.end(body);
   };
-  if (p === "/" || p === "/cities-we-serve" || p === "/products") return send(200, page(p));
+  if (p === "/" || p === "/cities-we-serve" || p === "/products") return send(200, page(p, p));
   if (p === "/products/shipping-container") {
     // A next.config.ts redirect: one hop, relative Location, as the real server sends it.
     res.writeHead(301, { location: "/products", "x-fake-build": buildId });
@@ -85,7 +95,8 @@ const server = http.createServer((req, res) => {
   }
   const city = p.match(/^\/cities-we-serve\/([a-z0-9-]+)$/);
   if (city && soft404.includes(city[1])) return send(200, notFound());
-  if (city) return slugs.includes(city[1]) ? send(200, page(city[1])) : send(404, notFound());
+  if (city && notFoundHeadSlugs.includes(city[1])) return send(200, page(city[1], p, NOT_FOUND_HEAD));
+  if (city) return slugs.includes(city[1]) ? send(200, page(city[1], p)) : send(404, notFound());
   if (p.startsWith("/_next/static/")) {
     const file = path.join(dir, ".next/static", p.slice("/_next/static/".length));
     if (file.startsWith(path.join(dir, ".next/static")) && fs.existsSync(file) && fs.statSync(file).isFile()) {
