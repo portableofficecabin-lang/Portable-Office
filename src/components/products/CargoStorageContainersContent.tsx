@@ -281,7 +281,7 @@ export function CargoStorageContainersContent() {
             </div>
             <div className="border-l-4 border-accent pl-4">
               <h4 className="font-bold text-foreground">Prefab Labour Colonies</h4>
-              <p className="text-sm text-muted-foreground">Integrated worker accommodation with dormitories (100+ beds, 2–3 high stacking), dining halls, canteens, and sanitary blocks. Deployed at power plants and industrial parks.</p>
+              <p className="text-sm text-muted-foreground">Integrated worker accommodation for power plants and industrial parks: dormitories on more than one level, dining halls, canteens and sanitary blocks.</p>
             </div>
             <div className="border-l-4 border-accent pl-4">
               <h4 className="font-bold text-foreground">Container Homes & Cafés</h4>

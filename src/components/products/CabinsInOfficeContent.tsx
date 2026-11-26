@@ -388,9 +388,9 @@ export function CabinsInOfficeContent() {
             </ul>
           </div>
           <div className="bg-background rounded-lg p-4 border">
-            <h4 className="font-semibold text-foreground text-sm mb-2">Real-world example:</h4>
+            <h4 className="font-semibold text-foreground text-sm mb-2">A practical check:</h4>
             <p className="text-xs text-muted-foreground">
-              A fintech startup downsized from 10 large cabins to 6 smaller ones plus 8 phone pods after tracking actual usage — improving utilization and freeing up portable workspaces for project teams.
+              Track how your cabins and meeting rooms are actually used for a few weeks before ordering more — a mix of fewer large cabins and a few small phone booths can meet the same need with less floor space.
             </p>
           </div>
         </div>

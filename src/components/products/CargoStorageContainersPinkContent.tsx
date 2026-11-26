@@ -57,7 +57,7 @@ const pricingRows = [
 const faqs = [
   {
     q: "What makes pink cargo containers different from standard containers?",
-    a: "Pink cargo containers share the same structural specifications as standard units—Corten steel or MS frame, 500 kg/sqm floor load, weatherproof construction. The difference is a specialised paint system using epoxy primer (80 microns) with polyurethane topcoat (60 microns) in RAL 3015 light pink, Pantone hot pink, or custom brand-matched shades, resisting 5000 hours of salt spray.",
+    a: "Pink cargo containers share the same structural specifications as standard units—Corten steel or MS frame, 500 kg/sqm floor load, weatherproof construction. The difference is a specialised paint system using epoxy primer (80 microns) with polyurethane topcoat (60 microns) in RAL 3015 light pink, Pantone hot pink, or custom brand-matched shades.",
   },
   {
     q: "Can I customise the shade of pink?",
@@ -292,7 +292,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               </table>
             </div>
             <p className="text-muted-foreground text-sm mt-4">
-              <strong>Paint system:</strong> Epoxy primer (80 microns) with polyurethane topcoat (60 microns) in gloss or matte finishes, resisting 5000 hours of salt spray.
+              <strong>Paint system:</strong> Epoxy primer (80 microns) with polyurethane topcoat (60 microns) in gloss or matte finishes.
             </p>
           </div>
           <div className="space-y-3">

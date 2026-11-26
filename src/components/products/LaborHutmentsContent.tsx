@@ -87,7 +87,7 @@ export function LaborHutmentsContent() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { icon: Thermometer, title: "Insulation", desc: "Wall panel and roof systems use 30–60mm PUF/EPS cores, reducing indoor temperatures by 10–15°C in peak summers and cutting HVAC requirements" },
-            { icon: Shield, title: "Structural Strength", desc: "Galvanized steel frames provide wind resistance up to 150 km/h and suitability for seismic zones III–IV when properly anchored" },
+            { icon: Shield, title: "Structural Strength", desc: "Galvanized steel frames, with anchoring specified for the site's wind and seismic conditions" },
             { icon: Zap, title: "Safety Compliance", desc: "Electrical layouts include MCBs, earthing, and optional fire-retardant linings meeting safety regulations and local codes" },
             { icon: Settings, title: "Sanitation", desc: "Pre-planned integration of toilets, bathing areas, water tanks, septic systems, and plumbing lines with proper sanitary fittings" },
             { icon: Users, title: "Comfort", desc: "Cross-ventilation, exhaust fans, LED lighting, ceiling fans, provision for split ACs, mosquito mesh, and weather resistant reflective roofing" },

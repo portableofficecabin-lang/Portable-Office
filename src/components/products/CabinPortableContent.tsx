@@ -352,7 +352,7 @@ export function CabinPortableContent() {
           {[
             { icon: Hammer, title: "Mild Steel (MS) Cabins", items: ["Welded frame construction with MS sheet cladding", "Anti-rust primers and industrial paint finish", "Ideal for rugged site conditions", "Customized to any size", "Requires repainting every few years in harsh environments"] },
             { icon: Shield, title: "GI (Galvanized Iron) Cabins", items: ["Better corrosion resistance than MS", "Commonly used for labour cabins, security cabins, and toilets", "Excellent for coastal or high-rainfall regions like Maharashtra and Tamil Nadu"] },
-            { icon: Layers, title: "Shipping Container Conversions", items: ["ISO 20 ft and 40 ft containers built from CORTEN steel", "Inherent weatherproofing and structural integrity", "Wind-resistant up to 150 km/h", "Modified with doors, windows, insulation, and interior finishes", "Heavier but longer-lasting"] },
+            { icon: Layers, title: "Shipping Container Conversions", items: ["ISO 20 ft and 40 ft containers built from CORTEN steel", "Inherent weatherproofing and structural integrity", "Modified with doors, windows, insulation, and interior finishes", "Heavier but longer-lasting"] },
             { icon: Thermometer, title: "Sandwich Panel Systems (PUF/EPS/Rockwool)", items: ["Superior thermal insulation (R-values up to 30)", "Lighter weight (40-50 kg/m² density)", "Faster erection time", "Suitable for PEB buildings and modular office blocks"] },
           ].map((material, idx) => (
             <div key={idx} className="flex gap-4 bg-card border border-border/40 rounded-xl p-5">
