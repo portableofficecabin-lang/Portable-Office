@@ -83,6 +83,48 @@ does `git fetch` → `git reset --hard` → `npm ci` → `next build` **inside t
    `/products/portable-cabin/*` guides and the prefab marketing office) answered cached 404s
    (`x-nextjs-cache: HIT`). Attempt 2 of the same run printed `Already up to date` (defect 2), so
    only a new commit on `main` triggers the full build and reload that repairs it.
+4. **Next 15.5.28: the cached 404 lands in `route-cache/`, and then turns into a 200 with a noindex
+   head (2026-11-25, #323 Channasandra, Deploy run 45623102729).** The build finished at 13:24:21Z and
+   the new process started at 13:25:50Z. The workflow's verify step then saw
+   `/cities-we-serve/shipping-container-channasandra` answer 404 three times (city 171 of 172). At
+   ~14:39Z the page answered **200 with the right body but the not-found page's head**: the root
+   layout's default title, `<meta name="robots" content="noindex">`, no canonical, no Open Graph or
+   Twitter tags (identical for browsers and Googlebot). `verify-release.mjs` passed it, because it
+   only looked at the status, the build id and the not-found *body*. Reproduced locally with the real
+   commits (old 4bf977d serving, new e338811 built in place, revalidate shortened to 30 s):
+   - Next 15.5 serves ISR pages from the build's output ("seed" files in `.next/server/app/`) and keeps
+     runtime regenerations in `.next/server/route-cache/APP_PAGE/<route hash>/$/<path>.{html,meta,rsc}`,
+     which it reads first.
+   - Before the new build, the old process answers 404 for the unknown slug and writes nothing
+     (`dynamicParams = false` works there).
+   - After the new build is on disk, the old process serves the NEW seed as `STALE` and regenerates it
+     in the background with its OLD code. `dynamicParams` is not consulted for a background
+     revalidation, so the old code's `notFound()` is stored as `status: 404` in `route-cache/`
+     12 s after the build, before any restart.
+   - After the reload, the new process serves that cached 404 (`STALE`). Its **first** regeneration
+     returns 200 with the real body but the not-found head (noindex). Only the second regeneration is
+     correct. With the production revalidate of 3600 s that is about one hour of 404, then one hour of
+     noindex.
+
+   **Fixed in two layers, and both work with the legacy script that is still installed:**
+   - `isr-cache-handler.cjs` (`next.config.ts` → `cacheHandler`) is Next's own `FileSystemCache` with
+     one guard. A server process skips every ISR write (`set`, and the copy of a seed into
+     `route-cache/`) when `.next/BUILD_ID` is missing or was written after the process started. Both
+     only happen while a newer `next build` owns the directory: `next build` deletes `.next/` (except
+     `.next/cache`) when it starts and writes the new `BUILD_ID` before it prerenders. Writes during
+     `next build` itself (`NEXT_PHASE=phase-production-build`) are never skipped, the process started
+     after the build writes normally, and real 404s and noindex pages are cached as before. Locally,
+     with the guard, the in-window requests got the new page's correct 200 from the old process,
+     nothing was written to `route-cache/`, and the new process served the correct head from its
+     first request on. Note that the deploy that first ships the guard still runs an unguarded *old*
+     process during its own window, so the guard protects from the **next** deploy onwards.
+   - `verify-release.mjs` checks every indexable page's head ("seo"): no noindex (meta or
+     `X-Robots-Tag`), its own title (not the layout's default), a description and one self-canonical.
+     It also fetches every new route as Googlebot and compares the head. The exact production hybrid
+     now fails the deploy instead of passing it.
+
+   Release-based deploys (below) remove the shared directory altogether. The guard is a no-op there,
+   because a release is never rebuilt while it serves.
 
 ## The fix: release-based, blue/green deploys (`deploy/deploy-portable-office.sh`)
 
@@ -130,7 +172,7 @@ as merged, it would have failed every deploy:
 
 ## Tests (`.github/workflows/deploy-script-tests.yml`, runs on every PR touching the pipeline)
 
-- `node --test scripts/deploy/verify-release.test.mjs`: 39 tests for the route gate. They cover:
+- `node --test scripts/deploy/verify-release.test.mjs`: 51 tests for the route gate. They cover:
   - slug and sitemap parsing against the real `cityPages.ts`;
   - the App Router build-ID marker;
   - `/api/build-info` checks: wrong commit, missing endpoint, a 500 error, an HTML page or broken
@@ -144,7 +186,11 @@ as merged, it would have failed every deploy:
     broken image optimiser and an HTML page served as a chunk; redirects that chain, change status,
     leave the site or land on a not-found page; the live build's chunk missing from the new
     release (continuity);
-  - that `src/views/NotFound.tsx` still renders the not-found marker, that every critical city
+  - the SEO head of every indexable page: the exact not-found head served with status 200 (the
+    2026-11-25 hybrid), noindex in the meta tag or `X-Robots-Tag`, the layout's default title, a missing
+    description, a missing, foreign or duplicated canonical, and a new route that shows Googlebot a
+    different head; real 404s are not head-checked, and `--no-seo` turns the check off;
+  - that `src/views/NotFound.tsx` still renders the not-found marker, that `DEFAULT_TITLE` is still `app/layout.tsx`'s default title, that every critical city
     page exists in `cityPages.ts`, and that every declared redirect exists in `next.config.ts`.
 - `shellcheck` + `bash -n` for both shell scripts.
 - `deploy/test/integration.sh` runs on a GitHub runner, never the VPS. It uses real nginx with TLS,

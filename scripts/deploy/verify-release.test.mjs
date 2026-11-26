@@ -24,6 +24,12 @@ import {
   loadCriticalPaths,
   loadCritical,
   CRITICAL_ROUTES_FILE,
+  seoHead,
+  seoHeadProblems,
+  DEFAULT_TITLE,
+  SITE_HOST,
+  GOOGLEBOT_UA,
+  seoHeadDiff,
 } from "./verify-release.mjs";
 
 /** HTML as Next 15 (App Router) serves an ISR-regenerated page: the build id ONLY in the escaped
@@ -31,6 +37,12 @@ import {
 const appRouterHtml = (id) =>
   `<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/></head><body><main>page</main>` +
   `<script>self.__next_f.push([1,"0:{\\"P\\":null,\\"b\\":\\"${id}\\",\\"p\\":\\"\\",\\"c\\":[\\"\\",\\"\\"]}\\n"])</script></body></html>`;
+/** The head of the site's not-found page as Next 15 renders it (production, 2026-11-25): the root
+ *  layout's default title, noindex, no canonical. */
+const NOT_FOUND_HEAD =
+  `<head><meta charSet="utf-8"/><meta name="robots" content="noindex"/>` +
+  `<title>Portable Office Cabin | India&#x27;s Leading Manufacturer</title>` +
+  `<meta name="description" content="India&#x27;s leading manufacturer of portable office cabins"/></head>`;
 const SHA = "a835e86a552f92ac59be861bf116dd3e452083a9";
 const OTHER_SHA = "64dfddaf70ee64f02e805aa2970ad10b0a84019c";
 
@@ -201,15 +213,35 @@ async function fakeRelease({
     writeFileSync(join(dir, CRITICAL_ROUTES_FILE), JSON.stringify({ routes: critical || [], ...(criticalRedirects ? { redirects: criticalRedirects } : {}) }));
   }
 
-  const notFoundHtml = (id) => appRouterHtml(id).replace("<main>page</main>", "<main><h1>404</h1><p>Oops! Page not found</p></main>");
+  const notFoundHtml = (id) =>
+    appRouterHtml(id)
+      .replace("<head><meta charSet=\"utf-8\"/></head>", NOT_FOUND_HEAD)
+      .replace("<main>page</main>", "<main><h1>404</h1><p>Oops! Page not found</p></main>");
+  // The head Next renders for a page's own metadata (the order Next prints it in), with switchable
+  // faults: the not-found head on a 200 page (the 2026-11-25 hybrid), noindex, default title, …
+  let botRequest = false; // set per request by the server below (responses are built synchronously)
+  const head = (p) => {
+    if (faults.notFoundHead === p || (botRequest && faults.botNotFoundHead === p)) return NOT_FOUND_HEAD;
+    const title = faults.defaultTitle === p ? "Portable Office Cabin | India&#x27;s Leading Manufacturer" : `Page ${p} | Portable Office Cabin`;
+    return (
+      `<head><meta charSet="utf-8"/><title>${title}</title>` +
+      (faults.noDescription === p ? "" : `<meta name="description" content="About ${p}"/>`) +
+      `<meta name="robots" content="${faults.noindex === p ? "noindex, follow" : "index, follow"}"/>` +
+      (faults.noCanonical === p ? "" : `<link rel="canonical" href="https://${HOST}${faults.wrongCanonical === p ? "/" : p === "/" ? "" : p}"/>`) +
+      (faults.twoCanonicals === p ? `<link rel="canonical" href="https://${HOST}/other"/>` : "") +
+      `<meta property="og:url" content="https://${HOST}${p}"/></head>`
+    );
+  };
   // A rendered page: its build's chunk, one optimised image, an <h1> (unless the fault removes it).
   const html = (id, p = "") =>
-    appRouterHtml(id).replace(
-      "<main>page</main>",
-      `<script src="/_next/static/chunks/main-${id}.js" async=""></script>` +
-        `<main>${faults.noH1 === p ? "" : "<h1>Page</h1>"}<button>Add to Cart</button>` +
-        `<img src="/_next/image?url=%2Fimages%2Fa.webp&amp;w=640&amp;q=75"/></main>`,
-    );
+    appRouterHtml(id)
+      .replace("<head><meta charSet=\"utf-8\"/></head>", p ? head(p) : "<head><meta charSet=\"utf-8\"/></head>")
+      .replace(
+        "<main>page</main>",
+        `<script src="/_next/static/chunks/main-${id}.js" async=""></script>` +
+          `<main>${faults.noH1 === p ? "" : "<h1>Page</h1>"}<button>Add to Cart</button>` +
+          `<img src="/_next/image?url=%2Fimages%2Fa.webp&amp;w=640&amp;q=75"/></main>`,
+      );
   const chunks = new Set([buildId, ...carried].map((id) => `/_next/static/chunks/main-${id}.js`));
   const sitemapPaths = ["/", "/cities-we-serve", ...slugs.map((s) => `/cities-we-serve/${s}`), ...extraSitemap];
   const buildInfo = {
@@ -222,9 +254,10 @@ async function fakeRelease({
   const seenHosts = new Set();
   const server = http.createServer((req, res) => {
     seenHosts.add(req.headers.host);
+    botRequest = /Googlebot/.test(req.headers["user-agent"] || "");
     const p = req.url;
     const send = (code, body, type = "text/html") => {
-      res.writeHead(code, { "content-type": type });
+      res.writeHead(code, { "content-type": type, ...(faults.xRobotsNoindex === p ? { "x-robots-tag": "noindex" } : {}) });
       res.end(body);
     };
     if (p === "/sitemap.xml") {
@@ -273,7 +306,8 @@ test("a healthy release passes every check, with the Host header of the real sit
     assert.equal(r.ok, true);
     assert.equal(r.buildId, "BUILD1");
     // assets: the build's one chunk + the one next/image URL every page loads (de-duplicated).
-    assert.deepEqual(r.counts, { build: 2, health: 5, city: 2, new: 0, sitemap: 1, identity: 0, critical: 0, redirects: 0, assets: 2, continuity: 0 });
+    // seo: the 3 HTML health pages (/, /cities-we-serve, /products), the 2 city pages and /products/p1.
+    assert.deepEqual(r.counts, { build: 2, health: 5, city: 2, new: 0, sitemap: 1, identity: 0, critical: 0, redirects: 0, assets: 2, continuity: 0, seo: 6 });
     assert.deepEqual([...f.seenHosts], [HOST]);
   } finally {
     await f.close();
@@ -614,4 +648,144 @@ test("an unreachable release FAILS instead of throwing", async () => {
   const r = await verifyRelease({ base, host: HOST, sourceDir: REPO_ROOT, buildId: "X", quick: true, timeoutMs: 2000 });
   assert.equal(r.ok, false);
   assert.ok(r.failures.length > 0);
+});
+
+// ── seo: every indexable page carries its own head (2026-11-25, #323 Channasandra) ─────────
+const goodHead = (p) =>
+  `<!DOCTYPE html><html><head><meta charSet="utf-8"/><title>Page | Portable Office Cabin</title>` +
+  `<meta name="description" content="About the page"/><meta name="robots" content="index, follow"/>` +
+  `<link rel="canonical" href="https://${HOST}${p}"/></head><body><main><h1>Page</h1></main></body></html>`;
+
+test("DEFAULT_TITLE is the root layout's default title (app/layout.tsx)", () => {
+  const layout = readFileSync(join(REPO_ROOT, "app/layout.tsx"), "utf8");
+  const m = layout.match(/default:\s*"([^"]+)"/);
+  assert.ok(m, "app/layout.tsx has no title.default");
+  assert.equal(m[1], DEFAULT_TITLE, "app/layout.tsx changed its default title — update DEFAULT_TITLE");
+  assert.equal(SITE_HOST, HOST);
+});
+
+test("seoHead reads title, robots, description, canonicals and og:url, decoding entities", () => {
+  const h = seoHead(goodHead("/a").replace("Page |", "Tom&#x27;s &amp; Co |"));
+  assert.equal(h.title, "Tom's & Co | Portable Office Cabin");
+  assert.equal(h.robots, "index, follow");
+  assert.equal(h.description, "About the page");
+  assert.deepEqual(h.canonicals, [`https://${HOST}/a`]);
+});
+
+test("seoHeadProblems passes a page's own head (apex, www, trailing slash, query ignored)", () => {
+  assert.deepEqual(seoHeadProblems({ body: goodHead("/cities-we-serve/x") }, "/cities-we-serve/x"), []);
+  assert.deepEqual(seoHeadProblems({ body: goodHead("/cities-we-serve/x/") }, "/cities-we-serve/x"), []);
+  assert.deepEqual(seoHeadProblems({ body: goodHead("/cities-we-serve/x").replace(`//${HOST}`, `//www.${HOST}`) }, "/cities-we-serve/x"), []);
+  assert.deepEqual(seoHeadProblems({ body: goodHead("") }, "/"), [], "the home page's canonical is the bare origin");
+  assert.deepEqual(seoHeadProblems({ body: goodHead("/a") }, "/a?x=1"), []);
+});
+
+test("seoHeadProblems names the cached not-found head on a 200 page (the 2026-11-25 hybrid) in ONE failure", () => {
+  // Production, 2026-11-25 14:40Z: /cities-we-serve/shipping-container-channasandra answered 200 with
+  // the right <h1> and body, but this head (x-nextjs-cache: HIT, build e338811fcc40_mww5nlmy).
+  const hybrid = `<!DOCTYPE html><html>${NOT_FOUND_HEAD}<body><main><h1>Shipping &amp; Storage Containers in Channasandra</h1></main></body></html>`;
+  const out = seoHeadProblems({ body: hybrid }, "/cities-we-serve/shipping-container-channasandra");
+  assert.equal(out.length, 1);
+  assert.match(out[0], /not-found page's head .*cached not-found metadata/);
+});
+
+test("seoHeadProblems reports each head defect separately", () => {
+  const p = "/cities-we-serve/x";
+  const body = goodHead(p);
+  assert.match(seoHeadProblems({ body: body.replace("index, follow", "noindex, follow") }, p).join(), /robots" content="noindex, follow"/);
+  assert.match(seoHeadProblems({ body, xRobotsTag: "noindex, nofollow" }, p).join(), /X-Robots-Tag: noindex, nofollow/);
+  assert.deepEqual(seoHeadProblems({ body, xRobotsTag: "index, follow" }, p), [], "an indexable X-Robots-Tag is fine");
+  assert.match(seoHeadProblems({ body: body.replace("Page | Portable Office Cabin", DEFAULT_TITLE.replace("'", "&#x27;")) }, p).join(), /default title/);
+  assert.match(seoHeadProblems({ body: body.replace(/<title>[^<]*<\/title>/, "") }, p).join(), /no <title>/);
+  assert.match(seoHeadProblems({ body: body.replace(/<meta name="description"[^>]*>/, "") }, p).join(), /no meta description/);
+  assert.match(seoHeadProblems({ body: body.replace(/<link rel="canonical"[^>]*>/, "") }, p).join(), /no canonical link/);
+  assert.match(seoHeadProblems({ body: body.replace(p + '"', '/"') }, p).join(), /has canonical https:\/\/portableofficecabin\.com\/, not this page/);
+  assert.match(seoHeadProblems({ body: body.replace(HOST, "example.com") }, p).join(), /not this page/, "another site");
+  assert.match(seoHeadProblems({ body: body.replace("</head>", `<link rel="canonical" href="https://${HOST}/b"/></head>`) }, p).join(), /2 canonical links/);
+});
+
+test("seoHeadProblems accepts a canonical on the --host / --base host (idle port, staging)", () => {
+  const body = goodHead("/a").replace(`https://${HOST}`, "http://127.0.0.1:3010");
+  assert.match(seoHeadProblems({ body }, "/a").join(), /not this page/);
+  assert.deepEqual(seoHeadProblems({ body }, "/a", [SITE_HOST, "127.0.0.1"]), []);
+});
+
+test("a city page that answers 200 with the not-found head FAILS (the Channasandra incident)", async () => {
+  const f = await fakeRelease({ faults: { notFoundHead: "/cities-we-serve/c2" } });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, releaseDir: f.dir });
+    assert.equal(r.ok, false);
+    assert.deepEqual(r.failures, [
+      "seo: /cities-we-serve/c2 (city) answered 200 with the not-found page's head (the layout's default title, noindex, no canonical): cached not-found metadata from an earlier 404 of this URL",
+    ]);
+    assert.equal(r.counts.city, 2, "status, build and body are fine — only the head is wrong");
+    assert.equal(r.counts.seo, 5);
+  } finally {
+    await f.close();
+  }
+});
+
+test("a new route, a sitemap URL and a critical route are head-checked too", async () => {
+  const f = await fakeRelease({
+    critical: ["/products/x"],
+    faults: { notFoundHead: "/cities-we-serve/c1", noindex: "/products/p1", wrongCanonical: "/products/x" },
+  });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, releaseDir: f.dir, newRoutes: ["/cities-we-serve/c1"] });
+    assert.equal(r.ok, false);
+    const seo = r.failures.filter((x) => x.startsWith("seo: "));
+    assert.ok(seo.some((x) => x.startsWith("seo: /cities-we-serve/c1 (new) answered 200 with the not-found page's head")), seo.join("\n"));
+    assert.ok(seo.some((x) => x.startsWith("seo: /cities-we-serve/c1 (city) answered 200 with the not-found page's head")), seo.join("\n"));
+    assert.ok(seo.includes('seo: /products/p1 (sitemap) carries <meta name="robots" content="noindex, follow">'), seo.join("\n"));
+    assert.ok(seo.includes("seo: /products/x (critical) has canonical https://portableofficecabin.com/, not this page"), seo.join("\n"));
+  } finally {
+    await f.close();
+  }
+});
+
+test("an X-Robots-Tag noindex on a health page FAILS; --no-seo skips every head check", async () => {
+  const f = await fakeRelease({ faults: { xRobotsNoindex: "/", defaultTitle: "/cities-we-serve/c1", noDescription: "/cities-we-serve/c2" } });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, releaseDir: f.dir });
+    assert.deepEqual(r.failures.sort(), [
+      "seo: / (health) is served with X-Robots-Tag: noindex",
+      `seo: /cities-we-serve/c1 (city) has the root layout's default title "${DEFAULT_TITLE}" instead of its own`,
+      "seo: /cities-we-serve/c2 (city) has no meta description",
+    ]);
+    const off = await verifyRelease({ base: f.base, host: HOST, releaseDir: f.dir, seo: false });
+    assert.deepEqual(off.failures, []);
+    assert.equal(off.counts.seo, 0);
+  } finally {
+    await f.close();
+  }
+});
+
+test("pages that legitimately 404 are not head-checked (the not-found page keeps its noindex)", async () => {
+  const f = await fakeRelease({ faults: { cached404: "c2" } });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, releaseDir: f.dir });
+    assert.deepEqual(r.failures, ["city: /cities-we-serve/c2 answered 404"]);
+    assert.ok(!r.failures.some((x) => x.startsWith("seo: ")));
+  } finally {
+    await f.close();
+  }
+});
+
+test("seoHeadDiff compares the SEO head of two fetches of a page", () => {
+  const a = goodHead("/a");
+  assert.deepEqual(seoHeadDiff(a, a), []);
+  assert.deepEqual(seoHeadDiff(a, `<html>${NOT_FOUND_HEAD}</html>`), ["title", "robots", "description", "canonicals"]);
+  assert.match(GOOGLEBOT_UA, /Googlebot/);
+});
+
+test("a new route that shows Googlebot a different head than a browser FAILS", async () => {
+  const f = await fakeRelease({ faults: { botNotFoundHead: "/cities-we-serve/c1" } });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, releaseDir: f.dir, newRoutes: ["/cities-we-serve/c1"] });
+    assert.deepEqual(r.failures, ["seo: /cities-we-serve/c1 (new) shows Googlebot a different head (title, robots, description, canonicals)"]);
+    const same = await verifyRelease({ base: f.base, host: HOST, releaseDir: f.dir, newRoutes: ["/cities-we-serve/c2"] });
+    assert.deepEqual(same.failures, []);
+  } finally {
+    await f.close();
+  }
 });
