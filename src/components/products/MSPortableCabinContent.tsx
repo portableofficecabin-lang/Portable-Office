@@ -250,7 +250,7 @@ export function MSPortableCabinContent() {
             The Indian construction and infrastructure sector adopted MS portable cabins because they solve a real problem fast: creating durable offices, accommodation, security points, classrooms, and sanitation blocks without waiting months for conventional construction.
           </p>
           <p className="leading-relaxed text-muted-foreground">
-            Portable Office Cabin, established in 2014, manufactures and supplies MS portable cabins, container offices, and prefab buildings for both B2B and B2C requirements across India. This guide explains what an MS portable cabin is, typical sizes, major applications, and how MS compares with GI, FRP, and shipping container conversions.
+            Portable Office Cabin manufactures and supplies MS portable cabins, container offices, and prefab buildings for both B2B and B2C requirements across India. This guide explains what an MS portable cabin is, typical sizes, major applications, and how MS compares with GI, FRP, and shipping container conversions.
           </p>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">

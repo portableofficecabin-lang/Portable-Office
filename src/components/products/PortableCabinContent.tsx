@@ -226,7 +226,7 @@ export function PortableCabinContent({ offer }: { offer?: { productId?: string; 
             One of the key advantages is flexibility. Since these units are portable and modular by nature, they typically do not require special permission for installation, allowing you to respond quickly to changing site requirements. The steel built type—whether MS or GI—ensures long-lasting performance, even in challenging weather conditions.
           </p>
           <p>
-            Leading manufacturers offer a range of options, from single-compartment units to multi-bay portable toilets, all designed for easy integration with office cabins, security cabins, or storage rooms. By choosing the right sanitation setup, you ensure that your portable cabins remain functional, compliant, and comfortable for all users.
+            Manufacturers offer a range of options, from single-compartment units to multi-bay portable toilets, all designed for easy integration with office cabins, security cabins, or storage rooms. By choosing the right sanitation setup, you ensure that your portable cabins remain functional, compliant, and comfortable for all users.
           </p>
         </div>
       </section>
