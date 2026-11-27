@@ -169,9 +169,16 @@ function variantFor(slug: string, count: number): number {
 export function cityMainProductLink(page: CityPage): CityPageInlineLink | undefined {
   const rule = cityMainProductRule(page.slug);
   if (!rule) return undefined;
-  const v = rule.variants[variantFor(page.slug, rule.variants.length)];
-  const href = v.href ?? rule.href;
   const hrefs = cityPageHrefs(page);
-  if (hrefs.has(rule.href) || hrefs.has(href)) return undefined;
+  if (hrefs.has(rule.href)) return undefined;
+  let v: AnchorVariant | undefined = rule.variants[variantFor(page.slug, rule.variants.length)];
+  // The picked anchor points elsewhere in the family (e.g. the toilet category) and the page already
+  // links that page, but not the main product: use the anchor that points at the main product itself
+  // (its effective href is rule.href), so the page still reaches it. #364 (owner 2026-11-27) removed the
+  // Shoolagiri toilet page's duplicate category-worded link to the types page; this keeps it reaching
+  // that page through the specifications-worded anchor. No such anchor → no link, as before.
+  if (v.href && hrefs.has(v.href)) v = rule.variants.find((x) => (x.href ?? rule.href) === rule.href);
+  if (!v) return undefined;
+  const href = v.href ?? rule.href;
   return { before: v.before, link: { label: v.label, href }, after: v.after };
 }
