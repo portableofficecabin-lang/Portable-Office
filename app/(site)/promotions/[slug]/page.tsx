@@ -1,5 +1,6 @@
 
 import { getSEOPromotionBySlug, seoPromotions } from "@/data/seoPromotions";
+import { promotionBuyerFacts } from "@/data/promotionBuyerFacts";
 import { PromotionJsonLd } from "@/components/seo/PromotionJsonLd";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { SEOPromotionPage } from "@/views/SEOPromotionPage";
@@ -51,10 +52,13 @@ export default async function PromotionPage({ params }: { params: Promise<{ slug
     notFound();
   }
 
+  // Resolved here, on the server, so the catalogue never ships to the browser.
+  const buyerFacts = promotionBuyerFacts(slug);
+
   return (
     <>
       <PromotionJsonLd content={content} />
-      <SEOPromotionPage content={content} />
+      <SEOPromotionPage content={content} buyerFacts={buyerFacts} />
     </>
   );
 }
