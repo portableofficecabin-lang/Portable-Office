@@ -14,6 +14,7 @@ import { ArrowRight, MapPin } from "lucide-react";
 
 import type { ResolvedCategoryLanding } from "@/data/categoryLandings";
 import { CategoryEnquiryForm } from "@/components/products/CategoryEnquiryForm";
+import { CategorySpecTable } from "@/components/products/CategorySpecTable";
 
 const h2 = "font-display text-2xl font-bold text-foreground mb-4";
 const linkClass =
@@ -82,6 +83,9 @@ export function CategoryLandingContent({ landing }: { landing: ResolvedCategoryL
           </table>
         </div>
       </section>
+
+      {/* ── Per-model specifications — the products' own catalogue rows (CategorySpecTable) ── */}
+      <CategorySpecTable slug={slug} categoryName={categoryName} models={landing.models} />
 
       {/* ── Applications ──────────────────────────────────────────────────── */}
       <section aria-labelledby={id("uses")}>
