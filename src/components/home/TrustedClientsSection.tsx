@@ -1,27 +1,13 @@
 import Link from "next/link";
 import { Factory, Truck, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import tataProjects from "@/assets/clients/tata-projects.jpg";
-import asianPaints from "@/assets/clients/asian-paints.jpg";
-import brigade from "@/assets/clients/brigade.jpg";
-import mfar from "@/assets/clients/mfar.png";
-import tataElectronics from "@/assets/clients/tata-electronics.webp";
-import zhonhen from "@/assets/clients/zhonhen.webp";
-import mythri from "@/assets/clients/mythri.webp";
-import ashokLeyland from "@/assets/clients/ashok-leyland.jpg";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { CLIENT_LOGOS, clientsWithPermission } from "@/data/clientLogos";
 
-// `name` is NOT rendered as visible text — it only drives the accessible alt text on each logo.
-const clients = [
-  { name: "Tata Projects", logo: tataProjects },
-  { name: "Tata Electronics", logo: tataElectronics },
-  { name: "Ashok Leyland", logo: ashokLeyland },
-  { name: "Asian Paints", logo: asianPaints },
-  { name: "Brigade Group", logo: brigade },
-  { name: "MFAR Constructions", logo: mfar },
-  { name: "Mythri Constructions", logo: mythri },
-  { name: "Zhonhen System Integration", logo: zhonhen },
-];
+// Only clients with a purchase record AND written logo permission on file (see clientLogos.ts).
+// None is on record yet, so the logo strip and every client claim below stay hidden; the
+// customisation call to action and the capability points still render.
+const clients = clientsWithPermission(CLIENT_LOGOS);
 
 // Capability claims only — nothing quantified. Do not add project/client counts here unless the
 // figure can actually be substantiated.
@@ -32,6 +18,7 @@ const trustPoints = [
 ];
 
 export function TrustedClientsSection() {
+  const hasLogos = clients.length > 0;
   // Duplicate the list so the marquee loops seamlessly
   const track = [...clients, ...clients];
 
@@ -45,15 +32,21 @@ export function TrustedClientsSection() {
 
       <div className="container-custom relative">
         <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
-          <span className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-semibold text-accent">
-            Trusted by Businesses Across India
-          </span>
+          {hasLogos && (
+            <span className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-semibold text-accent">
+              Trusted by Businesses Across India
+            </span>
+          )}
 
           <h2
             id="trusted-clients-heading"
             className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-5 mb-4 leading-tight"
           >
-            Join Our <span className="text-accent">Happy Customers</span>
+            {hasLogos ? (
+              <>Join Our <span className="text-accent">Happy Customers</span></>
+            ) : (
+              <>Built to <span className="text-accent">Your Requirement</span></>
+            )}
           </h2>
 
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
@@ -78,6 +71,8 @@ export function TrustedClientsSection() {
         </div>
       </div>
 
+      {hasLogos && (
+      <>
       <div className="container-custom relative">
         <p className="text-center text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-6">
           SOME OF THE ORGANISATIONS WE HAVE SERVED
@@ -118,6 +113,8 @@ export function TrustedClientsSection() {
           completed supply, rental or installation engagements.
         </p>
       </div>
+      </>
+      )}
     </section>
   );
 }
