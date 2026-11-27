@@ -4,6 +4,20 @@
 
 /* Fonts are loaded non-blocking from index.html via preconnect + async stylesheet to protect mobile LCP. */
 
+/* The rupee sign (U+20B9) is outside Inter's "latin" subset (the one next/font preloads); it sits in
+   "latin-ext", a separate ~85 KB file. Every page that shows a price therefore downloaded that whole
+   file for ONE glyph (27 Nov 2026 mobile audit: all four price pages; the page without prices did
+   not). This face draws ₹ from a font already on the device — Roboto / Noto on Android, Segoe UI or
+   Arial on Windows, Helvetica on Apple — and covers nothing else (unicode-range), so all other text
+   still uses Inter / Plus Jakarta. If no local font matches, the browser falls back to the next
+   family in the stack exactly as before. */
+@font-face {
+  font-family: "Rupee Local";
+  src: local("Roboto"), local("Noto Sans"), local("Segoe UI"), local("Arial"), local("Helvetica Neue"), local("Helvetica");
+  unicode-range: U+20B9;
+  font-display: swap;
+}
+
 /* Industrial E-commerce Design System
    Primary: Deep Navy - Trust, Authority
    Accent: Amber/Orange - Energy, Industrial

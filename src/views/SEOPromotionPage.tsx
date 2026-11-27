@@ -8,12 +8,16 @@ import { ArrowRight, CheckCircle, Phone, Mail, MapPin, ExternalLink } from "luci
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/company";
 import { promotionBreadcrumbs } from "@/lib/seo/promotionBreadcrumbs";
+import { PromotionBuyerFacts } from "@/components/promotions/PromotionBuyerFacts";
+import type { PromotionBuyerFactsData } from "@/data/promotionBuyerFacts";
 
 interface SEOPromotionPageProps {
   content: SEOContent;
+  /** Resolved on the server for the pages configured in src/data/promotionBuyerFacts.ts (null elsewhere). */
+  buyerFacts?: PromotionBuyerFactsData | null;
 }
 
-export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
+export function SEOPromotionPage({ content, buyerFacts }: SEOPromotionPageProps) {
   const crumbs = promotionBreadcrumbs(content);
   return (
     <Layout>
@@ -91,6 +95,10 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
                   </p>
                 ))}
               </div>
+
+              {/* Buyer facts (SEO phase 2): exact catalogue sizes and prices, specifications, delivery and
+                  installation scope, quote action — only on the pages configured for it. */}
+              {buyerFacts && <PromotionBuyerFacts data={buyerFacts} productLabel={content.keyword} />}
 
               {/* Features */}
               <div className="bg-card rounded-2xl p-8 md:p-12 border border-border">

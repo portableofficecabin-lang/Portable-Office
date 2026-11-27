@@ -8,6 +8,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { bangaloreContainerRows } from "@/data/bangaloreContainerPrices";
 import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
+import { deliveryInstallationFacts } from "@/data/promotionBuyerFacts";
+import { DeliveryInstallationFacts } from "@/components/promotions/PromotionBuyerFacts";
 
 const IMG = "/images/products";
 
@@ -99,6 +101,9 @@ const BUILD_SPEC = [
  * GST-inclusive price, read from the commerce catalogue at render (src/data/bangaloreContainerPrices.ts);
  * the "40 ft storage container" row was removed because no single 40 ft storage product exists. */
 const PRICE_ROWS = bangaloreContainerRows();
+
+/** Delivery charges by PIN code, transit and installation scope — the checkout constants. */
+const DELIVERY_FACTS = deliveryInstallationFacts();
 
 const COMPARISON = [
   ["Time to ready", "7–15 working days + transit", "2–3 months"],
@@ -311,7 +316,7 @@ export function ShippingContainerBangaloreContent() {
           <OptimizedImage src={`${IMG}/shipping-container-kormangala-crane.webp`} alt="Shipping container being installed by crane at a Bangalore construction site" aspectRatio="3/2" geoTag={false} className="rounded-2xl shadow-lg" />
           <div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer; unloading by crane or Hydra is optional and set out in your written quotation. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units bought online are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days.
+              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer; unloading and positioning by crane or hydra come with the optional installation set out below. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units bought online are dispatched within 7–15 working days of order confirmation; delivery charges and transit times by PIN code are listed below.
             </p>
             <div className="flex flex-wrap gap-2">
               {DELIVERY_AREAS.map((a) => (
@@ -325,6 +330,10 @@ export function ShippingContainerBangaloreContent() {
           </div>
         </div>
       </section>
+
+      {/* Delivery charges, transit and installation scope straight from the checkout constants
+          (SEO phase 2, 2026-11-27), so this page can never promise more than checkout sells. */}
+      <DeliveryInstallationFacts data={DELIVERY_FACTS} place="Bengaluru" />
 
       {/* Why us */}
       <section className="bg-accent/5 border border-accent/15 rounded-2xl p-6 lg:p-8">
