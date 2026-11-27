@@ -417,8 +417,8 @@ export function ProductsPageContent({
                   ~47 rows (names, short descriptions, prices of other categories) on all of them, so 55–59% of
                   the site-office, toilet and security category text was identical (site-inventory
                   "distinct-content") and each page carried ~340 extra DOM elements. Those categories keep their
-                  own grid, content and links; every product stays linked from its own category, this hub and
-                  the menu. Categories with no products keep the index unchanged. Proposed 2026-11-27 as a
+                  own grid, content and links; every product stays linked from its own category grid and from
+                  this hub. Categories with no products keep the index unchanged. Proposed 2026-11-27 as a
                   draft for the owner. */}
               {showCatalogueIndex && products.length > 0 && (
                 <section className="mt-16 pt-10 border-t border-border/50" aria-label="Full product catalogue index">
