@@ -51,7 +51,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <meta name="google-site-verification" content="awkHO4TQHj5zzuD2nUNuaTOfQpuW7qb_7W_EQ-uGsC8" />
-        <link rel="icon" href="/favicon.jpeg" />
+        {/* Was <link rel="icon" href="/favicon.jpeg">: a 1600 × 1600 px, 100 KB photo downloaded on every
+            page view — the largest single file on most pages in the 27 Nov mobile audit. The same image
+            at icon sizes: favicon.ico (16/32/48 px, ~2 KB; Google wants a multiple of 48 px), a 192 px
+            PNG and a 180 px Apple touch icon. favicon.jpeg stays in public/ for any external reference. */}
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
+        <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <Providers>{children}</Providers>

@@ -13,6 +13,8 @@ import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 
 import type { ResolvedCategoryLanding } from "@/data/categoryLandings";
+import { WHATS_INCLUDED_CATEGORY_SLUGS } from "@/data/deliveryCopy";
+import { WhatsIncluded } from "@/components/products/WhatsIncluded";
 import { CategoryEnquiryForm } from "@/components/products/CategoryEnquiryForm";
 import { CategorySpecTable } from "@/components/products/CategorySpecTable";
 
@@ -116,6 +118,11 @@ export function CategoryLandingContent({ landing }: { landing: ResolvedCategoryL
           ))}
         </div>
       </section>
+
+      {/* ── What's included — the price, delivery, installation and exclusions, from the checkout's own tables ── */}
+      {WHATS_INCLUDED_CATEGORY_SLUGS.includes(slug) && (
+        <WhatsIncluded id={id("included")} showQuotedNote={landing.models.some((m) => !m.priceLabel || m.rental)} />
+      )}
 
       {/* ── Transport, installation and delivery — read from the checkout's own tables ── */}
       <section aria-labelledby={id("delivery")}>

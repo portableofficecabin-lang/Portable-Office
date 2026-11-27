@@ -11,6 +11,7 @@ import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { useCart } from "@/contexts/CartContext";
 import { COMPANY } from "@/lib/company";
+import { getCardImageDisclosure } from "@/data/productImageDisclosure";
 
 interface ProductCardProps {
   product: Product;
@@ -30,6 +31,8 @@ export function ProductCard({ product, priority = false, prefetch = false }: Pro
   const { addToCart } = useCart();
   const router = useRouter();
   const productImage = getBestProductImage(product.id, product.categorySlug, product.images?.[0], product.sku);
+  // Accurate alt text and, for a render, a visible "Illustrative render" label (productImageDisclosure.ts).
+  const imageDisclosure = getCardImageDisclosure(productImage);
 
   // Same commerce catalog, same isPurchasable() gate as the product page and the JSON-LD, so
   // the card price is the identical GST-inclusive integer the product page shows. Quote-only
@@ -52,7 +55,7 @@ export function ProductCard({ product, priority = false, prefetch = false }: Pro
         <div className="w-full h-full transition-transform duration-700 group-hover:scale-110">
           <OptimizedImage
             src={productImage}
-            alt={`${product.name} – ${product.category} by Portable Office Cabin, India`}
+            alt={imageDisclosure?.alt ?? `${product.name} – ${product.category} by Portable Office Cabin, India`}
             title={`${product.name} | ${product.category} – Portable Office Cabin`}
             aspectRatio="4/3"
             className="w-full h-full"
@@ -62,6 +65,12 @@ export function ProductCard({ product, priority = false, prefetch = false }: Pro
           />
         </div>
         
+        {imageDisclosure?.label && (
+          <span className="absolute top-4 right-4 z-10 rounded-full bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white">
+            {imageDisclosure.label}
+          </span>
+        )}
+
         {/* Gradient overlay for better text visibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
         

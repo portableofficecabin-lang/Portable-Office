@@ -2,6 +2,8 @@
 // unique, keyword-rich alt/title text for each gallery image (server-rendered in
 // ProductDetailServer). Falls back to the generic product alt when not listed.
 
+import { CARD_IMAGE_DISCLOSURE, imageFileBasename } from "./productImageDisclosure";
+
 export const productImageCaptions: Record<string, string> = {
   // Portable Cabin 40ft Bunkhouse
   "portable-cabin-40ft-bunkhouse-front.webp":
@@ -107,6 +109,9 @@ export const productImageAltText: Record<string, string> = {
     "Illustrative example of a white and blue container office cabin with a door and three windows fitted with grilles",
   "container-office-cabin-interior-example.webp":
     "Illustrative example of a container office interior with wood-grain wall panels, two ceiling fans, a tube light and sliding windows",
+  // Site-office-container, portable-toilet and security-cabin card images (2026-11-27) — see
+  // productImageDisclosure.ts; the same alt text is used on the category cards.
+  ...Object.fromEntries(Object.entries(CARD_IMAGE_DISCLOSURE).map(([file, d]) => [file, d.alt])),
 };
 
 /**
@@ -122,6 +127,10 @@ export const productImageLabels: Record<string, string> = {
   "container-office-cabin-roof-aerial-example.webp": "Illustrative example",
   "container-office-cabin-exterior-example.webp": "Illustrative example",
   "container-office-cabin-interior-example.webp": "Illustrative example",
+  // Renders among the category card images (productImageDisclosure.ts).
+  ...Object.fromEntries(
+    Object.entries(CARD_IMAGE_DISCLOSURE).flatMap(([file, d]) => (d.label ? [[file, d.label]] : [])),
+  ),
 };
 
 /**
@@ -167,8 +176,9 @@ export function getProductGalleryFit(slug: string): "contain" | undefined {
   return productGalleryFit[slug];
 }
 
+/** File basename without query or Next's asset content hash (productImageDisclosure.ts). */
 function imageBasename(imageUrl: string): string {
-  return imageUrl.split("/").pop()?.split("?")[0] ?? "";
+  return imageFileBasename(imageUrl);
 }
 
 /** Resolve a caption from an image URL/path by its file basename. */
