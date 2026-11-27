@@ -14,8 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "Inter", "sans-serif"],
-        display: ["var(--font-plus-jakarta)", "Plus Jakarta Sans", "sans-serif"],
+        // "Rupee Local" (src/index.css) covers ONLY U+20B9 (₹) from a font already on the device, so a
+        // price no longer downloads Inter's / Plus Jakarta's latin-ext file (~85 KB) for one glyph.
+        sans: ['"Rupee Local"', "var(--font-inter)", "Inter", "sans-serif"],
+        display: ['"Rupee Local"', "var(--font-plus-jakarta)", "Plus Jakarta Sans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

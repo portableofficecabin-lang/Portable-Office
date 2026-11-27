@@ -9,25 +9,28 @@ import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { PortableToiletContent } from "@/components/products/PortableToiletContent";
 import { ProductGuidesSection } from "@/components/products/ProductGuidesSection";
 
-// Dedicated, indexable landing page for the high-intent "portable toilet cabin"
-// query. This static segment takes precedence over /products/[slug], so it does NOT
-// need a product entry. Single canonical URL: /products/portable-toilet-cabin.
+// Portable toilet TYPES & SPECIFICATIONS explainer (MS, GI, FRP, bio-toilets; fittings; tanks).
+// Search Console phase (2026-11-27): the category /products/category/portable-toilet-cabins owns the
+// head term "portable toilet cabin(s)" and the price intent, so this page no longer leads with it and
+// links the category for models and prices. This static segment takes precedence over
+// /products/[slug], so it does NOT need a product entry. Single canonical URL (unchanged):
+// /products/portable-toilet-cabin.
 
 const SITE = "https://portableofficecabin.com";
 const PATH = "/products/portable-toilet-cabin";
-const H1 = "Portable Toilet Cabin";
+const H1 = "Portable Toilet Types and Specifications";
 const DESCRIPTION =
-  "Portable toilet cabins in MS, GI and FRP, plus bio-toilets: single or multi-seater, with water tank, exhaust and western or Indian pan, delivered across India.";
+  "How portable toilet types differ: MS, GI and FRP cabins and bio-toilets, single or multi-seater, with water tank, exhaust and western or Indian pan.";
 const IMAGE = `${SITE}/images/products/portable-toilet.webp`;
 const TOILET_LOCATION_LINKS = CATEGORY_LINKS["portable-toilet-cabins"]?.locationLinks ?? [];
 
 export const revalidate = 1800; // 30 minutes
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Portable Toilet Cabin Manufacturer in India",
+  title: "Portable Toilet Types & Specifications",
   description: DESCRIPTION,
   keywords:
-    "portable toilet cabin, portable toilet manufacturer India, MS portable toilet, FRP portable toilet, bio toilet cabin, mobile toilet van, portable toilet price India, construction site toilet",
+    "portable toilet types, portable toilet specifications, MS portable toilet, GI portable toilet, FRP portable toilet, bio toilet cabin, construction site toilet",
   path: PATH,
   ogImage: IMAGE,
 });
@@ -43,7 +46,7 @@ export default function PortableToiletCabinPage() {
             /* Through the category, as on every product page and the metal hub — the trail used to
                skip it (2026-10-10). The visible breadcrumb below mirrors this. */
             { name: "Portable Toilet Cabins", url: `${SITE}/products/category/portable-toilet-cabins` },
-            { name: "Portable Toilet Cabin", url: `${SITE}${PATH}` },
+            { name: H1, url: `${SITE}${PATH}` },
           ]),
           /* Service, not Product. This is a RANGE hub, not a sellable unit: it carries no
                offer, and Google rejects a Product node that has none ("Either 'offers',
@@ -74,7 +77,7 @@ export default function PortableToiletCabinPage() {
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
             <Link href="/products/category/portable-toilet-cabins" className="text-muted-foreground hover:text-accent">Portable Toilet Cabins</Link>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
-            <span className="text-foreground font-medium">Portable Toilet Cabin</span>
+            <span className="text-foreground font-medium">{H1}</span>
           </nav>
         </div>
       </section>
@@ -92,6 +95,13 @@ export default function PortableToiletCabinPage() {
               {H1}
             </h1>
             <p className="text-lg text-muted-foreground">{DESCRIPTION}</p>
+            <p className="mt-3 text-muted-foreground">
+              For the models we sell, with prices, delivery and installation, see our{" "}
+              <Link href="/products/category/portable-toilet-cabins" className="text-accent font-medium hover:underline">
+                portable toilet cabins
+              </Link>
+              .
+            </p>
           </div>
           <PortableToiletContent />
 

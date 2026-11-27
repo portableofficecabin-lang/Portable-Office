@@ -224,6 +224,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
       { name: "Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
       { name: "Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+      // Search Console phase (2026-11-27): Hoskote, the second site-office market named in the brief.
+      { name: "Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
     ],
     guideLinks: [GUIDE.installation, GUIDE.transport, GUIDE.layouts, GUIDE.insulation],
     relatedCategorySlugs: ["container-offices", "portable-cabins", "cargo-storage-shipping-containers"],
