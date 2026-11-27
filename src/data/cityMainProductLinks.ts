@@ -29,6 +29,12 @@ interface AnchorVariant {
   before: string;
   label: string;
   after: string;
+  /**
+   * Overrides the rule's href for this anchor only — used where the WORDING points somewhere else in
+   * the family (owner 2026-11-27: "browse models / prices" wording → the category; "specifications"
+   * wording → the types page).
+   */
+  href?: string;
 }
 
 interface MainProductRule {
@@ -44,8 +50,8 @@ export const CITY_MAIN_PRODUCT_RULES: MainProductRule[] = [
     match: /^portable-toilet/,
     href: "/products/portable-toilet-cabin",
     variants: [
-      { before: "Unit types, fittings and sizes for the whole range are on our", label: "portable toilet cabin", after: " page." },
-      { before: "To compare single units, blocks and fittings, see the", label: "portable toilet cabin range", after: "." },
+      { before: "Unit types, fittings and sizes for the whole range are on our", label: "portable toilet types and specifications", after: " page." },
+      { before: "To compare single units, blocks and fittings, see the", label: "portable toilet cabin range", after: ".", href: "/products/category/portable-toilet-cabins" },
     ],
   },
   {
@@ -163,7 +169,9 @@ function variantFor(slug: string, count: number): number {
 export function cityMainProductLink(page: CityPage): CityPageInlineLink | undefined {
   const rule = cityMainProductRule(page.slug);
   if (!rule) return undefined;
-  if (cityPageHrefs(page).has(rule.href)) return undefined;
   const v = rule.variants[variantFor(page.slug, rule.variants.length)];
-  return { before: v.before, link: { label: v.label, href: rule.href }, after: v.after };
+  const href = v.href ?? rule.href;
+  const hrefs = cityPageHrefs(page);
+  if (hrefs.has(rule.href) || hrefs.has(href)) return undefined;
+  return { before: v.before, link: { label: v.label, href }, after: v.after };
 }

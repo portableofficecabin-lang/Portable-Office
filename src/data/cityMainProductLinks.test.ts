@@ -76,3 +76,14 @@ describe("city page → main product link", () => {
     for (const h of nested) expect(hrefs.has(h.replace(/[?#].*$/, "").replace(/\/$/, ""))).toBe(true);
   });
 });
+
+describe("portable-toilet city links (owner 2026-11-27)", () => {
+  it("toilet variants follow their wording: specifications → types page, browsing models → category", () => {
+    const rule = cityMainProductRule("portable-toilet-cabin-anywhere");
+    expect(rule?.href).toBe("/products/portable-toilet-cabin");
+    const [specs, browse] = rule!.variants;
+    expect(specs.href ?? rule!.href).toBe("/products/portable-toilet-cabin");
+    expect(specs.label).toBe("portable toilet types and specifications");
+    expect(browse.href).toBe("/products/category/portable-toilet-cabins");
+  });
+});
