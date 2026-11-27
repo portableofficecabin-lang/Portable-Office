@@ -86,4 +86,27 @@ describe("portable-toilet city links (owner 2026-11-27)", () => {
     expect(specs.label).toBe("portable toilet types and specifications");
     expect(browse.href).toBe("/products/category/portable-toilet-cabins");
   });
+
+  // #364: the Shoolagiri toilet page's duplicate "Portable Toilet Cabin Range" → types page was removed
+  // (owner 2026-11-27) because its list already links the category. The page then links the category but
+  // not the types page, so it gets the specifications-worded sentence to the types page instead of the
+  // category-worded one (which would add nothing: the category is already linked).
+  it("a toilet page that links the category but not the types page gets the specifications sentence", () => {
+    const page = CITY_PAGES.find((p) => p.slug === "portable-toilet-cabin-shoolagiri")!;
+    expect(page).toBeDefined();
+    const hrefs = cityPageHrefs(page);
+    expect(hrefs.has("/products/category/portable-toilet-cabins")).toBe(true);
+    expect(hrefs.has("/products/portable-toilet-cabin")).toBe(false);
+    expect(cityMainProductLink(page)).toEqual({
+      before: "Unit types, fittings and sizes for the whole range are on our",
+      link: { label: "portable toilet types and specifications", href: "/products/portable-toilet-cabin" },
+      after: " page.",
+    });
+  });
+
+  it("a page that already links the types page gets no extra toilet sentence", () => {
+    for (const page of CITY_PAGES.filter((p) => /^portable-toilet/.test(p.slug) && cityPageHrefs(p).has("/products/portable-toilet-cabin"))) {
+      expect({ slug: page.slug, link: cityMainProductLink(page) }).toEqual({ slug: page.slug, link: undefined });
+    }
+  });
 });
