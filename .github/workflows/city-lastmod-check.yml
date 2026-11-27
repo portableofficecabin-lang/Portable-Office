@@ -15,6 +15,10 @@ on:
       - src/data/sitemapLastmod.json
       - src/lib/seo/cityLastmod.ts
       - src/lib/seo/cityBlocks.ts
+      # the check itself, so a change to it re-verifies on main
+      - .github/workflows/city-lastmod-check.yml
+      - scripts/seo/lastmod-check.ts
+      - src/lib/seo/cityLastmodCheck.ts
   workflow_dispatch:
 
 permissions:
