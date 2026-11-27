@@ -10,8 +10,9 @@
  *
  * Facts policy: every claim below is verifiable elsewhere on this site — MSME/Udyam registration
  * and our Tamil Nadu factory address (the ISO 9001 line was removed pending the owner's certificate)
- * (Footer), 15+ years / 500+ projects / up to 60% cheaper (HeroSection, WhatSetsUsApart), client
- * names (TrustedClientsSection), 7–15 working days dispatch plus zone transit (shippingZones.ts). Claims from
+ * (Footer), 15+ years / 500+ projects / up to 60% cheaper (HeroSection, WhatSetsUsApart),
+ * 7–15 working days dispatch plus zone transit (shippingZones.ts). Client names were removed
+ * until the owner has purchase records and logo permission on file (clientLogos.ts). Claims from
  * draft copy that could NOT be verified against site data (10×8 ft standard size, business hours,
  * "2–3 week" lead time) were corrected or omitted rather than published.
  *
@@ -151,7 +152,7 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
         <p>
           We are a manufacturer with our own
           in-house factory at Kamandoddi, Hosur — Tamil Nadu, just ~40 km from Bangalore — delivering
-          across India to clients including Tata Projects, Ashok Leyland, Asian Paints and Brigade Group.
+          across India.
           {minPrice !== null && <> Prices start at <strong className="text-foreground">{inr(minPrice)} (incl. GST)</strong>.</>}
         </p>
         {/* Links UP to the range hub and DOWN to its guides (added 2026-10-10). The hub is a static
@@ -288,7 +289,6 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
         <ul className="space-y-2 text-muted-foreground leading-relaxed list-disc pl-5">
           <li><strong className="text-foreground">In-house manufacturing, no middlemen.</strong> Our own factory at Kamandoddi, Hosur in Tamil Nadu means factory-direct prices and full quality control — we are the manufacturer, not a reseller.</li>
           <li><strong className="text-foreground">Registered business.</strong> GST-registered and Udyam/MSME registered (UDYAM-TN-11-0068545).</li>
-          <li><strong className="text-foreground">Project clients.</strong> Trusted by Tata Projects, Ashok Leyland, Asian Paints and Brigade Group.</li>
           <li><strong className="text-foreground">No RCC foundation for standard cabins, no demolition</strong> — a level base suited to the site is enough, and the cabin is an asset you can relocate or resell, not a structure you demolish.</li>
           <li><strong className="text-foreground">Pan-India delivery.</strong> Cabins delivered and installed across the country, factory-finished and usable when they arrive.</li>
         </ul>
