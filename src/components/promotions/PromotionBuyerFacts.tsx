@@ -133,7 +133,8 @@ export function DeliveryInstallationFacts({ data, place }: { data: DeliveryInsta
             <li>Standard units bought online are dispatched within {data.dispatch}.</li>
             {data.freePins.length > 0 && (
               <li>
-                Delivery is <strong className="text-foreground">free</strong> to PIN codes beginning {data.freePins.join(", ")},
+                Delivery is <strong className="text-foreground">free</strong> to PIN codes beginning{" "}
+                {data.freePins.length > 1 ? `${data.freePins.slice(0, -1).join(", ")} or ${data.freePins[data.freePins.length - 1]}` : data.freePins[0]},
                 with {data.freeTransit} in transit.
               </li>
             )}
