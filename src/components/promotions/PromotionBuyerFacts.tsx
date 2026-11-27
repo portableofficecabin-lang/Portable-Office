@@ -117,6 +117,11 @@ export function PromotionBuyerFacts({ data, productLabel }: { data: PromotionBuy
   );
 }
 
+/** "560, 562, 563 and 635" — the free zone's PIN-code prefixes as the owner words them (2026-11-27). */
+export function pinPrefixList(pins: readonly string[]): string {
+  return pins.length > 1 ? `${pins.slice(0, -1).join(", ")} and ${pins[pins.length - 1]}` : pins[0] ?? "";
+}
+
 /** Delivery and installation scope from the checkout constants (also used on the bespoke Bangalore page). */
 export function DeliveryInstallationFacts({ data, place }: { data: DeliveryInstallationData; place: string }) {
   return (
@@ -133,9 +138,9 @@ export function DeliveryInstallationFacts({ data, place }: { data: DeliveryInsta
             <li>Standard units bought online are dispatched within {data.dispatch}.</li>
             {data.freePins.length > 0 && (
               <li>
-                Delivery is <strong className="text-foreground">free</strong> to PIN codes beginning{" "}
-                {data.freePins.length > 1 ? `${data.freePins.slice(0, -1).join(", ")} or ${data.freePins[data.freePins.length - 1]}` : data.freePins[0]},
-                with {data.freeTransit} in transit.
+                {/* Owner wording (2026-11-27): "the 560, 562, 563 and 635 PIN-code prefixes". */}
+                Delivery is <strong className="text-foreground">free</strong> for the {pinPrefixList(data.freePins)} PIN-code
+                {data.freePins.length > 1 ? " prefixes" : " prefix"}, with {data.freeTransit} in transit.
               </li>
             )}
             {data.otherZones.map((zone) => (

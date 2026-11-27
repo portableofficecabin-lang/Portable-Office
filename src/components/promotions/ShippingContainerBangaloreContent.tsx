@@ -7,11 +7,17 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { bangaloreContainerRows } from "@/data/bangaloreContainerPrices";
-import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
+import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
 import { deliveryInstallationFacts } from "@/data/promotionBuyerFacts";
-import { DeliveryInstallationFacts } from "@/components/promotions/PromotionBuyerFacts";
+import { DeliveryInstallationFacts, pinPrefixList } from "@/components/promotions/PromotionBuyerFacts";
 
 const IMG = "/images/products";
+
+/** The free delivery zone (it covers Bengaluru PIN codes), from checkout: its transit time and its
+ *  PIN-code prefixes, worded as the owner asked (2026-11-27): "the 560, 562, 563 and 635 PIN-code prefixes". */
+const FREE_ZONE = deliveryInstallationFacts();
+const FREE_ZONE_TRANSIT = FREE_ZONE.freeTransit;
+const FREE_PIN_PREFIXES = `the ${pinPrefixList(FREE_ZONE.freePins)} PIN-code prefixes`;
 
 const CONTACT = {
   tel: "+919731897976",
@@ -27,8 +33,10 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   },
   {
     question: "How long does delivery take in Bangalore?",
-    answer:
-      "Standard units bought online are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days. Larger or custom projects follow the timeline in your written quotation. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
+    // Built from the checkout constants (2026-11-27). It said "transit typically taking 1–5 working days",
+    // which contradicted the page's own delivery block: the free zone that covers Bengaluru PIN codes
+    // takes 1–2 working days. This answer is also the FAQ JSON-LD, so the two stay in step.
+    answer: `Standard units bought online are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation. Delivery is free for ${FREE_PIN_PREFIXES} and takes ${FREE_ZONE_TRANSIT} in transit; other PIN codes are charged by delivery zone at checkout, as listed under "Delivery and installation" on this page. Larger or custom projects follow the timeline in your written quotation. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.`,
   },
   {
     question: "Do you sell both new and used shipping containers?",
@@ -241,7 +249,7 @@ export function ShippingContainerBangaloreContent() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-muted-foreground italic mb-5">*The same fixed price as on each product page, GST included. Delivery is free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}; other PIN codes are charged by delivery zone at checkout. For custom builds, <Link href="/contact" className="text-accent hover:underline">contact us</Link> for a written quote that lists GST and transport separately.</p>
+        <p className="text-xs text-muted-foreground italic mb-5">*The same fixed price as on each product page, GST included. Delivery is free for {FREE_PIN_PREFIXES}; other PIN codes are charged by delivery zone at checkout. For custom builds, <Link href="/contact" className="text-accent hover:underline">contact us</Link> for a written quote that lists GST and transport separately.</p>
         <p className="text-muted-foreground leading-relaxed max-w-3xl">Because we manufacture in-house at our own Tamil Nadu factory near Hosur rather than trading imported units, you avoid dealer margins and port repositioning charges that inflate prices elsewhere in the market.</p>
       </section>
 
