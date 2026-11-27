@@ -2752,7 +2752,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Shared Shop Row Features",
         text: "Possible features include individual rolling shutters, separate locks, individual electrical meter or sub-meter provisions, a shared canopy, common exterior lighting, uniform exterior colours, signage panels, a waste collection area, accessible pedestrian circulation and suitable toilet facilities. Electrical metering and utility connections must follow the applicable utility provider's rules, and the final shop-row layout must consider setbacks, fire access, sanitation, parking, accessibility and approvals.",
-        link: { label: "Portable toilet cabins for a shop row", href: "/products/portable-toilet-cabin" },
+        link: { label: "Portable toilet cabins for a shop row", href: "/products/category/portable-toilet-cabins" },
       },
     ],
 
@@ -2990,7 +2990,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
       { label: "Container Cafe and Food Kiosks", href: "/products/container-cafe-restaurant" },
-      { label: "Portable Toilet Cabins", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Security Cabins", href: "/products/category/security-cabins" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Site Office Containers", href: "/products/category/site-office-containers" },
@@ -41220,7 +41220,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cabin Insulation and Cooling", href: "/products/portable-cabin/insulation-and-cooling" },
       { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "Container Site Office", href: "/products/container-site-office" },
-      { label: "Portable Toilet Cabin", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
       { label: "MS Container Office Cabin", href: "/products/ms-container-office-cabin" },
       { label: "Security Cabin in Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
@@ -41964,7 +41964,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "PUF Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
       { label: "Insulated Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
-      { label: "Portable Toilet Cabins", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Security Cabins Across Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
     ],
     nearbyLinks: {
@@ -42347,7 +42347,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Security Cabins", href: "/products/category/security-cabins" },
       { label: "Security Cabin", href: "/products/security-cabin" },
       { label: "Guard Security Cabin", href: "/products/guard-security-cabin" },
-      { label: "Portable Toilet Cabin", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
       { label: "Planning a cabin with a toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
       { label: "Cabin insulation and cooling guide", href: "/products/portable-cabin/insulation-and-cooling" },
       { label: "MS and PUF cabin materials compared", href: "/guides/portable-cabin-materials-ms-vs-puf" },
@@ -68360,7 +68360,6 @@ export const CITY_PAGES: CityPage[] = [
     },
     relatedLinksHeading: "Related Products",
     relatedLinks: [
-      { label: "Portable Toilet Cabin Range", href: "/products/portable-toilet-cabin" },
       { label: "Portable Toilet Block - 4 Unit", href: "/products/portable-toilet-block-4-unit" },
       { label: "Compare Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Cabins with an Attached Toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
@@ -71850,7 +71849,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For a standalone washroom rather than an occupied cabin, see our",
-            link: { label: "standalone portable toilets", href: "/products/portable-toilet-cabin" },
+            link: { label: "standalone portable toilets", href: "/products/category/portable-toilet-cabins" },
             after: ".",
           },
           {
