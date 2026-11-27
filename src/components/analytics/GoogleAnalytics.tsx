@@ -2,6 +2,7 @@
 
 import Script from "next/script";
 import { useEffect, useState } from "react";
+import { analyticsAllowed } from "@/lib/analytics/trackingPolicy";
 
 const GA_ID = "G-B0YKT0X980";
 
@@ -11,11 +12,14 @@ const GA_ID = "G-B0YKT0X980";
 // initial load window (Total Blocking Time / "reduce third-party impact") while
 // still tracking real, engaged visitors. The fallback timer ensures idle sessions
 // are eventually counted too.
+//
+// Never loaded for local builds, automated/test browsers or opted-out visitors
+// (src/lib/analytics/trackingPolicy.ts), so test runs send no hits to the production property.
 export function GoogleAnalytics() {
   const [load, setLoad] = useState(false);
 
   useEffect(() => {
-    if (load) return;
+    if (load || !analyticsAllowed()) return;
 
     let done = false;
     const trigger = () => {
