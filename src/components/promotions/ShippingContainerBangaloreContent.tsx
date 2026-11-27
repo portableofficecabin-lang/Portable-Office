@@ -7,11 +7,14 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { bangaloreContainerRows } from "@/data/bangaloreContainerPrices";
-import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
+import { DISPATCH_WORKING_DAYS, FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
 import { deliveryInstallationFacts } from "@/data/promotionBuyerFacts";
 import { DeliveryInstallationFacts } from "@/components/promotions/PromotionBuyerFacts";
 
 const IMG = "/images/products";
+
+/** Transit time of the free delivery zone (the one that covers Bengaluru PIN codes), from checkout. */
+const FREE_ZONE_TRANSIT = deliveryInstallationFacts().freeTransit;
 
 const CONTACT = {
   tel: "+919731897976",
@@ -27,8 +30,10 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   },
   {
     question: "How long does delivery take in Bangalore?",
-    answer:
-      "Standard units bought online are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days. Larger or custom projects follow the timeline in your written quotation. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
+    // Built from the checkout constants (2026-11-27). It said "transit typically taking 1–5 working days",
+    // which contradicted the page's own delivery block: the free zone that covers Bengaluru PIN codes
+    // takes 1–2 working days. This answer is also the FAQ JSON-LD, so the two stay in step.
+    answer: `Standard units bought online are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation. Delivery to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT} is free and takes ${FREE_ZONE_TRANSIT} in transit; other PIN codes are charged by delivery zone at checkout, as listed under "Delivery and installation" on this page. Larger or custom projects follow the timeline in your written quotation. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.`,
   },
   {
     question: "Do you sell both new and used shipping containers?",
