@@ -83,6 +83,7 @@ import { PrefabMarketingOfficeContent } from "@/components/products/PrefabMarket
 import { ConstructionIndividualBuildingContent } from "@/components/products/ConstructionIndividualBuildingContent";
 import { ContainerCafeRestaurantContent } from "@/components/products/ContainerCafeRestaurantContent";
 import { ProductBuyerGuide } from "@/components/products/ProductBuyerGuide";
+import { SiteOfficeOwnSection } from "@/components/products/SiteOfficeOwnSection";
 
 const SITE = "https://portableofficecabin.com";
 
@@ -287,6 +288,17 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
   const productGroupSchema = family ? generateProductGroupSchema(family, galleryImages) : undefined;
 
   const cs = product.categorySlug;
+
+  /* The shared site-office guide (SiteOfficeContainerContent) renders on the static site-office
+     products that have no content component of their own: today the 20 ft × 8 ft Standard Site
+     Office Container (id 2) and the 40 ft × 10 ft Container Site Office (id 42). Each of those two
+     also gets its own section under its Specifications table (SiteOfficeOwnSection), which mentions
+     the guide only while the guide is still on the page. Where the guide belongs is decided from
+     Search Console data (owner, 27 Nov 2026). */
+  const rendersSharedSiteOfficeGuide =
+    isStaticProduct &&
+    cs === "site-office-containers" &&
+    !["construction-site-portable-office", "site-office-container-manufacturers", "steel-portable-office-container"].includes(slug);
 
   /**
    * TRUE for a product whose build specification the owner has not yet confirmed — today only
@@ -721,6 +733,10 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
             </div>
           </div>
 
+          {/* Site-office pair: the product's OWN section, directly under its Specifications table.
+              Renders nothing for any product without an entry in src/data/siteOfficeOwnSections.ts. */}
+          <SiteOfficeOwnSection productId={product.id} sharedGuideBelow={rendersSharedSiteOfficeGuide} />
+
           {/* Category-specific content (server-rendered) */}
           {isStaticProduct && cs === "portable-toilet-cabins" && <div className="mt-16"><PortableToiletContent offer={contentOffer} /></div>}
           {cs === "portable-cabins" && slug === "porta-cabin" && <div className="mt-16"><PortaCabinContent offer={contentOffer} /></div>}
@@ -736,7 +752,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "site-office-containers" && slug === "construction-site-portable-office" && <div className="mt-16"><ConstructionSitePortableOfficeContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "site-office-container-manufacturers" && <div className="mt-16"><SiteOfficeContainerManufacturersContent /></div>}
           {cs === "site-office-containers" && slug === "steel-portable-office-container" && <div className="mt-16"><SteelPortableOfficeContainerContent /></div>}
-          {isStaticProduct && cs === "site-office-containers" && !["construction-site-portable-office","site-office-container-manufacturers","steel-portable-office-container"].includes(slug) && <div className="mt-16"><SiteOfficeContainerContent offer={contentOffer} /></div>}
+          {rendersSharedSiteOfficeGuide && <div className="mt-16"><SiteOfficeContainerContent offer={contentOffer} /></div>}
           {cs === "container-offices" && slug === "container-office" && <div className="mt-16"><ContainerOfficeGenericContent /></div>}
           {cs === "container-offices" && slug === "ms-container-office-cabin" && <div className="mt-16"><MSContainerOfficeCabinContent /></div>}
           {cs === "container-offices" && slug === "cabins-in-office" && <div className="mt-16"><CabinsInOfficeContent /></div>}
