@@ -133,10 +133,18 @@ function variantOffer(family: ProductFamily, variant: SizeVariant) {
  * the page's robots directive, the sitemap, the Product node and the feed — never re-derived
  * here, so the group can never disagree with the pages it points at.
  */
-function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
+function siblingVariantRef(family: ProductFamily, variant: SizeVariant, gallery: string[]) {
   if (!variantIsSearchEligible(family, variant)) return null;
   const offer = variantOffer(family, variant);
   if (!offer) return null;
+
+  /* PROTECTED-FLOW CHANGE S3 (draft, needs "I approve changing the protected Merchant purchase
+   * flow." before merge): the variant node also carries brand and — only where the picture really
+   * is this size — an image: the size's own photograph, or the family gallery for the size the
+   * parent page itself sells (rendersAtParent: that gallery IS this unit). A family photo is never
+   * attached to a different size (see SizeVariant.mainImage). Name, url, sku, size and offer are
+   * unchanged. */
+  const image = variant.mainImage ? [absolute(variant.mainImage)] : variant.rendersAtParent ? gallery : [];
 
   return {
     "@type": "Product",
@@ -145,6 +153,8 @@ function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
     url: variantUrl(family, variant),
     sku: variant.sku,
     size: variant.sizeLabelPlain,
+    ...(image.length > 0 ? { image } : {}),
+    brand: { "@type": "Brand", name: family.brand },
     offers: offer,
   };
 }
@@ -164,7 +174,7 @@ function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
 export function generateProductGroupSchema(family: ProductFamily, images: string[] = []) {
   const gallery = Array.from(new Set(images.filter(Boolean).map(absolute)));
   const variants = publishedVariants(family)
-    .map((v) => siblingVariantRef(family, v))
+    .map((v) => siblingVariantRef(family, v, gallery))
     .filter(Boolean);
 
   if (variants.length === 0) return null;
