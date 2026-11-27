@@ -8,8 +8,8 @@
  * contradict the cards rendered above it. If a SKU stops being purchasable the row simply
  * disappears; it can never strand a stale figure.
  *
- * Facts policy: every claim is verifiable elsewhere on this site — ISO 9001:2015 certificate
- * QT-99968/0726 (IsoCertificationBadge), the Tamil Nadu factory at Kamandoddi, Hosur (Footer,
+ * Facts policy: every claim is verifiable elsewhere on this site — the Tamil Nadu factory at
+ * Kamandoddi, Hosur (Footer,
  * company.ts), and 7–15 working days dispatch + 1–5 days transit (productCommerce DELIVERY, shown
  * on the product pages themselves). Nothing about a Bangalore or Karnataka factory: manufacturing
  * is Tamil Nadu only, and Bangalore is an office.
@@ -95,7 +95,7 @@ export const prefabBuildingFaqs: { question: string; answer: string }[] = [
   {
     question: "Where are these buildings manufactured?",
     answer:
-      "At our own factory at Kamandoddi, near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor. We are an ISO 9001:2015 certified manufacturer, certificate number QT-99968/0726, and we deliver across India.",
+      "At our own factory at Kamandoddi, near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor. We deliver across India.",
   },
 ];
 
@@ -115,9 +115,8 @@ export function PrefabBuildingCategoryContent({ products }: { products: Product[
           enough to be carried in by hand where a trailer will never fit.
         </p>
         <p>
-          Everything here is built at our own factory at Kamandoddi, near Hosur in Tamil Nadu, by an
-          ISO 9001:2015 certified manufacturer (Certificate No. QT-99968/0726), and delivered across
-          India. If a{" "}
+          Everything here is built at our own factory at Kamandoddi, near Hosur in Tamil Nadu, and
+          delivered across India. If a{" "}
           <Link href="/products/category/container-offices" className="text-accent hover:underline">
             container office
           </Link>{" "}

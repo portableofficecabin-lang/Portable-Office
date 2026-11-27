@@ -10,8 +10,8 @@ import { stripComments } from "./cityBlocks";
  * "government agencies", "since the 2010s", "40+ industrial hubs" and "ISO-grade" containers.
  *
  * Comments are stripped first, so a note recording what was removed does not count as the claim.
- * Not covered here: the ISO 9001:2015 certificate and the client logos (waiting for the owner's
- * evidence), and product, category and Merchant-feed files (owned by the product SEO work).
+ * Not covered here: the client logos (waiting for the owner's evidence) and the Merchant-protected
+ * product files. The ISO 9001:2015 claim has its own guard below (claims inventory E1).
  */
 const FILES = [
   "app/layout.tsx",
@@ -99,5 +99,44 @@ describe("site-wide copy states no unsupported claims", () => {
     const about = stripComments(readFileSync("src/views/About.tsx", "utf8"));
     expect(about).not.toContain("milestones");
     expect(about).not.toContain("Our Journey");
+  });
+});
+/**
+ * ISO 9001:2015 (claims inventory E1): no certificate copy, certification body, scope or validity
+ * is on record, so the claim is off every non-protected public surface. It still renders on product
+ * pages through ProductDetailServer / ProductVariantView (IsoCertificationBadge), which need the
+ * owner's separate Merchant approval, and in admin PDFs (owner decision). If the owner supplies a
+ * current certificate, revert this guard together with the copy.
+ */
+const ISO_FREE_FILES = [
+  "src/lib/site-navigation.ts",
+  "src/components/layout/header/MobileNavigation.tsx",
+  "src/components/home/HeroSection.tsx",
+  "src/components/home/WhatSetsUsApart.tsx",
+  "src/views/Products.tsx",
+  "src/lib/seo/structured-data.ts",
+  "src/data/cityPages.ts",
+  "src/data/productSEO.ts",
+  "app/(site)/products/metal-portable-cabin/page.tsx",
+  "src/components/products/BuildingConstructionContractorContent.tsx",
+  "src/components/products/CargoStorageContainersContent.tsx",
+  "src/components/products/MetalPortableCabinContent.tsx",
+  "src/components/products/PortableCabinsCategoryContent.tsx",
+  "src/components/products/PrefabBuildingCategoryContent.tsx",
+  "src/components/products/PrefabricatedPortableCabinContent.tsx",
+  "src/components/products/SteelPortableCabinContent.tsx",
+  "src/components/products/PortableCabinContent.tsx",
+  "src/components/products/PortableToiletContent.tsx",
+];
+
+const ISO_CLAIM: RegExp[] = [/\bISO\s*9001/i, /QT-99968/, /\bisoCertificate\b/, /\bIsoCertificationBadge\b/];
+
+describe("the unverified ISO 9001 claim stays off non-protected public surfaces", () => {
+  it("header, footer, homepage, /products, structured data, city and category copy", () => {
+    for (const file of ISO_FREE_FILES) {
+      const code = stripComments(readFileSync(file, "utf8"));
+      const found = ISO_CLAIM.filter((re) => re.test(code)).map((re) => re.source);
+      expect({ file, found }).toEqual({ file, found: [] });
+    }
   });
 });

@@ -163,7 +163,7 @@ export function ProductsPageContent({
         <div className="flex flex-wrap gap-2.5">
           <PageHeroChip>
             <BadgeCheck className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-            ISO 9001:2015 Certified
+            GST & MSME registered
           </PageHeroChip>
           <PageHeroChip>
             <Factory className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
