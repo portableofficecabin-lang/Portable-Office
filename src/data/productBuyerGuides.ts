@@ -87,6 +87,11 @@ export const PRODUCT_BUYER_GUIDES: ProductBuyerGuide[] = [
             link: { href: "/products/security-cabin", label: "custom-size security cabins" },
             after: " are built to order and quoted separately.",
           },
+          {
+            before: "To compare every model and price side by side, see our",
+            link: { href: "/products/category/security-cabins", label: "security cabins" },
+            after: " page.",
+          },
         ],
       },
       {

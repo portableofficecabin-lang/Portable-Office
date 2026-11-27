@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 import { PRODUCT_BUYER_GUIDES, BUYER_GUIDE_CREDENTIALS, type GuideParagraph } from "./productBuyerGuides";
-import { products, getProductDetailPath } from "./products";
+import { products, getProductDetailPath, categories } from "./products";
 import { getCommerce } from "./productCommerce";
 
 /**
@@ -24,6 +24,8 @@ function allText(): { productId: string; text: string }[] {
 
 const STATIC_ROUTES = new Set(["/warranty", "/contact"]);
 const productPaths = new Set(products.map((p) => getProductDetailPath(p)));
+// Category pages that exist (a model page may point to the category that owns the head term).
+const categoryPaths = new Set(categories.map((c) => `/products/category/${c.slug}`));
 
 describe("product buyer guides", () => {
   it("each guide belongs to exactly one existing, priced catalogue product", () => {
@@ -62,7 +64,7 @@ describe("product buyer guides", () => {
       for (const s of g.sections) {
         for (const p of s.paragraphs ?? []) {
           if (typeof p === "string") continue;
-          const ok = productPaths.has(p.link.href) || STATIC_ROUTES.has(p.link.href);
+          const ok = productPaths.has(p.link.href) || STATIC_ROUTES.has(p.link.href) || categoryPaths.has(p.link.href);
           expect({ productId: g.productId, href: p.link.href, ok }).toEqual({ productId: g.productId, href: p.link.href, ok: true });
           // A guide never links to its own page.
           const self = products.find((x) => x.id === g.productId)!;
