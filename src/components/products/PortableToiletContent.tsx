@@ -319,7 +319,7 @@ export function PortableToiletContent({ offer }: { offer?: FixedOffer & { produc
             </div>
           </AccordionTrigger>
           <AccordionContent className="text-muted-foreground text-sm leading-relaxed space-y-3 pb-6">
-            <p>Compliance with regulations is essential when deploying portable toilets in India. All our products are manufactured in accordance with standards set by the Ministry of Urban Development and the Central Pollution Control Board, ensuring proper waste management, water conservation, and hygiene. We also adhere to international quality benchmarks such as ISO 9001:2015.</p>
+            <p>Compliance with regulations is essential when deploying portable toilets in India. All our products are manufactured in accordance with standards set by the Ministry of Urban Development and the Central Pollution Control Board, ensuring proper waste management, water conservation, and hygiene.</p>
             <p>Our products are designed to meet both local and international regulations, providing peace of mind for customers across diverse applications. For more information on regulatory requirements, product certifications, or to confirm compliance for your specific project, please contact us.</p>
           </AccordionContent>
         </AccordionItem>

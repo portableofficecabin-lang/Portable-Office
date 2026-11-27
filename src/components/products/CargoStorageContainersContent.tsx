@@ -46,7 +46,7 @@ const faqs = [
   { q: "What sizes of cargo containers are available in India?", a: "The most common are 20 ft GP (33 m³ internal volume) and 40 ft GP (67 m³). High cube variants add 30.5 cm height. Specialized sizes include 10 ft (for urban sites), 45 ft pallet-wide, and half-height units for dense bulk cargo." },
   { q: "How do I inspect a used container before buying?", a: "Check corner posts for bending, wall thickness with ultrasonic gauging, roof for pinholes, door alignment and seal compression, lock rod operation, and marine plywood floor for delamination or rot. Verify CSC plate details and manufacture date (post-2010 preferred)." },
   { q: "What maintenance does a cargo container need?", a: "Annual repainting with epoxy coating (80 μm minimum), rust treatment at first signs, lubricate hinges with lithium EP2 grease, roof inspection after monsoon, pest treatment for timber floors, and clear drainage around the base." },
-  { q: "Does Portable Office Cabin deliver across India?", a: "Yes. Portable Office Cabin provides PAN-India delivery with hydraulic ramps for safe transport, crane positioning, and grout foundations for installation, with ISO 9001 quality management." },
+  { q: "Does Portable Office Cabin deliver across India?", a: "Yes. Portable Office Cabin provides PAN-India delivery with hydraulic ramps for safe transport, crane positioning, and grout foundations for installation." },
 ];
 
 export function CargoStorageContainersContent() {
@@ -307,7 +307,7 @@ export function CargoStorageContainersContent() {
             </div>
             <div>
               <p className="font-medium text-foreground mb-1">Quality & Compliance</p>
-              <p>ISO 9001 quality management, NBC fire safety</p>
+              <p>NBC fire safety</p>
             </div>
           </div>
         </div>

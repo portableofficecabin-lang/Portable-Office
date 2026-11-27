@@ -8,8 +8,8 @@
  * basePrice is ex-GST; the customer-facing price is always sellPrice). Nothing here hardcodes a
  * price, so this copy can never contradict the cards rendered above it or the feed.
  *
- * Facts policy: every claim below is verifiable elsewhere on this site — ISO 9001:2015 certificate
- * QT-99968/0726 (IsoCertificationBadge), MSME/Udyam registration and our Tamil Nadu factory address
+ * Facts policy: every claim below is verifiable elsewhere on this site — MSME/Udyam registration
+ * and our Tamil Nadu factory address (the ISO 9001 line was removed pending the owner's certificate)
  * (Footer), 15+ years / 500+ projects / up to 60% cheaper (HeroSection, WhatSetsUsApart),
  * 7–15 working days dispatch plus zone transit (shippingZones.ts). Client names were removed
  * until the owner has purchase records and logo permission on file (clientLogos.ts). Claims from
@@ -150,7 +150,7 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
           relocated whenever your project moves.
         </p>
         <p>
-          We are an ISO 9001:2015 certified manufacturer (Certificate No. QT-99968/0726) with our own
+          We are a manufacturer with our own
           in-house factory at Kamandoddi, Hosur — Tamil Nadu, just ~40 km from Bangalore — delivering
           across India.
           {minPrice !== null && <> Prices start at <strong className="text-foreground">{inr(minPrice)} (incl. GST)</strong>.</>}
@@ -288,7 +288,7 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
         <h2 className="font-display text-2xl font-bold mb-3">Why Buy From Portable Office Cabin</h2>
         <ul className="space-y-2 text-muted-foreground leading-relaxed list-disc pl-5">
           <li><strong className="text-foreground">In-house manufacturing, no middlemen.</strong> Our own factory at Kamandoddi, Hosur in Tamil Nadu means factory-direct prices and full quality control — we are the manufacturer, not a reseller.</li>
-          <li><strong className="text-foreground">ISO 9001:2015 certified.</strong> Documented quality processes on every build (Certificate No. QT-99968/0726); GST-registered and Udyam/MSME registered (UDYAM-TN-11-0068545).</li>
+          <li><strong className="text-foreground">Registered business.</strong> GST-registered and Udyam/MSME registered (UDYAM-TN-11-0068545).</li>
           <li><strong className="text-foreground">No RCC foundation for standard cabins, no demolition</strong> — a level base suited to the site is enough, and the cabin is an asset you can relocate or resell, not a structure you demolish.</li>
           <li><strong className="text-foreground">Pan-India delivery.</strong> Cabins delivered and installed across the country, factory-finished and usable when they arrive.</li>
         </ul>

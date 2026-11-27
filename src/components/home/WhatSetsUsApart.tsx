@@ -85,11 +85,12 @@ export function WhatSetsUsApart() {
                 <div className="grid grid-cols-2 gap-4">
                   {/* 2026-11-26: the heading and the project-count and years tiles were replaced, as no
                       record supports them (claims S5–S7 in docs/claims/sitewide-claims-2026-11-26.md).
-                      The ISO tile stays until the owner confirms the certificate. */}
+                      The certification tile was replaced by the GST-invoice fact while the owner's certificate is
+                      pending (claims inventory E1). */}
                   {[
                     { value: "Fixed", label: "GST-inclusive prices, standard units" },
                     { value: "In-house", label: "Manufacturing near Hosur" },
-                    { value: "ISO 9001", label: "2015 Certified" },
+                    { value: "GST", label: "Invoice with every order" },
                     { value: "7 Days", label: "Support, Mon-Sun" },
                   ].map((stat) => (
                     <div key={stat.label} className="text-center p-5 bg-white/[0.08] rounded-xl border border-white/10 hover:border-accent/40 transition-all duration-300 hover:scale-[1.03]">
