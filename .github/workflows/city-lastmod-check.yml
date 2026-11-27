@@ -1,0 +1,51 @@
+name: City lastmod check
+
+# Post-merge reminder for docs/seo/city-page-release-checklist.md step 9.
+# A release that edits src/data/cityPages.ts leaves the edited pages WITHOUT a sitemap <lastmod>
+# until `npm run seo:lastmod` is re-run on main and the regenerated manifest is merged.
+# This workflow only REPORTS: it writes the list to the run summary and opens (or updates) one
+# GitHub issue. It never edits the manifest, opens a PR or merges anything: merging is a
+# production deploy and needs the owner's approval by number.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - src/data/cityPages.ts
+      - src/data/sitemapLastmod.json
+      - src/lib/seo/cityLastmod.ts
+      - src/lib/seo/cityBlocks.ts
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: city-lastmod-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Which city pages would ship without a lastmod
+        id: check
+        run: npm run -s seo:lastmod:check -- --warn | tee lastmod-check.txt
+      - name: Open or update the reminder issue
+        if: steps.check.outputs.undated != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="City pages missing sitemap lastmod"
+          BODY="$(printf 'After %s (%s):\n\n```\n%s\n```\n\nChecklist: docs/seo/city-page-release-checklist.md, step 9.\n' "${GITHUB_SHA::7}" "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" "$(cat lastmod-check.txt)")"
+          NUM="$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq '.[0].number // empty')"
+          if [ -n "$NUM" ]; then gh issue comment "$NUM" --body "$BODY"; else gh issue create --title "$TITLE" --body "$BODY"; fi
