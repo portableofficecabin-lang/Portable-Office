@@ -17,8 +17,8 @@
  * here, so this component can never show a stale registration.
  *
  * Shown from `md` up, matching the trust statements beside it; an item can defer itself to
- * `lg` via `showFrom: "lg"` (the long ISO badge does, mirroring how the third trust statement
- * on the left is the first to drop) so the h-9 bar can never overflow at tablet widths. On
+ * `lg` via `showFrom: "lg"` (none does today; the long ISO badge that used it was removed while
+ * the owner's certificate is pending) so the h-9 bar can never overflow at tablet widths. On
  * phones the same registrations remain available in the footer (registrationBadges).
  */
 import { useEffect, useRef, useState } from "react";

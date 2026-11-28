@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle, Zap, IndianRupee, Leaf, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { IsoCertificationBadge } from "@/components/IsoCertificationBadge";
 import heroCabin from "@/assets/hero-cabin-900.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { startingFromEstimate, formatINR } from "@/components/home/cabin-calculator/pricing";
@@ -154,7 +153,7 @@ export function HeroSection() {
             </div>
 
             <div
-              className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 mb-4 animate-fade-up lg:justify-start"
+              className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 mb-10 animate-fade-up lg:justify-start"
               style={{ animationDelay: "0.34s" }}
             >
               <span className="inline-flex items-center gap-2">
@@ -172,10 +171,8 @@ export function HeroSection() {
               </span>
             </div>
 
-            {/* ISO 9001:2015 certification — premium trust badge */}
-            <div className="mb-10 animate-fade-up" style={{ animationDelay: "0.37s" }}>
-              <IsoCertificationBadge variant="onDark" />
-            </div>
+            {/* The ISO 9001:2015 badge was removed here (draft, owner evidence pending; claims
+                inventory E1). The registration strip above now carries the bottom margin. */}
 
             {/* CTAs */}
             <div 

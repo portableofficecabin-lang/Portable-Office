@@ -546,7 +546,7 @@ export function MetalPortableCabinContent() {
           </a>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          Monday to Saturday, 7 AM to 10 PM. ISO 9001:2015 certified and MSME registered, with
+          Monday to Saturday, 7 AM to 10 PM. MSME registered, with
           manufacturing at our Tamil Nadu factory in Kamandoddi, near Hosur, and a Bangalore office
           in Electronic City.
         </p>

@@ -34005,8 +34005,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "Line by line, against your own plot and your own drawing — free, and yours to take to another builder for comparison.",
       },
       {
-        title: "An ISO 9001:2015 certified company",
-        text: "Certificate QT-99968/0726, alongside GST registration and Udyam registration — all verifiable, all stated in full on our contact page.",
+        title: "GST and Udyam registered",
+        text: "GST registration and Udyam registration — both verifiable, both stated in full on our contact page.",
       },
     ],
 
@@ -34260,7 +34260,7 @@ export const CITY_PAGES: CityPage[] = [
 
     solutionsHeading: "What a Complete Camp from Us Includes",
     solutionsIntro:
-      "Everything is built at our factory at Kamandoddi, near Hosur, under our ISO 9001:2015 system, delivered on trailers and placed by hydra. Your written quotation sets out the programme for your camp; a 500-worker camp is phased so the first blocks are occupied while the rest are being built. Block by block, this is what you get. For unit specifications and pricing, see the Labour Colony and Workmen Accommodation product pages linked at the end of this page.",
+      "Everything is built at our factory at Kamandoddi, near Hosur, delivered on trailers and placed by hydra. Your written quotation sets out the programme for your camp; a 500-worker camp is phased so the first blocks are occupied while the rest are being built. Block by block, this is what you get. For unit specifications and pricing, see the Labour Colony and Workmen Accommodation product pages linked at the end of this page.",
     solutions: [
       {
         title: "Dormitory blocks",
@@ -34390,8 +34390,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "Every block has lifting lugs and goes to your next site on a trailer. If you would rather not keep it, ask us about buy-back.",
       },
       {
-        title: "An ISO 9001:2015 certified company",
-        text: `Certificate ${COMPANY.isoCertificate}, alongside GST registration and Udyam (MSME) registration — all verifiable, all stated in full in the footer of every page, including our contact page.`,
+        title: "GST and Udyam (MSME) registered",
+        text: `GST registration and Udyam (MSME) registration — both verifiable, both stated in full in the footer of every page, including our contact page.`,
       },
     ],
 
@@ -34482,7 +34482,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
     ],
 
-    disclaimer: `Portable Office Cabin — ISO 9001:2015 certified (${COMPANY.isoCertificate}), Udyam (MSME) registered. Factory: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The compliance notes on this page summarise the Building and Other Construction Workers Act, the Contract Labour (Regulation and Abolition) Act and related rules as planning guidance only; they are not legal advice. The Karnataka labour department and local authorities are independent statutory bodies with which Portable Office Cabin is not affiliated.`,
+    disclaimer: `Portable Office Cabin — Udyam (MSME) registered. Factory: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The compliance notes on this page summarise the Building and Other Construction Workers Act, the Contract Labour (Regulation and Abolition) Act and related rules as planning guidance only; they are not legal advice. The Karnataka labour department and local authorities are independent statutory bodies with which Portable Office Cabin is not affiliated.`,
   },
   /* ────────────────────────────────────────────────────────────────────────────────────────
    * HOUSE CONSTRUCTION SERVICES AND CONTRACTOR IN ELECTRONIC CITY, BANGALORE
