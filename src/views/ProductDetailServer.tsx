@@ -4,7 +4,6 @@ import { Check, ChevronRight, Truck, Ruler } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/JsonLd";
-import { IsoCertificationBadge } from "@/components/IsoCertificationBadge";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductActions } from "@/components/products/ProductActions";
 import { ProductKeySpecs } from "@/components/products/ProductKeySpecs";
@@ -305,7 +304,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
    * the Portable Shop Cabin (id 48): its wall, roof and floor materials and its warranty are still
    * "[confirm …]" in the owner's copy (2026-10-18). Two generic template claims would otherwise
    * state an unconfirmed specification for it, so both are withheld on this page only:
-   *   · the "Steel Grade" row (MS CR / CRCA sheet — IS 513 & IS 2062 · Corten · ISO-Grade);
+   *   · the "Steel Grade" row (MS CR / CRCA sheet — IS 513 & IS 2062 · Corten);
    *   · the Warranty tab of the Shipping & Delivery modal — the policy's structural term depends
    *     on the cabin's material, so no term can be shown as applying to it.
    * Every other product is unchanged. Remove the slug once the owner confirms the build.
@@ -495,8 +494,9 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                 )}
               </div>
 
-              {/* ISO 9001:2015 certification — premium trust badge (all product pages) */}
-              <IsoCertificationBadge className="mb-5" />
+              {/* The ISO 9001:2015 badge (IsoCertificationBadge) is not shown while the owner's
+                  certificate is pending: no certifying body, scope or validity is on record
+                  (claims inventory E1). The component is kept so it can be restored. */}
               {/^\s*</.test(product.description || "") ? (
                 <div
                   className="prose prose-sm sm:prose-base max-w-none text-muted-foreground mb-6 prose-headings:text-foreground prose-strong:text-foreground prose-a:text-accent"
@@ -508,7 +508,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                 </p>
               )}
 
-              {/* Brand, Steel Grade & Certification — shown on all product pages */}
+              {/* Brand, Application & Steel Grade — shown on all product pages */}
               <div className="border border-border/60 rounded-xl p-4 mb-6 bg-card/50">
                 <dl className="space-y-3 text-sm">
                   <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
@@ -535,7 +535,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                     <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
                       <dt className="font-semibold text-foreground sm:w-32 shrink-0">Steel Grade</dt>
                       <dd className="text-muted-foreground">
-                        MS CR Sheet / CRCA Sheet — IS 513 &amp; IS 2062 · Corten · ISO-Grade
+                        MS CR Sheet / CRCA Sheet — IS 513 &amp; IS 2062 · Corten
                       </dd>
                     </div>
                   )}
