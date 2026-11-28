@@ -1999,11 +1999,8 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
       doc.text("Estimated Cabin Quotation", headerTextX, 18);
       doc.setTextColor(255, 255, 255); doc.setFontSize(8);
       doc.text(new Date().toLocaleDateString("en-IN"), 196, 12, { align: "right" });
-      // ISO 9001:2015 certification (company profile) — top-right of the header band.
-      doc.setFont("helvetica", "bold"); doc.setFontSize(7.5); doc.setTextColor(245, 158, 11);
-      doc.text("ISO 9001:2015 Certified Company", 196, 17.5, { align: "right" });
-      doc.setFont("helvetica", "normal"); doc.setFontSize(6.5); doc.setTextColor(255, 255, 255);
-      doc.text("Quality Management System · Cert. No.: QT-99968/0726", 196, 21.5, { align: "right" });
+      // The two ISO certification lines below the date were removed (claims inventory E1: no
+      // certificate copy, body, scope or validity on record). The band keeps its fixed 26 mm height.
 
       doc.setTextColor(20, 20, 20); doc.setFont("helvetica", "bold"); doc.setFontSize(11);
       doc.text(`${product.label} — ${est.dimLength} × ${est.dimWidth} ft (${est.area} sq.ft) × ${est.quantity}`, 14, 36);

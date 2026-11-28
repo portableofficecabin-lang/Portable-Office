@@ -40,13 +40,9 @@ const COMPANY = {
   gst: "33FVKPK6238Q1ZT",
 };
 
-// ISO certification — kept in sync with src/components/IsoCertificationBadge.tsx
-// (the single source of the certificate wording across the site).
-const ISO_CERT = {
-  standard: "ISO 9001:2015",
-  scope: "Quality Management System",
-  number: "QT-99968/0726",
-};
+// The ISO certification strip was removed from the certificate (PDF and preview) on the owner's
+// instruction: no certificate copy, certification body, scope or validity is on record (claims
+// inventory E1, docs/claims/sitewide-claims-2026-11-26.md). Warranty terms are unchanged.
 
 const NAVY = "#0f1b2d";
 const AMBER = "#f59e0b";
@@ -383,14 +379,8 @@ export default function WarrantyCertificate() {
 
       pdf.setDrawColor(...navy); pdf.setLineWidth(0.5); pdf.line(LEFT, y, PW - RIGHT, y); y += 6;
 
-      // ISO strip
-      pdf.setFillColor(255, 251, 235); pdf.setDrawColor(...amber); pdf.setLineWidth(0.3);
-      pdf.roundedRect(LEFT, y, contentW, 8, 1.5, 1.5, "FD");
-      pdf.setFont("helvetica", "bold"); pdf.setFontSize(9); pdf.setTextColor(...navy);
-      pdf.text(`${ISO_CERT.standard} Certified Company`, LEFT + 4, y + 5);
-      pdf.setFont("helvetica", "normal"); pdf.setFontSize(7.5); pdf.setTextColor(...gray);
-      pdf.text(`${ISO_CERT.scope} · Certificate No.: ${ISO_CERT.number}`, PW - RIGHT - 4, y + 5, { align: "right" });
-      y += 13;
+      // (The 8 mm certification strip that sat here was removed; the title moves up to close the gap.)
+      y += 4;
 
       // title
       pdf.setFont("helvetica", "bold"); pdf.setFontSize(18); pdf.setTextColor(...navy);
@@ -746,13 +736,6 @@ export default function WarrantyCertificate() {
                     </div>
                     <div style={{ fontSize: 11, color: "#4b5563", fontWeight: 600 }}>GSTIN: {COMPANY.gst}</div>
                   </div>
-                </div>
-
-                {/* ISO certification strip — wording kept in sync with IsoCertificationBadge (single source across the site) */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 8, marginTop: 12, padding: "7px 12px", border: `1px solid ${AMBER}`, borderRadius: 6, background: "#fffbeb" }}>
-                  <ShieldCheck style={{ color: AMBER, width: 16, height: 16 }} />
-                  <span style={{ fontSize: 12, fontWeight: 700, color: NAVY }}>ISO 9001:2015 Certified Company</span>
-                  <span style={{ fontSize: 11, color: "#6b7280" }}>· Quality Management System · Certificate No.: {ISO_CERT.number}</span>
                 </div>
 
                 {/* title */}
