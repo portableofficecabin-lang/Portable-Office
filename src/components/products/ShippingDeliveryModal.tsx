@@ -31,13 +31,17 @@ import {
 } from "@/components/ui/accordion";
 import {
   DISPATCH_WORKING_DAYS,
-  FREE_DELIVERY_PIN_PREFIXES_TEXT,
-  INSTALLATION,
   INSTALLATION_NOT_COVERED,
   INSTALLATION_SCOPE,
   TRANSIT_WORKING_DAYS,
 } from "@/data/shippingZones";
-import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
+import {
+  FREE_DELIVERY_LINE,
+  INSTALLATION_BY_QUOTATION_LINE,
+  INSTALLATION_OPTION_LINE,
+  OTHER_ZONES_LINE,
+  TRANSPORT_BY_QUOTATION_LINE,
+} from "@/data/deliveryCopy";
 
 function InfoItem({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   return (
@@ -69,10 +73,11 @@ const DISPATCH = `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} wo
 const SHIPMENT_UPDATES = "Ask our team for shipment status updates once your order is dispatched";
 const TRANSIT_DAMAGE =
   "Damage in transit: tell us within 48 hours of delivery, with photographs. Once our team confirms it, we repair the unit at no cost, replace the affected components or agree compensation, as set out in our Refund & Cancellation Policy";
-/** The paid checkout option (bought-online products), priced from INSTALLATION. */
-const INSTALLATION_OPTION = `Optional ${INSTALLATION.label.toLowerCase()}: ${formatINR(INSTALLATION.rate)} including ${GST_PERCENT_LABEL} GST, added at checkout`;
+/** The paid checkout option (bought-online products), priced from INSTALLATION — shared with the
+ *  category pages' "What's included" block (src/data/deliveryCopy.ts). */
+const INSTALLATION_OPTION = INSTALLATION_OPTION_LINE;
 /** Rentals and quote-only products: installation is part of the written quotation. */
-const INSTALLATION_BY_QUOTATION = "Installation: set out in your written quotation";
+const INSTALLATION_BY_QUOTATION = INSTALLATION_BY_QUOTATION_LINE;
 
 /**
  * `showWarranty` (default true) hides the Warranty tab for a product whose warranty terms the
@@ -129,14 +134,14 @@ export function ShippingDeliveryModal({
                 <AccordionContent>
                   {transportAtCheckout ? (
                     <ul className="space-y-3">
-                      <InfoItem icon={CheckCircle2} text={`Free delivery to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}`} />
-                      <InfoItem icon={MapPin} text="Other PIN codes: transport is charged by delivery zone and shown at checkout before you pay" />
+                      <InfoItem icon={CheckCircle2} text={FREE_DELIVERY_LINE} />
+                      <InfoItem icon={MapPin} text={OTHER_ZONES_LINE} />
                       <InfoItem icon={CheckCircle2} text="Need it sooner? Ask our team before you order — express delivery is not a checkout option" />
                       <InfoItem icon={Wrench} text={INSTALLATION_OPTION} />
                     </ul>
                   ) : (
                     <ul className="space-y-3">
-                      <InfoItem icon={MapPin} text="Transport: confirmed in your written quotation" />
+                      <InfoItem icon={MapPin} text={TRANSPORT_BY_QUOTATION_LINE} />
                       <InfoItem icon={CheckCircle2} text="Need it sooner? Ask our team before you order" />
                       <InfoItem icon={Wrench} text={INSTALLATION_BY_QUOTATION} />
                     </ul>

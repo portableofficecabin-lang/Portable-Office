@@ -36,11 +36,12 @@ export const revalidate = 1800; // 30 minutes, matching the other product landin
 const SITE = "https://portableofficecabin.com";
 const PATH = "/products/metal-portable-cabin";
 const H1 = "Metal Portable Cabin";
-/* The owner's supplied meta title and description, minus nothing — both already avoid a price
-   claim and a founding year, so they ship as written. */
+/* The owner's supplied meta title and description — both already avoid a price claim and a
+   founding year. "ISO 9001 factory" became "Made near Hosur" while the certificate is pending
+   (claims inventory E1). */
 const DESCRIPTION =
   "Metal portable cabins built to order in MS, galvanised or colour-coated sheet. Choose your " +
-  "metal, size and layout. ISO 9001 factory, delivered pan-India.";
+  "metal, size and layout. Made near Hosur, delivered pan-India.";
 const IMAGE = `${SITE}/images/products/metal-portable-cabin/metal-portable-cabin-front.webp`;
 
 export const metadata: Metadata = buildPageMetadata({

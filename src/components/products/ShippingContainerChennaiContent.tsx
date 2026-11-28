@@ -72,7 +72,7 @@ const techSpecs = [
 const faqs = [
   { q: "What sizes of shipping containers are available in Chennai?", a: "We supply 10 ft, 20 ft, 40 ft GP and 40 ft HC containers. Custom sizes can be fabricated. The most common lengths are 20 ft and 40 ft, designed for transporting goods over long distances." },
   { q: "How much does a used shipping container cost in Chennai?", a: `Our shipping container is priced at ${chennaiPrice} including GST — one fixed price you can order online with secure checkout. One-trip containers offer near-new condition; contact us for current grade availability.` },
-  { q: "Can containers withstand Chennai's coastal climate?", a: "Absolutely. Our containers use ISO-grade Corten steel with corrosion resistance suited to Chennai's coastal salinity. We apply marine-grade epoxy coatings (120 microns DFT) and recommend 1–2m roof overhangs for monsoon protection." },
+  { q: "Can containers withstand Chennai's coastal climate?", a: "Absolutely. Our containers use Corten (weathering) steel with corrosion resistance suited to Chennai's coastal salinity. We apply marine-grade epoxy coatings (120 microns DFT) and recommend 1–2m roof overhangs for monsoon protection." },
   { q: "How quickly can you deliver containers in Chennai?", a: "The standard container bought online is dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Fitted container offices and container homes with full interiors follow the timeline in your written quotation." },
   { q: "Do I need approvals for container structures in Chennai?", a: "Temporary structure permits (valid 1–3 years, renewable) may be required. Setback requirements are typically 3–5m. We guide clients on CMDA bylaws and Chennai Corporation documentation." },
   { q: "Can you convert containers into homes and cafés?", a: "Yes. We design container homes with partitioned bedrooms, pantry, attached toilets, and large sliding glass windows. Container cafés include SS counters, kitchen zoning, and exhaust hoods." },
@@ -266,7 +266,7 @@ export function ShippingContainerChennaiContent() {
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: "70–80% faster", desc: "Installation vs. brick construction" },
+            { label: "Faster installation", desc: "Than brick construction" },
             { label: "Full relocatability", desc: "Move via crane to new site" },
             { label: "Lower material waste", desc: "Reuse existing steel containers" },
             { label: "Premium finishes", desc: "Double-glazed low-E glass, SS sinks" },

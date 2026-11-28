@@ -2752,7 +2752,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Shared Shop Row Features",
         text: "Possible features include individual rolling shutters, separate locks, individual electrical meter or sub-meter provisions, a shared canopy, common exterior lighting, uniform exterior colours, signage panels, a waste collection area, accessible pedestrian circulation and suitable toilet facilities. Electrical metering and utility connections must follow the applicable utility provider's rules, and the final shop-row layout must consider setbacks, fire access, sanitation, parking, accessibility and approvals.",
-        link: { label: "Portable toilet cabins for a shop row", href: "/products/portable-toilet-cabin" },
+        link: { label: "Portable toilet cabins for a shop row", href: "/products/category/portable-toilet-cabins" },
       },
     ],
 
@@ -2990,13 +2990,13 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
       { label: "Container Cafe and Food Kiosks", href: "/products/container-cafe-restaurant" },
-      { label: "Portable Toilet Cabins", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Security Cabins", href: "/products/category/security-cabins" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Site Office Containers", href: "/products/category/site-office-containers" },
       { label: "Cargo Containers for Container Shops", href: "/products/category/cargo-storage-shipping-containers" },
-      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "MS or PUF: Choosing the Material", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
       // Sibling shop pages named in the owner's brief, linked once live: Shivamogga (#195), Sriperumbudur
       // (#208), Hassan (#210, live 2026-11-07) and Hoskote (#202). Hassan and Hoskote link back here.
@@ -3895,7 +3895,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Agarbatti and Sandalwood Kiosk",
         text: "A compact retail kiosk may be configured for incense, packaged sandalwood products, souvenirs and gift items, with display shelving and a glass-front retail counter. Retailers remain responsible for sourcing their products and for the trade requirements that apply.",
-        link: { label: "Shelving, counters and interior layouts", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Shelving, counters and interior layouts", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Betel and Paan Kiosk",
@@ -4146,8 +4146,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Container Site Offices", href: "/products/category/site-office-containers" },
-      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "MS or PUF: Choosing the Material", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Truck-Driver and Highway Kiosks in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
       // Shivamogga's shop page (#195, live 2026-11-06): one of the brief's named sibling shop pages.
@@ -9231,7 +9231,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
       { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
       { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       // Hoskote's portable-shop sibling (2026-11-05), which links back from its nearby locations.
       { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
       // Hoskote's shipping and storage container sibling (2026-11-21), which links back from its areas section.
@@ -9362,7 +9362,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Bakery and Snacks Kiosk",
         text: "A portable bakery counter with a glass display front, shelves and lighting, plus electrical provisions for suitable display equipment such as a lit showcase.",
-        link: { label: "Cabin layouts and interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Cabin layouts and interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Tender Coconut and Juice Stall",
@@ -9392,7 +9392,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Mini Mart for Residential Layouts",
         text: "A larger shop cabin laid out with shelves along the walls, a billing counter near the door, storage space and room for suitable refrigeration equipment, sized for a residential layout or an apartment community.",
-        link: { label: "Portable cabin sizes and dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
+        link: { label: "Portable cabin sizes and dimensions", href: "/guides/portable-cabin-sizes-and-dimensions" },
       },
       {
         title: "Container Shop",
@@ -9632,10 +9632,10 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
       { label: "Cargo and Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
-      { label: "MS vs PUF Cabin Materials", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "MS vs PUF Cabin Materials", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "Security Cabin", href: "/products/security-cabin" },
-      { label: "Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
     ],
     nearbyLinks: {
       heading: "Nearby locations",
@@ -10472,7 +10472,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinksHeading: "Related products",
     relatedLinks: [
       { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
       { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
@@ -11231,7 +11231,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Truck Spares and Lubricants Shop",
         text: "Possible features include heavy-duty shelving, a rolling shutter, lockable storage, a counter, suitable lighting and appropriate flooring. Shelving is specified for the expected loads, and lubricants and other regulated or combustible materials must be stored according to the applicable safety requirements.",
-        link: { label: "Planning shelving, counters and storage inside a cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Planning shelving, counters and storage inside a cabin", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Driver Essentials Kiosk",
@@ -11246,7 +11246,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Highway Location Considerations",
         text: "A highway kiosk needs legally permitted commercial land, approved access, suitable road setbacks, safe vehicle circulation, appropriate parking, exterior lighting, clear signage and waste management. Customers should reach it through the approved access: a kiosk is never a reason for direct, unauthorized access from NH 48 or for unsafe roadside parking.",
-        link: { label: "Preparing the site and base for a cabin", href: "/products/portable-cabin/installation-and-site-preparation" },
+        link: { label: "Preparing the site and base for a cabin", href: "/guides/portable-cabin-installation-and-site-preparation" },
       },
     ],
 
@@ -11471,8 +11471,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Office Containers", href: "/products/category/site-office-containers" },
       { label: "Security Cabin Range", href: "/products/category/security-cabins" },
       { label: "Keeping a Cabin Cool: Insulation Guide", href: "/products/portable-cabin/insulation-and-cooling" },
-      { label: "MS or PUF Panels: Material Guide", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "MS or PUF Panels: Material Guide", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Cabin Transport and Delivery Guide", href: "/guides/portable-cabin-transport-and-delivery" },
       { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Portable Shops in Shivamogga's Machenahalli Area", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
       { label: "Shop Cabins for Hebbal's Office Areas, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
@@ -12372,7 +12372,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Industrial Hassan",
         text: "Industrial areas and SEZ surroundings, such as the KIADB Hassan Growth Centre and the areas around the KIADB textile and pharmaceutical SEZs, may support permitted retail businesses serving employees, contractors and visitors. Possible shop cabin applications include fancy stores, snacks and daily essentials shops, mobile accessory counters, compact retail kiosks and smart-finish kiosks for approved commercial locations.",
-        link: { label: "Layouts and interiors for a compact retail cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Layouts and interiors for a compact retail cabin", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Hassan City",
@@ -12387,7 +12387,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Heritage and Agricultural Hassan",
         text: "The district includes heritage destinations, such as Belur, Halebidu and Shravanabelagola, and agricultural communities. Possible applications include souvenir kiosks, pooja and flower stalls, agricultural input shops and village convenience stores. Heritage-area placement and regulated agricultural product sales require appropriate approvals.",
-        link: { label: "Preparing the base and access at a rural site", href: "/products/portable-cabin/installation-and-site-preparation" },
+        link: { label: "Preparing the base and access at a rural site", href: "/guides/portable-cabin-installation-and-site-preparation" },
       },
     ],
 
@@ -12615,7 +12615,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Security Guard Cabins", href: "/products/security-cabin" },
       { label: "Container Site Office", href: "/products/container-site-office" },
       { label: "All Portable Cabin Models", href: "/products/category/portable-cabins" },
-      { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Cabin Transport and Delivery Guide", href: "/guides/portable-cabin-transport-and-delivery" },
       { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Portable Shop Cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
       { label: "Portable Shop Cabins in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
@@ -13767,7 +13767,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabin Models", href: "/products/category/portable-toilet-cabins" },
       { label: "4-Unit Portable Toilet Block", href: "/products/portable-toilet-block-4-unit" },
       { label: "Container Site Offices", href: "/products/category/site-office-containers" },
-      { label: "Preparing the Site and Base", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Preparing the Site and Base", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Toilet Cabin in Karnataka", href: "/promotions/portable-toilet-cabin-in-karnataka" },
     ],
     nearbyLinks: {
@@ -14028,7 +14028,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
       { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
@@ -14908,7 +14908,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Sugarcane Juice Kiosk",
         text: "A portable sugarcane juice kiosk may include a serving window, an equipment counter, a power provision for the crusher, washable surfaces, a water supply, a drainage outlet, insect mesh, space for bagasse collection and a shade canopy. The crusher's actual electrical load and dimensions must be confirmed before the layout is finalised.",
-        link: { label: "How cabin interiors and layouts are planned", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "How cabin interiors and layouts are planned", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Jaggery and Local Produce Shop",
@@ -14923,7 +14923,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Tender Coconut Stall",
         text: "Possible features include an open-front service counter, a shade awning, coconut storage, a husk collection area, washable floor or counter surfaces and suitable drainage.",
-        link: { label: "Preparing the base and drainage on site", href: "/products/portable-cabin/installation-and-site-preparation" },
+        link: { label: "Preparing the base and drainage on site", href: "/guides/portable-cabin-installation-and-site-preparation" },
       },
       {
         title: "Tourist Kiosk",
@@ -15211,7 +15211,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Office Cabin Range", href: "/products/category/portable-cabins" },
       { label: "Security Cabins and Guard Booths", href: "/products/category/security-cabins" },
       { label: "Site Office Containers", href: "/products/category/site-office-containers" },
-      { label: "Insulated PUF or MS: Which Material?", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Insulated PUF or MS: Which Material?", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
     ],
     nearbyLinks: {
@@ -15873,7 +15873,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
       { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
-      { label: "MS or PUF Cabin Materials", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "MS or PUF Cabin Materials", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Container Site Office", href: "/products/container-site-office" },
     ],
@@ -17511,8 +17511,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Office Cabins with a Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
       { label: "All Portable Cabins", href: "/products/category/portable-cabins" },
       { label: "Site Office Containers", href: "/products/category/site-office-containers" },
-      { label: "Portable Cabin Layouts and Interiors", href: "/products/portable-cabin/layouts-and-interiors" },
-      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabin Layouts and Interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
       { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Request an Office Cabin Quotation", href: "/contact" },
@@ -20419,7 +20419,7 @@ export const CITY_PAGES: CityPage[] = [
    *
    * KEYWORD OWNERSHIP: shipping / storage container × JP Nagar, for home rebuilds, downsizing and
    * school storage. Bellandur keeps household, society and shop storage in Bellandur; Marathahalli ORR
-   * keeps commercial storage on the ORR; Koramangala (/products/shipping-container-in-kormangala)
+   * keeps commercial storage on the ORR; Koramangala (/products/used-20ft-shipping-container-as-is-grade)
    * keeps offices, cafés and conversions. No other shipping page names JP Nagar or its localities.
    * Bannerghatta Road brief (2026-11-16): Arekere, Bilekahalli, Gottigere and Bannerghatta Road moved to
    * the Bannerghatta Road page; the areas text is that brief's replacement, plus a "Bannerghatta Road" link.
@@ -23977,7 +23977,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Cabins", href: "/products/category/portable-cabins" },
       { label: "Insulated Portable Cabins: PUF Panels & Cooling", href: "/products/portable-cabin/insulation-and-cooling" },
-      { label: "Portable Cabin Installation & Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabin Installation & Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
       { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
@@ -34005,8 +34005,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "Line by line, against your own plot and your own drawing — free, and yours to take to another builder for comparison.",
       },
       {
-        title: "An ISO 9001:2015 certified company",
-        text: "Certificate QT-99968/0726, alongside GST registration and Udyam registration — all verifiable, all stated in full on our contact page.",
+        title: "GST and Udyam registered",
+        text: "GST registration and Udyam registration — both verifiable, both stated in full on our contact page.",
       },
     ],
 
@@ -34260,7 +34260,7 @@ export const CITY_PAGES: CityPage[] = [
 
     solutionsHeading: "What a Complete Camp from Us Includes",
     solutionsIntro:
-      "Everything is built at our factory at Kamandoddi, near Hosur, under our ISO 9001:2015 system, delivered on trailers and placed by hydra. Your written quotation sets out the programme for your camp; a 500-worker camp is phased so the first blocks are occupied while the rest are being built. Block by block, this is what you get. For unit specifications and pricing, see the Labour Colony and Workmen Accommodation product pages linked at the end of this page.",
+      "Everything is built at our factory at Kamandoddi, near Hosur, delivered on trailers and placed by hydra. Your written quotation sets out the programme for your camp; a 500-worker camp is phased so the first blocks are occupied while the rest are being built. Block by block, this is what you get. For unit specifications and pricing, see the Labour Colony and Workmen Accommodation product pages linked at the end of this page.",
     solutions: [
       {
         title: "Dormitory blocks",
@@ -34390,8 +34390,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "Every block has lifting lugs and goes to your next site on a trailer. If you would rather not keep it, ask us about buy-back.",
       },
       {
-        title: "An ISO 9001:2015 certified company",
-        text: `Certificate ${COMPANY.isoCertificate}, alongside GST registration and Udyam (MSME) registration — all verifiable, all stated in full in the footer of every page, including our contact page.`,
+        title: "GST and Udyam (MSME) registered",
+        text: `GST registration and Udyam (MSME) registration — both verifiable, both stated in full in the footer of every page, including our contact page.`,
       },
     ],
 
@@ -34482,7 +34482,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
     ],
 
-    disclaimer: `Portable Office Cabin — ISO 9001:2015 certified (${COMPANY.isoCertificate}), Udyam (MSME) registered. Factory: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The compliance notes on this page summarise the Building and Other Construction Workers Act, the Contract Labour (Regulation and Abolition) Act and related rules as planning guidance only; they are not legal advice. The Karnataka labour department and local authorities are independent statutory bodies with which Portable Office Cabin is not affiliated.`,
+    disclaimer: `Portable Office Cabin — Udyam (MSME) registered. Factory: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The compliance notes on this page summarise the Building and Other Construction Workers Act, the Contract Labour (Regulation and Abolition) Act and related rules as planning guidance only; they are not legal advice. The Karnataka labour department and local authorities are independent statutory bodies with which Portable Office Cabin is not affiliated.`,
   },
   /* ────────────────────────────────────────────────────────────────────────────────────────
    * HOUSE CONSTRUCTION SERVICES AND CONTRACTOR IN ELECTRONIC CITY, BANGALORE
@@ -36052,7 +36052,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Cabins on Rent", href: "/rental-service" },
-      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/refurbished-20ft-shipping-container" },
       { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
       { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
@@ -37473,7 +37473,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Container Offices", href: "/products/category/container-offices" },
-      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/refurbished-20ft-shipping-container-industrial" },
       { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
       { label: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
       { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
@@ -38453,7 +38453,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Container Offices", href: "/products/category/container-offices" },
-      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/refurbished-20ft-shipping-container-industrial" },
       { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
       { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
@@ -38900,7 +38900,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Tailoring and Alteration Shop Cabin",
         text: "Possible features include space for a sewing machine, a worktable, good task lighting, a clothing rail, material storage and electrical sockets.",
-        link: { label: "Planning a workroom layout inside a cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Planning a workroom layout inside a cabin", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Salon and Barber Shop Cabin",
@@ -38917,7 +38917,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Courier and Parcel Counter",
         text: "Possible features include a parcel receiving counter, sorting shelves, lockable storage, a suitable electrical provision and a customer service window.",
-        link: { label: "Cabin sizes and dimensions explained", href: "/products/portable-cabin/sizes-and-dimensions" },
+        link: { label: "Cabin sizes and dimensions explained", href: "/guides/portable-cabin-sizes-and-dimensions" },
       },
     ],
 
@@ -39160,9 +39160,9 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Container Site Offices", href: "/products/category/site-office-containers" },
-      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
-      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Preparing the Site and Base", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/refurbished-20ft-shipping-container-industrial" },
+      { label: "MS or PUF: Choosing the Material", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Preparing the Site and Base", href: "/guides/portable-cabin-installation-and-site-preparation" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -40994,7 +40994,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Granite Quarries and Processing Units",
         text: "Quarry entrances, machinery yards and block storage areas are often remote, with dust and heavy vehicles close by. A robust MS watchman cabin with a lockable steel door, window grills and a raised base suits these positions; the dust exposure and vehicle movement at the site decide where it is placed.",
-        link: { label: "Choosing MS or PUF for a quarry cabin", href: "/products/portable-cabin/materials-ms-vs-puf" },
+        link: { label: "Choosing MS or PUF for a quarry cabin", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       },
       {
         title: "Warehouses and Highway Truck Yards",
@@ -41220,7 +41220,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cabin Insulation and Cooling", href: "/products/portable-cabin/insulation-and-cooling" },
       { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "Container Site Office", href: "/products/container-site-office" },
-      { label: "Portable Toilet Cabin", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
       { label: "MS Container Office Cabin", href: "/products/ms-container-office-cabin" },
       { label: "Security Cabin in Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
@@ -41366,7 +41366,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Petty Shop / Bunk Shop",
         text: "A compact prefabricated shop cabin for daily essentials, packaged snacks, bottled drinks, mobile recharges and small retail operations. It can be fitted with a rolling shutter, a counter, shelving and electrical points.",
-        link: { label: "Compare portable cabin sizes", href: "/products/portable-cabin/sizes-and-dimensions" },
+        link: { label: "How to choose a portable cabin size", href: "/guides/portable-cabin-sizes-and-dimensions" },
       },
       {
         title: "Tea Stall and Snack Kiosk",
@@ -41389,7 +41389,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Convenience Store / Mini Supermarket",
         text: "A larger prefabricated shop layout with shelving, a billing counter, storage and space for refrigeration equipment, where the electrical load and ventilation are designed for it.",
-        link: { label: "Plan the shop layout and interior", href: "/products/portable-cabin/layouts-and-interiors" },
+        link: { label: "Plan the shop layout and interior", href: "/guides/portable-cabin-layouts-and-interiors" },
       },
       {
         title: "Pharmacy Kiosk",
@@ -41399,7 +41399,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Container Shop",
         text: "A retail shop conversion using a shipping container structure, with engineered openings, shutters, display windows and branding. Openings in a container's walls have to be designed for the structure, so the front is fixed before fabrication starts.",
-        link: { label: "Shipping containers in Krishnagiri", href: "/products/shipping-container-in-krishnagiri" },
+        link: { label: "Shipping containers in Krishnagiri", href: "/products/refurbished-20ft-shipping-container-premium" },
       },
     ],
 
@@ -41599,12 +41599,12 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
-      { label: "Shipping Container in Krishnagiri", href: "/products/shipping-container-in-krishnagiri" },
+      { label: "Shipping Container in Krishnagiri", href: "/products/refurbished-20ft-shipping-container-premium" },
       { label: "Cargo and Storage Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
-      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "MS or PUF: Choosing the Material", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/guides/portable-cabin-installation-and-site-preparation" },
       { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
       { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
@@ -41739,7 +41739,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Mine and Quarry Check Posts",
         text: "Mineral operations around Salem, including magnesite mining and quarrying, may need entry and exit monitoring for vehicles, equipment and personnel. A check post cabin can be planned with suitable observation windows, a document-pass counter, space for registers, protected electrical fittings and dust-conscious window and door arrangements, with a view toward the approved vehicle-checking area. A raised document window can be considered where the vehicle dimensions and safe traffic arrangements allow. The cabin is not dustproof, and its view covers the checking area rather than the whole site.",
-        link: { label: "MS sheet or PUF panel for a check post", href: "/products/portable-cabin/materials-ms-vs-puf" },
+        link: { label: "MS sheet or PUF panel for a check post", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       },
       {
         title: "Sago Factory Gates",
@@ -41754,7 +41754,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Truck Yards and Transport Companies",
         text: "Transport yards around Sankagiri and along the NH 44 and NH 544 corridors may need a security booth for vehicle-entry monitoring and recordkeeping. Possible features include a vehicle-entry observation window, a document counter, CCTV and floodlight mounting provisions, space for communication equipment and suitable exterior lighting.",
-        link: { label: "Preparing the base at a yard entrance", href: "/products/portable-cabin/installation-and-site-preparation" },
+        link: { label: "Preparing the base at a yard entrance", href: "/guides/portable-cabin-installation-and-site-preparation" },
       },
       {
         title: "Steel and Engineering Units",
@@ -41964,7 +41964,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "PUF Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
       { label: "Insulated Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
-      { label: "Portable Toilet Cabins", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Security Cabins Across Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
     ],
     nearbyLinks: {
@@ -42347,10 +42347,10 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Security Cabins", href: "/products/category/security-cabins" },
       { label: "Security Cabin", href: "/products/security-cabin" },
       { label: "Guard Security Cabin", href: "/products/guard-security-cabin" },
-      { label: "Portable Toilet Cabin", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
       { label: "Planning a cabin with a toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
       { label: "Cabin insulation and cooling guide", href: "/products/portable-cabin/insulation-and-cooling" },
-      { label: "MS and PUF cabin materials compared", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "MS and PUF cabin materials compared", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
       { label: "Container Site Office", href: "/products/container-site-office" },
       { label: "Security Cabin in Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
@@ -42887,7 +42887,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "All Security Cabin Models", href: "/products/category/security-cabins" },
       { label: "Guard Security Cabin with All-Round Windows", href: "/products/guard-security-cabin" },
-      { label: "MS Sheet or PUF Panel Cabins", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "MS Sheet or PUF Panel Cabins", href: "/guides/portable-cabin-materials-ms-vs-puf" },
       { label: "PUF Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
       { label: "Security Cabin in Bangalore", href: "/promotions/security-cabin-in-bangalore" },
       { label: "Security Cabin in Karnataka", href: "/promotions/security-cabin-in-karnataka" },
@@ -43323,7 +43323,7 @@ export const CITY_PAGES: CityPage[] = [
    * KEYWORD OWNERSHIP: shipping / storage / cargo container and container rental × Dharmapuri,
    * Adhiyamankottai and Palacode. The Dharmapuri toilet page keeps site sanitation (the two pages link
    * to each other); the Mettur, Salem shipping page no longer lists Dharmapuri in its areas line. The
-   * Krishnagiri container product page (/products/shipping-container-in-krishnagiri) keeps its own
+   * Krishnagiri container product page (/products/refurbished-20ft-shipping-container-premium) keeps its own
    * title, meta and uses; it names Dharmapuri only as a delivery area in its body.
    *
    * LINKS (brief §5): the toilet page and /products/shipping-container-rental are live (HTTP 200).
@@ -45195,7 +45195,7 @@ export const CITY_PAGES: CityPage[] = [
    *   • FAQs (six) → faqs; the closing request → CTA + the cargo-category enquiry form (rental models
    *     kept: rental is in this brief's scope).
    * INSPECTION LINK (brief section 5): the Chennai shipping-container page
-   * (/products/shipping-container-in-chennai) has no used-container inspection checklist, only one
+   * (/products/used-20ft-shipping-container-wind-water-tight) has no used-container inspection checklist, only one
    * line that units are inspected before sale, so the anchor "how to inspect a used container" points
    * at /products/cargo-storage-containers, whose "Key Inspection Points" list and FAQ cover it.
    * Not claimed: delivery to every location, fixed timelines, guaranteed grades, high-cube stock,
@@ -47265,7 +47265,7 @@ export const CITY_PAGES: CityPage[] = [
    * text, the enquiry-form heading and intro, and the image alt text and captions.
    *
    * INTERLINKS (brief section 5): the rental link is in place (live, 200). The brief's Chennai target
-   * was checked: /products/shipping-container-in-chennai has no inspection checklist, so "how to
+   * was checked: /products/used-20ft-shipping-container-wind-water-tight has no inspection checklist, so "how to
    * inspect a used container" points at /products/cargo-storage-containers ("Key Inspection Points"),
    * the same target the Uttara Kannada shipping page uses for this anchor (one anchor, one target
    * across the site). It is therefore not repeated in the related links. The Vellore link (added by #231, the
@@ -51940,7 +51940,7 @@ export const CITY_PAGES: CityPage[] = [
     areasInlineLinks: [
       {
         before: "Factories in the Peenya Industrial Area, a little further north-west, are covered on our page on",
-        link: { label: "shipping containers for Peenya Industrial Area", href: "/products/shipping-container-in-peenya-industrial" },
+        link: { label: "shipping containers for Peenya Industrial Area", href: "/products/used-20ft-shipping-container-cargo-worthy" },
         after: ".",
       },
       // Vijayanagar, Bengaluru brief (2026-11-18): upholstery workshops and agarbatti units are that page's intent.
@@ -53215,7 +53215,7 @@ export const CITY_PAGES: CityPage[] = [
     areasInlineLinks: [
       {
         before: "Running a factory in the Peenya Industrial Area instead? See our page on",
-        link: { label: "storage containers for Peenya's industrial units", href: "/products/shipping-container-in-peenya-industrial" },
+        link: { label: "storage containers for Peenya's industrial units", href: "/products/used-20ft-shipping-container-cargo-worthy" },
         after: ".",
       },
       // Malleshwaram brief (2026-11-19, §5): picture framing and salvage stock are that page's intent.
@@ -60581,11 +60581,11 @@ export const CITY_PAGES: CityPage[] = [
    * they do not repeat the sibling shipping-container pages (8-word shingle check).
    *
    * INTERLINKS (brief section 5): the rental link is in place (live, 200). The Chennai shipping-container
-   * page (/products/shipping-container-in-chennai) still has no used-container inspection checklist
+   * page (/products/used-20ft-shipping-container-wind-water-tight) still has no used-container inspection checklist
    * (checked live 2026-11-08), so "how to inspect a used container" points at
    * /products/cargo-storage-containers ("Key Inspection Points"), the target the owner chose for
    * Coimbatore and the one Uttara Kannada and the hydel page use: one anchor, one target. The Krishnagiri
-   * container page (/products/shipping-container-in-krishnagiri) has no quarry content, so the brief's
+   * container page (/products/refurbished-20ft-shipping-container-premium) has no quarry content, so the brief's
    * optional quarry link is omitted. The Karnataka shipping-container hub (seoPromotions) and the cargo
    * category's location links list this page.
    *
@@ -64113,7 +64113,8 @@ export const CITY_PAGES: CityPage[] = [
    * section); used container inspection → "used shipping container inspection": the brief's
    * /shipping-container-chennai is not a route and the Chennai product page has one sentence on inspection,
    * so it points to the Athipattu page's checklist, as the sibling pages do; rental → the rental product;
-   * areas → Banaswadi, Indiranagar and the Bengaluru shipping promotion ("shipping container solutions
+   * areas → Banaswadi, Indiranagar, Richmond Town (the Richmond Town brief's §28 reciprocal) and the Bengaluru
+   * shipping promotion ("shipping container solutions
    * across Bengaluru"). NOT linked, because no such page exists: Cox Town, Cooke Town, Richards Town, Benson
    * Town, Pottery Town, Tannery Road, Shivajinagar, Vasanth Nagar, Ulsoor, St Thomas Town, Kammanahalli,
    * Lingarajapuram, Hulimavu (no shipping page; Hulimavu is a content brief, not a route) and a refrigerated
@@ -64130,7 +64131,8 @@ export const CITY_PAGES: CityPage[] = [
    * spare furniture, bakery and catering utensils, Ramzan and festival-season non-food stock and community
    * hall furniture. Mosque Road, Coles Road and Wheeler Road are named as local road references only (areas
    * and delivery copy), not as keywords. Named only in the pointer sentences to their own pages: Banaswadi
-   * and Lingarajapuram (Banaswadi page), Halasuru and Indiranagar (Indiranagar page); Koramangala, Horamavu,
+   * and Lingarajapuram (Banaswadi page), Halasuru and Indiranagar (Indiranagar page), Richmond Town (Richmond
+   * Town page); Koramangala, Horamavu,
    * Hennur Road, Vellore and Bellandur only in their application links. Shivajinagar is named once, as the
    * wholesale market traders stock up at (brief §8), never as a target. Not named at all: Cox Town, Cooke
    * Town, Richards Town, Benson Town, Pottery Town, Tannery Road, Vasanth Nagar, St Thomas Town,
@@ -64224,6 +64226,13 @@ export const CITY_PAGES: CityPage[] = [
       {
         before: "Halasuru and Indiranagar, further south-east, are served from our page on",
         link: { label: "shipping containers in Indiranagar", href: "/cities-we-serve/shipping-container-indiranagar" },
+        after: ".",
+      },
+      // Richmond Town brief (2026-11-25, §28): office, hotel and restaurant refurbishment and professional event
+      // equipment storage in Richmond Town are that page's intent; this page's areas and targeting are unchanged.
+      {
+        before: "For office interior refurbishment, hotel renovations and professional event equipment storage in Richmond Town, explore our dedicated",
+        link: { label: "Richmond Town shipping container solutions", href: "/cities-we-serve/shipping-container-richmond-town" },
         after: ".",
       },
       {
@@ -68351,7 +68360,6 @@ export const CITY_PAGES: CityPage[] = [
     },
     relatedLinksHeading: "Related Products",
     relatedLinks: [
-      { label: "Portable Toilet Cabin Range", href: "/products/portable-toilet-cabin" },
       { label: "Portable Toilet Block - 4 Unit", href: "/products/portable-toilet-block-4-unit" },
       { label: "Compare Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Cabins with an Attached Toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
@@ -68417,7 +68425,7 @@ export const CITY_PAGES: CityPage[] = [
    * the returnable-packaging, scrap-segregation and early-spares uses. Portable Security Cabins in
    * Shoolagiri keeps gatehouses (the two pages link to each other once each; its link sits in its
    * project-stage section). Container Office in SIPCOT Shoolagiri keeps offices. The Krishnagiri
-   * container product page (/products/shipping-container-in-krishnagiri) keeps its own title, meta
+   * container product page (/products/refurbished-20ft-shipping-container-premium) keeps its own title, meta
    * and uses and does not name Shoolagiri, so the brief's "link the existing Shoolagiri mention" has
    * nothing to link.
    *
@@ -70107,9 +70115,9 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Construction Site Portable Office", href: "/products/construction-site-portable-office" },
       { label: "Marketing Office", href: "/products/marketing-office" },
       { label: "Portable Cabin with Attached Toilet and Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
-      { label: "Portable Cabin Layouts and Interior Ideas", href: "/products/portable-cabin/layouts-and-interiors" },
-      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
-      { label: "Portable Cabin Transport and Delivery", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Cabin Layouts and Interior Ideas", href: "/guides/portable-cabin-layouts-and-interiors" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
+      { label: "Portable Cabin Transport and Delivery", href: "/guides/portable-cabin-transport-and-delivery" },
       { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
     ],
     nearbyLinks: {
@@ -70915,7 +70923,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "To compare MS sheet and PUF panel construction before you decide, see our guide to",
-            link: { label: "portable cabin materials", href: "/products/portable-cabin/materials-ms-vs-puf" },
+            link: { label: "portable cabin materials", href: "/guides/portable-cabin-materials-ms-vs-puf" },
             after: ".",
           },
         ],
@@ -70972,7 +70980,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For what to prepare before a cabin arrives, see our guide to",
-            link: { label: "portable cabin installation and site preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+            link: { label: "portable cabin installation and site preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
             after: ".",
           },
         ],
@@ -71312,7 +71320,7 @@ export const CITY_PAGES: CityPage[] = [
             inlineLinks: [
               {
                 before: "Partitions are fitted at the factory, before the cabin leaves. For how a cabin is divided into rooms, see our guide to",
-                link: { label: "portable cabin layouts and interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+                link: { label: "portable cabin layouts and interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
                 after: ".",
               },
             ],
@@ -71499,7 +71507,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For standard footprints and internal measurements, see our",
-            link: { label: "portable cabin sizes and dimensions guide", href: "/products/portable-cabin/sizes-and-dimensions" },
+            link: { label: "portable cabin sizes and dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
             after: ".",
           },
         ],
@@ -71542,7 +71550,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For how size, insulation and fit-out shape the cost, see our",
-            link: { label: "portable cabin price guide", href: "/products/portable-cabin/price-and-cost-guide" },
+            link: { label: "portable cabin cost guide", href: "/guides/portable-cabin-price-and-cost" },
             after: ".",
           },
         ],
@@ -71580,7 +71588,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "The cabin needs a level base and a clear approach when it arrives. For what to prepare, see our guide to",
-            link: { label: "preparing a site for cabin delivery", href: "/products/portable-cabin/installation-and-site-preparation" },
+            link: { label: "preparing a site for cabin delivery", href: "/guides/portable-cabin-installation-and-site-preparation" },
             after: ".",
           },
         ],
@@ -71681,12 +71689,1109 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN RICHMOND TOWN — temporary offices during commercial refurbishment, reception and
+   * customer-service cabins, security and valet booths, site offices, sales and registration counters and
+   * institutional admin cabins for central Bengaluru properties.
+   *
+   * Owner brief of 2026-11-25 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — Portable Cabin in Richmond
+   * Town", Downloads/Portable Cabin in Richmond Town.docx): SEO title (the "Rent & Sale" variant: /rental-service
+   * hires out site office and security guard cabins), meta description, H1, keywords, section order, H2 / H3
+   * headings, the three tables and the ten FAQs are the brief's, and so is the copy, lightly edited for flow and
+   * British spelling. Route: the city-page convention /cities-we-serve/portable-cabin-richmond-town (the brief's
+   * own canonical rule); no root-level page. The brief's notes to the implementer are applied, not printed:
+   *   • sizes: the catalogue's common footprints are 10×8, 20×8 and 40×8 ft (sizes guide) and guard cabins come
+   *     in 4×4 and 6×6 ft (porta cabin and portable cabin pages), so the brief's table is captioned as planning
+   *     examples, not stock or certified occupancy; no universal internal height is published;
+   *   • specifications: the construction table separates typical items (the office cabin page's MS frame,
+   *     primer and paint, concealed wiring, MCB box, LED lights, AC point and bracket; aluminium sliding windows
+   *     from the MS cabin page) from optional ones; PUF thickness is "as specified" (the site states 40–50 mm
+   *     PUF or EPS, so 50 mm is not published as standard); MDF only "where suitable" (offered as an interior
+   *     finish package); ACP on request (security cabin page); a wood-look exterior is not claimed as stock;
+   *   • rental: /rental-service hires out 10×10 and 20×10 ft site office cabins and an 8×8 ft security guard
+   *     cabin, each with a minimum period, and no furnished unit, so the section says so without rates or
+   *     periods, fitted reception or valet cabins on hire are confirmed per quotation, and the brief's
+   *     "furnished portable cabin rental" keyword is dropped;
+   *   • no price, delivery time, same-day installation, night delivery, temperature, energy or acoustic promise;
+   *     no claim that building management approval alone is enough; relocation is "may be possible";
+   *   • no Kannada copy on the page, so the brief's optional Kannada keywords are not used; "Portakabin" is not
+   *     used anywhere.
+   * Written for the slots: the tagline, the link lead-ins, the image alt text and captions, the two table
+   * captions, the enquiry-checklist lead-in and the disclaimer.
+   * Mapped onto the template in the brief's order (no template change):
+   *   • H1, tagline, intro (the brief's seven paragraphs, plus where the cabins are built), `introLink` (the
+   *     portable cabins category) and the heroCta row (quotation · Call · WhatsApp).
+   *   • Applications, refurbishment offices, reception cabins, security booths, valet booths, site offices,
+   *     sales / registration counters, institutional cabins, sizes (table), construction specifications
+   *     (table), MS / GI / PUF, interior finishing, exterior finishes, AC & attached toilet, rent, sale, renting
+   *     versus buying (the brief's H3 table, an H2 here because a subsection has no table), delivery &
+   *     installation and price → afterSolutions extra sections; their H3s are `subsections`.
+   *   • "Areas We Serve Near Richmond Town" → areas; the brief's enquiry checklist → an extra section without a
+   *     placement (after the areas, before the FAQs); the FAQs; the CTA (phone, WhatsApp and e-mail from
+   *     COMPANY). No enquiry form: the portable-cabins category has no category landing, so /api/enquiries
+   *     rejects it (as on the other portable cabin pages); the buttons go to /contact, phone and WhatsApp.
+   *
+   * LINKS (brief §31, every route checked live 200 / index on build a62de02): intro → "portable and prefabricated
+   * cabins" (category); applications → "standalone portable toilets" (portable toilet cabin page); refurbishment
+   * → "portable office cabin solutions" (office portable cabin page); security → "portable security cabins and
+   * guard booths" (security cabin page); site offices → "portable site office cabins" (construction site portable
+   * office page); sales → "portable sales and marketing offices" (prefab marketing office page); sizes → sizes
+   * guide; specifications → "MS portable cabin specifications" (MS portable cabin page); MS / GI / PUF → "PUF
+   * insulated portable cabins" (insulation and cooling guide); interiors → layouts guide; AC & toilet →
+   * "portable cabins with attached toilets" (toilet and pantry guide); rent → /rental-service; delivery →
+   * installation guide; price → price guide; areas → "portable cabins across Bengaluru" (Bangalore hub).
+   * Brief §32 (mandatory two-way link with the Richmond Town shipping container page, session 32's
+   * /cities-we-serve/shipping-container-richmond-town, not yet released): whichever page is released SECOND adds
+   * both halves — this page's applications section ("shipping containers in Richmond Town") and the last
+   * `areasInlineLinks` item on that page ("portable cabin in Richmond Town"). Inbound: the Bangalore hub
+   * ("Richmond Town – Temporary Offices & Commercial Cabins", the brief's hub anchor), the Karnataka portable
+   * hub ("Portable Cabins in Richmond Town"), the Karnataka porta hub ("Porta Cabins in Richmond Town") and the
+   * /cities-we-serve directory.
+   *
+   * KEYWORD OWNERSHIP: portable / porta / prefab / prefabricated / movable / ready-built cabin × Richmond Town,
+   * Richmond Road and Richmond Circle, for occupied working space: temporary offices during commercial
+   * refurbishment, reception and customer-service cabins, hotel and restaurant valet / parking booths,
+   * commercial service and ticket counters, event registration and admission counters, and institutional admin
+   * cabins. Not targeted: shipping, cargo or storage containers (the Richmond Town shipping page), container
+   * office or container cabin (container-conversion pages), portable shops, standalone toilets, and the
+   * neighbouring localities (named only in the areas paragraph; none has a portable cabin page). "Bengaluru"
+   * stays out of the title; the geo meta and the Service JSON-LD's areaServed carry "Richmond Town, Bengaluru".
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Portable Cabin in Richmond Town city
+   * page/Portable Cabin in Richmond Town/cabin (1–5).webp", no EXIF / XMP / ICC) of one olive-green
+   * corrugated-steel cabin. Each is copied with an XMP dc:title / dc:description that labels it a render (no
+   * creator, GPS or date). (1) three-quarter exterior = hero / og:image (the brief's
+   * "portable-cabin-richmond-town"); (5) furnished office interior = refurbishment section; (2) front elevation
+   * = exterior finishes; (3) rear wall with the AC outdoor unit = AC & toilet section — the unit's manufacturer
+   * logo is covered with a patch of its own plain panel (the brief: no third-party logos), the only pixel
+   * change, so (3) is re-encoded once; (4) top view = delivery & installation. (1), (2), (4) and (5) keep their
+   * VP8 data byte-for-byte. None shows a reception counter, guard booth, valet booth, toilet, ACP, glass front
+   * or crane, so those image slots are not used and no alt text or caption claims them.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (provider = our factory,
+   * areaServed = Richmond Town, alternateName = the porta and prefabricated cabin names, no offers, so no
+   * Product schema with invented prices) and the hero's og:image size.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-richmond-town",
+    city: "Richmond Town",
+    listTitle: "Portable Cabins in Richmond Town",
+    metaTitle: "Portable Cabin in Richmond Town | Rent & Sale",
+    metaDescription:
+      "Portable cabins in Richmond Town for temporary offices, security booths, site offices and sales counters. Explore customised insulated cabin options.",
+    keywords:
+      "portable cabin in Richmond Town, porta cabin in Richmond Town, portable cabins Richmond Town, portacabin in Richmond Town, portable cabin manufacturers in Richmond Town, porta cabin manufacturers Richmond Town, portable cabin suppliers Richmond Town, prefab cabin Richmond Town, prefabricated cabin Richmond Town, movable cabin Richmond Town, ready-built cabin Richmond Town, portable cabin for sale in Richmond Town, portable cabin price in Richmond Town, buy portable cabin Richmond Town, customised portable cabin Richmond Town, portable cabin on rent in Richmond Town, porta cabin rental Richmond Town, portable office cabin Richmond Town, temporary office cabin Richmond Town, portable reception cabin Richmond Town, valet parking booth Richmond Town, parking ticket booth Richmond Town, event registration cabin Richmond Town, portable site office Richmond Town, portable cabin Richmond Road, portable cabin Richmond Circle",
+    // Approximate point in central Richmond Town, south of Richmond Road, the same as the Richmond Town
+    // shipping-container page (rounded; owner to confirm). PIN 560025.
+    geo: {
+      region: "IN-KA",
+      placename: "Richmond Town, Bengaluru, Karnataka, India",
+      position: "12.9620;77.6030",
+      icbm: "12.9620, 77.6030",
+    },
+    motion: true,
+    // Brief §2 / §39: "porta cabin" and the prefab synonym as the Service's other names.
+    serviceJsonLd: { serviceType: "Portable Cabin", alternateName: ["Porta Cabins in Richmond Town", "Prefabricated Cabins in Richmond Town"] },
+    // The hero is 1445 × 1088 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-richmond-town/portable-cabin-richmond-town.webp",
+      alt: "Olive-green corrugated-steel portable cabin with two black-framed sliding windows, a steel door and entrance steps on a paved yard",
+      width: 1445,
+      height: 1088,
+      caption:
+        "Illustrative render of one cabin design, not photographed in Richmond Town. The window, door and finish choices for your cabin are agreed before it is built.",
+    },
+
+    h1: "Portable Cabin Manufacturers in Richmond Town",
+    tagline:
+      "Temporary offices, reception cabins, security and valet booths, site offices and sales counters for Richmond Town properties, built to your layout.",
+    intro: [
+      "Richmond Town is an established central Bengaluru neighbourhood with heritage residences, commercial offices, hotels, restaurants, educational institutions and residential developments.",
+      "Creating extra working space within an existing property can be difficult, particularly where permanent construction would need extensive alterations, approvals and a longer project schedule.",
+      "Portable Office Cabin manufactures and supplies prefabricated cabins for temporary offices, security staff, construction projects, reception areas and commercial service counters. The cabins are built at our factory near Hosur and delivered to your site.",
+      "Each cabin can be customised to the space available, the intended use, the insulation required, the electrical fittings and the interior layout.",
+      "Whether you need a temporary office during a building refurbishment, a security cabin at an entrance gate or a compact valet parking booth, we can suggest suitable prefabricated cabin options for your Richmond Town premises.",
+      "Cabins are manufactured with the structural framing, wall panels, roofing, doors, windows and electrical provisions set out in the approved quotation.",
+      "Delivery, installation and commissioning depend on site readiness, transport access and the approvals that apply.",
+    ],
+    // Brief §31: the main portable cabin category (which owns the head term) from the introduction.
+    introLink: {
+      before: "For our standard cabin designs, browse our",
+      link: { label: "portable and prefabricated cabins", href: "/products/category/portable-cabins" },
+      after: ".",
+    },
+    heroCta: true,
+
+    extraSections: [
+      {
+        heading: "Portable Cabin Applications in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: ["Portable cabins may be considered for:"],
+        bullets: [
+          { text: "Temporary office accommodation." },
+          { text: "Office refurbishment projects." },
+          { text: "Commercial reception areas." },
+          { text: "Security and entrance gate booths." },
+          { text: "Construction site offices." },
+          { text: "Hotel valet parking booths." },
+          { text: "Restaurant parking counters." },
+          { text: "Residential project sales offices." },
+          { text: "Event registration desks." },
+          { text: "Ticket counters." },
+          { text: "School admission counters." },
+          { text: "Temporary staff rooms." },
+          { text: "Institutional help desks." },
+          { text: "Property management offices." },
+        ],
+        // Brief §5: standalone washrooms belong to the portable toilet page. Brief §32: storage of furniture,
+        // equipment and inventory belongs to the Richmond Town shipping container page (the two pages' two-way link).
+        inlineLinks: [
+          {
+            before: "For a standalone washroom rather than an occupied cabin, see our",
+            link: { label: "standalone portable toilets", href: "/products/category/portable-toilet-cabins" },
+            after: ".",
+          },
+          {
+            before: "For furniture, equipment and inventory storage rather than an occupied working space, see our",
+            link: { label: "shipping containers in Richmond Town", href: "/cities-we-serve/shipping-container-richmond-town" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Temporary Office Cabins During Commercial Refurbishment",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-richmond-town/furnished-portable-office-cabin-richmond-town.webp",
+          alt: "Furnished portable office cabin interior with a desk and chairs, low cabinets, a wall TV, LED ceiling lights and two split ACs",
+          width: 1672,
+          height: 941,
+          caption:
+            "Illustrative render of a furnished office interior. Furniture, the false ceiling and AC units are included only where your quotation lists them.",
+        },
+        paragraphs: [
+          "Commercial establishments undergoing interior renovation may need temporary working accommodation while their permanent offices are being upgraded.",
+          "A suitably designed portable office cabin can provide a separate working area for administrative staff, managers and project teams.",
+        ],
+        subsections: [
+          {
+            heading: "Temporary staff accommodation",
+            paragraphs: ["Possible configurations include:"],
+            bullets: [
+              { text: "Open office workstations." },
+              { text: "Administrative desks." },
+              { text: "A manager's cabin." },
+              { text: "A reception desk." },
+              { text: "A small discussion area." },
+              { text: "Document cabinets." },
+              { text: "Electrical sockets." },
+              { text: "Network point provisions." },
+              { text: "LED lighting." },
+              { text: "Ceiling fans." },
+              { text: "AC provision." },
+            ],
+          },
+          {
+            heading: "Office layout options",
+            paragraphs: ["Depending on the cabin's dimensions and the number of occupants, layouts may include:"],
+            bullets: [
+              { text: "A single open-plan office." },
+              { text: "A manager's room behind a separate partition." },
+              { text: "A staff workstation area." },
+              { text: "A small meeting corner." },
+              { text: "A temporary reception and administration area." },
+            ],
+            closing: [
+              "A 20\u00a0ft or 30\u00a0ft cabin may suit a smaller office team, subject to the actual internal dimensions and the approved furniture layout.",
+            ],
+          },
+          {
+            heading: "Phased commercial refurbishment",
+            paragraphs: ["Temporary office cabins may support businesses during:"],
+            bullets: [
+              { text: "Office flooring replacement." },
+              { text: "Electrical renovation." },
+              { text: "Interior partition replacement." },
+              { text: "False ceiling work." },
+              { text: "Reception refurbishment." },
+              { text: "Commercial building upgrades." },
+            ],
+            closing: [
+              "A cabin used as an occupied office is designed for that use, with adequate ventilation, electrical safety, access and the fire safety requirements that apply.",
+            ],
+            inlineLinks: [
+              {
+                before: "For office cabin models and their standard fittings, see our",
+                link: { label: "portable office cabin solutions", href: "/products/office-portable-cabin" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Reception & Customer Service Cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hotels, offices and commercial establishments undergoing refurbishment may need a temporary reception area to keep customer-facing operations running.",
+        ],
+        subsections: [
+          {
+            heading: "Possible applications",
+            bullets: [
+              { text: "A temporary reception desk." },
+              { text: "Visitor registration." },
+              { text: "A customer enquiry counter." },
+              { text: "A building administration desk." },
+              { text: "A temporary help desk." },
+              { text: "A property management counter." },
+            ],
+          },
+          {
+            heading: "Optional configurations",
+            bullets: [
+              { text: "Glass viewing panels." },
+              { text: "A reception counter." },
+              { text: "Staff seating." },
+              { text: "LED lighting." },
+              { text: "Electrical outlets." },
+              { text: "AC provision." },
+              { text: "Document shelving." },
+              { text: "Approved signage." },
+            ],
+            closing: [
+              "The layout leaves enough room for staff to move and for customers to be served. Where needed, accessibility and the entrance arrangements are assessed too.",
+              "A reception cabin helps keep a front desk open during works, but the cabin alone cannot guarantee uninterrupted business operations.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Security Cabins & Guard Booths",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Portable security cabins may be considered for heritage residences, apartment entrances, office campuses and commercial premises.",
+        ],
+        subsections: [
+          {
+            heading: "Typical compact cabin sizes",
+            bullets: [{ text: "4\u00a0×\u00a04\u00a0ft." }, { text: "6\u00a0×\u00a06\u00a0ft." }, { text: "Customised dimensions." }],
+          },
+          {
+            heading: "Possible specifications",
+            bullets: [
+              { text: "MS or GI structural construction." },
+              { text: "Viewing windows." },
+              { text: "A lockable entrance door." },
+              { text: "An LED light." },
+              { text: "A fan." },
+              { text: "An electrical socket." },
+              { text: "A small desk or shelf." },
+              { text: "Intercom provision." },
+              { text: "Suitable ventilation." },
+            ],
+            closing: [
+              "Window placement is designed around the visibility the guard needs and the approved layout; all-round visibility is offered only where the chosen cabin design provides it.",
+            ],
+            // Brief §8: kept brief so the dedicated security cabin page keeps its keyword ownership.
+            inlineLinks: [
+              {
+                before: "For guard cabin models, sizes and specifications, see our",
+                link: { label: "portable security cabins and guard booths", href: "/products/security-cabin" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Hotel Valet & Parking Booths",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hotels, restaurants and commercial buildings in Richmond Town can use a compact cabin to manage parking.",
+        ],
+        subsections: [
+          {
+            heading: "Valet parking booth applications",
+            bullets: [
+              { text: "Hotel entrance management." },
+              { text: "Restaurant valet service." },
+              { text: "Commercial parking administration." },
+              { text: "Visitor vehicle registration." },
+              { text: "Parking ticket collection." },
+              { text: "A shelter for parking staff." },
+            ],
+          },
+          {
+            heading: "Possible features",
+            bullets: [
+              { text: "A compact service counter." },
+              { text: "Viewing windows." },
+              { text: "A sliding service window." },
+              { text: "A key organisation shelf." },
+              { text: "Staff seating." },
+              { text: "An electrical socket." },
+              { text: "LED lighting." },
+              { text: "A fan or ventilation provision." },
+              { text: "Optional approved branding." },
+            ],
+            closing: [
+              "The booth stands within an authorised area, clear of pedestrian movement, emergency access and vehicle circulation. It is never set on a public road or footpath unless the required permissions are in place.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Site Office Cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Construction and redevelopment projects in Richmond Town may need temporary accommodation for engineers, supervisors and project administration staff.",
+        ],
+        subsections: [
+          {
+            heading: "Possible applications",
+            bullets: [
+              { text: "Commercial redevelopment projects." },
+              { text: "Building refurbishment." },
+              { text: "Residential renovation." },
+              { text: "Property restoration." },
+              { text: "Construction project management." },
+            ],
+          },
+          {
+            heading: "Typical site office configurations",
+            bullets: [
+              { text: "A 20\u00a0×\u00a010\u00a0ft cabin." },
+              { text: "A 30\u00a0×\u00a010\u00a0ft cabin." },
+              { text: "Customised cabin dimensions." },
+            ],
+          },
+          {
+            heading: "Optional interior features",
+            bullets: [
+              { text: "An engineer's desk." },
+              { text: "A drawing table." },
+              { text: "A meeting table." },
+              { text: "Office chairs." },
+              { text: "Document storage." },
+              { text: "Internal partitions." },
+              { text: "LED lighting." },
+              { text: "Electrical sockets." },
+              { text: "AC provision." },
+              { text: "An attached toilet, where suitable." },
+            ],
+            closing: [
+              "A site office cabin may be moved to another project when this one finishes, subject to its structural condition, transport feasibility and site access.",
+            ],
+            inlineLinks: [
+              {
+                before: "For site office models and their full specifications, see our",
+                link: { label: "portable site office cabins", href: "/products/construction-site-portable-office" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Sales Offices, Ticket Counters & Registration Cabins",
+        placement: "afterSolutions",
+        paragraphs: ["Customised prefabricated cabins may be considered for temporary customer-facing commercial activities."],
+        subsections: [
+          {
+            heading: "Project sales offices",
+            paragraphs: ["Possible configurations include:"],
+            bullets: [
+              { text: "A customer consultation desk." },
+              { text: "Staff workstations." },
+              { text: "A display area." },
+              { text: "Reception seating." },
+              { text: "Glass frontage." },
+              { text: "AC provision." },
+              { text: "Approved branding." },
+            ],
+          },
+          {
+            heading: "Event registration cabins",
+            paragraphs: ["Possible configurations include:"],
+            bullets: [
+              { text: "A registration counter." },
+              { text: "Staff seating." },
+              { text: "Electrical sockets." },
+              { text: "Network provisions." },
+              { text: "Document shelves." },
+              { text: "A sliding service window." },
+            ],
+          },
+          {
+            heading: "Ticket and admission counters",
+            paragraphs: ["Possible applications include:"],
+            bullets: [
+              { text: "Event ticket counters." },
+              { text: "School admission counters." },
+              { text: "Institutional registration desks." },
+              { text: "Club event help desks." },
+              { text: "Parking ticket booths." },
+            ],
+            inlineLinks: [
+              {
+                before: "For sales gallery and site sales office designs, see our",
+                link: { label: "portable sales and marketing offices", href: "/products/marketing-office/prefab-marketing-office" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Educational & Institutional Cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Schools, churches, clubs and other institutions may need temporary working accommodation during renovation, maintenance or scheduled events.",
+          "Possible applications include:",
+        ],
+        bullets: [
+          { text: "Temporary administrative offices." },
+          { text: "Admission counters." },
+          { text: "Staff rooms." },
+          { text: "Visitor help desks." },
+          { text: "Event registration cabins." },
+          { text: "Maintenance supervision offices." },
+        ],
+        closing: [
+          "Each configuration is based on the intended occupancy, the site area available, accessibility and the safety requirements that apply. These are administrative working spaces: a portable cabin is not automatically approved for classroom or other institutional use.",
+        ],
+      },
+      {
+        heading: "Portable Cabin Sizes in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: ["Cabin dimensions are chosen to suit the placement space available, the intended use and the approved interior layout."],
+        // Sizes use no-break spaces (\u00a0) so a footprint never splits over two lines on a narrow phone; the short
+        // headers keep the four columns inside a 360 px screen.
+        table: {
+          caption: "Indicative planning examples, not certified occupancy limits or stock sizes.",
+          headers: ["Cabin size", "Floor area (sq ft)", "Indicative staff", "Typical use"],
+          rows: [
+            ["4\u00a0×\u00a04\u00a0ft", "16", "1 person", "Compact guard booth"],
+            ["6\u00a0×\u00a06\u00a0ft", "36", "1–2 people", "Gate cabin or valet booth"],
+            ["10\u00a0×\u00a08\u00a0ft", "80", "1–2 people", "Small site office or cashier cabin"],
+            ["20\u00a0×\u00a010\u00a0ft", "200", "3–4 people", "Site office or sales office"],
+            ["30\u00a0×\u00a010\u00a0ft", "300", "5–6 people", "Project office or reception"],
+            ["40\u00a0×\u00a010\u00a0ft", "400", "7–8 people", "Temporary commercial office"],
+          ],
+        },
+        closing: [
+          "Floor areas are nominal. The usable area depends on wall thickness, partitions, furniture, internal fittings and circulation space.",
+          "Our most common footprints are 10\u00a0×\u00a08, 20\u00a0×\u00a08 and 40\u00a0×\u00a08\u00a0ft; the other sizes above are confirmed in your quotation.",
+        ],
+        subsections: [
+          {
+            heading: "Customised cabin dimensions",
+            paragraphs: ["Customised dimensions may be considered, subject to:"],
+            bullets: [
+              { text: "Structural design." },
+              { text: "The intended application." },
+              { text: "Road transport restrictions." },
+              { text: "Vehicle availability." },
+              { text: "Site accessibility." },
+              { text: "Lifting requirements." },
+              { text: "The permissions that apply." },
+            ],
+            closing: [
+              "Internal height may be around 8\u00a0ft where the design supports it; the height of your cabin is stated in its quotation rather than assumed for every model.",
+            ],
+            inlineLinks: [
+              {
+                before: "Internal measurements for each standard footprint are listed in our",
+                link: { label: "portable cabin dimensions guide", href: "/guides/portable-cabin-sizes-and-dimensions" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin Construction Specifications",
+        placement: "afterSolutions",
+        paragraphs: [
+          "The specification of each cabin is set in its quotation. The table separates items typical of our office cabins from optional ones; not every cabin includes every item.",
+        ],
+        table: {
+          caption: "Typical = found in most office cabin quotations; optional or as specified = added only where your quotation lists it.",
+          headers: ["Component", "Specification", "Typical or optional"],
+          rows: [
+            ["Structural frame", "Welded mild steel sections", "Typical"],
+            ["Steel protection", "Anti-rust primer and paint system", "Typical"],
+            ["External wall", "MS or GI sheet, or insulated panel construction", "As specified"],
+            ["Roof", "Steel or insulated roofing system", "As specified"],
+            ["Insulation", "PUF (or another insulated panel) to the selected thickness", "As specified"],
+            ["Floor base", "Steel supporting structure", "Typical"],
+            ["Flooring board", "Cement fibre board or an approved alternative", "As specified"],
+            ["Floor finish", "Vinyl or another approved flooring", "As specified"],
+            ["Interior finish", "MDF or another specified lining, where suitable", "Optional"],
+            ["Windows", "Aluminium sliding windows or an approved alternative", "Typical"],
+            ["Door", "Lockable entrance door", "Typical"],
+            ["Electrical wiring", "Concealed wiring", "Typical"],
+            ["Lighting", "LED lights", "Typical"],
+            ["Ventilation", "Fans and suitable ventilation", "Typical"],
+            ["Electrical protection", "MCB distribution box and protective devices", "Typical"],
+            ["AC", "AC point and outdoor-unit bracket; the AC unit itself per quotation", "Provision typical, unit optional"],
+            ["Partitions", "To the approved layout", "Optional"],
+            ["Toilet", "Subject to design and site services", "Optional"],
+            ["Furniture", "Customised office furniture", "Optional"],
+            ["Exterior finish", "Painted steel; ACP or another approved finish on request", "Paint typical, ACP optional"],
+          ],
+        },
+        inlineLinks: [
+          {
+            before: "For frame, wall and roof details of our steel cabins, see our",
+            link: { label: "MS portable cabin specifications", href: "/products/ms-portable-cabin" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "MS, GI & PUF Insulated Portable Cabins",
+        placement: "afterSolutions",
+        subsections: [
+          {
+            heading: "MS portable cabins",
+            paragraphs: [
+              "Mild steel portable cabins may be considered for security booths, temporary offices and site administration. The final structure and protective coating follow the approved design.",
+            ],
+          },
+          {
+            heading: "GI portable cabins",
+            paragraphs: [
+              "Galvanised steel components may be used in suitable cabin configurations, according to the manufacturing specification. Galvanising slows corrosion; it does not remove the need for maintenance.",
+            ],
+          },
+          {
+            heading: "PUF insulated portable cabins",
+            paragraphs: [
+              "PUF insulated wall and roof panels can help reduce heat transfer compared with uninsulated metal construction. Actual indoor comfort depends on:",
+            ],
+            bullets: [
+              { text: "Insulation thickness." },
+              { text: "Panel construction." },
+              { text: "Roof exposure." },
+              { text: "The outdoor temperature." },
+              { text: "Window size." },
+              { text: "Ventilation." },
+              { text: "The number of occupants." },
+              { text: "Electrical equipment." },
+              { text: "AC capacity." },
+            ],
+            closing: [
+              "The PUF panel thickness for your cabin is stated in its quotation. We don't promise a particular temperature reduction, electricity saving or acoustic performance.",
+            ],
+            inlineLinks: [
+              {
+                before: "For how insulation and cooling are chosen, see our guide to",
+                link: { label: "PUF insulated portable cabins", href: "/products/portable-cabin/insulation-and-cooling" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin Interior Finishing",
+        placement: "afterSolutions",
+        paragraphs: ["Interior finishes are chosen to suit the intended use."],
+        subsections: [
+          {
+            heading: "Interior finishing options",
+            bullets: [
+              { text: "MDF interior lining, where suitable." },
+              { text: "Approved wall panels." },
+              { text: "A false ceiling." },
+              { text: "Vinyl flooring." },
+              { text: "LED lighting." },
+              { text: "Ceiling fans." },
+              { text: "Electrical sockets." },
+              { text: "Internal partitions." },
+              { text: "Office furniture." },
+              { text: "Network point provisions." },
+              { text: "AC provision." },
+            ],
+            closing: ["Interior materials are checked for moisture exposure, fire performance and the intended occupancy."],
+          },
+          {
+            heading: "Office furniture options",
+            bullets: [
+              { text: "A manager's table." },
+              { text: "Staff workstations." },
+              { text: "Pedestal drawer units." },
+              { text: "A meeting table." },
+              { text: "A reception counter." },
+              { text: "File cabinets." },
+              { text: "Overhead storage cabinets." },
+              { text: "Office chairs." },
+            ],
+            closing: ["Furniture is optional: it is supplied only where your quotation and approved layout include it."],
+            inlineLinks: [
+              {
+                before: "Partition, ceiling and furniture planning is explained in our",
+                link: { label: "guide to cabin layouts and interiors", href: "/guides/portable-cabin-layouts-and-interiors" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Exterior Finishes for Richmond Town Properties",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-richmond-town/portable-cabin-richmond-town-front-view.webp",
+          alt: "Front view of an olive-green portable cabin with two barred sliding windows, a steel door at one end and steel steps",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative render of a painted steel exterior. The colour, window canopies and lights are chosen with you before the cabin is built.",
+        },
+        paragraphs: [
+          "Richmond Town has established residences and commercial properties where the appearance of a portable cabin can matter.",
+          "Customised exterior finishes can be considered to suit the property.",
+        ],
+        subsections: [
+          {
+            heading: "ACP cladding",
+            paragraphs: ["Where offered, ACP cladding can give a different exterior appearance for:"],
+            bullets: [{ text: "Commercial reception cabins." }, { text: "Sales offices." }, { text: "Security cabins." }, { text: "Valet booths." }],
+            closing: ["The cladding system used meets the fire safety requirements that apply."],
+          },
+          {
+            heading: "Wood-look exterior finishes",
+            paragraphs: [
+              "Where available, a wood-look finish may be considered for appearance-sensitive properties. A wood-look finish is a decorative surface, not genuine timber.",
+            ],
+          },
+          {
+            heading: "Glass frontage",
+            paragraphs: ["Optional glass frontage may be considered for:"],
+            bullets: [
+              { text: "Reception cabins." },
+              { text: "Sales offices." },
+              { text: "Registration counters." },
+              { text: "Customer-facing commercial cabins." },
+            ],
+            closing: ["The glazing specification, privacy and safety are agreed for each cabin."],
+          },
+          {
+            heading: "Customised colours and branding",
+            paragraphs: ["Possible options include:"],
+            bullets: [
+              { text: "Neutral grey." },
+              { text: "White." },
+              { text: "Charcoal." },
+              { text: "Beige." },
+              { text: "Approved corporate colours." },
+              { text: "Authorised company branding." },
+            ],
+            closing: [
+              "Only finishes we actually offer are quoted, and no third-party logo is applied without authorisation. A considered exterior does not remove any heritage or planning approval the property needs.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin with AC & Attached Toilet",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-richmond-town/portable-office-cabin-ac-provision.webp",
+          alt: "Rear wall of an olive-green portable cabin with a split AC outdoor unit mounted on brackets",
+          width: 1774,
+          height: 887,
+          caption: "Illustrative render of a split AC outdoor unit on a wall bracket. The AC unit itself is supplied only where your quotation includes it.",
+        },
+        subsections: [
+          {
+            heading: "Air-conditioning options",
+            paragraphs: ["Depending on the approved cabin design, you can ask for:"],
+            bullets: [
+              { text: "AC electrical provision." },
+              { text: "Split AC installation." },
+              { text: "Suitable window AC installation." },
+              { text: "Approved outdoor-unit mounting arrangements." },
+            ],
+            closing: ["The electrical load, cooling requirement and AC specification are confirmed before the cabin is built."],
+          },
+          {
+            heading: "Attached toilet options",
+            paragraphs: ["Where the cabin is designed to take a toilet, possible fittings include:"],
+            bullets: [
+              { text: "A toilet compartment." },
+              { text: "A WC." },
+              { text: "A wash basin." },
+              { text: "Water supply provision." },
+              { text: "A drainage connection." },
+              { text: "Exhaust ventilation." },
+              { text: "Suitable moisture-resistant finishes." },
+            ],
+            closing: [
+              "Water supply and drainage at the site are checked first. A water tank, plumbing connection or sewage disposal arrangement is included only where your quotation lists it.",
+            ],
+            inlineLinks: [
+              {
+                before: "Plumbing, drainage and layout options for a cabin toilet are covered in our guide to",
+                link: { label: "portable cabins with attached toilets", href: "/products/portable-cabin/with-toilet-and-pantry" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin on Rent in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Renting can suit a temporary office refurbishment, a construction project, a commercial event or another short-term administrative need.",
+          "Our rental fleet includes standard site office cabins and a security guard cabin, each with its own minimum hire period; the listed rental units do not include furniture. A reception, valet or registration cabin fitted out to your layout is a custom build, so its availability on hire and the hire terms are set out in your quotation.",
+        ],
+        subsections: [
+          {
+            heading: "Possible rental applications",
+            bullets: [
+              { text: "A temporary office during refurbishment." },
+              { text: "Construction site administration." },
+              { text: "Hotel reception renovation." },
+              { text: "An event registration counter." },
+              { text: "A temporary valet booth." },
+              { text: "An institutional help desk." },
+            ],
+          },
+          {
+            heading: "Rental arrangements",
+            paragraphs: ["Your rental quotation confirms:"],
+            bullets: [
+              { text: "The cabin sizes available." },
+              { text: "The minimum rental period." },
+              { text: "Monthly rental charges." },
+              { text: "The security deposit." },
+              { text: "Delivery, installation and collection charges." },
+              { text: "AC availability." },
+              { text: "Maintenance responsibilities." },
+              { text: "Responsibility for damage." },
+              { text: "Rental extension terms." },
+            ],
+            inlineLinks: [
+              {
+                before: "Current rental units and the minimum period for each are listed on our",
+                link: { label: "portable cabin rental page", href: "/rental-service" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin for Sale in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Buying a portable cabin may suit customers who need working accommodation for longer. Possible applications include:",
+        ],
+        bullets: [
+          { text: "A permanent security booth, subject to approval." },
+          { text: "A long-term commercial reception." },
+          { text: "Hotel valet parking management." },
+          { text: "Project administration." },
+          { text: "Reusable construction site offices." },
+          { text: "Property management cabins." },
+        ],
+        closing: ["A purchased cabin is built to the approved dimensions, structural specification, interior fittings and exterior finish."],
+      },
+      {
+        heading: "Renting Versus Buying a Portable Cabin",
+        placement: "afterSolutions",
+        table: {
+          caption: "General guidance; the right choice depends on your actual costs, customisation and reuse.",
+          headers: ["Requirement", "Renting may suit", "Buying may suit"],
+          rows: [
+            ["Short refurbishment project", "Yes, subject to availability", "Depends on future reuse"],
+            ["Temporary event", "Yes, subject to availability", "Depends on how often you use it"],
+            ["Long-term security booth", "Compare the total rental cost", "Worth considering"],
+            ["Multiple construction projects", "Compare rental and relocation costs", "A reusable cabin"],
+            ["Customised permanent configuration", "Depends on the rental terms", "Often worth considering"],
+          ],
+        },
+        closing: [
+          "There is no fixed rule on when renting is better than buying: compare the total costs, the customisation you need and how often the cabin will be reused.",
+        ],
+      },
+      {
+        heading: "Delivery & Installation in Richmond Town",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-cabin-richmond-town/portable-cabin-richmond-town-top-view.webp",
+          alt: "Top view of an olive-green portable cabin showing its corrugated steel roof, window canopies and entrance steps",
+          width: 1672,
+          height: 941,
+          caption: "Illustrative top view of a cabin on a paved pad. The base, lifting and access for your site are assessed before delivery.",
+        },
+        paragraphs: ["Delivery and installation need an assessment of the approved placement area, road access and site conditions."],
+        subsections: [
+          {
+            heading: "Site assessment",
+            paragraphs: ["Before manufacturing or delivery, confirm:"],
+            bullets: [
+              { text: "The required cabin dimensions." },
+              { text: "The intended occupancy." },
+              { text: "The placement area available." },
+              { text: "The ground or slab load capacity." },
+              { text: "Vehicle access." },
+              { text: "Gate dimensions." },
+              { text: "Overhead clearance." },
+              { text: "Crane access." },
+              { text: "Electrical supply." },
+              { text: "Water and drainage requirements." },
+              { text: "The property approvals that apply." },
+            ],
+          },
+          {
+            heading: "Foundation and base preparation",
+            paragraphs: ["Depending on the cabin design and site conditions, suitable supports may include:"],
+            bullets: [
+              { text: "Designed concrete pedestals." },
+              { text: "An approved PCC base." },
+              { text: "An engineered supporting structure." },
+              { text: "Another suitable foundation arrangement." },
+            ],
+            closing: [
+              "No single foundation suits every cabin and site. Your quotation states whether the base is prepared by us or by your own contractor.",
+            ],
+          },
+          {
+            heading: "Transport scheduling",
+            paragraphs: ["Delivery in central Bengaluru may depend on:"],
+            bullets: [
+              { text: "Heavy-vehicle restrictions." },
+              { text: "Property management requirements." },
+              { text: "Local traffic conditions." },
+              { text: "Vehicle availability." },
+              { text: "Noise restrictions." },
+              { text: "The permissions required." },
+            ],
+            closing: ["Night or early-morning delivery may be considered where it is permitted and can be arranged; it is not guaranteed."],
+          },
+          {
+            heading: "Crane unloading and placement",
+            paragraphs: ["Professional lifting equipment may be needed to position the cabin. Confirm:"],
+            bullets: [
+              { text: "The cabin's lifting weight." },
+              { text: "The approved lifting points." },
+              { text: "Crane capacity." },
+              { text: "Lifting radius." },
+              { text: "Ground-bearing conditions." },
+              { text: "Overhead electrical clearance." },
+              { text: "Qualified lifting personnel." },
+              { text: "Any road-use permissions required." },
+            ],
+            closing: ["A hydra crane does not suit every installation; the lifting method is chosen for your site."],
+          },
+          {
+            heading: "Electrical commissioning",
+            paragraphs: ["Electrical connections are made by suitably qualified personnel, who verify:"],
+            bullets: [
+              { text: "Supply capacity." },
+              { text: "Earthing." },
+              { text: "Electrical protection." },
+              { text: "The distribution board connection." },
+              { text: "AC electrical requirements." },
+              { text: "The electrical safety requirements that apply." },
+            ],
+          },
+          {
+            heading: "Water and drainage connections",
+            paragraphs: ["For cabins with toilets, confirm:"],
+            bullets: [
+              { text: "Water supply." },
+              { text: "The drainage connection." },
+              { text: "The plumbing layout." },
+              { text: "The sanitation requirements that apply." },
+            ],
+          },
+          {
+            heading: "Building management coordination",
+            paragraphs: ["Obtain the approvals that apply:"],
+            bullets: [
+              { text: "The property owner's authorisation." },
+              { text: "Building management approval." },
+              { text: "Association approval." },
+              { text: "A vehicle gate pass." },
+              { text: "Statutory permissions." },
+            ],
+            closing: ["Building management approval alone may not be enough; the other permissions still apply."],
+          },
+          {
+            heading: "Installation completion",
+            paragraphs: [
+              "Installation time depends on the cabin specification, foundation readiness, lifting arrangements, utility connections and inspections. We don't promise same-day occupancy or installation within a fixed number of hours.",
+            ],
+            inlineLinks: [
+              {
+                before: "Base, access and lifting preparation is covered in our",
+                link: { label: "cabin installation and site preparation guide", href: "/guides/portable-cabin-installation-and-site-preparation" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Portable Cabin Price in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: ["Portable cabin pricing depends on the configuration you choose and your site. The main factors are:"],
+        bullets: [
+          { text: "Cabin dimensions." },
+          { text: "Structural steel specification." },
+          { text: "MS or GI construction." },
+          { text: "Insulation requirements." },
+          { text: "PUF panel thickness." },
+          { text: "Interior finishing." },
+          { text: "Flooring." },
+          { text: "Doors and windows." },
+          { text: "Electrical fittings." },
+          { text: "Internal partitions." },
+          { text: "Furniture." },
+          { text: "AC requirements." },
+          { text: "An attached toilet." },
+          { text: "ACP cladding." },
+          { text: "Glass frontage." },
+          { text: "Customised branding." },
+          { text: "Transport." },
+          { text: "Loading and unloading." },
+          { text: "Crane requirements." },
+          { text: "Foundation preparation." },
+          { text: "Installation requirements." },
+          { text: "The rental period, where applicable." },
+        ],
+        closing: [
+          "A price may be worked out on floor area, on the approved specification or on the complete customised cabin. Send us the dimensions you need, the intended use and photographs of the site for a customised quotation.",
+        ],
+        inlineLinks: [
+          {
+            before: "The cost drivers are explained in more detail in our",
+            link: { label: "portable cabin cost guide", href: "/guides/portable-cabin-price-and-cost" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "What to Include in Your Enquiry",
+        paragraphs: ["A quotation is quicker to prepare when your enquiry includes:"],
+        bullets: [
+          { text: "The cabin size you need." },
+          { text: "The number of cabins." },
+          { text: "The intended application." },
+          { text: "The expected number of occupants." },
+          { text: "The interior layout you need." },
+          { text: "Your MS, GI or PUF preference." },
+          { text: "Insulation requirements." },
+          { text: "Furniture requirements." },
+          { text: "AC requirements." },
+          { text: "Attached toilet requirements." },
+          { text: "The exterior colour and finish." },
+          { text: "Whether you want to buy or rent." },
+          { text: "The delivery date you need." },
+          { text: "The installation address." },
+          { text: "Photographs of the site." },
+          { text: "The placement dimensions available." },
+        ],
+      },
+    ],
+
+    areasHeading: "Areas We Serve Near Richmond Town",
+    areasText:
+      "Portable cabin and porta cabin enquiries for Richmond Town (PIN 560025) are handled on this page, including the Richmond Road stretch and the streets around Richmond Circle. We also take enquiries from nearby Langford Town, Shanthinagar, Ashok Nagar, Residency Road, Vittal Mallya Road, Lavelle Road, MG Road, Brigade Road, Austin Town, Wilson Garden, Neelasandra and Adugodi. Vehicle access and the placement area are assessed property by property before we confirm a delivery.",
+    // Brief §23: the Bengaluru portable cabin service-area hub.
+    areasInlineLink: {
+      before: "For other Bengaluru neighbourhoods, see our",
+      link: { label: "portable cabins across Bengaluru", href: "/promotions/portable-cabin-in-bangalore" },
+      after: ".",
+    },
+
+    faqs: [
+      {
+        question: "What is the price of a portable cabin in Richmond Town?",
+        answer:
+          "The price depends on the cabin size, structural specification, insulation, interior finishes, electrical fittings, optional furniture and delivery requirements. Contact Portable Office Cabin with your requirements for a customised quotation.",
+      },
+      {
+        question: "What is the difference between a porta cabin and a portable cabin?",
+        answer:
+          "None in practice: porta cabin and portable cabin are both common generic names for a prefabricated, movable cabin. People also search for prefab cabins, prefabricated cabins and ready-built cabins.",
+      },
+      {
+        question: "How soon can I get a portable cabin in Richmond Town?",
+        answer:
+          "Manufacturing and delivery schedules depend on the cabin size, the customisation, production availability and site readiness. Ask for a confirmed schedule with your quotation.",
+      },
+      {
+        question: "Will a portable cabin become hot inside?",
+        answer:
+          "Indoor temperature depends on insulation, roof exposure, ventilation, the outdoor temperature and the number of occupants. PUF insulation can help reduce heat transfer, and ventilation and air-conditioning may be needed for full-time office use.",
+      },
+      {
+        question: "Can a portable cabin include an attached toilet and AC?",
+        answer:
+          "Yes, in suitable customised configurations. The electrical supply, plumbing, drainage and ventilation are confirmed before the design is finalised.",
+      },
+      {
+        question: "Can I rent a portable cabin during office refurbishment?",
+        answer:
+          "Standard site office cabins can be hired, subject to availability and a minimum hire period. Whether a cabin fitted out to your layout can be hired is confirmed in your quotation.",
+      },
+      {
+        question: "Can a portable cabin be customised to match my commercial property?",
+        answer:
+          "Colours, exterior finishes, ACP cladding, glass frontage and your own branding can be considered where offered. The final configuration depends on the approved design and the property's requirements.",
+      },
+      {
+        question: "Do I need permission to install a portable cabin?",
+        answer:
+          "Permission requirements depend on the property, the intended use, how long the cabin stays and local regulations. Obtain the property owner's authorisation and any building management or statutory approvals that apply.",
+      },
+      {
+        question: "Can the portable cabin be relocated later?",
+        answer:
+          "Relocation may be possible, depending on the cabin's structural condition, dimensions, lifting arrangements, transport access and the new site. Relocation and its charges are confirmed separately.",
+      },
+      {
+        question: "Can I install a portable cabin in a hotel parking area?",
+        answer:
+          "A suitably designed cabin may be considered for an authorised parking area after assessing the space available, vehicle circulation, structural capacity, pedestrian access and the approvals that apply.",
+      },
+    ],
+
+    ctaHeading: "Get a Portable Cabin Quote for Richmond Town",
+    ctaText: `Whether you need a temporary office, a security booth, a valet parking cabin, a construction site office or a customised reception space, Portable Office Cabin can discuss suitable configurations based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Serving Richmond Town, Bengaluru, Karnataka 560025.`,
+    // The CTA box button → /contact.
+    ctaButtonLabel: "Request a Cabin Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons; the
+    // call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    // The category, the product pages and the guides linked in the body are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Portable Cabin Sizes & Specifications", href: "/products/portable-cabin" },
+      { label: "Porta Cabin Models", href: "/products/porta-cabin" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable Office Cabin builds its cabins at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and its office is in Electronic City, Bengaluru; it has no factory, yard, showroom or branch in Richmond Town. Every cabin is subject to availability, and its quotation states the dimensions, layout, fit-out, furniture, electrical and plumbing provisions, any hire terms, and who arranges the base, transport, unloading, placement and utility connections; no delivery or installation date is guaranteed. Portable Office Cabin does not obtain permissions from property owners, building management, associations or the authorities. The sizes and staff numbers on this page are planning examples, not stock or certified occupancy limits. All five images are illustrative renders of one olive-green cabin; none was photographed in Richmond Town or shows a supplied unit, and none shows a reception counter, guard booth, valet booth, toilet, ACP cladding or glass frontage. Hotels, restaurants, schools, churches and clubs are mentioned only as examples of typical uses, not as customers, and Richmond Town and the neighbourhoods named indicate where enquiries can come from, not completed installations. Notes on electrical work, lifting, foundations, fire safety and permissions are general guidance, not electrical, engineering or legal advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN KORAMANGALA — partitioned self-storage bays, restaurant
    * equipment between leases and bicycle rooms (owner brief "Version B", 2026-11-15).
    *
    * Route: the brief's expected canonical, /cities-we-serve/shipping-container-koramangala, had never
    * been released. The only Koramangala shipping route was the product page
-   * /products/shipping-container-in-kormangala (id 29, the used 20 ft as-is unit with online Buy Now),
+   * /products/used-20ft-shipping-container-as-is-grade (id 29, the used 20 ft as-is unit with online Buy Now),
    * whose title named Koramangala. The owner chose this new city page for Version B and a refocus of
    * that product page on the unit itself (its title, descriptions and body no longer target "shipping
    * container in Koramangala" and it links here), so one indexable page owns the query.
@@ -71819,6 +72924,15 @@ export const CITY_PAGES: CityPage[] = [
       link: { label: "HSR Layout", href: "/cities-we-serve/shipping-container-hsr-layout" },
       after: ".",
     },
+    // Richmond Town brief (2026-11-25, §28): office, hotel and restaurant refurbishment storage in Richmond Town,
+    // to the north-west, is that page's intent; this page's areas text, targeting and HSR Layout link are unchanged.
+    areasInlineLinks: [
+      {
+        before: "Offices, hotels and restaurants refurbishing in Richmond Town, to the north-west, can read about",
+        link: { label: "commercial refurbishment storage in Richmond Town", href: "/cities-we-serve/shipping-container-richmond-town" },
+        after: ".",
+      },
+    ],
 
     howHeading: "From enquiry to placement",
     howSteps: [
@@ -71921,7 +73035,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinksHeading: "Related products",
     relatedLinks: [
       // The purchasable unit itself (refocused on the as-is grade when this page went live); it links back here.
-      { label: "Used 20 ft Shipping Container (As-Is Grade)", href: "/products/shipping-container-in-kormangala" },
+      { label: "Used 20 ft Shipping Container (As-Is Grade)", href: "/products/used-20ft-shipping-container-as-is-grade" },
       { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
@@ -71929,6 +73043,1002 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Containers are supplied by Portable Office Cabin, whose factory is at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and from its Electronic City office in Bengaluru; there is no Portable Office Cabin yard, depot or branch in Koramangala. Units are offered subject to availability. The quotation for a unit sets out its size, condition, grade and internal dimensions, any partitions, racks, ramp, locks or lighting, any hire terms, and who handles transport, unloading, placement and collection; no delivery date is guaranteed. All five images are illustrative renders of one teal container; none was taken in Koramangala, and none shows a delivered or fitted unit. The self-storage guidance is for customers planning their own operation: Portable Office Cabin supplies the container and any agreed fit-out. The localities listed describe where enquiries are welcome, and the storage uses are examples rather than clients, finished projects or confirmed delivery points. Guidance on approvals, appliance storage, bicycle parking, battery charging, site access and placement is general information, not legal, fire-safety, engineering or insurance advice.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN RICHMOND TOWN (central Bengaluru, PIN 560025) — temporary storage for
+   * commercial refurbishment: office interior refits (furniture, department-wise organisation, files and
+   * documents, disconnected electronics, phased floor-by-floor work), hotel and restaurant renovation
+   * (guest-room furniture, dining furniture, hospitality fittings, back-of-house stock, reefer pointer),
+   * professional event companies (stage sets, lighting, décor, project-wise inventory), school
+   * refurbishment furniture, heritage-residence restoration (secondary) and retail refits; commercial
+   * parking-area placement, presentable painted and branded containers, building management coordination.
+   *
+   * Owner brief of 2026-11-25 ("CLAUDE AI — COMPLETE SEO IMPLEMENTATION COMMAND — Richmond Town Shipping &
+   * Cargo Container City Page" + "show animation in the page and complete the page"): meta title, meta
+   * description, H1, keywords, section order, H2 / H3 headings, the sizes table and the FAQs are the brief's,
+   * and so is the copy, lightly edited for flow and British spelling (organise, authorised, minimise). The
+   * brief's checks against the catalogue: rental is listed (Shipping Container Rental: 10 ft / 20 ft / 40 ft /
+   * 40 ft HC, one month to five years, crane and trailer coordination, "branding" among its fit-out options,
+   * and rent-plus-buy among its commercial models), so the "Hire & Sale" title, the hire references in the
+   * description, the short-term hire section and the two rental FAQs stand; 10 ft is "subject to stock"
+   * (rental sizes; "10 ft fabricated" on Cargo Container for Sale). Painting and branding are listed (Cargo
+   * Storage Containers Pink: epoxy primer + PU topcoat, "Custom Brand Match"; rental fit-out "branding"),
+   * so the painting section and FAQ stand, worded as quoted options, with no in-house claim. NOT verified,
+   * so not promised: weekly hire, a security deposit amount, automatic extensions or hire-to-purchase,
+   * night or early-morning delivery, crane-permit handling, quotation response times and GST terms. The
+   * template has no separate Open Graph title or description: og:title / og:description use the meta title
+   * and description, as on every city page, so the brief's OG wording is not used. The visible breadcrumb
+   * and the BreadcrumbList are the city-page template's (Home › Cities We Serve › this page), as on every
+   * sibling. The brief's notes to the implementer ("Do not guarantee…", "Do not recommend…", "Publish only
+   * if…", "Keep this section…", "Remove this FAQ…") are instructions, not page copy: where one carries a
+   * fact for the reader it is reworded as a plain statement; otherwise it is left out. The route follows the
+   * site convention (/cities-we-serve/…), not the brief's root slug, which it allows for. The tagline,
+   * captions, link lead-ins, enquiry-form intro and disclaimer were written for their slots.
+   * No Product JSON-LD: city pages carry no prices (file rule) and a Product block without offers earns no
+   * rich result, so the Service JSON-LD (no offers; areaServed "Richmond Town, Bengaluru, Karnataka", not an
+   * address), FAQPage and BreadcrumbList stand, as on every sibling. No ImageObject block: the template has
+   * none, and the hero is already the Service image and og:image. The optional Kannada terms are left out
+   * (the page is in English).
+   * Mapped onto the template in the brief's order:
+   *   Intro → intro + introLink ("shipping and cargo containers" → the cargo category) + heroCta.
+   *   Where containers are useful, office refit, hotel & restaurant, events, schools, heritage restoration
+   *     and retail → seven afterIntro extra sections, with the brief's H3s as `subsections`.
+   *   Short-term hire, buying, sizes & parking, presentable containers, special types, delivery and price →
+   *     afterSolutions extra sections. "Areas We Serve Around Richmond Town" → areas + areasInlineLinks.
+   *   The brief's enquiry checklist (§21 "Ask customers to provide") → the numbered "how" list after the
+   *   areas. FAQs: the brief's nine. CTA: the brief's closing section (phone, WhatsApp and e-mail from
+   *   COMPANY) + the cargo enquiry form.
+   *
+   * LINKS (brief §27, only where the destination exists and supports the anchor): intro → the cargo
+   * category; files and documents → "insulated and air-conditioned storage containers" (the Vellore page's
+   * insulated / AC storage section); restaurant furniture → "kitchen equipment storage between restaurant
+   * leases in Koramangala" (its "Restaurant equipment storage between moves" section, which this page does
+   * not duplicate); temporary cold storage → "refrigerated container formats" (Cargo Container for Sale,
+   * which lists reefer formats; there is no separate reefer product page); short-term hire → the rental
+   * product; cargo-worthy containers → "used shipping container inspection checklist" (the brief's
+   * /shipping-container-chennai is not a route, so the Athipattu page's checklist, as the siblings do);
+   * painting → "brand-matched painted cargo containers" (Cargo Storage Containers Pink, the product that
+   * documents the paint system); special types → "available cargo container types" (the Cargo Containers
+   * types guide); delivery → "restricted-site container delivery" (Bellandur); areas → the Bengaluru
+   * shipping promotion ("shipping containers across Bengaluru") and the Portable Cabin in Richmond Town page
+   * ("portable cabin in Richmond Town", the two pages' agreed two-way link; that page links back from its
+   * applications section); heritage restoration → "heritage bungalow and household storage in Frazer Town"
+   * (that page's household and bungalow redevelopment intent; it links back from its areas section). NOT
+   * linked: Hulimavu (no live page), Vishweshwaraiah Layout (residential plot storage, not this page's
+   * applications) and Shanthinagar, Langford Town, Ashok Nagar, Austin Town, Neelasandra, Wilson Garden, Victoria
+   * Layout, Vivek Nagar and Adugodi (no shipping page; Adugodi is in Koramangala's areas list). Anchors differ
+   * from the siblings' anchors for the same targets. Inbound: the Koramangala page's areas section (a new
+   * one-item `areasInlineLinks`; its areas text, targeting and HSR Layout link unchanged), the Karnataka
+   * shipping hub ("Shipping Containers in Richmond Town"), the cargo category's location links ("Shipping
+   * containers in Richmond Town", the brief's anchor), the Portable Cabin in Richmond Town page's applications
+   * section ("shipping containers in Richmond Town", its brief's §32 wording), the Frazer Town page's areas
+   * section ("Richmond Town shipping container solutions", this brief's §28 wording, appended at the end of
+   * its `areasInlineLinks`) and every Karnataka shipping page's nearby block.
+   * `nearbySkipsBodyLinks` keeps this page's nearby block from repeating the body links.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container × Richmond Town, with Richmond Road (the local
+   * stretch) and Richmond Circle as geographic references only (named in the areas text and the disclaimer; no
+   * variant routes exist or are added), for office interior refit and refurbishment storage, commercial
+   * office furniture storage during refits, hotel room refurbishment storage, restaurant dining furniture
+   * storage during renovation, professional event, stage-set and exhibition equipment storage, presentable
+   * painted and branded commercial containers and commercial parking-area placement. Not named at all, and
+   * kept for possible future pages: Langford Town, Shanthinagar, Ashok Nagar, Austin Town, Neelasandra,
+   * Wilson Garden, Victoria Layout, Vivek Nagar, Residency Road, Lavelle Road, MG Road and Brigade Road.
+   * Koramangala, Vellore, Athipattu and Bellandur appear only in their application links. Portable, porta and
+   * office cabins × Richmond Town belong to the Portable Cabin in Richmond Town page and appear here only in
+   * the link to it (none in the title, description, keywords or headings). Kept apart from
+   * household and heritage-bungalow storage and community halls (Frazer Town, linked once), restaurant equipment
+   * between moves (Koramangala), bar kegs and boutique stock (Indiranagar), tent-house and catering vessels
+   * (Horamavu), wedding-wear rental and children's sports coaching (HRBR Layout), costumes and books
+   * (Jayanagar pages), school sports-day stock (JP Nagar) and residential plot construction storage (SMV
+   * Layout): household storage is secondary here (heritage restoration only), and the school section
+   * covers refurbishment furniture only. "Bengaluru" stays out of the title; the intro says "central
+   * Bengaluru neighbourhood", and the geo meta and the Service JSON-LD's areaServed carry "Richmond Town,
+   * Bengaluru, Karnataka".
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Richmond Town Shipping & Cargo
+   * Container City Page/Richmond Town Shipping & Cargo Container City Page/cabin (1–5).webp", no EXIF / XMP /
+   * ICC; none matches the VP8 data of an image already in the repo) of one maroon corrugated steel 20 ft
+   * container; four of them show a black-framed sliding window cut into one long side. All five are used,
+   * VP8 data copied byte-for-byte with an XMP dc:title / dc:description marking each as an illustrative
+   * render (no creator, copyright, GPS, camera or date set): three-quarter view of the window side and the
+   * closed cargo doors (1, 1445 × 1088) = hero / og:image; empty interior through the open doors, window on
+   * the left wall (2) = office refit; roof from above (3, 1774 × 887) = sizes and parking; plain long side
+   * straight on (4, 1538 × 1022) = presentable / painted containers; window side straight on (5, 1539 ×
+   * 1022) = special container types. Every caption that shows the window says it is a modification a
+   * standard cargo container does not have. No image shows furniture, office equipment, event gear, a
+   * parking bay, a lorry or a crane, so the brief's application image slots are not used, and no alt text,
+   * caption or filename claims those items or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD (no offers) and the hero's
+   * og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-richmond-town",
+    city: "Richmond Town",
+    listTitle: "Shipping & Cargo Containers in Richmond Town",
+    metaTitle: "Shipping Container in Richmond Town | Hire & Sale",
+    metaDescription:
+      "Shipping containers in Richmond Town for office refits, hotel renovations, restaurant furniture and event equipment storage. Explore purchase and hire options.",
+    keywords:
+      "shipping container in Richmond Town, cargo container in Richmond Town, storage container in Richmond Town, shipping container Richmond Town, cargo container Richmond Town, used shipping container Richmond Town, new shipping container Richmond Town, second-hand shipping container Richmond Town, shipping container supplier in Richmond Town, cargo container dealer in Richmond Town, shipping container for sale in Richmond Town, shipping container price in Richmond Town, cargo container price Richmond Town, buy shipping container in Richmond Town, shipping container on rent in Richmond Town, shipping container hire Richmond Town, cargo container rental Richmond Town, shipping container Richmond Road, shipping container Richmond Circle, 10 ft shipping container Richmond Town, 20 ft shipping container Richmond Town, 40 ft shipping container Richmond Town, high cube shipping container, office refurbishment storage container, office interior refit storage container, commercial furniture storage container, hotel renovation storage container, restaurant refurbishment storage container, event equipment storage container, exhibition equipment storage, painted shipping container, branded shipping container, commercial parking area container placement, temporary refurbishment storage",
+    // Approximate point in central Richmond Town, south of Richmond Road (rounded; for the owner to confirm).
+    geo: {
+      region: "IN-KA",
+      placename: "Richmond Town, Bengaluru, Karnataka, India",
+      position: "12.9620;77.6030",
+      icbm: "12.9620, 77.6030",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container", alternateName: ["Cargo Container", "Storage Container"] },
+    // The hero is 1445 × 1088 px (read from its VP8 header); og:image carries that size.
+    ogImageDimensions: true,
+    // The cargo category, Vellore, Koramangala, the rental and reefer product pages, Athipattu, the types
+    // guide, Bellandur and the Bengaluru promotion are linked in the body, so the nearby block leaves the
+    // sibling city pages among them out.
+    nearbySkipsBodyLinks: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-richmond-town/shipping-container-richmond-town.webp",
+      alt: "Corrugated steel shipping container exterior with cargo doors: a maroon container with its doors closed by four vertical locking bars and a sliding window cut into one long side, on a paved yard",
+      width: 1445,
+      height: 1088,
+      caption:
+        "Illustrative render, not a photograph taken in Richmond Town or of a delivered unit. The sliding side window is a modification that a standard cargo container does not have.",
+    },
+
+    h1: "Shipping & Cargo Containers in Richmond Town",
+    tagline:
+      "Lockable space for office furniture during an interior refit, hotel and restaurant furniture while rooms are renovated, and stage sets between events.",
+    intro: [
+      "Richmond Town is an established central Bengaluru neighbourhood of commercial offices, hotels and restaurants, educational institutions, heritage residences and retail businesses.",
+      "Office refurbishments, restaurant renovations, hotel upgrades and property restoration projects often need temporary storage for furniture, equipment and compatible inventory while the work is under way.",
+    ],
+    introLink: {
+      before: "Portable Office Cabin can supply",
+      link: { label: "shipping and cargo containers", href: "/products/category/cargo-storage-shipping-containers" },
+      after:
+        " matched to your requirements, the container specifications available and how a vehicle can reach your premises. Whether you need temporary storage during an office interior refit, extra space for restaurant furniture or a dedicated container for event equipment, suitable configurations can be discussed for your Richmond Town premises, with new and used units for temporary or longer-term commercial storage.",
+    },
+
+    areasHeading: "Areas We Serve Around Richmond Town",
+    areasText:
+      "Shipping and cargo containers are supplied to Richmond Town (PIN 560025), including suitable commercial premises along the local stretch of Richmond Road and around Richmond Circle. Vehicle access, building management requirements and the room for placement are assessed for every site before we propose a delivery date.",
+    // Brief §19 and §30: the neighbouring localities are kept for their own (possible future) pages, so they
+    // are not named; the Bengaluru shipping promotion is the brief's service-area hub.
+    areasInlineLinks: [
+      {
+        before: "Enquiries from elsewhere in central Bengaluru are welcome too; for other neighbourhoods, start from our page on",
+        link: { label: "shipping containers across Bengaluru", href: "/promotions/shipping-container-in-bangalore" },
+        after: ".",
+      },
+      // Brief §27 / the Portable Cabin in Richmond Town brief §32: the two-way link with that page (occupied
+      // working space), worded with its session; it carries the matching link back to this page.
+      {
+        before: "Need a temporary working space rather than storage? Explore our",
+        link: { label: "portable cabin in Richmond Town", href: "/cities-we-serve/portable-cabin-richmond-town" },
+        after: " solutions for offices, reception areas and security booths.",
+      },
+    ],
+
+    howHeading: "What to Send With Your Enquiry",
+    howIntro: "To prepare a quotation, tell us:",
+    howSteps: [
+      { title: "The container size you need.", text: "" },
+      { title: "How many containers.", text: "" },
+      { title: "What you intend to store.", text: "" },
+      { title: "Whether you prefer a new or used unit.", text: "" },
+      { title: "Whether you are buying or hiring.", text: "" },
+      { title: "How long you expect to need the storage.", text: "" },
+      { title: "The address of your commercial premises.", text: "" },
+      { title: "Photographs of the site.", text: "" },
+      { title: "Measurements of the parking area or placement space.", text: "" },
+      { title: "Your required delivery date.", text: "" },
+      { title: "Any painting or branding requirements.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Where Shipping Containers Are Useful in Richmond Town",
+        placement: "afterIntro",
+        paragraphs: ["Possible applications include:"],
+        bullets: [
+          { text: "Office interior refurbishment." },
+          { text: "Co-working space renovation." },
+          { text: "Hotel room refurbishment." },
+          { text: "Restaurant and café renovation." },
+          { text: "Hospitality furniture storage." },
+          { text: "School summer maintenance." },
+          { text: "Heritage property restoration." },
+          { text: "Temporary retail inventory." },
+          { text: "Event equipment storage." },
+          { text: "Exhibition and stage equipment storage." },
+        ],
+        closing: [
+          "Whether a container suits depends on the intended use, the storage environment, its structural condition and the placement space available.",
+        ],
+      },
+      {
+        heading: "Office Interior Refit & Refurbishment Storage",
+        placement: "afterIntro",
+        image: {
+          src: "/images/cities/shipping-container-richmond-town/richmond-town-shipping-container-interior.webp",
+          alt: "Empty shipping container interior with corrugated steel walls and flooring: maroon walls and ribbed ceiling, a plywood floor and a sliding window in the left wall, seen through the open cargo doors",
+          width: 1445,
+          height: 1088,
+          caption:
+            "Illustrative render of an empty interior. The window is a modification; racks, shelving and lighting are fitted only where your quotation lists them, and none are shown here.",
+        },
+        paragraphs: [
+          "Office buildings and co-working spaces undergoing interior renovation may need temporary storage for furniture and compatible equipment.",
+        ],
+        subsections: [
+          {
+            heading: "Office Furniture Storage",
+            paragraphs: ["Possible inventory includes:"],
+            bullets: [
+              { text: "Executive tables." },
+              { text: "Office workstations." },
+              { text: "Disassembled conference tables." },
+              { text: "Office chairs." },
+              { text: "Pedestal drawer units." },
+              { text: "File cabinets." },
+              { text: "Reception furniture." },
+              { text: "Compatible office partitions." },
+              { text: "Packaged shelving components." },
+            ],
+            closing: ["Use suitable protective wrapping and keep stacks stable."],
+          },
+          {
+            heading: "Department-wise Storage Organisation",
+            paragraphs: ["During a refurbishment, furniture and equipment can be organised by:"],
+            bullets: [
+              { text: "Department." },
+              { text: "Office floor." },
+              { text: "Workstation number." },
+              { text: "Employee allocation." },
+              { text: "Refurbishment stage." },
+              { text: "Scheduled reinstallation date." },
+            ],
+            closing: ["Labels and an inventory record make reinstallation simpler."],
+          },
+          {
+            heading: "Office Files & Document Storage",
+            paragraphs: ["Documents and paper records need protection from:"],
+            bullets: [
+              { text: "Moisture." },
+              { text: "Condensation." },
+              { text: "Excessive temperatures." },
+              { text: "Water ingress." },
+              { text: "Pests." },
+            ],
+            closing: [
+              "Use suitable protective packaging, with environmental monitoring where required. Sensitive records may need purpose-designed climate-controlled storage; an ordinary steel container is not offered for long-term document preservation.",
+            ],
+            // Brief §27: climate-controlled guidance belongs to the Vellore page.
+            inlineLinks: [
+              {
+                before: "If records need steadier conditions, read about",
+                link: { label: "insulated and air-conditioned storage containers", href: "/cities-we-serve/shipping-container-vellore" },
+                after: " before choosing a unit.",
+              },
+            ],
+          },
+          {
+            heading: "Office Electronics Storage",
+            paragraphs: ["Possible equipment includes:"],
+            bullets: [
+              { text: "Disconnected computer monitors." },
+              { text: "Packaged desktop computers." },
+              { text: "Printers." },
+              { text: "Network accessories." },
+              { text: "Other compatible office electronic equipment." },
+            ],
+            closing: [
+              "Follow the manufacturers' storage requirements. Equipment is not operated or charged inside an ordinary storage-only container, and ventilation or insulation alone does not guarantee suitable temperature and humidity.",
+            ],
+          },
+          {
+            heading: "Phased Office Refurbishment",
+            paragraphs: ["Businesses renovating one office floor at a time may need storage at different stages of the project, for:"],
+            bullets: [
+              { text: "Furniture removal before renovation." },
+              { text: "Department-wise inventory organisation." },
+              { text: "Temporary equipment storage." },
+              { text: "Scheduled material retrieval." },
+              { text: "Reinstallation after refurbishment." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Hotel & Restaurant Renovation Storage",
+        placement: "afterIntro",
+        paragraphs: [
+          "Hotels, restaurants, cafés and other hospitality businesses may need temporary storage during refurbishment or interior upgrades.",
+        ],
+        subsections: [
+          {
+            heading: "Hotel Room Furniture Storage",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Disassembled bed frames." },
+              { text: "Side tables." },
+              { text: "Wardrobe components." },
+              { text: "Guest-room chairs." },
+              { text: "Packaged decorative fittings." },
+              { text: "Suitable lighting fixtures." },
+              { text: "Wrapped furniture." },
+            ],
+            closing: [
+              "Protect each item according to its material and the manufacturer's instructions. Mattresses, upholstery and other moisture-sensitive items may need additional environmental control.",
+            ],
+          },
+          {
+            heading: "Restaurant Dining Furniture Storage",
+            paragraphs: ["Possible inventory includes:"],
+            bullets: [
+              { text: "Dining tables." },
+              { text: "Restaurant chairs." },
+              { text: "Café furniture." },
+              { text: "Disassembled seating." },
+              { text: "Decorative furniture." },
+              { text: "Compatible service counters." },
+            ],
+            closing: ["Arrange furniture to minimise damage and keep an access aisle clear."],
+            // Brief §29: restaurant equipment moved between premises is the Koramangala page's intent.
+            inlineLinks: [
+              {
+                before: "Moving a kitchen's equipment out between leases rather than refurbishing in place? See",
+                link: { label: "kitchen equipment storage between restaurant leases in Koramangala", href: "/cities-we-serve/shipping-container-koramangala" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Hospitality Refurbishment Materials",
+            paragraphs: ["Suitable inventory may include:"],
+            bullets: [
+              { text: "Packaged wall finishes." },
+              { text: "Compatible decorative panels." },
+              { text: "Boxed lighting fixtures." },
+              { text: "Non-hazardous installation accessories." },
+              { text: "Replacement furniture fittings." },
+            ],
+            closing: ["Check that each material is compatible with the storage conditions."],
+          },
+          {
+            heading: "Back-of-house Storage",
+            paragraphs: ["Hotels and restaurants may also consider extra storage for:"],
+            bullets: [
+              { text: "Spare dining furniture." },
+              { text: "Packaged non-food supplies." },
+              { text: "Compatible maintenance tools." },
+              { text: "Replacement fixtures." },
+              { text: "Suitable housekeeping equipment." },
+            ],
+            closing: [
+              "Food, temperature-sensitive ingredients, LPG cylinders, fuel and incompatible cleaning chemicals are not stored in an ordinary container.",
+            ],
+          },
+          {
+            heading: "Temporary Cold Storage Requirements",
+            paragraphs: [
+              "A restaurant refurbishing its kitchen may need refrigerated storage, which is a different unit from a dry cargo container. Before a refrigerated container is ordered, confirm:",
+            ],
+            bullets: [
+              { text: "The temperature requirements." },
+              { text: "The electrical power requirements." },
+              { text: "Product suitability." },
+              { text: "The applicable food storage requirements." },
+              { text: "Reefer availability." },
+            ],
+            closing: ["An ordinary dry cargo container is not refrigerated storage."],
+            // Brief §7 / §27: no separate reefer product page exists; Cargo Container for Sale lists reefer formats.
+            inlineLinks: [
+              {
+                before: "Reefer units are among the",
+                link: { label: "refrigerated container formats", href: "/products/cargo-container-for-sale" },
+                after: " we supply; availability is confirmed in your quotation.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Event Equipment & Stage Set Storage",
+        placement: "afterIntro",
+        paragraphs: [
+          "Event management companies and exhibition contractors may need temporary or recurring storage between projects.",
+        ],
+        subsections: [
+          {
+            heading: "Stage Set Storage",
+            paragraphs: ["Possible inventory includes:"],
+            bullets: [
+              { text: "Disassembled stage panels." },
+              { text: "Compatible backdrop frames." },
+              { text: "Modular display structures." },
+              { text: "Packaged stage accessories." },
+              { text: "Suitable exhibition components." },
+            ],
+            closing: ["Check the container's actual internal dimensions and floor-loading limits against the largest components."],
+          },
+          {
+            heading: "Event Lighting Equipment",
+            paragraphs: ["Compatible inventory may include:"],
+            bullets: [
+              { text: "Disconnected stage lighting fixtures." },
+              { text: "Packaged LED fixtures." },
+              { text: "Lighting stands." },
+              { text: "Cable accessories." },
+              { text: "Protective equipment cases." },
+            ],
+            closing: [
+              "Follow the equipment manufacturer's storage requirements. Electrical testing and battery charging are not carried out inside an ordinary storage container.",
+            ],
+          },
+          {
+            heading: "Event Décor Storage",
+            paragraphs: ["Suitable inventory may include:"],
+            bullets: [
+              { text: "Artificial decorative arrangements." },
+              { text: "Packaged fabric décor." },
+              { text: "Compatible display stands." },
+              { text: "Decorative props." },
+              { text: "Exhibition signage." },
+              { text: "Reusable event accessories." },
+            ],
+            closing: ["Protect fabric and other moisture-sensitive materials against condensation and unsuitable temperatures."],
+          },
+          {
+            heading: "Project-wise Event Inventory",
+            paragraphs: ["Organise equipment using:"],
+            bullets: [
+              { text: "Event identification labels." },
+              { text: "Numbered equipment cases." },
+              { text: "Project-wise storage zones." },
+              { text: "Inventory checklists." },
+              { text: "Return inspection records." },
+              { text: "Scheduled dispatch records." },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "School & Educational Institution Refurbishment",
+        placement: "afterIntro",
+        paragraphs: [
+          "Schools and educational institutions may need temporary storage while classrooms, halls and administrative areas are maintained. Possible inventory includes:",
+        ],
+        bullets: [
+          { text: "Classroom desks." },
+          { text: "Chairs." },
+          { text: "Disassembled shelving." },
+          { text: "Compatible teaching furniture." },
+          { text: "Packaged classroom accessories." },
+          { text: "Suitable sports equipment." },
+          { text: "Stage props." },
+        ],
+        closing: [
+          "Storage of this kind is usually needed during classroom repainting, flooring replacement, furniture repairs, administrative office refurbishment, auditorium maintenance or a scheduled holiday-period renovation.",
+        ],
+      },
+      {
+        heading: "Heritage Property Restoration Storage",
+        placement: "afterIntro",
+        paragraphs: [
+          "Owners restoring older residences may need temporary storage for compatible furniture and household belongings. Possible inventory includes:",
+        ],
+        bullets: [
+          { text: "Wrapped wooden furniture." },
+          { text: "Disassembled tables." },
+          { text: "Chairs." },
+          { text: "Suitable decorative accessories." },
+          { text: "Packaged household belongings." },
+          { text: "Compatible restoration materials." },
+        ],
+        closing: [
+          "Antiques, artwork, valuable documents and delicate wooden furniture may need specialist packing, insurance and controlled storage conditions; an ordinary shipping container does not provide museum-grade preservation.",
+          "Placement must comply with the applicable property, planning and heritage-related requirements.",
+        ],
+        // Brief §27 / §29: household storage and heritage-bungalow redevelopment are the Frazer Town page's intent;
+        // this section stays secondary and points there (that page links back from its areas section).
+        inlineLinks: [
+          {
+            before: "Rebuilding an older family bungalow and storing household belongings rather than commercial stock? See",
+            link: { label: "heritage bungalow and household storage in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Temporary Retail Inventory Storage",
+        placement: "afterIntro",
+        paragraphs: [
+          "Retailers may need additional storage during a shop refurbishment, a seasonal inventory change, display furniture replacement, a temporary stock relocation or a commercial interior renovation. Possible inventory includes:",
+        ],
+        bullets: [
+          { text: "Compatible packaged merchandise." },
+          { text: "Display racks." },
+          { text: "Disassembled shop fittings." },
+          { text: "Empty cartons." },
+          { text: "Suitable promotional materials." },
+        ],
+      },
+      {
+        heading: "Short-term Shipping Container Hire in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Temporary container hire may suit office refurbishment, hotel renovations, restaurant upgrades and event-related storage. Possible rental applications include:",
+        ],
+        bullets: [
+          { text: "Office furniture relocation during interior work." },
+          { text: "Temporary restaurant dining furniture storage." },
+          { text: "Hotel room refurbishment." },
+          { text: "Commercial building maintenance." },
+          { text: "Event equipment storage." },
+          { text: "Scheduled school renovation." },
+        ],
+        inlineLinks: [
+          {
+            before: "Sizes and terms are set out on our page on",
+            link: { label: "shipping container hire options", href: "/products/shipping-container-rental" },
+            after: ".",
+          },
+        ],
+        subsections: [
+          {
+            heading: "Rental Arrangements",
+            paragraphs: [
+              "Hire runs from one month to five years, in 10 ft, 20 ft, 40 ft and 40 ft high cube sizes, subject to stock. Your rental quotation sets out:",
+            ],
+            bullets: [
+              { text: "The available container size." },
+              { text: "The minimum rental term." },
+              { text: "The monthly rental charge." },
+              { text: "Any security deposit." },
+              { text: "Transport charges." },
+              { text: "Loading and unloading charges." },
+              { text: "Extension terms." },
+              { text: "Collection arrangements." },
+              { text: "Responsibility for damage." },
+            ],
+            closing: [
+              "Weekly hire, automatic extensions and immediate availability are not standard terms; such an arrangement holds only once your quotation confirms it.",
+            ],
+          },
+          {
+            heading: "Multi-stage Refurbishment Projects",
+            paragraphs: [
+              "Businesses that need several containers can ask for delivery and collection to follow the project schedule. Staggered deliveries depend on container availability and transport, and are confirmed in the quotation.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Buying a Shipping Container in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Businesses that need storage for longer may prefer to buy a suitable container. Grades depend on current stock, and the grade of each unit is stated in your quotation.",
+        ],
+        subsections: [
+          {
+            heading: "New One-trip Shipping Containers",
+            paragraphs: [
+              "One-trip containers have usually carried a single cargo load and look newer than most used units. Possible uses include:",
+            ],
+            bullets: [
+              { text: "Appearance-sensitive commercial premises." },
+              { text: "Hotel service areas." },
+              { text: "Office building storage." },
+              { text: "Long-term commercial inventory." },
+              { text: "Suitable branded container installations." },
+            ],
+            closing: ["The condition and availability of each unit are checked individually."],
+          },
+          {
+            heading: "Used Wind & Watertight Shipping Containers",
+            paragraphs: ["Wind and watertight containers can be an economical choice for compatible stationary storage, such as:"],
+            bullets: [
+              { text: "Back-of-house commercial storage." },
+              { text: "Event equipment storage." },
+              { text: "Furniture storage." },
+              { text: "Compatible maintenance equipment." },
+            ],
+            closing: [
+              "Inspect the actual structural condition, flooring, door seals and locking mechanisms before buying. A used container is not assumed to be as secure as a new one without that inspection, and a wind and watertight grade is not condensation-free or floodproof.",
+            ],
+          },
+          {
+            heading: "Cargo-worthy Shipping Containers",
+            paragraphs: ["Where available, cargo-worthy units may be used for transport, subject to:"],
+            bullets: [
+              { text: "Structural condition." },
+              { text: "Current CSC approval and examination status." },
+              { text: "Carrier acceptance." },
+              { text: "Cargo compatibility." },
+              { text: "Freight forwarder requirements." },
+            ],
+            closing: ["Not every cargo-worthy container carries current certification; the documents for a unit are confirmed with it."],
+            // Brief §13: detailed used-container inspection → the Athipattu page's checklist (no Chennai route).
+            inlineLinks: [
+              {
+                before: "Each point to check is explained in our",
+                link: { label: "used shipping container inspection checklist", href: "/cities-we-serve/shipping-container-in-athipattu" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Sizes & Commercial Parking Space",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-richmond-town/richmond-town-shipping-container-top-view.webp",
+          alt: "Elevated view showing the steel shipping container roof: a maroon container seen from above on a paved pad beside a timber fence, its window visible along one side",
+          width: 1774,
+          height: 887,
+          caption:
+            "Illustrative overhead render. Plan for the container's footprint plus clear space at the door end and room for the delivery vehicle.",
+        },
+        paragraphs: [
+          "Commercial premises in Richmond Town may have limited space for a container. Before selecting a size, measure the actual parking area, service yard or authorised placement location.",
+        ],
+        table: {
+          caption: "Dimensions are approximate and vary by container design. Confirm the external size of the unit quoted to you.",
+          headers: ["Size", "External (approx.)", "Footprint", "Suitable use"],
+          rows: [
+            ["10 ft, subject to stock", "3.0 × 2.4 m", "7.2 m²", "Small furniture and refit inventory"],
+            ["20 ft", "6.1 × 2.4 m", "14.6 m²", "Office furniture and restaurant equipment"],
+            ["40 ft", "12.2 × 2.4 m", "29.3 m²", "Larger commercial inventory and event equipment"],
+          ],
+        },
+        subsections: [
+          {
+            heading: "10 ft Shipping Container",
+            paragraphs: ["Where one is in stock, a 10 ft container may suit:"],
+            bullets: [
+              { text: "Compact office refurbishment." },
+              { text: "Restaurant chairs and accessories." },
+              { text: "Small event equipment inventory." },
+              { text: "Compatible maintenance supplies." },
+            ],
+          },
+          {
+            heading: "20 ft Shipping Container",
+            paragraphs: ["A 20 ft container may suit:"],
+            bullets: [
+              { text: "Office furniture." },
+              { text: "Hotel refurbishment materials." },
+              { text: "Restaurant dining furniture." },
+              { text: "Compatible event equipment." },
+              { text: "Temporary commercial inventory." },
+            ],
+          },
+          {
+            heading: "40 ft Shipping Container",
+            paragraphs: ["A 40 ft container may suit:"],
+            bullets: [
+              { text: "Larger office refurbishment projects." },
+              { text: "Bulk commercial furniture." },
+              { text: "Event stage components." },
+              { text: "Exhibition equipment." },
+              { text: "Larger compatible storage requirements." },
+            ],
+          },
+          {
+            heading: "Parking Area Comparison",
+            paragraphs: [
+              "A standard 20 ft container's external footprint is about 6.1 × 2.4 metres, and a standard 40 ft container's about 12.2 × 2.4 metres. Parking bay sizes vary between properties, so no container is quoted as fitting a set number of bays without measurements.",
+              "Allow additional space for:",
+            ],
+            bullets: [
+              { text: "Cargo door operation." },
+              { text: "Material handling." },
+              { text: "Vehicle access." },
+              { text: "Emergency access." },
+              { text: "Container unloading." },
+              { text: "Applicable setbacks." },
+              { text: "Foundation supports." },
+            ],
+          },
+          {
+            heading: "Container Height & Overhead Clearance",
+            paragraphs: [
+              "A standard-height container is about 2.59 metres tall and a high cube container about 2.90 metres; confirm the actual external dimensions of the unit quoted.",
+              "Transport and lifting need additional overhead clearance. A basement or covered parking level is not recommended without an access, structural and safety assessment, and a container is not placed on a suspended parking slab until the slab's load capacity has been verified.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Presentable Shipping Containers for Commercial Premises",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-richmond-town/painted-shipping-container-richmond-town.webp",
+          alt: "Steel shipping container with a painted maroon exterior finish, its plain corrugated long side and forklift pockets seen straight on",
+          width: 1538,
+          height: 1022,
+          caption:
+            "Illustrative render of a plain painted side wall. The shade and finish of a supplied unit are as stated in its quotation.",
+        },
+        paragraphs: ["Businesses with customer-facing premises may want a container whose exterior suits its surroundings."],
+        subsections: [
+          {
+            heading: "One-trip Container Appearance",
+            paragraphs: ["Where available, a newer container with panels in good condition may suit appearance-sensitive premises."],
+          },
+          {
+            heading: "Neutral Colour Painting",
+            paragraphs: ["Exterior repainting can be quoted in a colour you specify. Neutral shades that suit commercial premises include:"],
+            bullets: [
+              { text: "Light grey." },
+              { text: "Dark grey." },
+              { text: "White." },
+              { text: "Beige." },
+              { text: "Charcoal." },
+              { text: "Other approved commercial colours." },
+            ],
+            closing: [
+              "Repainting uses a compatible protective coating over suitable surface preparation, and the exact shade is confirmed in your quotation.",
+            ],
+            inlineLinks: [
+              {
+                before: "A primer-and-topcoat paint system with brand-matched shades is described on our page on",
+                link: { label: "brand-matched painted cargo containers", href: "/products/cargo-storage-containers-pink" },
+                after: ".",
+              },
+            ],
+          },
+          {
+            heading: "Corporate Branding",
+            paragraphs: ["Containers can be finished with approved:"],
+            bullets: [
+              { text: "Company logos." },
+              { text: "Corporate colour schemes." },
+              { text: "Business identification." },
+              { text: "Authorised signage." },
+            ],
+            closing: [
+              "Artwork needs the customer's approval and must meet the applicable signage requirements; third-party logos are not applied without authorisation.",
+            ],
+          },
+          {
+            heading: "Visual Integration With Commercial Premises",
+            paragraphs: ["Screening or landscaping may be considered where permitted, provided it does not obstruct:"],
+            bullets: [
+              { text: "Cargo doors." },
+              { text: "Ventilation openings." },
+              { text: "Drainage." },
+              { text: "Fire access." },
+              { text: "Emergency exits." },
+              { text: "Required inspection access." },
+            ],
+            closing: ["Unapproved structures are not attached to the container."],
+          },
+        ],
+      },
+      {
+        heading: "Special Cargo Container Types",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/shipping-container-richmond-town/richmond-town-shipping-container-side-window.webp",
+          alt: "Long side of a maroon corrugated steel container seen straight on, with a black-framed sliding window cut into the side wall",
+          width: 1539,
+          height: 1022,
+          caption:
+            "Illustrative render of a modified container. Windows and extra doors are cut only on order, after a structural review; a standard dry container has none.",
+        },
+        paragraphs: [
+          "Most compatible refurbishment storage is served by standard dry shipping containers. Other types, supplied or arranged subject to stock, include:",
+        ],
+        bullets: [
+          { title: "High cube containers", text: "for taller compatible equipment." },
+          { title: "Open top containers", text: "for specialised cargo loaded from above." },
+          { title: "Flat rack containers", text: "for suitable oversized cargo; a flat rack is not an enclosed storage container." },
+          { title: "Refrigerated containers", text: "for controlled-temperature requirements." },
+        ],
+        inlineLinks: [
+          {
+            before: "Each type is described in our guide to",
+            link: { label: "available cargo container types", href: "/products/cargo-containers" },
+            after: ".",
+          },
+        ],
+      },
+      {
+        heading: "Container Delivery in Central Bengaluru",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Delivery to commercial premises in Richmond Town is planned around vehicle access, placement conditions and the applicable transport restrictions.",
+        ],
+        subsections: [
+          {
+            heading: "Building Management Coordination",
+            paragraphs: ["Before delivery, confirm:"],
+            bullets: [
+              { text: "The property owner's authorisation." },
+              { text: "Building management approval." },
+              { text: "Security gate access." },
+              { text: "Vehicle gate pass requirements." },
+              { text: "The approved placement area." },
+              { text: "Delivery timing." },
+              { text: "An authorised on-site representative." },
+            ],
+            closing: ["Building management approval alone may not satisfy every applicable legal requirement."],
+          },
+          {
+            heading: "Parking Area Preparation",
+            paragraphs: ["Before delivery:"],
+            bullets: [
+              { text: "Clear the approved placement area." },
+              { text: "Move parked vehicles where authorised." },
+              { text: "Check the access width." },
+              { text: "Check the overhead clearance." },
+              { text: "Assess the ground or slab load capacity." },
+              { text: "Keep emergency access open." },
+            ],
+          },
+          {
+            heading: "Transport Access",
+            paragraphs: ["We assess possible obstructions such as:"],
+            bullets: [
+              { text: "Overhead electrical cables." },
+              { text: "Tree branches." },
+              { text: "Building projections." },
+              { text: "Signboards." },
+              { text: "Gate restrictions." },
+              { text: "Parked vehicles." },
+              { text: "Road width." },
+              { text: "Vehicle turning space." },
+            ],
+          },
+          {
+            heading: "Night & Early-morning Delivery",
+            paragraphs: ["Delivery may be scheduled around:"],
+            bullets: [
+              { text: "Applicable heavy-vehicle restrictions." },
+              { text: "Property management requirements." },
+              { text: "Local traffic conditions." },
+              { text: "Transport availability." },
+              { text: "Noise restrictions." },
+              { text: "Required permissions." },
+            ],
+            closing: [
+              "A night or early-morning slot may be considered where it is legally permitted and operationally available. It is not guaranteed, and it is offered only once those arrangements are confirmed.",
+            ],
+          },
+          {
+            heading: "Crane Unloading",
+            paragraphs: ["Where direct truck access is unsuitable, crane placement may be considered. Before a lift, confirm:"],
+            bullets: [
+              { text: "Safe lifting arrangements." },
+              { text: "Crane positioning." },
+              { text: "Ground-bearing conditions." },
+              { text: "Overhead clearance." },
+              { text: "Required road-use permissions." },
+              { text: "Traffic management requirements." },
+              { text: "Qualified lifting personnel." },
+            ],
+            closing: [
+              "Crane access from a public road is not guaranteed, and permission to occupy the road is not included unless your quotation lists it.",
+            ],
+            // Brief §17: detailed restricted-site guidance belongs to the Bellandur page.
+            inlineLinks: [
+              {
+                before: "Gate passes, tight approaches and unloading checks are covered in more detail in our notes on",
+                link: { label: "restricted-site container delivery", href: "/cities-we-serve/shipping-container-bellandur" },
+                after: ".",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Richmond Town",
+        placement: "afterSolutions",
+        paragraphs: ["Shipping container pricing depends on:"],
+        bullets: [
+          { text: "Container size." },
+          { text: "New or used condition." },
+          { text: "Container grade." },
+          { text: "Structural condition." },
+          { text: "Purchase or rental arrangement." },
+          { text: "Rental duration." },
+          { text: "Transport distance." },
+          { text: "Site accessibility." },
+          { text: "Delivery scheduling." },
+          { text: "Loading and unloading." },
+          { text: "Crane requirements." },
+          { text: "Exterior painting." },
+          { text: "Corporate branding." },
+          { text: "Suitable shelving." },
+          { text: "Approved lighting installations." },
+          { text: "Lockbox requirements." },
+          { text: "Collection arrangements." },
+        ],
+        closing: [
+          "Portable Office Cabin provides a quotation based on your confirmed requirements. For a hired container, the delivery and collection charges are listed in the rental quotation; prices, hire charges and timings are not stated on this page.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How much does it cost to rent a shipping container in Richmond Town?",
+        answer:
+          "Rental charges depend on the container size, condition, hire duration, transport and unloading. Hire runs from one month, and Portable Office Cabin confirms the charges for your requirement in a rental quotation.",
+      },
+      {
+        question: "Can I hire a shipping container for an office interior refit?",
+        answer:
+          "Yes. A suitable container can be hired for compatible office furniture and equipment while the refurbishment is under way. Confirm how long you need it and the storage conditions your items require.",
+      },
+      {
+        question: "Can you deliver a shipping container at night?",
+        answer:
+          "Night delivery may be considered subject to the applicable transport restrictions, required permissions, property management approval and transport availability. The arrangements are confirmed before booking, and a night slot is not guaranteed.",
+      },
+      {
+        question: "Will a shipping container fit in our commercial parking area?",
+        answer:
+          "That depends on the actual space available, the overhead clearance, the structural load capacity, vehicle access and the clearance the cargo doors need. Send site photographs and measurements for an assessment.",
+      },
+      {
+        question: "Can you paint a container in our company colours?",
+        answer:
+          "Yes. Exterior painting and approved branding can be quoted. Share the colour, design and branding specification you need; the unit's surface condition and the final finish are confirmed in your quotation.",
+      },
+      {
+        question: "Can office files and electronics be stored inside a shipping container?",
+        answer:
+          "That depends on each item's temperature, humidity, packaging and security requirements. An ordinary steel container can see significant temperature swings and condensation, so sensitive equipment and records may need purpose-designed environmental controls.",
+      },
+      {
+        question: "Can restaurant furniture be stored during renovation?",
+        answer:
+          "Compatible restaurant furniture can be stored with suitable protective wrapping and arrangement. Check the furniture's material and the environmental conditions it needs.",
+      },
+      {
+        question: "Do we need permission to place a shipping container?",
+        answer:
+          "Requirements depend on the property, the intended use, the duration and the applicable local regulations. Obtain the property owner's authorisation and any necessary building management or statutory approvals.",
+      },
+      {
+        question: "What happens after our refurbishment is completed?",
+        answer:
+          "A hired container is collected under the terms of your rental agreement. A purchased container can be kept, relocated or resold where permitted. A hire does not convert to a purchase automatically; ask if you would like a rent-plus-buy arrangement quoted.",
+      },
+    ],
+
+    ctaHeading: "Plan Your Shipping Container Requirement in Richmond Town",
+    ctaText: `Whether you are refurbishing an office, renovating a hotel, upgrading a restaurant or organising event equipment, Portable Office Cabin can discuss suitable shipping container options based on your requirements. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}. Serving Richmond Town, Bengaluru, Karnataka – 560025.`,
+    // Brief §21: the quotation request → /contact (the CTA box button's target).
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (numbers and link from COMPANY).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry for Richmond Town",
+      intro:
+        "Choose the container type and quantity, give the Richmond Town premises address, and say whether you are buying or hiring, for how long and what will be stored. Site photographs, parking-area measurements and any building management requirements help us plan the delivery.",
+    },
+    // The cargo category, Cargo Container for Sale, the rental product and the types guide are linked in the
+    // body, so they are not repeated here.
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer: `Portable Office Cabin dispatches containers from its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, Tamil Nadu, and runs its Bengaluru office from Electronic City; it has no yard, depot, showroom or branch in Richmond Town. What a unit is and includes is set by its written quotation: size, grade and condition, internal and door dimensions, payload limits, any paint finish, branding, lockbox, shelving, lighting, insulation, windows or extra doors, any hire terms, and how it is delivered, lifted, unloaded and collected. Stock changes, so a size, a delivery date, a night or early-morning slot, a crane lift or a staggered delivery holds only once the quotation confirms it. Unless an approved specification says otherwise, no unit is offered as condensation-free, floodproof, theft-proof or temperature- or humidity-controlled storage, and an ordinary storage container is not supplied for food, LPG cylinders, fuel or other hazardous materials, for long-term preservation of documents, antiques or artwork, or for operating or charging electrical equipment. The five pictures are illustrative renders of one maroon container, not photographs taken in Richmond Town; none shows a delivered unit, a unit for sale, a customer's premises or stored goods, and the window shown in four of them is a modification, not a feature of a standard cargo container. Footprints and dimensions are approximate. Offices, hotels, restaurants, schools, event companies, retailers and property owners are named as possible uses, not as customers or completed projects, and Richmond Road and Richmond Circle are named to describe where enquiries are welcome, not confirmed delivery addresses. Guidance on storage, placement, parking slabs, cranes, permissions and signage is general information, not legal, structural, fire-safety, insurance or engineering advice; follow the manufacturers' instructions and the requirements of the authorities and building managers concerned.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING & STORAGE CONTAINERS IN INDIRANAGAR (east Bengaluru) — storage for bars, pubs and
@@ -72499,10 +74609,10 @@ export const CITY_PAGES: CityPage[] = [
     ctaSecondaryLinks: [],
     relatedLinksHeading: "Related products and guides",
     relatedLinks: [
-      { label: "Portable Cabin Layouts and Interior Ideas", href: "/products/portable-cabin/layouts-and-interiors" },
-      { label: "Portable Cabin Sizes and Dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
-      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
-      { label: "Portable Cabin Transport and Delivery", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Cabin Layouts and Interior Ideas", href: "/guides/portable-cabin-layouts-and-interiors" },
+      { label: "Portable Cabin Sizes and Dimensions", href: "/guides/portable-cabin-sizes-and-dimensions" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
+      { label: "Portable Cabin Transport and Delivery", href: "/guides/portable-cabin-transport-and-delivery" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -74542,7 +76652,7 @@ export const CITY_PAGES: CityPage[] = [
    * appear once each in the body.
    *
    * LINKS (brief §5): sizes section → /products/portable-shop-cabin ("portable shop cabins"); design
-   * section → /products/portable-cabin/layouts-and-interiors ("custom portable cabin layouts"); food-
+   * section → /guides/portable-cabin-layouts-and-interiors ("custom portable cabin layouts"); food-
    * protection H3 → /products/portable-cabin/insulation-and-cooling; community-placement H3 → the RR
    * Nagar security-cabin page (#281), anchor "portable security cabins in RR Nagar" (the brief's guard-post
    * reference; that page's brief asks for no link back).
@@ -74958,7 +77068,7 @@ export const CITY_PAGES: CityPage[] = [
         inlineLinks: [
           {
             before: "For planning ideas, see our guide to",
-            link: { label: "custom portable cabin layouts", href: "/products/portable-cabin/layouts-and-interiors" },
+            link: { label: "custom portable cabin layouts", href: "/guides/portable-cabin-layouts-and-interiors" },
             after: ".",
           },
         ],
@@ -75078,10 +77188,10 @@ export const CITY_PAGES: CityPage[] = [
     ctaSecondaryLinks: [],
     relatedLinksHeading: "Related products and guides",
     relatedLinks: [
-      { label: "Portable Cabin Sizes and Dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
-      { label: "MS Sheet or PUF Panel Cabins", href: "/products/portable-cabin/materials-ms-vs-puf" },
-      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
-      { label: "Portable Cabin Transport and Delivery", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Cabin Sizes and Dimensions", href: "/guides/portable-cabin-sizes-and-dimensions" },
+      { label: "MS Sheet or PUF Panel Cabins", href: "/guides/portable-cabin-materials-ms-vs-puf" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/guides/portable-cabin-installation-and-site-preparation" },
+      { label: "Portable Cabin Transport and Delivery", href: "/guides/portable-cabin-transport-and-delivery" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",

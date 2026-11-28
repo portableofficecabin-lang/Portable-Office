@@ -33,11 +33,11 @@ export function LabourHutmentsStaffAccommodationContent() {
 
   const faqs = [
     { q: "How quickly can a 100-bed labour colony be installed?", a: "For a 100-bed G+1 modular labour hutment colony, your written quotation sets out factory preparation and site installation, which starts once civil work is ready. Work progresses parallel to main site mobilisation, saving valuable project time." },
-    { q: "What does the labour hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Full colony packages are sized to the brief — configuration, panel thickness, and amenities all change the build — so those are quoted separately. Either way it is 20–30% cheaper than traditional RCC/brick construction, with the added benefit of reusability across 3–5 project sites." },
-    { q: "Can labour hutments be relocated to another project site?", a: "Yes. Bolt-together assembly allows easy dismantling with 80% material recovery for transport and reinstallation at subsequent sites, making them highly cost-effective over multiple project cycles." },
+    { q: "What does the labour hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Full colony packages are sized to the brief — configuration, panel thickness, and amenities all change the build — so those are quoted separately. Either way, it carries the added benefit of reusability across 3–5 project sites." },
+    { q: "Can labour hutments be relocated to another project site?", a: "Yes. Bolt-together assembly allows easy dismantling for transport and reinstallation at subsequent sites, making them highly cost-effective over multiple project cycles." },
     { q: "What compliance standards do your labour hutments meet?", a: "Our structures comply with BOCW Act requirements, NBC 2016 fire safety and egress norms, IS 456/800/875 structural standards, and client-specific HSE requirements. Complete documentation including drawings, test certificates, and O&M manuals is provided." },
     { q: "Do you offer multi-storey labour accommodation?", a: "Yes, we offer G+1 and G+2 configurations that maximise space on land-scarce urban sites. Multi-storey units use heavy-duty steel framing designed for Zone V earthquake compliance." },
-    { q: "What is the design life of prefab labour hutments?", a: "Design life is 10–15+ years with proper maintenance. Steel salvage value of 40–50% at end of life, panels can be individually replaced without full disassembly, and repainting is recommended every 3–5 years." },
+    { q: "What is the design life of prefab labour hutments?", a: "Design life is 10–15+ years with proper maintenance. The steel keeps a salvage value at end of life, panels can be individually replaced without full disassembly, and repainting is recommended every 3–5 years." },
     { q: "Can you supply integrated colony packages with canteen and toilets?", a: "Absolutely. We supply complete colony packages including dormitory blocks, staff quarters, prefab canteens (50–200 pax), first-aid centres, portable toilets, and security cabins — all from one location for uniform quality." },
     { q: "What insulation options are available for extreme climates?", a: "Panel thickness ranges from 40–80mm based on climate zone. PUF/EPS core with density 32–40 kg/m³ provides thermal conductivity of 0.022–0.028 W/mK, keeping interiors comfortable from -5°C to 50°C ambient temperatures." },
   ];
@@ -50,7 +50,7 @@ export function LabourHutmentsStaffAccommodationContent() {
           Prefabricated Labour Hutments & Staff Accommodation by Portable Office Cabin
         </h2>
         <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-          India's infrastructure push from 2024 to 2026 — driven by Bharatmala, Sagarmala, and metro expansions — demands housing for millions of migrant workers. Prefabricated labour hutments and staff accommodation offer modular, factory-built housing solutions designed for rapid deployment at construction sites, industrial plants, and infrastructure development projects. These structures address a critical gap: without proper facilities, construction companies face 30–40% workforce attrition.
+          India's infrastructure push — driven by Bharatmala, Sagarmala, and metro expansions — demands housing for millions of migrant workers. Prefabricated labour hutments and staff accommodation offer modular, factory-built housing solutions designed for rapid deployment at construction sites, industrial plants, and infrastructure development projects. These structures address a critical gap: without proper facilities, construction companies face higher workforce attrition.
         </p>
         <p className="text-muted-foreground leading-relaxed">
           Portable Office Cabin is a manufacturer and supplier of prefabricated labour colonies, portable cabins, and modular staff housing solutions across India. Our systems use insulated sandwich panels, steel frames, PEB structures, container conversions, and plug-and-play MEP fittings. This guide helps buyers compare options, understand technical features, and plan complete labour and staff colony layouts for metro rail projects, highway packages, refineries, mining sites, and large real-estate townships.
@@ -104,8 +104,8 @@ export function LabourHutmentsStaffAccommodationContent() {
         <div className="grid sm:grid-cols-2 gap-4">
           {[
             { title: "Rapid Deployment", desc: "A G+1 labour colony for 100–300 workers needs far less time on site than RCC structures" },
-            { title: "Cost Effective Solution", desc: "20–30% savings from minimal foundations, no curing time, and reusability across multiple sites" },
-            { title: "Easy Relocation", desc: "Dismantling via bolted joints achieves 80% material recovery for subsequent project sites" },
+            { title: "Cost Effective Solution", desc: "Savings from minimal foundations, no curing time, and reusability across multiple sites" },
+            { title: "Easy Relocation", desc: "Dismantling via bolted joints lets the units move to subsequent project sites" },
             { title: "Compliance Ready", desc: "Easier adherence to NBC 2016 guidelines for 3.5–4.5 sqm/person floor space and BOCW Act requirements" },
             { title: "Reduced Dependency", desc: "Minimal reliance on local material supply and skilled masons — crucial for remote work sites" },
           ].map((item) => (
@@ -335,7 +335,7 @@ export function LabourHutmentsStaffAccommodationContent() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             { label: "Design Life", value: "10–15+ years with proper maintenance" },
-            { label: "Reuse Potential", value: "3–5 project cycles with 40–50% steel salvage value" },
+            { label: "Reuse Potential", value: "3–5 project cycles, with steel salvage value at end of life" },
             { label: "Repainting", value: "Every 3–5 years (coastal/industrial areas)" },
             { label: "Panel Replacement", value: "Individual sections replaceable without full disassembly" },
             { label: "Warranty", value: "As per our published warranty policy (structural cover by material)" },
@@ -356,10 +356,10 @@ export function LabourHutmentsStaffAccommodationContent() {
         </h2>
         <div className="grid sm:grid-cols-2 gap-4">
           {[
-            { icon: Leaf, title: "Energy Reduction", desc: "Insulated panels cut cooling loads by 25–35%" },
+            { icon: Leaf, title: "Energy Reduction", desc: "Insulated panels cut cooling loads" },
             { icon: Zap, title: "Solar Integration", desc: "Rooftop PV provisions (1kW/100 beds)" },
             { icon: Thermometer, title: "Water Management", desc: "Low-flow fixtures (4–6L flush), rainwater harvesting options" },
-            { icon: RotateCcw, title: "Material Efficiency", desc: "90% waste reduction versus conventional construction; 95% steel recyclable" },
+            { icon: RotateCcw, title: "Material Efficiency", desc: "Less waste than conventional construction; recyclable steel" },
           ].map((item) => (
             <div key={item.title} className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
               <item.icon className="h-5 w-5 text-accent shrink-0 mt-0.5" />
@@ -471,7 +471,7 @@ export function LabourHutmentsStaffAccommodationContent() {
           ))}
         </ul>
         <p className="text-sm text-muted-foreground italic">
-          Early engagement with our engineering team optimises layouts and reduces costs by 10–15%. Include future expansion or relocation needs in initial discussions to maximise asset utilisation.
+          Early engagement with our engineering team optimises layouts to reduce costs. Include future expansion or relocation needs in initial discussions to maximise asset utilisation.
         </p>
       </section>
 
@@ -482,9 +482,7 @@ export function LabourHutmentsStaffAccommodationContent() {
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
-            "15+ years of prefabrication experience",
             "In-house design, manufacturing & installation",
-            "500+ projects delivered",
             "A written quotation for every order",
             "Track record in labour colonies, container offices, PEB structures",
             "Commitment to quality, worker well-being & sustainable construction",

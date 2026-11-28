@@ -20,7 +20,7 @@ const highlights = [
   { icon: Clock, title: "Quick Setup", description: "Quick deployment versus weeks for traditional construction on Peenya's leased plots" },
   { icon: Truck, title: "Full Relocatability", description: "Move containers to Dobbaspet, Bidadi, or Jigani when factory operations shift" },
   { icon: IndianRupee, title: "Lower Upfront Cost", description: "Significantly cheaper than permanent RCC structures for 3–5 year industrial leases" },
-  { icon: Shield, title: "ISO-Grade Build", description: "Corten steel body with marine-grade plywood flooring — weather-resistant for Bengaluru monsoons" },
+  { icon: Shield, title: "Corten Steel Build", description: "Corten steel body with marine-grade plywood flooring — weather-resistant for Bengaluru monsoons" },
   { icon: Factory, title: "3,500+ MSME Hub", description: "Serving Asia's largest industrial estate across four phases along Tumkur Road corridor" },
   { icon: Wrench, title: "Full Customization", description: "Internal racks, mezzanine shelves, ventilation grills, insulation, AC, and electrical fit-out" },
 ];
@@ -71,11 +71,11 @@ const faqs = [
   },
   {
     q: "Can containers be relocated if our factory moves from Peenya?",
-    a: "Yes, full relocatability is a key advantage. Containers can be lifted via crane or hydra and transported to Dobbaspet, Bidadi, Jigani, Nelamangala, Hoskote, or any other location. Approximately 80% of material value is retained during relocation."
+    a: "Yes, full relocatability is a key advantage. Containers can be lifted via crane or hydra and transported to Dobbaspet, Bidadi, Jigani, Nelamangala, Hoskote, or any other location."
   },
   {
     q: "Are used containers suitable for storage in Peenya's industrial conditions?",
-    a: "Yes, used cargo-grade containers are ideal for raw material and finished goods storage. They are 40–60% cheaper than new units while maintaining structural integrity. We inspect every used container for flooring, doors, rust, and water tightness before delivery."
+    a: "Yes, used cargo-grade containers are ideal for raw material and finished goods storage. They cost less than new units while maintaining structural integrity. We inspect every used container for flooring, doors, rust, and water tightness before delivery."
   },
   {
     q: "What site preparation is needed for container placement in Peenya?",
@@ -242,7 +242,7 @@ export function ShippingContainerPeenyaContent() {
           <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
             <p>Selection depends on budget, appearance requirements, and project duration.</p>
             <ul className="space-y-3">
-              <li><strong>Used cargo-grade containers</strong> suit pure storage — typically 40–60% cheaper while maintaining structural integrity</li>
+              <li><strong>Used cargo-grade containers</strong> suit pure storage — they cost less than new units while maintaining structural integrity</li>
               <li><strong>New or one-trip containers</strong> preferred for client-facing site offices, QA labs, or brand-visible structures facing Tumkur Road</li>
               <li>Portable Office Cabin inspects used units for flooring, doors, rust, and water tightness before offering to customers</li>
               <li>6–18 month projects often choose used; long-term offices (5+ years) lean toward new/one-trip</li>

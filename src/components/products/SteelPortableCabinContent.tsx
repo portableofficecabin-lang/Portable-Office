@@ -38,7 +38,8 @@ import { BuyNowCTA } from "@/components/products/BuyNowCTA";
  *    site FAQ: manufacturing at the Tamil Nadu factory in Kamandoddi near Hosur, with a
  *    Bangalore office in Electronic City.
  *
- * ISO 9001:2015 and MSME/Udyam are kept — both are recorded in company.ts.
+ * MSME/Udyam is kept (recorded in company.ts). The ISO 9001:2015 line was removed while the
+ * owner's certificate is pending (claims inventory E1).
  */
 
 const CONTACT = {
@@ -72,7 +73,7 @@ const WHY_STEEL = [
     icon: Truck,
     title: "It moves with your projects",
     body:
-      "When one site finishes, the cabin goes on a truck to the next one. Plenty of our customers have moved the same cabin four or five times over a decade. You are buying an asset, not a temporary arrangement.",
+      "When one site finishes, the cabin goes on a truck to the next one. You are buying an asset, not a temporary arrangement.",
   },
   {
     icon: ClipboardList,
@@ -247,7 +248,7 @@ export function SteelPortableCabinContent() {
         <p>
           Portable Office Cabin manufactures steel cabins at our Tamil Nadu factory in Kamandoddi,
           near Hosur, with a Bangalore office in Electronic City for sales and support. We are
-          ISO 9001:2015 certified and MSME registered, and we have supplied everything from a single
+          MSME registered, and we have supplied everything from a single
           guard cabin to full labour colonies for infrastructure projects. This page covers what
           goes into our steel cabins, the sizes we keep ready, what drives the price, and how to
           decide whether steel is the right choice for you.
@@ -440,7 +441,7 @@ export function SteelPortableCabinContent() {
               choice if the room will be air-conditioned all day — a clinic, a control room, an
               executive office through a Chennai summer — because a sealed foam core holds
               temperature in a way sheet-and-wool walls do not. Our{" "}
-              <Link href="/products/portable-cabin/materials-ms-vs-puf" className="font-medium text-accent underline-offset-4 hover:underline">
+              <Link href="/guides/portable-cabin-materials-ms-vs-puf" className="font-medium text-accent underline-offset-4 hover:underline">
                 MS sheet vs PUF panel comparison
               </Link>{" "}
               goes through it in detail.
@@ -549,7 +550,7 @@ export function SteelPortableCabinContent() {
           </a>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          Monday to Saturday, 7 AM to 10 PM. ISO 9001:2015 certified and MSME registered, with
+          Monday to Saturday, 7 AM to 10 PM. MSME registered, with
           manufacturing at our Tamil Nadu factory in Kamandoddi, near Hosur.
         </p>
       </div>

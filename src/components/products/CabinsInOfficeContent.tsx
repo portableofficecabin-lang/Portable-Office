@@ -64,7 +64,7 @@ export function CabinsInOfficeContent() {
       {/* Introduction */}
       <section>
         <h2 className="text-3xl font-bold text-foreground mb-6">
-          Cabins in Office: Modern Modular Workspaces for 2026
+          Cabins in Office: Modern Modular Workspaces
         </h2>
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-4 text-muted-foreground leading-relaxed">
@@ -72,7 +72,7 @@ export function CabinsInOfficeContent() {
               Cabins in office settings have transformed dramatically over the past three decades. What once meant bulky wooden partitions and fixed manager rooms now refers to sleek, prefabricated office structures built with glass-and-steel modular systems that can be assembled in a short time. We are proud to deliver high-quality, reliable prefab office solutions, backed by years of experience and a strong dedication to quality.
             </p>
             <p>
-              This guide covers what office cabins are, why companies in 2026 use them, and how to design and install them quickly to support hybrid work and productivity goals.
+              This guide covers what office cabins are, why companies use them, and how to design and install them quickly to support hybrid work and productivity goals.
             </p>
           </div>
           <OptimizedImage
@@ -239,7 +239,7 @@ export function CabinsInOfficeContent() {
         <h2 className="text-2xl font-bold text-foreground mb-4">Benefits of Having Cabins in an Office</h2>
         <div className="grid md:grid-cols-2 gap-6">
           {[
-            { title: "Productivity Gains", desc: "Fewer call disruptions; 20–30% higher focus in enclosed zones for tasks requiring 60–90 minutes of deep work" },
+            { title: "Productivity Gains", desc: "Fewer call disruptions and quieter enclosed zones for tasks requiring 60–90 minutes of deep work" },
             { title: "Privacy & Confidentiality", desc: "Suitable for HR meetings, performance reviews, client negotiations, and legal discussions" },
             { title: "Hybrid Work Support", desc: "Dedicated video conferencing space with stable acoustics and lighting for remote collaboration" },
             { title: "Employee Well-being", desc: "Reduced noise fatigue; ability to step away for focused work without leaving the office" },
@@ -352,7 +352,7 @@ export function CabinsInOfficeContent() {
 
       {/* Design Trends */}
       <section>
-        <h2 className="text-2xl font-bold text-foreground mb-4">Design Trends for Office Cabins in 2024–2026</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-4">Design Trends for Office Cabins</h2>
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { title: "Transparent Privacy", desc: "Clear glass with acoustic films and subtle frosting lines" },
@@ -388,9 +388,9 @@ export function CabinsInOfficeContent() {
             </ul>
           </div>
           <div className="bg-background rounded-lg p-4 border">
-            <h4 className="font-semibold text-foreground text-sm mb-2">Real-world example:</h4>
+            <h4 className="font-semibold text-foreground text-sm mb-2">A practical check:</h4>
             <p className="text-xs text-muted-foreground">
-              A fintech startup downsized from 10 large cabins to 6 smaller ones plus 8 phone pods after tracking actual usage — boosting utilization by 25% and freeing up portable workspaces for project teams.
+              Track how your cabins and meeting rooms are actually used for a few weeks before ordering more — a mix of fewer large cabins and a few small phone booths can meet the same need with less floor space.
             </p>
           </div>
         </div>
@@ -400,7 +400,7 @@ export function CabinsInOfficeContent() {
       <section>
         <h2 className="text-2xl font-bold text-foreground mb-4">Future of Office Cabins</h2>
         <p className="text-muted-foreground leading-relaxed">
-          Office cabins will remain central as companies refine hybrid policies through 2026 and beyond. Emerging concepts include demountable cabins that can be relocated floor-to-floor, climate-controlled focus pods for Indian summers, and cabins designed for VR/AR collaboration. Data-driven design is rising — sensors now report cabin occupancy, air quality, and noise levels to optimise layouts over time. Sustainability drives the manufacture of cabins with recyclable aluminium, low-VOC panels, and modular components that support reuse after office moves.
+          Office cabins will remain central as companies refine hybrid policies. Emerging concepts include demountable cabins that can be relocated floor-to-floor, climate-controlled focus pods for Indian summers, and cabins designed for VR/AR collaboration. Data-driven design is rising — sensors now report cabin occupancy, air quality, and noise levels to optimise layouts over time. Sustainability drives the manufacture of cabins with recyclable aluminium, low-VOC panels, and modular components that support reuse after office moves.
         </p>
       </section>
 

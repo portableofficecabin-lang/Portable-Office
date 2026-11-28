@@ -74,7 +74,7 @@ export function ContainerOfficeGenericContent() {
             {
               icon: DollarSign,
               title: "Cost Savings vs Traditional Construction",
-              desc: "Container offices typically prove 20–30% more economical while delivering comparable functionality. Savings come from reduced material costs, minimal foundation requirements, and significantly lower labour expenses due to factory-based fabrication.",
+              desc: "Container offices are often more economical while delivering comparable functionality. Savings come from reduced material costs, minimal foundation requirements, and significantly lower labour expenses due to factory-based fabrication.",
             },
             {
               icon: Clock,
@@ -133,7 +133,7 @@ export function ContainerOfficeGenericContent() {
             },
             {
               title: "Multi-Container Stacked Office Complex",
-              desc: "A G+1 container office block we completed for an industrial park in Gujarat in 2022 featured an external staircase, balcony access, and interconnected upper and lower floors—delivering 640+ square feet of usable office space with minimal ground footprint.",
+              desc: "A G+1 container office block can combine an external staircase, balcony access, and interconnected upper and lower floors, giving more usable office space on a minimal ground footprint.",
             },
             {
               title: "Glass Façade Container Office",
@@ -316,7 +316,7 @@ export function ContainerOfficeGenericContent() {
             {
               icon: HardHat,
               title: "Construction & Infrastructure",
-              desc: "Site offices for road, metro, bridge, and power projects requiring rapid deployment, durability, and eventual relocation. In 2021, we delivered a 40 ft site office for a highway contractor in Rajasthan that served three different project locations over two years.",
+              desc: "Site offices for road, metro, bridge, and power projects requiring rapid deployment, durability, and eventual relocation.",
             },
             {
               icon: Factory,

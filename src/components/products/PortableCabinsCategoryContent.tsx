@@ -8,10 +8,11 @@
  * basePrice is ex-GST; the customer-facing price is always sellPrice). Nothing here hardcodes a
  * price, so this copy can never contradict the cards rendered above it or the feed.
  *
- * Facts policy: every claim below is verifiable elsewhere on this site — ISO 9001:2015 certificate
- * QT-99968/0726 (IsoCertificationBadge), MSME/Udyam registration and our Tamil Nadu factory address
- * (Footer), 15+ years / 500+ projects / up to 60% cheaper (HeroSection, WhatSetsUsApart), client
- * names (TrustedClientsSection), 7–15 working days dispatch plus zone transit (shippingZones.ts). Claims from
+ * Facts policy: every claim below is verifiable elsewhere on this site — MSME/Udyam registration
+ * and our Tamil Nadu factory address (the ISO 9001 line was removed pending the owner's certificate)
+ * (Footer), 15+ years / 500+ projects / up to 60% cheaper (HeroSection, WhatSetsUsApart),
+ * 7–15 working days dispatch plus zone transit (shippingZones.ts). Client names were removed
+ * until the owner has purchase records and logo permission on file (clientLogos.ts). Claims from
  * draft copy that could NOT be verified against site data (10×8 ft standard size, business hours,
  * "2–3 week" lead time) were corrected or omitted rather than published.
  *
@@ -125,7 +126,7 @@ export const portableCabinsFaqs: { question: string; answer: string }[] = [
   {
     question: "Are portable cabins cheaper than brick-and-mortar construction?",
     answer:
-      "Yes — up to 60% cheaper than conventional construction, and dramatically faster. You also avoid demolition losses: when the project ends, the cabin moves to your next site or can be resold, so it retains value as an asset.",
+      "A standard cabin usually avoids the RCC foundation and long civil works of a brick-and-mortar building — a level base suited to the site is enough — with far less time on site. You also avoid demolition losses: when the project ends, the cabin moves to your next site or can be resold, so it retains value as an asset.",
   },
 ];
 
@@ -145,14 +146,13 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
           use, with far less time on site than conventional construction. Whether you need a site office for a construction project,
           secure staff accommodation, a sales office or a{" "}
           <Link href="/products/category/security-cabins" className="text-accent hover:underline">security cabin</Link>,
-          our portable cabins cost up to 60% less than conventional construction and can be
+          our standard portable cabins sit on a level base suited to the site rather than an RCC foundation, and can be
           relocated whenever your project moves.
         </p>
         <p>
-          We are an ISO 9001:2015 certified manufacturer (Certificate No. QT-99968/0726) with 15+
-          years in modular construction, our own in-house factory at Kamandoddi, Hosur — Tamil Nadu,
-          just ~40 km from Bangalore — and 500+ projects delivered across India for clients including Tata Projects,
-          Ashok Leyland, Asian Paints and Brigade Group.
+          We are a manufacturer with our own
+          in-house factory at Kamandoddi, Hosur — Tamil Nadu, just ~40 km from Bangalore — delivering
+          across India.
           {minPrice !== null && <> Prices start at <strong className="text-foreground">{inr(minPrice)} (incl. GST)</strong>.</>}
         </p>
         {/* Links UP to the range hub and DOWN to its guides (added 2026-10-10). The hub is a static
@@ -161,9 +161,9 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
         <p>
           New to portable cabins? Start with the{" "}
           <Link href="/products/portable-cabin" className="text-accent hover:underline">portable cabin sizes, specifications and prices overview</Link>, then read the{" "}
-          <Link href="/products/portable-cabin/price-and-cost-guide" className="text-accent hover:underline">price and cost guide</Link>, the{" "}
-          <Link href="/products/portable-cabin/sizes-and-dimensions" className="text-accent hover:underline">sizes and dimensions guide</Link> or the{" "}
-          <Link href="/products/portable-cabin/materials-ms-vs-puf" className="text-accent hover:underline">MS sheet vs PUF panel comparison</Link>. Choosing between
+          <Link href="/guides/portable-cabin-price-and-cost" className="text-accent hover:underline">guide to what decides cabin cost</Link>, the{" "}
+          <Link href="/guides/portable-cabin-sizes-and-dimensions" className="text-accent hover:underline">guide to choosing a cabin size</Link> or the{" "}
+          <Link href="/guides/portable-cabin-materials-ms-vs-puf" className="text-accent hover:underline">MS sheet vs PUF panel comparison</Link>. Choosing between
           mild steel, galvanised and colour-coated skins? See the{" "}
           <Link href="/products/metal-portable-cabin" className="text-accent hover:underline">metal portable cabin guide</Link>.
         </p>
@@ -288,9 +288,8 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
         <h2 className="font-display text-2xl font-bold mb-3">Why Buy From Portable Office Cabin</h2>
         <ul className="space-y-2 text-muted-foreground leading-relaxed list-disc pl-5">
           <li><strong className="text-foreground">In-house manufacturing, no middlemen.</strong> Our own factory at Kamandoddi, Hosur in Tamil Nadu means factory-direct prices and full quality control — we are the manufacturer, not a reseller.</li>
-          <li><strong className="text-foreground">ISO 9001:2015 certified.</strong> Documented quality processes on every build (Certificate No. QT-99968/0726); GST-registered and Udyam/MSME registered (UDYAM-TN-11-0068545).</li>
-          <li><strong className="text-foreground">15+ years, 500+ projects delivered.</strong> Trusted by Tata Projects, Ashok Leyland, Asian Paints and Brigade Group.</li>
-          <li><strong className="text-foreground">Up to 60% cheaper than civil construction</strong> — and the cabin is an asset you can relocate or resell, not a structure you demolish.</li>
+          <li><strong className="text-foreground">Registered business.</strong> GST-registered and Udyam/MSME registered (UDYAM-TN-11-0068545).</li>
+          <li><strong className="text-foreground">No RCC foundation for standard cabins, no demolition</strong> — a level base suited to the site is enough, and the cabin is an asset you can relocate or resell, not a structure you demolish.</li>
           <li><strong className="text-foreground">Pan-India delivery.</strong> Cabins delivered and installed across the country, factory-finished and usable when they arrive.</li>
         </ul>
       </div>

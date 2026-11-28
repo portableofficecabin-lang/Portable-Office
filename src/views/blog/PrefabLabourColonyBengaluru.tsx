@@ -16,7 +16,7 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 const articleStructuredData = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "Prefabricated Labor Colony in Bengaluru",
+  headline: "Prefabricated Labour Colony in Bengaluru: A Planning Guide",
   description: "Complete guide to prefabricated labour colonies in Bengaluru – turnkey modular worker accommodation for construction sites, industrial projects, and infrastructure development across Karnataka.",
   image: "https://portableofficecabin.com/blog/prefab-colony-hero.png",
   author: {
@@ -41,7 +41,7 @@ const articleStructuredData = {
     }
   },
   datePublished: "2026-02-27",
-  dateModified: "2026-02-27",
+  dateModified: "2026-11-26",
   mainEntityOfPage: "https://portableofficecabin.com/blog/prefabricated-labor-colony-bengaluru"
 };
 
@@ -80,10 +80,14 @@ export default function PrefabLabourColonyBengaluru() {
               <span>25 min read</span>
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-              Prefabricated Labor Colony in Bengaluru
+              Prefabricated Labour Colony in Bengaluru: A Planning Guide
             </h1>
             <p className="text-lg text-foreground/80 leading-relaxed">
               Bengaluru's construction and infrastructure landscape is transforming at an unprecedented pace. With Metro Phase 2 and 3 extensions underway, Outer Ring Road widening projects, airport expansion at Devanahalli, and massive IT parks rising across the city, the demand for organised worker accommodation has never been higher. A prefabricated labor colony offers the answer—factory-built modular housing that can be deployed rapidly on site, providing safe, hygienic shelter for the workforce that builds this city (also referred to as Bangalore in many industry references).
+            </p>
+            <p className="text-base text-foreground/80">
+              Looking for models and prices? See{" "}
+              <Link href="/promotions/labour-colony-in-bangalore" className="font-semibold text-accent hover:underline">labour colony in Bangalore: models and prices</Link>.
             </p>
             <div className="rounded-2xl overflow-hidden border border-border/50">
               <img src={resolveImageUrl(prefabColonyHero)} alt="Prefabricated Labor Colony in Bengaluru – Modular Worker Accommodation" className="w-full h-auto object-cover" />
@@ -93,7 +97,7 @@ export default function PrefabLabourColonyBengaluru() {
           {/* Intro paragraph */}
           <section className="prose prose-lg max-w-none">
             <p className="text-foreground/85 leading-relaxed">
-              At <strong>Portable Office Cabin</strong>, we manufacture turnkey prefab labour colonies in-house at our Tamil Nadu factory near Hosur — barely 40 km from the city — and design, deliver and install them across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a leading manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited is also a leading manufacturer of prefabricated labour huts in Bengaluru.
+              At <strong>Portable Office Cabin</strong>, we manufacture turnkey prefab labour colonies in-house at our Tamil Nadu factory near Hosur — barely 40 km from the city — and design, deliver and install them across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited is also a leading manufacturer of prefabricated labour huts in Bengaluru.
             </p>
           </section>
 
@@ -124,7 +128,7 @@ export default function PrefabLabourColonyBengaluru() {
           {/* Branded Internal Link */}
           <div className="bg-accent/10 border border-accent/30 rounded-xl p-5">
             <p className="text-sm text-foreground/85 leading-relaxed">
-              <strong>Portable Office Cabin</strong> is India's trusted manufacturer of portable cabins, container offices, prefab homes, and modular building solutions. We deliver quality construction with customizable designs at competitive prices.{" "}
+              <strong>Portable Office Cabin</strong> is a manufacturer of portable cabins, container offices, prefab homes, and modular building solutions. We deliver quality construction with customizable designs at competitive prices.{" "}
               <Link href="/" className="text-accent font-semibold hover:underline">Visit our homepage →</Link>
             </p>
           </div>
@@ -180,7 +184,7 @@ export default function PrefabLabourColonyBengaluru() {
               Portable Office Cabin's Prefabricated Labor Colony Solutions
             </h2>
             <p className="text-foreground/85 leading-relaxed">
-              Portable Office Cabin has been delivering prefabricated labour accommodation and modular site infrastructure across Karnataka since the 2010s. As both a B2B and B2C manufacturer and supplier, we serve large EPC contractors and real estate developers, medium-sized contractors, and individual industrial plot owners who need smaller-scale solutions.
+              Portable Office Cabin delivers prefabricated labour accommodation and modular site infrastructure across Karnataka. As both a B2B and B2C manufacturer and supplier, we serve large EPC contractors and real estate developers, medium-sized contractors, and individual industrial plot owners who need smaller-scale solutions.
             </p>
             <p className="text-foreground/85 leading-relaxed">
               Our approach is simple: we handle everything from initial layout planning to final installation, giving you a single point of responsibility for your entire labour colony.

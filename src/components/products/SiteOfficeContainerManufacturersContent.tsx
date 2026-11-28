@@ -321,7 +321,7 @@ export function SiteOfficeContainerManufacturersContent() {
               Buying pays off for multi-year projects, custom specifications, branding-heavy setups, and repeated redeployment across sites — the container remains a company asset with resale value after every project. Prefer renting for a short-duration project instead? See our <Link href="/rental-service" className="font-medium text-accent underline-offset-4 hover:underline">rental service</Link>.
             </p>
             <p>
-              If your team is comparing options, also explore our <Link href="/products/construction-site-portable-office" className="font-medium text-accent underline-offset-4 hover:underline">Construction Site Portable Office</Link> and <Link href="/products/container-office" className="font-medium text-accent underline-offset-4 hover:underline">Container Office</Link> pages.
+              If your team is comparing options, also explore our <Link href="/products/construction-site-portable-office" className="font-medium text-accent underline-offset-4 hover:underline">Construction Site Portable Office</Link> and <Link href="/products/container-office" className="font-medium text-accent underline-offset-4 hover:underline">Container Office</Link> pages, or compare every model and price on our <Link href="/products/category/site-office-containers" className="font-medium text-accent underline-offset-4 hover:underline">site office containers</Link> page.
             </p>
             <p>
               For complete site infrastructure, we can also combine office cabins with labour accommodation, sanitation blocks, security cabins, and rooftop sheds under one modular delivery plan.

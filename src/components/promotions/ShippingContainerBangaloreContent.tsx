@@ -6,8 +6,18 @@ import {
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { bangaloreContainerRows } from "@/data/bangaloreContainerPrices";
+import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
+import { deliveryInstallationFacts } from "@/data/promotionBuyerFacts";
+import { DeliveryInstallationFacts, pinPrefixList } from "@/components/promotions/PromotionBuyerFacts";
 
 const IMG = "/images/products";
+
+/** The free delivery zone (it covers Bengaluru PIN codes), from checkout: its transit time and its
+ *  PIN-code prefixes, worded as the owner asked (2026-11-27): "the 560, 562, 563 and 635 PIN-code prefixes". */
+const FREE_ZONE = deliveryInstallationFacts();
+const FREE_ZONE_TRANSIT = FREE_ZONE.freeTransit;
+const FREE_PIN_PREFIXES = `the ${pinPrefixList(FREE_ZONE.freePins)} PIN-code prefixes`;
 
 const CONTACT = {
   tel: "+919731897976",
@@ -19,12 +29,14 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "What is the price of a shipping container in Bangalore?",
     answer:
-      "Prices start from ₹1.5 lakh for basic models. A fitted 20ft container office typically costs more depending on insulation, electricals, and interiors. Your detailed written quote lists GST and transport separately.",
+      "Standard containers are sold at one fixed, GST-inclusive price shown on each product page in our shipping container range. A fitted 20ft container office typically costs more depending on insulation, electricals, and interiors. Your detailed written quote lists GST and transport separately.",
   },
   {
     question: "How long does delivery take in Bangalore?",
-    answer:
-      "Standard units bought online are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days. Larger or custom projects follow the timeline in your written quotation. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
+    // Built from the checkout constants (2026-11-27). It said "transit typically taking 1–5 working days",
+    // which contradicted the page's own delivery block: the free zone that covers Bengaluru PIN codes
+    // takes 1–2 working days. This answer is also the FAQ JSON-LD, so the two stay in step.
+    answer: `Standard units bought online are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation. Delivery is free for ${FREE_PIN_PREFIXES} and takes ${FREE_ZONE_TRANSIT} in transit; other PIN codes are charged by delivery zone at checkout, as listed under "Delivery and installation" on this page. Larger or custom projects follow the timeline in your written quotation. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.`,
   },
   {
     question: "Do you sell both new and used shipping containers?",
@@ -49,7 +61,7 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "What maintenance does a container need?",
     answer:
-      "Very little. We recommend repainting every few years and periodic checks of door seals and fittings. Maintained this way, a container lasts 15–20 years or more. Warranty cover follows our published warranty policy; the full terms are on our Warranty page.",
+      "Very little. We recommend repainting every few years and periodic checks of door seals and fittings. Warranty cover follows our published warranty policy; the full terms are on our Warranty page.",
   },
   {
     question: "Can you deliver outside Bangalore?",
@@ -86,24 +98,25 @@ const SIZES = [
 
 const BUILD_SPEC = [
   "Galvanized steel frame and corten/MS steel body for corrosion resistance",
-  "IS-grade raw materials throughout",
   "50mm PUF insulated wall and roof panels (optional) for thermal comfort",
   "Weatherproof construction rated for Bangalore's monsoon and summer",
   "Lockable steel doors; windows, ventilation, and electrical fit-outs to order",
 ];
 
-const PRICES = [
-  ["Used/refurbished 20 ft storage container", "₹1.5 – ₹2.5 lakh"],
-  ["New 20 ft storage container", "₹2 – ₹3.5 lakh"],
-  ["20 ft container office (insulated, fitted)", "₹3 – ₹5 lakh"],
-  ["40 ft storage container", "₹3 – ₹5 lakh"],
-  ["40 ft container office / accommodation", "₹5 – ₹8 lakh"],
-];
+/* Price table: catalogue links, not ranges (owner, 2026-11-26). The indicative ranges that stood here
+ * ("₹1.5 – ₹2.5 lakh", "₹2 – ₹3.5 lakh", "₹3 – ₹5 lakh" ×2, "₹5 – ₹8 lakh") matched no catalogue
+ * configuration. Each row now lists the exact products of that configuration with their own fixed,
+ * GST-inclusive price, read from the commerce catalogue at render (src/data/bangaloreContainerPrices.ts);
+ * the "40 ft storage container" row was removed because no single 40 ft storage product exists. */
+const PRICE_ROWS = bangaloreContainerRows();
+
+/** Delivery charges by PIN code, transit and installation scope — the checkout constants. */
+const DELIVERY_FACTS = deliveryInstallationFacts();
 
 const COMPARISON = [
   ["Time to ready", "7–15 working days + transit", "2–3 months"],
   ["Relocatable", "Yes — moves with your project", "No"],
-  ["Cost", "From ₹1.5 lakh, fixed quote", "Higher, prone to overruns"],
+  ["Cost", "Fixed price or written quote", "Higher, prone to overruns"],
   ["Site disruption", "Minimal — built off-site", "High — months of on-site work"],
   ["Resale value", "Retains value; can be resold", "None once demolished"],
 ];
@@ -126,7 +139,6 @@ const DELIVERY_AREA_LINKS: Record<string, { href: string; title: string }> = {
 
 const WHY_US = [
   "Manufacturer, not middleman — factory-direct pricing from our own Kamandoddi (Tamil Nadu) factory near Hosur, about 40 km from Bangalore",
-  "15+ years of manufacturing experience and 500+ projects delivered across India",
   "Material-based structural warranty, as set out on our Warranty page",
   "End-to-end service: design, fabrication, delivery, installation, and after-sales support",
   "GST-registered and verified (GSTIN: 33FVKPK6238Q1ZT) with transparent, written quotations",
@@ -208,27 +220,36 @@ export function ShippingContainerBangaloreContent() {
       <section className="bg-muted/30 rounded-2xl p-6 lg:p-8">
         <H2 id="price" icon={IndianRupee}>Shipping Container Price in Bangalore</H2>
         <p className="text-muted-foreground mb-6 leading-relaxed max-w-3xl">
-          Shipping container prices in Bangalore start from ₹1.5 lakh for basic models. Your final price depends on five factors: size (20ft vs 40ft), condition (new build vs refurbished used), insulation, interior fit-out, and delivery distance. Indicative ranges:
+          Every container below is sold online at one fixed, GST-inclusive price; follow a link for its specification and photos, or browse the full <Link href="/products/category/cargo-storage-shipping-containers" className="text-accent hover:underline">shipping container range</Link>. Custom sizes, insulation and interior fit-outs are quoted in writing, and that price depends on size (20ft vs 40ft), condition (new build vs refurbished used), insulation, interior fit-out, and delivery distance.
         </p>
         <div className="overflow-x-auto bg-card rounded-xl shadow-card border border-border mb-4">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-accent/10 text-left">
                 <th className="px-5 py-3 font-semibold text-foreground">Container Type</th>
-                <th className="px-5 py-3 font-semibold text-foreground">Indicative Price Range*</th>
+                <th className="px-5 py-3 font-semibold text-foreground">Product and fixed price (incl. GST)*</th>
               </tr>
             </thead>
             <tbody>
-              {PRICES.map((row, i) => (
-                <tr key={row[0]} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
-                  <td className="px-5 py-3 text-foreground">{row[0]}</td>
-                  <td className="px-5 py-3 font-medium text-foreground whitespace-nowrap">{row[1]}</td>
+              {PRICE_ROWS.map((row, i) => (
+                <tr key={row.type} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
+                  <td className="px-5 py-3 text-foreground align-top">{row.type}</td>
+                  <td className="px-5 py-3 text-foreground">
+                    <ul className="space-y-1">
+                      {row.items.map((item) => (
+                        <li key={item.id}>
+                          <Link href={item.href} className="text-accent hover:underline">{item.name}</Link>{" "}
+                          <span className="font-medium whitespace-nowrap">{item.price}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-muted-foreground italic mb-5">*Indicative only — final pricing depends on specification and site. <Link href="/contact" className="text-accent hover:underline">Contact us</Link> for a detailed written quote that lists GST and transport separately.</p>
+        <p className="text-xs text-muted-foreground italic mb-5">*The same fixed price as on each product page, GST included. Delivery is free for {FREE_PIN_PREFIXES}; other PIN codes are charged by delivery zone at checkout. For custom builds, <Link href="/contact" className="text-accent hover:underline">contact us</Link> for a written quote that lists GST and transport separately.</p>
         <p className="text-muted-foreground leading-relaxed max-w-3xl">Because we manufacture in-house at our own Tamil Nadu factory near Hosur rather than trading imported units, you avoid dealer margins and port repositioning charges that inflate prices elsewhere in the market.</p>
       </section>
 
@@ -238,7 +259,7 @@ export function ShippingContainerBangaloreContent() {
         <div className="grid md:grid-cols-2 gap-5">
           <div className="bg-card border border-border rounded-2xl p-6">
             <h3 className="font-display font-bold text-lg text-foreground mb-2">New</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">A new (one-trip or factory-built) container costs more upfront but gives you a 15–20+ year service life, clean interiors, and full warranty coverage. It is the right choice for <Link href="/products/category/container-offices" className="text-accent hover:underline">offices</Link>, accommodation, and customer-facing spaces.</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">A new (one-trip or factory-built) container costs more upfront but gives you a longer service life, clean interiors, and full warranty coverage. It is the right choice for <Link href="/products/category/container-offices" className="text-accent hover:underline">offices</Link>, accommodation, and customer-facing spaces.</p>
           </div>
           <div className="bg-card border border-border rounded-2xl p-6">
             <h3 className="font-display font-bold text-lg text-foreground mb-2">Used / refurbished</h3>
@@ -278,7 +299,7 @@ export function ShippingContainerBangaloreContent() {
         <H2 id="industries" icon={Factory}>Industries We Serve in Bangalore</H2>
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <p className="text-muted-foreground leading-relaxed">
-            Construction and infrastructure contractors use our containers as site offices, stores, and labour accommodation on metro, road, and real-estate projects. Manufacturers and warehouses in Peenya, Bommasandra, and Jigani use them for overflow storage and security cabins. IT parks and facility managers deploy them as temporary offices during campus expansions. Event companies, retailers, and café operators commission branded conversions. Government agencies and PSUs procure them for site infrastructure — we are GST-registered and experienced with institutional documentation requirements.
+            Construction and infrastructure contractors use our containers as site offices, stores, and labour accommodation on metro, road, and real-estate projects. Manufacturers and warehouses in Peenya, Bommasandra, and Jigani use them for overflow storage and security cabins. IT parks and facility managers deploy them as temporary offices during campus expansions. Event companies, retailers, and café operators commission branded conversions. Public-sector buyers can procure them for site infrastructure too: we are GST-registered and quote in writing.
           </p>
           <OptimizedImage src={`${IMG}/container-office-interior-meeting.webp`} alt="Container office interior with electrical fit-out, Bangalore" aspectRatio="3/2" geoTag={false} className="rounded-2xl shadow-lg" />
         </div>
@@ -303,7 +324,7 @@ export function ShippingContainerBangaloreContent() {
           <OptimizedImage src={`${IMG}/shipping-container-kormangala-crane.webp`} alt="Shipping container being installed by crane at a Bangalore construction site" aspectRatio="3/2" geoTag={false} className="rounded-2xl shadow-lg" />
           <div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer; unloading by crane or Hydra is optional and set out in your written quotation. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units bought online are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days.
+              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer; unloading and positioning by crane or hydra come with the optional installation set out below. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units bought online are dispatched within 7–15 working days of order confirmation; delivery charges and transit times by PIN code are listed below.
             </p>
             <div className="flex flex-wrap gap-2">
               {DELIVERY_AREAS.map((a) => (
@@ -317,6 +338,10 @@ export function ShippingContainerBangaloreContent() {
           </div>
         </div>
       </section>
+
+      {/* Delivery charges, transit and installation scope straight from the checkout constants
+          (SEO phase 2, 2026-11-27), so this page can never promise more than checkout sells. */}
+      <DeliveryInstallationFacts data={DELIVERY_FACTS} place="Bengaluru" />
 
       {/* Why us */}
       <section className="bg-accent/5 border border-accent/15 rounded-2xl p-6 lg:p-8">

@@ -146,17 +146,17 @@ export interface ResolvedCategoryLanding extends Omit<CategoryLandingCopy, "meta
 const GUIDE = {
   installation: {
     name: "Installation and site preparation",
-    href: "/products/portable-cabin/installation-and-site-preparation",
+    href: "/guides/portable-cabin-installation-and-site-preparation",
     description: "Base, access and crane planning before a unit arrives.",
   },
   transport: {
     name: "Transport and delivery",
-    href: "/products/portable-cabin/transport-and-delivery",
+    href: "/guides/portable-cabin-transport-and-delivery",
     description: "Trucks, cranes and what to check on the route to site.",
   },
   layouts: {
     name: "Layouts and interiors",
-    href: "/products/portable-cabin/layouts-and-interiors",
+    href: "/guides/portable-cabin-layouts-and-interiors",
     description: "Planning desks, partitions, storage and services inside a cabin.",
   },
   insulation: {
@@ -166,7 +166,7 @@ const GUIDE = {
   },
   materials: {
     name: "MS vs PUF panel construction",
-    href: "/products/portable-cabin/materials-ms-vs-puf",
+    href: "/guides/portable-cabin-materials-ms-vs-puf",
     description: "How the two common wall builds differ in heat, cost and life.",
   },
   toiletPantry: {
@@ -176,12 +176,12 @@ const GUIDE = {
   },
   newVsUsed: {
     name: "Buying new vs used",
-    href: "/products/portable-cabin/buying-guide-new-vs-used",
+    href: "/guides/portable-cabin-new-vs-used",
     description: "What to inspect before paying for a second-hand unit.",
   },
   maintenance: {
     name: "Maintenance and lifespan",
-    href: "/products/portable-cabin/maintenance-and-lifespan",
+    href: "/guides/portable-cabin-maintenance-and-lifespan",
     description: "The routine checks that keep a steel structure in service.",
   },
 } satisfies Record<string, LinkItem>;
@@ -224,6 +224,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
       { name: "Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
       { name: "Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+      // Search Console phase (2026-11-27): Hoskote, the second site-office market named in the brief.
+      { name: "Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
     ],
     guideLinks: [GUIDE.installation, GUIDE.transport, GUIDE.layouts, GUIDE.insulation],
     relatedCategorySlugs: ["container-offices", "portable-cabins", "cargo-storage-shipping-containers"],
@@ -411,6 +413,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Storage containers in Babusapalya", href: "/cities-we-serve/shipping-container-babusa-palya" },
       // Frazer Town page (owner brief, 2026-11-25, §21: the brief's anchor, from the main shipping container page).
       { name: "Shipping containers in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
+      // Richmond Town page (owner brief, 2026-11-25, §28: the brief's category anchor).
+      { name: "Shipping containers in Richmond Town", href: "/cities-we-serve/shipping-container-richmond-town" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],

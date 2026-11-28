@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
-import { allChildParams } from "@/data/productChildPages";
+import { allChildParams, allGuidePages } from "@/data/productChildPages";
 import { publishedFamilies, publishedVariants, variantPath } from "@/data/productFamilies";
 import { seoPromotions } from "@/data/seoPromotions";
 import { CITY_PAGES } from "@/data/cityPages";
 import { products, getProductSlug, getProductDetailPath, categories } from "@/data/products";
 import { createStaticClient } from "@/lib/supabase/static";
 import { variantIsSearchEligible } from "@/data/productFamilies";
+import { cityLastModified } from "@/lib/seo/cityLastmod";
 
 const SITE_URL = "https://portableofficecabin.com";
 
@@ -19,16 +20,17 @@ const SITE_URL = "https://portableofficecabin.com";
  * sitemap's lastmod wholesale.
  *
  * lastmod means "when the content last MEANINGFULLY changed". Where this codebase actually knows
- * that — blog posts and products both carry `updated_at` in Supabase — it is emitted. Where it
- * does not (static pages, category and promotion landing pages built from source files), the
- * field is OMITTED. Omitting is explicitly fine and is what Google recommends over guessing;
+ * that — blog posts and products both carry `updated_at` in Supabase, and city pages have a
+ * git-derived manifest (src/data/sitemapLastmod.json, guarded by a content hash) — it is emitted.
+ * Where it does not (static pages, category and promotion landing pages built from shared source
+ * files and templates), the field is OMITTED. Omitting is explicitly fine and is what Google recommends over guessing;
  * build time would be a lie of a different kind, marking every page as changed on every deploy.
  */
 function entry(
   path: string,
   priority: number,
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] = "weekly",
-  lastModified?: Date,
+  lastModified?: Date | string,
 ): MetadataRoute.Sitemap[number] {
   return {
     url: `${SITE_URL}${path}`,
@@ -76,8 +78,13 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
     "weekly",
     new Date("2026-09-06"),
   ),
-  // SEO child pages under each main product (registry-driven — src/data/productChildPages.ts)
+  // SEO child pages under each main product (registry-driven — src/data/productChildPages.ts).
+  // Guides that moved to /guides (src/data/guideMoves.ts) are excluded by allChildParams() and
+  // listed below at their new URL instead, so no retired URL stays in the sitemap.
   ...allChildParams().map(({ slug, child }) => entry(`/products/${slug}/${child}`, 0.7, "monthly")),
+  // Guides section (D5, 2026-11): the /guides index and each guide.
+  entry("/guides", 0.6, "monthly"),
+  ...allGuidePages().map(({ guideSlug }) => entry(`/guides/${guideSlug}`, 0.7, "monthly")),
   /* STANDARD SIZE VARIANT pages — one per published size of every published product family
    * (src/data/productFamilies.ts). Each is a distinct, self-canonical, indexable landing
    * page, so every one must be listed here: a variant URL that is crawlable and canonical
@@ -109,8 +116,10 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   entry("/contact", 0.7, "monthly"),
   entry("/gallery", 0.7, "monthly"),
   entry("/cities-we-serve", 0.6, "monthly"),
-  // City / area landing pages (data-driven from src/data/cityPages.ts)
-  ...CITY_PAGES.map((c) => entry(`/cities-we-serve/${c.slug}`, 0.6, "monthly")),
+  // City / area landing pages (data-driven from src/data/cityPages.ts). lastmod = the merge into main
+  // that last changed the page's own copy (git-derived manifest, `npm run seo:lastmod`); omitted for a
+  // page edited or added since the manifest was generated — see src/lib/seo/cityLastmod.ts.
+  ...CITY_PAGES.map((c) => entry(`/cities-we-serve/${c.slug}`, 0.6, "monthly", cityLastModified(c))),
   entry("/book-appointment", 0.6, "monthly"),
   entry("/faq", 0.5, "monthly"),
   entry("/careers", 0.4, "monthly"),

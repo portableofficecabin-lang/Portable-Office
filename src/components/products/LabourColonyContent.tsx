@@ -32,7 +32,7 @@ const lifespanRows = [
 
 const highlights = [
   { icon: Clock, title: "Quick Installation", desc: "Factory-built units mean far less time on site than conventional construction" },
-  { icon: IndianRupee, title: "Cost Effective", desc: "20–40% savings versus RCC with recyclable steel structures and relocatable modules" },
+  { icon: IndianRupee, title: "Cost Effective", desc: "Savings versus RCC from recyclable steel structures and relocatable modules" },
   { icon: Users, title: "Scalable Capacity", desc: "From 50-bed single-storey to 500+ bed G+2 configurations with modular expansion" },
   { icon: Shield, title: "Compliance Ready", desc: "Designs aligned with BIS standards, NBC 2016, BOCW Act, and client EHS/ESG audits" },
   { icon: Truck, title: "Pan-India Delivery", desc: "Turnkey installation across 20+ states — Mumbai, Ahmedabad, Hyderabad, Kanpur, and remote sites" },
@@ -52,7 +52,7 @@ const faqs = [
   { q: "What is a labour colony?", a: "A labour colony is a structured worker accommodation facility deployed near project sites, factories, and infrastructure works. It includes dormitories, kitchens, toilets, dining halls, and recreation spaces designed for large workforces." },
   { q: "How quickly can a prefab labour colony be installed?", a: "Installation time depends on the number of workers housed, site preparation and layout complexity; your written quotation sets out the programme for your camp." },
   { q: "What materials are used for labour colony construction?", a: "We use mild steel structural frames with PUF/EPS sandwich panels, PPGI sheets, or Aerocon panels for walls and roofs. All materials are corrosion-resistant with anti-rust coatings for coastal and humid locations." },
-  { q: "Can labour colonies be relocated to another project site?", a: "Yes. Prefab labour colonies are designed for disassembly and relocation. Modular panels and steel frames can be transported and reinstalled at new sites, retaining 80–90% of material value." },
+  { q: "Can labour colonies be relocated to another project site?", a: "Yes. Prefab labour colonies are designed for disassembly and relocation. Modular panels and steel frames can be transported and reinstalled at new sites, so the materials are reused rather than demolished." },
   { q: "What is the cost of a prefab labour colony?", a: `The listed 80 ft × 24 ft G+2 labour colony configuration has a fixed price of ${listedPrice} including 18% GST and can be purchased online with secure payment. Custom capacities, configurations, insulation, and fit-out levels are priced separately — contact us for a tailored proposal.` },
   { q: "What compliance standards do your labour colonies meet?", a: "Our designs comply with BIS standards, NBC 2016, BOCW Act guidelines, and client-specified EHS/ESG audit requirements. We provide documentation for tender submissions and third-party inspections." },
   { q: "Do you provide integrated facilities like kitchens and toilets?", a: "Yes. We deliver complete labour colony ecosystems including dormitories, prefab canteens, portable toilets, kitchens, dining halls, recreation rooms, first-aid cabins, and security cabins." },
@@ -73,7 +73,7 @@ export function LabourColonyContent() {
               A labour colony is a structured worker accommodation facility deployed near project sites, factories, and infrastructure works. In India's construction industry, housing large workforces efficiently directly impacts project timelines, worker retention, and operational costs.
             </p>
             <p>
-              Portable Office Cabin is a leading manufacturer of prefabricated labour colonies, serving construction firms, industrial plants, and government tenders across Mumbai, Thane, Ahmedabad, Hyderabad, Kanpur, and remote project sites. Our modular structures offer quick installation, cost-effective pricing, relocatability, and hygienic living conditions—advantages traditional brick-and-mortar camps cannot match.
+              Portable Office Cabin is a manufacturer of prefabricated labour colonies, serving construction firms, industrial plants, and government tenders across Mumbai, Thane, Ahmedabad, Hyderabad, Kanpur, and remote project sites. Our modular structures offer quick installation, cost-effective pricing, relocatability, and hygienic living conditions—advantages traditional brick-and-mortar camps cannot match.
             </p>
           </div>
           <OptimizedImage

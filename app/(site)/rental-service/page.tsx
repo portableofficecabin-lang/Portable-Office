@@ -6,9 +6,9 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 export const metadata = buildPageMetadata({
-  title: "Portable Cabin Rental Service",
+  title: "Porta Cabin & Portable Cabin on Rent",
   description:
-    "Rent or hire portable cabins, site offices and shipping containers on flexible monthly terms with delivery, setup and maintenance support across India.",
+    "Porta cabins and portable cabins on rent — site offices and shipping containers on flexible monthly terms with delivery, setup and maintenance support across India.",
   path: "/rental-service",
 });
 

@@ -33,8 +33,8 @@ import pinkAngle from "@/assets/products/cargo-storage-containers-pink-angle.web
 import pinkPopup from "@/assets/products/cargo-storage-containers-pink-popup.webp";
 
 const highlights = [
-  { icon: Eye, title: "High Visibility", desc: "Pink containers attract 40% more attention than standard grey or blue units" },
-  { icon: Heart, title: "Strong Brand Recall", desc: "Pink scores 22% higher in recall tests versus neutral colours" },
+  { icon: Eye, title: "High Visibility", desc: "Pink containers stand out against standard grey or blue units" },
+  { icon: Heart, title: "Strong Brand Recall", desc: "A distinctive colour that sets your unit apart from neutral grey or blue containers" },
   { icon: Camera, title: "Instagram-Friendly", desc: "Drive 3x engagement rates for customer-facing businesses" },
   { icon: Shield, title: "Same Structural Strength", desc: "Identical load capacity, wind resistance, and durability as regular containers" },
 ];
@@ -57,7 +57,7 @@ const pricingRows = [
 const faqs = [
   {
     q: "What makes pink cargo containers different from standard containers?",
-    a: "Pink cargo containers share the same ISO-grade structural specifications as standard units—Corten steel or MS frame, 500 kg/sqm floor load, weatherproof construction. The difference is a specialised paint system using epoxy primer (80 microns) with polyurethane topcoat (60 microns) in RAL 3015 light pink, Pantone hot pink, or custom brand-matched shades, resisting 5000 hours of salt spray.",
+    a: "Pink cargo containers share the same structural specifications as standard units—Corten steel or MS frame, 500 kg/sqm floor load, weatherproof construction. The difference is a specialised paint system using epoxy primer (80 microns) with polyurethane topcoat (60 microns) in RAL 3015 light pink, Pantone hot pink, or custom brand-matched shades.",
   },
   {
     q: "Can I customise the shade of pink?",
@@ -77,7 +77,7 @@ const faqs = [
   },
   {
     q: "Can I buy a used container and get it painted pink?",
-    a: "Yes. Portable Office Cabin offers converted used containers at 20–30% lower cost than new fabrications. We inspect structural integrity, repair as needed, and apply the pink finish with full interior fit-out options.",
+    a: "Yes. Portable Office Cabin offers converted used containers at a lower cost than new fabrications. We inspect structural integrity, repair as needed, and apply the pink finish with full interior fit-out options.",
   },
 ];
 
@@ -101,7 +101,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               Pink cargo storage containers are standard ISO shipping containers—or newly fabricated modular units—finished in vibrant pink shades for branding, retail, and workspace applications. Businesses across India increasingly use them to stand out in visually competitive urban environments.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              From 2024 to 2026, real-world examples include pop-up stores at Mumbai's Phoenix Marketcity, container cafés in Bengaluru's Whitefield IT parks, site offices on Hyderabad metro projects, and registration booths at IIT Bombay's Techfest.
+              Typical uses include pop-up stores at malls, container cafés in IT parks, site offices on metro projects, and registration booths at college festivals.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               Pink cargo containers are made from high-grade mild steel, ensuring durability for shipping and storage, and are painted with weather-resistant coatings, making them suitable for long-term outdoor storage. They are fully ventilated to keep stored items in good condition. Repurposing shipping containers for storage is an eco-friendly choice that prevents the energy-intensive process of melting them down.
@@ -171,7 +171,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
                 : "A pink shipping container acts as 24/7 outdoor advertising. Positioned in high-traffic areas, a single 20ft unit visible to 10,000 daily passersby can deliver ₹5–10 lakh in annual advertising value without recurring hoarding costs."}
             </p>
             <p className="text-muted-foreground leading-relaxed text-sm">
-              Consider these scenarios: a pink container boutique at Goa's Baga Beach market during the 2025 tourist season, a cosmetic brand kiosk in a Delhi NCR mall parking lot, or a college fest registration booth in Pune handling 1,000 registrations per hour.
+              Consider these scenarios: a pink container boutique at a beach market during the tourist season, a cosmetic brand kiosk in a Delhi NCR mall parking lot, or a college fest registration booth in Pune handling 1,000 registrations per hour.
             </p>
             <p className="text-muted-foreground leading-relaxed text-sm">
               The underlying structure remains unchanged—high-grade Corten steel or MS frame, floor load capacity up to 500 kg/sqm, weatherproofing, and lockable double doors. Pink shipping containers also offer drive-up access for easy loading and unloading.
@@ -200,7 +200,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               ))}
             </ul>
             <p className="text-muted-foreground text-sm">
-              You can buy converted used containers (20–30% lower cost) or new fabrications from MS sections. Interiors can remain neutral while exteriors shine pink. Units come foundation-ready or fully portable with forklift pockets and corner castings.
+              You can buy converted used containers (lower cost) or new fabrications from MS sections. Interiors can remain neutral while exteriors shine pink. Units come foundation-ready or fully portable with forklift pockets and corner castings.
             </p>
           </div>
           <OptimizedImage
@@ -292,7 +292,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               </table>
             </div>
             <p className="text-muted-foreground text-sm mt-4">
-              <strong>Paint system:</strong> Epoxy primer (80 microns) with polyurethane topcoat (60 microns) in gloss or matte finishes, resisting 5000 hours of salt spray.
+              <strong>Paint system:</strong> Epoxy primer (80 microns) with polyurethane topcoat (60 microns) in gloss or matte finishes.
             </p>
           </div>
           <div className="space-y-3">
@@ -333,7 +333,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
                 <li>• Retail inventory storage behind shops</li>
                 <li>• Event equipment storage for agencies</li>
                 <li>• Archive storage for schools and colleges</li>
-                <li>• Seasonal stock storage for e-commerce sellers (40% faster access vs. traditional godowns)</li>
+                <li>• Seasonal stock storage for e-commerce sellers</li>
               </ul>
             </div>
             <div>
@@ -450,14 +450,14 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
         <h2 className="text-3xl font-bold text-foreground mb-6">Why Work with Portable Office Cabin?</h2>
         <div className="space-y-4">
           <p className="text-muted-foreground leading-relaxed">
-            Portable Office Cabin specialises in prefabricated and modular building solutions—portable cabins, container offices, labour colonies, PEB structures, and container homes—with 15+ years of experience and 500+ projects delivered across India.
+            Portable Office Cabin specialises in prefabricated and modular building solutions—portable cabins, container offices, labour colonies, PEB structures, and container homes—built at our own factory in Tamil Nadu and delivered across India.
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               "In-house design, fabrication, and NDT-tested quality control",
               "Pan-India project execution from single units to 100-container complexes",
               "Coordination with architects and branding agencies for brand-aligned designs",
-              "80% recycled steel and sustainable manufacturing practices",
+              "Steel structures that can be reused, relocated or recycled",
               offer
                 ? "After-sales support: modifications, relocation assistance, and repaint every 5 years"
                 : "After-sales support: modifications, relocation (₹1 lakh/unit), and repaint every 5 years",

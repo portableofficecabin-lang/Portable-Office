@@ -300,6 +300,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // home ceremonies, in Rajarajeshwari Nagar (owner brief 2026-11-18); the page links back here. Appended so
     // the live links keep their positions.
     { name: "Portable Cabins in Rajarajeshwari Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
+    // Portable cabins for temporary offices during refurbishment, reception cabins, security and valet booths and
+    // site offices in Richmond Town (owner brief 2026-11-25; anchor = the brief's service-area hub anchor); the page
+    // links back here. Appended so the live links keep their positions.
+    { name: "Richmond Town – Temporary Offices & Commercial Cabins", href: "/cities-we-serve/portable-cabin-richmond-town" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
@@ -564,6 +568,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
     // Portable / porta cabin page for Rajarajeshwari Nagar, Bengaluru (owner brief 2026-11-18), here and on Porta Cabin; appended so the live links keep their positions.
     { name: "Portable Cabins in Rajarajeshwari Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
+    // Portable / porta cabin page for Richmond Town, Bengaluru (owner brief 2026-11-25), here and on Porta Cabin; appended so the live links keep their positions.
+    { name: "Portable Cabins in Richmond Town", href: "/cities-we-serve/portable-cabin-richmond-town" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -609,6 +615,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Porta Cabins in Kaggadasapura", href: "/cities-we-serve/portable-cabin-kaggadasapura" },
     // Portable / porta cabin page for Rajarajeshwari Nagar, Bengaluru (owner brief 2026-11-18), here and on Portable Cabin; appended so the live links keep their positions.
     { name: "Porta Cabins in RR Nagar", href: "/cities-we-serve/portable-cabin-rajarajeshwari-nagar" },
+    // Portable / porta cabin page for Richmond Town, Bengaluru (owner brief 2026-11-25), here and on Portable Cabin; appended so the live links keep their positions.
+    { name: "Porta Cabins in Richmond Town", href: "/cities-we-serve/portable-cabin-richmond-town" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -819,6 +827,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Frazer Town / Pulikeshi Nagar (bungalow redevelopment, restaurant packaging and spare furniture, community hall
     // furniture; owner brief 2026-11-25), appended so the live links keep their positions.
     { name: "Shipping Containers in Frazer Town", href: "/cities-we-serve/shipping-container-frazer-town" },
+    // Richmond Town, central Bengaluru (office, hotel and restaurant refurbishment storage, event equipment;
+    // owner brief 2026-11-25), appended so the live links keep their positions.
+    { name: "Shipping Containers in Richmond Town", href: "/cities-we-serve/shipping-container-richmond-town" },
   ],
 };
 
@@ -843,7 +854,9 @@ const uniqueContentVariations = [
   },
   {
     intro: (kw: string, loc: string) =>
-      `For construction and industrial projects in ${loc}, ${kw} offers a proven alternative to permanent buildings. With over 15 years of experience, we deliver durable structures tailored to local site conditions.`,
+      // "With over 15 years of experience" removed 2026-11-26: no founding year is on record (the site
+      // states 2008, 2010 and 2014 in different places). The factory is a company.ts fact.
+      `For construction and industrial projects in ${loc}, ${kw} offers a proven alternative to permanent buildings. From our own factory in Tamil Nadu, we deliver durable structures built for local site conditions.`,
   },
 ];
 
@@ -858,7 +871,10 @@ function generateUniqueContent(keyword: string, location: string, variation: num
     intro,
     `Every ${mainKeyword} we supply features 50mm PUF insulated panels, galvanized steel framing, and weatherproof construction suited to ${location}'s climate. Each unit is engineered for year-round comfort and long service life.`,
     `Clients across ${location} choose us because we handle design, manufacturing, delivery, and installation end to end. From layout planning to electrical fit-outs, our team supports your project at every stage.`,
-    `We have delivered ${mainKeyword} throughout ${location} for contractors, infrastructure firms, factories, and government agencies. Whether you need a single unit or a multi-block setup, we scale to your requirements.`,
+    // Was "We have delivered <product> throughout <place> for … and government agencies": a delivery
+    // record generated for every product × place (Kerala, West Bengal, Maharashtra …) with nothing
+    // behind it. Removed 2026-11-26; this states what we supply, not where we have supplied it.
+    `We supply ${keyword.toLowerCase()} units to contractors, infrastructure firms and factories. Whether you need a single unit or a multi-block setup, we scale to your requirements.`,
     `Compared with conventional construction, ${mainKeyword} is faster, more cost-effective, and fully relocatable. Standard units bought online are dispatched within 7-15 working days of order confirmation, with transit to ${location} taking ${TRANSIT_RANGE} depending on the delivery zone; larger or custom projects follow the timeline in your written quotation.`,
     `If you are planning a project in ${location}, contact us for a free written quotation on ${mainKeyword}. Every order starts with a quotation — we offer customization in size, interiors, branding, and utilities so your unit is ready for immediate use on site.`,
   ];
@@ -867,8 +883,11 @@ function generateUniqueContent(keyword: string, location: string, variation: num
 function generateUniqueFAQs(keyword: string, location: string, variation: number): { question: string; answer: string }[] {
   const baseFAQs = [
     {
-      question: `What is the starting price for ${keyword.toLowerCase()} in ${location}?`,
-      answer: `Our ${keyword.toLowerCase()} pricing in ${location} starts from ₹1.5 lakh for basic models, with costs varying based on size, specifications, and customization requirements. Prices are indicative starting prices and exclude GST, transport and installation, which your written quotation confirms. Your detailed written quotation states each of them.`,
+      // No ₹ figure (2026-11-26): "starts from ₹1.5 lakh" was the same for every product on every
+      // promotion (toilets, labour colonies, shipping containers …) and not taken from the price
+      // catalogue. Location copy routes pricing to the product page or a written quotation.
+      question: `How is ${keyword.toLowerCase()} priced in ${location}?`,
+      answer: `Pricing depends on size, specifications and customization. Standard models sold online show one fixed, GST-inclusive price on their product page; custom and project units are priced in a written quotation that states GST, transport and installation separately.`,
     },
     {
       question: `How long does delivery and installation take in ${location}?`,
@@ -880,7 +899,8 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
     },
     {
       question: `What kind of maintenance do ${keyword.toLowerCase()} require in ${location}?`,
-      answer: `Our ${keyword.toLowerCase()} units in ${location} require minimal maintenance. We recommend annual repainting and regular checks of fittings to keep your structure in optimal condition for 15-20 years or more.`,
+      // "for 15-20 years or more" removed 2026-11-26: no basis on record, and the guides say 15–25.
+      answer: `Our ${keyword.toLowerCase()} units in ${location} require minimal maintenance. We recommend annual repainting and regular checks of fittings to keep your structure in good condition; warranty cover follows the material-based terms on our Warranty page.`,
     },
     {
       question: `Do you provide delivery and installation services throughout ${location}?`,
@@ -904,9 +924,12 @@ const titleSuffixes = [
   " | Manufacturer",
   " | Supplier",
   " | Enquire Today",
-  " | From ₹1.5L",
+  // Same-length swaps (2026-11-26), so no other page's title moves: " | From ₹1.5L" → " | Free Quote"
+  // (no ₹ in location titles) and " | ISO Grade" → " | Pan-India" (ISO 9001 certifies a management
+  // system; "ISO grade" is not a material grade).
+  " | Free Quote",
   " | Fast Delivery",
-  " | ISO Grade",
+  " | Pan-India",
   " | 7-15 Day Dispatch",
   " | Custom Sizes",
   " | Custom Built",
@@ -915,7 +938,7 @@ const titleSuffixes = [
   " | Call Us Today",
   " | Manufacturer & Supplier",
   " | Free Quote, Call Today",
-  " | ISO-Grade, Fast Delivery",
+  " | Pan-India, Fast Delivery",
   " | Manufacturer in India",
   " | Factory Direct Pricing",
 ];
@@ -948,15 +971,17 @@ function generateMetaDescription(keyword: string, location: string, variation: n
   const mainKeyword = `${keyword} in ${location}`;
   const templates = [
     `${mainKeyword} from a prefab manufacturer near Hosur. PUF insulated units, custom sizes & pan-India delivery to ${location}. Enquire today!`,
-    `Looking for ${mainKeyword}? Material-based warranty, IS-grade steel & full customization across ${location}. Call +91 9731897976 to discuss your requirement.`,
-    `Need ${mainKeyword}? Factory-direct from ₹1.5L. Weatherproof PUF panels, on-site setup & expert support in ${location}. Call or WhatsApp us.`,
-    `${mainKeyword} supplier with 15+ years experience. Galvanized frames, turnkey delivery & flexible layouts for every site in ${location}. Enquire now.`,
-    `${mainKeyword} built to order. 50mm PUF insulation, MCB wiring & pan-India logistics to sites in ${location}. Book a site visit.`,
-    `Affordable ${mainKeyword} for contractors & builders. Quick install, relocatable design & ISO-grade materials supplied across ${location}. Talk to us.`,
+    // 2026-11-26: no "IS-grade", "ISO-grade", "15+ years", "from ₹1.5L", "site visit" or "fully
+    // compliant" claims; none has evidence on record. Replacements use facts the site already states.
+    `Looking for ${mainKeyword}? Material-based warranty, galvanized steel frames & full customization across ${location}. Call +91 9731897976 to discuss your requirement.`,
+    `Need ${mainKeyword}? Factory-direct, priced on written quotation. Weatherproof PUF panels, on-site setup & expert support in ${location}. Call or WhatsApp us.`,
+    `${mainKeyword} supplier with its own factory near Hosur. Galvanized frames, turnkey delivery & flexible layouts for every site in ${location}. Enquire now.`,
+    `${mainKeyword} built to order. 50mm PUF insulation, MCB wiring & pan-India logistics to sites in ${location}. Request a quote.`,
+    `Affordable ${mainKeyword} for contractors & builders. Quick install, relocatable design & PUF-insulated panels supplied across ${location}. Talk to us.`,
     `${mainKeyword} manufacturer with its own factory. Custom cabins, container offices & storage units delivered ready-to-use in ${location}. Call us today.`,
     `Reliable ${mainKeyword} for industrial & construction sites. Durable steel frame, thermal comfort & delivery throughout ${location}. Call today.`,
     `Get ${mainKeyword} at factory-direct prices. Modular design, material-based structural warranty & installation support serving ${location}. Contact us.`,
-    `Quality ${mainKeyword} with fast turnaround. Dispatch in 7-15 working days, fully compliant electricals & finishes for ${location} projects. Talk to our team.`,
+    `Quality ${mainKeyword} with fast turnaround. Dispatch in 7-15 working days, MCB-protected wiring & finishes for ${location} projects. Talk to our team.`,
     `${mainKeyword} solutions for every budget. Rental or ownership options, scalable layouts & after-sales support in ${location}. Learn more.`,
     `${mainKeyword} manufacturer & supplier. PUF sandwich panels, anti-corrosion coating & complete electrical fit-outs delivered across ${location}. Call now.`,
   ];
@@ -984,7 +1009,8 @@ function generateContent(
   const content = generateUniqueContent(keyword, location, variation);
   
   const keyFeatures = [
-    `IS-grade materials for superior quality`,
+    // Was "IS-grade materials for superior quality" (no mill certificates on record), 2026-11-26.
+    `Factory-built at our own facility in Tamil Nadu`,
     `50mm PUF insulated panels for thermal comfort`,
     `Galvanized steel frame for corrosion resistance`,
     `Dispatch in 7-15 working days; transit to ${location} ${TRANSIT_RANGE} by delivery zone`,

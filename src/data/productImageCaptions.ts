@@ -2,6 +2,8 @@
 // unique, keyword-rich alt/title text for each gallery image (server-rendered in
 // ProductDetailServer). Falls back to the generic product alt when not listed.
 
+import { CARD_IMAGE_DISCLOSURE, imageFileBasename } from "./productImageDisclosure";
+
 export const productImageCaptions: Record<string, string> = {
   // Portable Cabin 40ft Bunkhouse
   "portable-cabin-40ft-bunkhouse-front.webp":
@@ -33,6 +35,32 @@ export const productImageCaptions: Record<string, string> = {
 // ProductDetailServer, in place of the "<product name> — <caption>" form built from the
 // captions above. Only the images listed here are affected.
 export const productImageAltText: Record<string, string> = {
+  // Luxury Prefab Villa G+1 (id 8). Owner-supplied 3D renders; each alt says so, then names only
+  // what is visible in the frame (product SEO pass 2026-11-25).
+  "luxury-prefab-villa-g1-front-elevation.webp":
+    "Illustrative render of a two-storey prefab villa from the front, with a glazed ground-floor living room, an upper balcony with glass railings and a pool beside the lawn",
+  "luxury-prefab-villa-g1-hillside-view.webp":
+    "Illustrative render of the two-storey prefab villa at an angle on a hillside, showing the glazed ground floor, the upper balcony and an infinity pool",
+  "luxury-prefab-villa-g1-corner-pool.webp":
+    "Illustrative render of the villa's panel-clad side and rear beside a swimming pool, with a slatted upper window, sliding glass doors and an outdoor grill",
+  "luxury-prefab-villa-g1-poolside-living.webp":
+    "Illustrative render of the villa's ground-floor corner with sliding glass doors open to a living room, a dining table and a kitchen",
+  "luxury-prefab-villa-g1-interior-living.webp":
+    "Illustrative render of a wood-panelled living room with slatted sliding screens opening onto a terrace and garden",
+  // Steel Portable Cabin (id 46). Owner-supplied 3D renders (2026-09-04); each alt says so and
+  // describes only what is visible — the priced build's door and windows differ (gallery note).
+  "steel-portable-cabin-front.webp":
+    "Illustrative render of a dark grey steel portable cabin from the front, with a wood-finish door, two windows with steel grilles and outdoor wall lights",
+  "steel-portable-cabin-angled-exterior.webp":
+    "Illustrative render of the steel portable cabin at an angle, showing its full length, grilled windows, a small high window at one end and an equipment box",
+  "steel-portable-cabin-interior-office.webp":
+    "Illustrative render of a steel portable cabin fitted out as an office, with desks, office chairs, a storage unit and grilled windows",
+  "steel-portable-cabin-side-rear.webp":
+    "Illustrative render of the steel portable cabin's plain corrugated side wall with ventilation louvres and an equipment box at one end",
+  "steel-portable-cabin-ventilated-unit.webp":
+    "Illustrative render of a two-tone green and grey steel site cabin with louvred windows and a door, in a yard beside stacked containers",
+  "steel-portable-cabin-roof.webp":
+    "Illustrative render of the steel portable cabin's corrugated roof seen from above, with stepping slabs leading to the door",
   // Portable Shop Cabin (id 48). All four are AI-generated renders, not photographs of a
   // delivered cabin, so each alt says so before describing the frame.
   "portable-shop-cabin-front-three-quarter.webp":
@@ -81,6 +109,9 @@ export const productImageAltText: Record<string, string> = {
     "Illustrative example of a white and blue container office cabin with a door and three windows fitted with grilles",
   "container-office-cabin-interior-example.webp":
     "Illustrative example of a container office interior with wood-grain wall panels, two ceiling fans, a tube light and sliding windows",
+  // Site-office-container, portable-toilet and security-cabin card images (2026-11-27) — see
+  // productImageDisclosure.ts; the same alt text is used on the category cards.
+  ...Object.fromEntries(Object.entries(CARD_IMAGE_DISCLOSURE).map(([file, d]) => [file, d.alt])),
 };
 
 /**
@@ -96,6 +127,10 @@ export const productImageLabels: Record<string, string> = {
   "container-office-cabin-roof-aerial-example.webp": "Illustrative example",
   "container-office-cabin-exterior-example.webp": "Illustrative example",
   "container-office-cabin-interior-example.webp": "Illustrative example",
+  // Renders among the category card images (productImageDisclosure.ts).
+  ...Object.fromEntries(
+    Object.entries(CARD_IMAGE_DISCLOSURE).flatMap(([file, d]) => (d.label ? [[file, d.label]] : [])),
+  ),
 };
 
 /**
@@ -110,6 +145,15 @@ export const productGalleryNotes: Record<string, string> = {
     "All images on this page are illustrative renders of container cafe concepts, not photographs of a completed project.",
   "ms-container-office-cabin":
     "Images marked “Illustrative example” show container office cabins and may differ from the 15 ft × 10 ft unit sold on this page in size, layout and finish. What the unit includes is set out in its specifications.",
+  // Product SEO pass 2026-11-25 (brief: identify generated product illustrations accurately).
+  // products.ts records both galleries as renders ("Owner-supplied render set", id 8; "six renders
+  // supplied 2026-09-04", id 46), and every frame was checked by eye: all are 3D renders.
+  "luxury-prefab-villa-g-1-floors":
+    "All images on this page are illustrative design renders of the villa, not photographs of a completed home. The landscaping, pool and furniture shown are not part of the listed specification.",
+  // The renders show a wood-finish door, grilled windows and office furniture; the priced build has
+  // an MS flush door and aluminium sliding windows (see its specifications) and no furniture.
+  "steel-portable-cabin":
+    "All images on this page are illustrative renders of steel portable cabins, not photographs of a delivered unit. Doors, windows, colours and finish may differ from the priced 20 × 10 ft build, and furniture shown inside is not included.",
 };
 
 /** The visible gallery note for a product slug, if it has one. */
@@ -132,8 +176,9 @@ export function getProductGalleryFit(slug: string): "contain" | undefined {
   return productGalleryFit[slug];
 }
 
+/** File basename without query or Next's asset content hash (productImageDisclosure.ts). */
 function imageBasename(imageUrl: string): string {
-  return imageUrl.split("/").pop()?.split("?")[0] ?? "";
+  return imageFileBasename(imageUrl);
 }
 
 /** Resolve a caption from an image URL/path by its file basename. */

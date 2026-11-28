@@ -1,10 +1,12 @@
-import { Shield, Building, Factory, Landmark, School, Hospital, Truck, CheckCircle, Phone } from "lucide-react";
+import Link from "next/link";
+import { Shield, Building, Factory, Landmark, School, Hospital, Truck, CheckCircle, Phone, MessageCircle } from "lucide-react";
 import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import securityCabinResidential from "@/assets/products/security-cabin-residential-gate.webp";
 import securityCabinIndustrial from "@/assets/products/security-cabin-industrial-gate.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { COMPANY } from "@/lib/company";
 
 // Cabin families and where each one fits. No price column: the cabin sold on this page has
 // one fixed, GST-inclusive price (shown in the header above), and publishing ranges alongside
@@ -33,7 +35,7 @@ const faqs = [
   },
   {
     q: "Which material is best for security cabins — MS, GI, or FRP?",
-    a: "MS (mild steel) is the most economical option for standard sizes. GI offers 20–30% better corrosion resistance — ideal for coastal or high-rainfall areas. FRP is maintenance-free and corrosion-proof, best for institutional and corporate settings. Choose based on location, budget, and expected service life."
+    a: "MS (mild steel) is the most economical option for standard sizes. GI offers better corrosion resistance — ideal for coastal or high-rainfall areas. FRP is maintenance-free and corrosion-proof, best for institutional and corporate settings. Choose based on location, budget, and expected service life."
   },
   {
     q: "How long does a security cabin last?",
@@ -72,7 +74,7 @@ export function SecurityCabinContent() {
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              Security cabins have become essential infrastructure across India in 2026. From residential society gates to industrial plants, toll plazas, and construction sites, these prefabricated structures provide protected working environments for security personnel manning entry points and checkpoints.
+              Security cabins have become essential infrastructure across India. From residential society gates to industrial plants, toll plazas, and construction sites, these prefabricated structures provide protected working environments for security personnel manning entry points and checkpoints.
             </p>
             <p>
               We manufacture and supply a complete range of portable security cabins including MS, GI, FRP, ACP, PVC, PUF, and steel variants with pan-India delivery. Every cabin is engineered for durability, weather resistance, quick installation, and minimal maintenance requirements.
@@ -88,13 +90,16 @@ export function SecurityCabinContent() {
               </ul>
             </div>
           </div>
-          <OptimizedImage
-            src={resolveImageUrl(securityCabinResidential)}
-            alt="Portable security guard cabin at residential gate entrance with boom barrier in Bangalore"
-            className="rounded-xl shadow-lg"
-            aspectRatio="16/10"
-            productName="Security Cabin"
-          />
+          <figure>
+            <OptimizedImage
+              src={resolveImageUrl(securityCabinResidential)}
+              alt="Illustrative render of a portable security cabin beside a boom barrier at a residential gate"
+              className="rounded-xl shadow-lg"
+              aspectRatio="16/10"
+              productName="Security Cabin"
+            />
+            <figcaption className="mt-2 text-xs text-muted-foreground">Illustrative render</figcaption>
+          </figure>
         </div>
       </section>
 
@@ -206,13 +211,16 @@ export function SecurityCabinContent() {
               <strong className="text-foreground">Note:</strong> GI cabins in 6' × 4' and larger 8' × 6' formats are built to order and quoted separately from the unit listed on this page.
             </p>
           </div>
-          <OptimizedImage
-            src={resolveImageUrl(securityCabinIndustrial)}
-            alt="GI portable security cabin at industrial gate entrance with boom barrier in India"
-            className="rounded-xl shadow-lg"
-            aspectRatio="16/10"
-            productName="GI Security Cabin"
-          />
+          <figure>
+            <OptimizedImage
+              src={resolveImageUrl(securityCabinIndustrial)}
+              alt="Illustrative render of a steel security cabin beside a boom barrier at an industrial gate"
+              className="rounded-xl shadow-lg"
+              aspectRatio="16/10"
+              productName="GI Security Cabin"
+            />
+            <figcaption className="mt-2 text-xs text-muted-foreground">Illustrative render</figcaption>
+          </figure>
         </div>
       </section>
 
@@ -528,7 +536,11 @@ export function SecurityCabinContent() {
       <section className="bg-accent/10 rounded-2xl p-8 text-center">
         <h3 className="text-xl font-bold text-foreground mb-2">Ready to Order Your Security Cabin?</h3>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Buy online with secure payment — delivery across India. Need a custom size or material? Call us and we will help you configure the right cabin for your site.
+          Buy online with secure payment — delivery across India. Need a custom size or material? Call or WhatsApp us and we will help you configure the right cabin for your site, or compare every model and price on our{" "}
+          <Link href="/products/category/security-cabins" className="font-medium text-accent hover:underline">
+            security cabins
+          </Link>{" "}
+          page.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <BuyNowCTA productId="26" />
@@ -537,6 +549,14 @@ export function SecurityCabinContent() {
             className="inline-flex items-center gap-2 border border-accent text-accent px-6 py-3 rounded-lg font-semibold hover:bg-accent/5 transition-colors"
           >
             <Phone className="w-4 h-4" /> +91-9731897976
+          </a>
+          <a
+            href={COMPANY.whatsapp.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 border border-accent text-accent px-6 py-3 rounded-lg font-semibold hover:bg-accent/5 transition-colors"
+          >
+            <MessageCircle className="w-4 h-4" aria-hidden="true" /> WhatsApp {COMPANY.whatsapp.display}
           </a>
         </div>
       </section>

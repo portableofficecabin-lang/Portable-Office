@@ -428,7 +428,7 @@ export function MetalPortableCabinContent() {
               Both sit on the same steel frame. A PUF cabin uses foam sandwich panels instead of a
               metal skin with insulation behind it, so it holds air conditioning better. Choose PUF
               for all-day AC; choose metal for value, easy repair and rough sites. Our{" "}
-              <Link href="/products/portable-cabin/materials-ms-vs-puf" className="font-medium text-accent underline-offset-4 hover:underline">
+              <Link href="/guides/portable-cabin-materials-ms-vs-puf" className="font-medium text-accent underline-offset-4 hover:underline">
                 MS sheet vs PUF panel comparison
               </Link>{" "}
               goes through it properly.
@@ -546,7 +546,7 @@ export function MetalPortableCabinContent() {
           </a>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          Monday to Saturday, 7 AM to 10 PM. ISO 9001:2015 certified and MSME registered, with
+          Monday to Saturday, 7 AM to 10 PM. MSME registered, with
           manufacturing at our Tamil Nadu factory in Kamandoddi, near Hosur, and a Bangalore office
           in Electronic City.
         </p>

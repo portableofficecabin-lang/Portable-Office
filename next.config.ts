@@ -254,6 +254,27 @@ const nextConfig: NextConfig = {
       { source: "/about", destination: "/about-us", statusCode: 301 },
       { source: "/projects", destination: "/gallery", statusCode: 301 },
       { source: "/terms", destination: "/terms-and-conditions", statusCode: 301 },
+      // ── Portable-cabin guides moved to /guides (D5, 2026-11; src/data/guideMoves.ts) ──
+      // ONE hop from the old nested URL and from its `.html` form. Config-level because the
+      // nested [slug]/[child] route is fully static (dynamicParams=false): a page-level redirect
+      // would never run for a URL it no longer prerenders. src/data/guideMoves.test.ts reads this
+      // file and checks every pair.
+      { source: "/products/portable-cabin/price-and-cost-guide", destination: "/guides/portable-cabin-price-and-cost", statusCode: 301 },
+      { source: "/products/portable-cabin/price-and-cost-guide.html", destination: "/guides/portable-cabin-price-and-cost", statusCode: 301 },
+      { source: "/products/portable-cabin/sizes-and-dimensions", destination: "/guides/portable-cabin-sizes-and-dimensions", statusCode: 301 },
+      { source: "/products/portable-cabin/sizes-and-dimensions.html", destination: "/guides/portable-cabin-sizes-and-dimensions", statusCode: 301 },
+      { source: "/products/portable-cabin/materials-ms-vs-puf", destination: "/guides/portable-cabin-materials-ms-vs-puf", statusCode: 301 },
+      { source: "/products/portable-cabin/materials-ms-vs-puf.html", destination: "/guides/portable-cabin-materials-ms-vs-puf", statusCode: 301 },
+      { source: "/products/portable-cabin/installation-and-site-preparation", destination: "/guides/portable-cabin-installation-and-site-preparation", statusCode: 301 },
+      { source: "/products/portable-cabin/installation-and-site-preparation.html", destination: "/guides/portable-cabin-installation-and-site-preparation", statusCode: 301 },
+      { source: "/products/portable-cabin/maintenance-and-lifespan", destination: "/guides/portable-cabin-maintenance-and-lifespan", statusCode: 301 },
+      { source: "/products/portable-cabin/maintenance-and-lifespan.html", destination: "/guides/portable-cabin-maintenance-and-lifespan", statusCode: 301 },
+      { source: "/products/portable-cabin/transport-and-delivery", destination: "/guides/portable-cabin-transport-and-delivery", statusCode: 301 },
+      { source: "/products/portable-cabin/transport-and-delivery.html", destination: "/guides/portable-cabin-transport-and-delivery", statusCode: 301 },
+      { source: "/products/portable-cabin/layouts-and-interiors", destination: "/guides/portable-cabin-layouts-and-interiors", statusCode: 301 },
+      { source: "/products/portable-cabin/layouts-and-interiors.html", destination: "/guides/portable-cabin-layouts-and-interiors", statusCode: 301 },
+      { source: "/products/portable-cabin/buying-guide-new-vs-used", destination: "/guides/portable-cabin-new-vs-used", statusCode: 301 },
+      { source: "/products/portable-cabin/buying-guide-new-vs-used.html", destination: "/guides/portable-cabin-new-vs-used", statusCode: 301 },
       // ── Home Construction service pages ───────────────────────────────────
       // Home Construction is a CATEGORY (/products/category/home-construction),
       // so its child pages live under /products/<parent>/<child> like every
@@ -278,6 +299,25 @@ const nextConfig: NextConfig = {
         destination: "/products/category/home-construction",
         statusCode: 301,
       },
+      // ── Renamed product URLs (D4, 2026-11; src/data/productSlugRenames.ts) ─
+      // Six fixed-price container SKUs had a PLACE in their URL although each sells one
+      // grade; the new slug is the page's own H1. ONE hop from the old URL and from its
+      // `.html` form — these rules sit ABOVE the generic `.html` rule below, which would
+      // otherwise send the old .html URL to the old clean URL first (two hops). Config-level
+      // because the [slug] route is fully static: an unknown slug never reaches page code.
+      // src/data/productSlugRenames.test.ts reads this file and checks every pair.
+      { source: "/products/shipping-container-in-kormangala", destination: "/products/used-20ft-shipping-container-as-is-grade", statusCode: 301 },
+      { source: "/products/shipping-container-in-kormangala.html", destination: "/products/used-20ft-shipping-container-as-is-grade", statusCode: 301 },
+      { source: "/products/shipping-container-in-krishnagiri", destination: "/products/refurbished-20ft-shipping-container-premium", statusCode: 301 },
+      { source: "/products/shipping-container-in-krishnagiri.html", destination: "/products/refurbished-20ft-shipping-container-premium", statusCode: 301 },
+      { source: "/products/shipping-container-in-sipcot", destination: "/products/refurbished-20ft-shipping-container-industrial", statusCode: 301 },
+      { source: "/products/shipping-container-in-sipcot.html", destination: "/products/refurbished-20ft-shipping-container-industrial", statusCode: 301 },
+      { source: "/products/shipping-container-in-chennai", destination: "/products/used-20ft-shipping-container-wind-water-tight", statusCode: 301 },
+      { source: "/products/shipping-container-in-chennai.html", destination: "/products/used-20ft-shipping-container-wind-water-tight", statusCode: 301 },
+      { source: "/products/shipping-container-in-narsapura-industrial", destination: "/products/refurbished-20ft-shipping-container", statusCode: 301 },
+      { source: "/products/shipping-container-in-narsapura-industrial.html", destination: "/products/refurbished-20ft-shipping-container", statusCode: 301 },
+      { source: "/products/shipping-container-in-peenya-industrial", destination: "/products/used-20ft-shipping-container-cargo-worthy", statusCode: 301 },
+      { source: "/products/shipping-container-in-peenya-industrial.html", destination: "/products/used-20ft-shipping-container-cargo-worthy", statusCode: 301 },
       // ── Legacy .html → clean extensionless URLs ───────────────────────────
       // Product `.html` URLs 301 to the clean form (the page's rel=canonical,
       // sitemap, internal links and JSON-LD all use the clean form).

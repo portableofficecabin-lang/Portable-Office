@@ -9,7 +9,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   ArrowRight, Calendar, Clock, User, Tag, BookOpen, Search,
-  TrendingUp, FileText, Bookmark, Share2
+  FileText, Bookmark, Share2
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -54,8 +54,8 @@ export interface BlogDbRow {
 
 const staticBlogPosts: BlogListPost[] = [
   {
-    title: "Portable Cabin Manufacturers in Bangalore",
-    description: "Find reliable portable cabin manufacturers in Bangalore. Types, pricing (2025–2026), features, customization options, and step-by-step process from enquiry to installation across Bengaluru.",
+    title: "How to Choose a Portable Cabin Supplier in Bengaluru",
+    description: "A buyer's guide to choosing a portable cabin supplier in Bengaluru: cabin types, features for the local climate, what decides the price, and the process from enquiry to installation.",
     slug: "portable-cabin-manufacturers-in-bangalore",
     date: "March 14, 2026",
     readTime: "20 min read",
@@ -66,8 +66,8 @@ const staticBlogPosts: BlogListPost[] = [
     featured: true,
   },
   {
-    title: "Prefabricated Labor Colony in Bengaluru",
-    description: "Complete guide to prefabricated labour colonies in Bengaluru – turnkey modular worker accommodation for construction sites, industrial projects, and infrastructure development across Karnataka.",
+    title: "Prefabricated Labour Colony in Bengaluru: A Planning Guide",
+    description: "A planning guide to prefabricated labour colonies in Bengaluru: layout, capacity, materials, compliance and setup for construction and industrial projects.",
     slug: "prefabricated-labor-colony-bengaluru",
     date: "February 26, 2025",
     readTime: "25 min read",
@@ -90,8 +90,8 @@ const staticBlogPosts: BlogListPost[] = [
     featured: false,
   },
   {
-    title: "Porta Cabins on Rent – Flexible Portable Space by Portable Office Cabin",
-    description: "Complete guide to renting porta cabins in India. Office cabins, security cabins, labour accommodation, container offices & portable toilets on hire.",
+    title: "Renting a Porta Cabin: Costs, Terms and What to Check Before You Hire",
+    description: "What renting a porta cabin involves in India: rental types, monthly terms, delivery and installation, and what to check before you hire.",
     slug: "porta-cabins-on-rent",
     date: "February 20, 2025",
     readTime: "18 min read",
@@ -389,38 +389,15 @@ export default function Blog({ initialDbRows = [] }: { initialDbRows?: BlogDbRow
                   <BookOpen className="h-5 w-5 text-accent" /> About This Blog
                 </h3>
                 <p className="text-sm text-foreground/80 leading-relaxed">
-                  Expert insights from India's leading portable cabin & prefab structure manufacturer.
-                  We share buying guides, cost comparisons, project case studies, and construction industry trends.
+                  {/* No superlatives and no content we don't publish (there are no case studies yet). */}
+                  Insights from a portable cabin & prefab structure manufacturer.
+                  We share buying guides, cost comparisons and construction industry trends.
                 </p>
               </div>
 
-              {/* Trending Topics */}
-              <div className="bg-card border border-border/50 rounded-xl p-6 shadow-sm">
-                <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-accent" /> Trending Topics
-                </h3>
-                <ul className="space-y-3">
-                  {[
-                    { title: "Portable Cabin Price in India 2025", views: "2.4K views" },
-                    { title: "Container Office Setup Guide", views: "1.8K views" },
-                    { title: "Prefab vs Traditional Construction", views: "1.5K views" },
-                    { title: "Labour Camp Design Standards", views: "1.2K views" },
-                  ].map((topic) => (
-                    <li key={topic.title}>
-                      <Link
-                        href="/blog/labour-shed-prefabricated-structures"
-                        className="flex items-start gap-3 group/item"
-                      >
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
-                        <div>
-                          <p className="text-sm font-semibold text-foreground group-hover/item:text-accent transition-colors leading-snug">{topic.title}</p>
-                          <span className="text-xs text-foreground/70">{topic.views}</span>
-                        </div>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {/* A "Trending Topics" box stood here until 2026-11-25. It showed invented view counts
+                  ("2.4K views" …) for four posts that do not exist, all linking to one unrelated post.
+                  Removed: the site must not show statistics it cannot back up. */}
 
               {/* Popular Tags */}
               <div className="bg-card border border-border/50 rounded-xl p-6 shadow-sm">
@@ -483,7 +460,7 @@ export default function Blog({ initialDbRows = [] }: { initialDbRows?: BlogDbRow
             Looking for Portable Cabin Solutions?
           </h2>
           <p className="text-primary-foreground/70 mb-6 max-w-xl mx-auto">
-            Explore our complete range of portable cabins, container offices, and prefab structures. India's most trusted manufacturer.
+            Explore our complete range of portable cabins, container offices, and prefab structures, built at our own factory in Tamil Nadu.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild size="lg" className="btn-accent">

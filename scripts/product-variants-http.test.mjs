@@ -63,9 +63,9 @@ const CASE_VARIANT_SIZES = ["20X10-FT", "20x10-FT"];
 const EXISTING_ROUTES = [
   "/products/container-office",
   "/products/portable-cabin",
-  "/products/portable-cabin/price-and-cost-guide",
-  "/products/portable-cabin/sizes-and-dimensions",
-  "/products/portable-cabin/materials-ms-vs-puf",
+  "/guides/portable-cabin-price-and-cost",
+  "/guides/portable-cabin-sizes-and-dimensions",
+  "/products/portable-cabin/insulation-and-cooling",
   "/products/category/container-offices",
   "/products/ms-container-office-cabin",
   "/products/vip-container-office",
@@ -578,7 +578,7 @@ section("18. Sitemap");
   );
   ok(!xml.includes(`/products/${FAMILY}/25x14-ft`), "the parent-served size's redirect URL is not in the sitemap");
   ok(!xml.includes(`/products/${FAMILY}/20x12-ft`), "the UNPUBLISHED 20x12 size is not in the sitemap");
-  ok(xml.includes("/products/portable-cabin/price-and-cost-guide"), "sitemap still lists the existing guides");
+  ok(xml.includes("/guides/portable-cabin-price-and-cost"), "sitemap still lists the existing guides");
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════════════

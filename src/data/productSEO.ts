@@ -32,7 +32,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
    * record of what this page is meant to rank for. */
   "45": {
     title: "Individual House Construction Cost & Specification | Portable Office Cabin",
-    description: "What individual house construction includes and what sets the cost per sq ft — RCC frame, masonry, finishes, G+1 to G+5, and the specification your rate is quoted against.",
+    description: "What individual house construction includes and what sets the cost per sq ft: RCC frame, masonry, finishes, G+1 to G+5, and the specification you are quoted on.",
     keywords: "individual house construction cost, house construction cost per sq ft, house construction specification, what is included in house construction, G+1 house construction cost, G+2 house construction cost, 40x30 house construction cost, RCC house construction specification, house construction materials list",
   },
   // Executive Portable Cabin 20ft
@@ -115,7 +115,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   "46": {
     title: "Steel Portable Cabin Manufacturer in India | Portable Office Cabin",
     h1: "Steel Portable Cabin",
-    description: `Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. ISO 9001 maker, pan-India delivery in ${DOOR_TO_DOOR}.`,
+    description: `Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. Pan-India delivery in ${DOOR_TO_DOOR}.`,
     keywords: "steel portable cabin, steel portable cabin manufacturer India, steel cabin price, portable steel office cabin, insulated steel cabin, steel site office cabin, steel security cabin, steel bunkhouse, portable cabin manufacturer India, relocatable steel cabin",
   },
   /* Portable Shop Cabin (id 48). `title` mirrors productCommerce "48".feedTitle, which is what
@@ -145,7 +145,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
    * carry a second figure. */
   "13": {
     title: "Prefabricated Portable Cabin — Factory-Built, Delivered Ready | Portable Office Cabin",
-    description: `See how a prefabricated portable cabin is built, checked and delivered in ${DOOR_TO_DOOR}. Sizes from 8x8 to 40x10 ft, from an ISO 9001 factory, pan-India.`,
+    description: `See how a prefabricated portable cabin is built, checked and delivered in ${DOOR_TO_DOOR}. Sizes from 8x8 to 40x10 ft, from our factory near Hosur, pan-India.`,
     keywords: "prefabricated portable cabin, how prefabricated cabins are made, prefab cabin manufacturing process, factory built portable cabin, prefabricated cabin India, modular cabin fabrication, prefab site office cabin, prefabricated cabin delivery time",
   },
   // New & Used Shipping Container for Sale in India
@@ -207,8 +207,8 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Prefab Porta Cabin
   "23": {
     title: "Prefab Porta Cabin – Types, Pricing & Guide",
-    description: "Prefab porta cabin for India 2026 — MS frame, PUF sandwich panels, bolted assembly, relocatable. 40–60% cheaper than RCC. Price incl. GST, buy online.",
-    keywords: "prefab porta cabin, porta cabin price India, portable cabin types, prefab cabin manufacturer, modular porta cabin, site office porta cabin, prefab porta cabin 2026, porta cabin sizes India",
+    description: "Prefab porta cabin for India — MS frame, PUF sandwich panels, bolted assembly, relocatable. 40–60% cheaper than RCC. Price incl. GST, buy online.",
+    keywords: "prefab porta cabin, porta cabin price India, portable cabin types, prefab cabin manufacturer, modular porta cabin, site office porta cabin, porta cabin sizes India",
   },
   // Labor Hutments
   "24": {
@@ -340,7 +340,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   "47": {
     title: "Container Cafe and Restaurant",
     h1: "Container Cafe and Restaurant",
-    description: "Open your cafe faster with a custom container cafe or restaurant. Kiosks, dine-in cafes and stacked designs, with kitchen layout, insulation and branding options, as specified in the quotation.",
+    description: "Custom shipping container cafes and restaurants: kiosks, dine-in cafes and stacked designs, with kitchen layout, insulation and branding to your quotation.",
     keywords: "container cafe, container restaurant, shipping container cafe, container cafe design, container cafe manufacturer, container cafe price, 20 ft container cafe, 40 ft container cafe, container kitchen, container coffee kiosk, modular restaurant",
   },
 };

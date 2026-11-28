@@ -30,8 +30,8 @@ const highlights = [
   { icon: Factory, title: "KIADB Plot Ready", desc: "Customized for KIADB plot specifications with minimal site preparation on PCC pads" },
   { icon: Shield, title: "Corten Steel Build", desc: "350 MPa yield strength with anti-corrosive epoxy paint for Kolar's climate" },
   { icon: Thermometer, title: "Climate Resistant", desc: "Handles 37°C summer peaks and heavy monsoon rains better than temporary alternatives" },
-  { icon: Recycle, title: "70% Lower Carbon", desc: "Container reuse cuts embodied carbon versus new RCC builds; solar-ready rooftops" },
-  { icon: Building, title: "30–50% Cost Savings", desc: "Lower investment compared to permanent RCC structures for industrial operations" },
+  { icon: Recycle, title: "Lower Carbon", desc: "Container reuse cuts embodied carbon versus new RCC builds; solar-ready rooftops" },
+  { icon: Building, title: "Cost Savings", desc: "Lower investment compared to permanent RCC structures for industrial operations" },
   { icon: MapPin, title: "Narsapura & Beyond", desc: "Coverage across Vemgal, Malur, Hoskote, and the NH-75 industrial corridor" },
   { icon: Wrench, title: "End-to-End Service", desc: "Design, fabrication, delivery, installation, and post-installation support" },
 ];
@@ -70,7 +70,7 @@ const faqs = [
   { q: "What shipping container sizes are available for Narsapura Industrial Area?", a: "We supply 10 ft, 20 ft, 40 ft GP, and 40 ft High Cube containers — both new and used. Custom-built units with partitions, roller shutters, and PUF insulation are also available for KIADB plots." },
   { q: "How quickly can you deliver containers to Narsapura?", a: "The standard unit bought online is dispatched within 7–15 working days of order confirmation from our Tamil Nadu factory near Hosur, just off the Bengaluru road corridor, and checkout shows the delivery estimate for your PIN code. Customized container offices and fitted units follow the timeline in your written quotation." },
   { q: "Do you supply used shipping containers for Narsapura factories?", a: "Yes. We stock CSC-recertified used containers that are rust-treated and repainted, offering 10–15 years of extended service life for storage and utility applications." },
-  { q: "Can containers be relocated within Narsapura or to other industrial areas?", a: "Absolutely. Containers retain 80% material value and can be shifted within the same campus or relocated to Malur, Hoskote, or other KIADB zones as operations grow." },
+  { q: "Can containers be relocated within Narsapura or to other industrial areas?", a: "Absolutely. Containers can be shifted within the same campus or relocated to Malur, Hoskote, or other KIADB zones as operations grow." },
   { q: "What foundation is needed for container placement on KIADB plots?", a: "Simple PCC pads or concrete blocks at the four corners are sufficient. No deep foundations or extensive site preparation is required, enabling rapid deployment." },
   { q: "Do you provide container offices with AC and electrical fit-outs?", a: "Yes. Our container offices include PUF/Rockwool insulation, UPVC windows, LED lighting, split AC provisions, IS 732-compliant wiring, and modular workstation layouts." },
   { q: "What industries do you serve in the Narsapura cluster?", a: "We serve automotive OEMs, engineering firms, FMCG warehouses, logistics operators, construction companies, and educational institutes across Narsapura, Vemgal, Malur, and Hoskote." },
@@ -230,7 +230,7 @@ export function ShippingContainerNarsapuraContent() {
           </div>
           <div className="bg-muted/50 rounded-lg p-4">
             <h3 className="font-semibold text-foreground mb-2">Sustainability</h3>
-            <p className="text-sm text-muted-foreground">Container reuse cuts embodied carbon by 70% versus new builds. Solar-ready rooftop configurations available for ESG-compliant operations.</p>
+            <p className="text-sm text-muted-foreground">Container reuse cuts embodied carbon versus new builds. Solar-ready rooftop configurations available for ESG-compliant operations.</p>
           </div>
         </div>
       </section>
@@ -279,7 +279,7 @@ export function ShippingContainerNarsapuraContent() {
             <h3 className="font-semibold text-foreground mb-2">Relocation Support</h3>
             <ul className="space-y-1 text-sm text-muted-foreground">
               <li>• Shift containers within campus or to Malur, Hoskote</li>
-              <li>• Retain 80% material value during relocation</li>
+              <li>• Reused, not demolished, when you relocate</li>
               <li>• Relocation timeline set out in your written quotation</li>
             </ul>
           </div>

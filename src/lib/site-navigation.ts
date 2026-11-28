@@ -424,22 +424,22 @@ export const topBarTrustItems = [
  * can never drift from the certificate or print a stale number. `srLabel` is the plain
  * name of the field for assistive tech and the revealed popover heading.
  */
-export const topBarVerifications = [
+/** One click-to-reveal badge. `showFrom: "lg"` keeps a long label hidden below lg (VerifiedBadges). */
+type TopBarVerification = {
+  readonly id: string;
+  readonly label: string;
+  readonly srLabel: string;
+  readonly value: string;
+  readonly showFrom?: "lg";
+};
+
+export const topBarVerifications: readonly TopBarVerification[] = [
   { id: "gst", label: "GST Verified", srLabel: "GSTIN", value: COMPANY.gstin },
   // "Registered", not "Verified": Udyam is a REGISTRATION, and this is the approved wording.
   { id: "msme", label: "MSME Registered", srLabel: "Udyam / MSME", value: COMPANY.udyam },
-  // Same wording as the footer's registrationBadges, so the certification is stated
-  // identically everywhere. By far the longest label, so it is the first to drop when
-  // space is tight: `showFrom: "lg"` keeps it hidden below lg (see VerifiedBadges) the
-  // same way the third trust statement on the left drops below lg.
-  {
-    id: "iso",
-    label: "ISO 9001:2015 Certified Company",
-    srLabel: "ISO 9001:2015",
-    value: `QMS · Cert. No. ${COMPANY.isoCertificate}`,
-    showFrom: "lg",
-  },
-] as const;
+  // The "ISO 9001:2015 Certified Company" badge was removed (draft, owner evidence pending): no
+  // certificate copy, certification body, scope or validity is on record (claims inventory E1 in docs/claims/sitewide-claims-2026-11-26.md).
+];
 
 /**
  * The geo line in the slim strip under the header (LocationStrip.tsx) — SERVER-RENDERED on
@@ -458,16 +458,15 @@ export const locationStripText =
   "Portable Cabin Manufacturer Serving Bangalore • Karnataka & Tamil Nadu";
 
 export const footerTrustItems = [
-  { label: "ISO 9001:2015 Certified", icon: "badge" },
+  { label: "MSME Registered", icon: "badge" },
   { label: "GST Invoice", icon: "receipt" },
   { label: "PAN India Delivery", icon: "truck" },
   { label: "In-house Manufacturing", icon: "factory" },
 ] as const;
 
-/** Wording preserved from the previous footer, including the "Company" and "QMS"
- *  qualifiers, so the certification is stated exactly as it was. */
+/** Statutory registrations in the footer bottom bar, from COMPANY. The ISO 9001:2015 row was
+ *  removed (draft, owner evidence pending; claims inventory E1 in docs/claims/sitewide-claims-2026-11-26.md). */
 export const registrationBadges = [
-  { label: "ISO 9001:2015 Certified Company", value: `QMS · Cert. No. ${COMPANY.isoCertificate}` },
   { label: "GSTIN", value: COMPANY.gstin },
   { label: "MSME / Udyam", value: COMPANY.udyam },
 ] as const;

@@ -67,7 +67,7 @@ export function PrefabPortaCabinContent() {
           setting the finished cabin down on site.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          In 2026, the demand for portable cabins continues to surge. Metro expansions in Delhi and Mumbai, highway projects under Bharatmala, and rural development initiatives all require fast, flexible structures. Whether you need site offices for a 6-month project or semi-permanent labour accommodation for a decade, prefab porta cabins deliver 40–60% cost savings compared to conventional RCC construction.
+          Demand for portable cabins continues to grow. Metro expansions in Delhi and Mumbai, highway projects under Bharatmala, and rural development initiatives all require fast, flexible structures. Whether you need site offices for a 6-month project or semi-permanent labour accommodation for a decade, prefab porta cabins save much of the time and civil work of conventional RCC construction.
         </p>
         <p className="text-muted-foreground leading-relaxed">
           This guide covers everything procurement teams and project managers need: features, types (from compact security cabins to G+1 labour colonies), specifications, and how to choose the right prefab porta cabin for your specific requirements.
@@ -130,11 +130,11 @@ export function PrefabPortaCabinContent() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { icon: Zap, title: "Rapid Deployment", desc: "Far less time on site than RCC buildings" },
-            { icon: Shield, title: "Cost Effectiveness", desc: "40–60% lower than conventional construction with less waste" },
+            { icon: Shield, title: "Cost Effectiveness", desc: "Less civil work and less waste than conventional construction" },
             { icon: RotateCcw, title: "Relocatable Design", desc: "Units can be shifted 5–10 times over their lifespan without structural degradation" },
-            { icon: Thermometer, title: "Energy Efficiency", desc: "PUF insulation reduces AC loads by up to 30% in extreme heat" },
+            { icon: Thermometer, title: "Energy Efficiency", desc: "PUF insulation cuts heat gain, so the AC works less in extreme heat" },
             { icon: Settings, title: "Weather Resistance", desc: "Anti-corrosion coatings and proper drainage handle monsoons" },
-            { icon: Leaf, title: "Eco Friendly Construction", desc: "90% recyclable materials, zero construction debris, solar panel compatibility" },
+            { icon: Leaf, title: "Eco Friendly Construction", desc: "Recyclable steel, minimal construction debris, solar panel compatibility" },
           ].map((feature) => (
             <div key={feature.title} className="bg-card rounded-xl p-6 shadow-card border border-border">
               <feature.icon className="h-8 w-8 text-accent mb-4" />
@@ -474,7 +474,7 @@ export function PrefabPortaCabinContent() {
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
-            { title: "Experience", desc: "15+ years in the industry with documented projects" },
+            { title: "Experience", desc: "Years in the industry and documented projects you can visit" },
             { title: "Capabilities", desc: "In-house design and fabrication versus outsourced work" },
             { title: "Quality Evidence", desc: "Visit existing installations to assess weld quality, panel fitment, and finishes" },
             { title: "Detailed Quotations", desc: "Specifications covering panel thickness, paint system, and inclusions" },

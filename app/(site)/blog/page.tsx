@@ -10,7 +10,7 @@ import { createStaticClient } from "@/lib/supabase/static";
 export const revalidate = 3600;
 
 export const metadata = buildPageMetadata({
-  title: "Blog — Prefab Cabin Guides",
+  title: "Blog — Portable Cabin & Prefab Articles",
   description:
     "Guides, cost breakdowns and comparisons on portable cabins, prefab homes, labour colonies and container offices from Portable Office Cabin.",
   path: "/blog",

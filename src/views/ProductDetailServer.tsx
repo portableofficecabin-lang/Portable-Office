@@ -82,6 +82,7 @@ import { MarketingOfficeContent } from "@/components/products/MarketingOfficeCon
 import { PrefabMarketingOfficeContent } from "@/components/products/PrefabMarketingOfficeContent";
 import { ConstructionIndividualBuildingContent } from "@/components/products/ConstructionIndividualBuildingContent";
 import { ContainerCafeRestaurantContent } from "@/components/products/ContainerCafeRestaurantContent";
+import { ProductBuyerGuide } from "@/components/products/ProductBuyerGuide";
 
 const SITE = "https://portableofficecabin.com";
 
@@ -757,12 +758,12 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "cargo-storage-shipping-containers" && slug === "used-shipping-container-for-sale" && <div className="mt-16"><UsedShippingContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-container-for-sale" && <div className="mt-16"><CargoContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-rental" && <div className="mt-16"><ShippingContainerRentalContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-kormangala" && <div className="mt-16"><ShippingContainerKormangalaContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-krishnagiri" && <div className="mt-16"><ShippingContainerKrishnagiriContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-sipcot" && <div className="mt-16"><ShippingContainerSIPCOTContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-chennai" && <div className="mt-16"><ShippingContainerChennaiContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-narsapura-industrial" && <div className="mt-16"><ShippingContainerNarsapuraContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-peenya-industrial" && <div className="mt-16"><ShippingContainerPeenyaContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "used-20ft-shipping-container-as-is-grade" && <div className="mt-16"><ShippingContainerKormangalaContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "refurbished-20ft-shipping-container-premium" && <div className="mt-16"><ShippingContainerKrishnagiriContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "refurbished-20ft-shipping-container-industrial" && <div className="mt-16"><ShippingContainerSIPCOTContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "used-20ft-shipping-container-wind-water-tight" && <div className="mt-16"><ShippingContainerChennaiContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "refurbished-20ft-shipping-container" && <div className="mt-16"><ShippingContainerNarsapuraContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "used-20ft-shipping-container-cargo-worthy" && <div className="mt-16"><ShippingContainerPeenyaContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-storage-containers" && <div className="mt-16"><CargoStorageContainersContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-containers" && <div className="mt-16"><CargoContainersContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-storage-containers-pink" && <div className="mt-16"><CargoStorageContainersPinkContent offer={contentOffer} /></div>}
@@ -770,6 +771,11 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "g1-workmen-accommodation" && slug === "workmen-accommodation" && <div className="mt-16"><WorkmenAccommodationContent /></div>}
           {cs === "g1-workmen-accommodation" && slug === "labour-colony" && <div className="mt-16"><LabourColonyContent /></div>}
           {cs === "security-cabins" && slug === "security-cabin" && <div className="mt-16"><SecurityCabinContent /></div>}
+
+          {/* Buyer guide for the catalogue products that have no *Content component of their own
+              (Guard Security Cabin, 40ft Bunkhouse, Luxury Prefab Villa, 20ft Storage Container).
+              Keyed by the static catalogue id; renders nothing for every other product. */}
+          <ProductBuyerGuide productId={product.id} />
 
           {/* PORTABLE CABINS — hub + guide cross-links, server-rendered on every product in the
               category. This REPLACES the former fallback that rendered the hub's entire long-form

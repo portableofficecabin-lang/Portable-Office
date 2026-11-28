@@ -97,7 +97,6 @@ const SPEC: [string, string][] = [
   ["Electricals", "6–10 points per 200 sq ft, MCB, LED, concealed wiring"],
   ["Finish", "Zinc phosphate primer + PU topcoat"],
   ["Life", "15–20+ years with basic upkeep"],
-  ["Certification", "Built under an ISO 9001:2015 quality system"],
 ];
 
 const SIZES: { size: string; area: string; use: string }[] = [
@@ -491,7 +490,7 @@ export function PrefabricatedPortableCabinContent() {
           </a>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          Monday to Saturday, 7 AM to 10 PM. ISO 9001:2015 certified and MSME registered, with
+          Monday to Saturday, 7 AM to 10 PM. MSME registered, with
           manufacturing at our Tamil Nadu factory in Kamandoddi, near Hosur, and a Bangalore office
           in Electronic City.
         </p>

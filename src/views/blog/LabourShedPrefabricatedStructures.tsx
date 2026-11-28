@@ -168,7 +168,7 @@ export default function LabourShedPrefabricatedStructures() {
               </p>
               <div className="bg-accent/10 p-6 rounded-xl border border-accent/30 my-6">
                 <p className="text-muted-foreground leading-relaxed">
-                  <Link href="/" className="text-accent font-bold hover:underline">Portable Office Cabin</Link> is a trusted manufacturer and supplier of high-quality portable cabins, container offices, and prefab modular structures in India. The company delivers modern, durable, and cost-effective workspace solutions designed to meet the evolving needs of construction sites, industrial projects, commercial developments, and institutional facilities. With a strong focus on quality materials, smart design, and timely delivery, Portable Office Cabin helps businesses create functional spaces quickly and efficiently.
+                  <Link href="/" className="text-accent font-bold hover:underline">Portable Office Cabin</Link> manufactures and supplies high-quality portable cabins, container offices, and prefab modular structures in India. The company delivers modern, durable, and cost-effective workspace solutions designed to meet the evolving needs of construction sites, industrial projects, commercial developments, and institutional facilities. With a strong focus on quality materials, smart design, and timely delivery, Portable Office Cabin helps businesses create functional spaces quickly and efficiently.
                 </p>
               </div>
               <p className="text-muted-foreground leading-relaxed italic bg-secondary/50 p-4 rounded-lg border-l-4 border-accent">
@@ -195,6 +195,11 @@ export default function LabourShedPrefabricatedStructures() {
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">What Are Prefabricated Labour Sheds?</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Prefabricated labour sheds represent a fundamental shift in how worker accommodation is constructed. Rather than building structures brick-by-brick on site, these modular buildings are manufactured off site in a controlled environment, then transported and assembled on site using bolted connections and standardized components.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                For ready models, see our{" "}
+                <Link href="/products/labor-hutments" className="text-accent font-medium hover:underline">labour hutments</Link> and{" "}
+                <Link href="/products/labour-colony" className="text-accent font-medium hover:underline">prefab labour colony</Link> pages.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 The core elements of any prefabricated shed include steel frames that form the structural skeleton, insulated wall panels providing thermal comfort and durability, roof panels engineered for weather resistance, plus doors, windows, and internal partitions. All these prefabricated components are precision-manufactured in a factory setting before being shipped to the project location.
@@ -431,7 +436,7 @@ export default function LabourShedPrefabricatedStructures() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                 {[
-                  { icon: Users, title: "Experience Since 2010s", desc: "Diverse portfolio across construction, industrial, and government projects." },
+                  { icon: Users, title: "Built for Site Work", desc: "Labour sheds, site offices and stores for construction and industrial projects." },
                   { icon: Factory, title: "End-to-End Capability", desc: "In-house design, manufacturing, logistics, installation, and after-sales support." },
                   { icon: Shield, title: "Quality & Sustainability", desc: "Durable steel structures, recyclable materials, waste reduction through precise manufacturing." },
                   { icon: Truck, title: "Versatile Product Range", desc: "Portable cabins, security rooms, PEB structures, canteens, container homes, toilets — all from one source." }

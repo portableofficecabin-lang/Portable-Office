@@ -506,7 +506,7 @@ export default function RentalServicePage() {
               </Badge>
               
               <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
-                Portable Cabin <span className="text-gradient-gold">Rental Service</span>
+                Porta Cabin &amp; Portable Cabin <span className="text-gradient-gold">on Rent</span>
               </h1>
               
               <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mb-8 leading-relaxed">

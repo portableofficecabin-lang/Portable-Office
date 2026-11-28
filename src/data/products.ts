@@ -1447,7 +1447,7 @@ export const products: Product[] = [
     // Renamed + explicit slug (Aug 2026 GMC correction): distinct configuration per city SKU,
     // URL unchanged. Same pattern for the five sibling city products below.
     name: "Used 20 ft Shipping Container (As-Is Grade)",
-    slug: "shipping-container-in-kormangala",
+    slug: "used-20ft-shipping-container-as-is-grade", // was "shipping-container-in-kormangala" (301 in next.config.ts; src/data/productSlugRenames.ts)
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     // 2026-11-15 owner decision: both descriptions name the unit, not Koramangala, whose shipping-container
@@ -1486,7 +1486,7 @@ export const products: Product[] = [
     id: "30",
     sku: "POC-SC-KRSH",
     name: "Refurbished 20 ft Shipping Container (Premium)",
-    slug: "shipping-container-in-krishnagiri",
+    slug: "refurbished-20ft-shipping-container-premium", // was "shipping-container-in-krishnagiri" (301 in next.config.ts; src/data/productSlugRenames.ts)
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     shortDescription: "Buy 20 ft & 40 ft shipping containers in Krishnagiri — storage, site offices, container homes, cafés & labour camps with delivery across Hosur, Rayakottai & Dharmapuri.",
@@ -1523,7 +1523,7 @@ export const products: Product[] = [
     id: "31",
     sku: "POC-SC-SIPCOT",
     name: "Refurbished 20 ft Shipping Container (Industrial)",
-    slug: "shipping-container-in-sipcot",
+    slug: "refurbished-20ft-shipping-container-industrial", // was "shipping-container-in-sipcot" (301 in next.config.ts; src/data/productSlugRenames.ts)
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     shortDescription: "Buy 20 ft & 40 ft shipping containers for SIPCOT industrial estates — storage, site offices, labour colonies & security cabins across Sriperumbudur, Oragadam, Hosur & Gummidipoondi.",
@@ -1560,7 +1560,7 @@ export const products: Product[] = [
     id: "32",
     sku: "POC-SC-CHN",
     name: "Used 20 ft Shipping Container (WWT)",
-    slug: "shipping-container-in-chennai",
+    slug: "used-20ft-shipping-container-wind-water-tight", // was "shipping-container-in-chennai" (301 in next.config.ts; src/data/productSlugRenames.ts)
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     shortDescription: "Buy 20 ft & 40 ft shipping containers in Chennai — storage, offices, homes, cafés & labour camps, dispatched within 7–15 working days when bought online.",
@@ -1598,7 +1598,7 @@ export const products: Product[] = [
     id: "33",
     sku: "POC-SC-NRSP",
     name: "Refurbished 20 ft Shipping Container",
-    slug: "shipping-container-in-narsapura-industrial",
+    slug: "refurbished-20ft-shipping-container", // was "shipping-container-in-narsapura-industrial" (301 in next.config.ts; src/data/productSlugRenames.ts)
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     description: "Shipping containers for Narsapura Industrial Area — storage, offices, labour colonies, and modular solutions for KIADB plots along NH-75. New, used, and refurbished units from 10 ft to 40 ft with customization for Honda, Volvo, and Lumax corridor factories.",
@@ -1633,7 +1633,7 @@ export const products: Product[] = [
     id: "34",
     sku: "POC-SC-PNYA",
     name: "Used 20 ft Shipping Container (Cargo-Worthy)",
-    slug: "shipping-container-in-peenya-industrial",
+    slug: "used-20ft-shipping-container-cargo-worthy", // was "shipping-container-in-peenya-industrial" (301 in next.config.ts; src/data/productSlugRenames.ts)
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     description: "Shipping containers for Peenya Industrial Area, Bengaluru — new and used 20 ft & 40 ft ISO units for storage, container offices, security cabins, labour accommodation, and modular conversions. Supplied across all four phases of Asia's largest industrial hub.",

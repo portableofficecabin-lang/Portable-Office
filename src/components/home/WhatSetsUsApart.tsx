@@ -78,15 +78,19 @@ export function WhatSetsUsApart() {
                 <div className="flex items-center gap-3 mb-8">
                   <div className="w-1.5 h-8 bg-gradient-to-b from-accent to-amber-light rounded-full" />
                   <h3 className="font-display text-2xl font-bold text-white">
-                    Industry-Leading Standards
+                    What You Can Count On
                   </h3>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
+                  {/* 2026-11-26: the heading and the project-count and years tiles were replaced, as no
+                      record supports them (claims S5–S7 in docs/claims/sitewide-claims-2026-11-26.md).
+                      The certification tile was replaced by the GST-invoice fact while the owner's certificate is
+                      pending (claims inventory E1). */}
                   {[
-                    { value: "500+", label: "Projects Completed" },
-                    { value: "15+", label: "Years Experience" },
-                    { value: "ISO 9001", label: "2015 Certified" },
+                    { value: "Fixed", label: "GST-inclusive prices, standard units" },
+                    { value: "In-house", label: "Manufacturing near Hosur" },
+                    { value: "GST", label: "Invoice with every order" },
                     { value: "7 Days", label: "Support, Mon-Sun" },
                   ].map((stat) => (
                     <div key={stat.label} className="text-center p-5 bg-white/[0.08] rounded-xl border border-white/10 hover:border-accent/40 transition-all duration-300 hover:scale-[1.03]">
@@ -98,7 +102,7 @@ export function WhatSetsUsApart() {
 
                 <div className="mt-8 pt-6 border-t border-white/10 text-center">
                   <p className="text-white/50 text-sm">
-                    Trusted by construction companies, schools, hospitals & government agencies across India
+                    Site offices, classrooms, clinics, security posts and staff housing, delivered across India
                   </p>
                 </div>
               </div>

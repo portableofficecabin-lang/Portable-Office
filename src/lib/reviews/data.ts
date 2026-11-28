@@ -7,6 +7,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 import type { ProductReview } from "@/components/products/ProductReviews";
 import { summarize, REVIEW_DISPLAY_LIMIT, type RatingSummary } from "./summary";
+import { earlierProductSlugs } from "@/data/productSlugRenames";
 
 export type ProductReviewData = {
   /** Newest approved reviews (up to REVIEW_DISPLAY_LIMIT) for cards + JSON-LD sample. */
@@ -32,10 +33,14 @@ export async function fetchProductReviewData(
   client: Client,
   productSlug: string,
 ): Promise<ProductReviewData> {
+  // A renamed product (src/data/productSlugRenames.ts) keeps the reviews stored under its earlier
+  // slug: rows are never rewritten, the read simply covers every slug the product has had.
+  const slugs = [productSlug, ...earlierProductSlugs(productSlug)];
+
   const listPromise = client
     .from("product_reviews")
     .select(REVIEW_COLUMNS)
-    .eq("product_slug", productSlug)
+    .in("product_slug", slugs)
     .eq("status", "approved")
     .order("created_at", { ascending: false })
     .limit(REVIEW_DISPLAY_LIMIT);
@@ -43,7 +48,7 @@ export async function fetchProductReviewData(
   const aggPromise = client
     .from("product_reviews")
     .select("rating", { count: "exact" })
-    .eq("product_slug", productSlug)
+    .in("product_slug", slugs)
     .eq("status", "approved")
     .limit(2000);
 

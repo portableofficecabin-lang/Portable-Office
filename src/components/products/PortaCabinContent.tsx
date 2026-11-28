@@ -20,7 +20,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
       <section>
         <div className="flex items-center gap-3 mb-6">
           <div className="h-1 w-12 bg-accent rounded-full" />
-          <span className="text-accent font-semibold uppercase tracking-wider text-sm">COMPLETE GUIDE 2025</span>
+          <span className="text-accent font-semibold uppercase tracking-wider text-sm">COMPLETE GUIDE</span>
         </div>
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-6">
           Porta Cabin: Portable Cabins, Container Offices & Modular Buildings
@@ -36,9 +36,9 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { icon: Truck, title: "Optional Installation", desc: "Added at checkout" },
-            { icon: IndianRupee, title: "Cost-Effective", desc: "30–40% cheaper than traditional" },
+            { icon: IndianRupee, title: "Cost-Effective", desc: "Usually no RCC foundation or long civil works — the base depends on cabin size and site" },
             { icon: Building2, title: "Reusable & Relocatable", desc: "Move across multiple project sites" },
-            { icon: Leaf, title: "Eco-Friendly", desc: "70–80% less construction waste" },
+            { icon: Leaf, title: "Eco-Friendly", desc: "Less construction waste than brick-and-mortar" },
           ].map((benefit) => (
             <div key={benefit.title} className="bg-accent/5 border border-accent/15 rounded-xl p-5 text-center hover:border-accent/30 transition-colors">
               <benefit.icon className="h-8 w-8 text-accent mx-auto mb-3" />
@@ -58,7 +58,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
         <p className="text-muted-foreground leading-relaxed mb-6">
           A porta cabin is a steel-framed, insulated, factory-manufactured modular structure designed for quick assembly, easy transportation, and reuse across multiple sites. These prefabricated units arrive ready to use, eliminating the lengthy timelines associated with traditional construction.
         </p>
-        <h3 className="font-display text-lg font-semibold text-foreground mb-4">Key Uses in 2025:</h3>
+        <h3 className="font-display text-lg font-semibold text-foreground mb-4">Key Uses:</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
           {[
             "Construction site offices and project management rooms",
@@ -165,7 +165,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           Advantages of Porta Cabins Over Traditional Construction
         </h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
-          When compared to conventional brick-and-mortar construction, porta cabins deliver significant advantages in cost, speed, and flexibility. Industry data suggests porta cabins are typically 30–40% cheaper and 60–70% faster to deploy than traditional buildings for comparable use cases in 2025 India.
+          When compared to conventional brick-and-mortar construction, porta cabins deliver significant advantages in cost, speed, and flexibility: usually no RCC foundation or long civil works (level ground or a prepared PCC/RCC base, depending on cabin size and permanence), units that arrive factory-built and ready to use, and a structure that moves to the next site instead of being demolished.
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -197,7 +197,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             {
               icon: Leaf,
               title: "Sustainability Benefits",
-              desc: "Recyclable steel frames, 70–80% less construction waste, reduced on-site dust and noise. Components can be refurbished or recycled at end of life.",
+              desc: "Recyclable steel frames, less construction waste, reduced on-site dust and noise. Components can be refurbished or recycled at end of life.",
             },
             {
               icon: Settings,
@@ -301,7 +301,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           Applications Across Industries & Use Cases
         </h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
-          Indian sectors including construction, infrastructure, education, healthcare, manufacturing, oil & gas, mining, retail, and hospitality are widely adopting porta cabins in 2025 for their speed, cost efficiency, and functionality advantages.
+          Indian sectors including construction, infrastructure, education, healthcare, manufacturing, oil & gas, mining, retail, and hospitality are widely adopting porta cabins for their speed, cost efficiency, and functionality advantages.
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -515,7 +515,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             },
             {
               title: "Sustainability Advantages",
-              desc: "Lower embodied carbon vs repeated brick construction. 70–80% less construction waste. Steel frames fully recyclable. Cabins can be upgraded and repurposed throughout lifespan.",
+              desc: "Lower embodied carbon vs repeated brick construction. Less construction waste. Steel frames fully recyclable. Cabins can be upgraded and repurposed throughout lifespan.",
             },
           ].map((item) => (
             <div key={item.title} className="bg-card border border-border rounded-xl p-6">
@@ -558,7 +558,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
       <section className="bg-accent/5 border border-accent/20 rounded-2xl p-8">
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
           <TrendingUp className="h-7 w-7 text-accent" />
-          Future of Porta Cabins: Trends & Innovations for 2025 and Beyond
+          Future of Porta Cabins: Trends & Innovations
         </h2>
         <div className="space-y-4 text-muted-foreground leading-relaxed">
           <p>
@@ -599,7 +599,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
       {/* FAQs */}
       <section>
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-6">
-          FAQs on Porta Cabins (2025)
+          FAQs on Porta Cabins
         </h2>
         <p className="text-muted-foreground mb-6 leading-relaxed">
           Common questions from project managers, purchase teams, and individual buyers evaluating porta cabins in India.

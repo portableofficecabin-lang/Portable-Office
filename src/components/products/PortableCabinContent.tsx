@@ -176,7 +176,7 @@ export function PortableCabinContent({ offer }: { offer?: { productId?: string; 
           Applications of Portable Cabins
         </h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
-          From 2020–2025, use of portable cabins has grown strongly across infrastructure, education, and industrial sectors. The industry has seen significant adoption in both manufacturing and service environments.
+          In recent years, use of portable cabins has grown strongly across infrastructure, education, and industrial sectors. The industry has seen significant adoption in both manufacturing and service environments.
         </p>
 
         <div className="rounded-2xl overflow-hidden shadow-lg mb-8">
@@ -226,7 +226,7 @@ export function PortableCabinContent({ offer }: { offer?: { productId?: string; 
             One of the key advantages is flexibility. Since these units are portable and modular by nature, they typically do not require special permission for installation, allowing you to respond quickly to changing site requirements. The steel built type—whether MS or GI—ensures long-lasting performance, even in challenging weather conditions.
           </p>
           <p>
-            Leading manufacturers offer a range of options, from single-compartment units to multi-bay portable toilets, all designed for easy integration with office cabins, security cabins, or storage rooms. By choosing the right sanitation setup, you ensure that your portable cabins remain functional, compliant, and comfortable for all users.
+            Manufacturers offer a range of options, from single-compartment units to multi-bay portable toilets, all designed for easy integration with office cabins, security cabins, or storage rooms. By choosing the right sanitation setup, you ensure that your portable cabins remain functional, compliant, and comfortable for all users.
           </p>
         </div>
       </section>
@@ -377,7 +377,7 @@ export function PortableCabinContent({ offer }: { offer?: { productId?: string; 
               </span>
             </AccordionTrigger>
             <AccordionContent className="text-muted-foreground leading-relaxed pb-4">
-              All our products are manufactured in accordance with relevant Indian standards, ensuring proper structural safety, electrical safety, and fire resistance. We work to quality benchmarks such as ISO 9001:2015 for the safety and performance of our portable cabins. For government tenders and corporate projects, we provide complete documentation including test certificates, material specifications, and compliance reports.
+              All our products are manufactured in accordance with relevant Indian standards, ensuring proper structural safety, electrical safety, and fire resistance. For government tenders and corporate projects, we provide complete documentation including test certificates, material specifications, and compliance reports.
             </AccordionContent>
           </AccordionItem>
         </Accordion>

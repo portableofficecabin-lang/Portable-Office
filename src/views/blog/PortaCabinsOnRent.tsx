@@ -62,8 +62,8 @@ const faqStructuredData = {
 const articleStructuredData = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "Porta Cabins on Rent – Flexible Portable Space by Portable Office Cabin",
-  description: "Complete guide to renting porta cabins in India. Learn about rental types, pricing, delivery timelines, customization options, and how to enquire with India's leading manufacturer.",
+  headline: "Renting a Porta Cabin: Costs, Terms and What to Check Before You Hire",
+  description: "What renting a porta cabin involves in India: rental types, monthly terms, delivery and installation, customization, and what to check before you hire.",
   image: "https://portableofficecabin.com/blog/porta-cabins-on-rent.png",
   author: {
     "@type": "Organization",
@@ -87,7 +87,7 @@ const articleStructuredData = {
     }
   },
   datePublished: "2025-02-20",
-  dateModified: "2026-02-27",
+  dateModified: "2026-11-26",
   mainEntityOfPage: "https://portableofficecabin.com/blog/porta-cabins-on-rent"
 };
 
@@ -104,7 +104,7 @@ export default function PortaCabinsOnRent() {
             <ChevronRight className="h-3 w-3" />
             <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-foreground font-medium">Porta Cabins on Rent</span>
+            <span className="text-foreground font-medium">Renting a Porta Cabin</span>
           </nav>
         </div>
       </div>
@@ -117,10 +117,14 @@ export default function PortaCabinsOnRent() {
             Back to Blog
           </Link>
           <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-6">
-            Porta Cabins on Rent – Flexible Portable Space
+            Renting a Porta Cabin: Costs, Terms and What to Check Before You Hire
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/80 max-w-3xl">
             Ready-to-use workspace, delivered on the date in your rental quotation. Office cabins, security posts, labour accommodation & more—available on hire across India.
+          </p>
+          <p className="text-base text-primary-foreground/80 max-w-3xl mt-4">
+            Current rental units and monthly terms: see our{" "}
+            <Link href="/rental-service" className="font-semibold text-accent underline-offset-4 hover:underline">porta cabins on rent</Link>.
           </p>
           <div className="flex flex-wrap items-center gap-4 mt-6 text-sm text-primary-foreground/70">
             <span className="flex items-center gap-1"><Clock className="h-4 w-4 text-accent" /> 18 min read</span>
@@ -174,7 +178,7 @@ export default function PortaCabinsOnRent() {
 
             {/* Introduction */}
             <section className="mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Porta Cabins on Rent – The Smart Choice for Temporary Space</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Why Renting Makes Sense for Temporary Space</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 When your project demands ready-to-use workspace without the wait of traditional construction, porta cabins on rent offer the ideal solution. Whether you're setting up a site office for a metro rail project in Mumbai, accommodating workers at a highway construction site in Rajasthan, or creating temporary classrooms during a school expansion in Tamilnadu, Karnataka or Andhra Pradesh, rental porta cabins deliver the space you need without the wait of a building, on the delivery date set out in your rental quotation.
               </p>
@@ -271,7 +275,7 @@ export default function PortaCabinsOnRent() {
 
             {/* Why Choose */}
             <section className="mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Why Choose Our Porta Cabins on Rent?</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">What to Check Before You Hire a Porta Cabin</h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 Renting porta cabins from a manufacturer rather than constructing permanent structures or purchasing new cabins outright offers tangible advantages that directly impact your project economics and timeline.
               </p>
@@ -617,7 +621,7 @@ export default function PortaCabinsOnRent() {
               <div className="bg-accent/10 border border-accent/30 rounded-xl p-6">
                 <h3 className="font-bold text-foreground mb-2">About Portable Office Cabin</h3>
                 <p className="text-sm text-muted-foreground mb-3">
-                  Whether you need a single security cabin for 3 months or a complete labour colony for a multi-year infrastructure project, Portable Office Cabin delivers rental solutions built on manufacturing expertise, regional presence, and a commitment to meeting your timeline. As one of the leading manufacturers in India's modular construction industry, we understand that every day matters on your project site.
+                  Whether you need a single security cabin for 3 months or a complete labour colony for a multi-year infrastructure project, Portable Office Cabin delivers rental solutions built on manufacturing expertise, regional presence, and a commitment to meeting your timeline. As a manufacturer in India's modular construction industry, we understand that every day matters on your project site.
                 </p>
                 <Link href="/" className="text-accent font-semibold text-sm hover:underline">
                   Visit portableofficecabin.com →
@@ -649,7 +653,7 @@ export default function PortaCabinsOnRent() {
             Ready to Rent a Porta Cabin?
           </h2>
           <p className="text-primary-foreground/70 mb-8 max-w-xl mx-auto">
-            Get a free rental quote tailored to your project. Factory-direct pricing, delivery dates confirmed in your quote, and turnkey support from India's trusted manufacturer.
+            Get a free rental quote tailored to your project. Factory-direct pricing, delivery dates confirmed in your quote, and turnkey support from the manufacturer.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="btn-accent">

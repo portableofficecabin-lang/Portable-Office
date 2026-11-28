@@ -4,16 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { SEOContent } from "@/data/seoPromotions";
-import { ArrowRight, CheckCircle, Phone, Mail, MapPin, Star, ExternalLink } from "lucide-react";
+import { ArrowRight, CheckCircle, Phone, Mail, MapPin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/company";
 import { promotionBreadcrumbs } from "@/lib/seo/promotionBreadcrumbs";
+import { PromotionBuyerFacts } from "@/components/promotions/PromotionBuyerFacts";
+import type { PromotionBuyerFactsData } from "@/data/promotionBuyerFacts";
 
 interface SEOPromotionPageProps {
   content: SEOContent;
+  /** Resolved on the server for the pages configured in src/data/promotionBuyerFacts.ts (null elsewhere). */
+  buyerFacts?: PromotionBuyerFactsData | null;
 }
 
-export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
+export function SEOPromotionPage({ content, buyerFacts }: SEOPromotionPageProps) {
   const crumbs = promotionBreadcrumbs(content);
   return (
     <Layout>
@@ -91,6 +95,10 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
                   </p>
                 ))}
               </div>
+
+              {/* Buyer facts (SEO phase 2): exact catalogue sizes and prices, specifications, delivery and
+                  installation scope, quote action — only on the pages configured for it. */}
+              {buyerFacts && <PromotionBuyerFacts data={buyerFacts} productLabel={content.keyword} />}
 
               {/* Features */}
               <div className="bg-card rounded-2xl p-8 md:p-12 border border-border">
@@ -219,19 +227,16 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
                 </ul>
               </div>
 
-              {/* Trust Card */}
+              {/* Trust Card: only facts on record (src/lib/company.ts). Until 2026-11-26 it showed five
+                  filled stars (no reviews behind them), "500+ Projects Delivered Across India" and
+                  "15+ Years Experience", none of which has evidence on record. */}
               <div className="bg-amber-500/10 rounded-2xl p-8 border border-amber-500/30">
-                <div className="flex items-center gap-2 mb-4">
-                  {[1, 2, 3, 4, 5].map(i => (
-                    <Star key={i} className="w-5 h-5 text-amber-500 fill-amber-500" />
-                  ))}
-                </div>
                 <p className="text-foreground font-bold text-lg mb-4">
-                  500+ Projects Delivered Across India
+                  Built at our own factory in Tamil Nadu
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-3 py-1 bg-card rounded-full text-sm font-medium border border-border text-muted-foreground">
-                    15+ Years Experience
+                    GST Registered: {COMPANY.gstin}
                   </span>
                   <span className="px-3 py-1 bg-card rounded-full text-sm font-medium border border-border text-muted-foreground">
                     Material-Based Warranty

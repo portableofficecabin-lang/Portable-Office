@@ -82,6 +82,11 @@ export function ProductsPageContent({
     ? products.some((p) => p.categorySlug === activeCategoryObj.slug && isPurchasable(p.id))
     : true;
 
+  /* The A–Z index of every product (below) renders on the /products hub, and on a category only when
+   * that category has no products of its own (its grid is empty, so the index is the way onward).
+   * Deliberately independent of the search box, so typing never adds or removes the section. */
+  const showCatalogueIndex = !activeCategory || !products.some((p) => p.categorySlug === activeCategory);
+
   const filteredProducts = useMemo(() => {
     let filtered = products;
     if (activeCategory) {
@@ -163,7 +168,7 @@ export function ProductsPageContent({
         <div className="flex flex-wrap gap-2.5">
           <PageHeroChip>
             <BadgeCheck className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-            ISO 9001:2015 Certified
+            GST & MSME registered
           </PageHeroChip>
           <PageHeroChip>
             <Factory className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
@@ -406,8 +411,16 @@ export function ProductsPageContent({
               {/* Server-rendered category content passed in by the route (see ProductsPageProps). */}
               {categoryContent}
 
-              {/* Full Catalogue Index — crawlable list of every product */}
-              {products.length > 0 && (
+              {/* Full Catalogue Index — crawlable list of every product: on the /products hub, and on a
+                  category only when it has no products of its own (showCatalogueIndex above).
+                  It used to render on every category page. On a category with products it repeated the same
+                  ~47 rows (names, short descriptions, prices of other categories) on all of them, so 55–59% of
+                  the site-office, toilet and security category text was identical (site-inventory
+                  "distinct-content") and each page carried ~340 extra DOM elements. Those categories keep their
+                  own grid, content and links; every product stays linked from its own category grid and from
+                  this hub. Categories with no products keep the index unchanged. Proposed 2026-11-27 as a
+                  draft for the owner. */}
+              {showCatalogueIndex && products.length > 0 && (
                 <section className="mt-16 pt-10 border-t border-border/50" aria-label="Full product catalogue index">
                   <h2 className="font-display font-bold text-xl text-foreground mb-2">Full Catalogue — All Products A–Z</h2>
                   <p className="text-sm text-muted-foreground mb-6">Quick-reference index of every product we manufacture, with prices and direct links to each product page.</p>
@@ -690,8 +703,10 @@ function PageParamBridge({ onChange }: { onChange: (page: number) => void }) {
 
 /**
  * Client bridge for the /products/category/[slug] route. activeCategory comes from
- * the path (a server prop), so the category's filtered content + crawlable A–Z index
- * are present in the static HTML and the route stays SSG/ISR (revalidate honoured).
+ * the path (a server prop), so the category's filtered product grid and its own content
+ * are present in the static HTML (the A–Z index of every product is on /products, and on a
+ * category only when it has no products of its own)
+ * and the route stays SSG/ISR (revalidate honoured).
  * Only ?page is read client-side after hydration — exactly like
  * ProductsListingWithParams — so deep-linked pagination still works WITHOUT awaiting
  * searchParams on the server (which would force the whole route into dynamic

@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 
 const switchReasons = [
-  "40–60% cheaper than conventional RCC structures when civil work and approvals are included",
+  "Single-storey cabins usually need no RCC foundation — a level hard surface or simple piers at support points, confirmed for your cabin size and site",
   "Optional on-site installation, added at checkout",
   "Fully relocatable across project phases and new sites",
   "Compliant electrical planning with insulation and AC-ready provisions",
@@ -174,7 +174,7 @@ export function OfficePortableCabinContent() {
             Office Portable Cabin – Fast, Flexible Workspaces by Portable Office Cabin
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            An office portable cabin is a prefabricated, self-contained workspace that arrives ready for immediate occupancy. In 2025, Indian businesses, contractors, and institutions are increasingly choosing these modular structures because they work faster, cost less, and move when the project moves.
+            An office portable cabin is a prefabricated, self-contained workspace that arrives ready for immediate occupancy. Indian businesses, contractors, and institutions are increasingly choosing these modular structures because they work faster, cost less, and move when the project moves.
           </p>
           <p className="text-muted-foreground">
             Portable Office Cabin delivers office cabins across Maharashtra, Gujarat, Karnataka, Tamil Nadu, and Delhi NCR for site offices, factory admin blocks, school offices, training rooms, and project command centres.
@@ -212,7 +212,6 @@ export function OfficePortableCabinContent() {
           {[
             "Standard configurations bought online are dispatched within 7–15 working days of order confirmation",
             "Optional on-site installation for units such as 20x10 ft office cabins, added at checkout",
-            "Up to 60% lower total project cost compared to conventional construction",
             "Little to no complex foundation work for temporary deployment",
             "Built for Indian conditions across heat, rain, industrial dust, and site movement",
             "Same cabin can shift to the next project after current work concludes",
@@ -405,7 +404,7 @@ export function OfficePortableCabinContent() {
           </h2>
           <div className="mt-4 space-y-3">
             {[
-              "Dedicated modular workspace manufacturer since 2010",
+              "Dedicated modular workspace manufacturer",
               "Pan-India delivery with established transport coordination",
               "Custom layouts for construction, education, manufacturing, and public-sector use",
               "After-sales support for maintenance, repair, relocation, and expansion",

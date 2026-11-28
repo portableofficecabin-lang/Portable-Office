@@ -69,7 +69,7 @@ export const seoData = {
   home: {
     title: "Portable Office Cabin Manufacturer Serving Bangalore | India",
     description:
-      "Leading portable office cabin manufacturer serving Bangalore from our Hosur factory. Container offices, site cabins & prefab structures. 7–15 working-day dispatch. Call now!",
+      "Portable office cabin manufacturer serving Bangalore from our Hosur factory. Container offices, site cabins & prefab structures. 7–15 working-day dispatch. Call now!",
     keywords:
       "portable office cabin manufacturer Bangalore, container office, site cabin, prefab structure, porta cabin India",
   },
@@ -83,7 +83,7 @@ export const seoData = {
   about: {
     title: "About Us | Portable Office Cabin Manufacturer",
     description:
-      "Portable Office Cabin: 15+ years building portable cabins & prefab solutions across India. 500+ projects delivered.",
+      "Portable Office Cabin builds portable cabins & prefab solutions at its own Tamil Nadu factory near Hosur and delivers across India.",
     keywords:
       "portable cabin manufacturer, prefab company India, modular building supplier, portable office manufacturer, about portable cabin company",
   },
@@ -614,15 +614,8 @@ function generateAreaServedForSchema() {
   ];
 }
 
-// The certification and registration claims below are unchanged in substance; they now read
-// their values from company.ts. (The ISO 9001 claim has no issuing body, scope or validity on
-// record — that is an open owner decision, not something this file can resolve.)
-const CERTIFICATION = {
-  "@type": "Certification",
-  name: "ISO 9001:2015",
-  about: "Quality Management System",
-  certificationIdentification: COMPANY.isoCertificate,
-} as const;
+// The registration claim below is unchanged in substance; it reads its value from company.ts.
+// The ISO 9001 certification node was removed on main by #370 (owner decision, 2026-11-27).
 const UDYAM_ID = { "@type": "PropertyValue", propertyID: "Udyam Registration Number", value: COMPANY.udyam } as const;
 
 export const organizationStructuredData = {
@@ -636,7 +629,6 @@ export const organizationStructuredData = {
   email: COMPANY.email.sales,
   telephone: PRIMARY_PHONE,
   taxID: COMPANY.gstin,
-  hasCertification: CERTIFICATION,
   identifier: UDYAM_ID,
   // Only profiles that actually exist — a sameAs pointing at a dead page is a bad
   // entity-verification signal. There is no Twitter/X and no IndiaMart profile.
@@ -674,7 +666,6 @@ export const localBusinessStructuredData = {
   priceRange: "₹₹₹",
   image: `${SITE_URL}/logo.jpeg`,
   taxID: COMPANY.gstin,
-  hasCertification: CERTIFICATION,
   identifier: UDYAM_ID,
   // Same verified-real profiles as the Organization node.
   sameAs: SAME_AS,

@@ -19,7 +19,8 @@
  *   • project count, client count, founding year or rating — the site's existing claims on these
  *     contradict each other and COMPANY records none.
  *   • named material brands, which would need a trademark disclaimer.
- *   • licence or empanelment claim beyond the registrations in COMPANY (GSTIN, Udyam, ISO 9001).
+ *   • licence or empanelment claim beyond the registrations in COMPANY (GSTIN, Udyam). The ISO 9001
+ *     line was removed while the owner's certificate is pending (claims inventory E1).
  * When the owner supplies those figures, add them here — do not let a copy edit introduce them.
  *
  * The FAQ answers are rendered VISIBLY on this page and are the same strings the page passes to
@@ -503,10 +504,8 @@ export function BuildingConstructionContractorContent() {
         </div>
 
         <p className="mt-4 rounded-xl border border-amber/30 bg-amber/5 p-5 text-sm leading-relaxed text-muted-foreground">
-          Portable Office Cabin operates a quality management system certified to ISO 9001:2015
-          (certificate no. {COMPANY.isoCertificate}), and is registered under GSTIN{" "}
-          {COMPANY.gstin} and Udyam {COMPANY.udyam}. Those are the registrations we hold; we do not
-          claim any others.
+          Portable Office Cabin is registered under GSTIN {COMPANY.gstin} and Udyam{" "}
+          {COMPANY.udyam}. Those are the registrations we hold; we do not claim any others.
         </p>
       </section>
 

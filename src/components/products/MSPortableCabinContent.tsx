@@ -244,13 +244,13 @@ export function MSPortableCabinContent() {
         </div>
         <div className="space-y-4">
           <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-            MS Portable Cabins: Complete Guide to Mild Steel Portable Cabins in India (2024–2025)
+            MS Portable Cabins: Complete Guide to Mild Steel Portable Cabins in India
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
             The Indian construction and infrastructure sector adopted MS portable cabins because they solve a real problem fast: creating durable offices, accommodation, security points, classrooms, and sanitation blocks without waiting months for conventional construction.
           </p>
           <p className="leading-relaxed text-muted-foreground">
-            Portable Office Cabin, established in 2014, manufactures and supplies MS portable cabins, container offices, and prefab buildings for both B2B and B2C requirements across India. This guide explains what an MS portable cabin is, typical sizes, major applications, and how MS compares with GI, FRP, and shipping container conversions.
+            Portable Office Cabin manufactures and supplies MS portable cabins, container offices, and prefab buildings for both B2B and B2C requirements across India. This guide explains what an MS portable cabin is, typical sizes, major applications, and how MS compares with GI, FRP, and shipping container conversions.
           </p>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -403,7 +403,7 @@ export function MSPortableCabinContent() {
           <div className="rounded-2xl bg-card p-5">
             <h3 className="mb-2 font-semibold text-foreground">MS vs GI</h3>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              MS cabins are usually 15–20% more economical than GI versions for similar layouts. GI performs better in coastal and high-humidity conditions, while MS remains the practical value choice for most inland projects. Our{" "}
+              MS cabins usually cost less than GI versions for similar layouts. GI performs better in coastal and high-humidity conditions, while MS remains the practical value choice for most inland projects. Our{" "}
               <Link href="/products/metal-portable-cabin" className="font-medium text-accent underline-offset-4 hover:underline">
                 guide to choosing the metal
               </Link>{" "}
