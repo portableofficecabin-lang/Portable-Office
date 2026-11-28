@@ -23,6 +23,7 @@ import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { FreshInsightSection } from "@/components/products/FreshInsightSection";
 import { enquiryLengthError } from "@/lib/enquiries/enquiryLimits";
+import { COMPANY } from "@/lib/company";
 
 const PRODUCT_OPTIONS = [
   "Portable Cabins",
@@ -296,12 +297,16 @@ export default function ContactPage() {
     setReferenceNumber(null);
   };
 
+  // Every value comes from src/lib/company.ts, the same source as the footer and the JSON-LD, so the
+  // Contact page can never state a different address, phone or e-mail from the rest of the site.
+  const factory = COMPANY.addresses.tamilNaduFactory;
+  const office = COMPANY.addresses.bangaloreOffice;
   const contactInfo = [
-    { icon: Phone, title: "Phone", details: ["+91 9731897976", "+91 90199 10931"], action: "tel:+919731897976" },
-    { icon: Mail, title: "Email", details: ["sales@portableofficecabin.com", "portableofficecabin@gmail.com"], action: "mailto:sales@portableofficecabin.com" },
-    { icon: MapPin, title: "Tamil Nadu Factory", details: ["Survey No. 222, Door No. 2/149-6, Road 1C", "Post Addakurukki, Kamandoddi, Tamil Nadu 635117", "Phone: +91 90199 10931"], action: "#" },
-    { icon: MapPin, title: "Bangalore Office (Electronic City)", details: ["Flat No. 280, Building No. 6, 7", "Electronic City Phase 1, Bommasandra Jigani", "Taluk Anekal, Chandapura, Bengaluru, Karnataka 560105", "Phone: +91 83103 72601 / +91 80731 02817"], action: "#" },
-    { icon: Clock, title: "Business Hours", details: ["Mon - Sat: 7:00 AM - 10:00 PM", "Sunday: 10:00 AM - 7:00 PM"], action: "#" },
+    { icon: Phone, title: "Phone", details: COMPANY.phones.map((p) => p.display), action: `tel:${COMPANY.phones[0].e164}` },
+    { icon: Mail, title: "Email", details: [COMPANY.email.sales, COMPANY.email.secondary], action: `mailto:${COMPANY.email.sales}` },
+    { icon: MapPin, title: factory.label, details: [factory.street, `${factory.locality}, ${factory.region} ${factory.postalCode}`, `Phone: ${COMPANY.phones[1].display}`], action: "#" },
+    { icon: MapPin, title: office.label, details: [office.street, `${office.locality}, ${office.region} ${office.postalCode}`, `Phone: ${(office.phones ?? []).map((p) => p.display).join(" / ")}`], action: "#" },
+    { icon: Clock, title: "Business Hours", details: [COMPANY.businessHours.weekdays.display, COMPANY.businessHours.sunday.display], action: "#" },
   ];
 
   const progressPct = ((step - 1) / (STEPS.length - 1)) * 100;
