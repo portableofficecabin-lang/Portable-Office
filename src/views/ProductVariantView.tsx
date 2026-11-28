@@ -3,7 +3,6 @@ import { Check, ChevronRight, Ruler, Truck } from "lucide-react";
 
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
-import { IsoCertificationBadge } from "@/components/IsoCertificationBadge";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductActions } from "@/components/products/ProductActions";
 import { ProductKeySpecs } from "@/components/products/ProductKeySpecs";
@@ -220,7 +219,7 @@ export function ProductVariantView({
                 </span>
               </div>
 
-              <IsoCertificationBadge className="mb-5" />
+              {/* ISO 9001:2015 badge not shown while the owner's certificate is pending (see ProductDetailServer). */}
 
               <p className="text-lg text-muted-foreground mb-6">
                 {variantDescription(family, variant)}
